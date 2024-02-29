@@ -20,7 +20,7 @@ class City(Period):
         abstract = True
 
 
-class District(Period):
+class District(City):
     district_name = models.CharField(max_length=255,null=False,blank=False)
 
     class Meta:
