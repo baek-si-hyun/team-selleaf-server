@@ -28,3 +28,4 @@ class MemberAddress(Address):
 
 class MemberProfile(File):
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
+
