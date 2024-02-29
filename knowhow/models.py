@@ -1,5 +1,7 @@
 from django.db import models
 
+from selleaf.Period import Period
+
 
 class Knowhow(Period):
     knowhow_title = models.CharField(max_length=50, null=False)
