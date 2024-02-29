@@ -1,5 +1,6 @@
 from django.db import models
 
+from member.models import Member
 from selleaf.models import Scrap, Period, Plant, File, Address
 from trade.managers import TradeManager
 
