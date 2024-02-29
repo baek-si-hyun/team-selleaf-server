@@ -1,6 +1,8 @@
 from django.db import models
 
 from lecture.models import Lecture
+from member.models import Member
+from selleaf.period import Period
 
 
 class Apply(Period):

@@ -1,6 +1,7 @@
 from django.db import models
 
 from lecture.models import Kit
+from member.models import Member
 from selleaf.models import Period, Address, Mileage
 
 
