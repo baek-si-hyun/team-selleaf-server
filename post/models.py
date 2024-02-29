@@ -1,6 +1,7 @@
 from django.db import models
 
-from selleaf.models import Period, File, Like, Plant, Scrap, Tag
+from plant.models import Plant
+from selleaf.models import Period, File, Like, Scrap, Tag
 
 
 class Post(Period):
