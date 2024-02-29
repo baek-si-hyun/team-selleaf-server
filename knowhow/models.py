@@ -1,5 +1,6 @@
 from django.db import models
 
+from selleaf.models import File, Like, Scrap, Tag
 from selleaf.period import Period
 
 
