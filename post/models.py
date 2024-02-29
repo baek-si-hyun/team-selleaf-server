@@ -1,41 +1,40 @@
 from django.db import models
 
-class Post(models.Model):
+from selleaf.models import Period, File, Like, Plant, Scrap, Tag
+
+
+class Post(Period):
     post_title = models.CharField(max_length=50, null=False)
     post_content = models.CharField(max_length=500, null=False)
     post_count = models.IntegerField(default=0, null=False)
-    post_category = models.ForeignKey('Category', on_delete=models.PROTECT)
-    user = models.Foreignkey('User', on_delete=models.PROTECT)
+    post_category = models.CharField(null=False)
+    member = models.ForeignKey('Member', on_delete=models.PROTECT)
 
     class Meta:
         db_table = 'tbl_post'
 
 
-class PostFile(models.Model):
-    # post_file_id (슈퍼키)
+class PostFile(File):
     post = models.ForeignKey('Post', on_delete=models.PROTECT)
     class Meta:
         db_table = 'tbl_post_file'
 
-class PostLike(models.Model):
-    # post_like_id (슈퍼키)
+class PostLike(Like):
     post = models.ForeignKey('Post', on_delete=models.PROTECT)
     class Meta:
         db_table = 'tbl_post_like'
 
-class PostPlant(models.Model):
-    plant = models.ForeignKey('PlantCategory', on_delete=models.PROTECT)
+class PostPlant(Plant):
     post = models.ForeignKey('Post', on_delete=models.PROTECT)
     class Meta:
         db_table = 'tbl_post_plant'
 
-class PostScrap(models.Model):
+class PostScrap(Scrap):
     post = models.ForeignKey('Post', on_delete=models.PROTECT)
     class Meta:
         db_table = 'tbl_post_scrap'
 
-class PostTag(models.Model):
-    tag = models.ForeignKey('Tag', on_delete=models.PROTECT)
+class PostTag(Tag):
     post = models.ForeignKey('Post', on_delete=models.PROTECT)
 
     class Meta:
@@ -43,3 +42,16 @@ class PostTag(models.Model):
 
 class PostCategory(models.Model):
     category_name = models.CharField(max_length=50, null=False)
+
+class PostReply(Period):
+    post_reply_content = models.CharField(null=False, max_length=50)
+    post = models.ForeignKey('Post', on_delete=models.PROTECT)
+    user = models.ForeignKey('User', on_delete=models.PROTECT)
+    class Meta:
+        db_table = 'tbl_post_reply'
+
+class PostReplyLike(Like):
+
+    post_reply = models.ForeignKey('PostReply', on_delete=models.PROTECT)
+    class Meta:
+        db_table = 'tbl_post_reply_like'
