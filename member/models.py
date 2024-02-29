@@ -1,6 +1,7 @@
 from django.db import models
 
-from selleaf.models import Period, Address, File
+from selleaf.models import Address, File
+from selleaf.period import Period
 
 
 class Member(Period):

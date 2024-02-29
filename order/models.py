@@ -2,7 +2,8 @@ from django.db import models
 
 from lecture.models import Kit
 from member.models import Member
-from selleaf.models import Period, Address, Mileage
+from selleaf.models import Address, Mileage
+from selleaf.period import Period
 
 
 class Order(Period):
@@ -21,6 +22,7 @@ class Order(Period):
     class Meta:
         db_table = 'tbl_order'
         ordering = ['-id']
+
 
 class OrderMileage(Mileage):
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False, blank=False)
