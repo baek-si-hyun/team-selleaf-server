@@ -8,6 +8,7 @@ from selleaf.models import File, Scrap
 from selleaf.period import Period
 from teacher.models import Teacher
 
+
 class LectureCategory(Period):
     lecture_category_name = models.CharField(null=False, blank=False, max_length=100)
 
@@ -28,6 +29,7 @@ class Lecture(Period):
 
     objects = models.Manager()
     enabled_objects = LectureManager()
+
     class Meta:
         db_table = 'tbl_lecture'
         ordering = ['-id']
@@ -36,8 +38,10 @@ class Lecture(Period):
 class LecturePlant(Period):
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
     plant = models.ForeignKey(Plant, on_delete=models.PROTECT, null=False)
+
     class Meta:
         db_table = 'tbl_lecture_plant'
+
 
 class LectureProductFile(File):
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
@@ -46,11 +50,13 @@ class LectureProductFile(File):
         db_table = 'tbl_lecture_product_file'
         ordering = ['-id']
 
+
 class LectureScrap(Scrap):
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_lecture_scrap'
+
 
 class Kit(Period):
     kit_name = models.CharField(null=False, blank=False, max_length=100)
@@ -60,6 +66,7 @@ class Kit(Period):
     class Meta:
         db_table = 'tbl_kit'
         ordering = ['-id']
+
 
 class LectureReview(Period):
     review_title = models.CharField(null=False, blank=False, max_length=100)
@@ -72,9 +79,10 @@ class LectureReview(Period):
         db_table = 'tbl_lecture_review'
         ordering = ['-id']
 
+
 # 강의 장소 사진 테이블
-class TeacherPlaceFile(File):
-    teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT, null=False)
+class LecturePlaceFile(File):
+    lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_teacher_place_file'
