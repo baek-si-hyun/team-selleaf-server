@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style data-emotion="css-global" data-s="">
+      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
+      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
+      @font-face {
+        font-family: OhouseIcon;
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
+            format("embedded-opentype"),
+          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
+            format("woff2"),
+          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
+            format("woff"),
+          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
+            format("truetype"),
+          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
+            format("svg");
+      }
+      html {
+        font-family: "Pretendard Variable", sans-serif;
+        letter-spacing: -0.3px;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+    <link
+      rel="shortcut icon"
+      href="../../../staticfiles/images/selleaf.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="../../../staticfiles/css/common.css" />
+    <link
+      rel="stylesheet"
+      href="../../../staticfiles/css/community/web/knowhow.css"
+    />
+    <title>노하우 커뮤니티</title>
+  </head>
+  <body>
+    <div class="knowhow-wrap" style="padding-top: 133px;">
+      <div class="knowhow-container">
+        <div class="knowhow-inner">
+          <div class="knowhow-box">
+            <div class="filter-wrap">
+              <div class="filter-container">
+                <div class="filter-item filter-selecter sort-selecter">
+                  <button type="button" class="filter-btn option">
+                    정렬<span class="filter-btn-icon"></span>
+                  </button>
+                  <div
+                    class="filter-modal"
+                    style="
+                      position: absolute;
+                      top: -25px;
+                      transform: translate(-70px, 210px);
+                      z-index: 3;
+                    "
+                  >
+                    <div
+                      class="filter-modal-inner"
+                      style="
+                        position: absolute;
+                        left: 0px;
+                        transform: translate(93px, 0px);
+                      "
+                    ></div>
+                    <div>
+                      <div class="modal-menu">
+                        <div class="modal-menu-inner">
+                          <button type="button" class="modal-menu-btn new-option choice">
+                            <div class="menu-choice">최신순</div>
+                          </button>
+                          <button type="button" class="modal-menu-btn option">
+                            <div class="menu-choice">
+                              인기순
+                            </div>
+                          </button>
+                          <button type="button" class="modal-menu-btn option">
+                            <div class="menu-choice">스크랩순</div>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="filter-item filter-selecter field-selecter">
+                  <button type="button" class="filter-btn option">
+                    분야<span class="filter-btn-icon"></span>
+                  </button>
+                  <div
+                    class="filter-modal"
+                    style="
+                      position: absolute;
+                      top: -25px;
+                      transform: translate(-70px, 210px);
+                      z-index: 3;
+                    "
+                  >
+                    <div
+                      class="filter-modal-inner"
+                      style="
+                        position: absolute;
+                        left: 0px;
+                        transform: translate(93px, 0px);
+                      "
+                    ></div>
+                    <div>
+                      <div class="modal-menu">
+                        <div class="modal-menu-inner">
+                          <button type="button" class="modal-menu-btn option">
+                            <div class="menu-choice">
+                              식물 키우기
+                            </div>
+                          </button>
+                          <button type="button" class="modal-menu-btn option">
+                            <div class="menu-choice">제품 추천</div>
+                          </button>
+                          <button type="button" class="modal-menu-btn option">
+                            <div class="menu-choice">스타일링</div>
+                          </button>
+                          <button type="button" class="modal-menu-btn option">
+                            <div class="menu-choice">기타</div>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="filter-item">
+                  <button type="button" class="filter-btn individual option">
+                    관엽식물
+                  </button>
+                </div>
+                <div class="filter-item">
+                  <button type="button" class="filter-btn individual option">
+                    칩엽식물
+                  </button>
+                </div>
+                <div class="filter-item">
+                  <button type="button" class="filter-btn individual option">
+                    희귀식물
+                  </button>
+                </div>
+                <div class="filter-item">
+                  <button type="button" class="filter-btn individual option">
+                    다육선인장
+                  </button>
+                </div>
+                <div class="filter-item">
+                  <button type="button" class="filter-btn individual option">
+                    테라리움
+                  </button>
+                </div>
+                <div class="filter-item">
+                  <button type="button" class="filter-btn individual option">
+                    기타
+                  </button>
+                </div>
+              </div>
+              <div class="option-list">
+                <button
+                  type="button"
+                  class="option-reset-btn"
+                  style="display: none;"
+                >
+                  초기화
+                </button>
+              </div>
+            </div>
+            <div class="total-data">
+              전체 12,360
+            </div>
+            <div>
+              <div style="position: relative;" class="content-wrap">
+                <div
+                  style="width: 100%; height: 100%; position: absolute; top: 0;"
+                >
+                  <div
+                    style="
+                      box-sizing: border-box;
+                      padding-top: 0px;
+                      margin-top: 0px;
+                    "
+                  >
+                    <div style="overflow-anchor: none;">
+                      <div class="content-line-box">
+                        <a href="javascript:void(0)">
+                          <div class="content-item-wrap">
+                            <div class="content-item-container">
+                              <div class="content-img-box">
+                                <img
+                                  src="../../../staticfiles/images/blank-image.png"
+                                  class="content-img"
+                                />
+                                <div class="new-icon-box">
+                                  <span type="fill" class="new-icon">NEW</span>
+                                </div>
+                                <div class="scrap-btn-box">
+                                  <button
+                                    type="button"
+                                    aria-label="scrap 토글 버튼"
+                                    class="scrap-btn"
+                                  >
+                                    <span class="scrap-icon-box">
+                                      <img
+                                        src="../../../staticfiles/images/scrap-off-pink.png"
+                                        alt=""
+                                      />
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                              <p class="content-title">
+                                노하우 게시물 제목이 들어갈 공간
+                              </p>
+                              <div class="content-bottom-box">
+                                <div class="content-uploader">
+                                  <div class="uploader-img-box">
+                                    <img
+                                      src="../../../staticfiles/images/blank-image.png"
+                                      class="uploader-img"
+                                    />
+                                  </div>
+                                  <span class="uploader-name">작성자</span>
+                                </div>
+                                <div class="content-data-box">
+                                  <span class="content-data"
+                                    >스크랩 <span>3</span>
+                                  </span>
+                                  <span class="content-data"
+                                    >조회 <span>153</span>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                        <a href="javascript:void(0)">
+                          <div class="content-item-wrap">
+                            <div class="content-item-container">
+                              <div class="content-img-box">
+                                <img
+                                  src="../../../staticfiles/images/blank-image.png"
+                                  class="content-img"
+                                />
+                                <div class="new-icon-box">
+                                  <span type="fill" class="new-icon">NEW</span>
+                                </div>
+                                <div class="scrap-btn-box">
+                                  <button
+                                    type="button"
+                                    aria-label="scrap 토글 버튼"
+                                    class="scrap-btn"
+                                  >
+                                    <span class="scrap-icon-box">
+                                      <img
+                                        src="../../../staticfiles/images/scrap-off-pink.png"
+                                        alt=""
+                                      />
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                              <p class="content-title">
+                                노하우 게시물 제목이 들어갈 공간
+                              </p>
+                              <div class="content-bottom-box">
+                                <div class="content-uploader">
+                                  <div class="uploader-img-box">
+                                    <img
+                                      src="../../../staticfiles/images/blank-image.png"
+                                      class="uploader-img"
+                                    />
+                                  </div>
+                                  <span class="uploader-name">작성자</span>
+                                </div>
+                                <div class="content-data-box">
+                                  <span class="content-data"
+                                    >스크랩 <span>3</span>
+                                  </span>
+                                  <span class="content-data"
+                                    >조회 <span>153</span>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div> </a
+                        ><a href="javascript:void(0)">
+                          <div class="content-item-wrap">
+                            <div class="content-item-container">
+                              <div class="content-img-box">
+                                <img
+                                  src="../../../staticfiles/images/blank-image.png"
+                                  class="content-img"
+                                />
+                                <div class="new-icon-box">
+                                  <span type="fill" class="new-icon">NEW</span>
+                                </div>
+                                <div class="scrap-btn-box">
+                                  <button
+                                    type="button"
+                                    aria-label="scrap 토글 버튼"
+                                    class="scrap-btn"
+                                  >
+                                    <span class="scrap-icon-box">
+                                      <img
+                                        src="../../../staticfiles/images/scrap-off-pink.png"
+                                        alt=""
+                                      />
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                              <p class="content-title">
+                                노하우 게시물 제목이 들어갈 공간
+                              </p>
+                              <div class="content-bottom-box">
+                                <div class="content-uploader">
+                                  <div class="uploader-img-box">
+                                    <img
+                                      src="../../../staticfiles/images/blank-image.png"
+                                      class="uploader-img"
+                                    />
+                                  </div>
+                                  <span class="uploader-name">작성자</span>
+                                </div>
+                                <div class="content-data-box">
+                                  <span class="content-data"
+                                    >스크랩 <span>3</span>
+                                  </span>
+                                  <span class="content-data"
+                                    >조회 <span>153</span>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div> </a
+                        ><a href="javascript:void(0)">
+                          <div class="content-item-wrap">
+                            <div class="content-item-container">
+                              <div class="content-img-box">
+                                <img
+                                  src="../../../staticfiles/images/blank-image.png"
+                                  class="content-img"
+                                />
+                                <div class="new-icon-box">
+                                  <span type="fill" class="new-icon">NEW</span>
+                                </div>
+                                <div class="scrap-btn-box">
+                                  <button
+                                    type="button"
+                                    aria-label="scrap 토글 버튼"
+                                    class="scrap-btn"
+                                  >
+                                    <span class="scrap-icon-box">
+                                      <img
+                                        src="../../../staticfiles/images/scrap-off-pink.png"
+                                        alt=""
+                                      />
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                              <p class="content-title">
+                                노하우 게시물 제목이 들어갈 공간
+                              </p>
+                              <div class="content-bottom-box">
+                                <div class="content-uploader">
+                                  <div class="uploader-img-box">
+                                    <img
+                                      src="../../../staticfiles/images/blank-image.png"
+                                      class="uploader-img"
+                                    />
+                                  </div>
+                                  <span class="uploader-name">작성자</span>
+                                </div>
+                                <div class="content-data-box">
+                                  <span class="content-data"
+                                    >스크랩 <span>3</span>
+                                  </span>
+                                  <span class="content-data"
+                                    >조회 <span>153</span>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div> </a
+                        ><a href="javascript:void(0)">
+                          <div class="content-item-wrap">
+                            <div class="content-item-container">
+                              <div class="content-img-box">
+                                <img
+                                  src="../../../staticfiles/images/blank-image.png"
+                                  class="content-img"
+                                />
+                                <div class="new-icon-box">
+                                  <span type="fill" class="new-icon">NEW</span>
+                                </div>
+                                <div class="scrap-btn-box">
+                                  <button
+                                    type="button"
+                                    aria-label="scrap 토글 버튼"
+                                    class="scrap-btn"
+                                  >
+                                    <span class="scrap-icon-box">
+                                      <img
+                                        src="../../../staticfiles/images/scrap-off-pink.png"
+                                        alt=""
+                                      />
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                              <p class="content-title">
+                                노하우 게시물 제목이 들어갈 공간
+                              </p>
+                              <div class="content-bottom-box">
+                                <div class="content-uploader">
+                                  <div class="uploader-img-box">
+                                    <img
+                                      src="../../../staticfiles/images/blank-image.png"
+                                      class="uploader-img"
+                                    />
+                                  </div>
+                                  <span class="uploader-name">작성자</span>
+                                </div>
+                                <div class="content-data-box">
+                                  <span class="content-data"
+                                    >스크랩 <span>3</span>
+                                  </span>
+                                  <span class="content-data"
+                                    >조회 <span>153</span>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div> </a
+                        ><a href="javascript:void(0)">
+                          <div class="content-item-wrap">
+                            <div class="content-item-container">
+                              <div class="content-img-box">
+                                <img
+                                  src="../../../staticfiles/images/blank-image.png"
+                                  class="content-img"
+                                />
+                                <div class="new-icon-box">
+                                  <span type="fill" class="new-icon">NEW</span>
+                                </div>
+                                <div class="scrap-btn-box">
+                                  <button
+                                    type="button"
+                                    aria-label="scrap 토글 버튼"
+                                    class="scrap-btn"
+                                  >
+                                    <span class="scrap-icon-box">
+                                      <img
+                                        src="../../../staticfiles/images/scrap-off-pink.png"
+                                        alt=""
+                                      />
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                              <p class="content-title">
+                                노하우 게시물 제목이 들어갈 공간
+                              </p>
+                              <div class="content-bottom-box">
+                                <div class="content-uploader">
+                                  <div class="uploader-img-box">
+                                    <img
+                                      src="../../../staticfiles/images/blank-image.png"
+                                      class="uploader-img"
+                                    />
+                                  </div>
+                                  <span class="uploader-name">작성자</span>
+                                </div>
+                                <div class="content-data-box">
+                                  <span class="content-data"
+                                    >스크랩 <span>3</span>
+                                  </span>
+                                  <span class="content-data"
+                                    >조회 <span>153</span>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                        <a href="javascript:void(0)">
+                          <div class="content-item-wrap">
+                            <div class="content-item-container">
+                              <div class="content-img-box">
+                                <img
+                                  src="../../../staticfiles/images/blank-image.png"
+                                  class="content-img"
+                                />
+                                <div class="new-icon-box">
+                                  <span type="fill" class="new-icon">NEW</span>
+                                </div>
+                                <div class="scrap-btn-box">
+                                  <button
+                                    type="button"
+                                    aria-label="scrap 토글 버튼"
+                                    class="scrap-btn"
+                                  >
+                                    <span class="scrap-icon-box">
+                                      <img
+                                        src="../../../staticfiles/images/scrap-off-pink.png"
+                                        alt=""
+                                      />
+                                    </span>
+                                  </button>
+                                </div>
+                              </div>
+                              <p class="content-title">
+                                노하우 게시물 제목이 들어갈 공간
+                              </p>
+                              <div class="content-bottom-box">
+                                <div class="content-uploader">
+                                  <div class="uploader-img-box">
+                                    <img
+                                      src="../../../staticfiles/images/blank-image.png"
+                                      class="uploader-img"
+                                    />
+                                  </div>
+                                  <span class="uploader-name">작성자</span>
+                                </div>
+                                <div class="content-data-box">
+                                  <span class="content-data"
+                                    >스크랩 <span>3</span>
+                                  </span>
+                                  <span class="content-data"
+                                    >조회 <span>153</span>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 스크랩 팝업 -->
+    <div class="scrap-popup-wrap">
+      <div class="scrap-popup-container">
+        <div class="scrap-popup-inner">
+          <div class="scrap-popup-text">스크랩 했습니다.</div>
+        </div>
+        <div class="scrap-popup-button-container">
+          <!-- 스크랩북 링크삽입 -->
+          <button class="scrap-link-button" type="button">
+            스크랩북 보기
+          </button>
+          <button class="scrap-link-button" type="button">폴더에 담기</button>
+        </div>
+      </div>
+    </div>
+    <div class="scrap-popup-cancel-wrap">
+      <div class="scrap-popup-container">
+        <div class="scrap-popup-inner">
+          <div class="scrap-popup-text">스크랩을 취소하였습니다.</div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="../../../staticfiles/js/community/web/knowhow.js"></script>
+</html>

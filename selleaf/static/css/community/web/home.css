@@ -1,0 +1,335 @@
+.home-wrap {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+.home-container {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  width: 100%;
+}
+.home-main-wrap {
+  position: relative;
+}
+.home-main-container {
+  max-width: 1256px;
+  margin: 0px auto;
+  padding: 0px 60px;
+}
+.filter-wrap {
+  text-align: center;
+  background: #ffffff;
+}
+.filter-container {
+  margin: 6px auto;
+  max-width: 1256px;
+  padding: 0 60px;
+  box-sizing: border-box;
+}
+.filter-inner {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 4px;
+  overflow: hidden;
+  padding: 10px 0px;
+}
+.filter-btn-label {
+  display: inline-block;
+  position: relative;
+  height: 32px;
+  border-radius: 16px;
+  padding-left: 12px;
+  padding-right: 12px;
+  line-height: 0;
+  color: rgb(47, 52, 56);
+  border: 1px solid rgb(218, 221, 224);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.filter-btn-label:hover {
+  background-color: #ffeff1;
+}
+.choice {
+  color: #c06888;
+  background-color: #ffeff1;
+  border: 1px solid #c06888;
+}
+.filter-btn {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+}
+.filter-btn-text {
+  font-size: 14px;
+  line-height: 18px;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: inherit;
+}
+.main-content-wrap {
+  margin: -13px -10px 0px;
+}
+.content-line {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.content-wrap {
+  padding: 13px 10px;
+}
+.content-container {
+  position: relative;
+  cursor: pointer;
+}
+.content-container:hover .content-img {
+  transform: scale(1.05);
+}
+.content-container:hover .content-content {
+  opacity: 0.5;
+}
+.content {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  aspect-ratio: 1 / 1;
+}
+.content-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+  transition: transform 0.2s ease 0s;
+}
+.scrap-btn {
+  margin: 0px;
+  padding: 0px;
+  border: none;
+  background: none;
+  font: inherit;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 2;
+}
+.scrap-btn-box {
+  display: inline-block;
+  font-size: 24px;
+  line-height: 1;
+
+  transform: translateZ(0px);
+}
+.scrap-btn-box > img {
+  filter: drop-shadow(rgba(63, 71, 77, 0.25) 0px 2px 5px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+}
+
+.content-content {
+  text-align: left;
+  font-size: 14px;
+  line-height: 18px;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow-wrap: break-word;
+  margin-bottom: 2px;
+}
+.content-link {
+  display: block;
+  position: absolute;
+  inset: 0px;
+}
+.content-uploader-box {
+  display: flex;
+  margin-top: 8px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.content-uploader {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+}
+.content-uploader:hover {
+  opacity: 0.5;
+}
+.uploader-icon-box {
+  display: inline-block;
+  background: url("../../../images/blank-image.png") 50% center / cover
+    no-repeat;
+  border-radius: 50%;
+  width: 18px;
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+.uploader-icon-box img {
+  width: 18px;
+  height: 18px;
+}
+.uploader-icon {
+  display: block;
+  visibility: hidden;
+  padding-top: 100%;
+}
+.uploader-name {
+  width: 85px;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+  color: rgb(47, 52, 56);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: start;
+}
+.like-box {
+  -webkit-box-align: center;
+  border: none;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.like-icon {
+  margin-right: 4px;
+}
+.like-count {
+  font-size: 12px;
+  line-height: 20px;
+  color: rgb(47, 52, 56);
+}
+
+.scrap-popup-wrap {
+  position: fixed;
+  width: 470px;
+  left: calc(50% - 235px);
+  bottom: 40px;
+  z-index: 1400;
+  transform: translateY(200%);
+}
+.scrap-popup-cancel-wrap {
+  position: fixed;
+  width: 470px;
+  left: calc(50% - 235px);
+  bottom: 40px;
+  z-index: 1400;
+  transform: translateY(200%);
+}
+.scrap-popup-container {
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 4px;
+  color: #f7f9fa;
+  background-color: rgb(47, 52, 56);
+  margin-top: 15px;
+}
+@keyframes show-toast {
+  0% {
+    transform: translateY(200%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+@keyframes hide-toast {
+  0% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(200%);
+    opacity: 0;
+  }
+}
+.show-animation {
+  animation-name: show-toast;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+.hide-animation {
+  animation-name: hide-toast;
+  animation-duration: 0.7s;
+  animation-fill-mode: forwards;
+}
+.scrap-popup-inner {
+  flex: 1 0 0px;
+  display: flex;
+  min-width: 0px;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.scrap-popup-text {
+  flex: 1 0 0px;
+  min-width: 0px;
+  margin: 0px;
+  text-align: left;
+  white-space: pre-line;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+.scrap-popup-button-container {
+  text-align: right;
+  margin: 0px -3px;
+}
+.scrap-link-button {
+  display: inline-block;
+  border: none;
+  background: none;
+  font-style: inherit;
+  font-variant: inherit;
+  font-stretch: inherit;
+  font-family: inherit;
+  font-optical-sizing: inherit;
+  font-kerning: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  margin: -5px 3px;
+  padding: 5px 8px;
+  font-size: 16px;
+  line-height: 20px;
+  color: #c06888;
+  font-weight: 700;
+}

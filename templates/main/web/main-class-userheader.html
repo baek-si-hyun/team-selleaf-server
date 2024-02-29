@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style data-emotion="css-global" data-s="">
+      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
+      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
+      @font-face {
+        font-family: OhouseIcon;
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
+            format("embedded-opentype"),
+          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
+            format("woff2"),
+          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
+            format("woff"),
+          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
+            format("truetype"),
+          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
+            format("svg");
+      }
+      html {
+        font-family: "Pretendard Variable", sans-serif;
+        letter-spacing: -0.3px;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+    <link
+      rel="shortcut icon"
+      href="../../../staticfiles/images/selleaf.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="../../../staticfiles/css/common.css" />
+    <link rel="stylesheet" href="../../../staticfiles/css/main/web/main.css" />
+    <title>class-일반회원용 헤더</title>
+  </head>
+  <body>
+    <div class="main-wrap">
+      <div class="main-container">
+        <header>
+          <div class="header-wrap" style="height: 81px">
+            <div
+              class="header-second-wrap"
+              style="
+                position: fixed;
+                transition: top 0.1s ease 0s;
+                z-index: 1102;
+                top: 0px;
+                width: 1903px;
+              "
+            >
+              <div class="hearder-container">
+                <!-- header-second-container가 아니라 원래는 header-first-inner로 했어야함 -->
+                <div class="header-second-container">
+                  <button type="button" class="hearder-second-container-button">
+                    <span class="hearder-span"></span>
+                  </button>
+                </div>
+                <div class="header-second-inner">
+                  <a
+                    class="hearder-second-inner-logo"
+                    aria-label="selleaf 로고"
+                    href="#"
+                  >
+                    <img
+                      class="header-second-inner-svg"
+                      src="../../../staticfiles/images/logo-lettering-blk.png"
+                      width="74"
+                      height="30"
+                    />
+                    <!-- <svg
+                        class="header-second-inner-svg"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="74"
+                        height="30"
+                        fill="none"
+                        viewBox="0 0 74 30"
+                      >
+                        <path
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                          d="M14.2 25.17H9.28V20.7a1.45 1.45 0 00-2.9 0v4.47H1.44a1.45 1.45 0 100 2.9H14.2a1.45 1.45 0 000-2.9zM4.5 9.15c0-4.6 2.08-5.28 3.33-5.28 1.24 0 3.33.69 3.33 5.28v.36c0 4.6-2.09 5.28-3.33 5.28-1.25 0-3.34-.69-3.34-5.28v-.36zm3.33 8.54c3.84 0 6.23-3.13 6.23-8.18v-.36c0-5.05-2.39-8.18-6.23-8.18-3.85 0-6.24 3.13-6.24 8.18v.36c0 5.05 2.39 8.18 6.24 8.18zM33.37 10.35H17.81a1.45 1.45 0 000 2.9h15.56a1.45 1.45 0 100-2.9zM31.82 25.84c-7.08 1.84-9.45.8-10.14.26-.45-.35-.65-.8-.65-1.48v-.87h10.25c.8 0 1.46-.65 1.46-1.45v-5.08c0-.8-.65-1.45-1.46-1.45h-11.7a1.45 1.45 0 100 2.9h10.25v2.18H19.57c-.8 0-1.45.65-1.45 1.45v2.32a4.6 4.6 0 001.78 3.78c1.2.92 2.94 1.39 5.21 1.39 2.05 0 4.54-.38 7.44-1.13a1.45 1.45 0 10-.73-2.82zM20.3 7.83h10.82a1.45 1.45 0 100-2.9h-9.36V1.44a1.45 1.45 0 10-2.9 0v4.93c0 .8.65 1.45 1.45 1.45z"
+                          clip-rule="evenodd"
+                        ></path>
+                        <rect
+                          width="3"
+                          height="15"
+                          x="70"
+                          fill="currentColor"
+                          rx="1.5"
+                        ></rect>
+                        <path
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                          d="M64.5 13.28a1.45 1.45 0 002.73-1c-.05-.13-1-2.68-3.38-4.5l3.7-4.1a1.45 1.45 0 00-1.09-2.42h-9.05a1.45 1.45 0 100 2.9h5.8l-6.88 7.64a1.45 1.45 0 102.16 1.95l3.41-3.8a8.02 8.02 0 012.6 3.33zM69.56 26.52h-7.01a.82.82 0 01-.82-.82v-1.95h8.65v1.95c0 .45-.37.82-.82.82zm2.27-9.37c-.8 0-1.45.65-1.45 1.45v2.25h-8.65V18.6a1.45 1.45 0 10-2.9 0v7.1a3.72 3.72 0 003.72 3.72h7.01a3.72 3.72 0 003.72-3.72v-7.1c0-.8-.65-1.45-1.45-1.45zM42.46 3.87c2.22 0 2.33 4.24 2.33 5.08 0 .85-.11 5.09-2.33 5.09-2.21 0-2.32-4.24-2.32-5.09 0-.84.11-5.08 2.32-5.08zm0 13.07c1.76 0 3.23-.93 4.14-2.62.71-1.34 1.1-3.2 1.1-5.37 0-2.16-.39-4.02-1.1-5.36A4.59 4.59 0 0042.46.97c-1.75 0-3.22.93-4.13 2.62-.72 1.34-1.1 3.2-1.1 5.36 0 2.17.38 4.03 1.1 5.37a4.59 4.59 0 004.13 2.62z"
+                          clip-rule="evenodd"
+                        ></path>
+                        <path
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                          d="M51.4.49c-.8 0-1.45.65-1.45 1.45v17.78c-1.93.6-5.75 1.12-10.38 1.12h-2.2a1.45 1.45 0 000 2.91h2.2c2.64 0 7.21-.23 10.38-1.02v4.84a1.45 1.45 0 002.9 0V1.94c0-.8-.65-1.45-1.45-1.45z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg> -->
+                  </a>
+                </div>
+                <div class="header-third-inner">
+                  <a class="header-third-inner-firsta" href="#"
+                    ><span class="header-third-inner-firstsp">커뮤니티</span>
+                  </a>
+                  <a class="header-third-inner-seconda" href="#"
+                    ><span class="header-third-inner-secondsp">수강</span></a
+                  >
+                  <a class="header-third-inner-seconda" href="#"
+                    ><span class="header-third-inner-secondsp">거래</span></a
+                  >
+                  <a class="header-third-inner-seconda" href="#"
+                    ><span class="header-third-inner-secondsp"
+                      >회사소개</span
+                    ></a
+                  >
+                </div>
+                <div class="header-fourth-inner">
+                  <div class="header-fourth-second-inner">
+                    <div class="header-fourth-inner-firstdiv">
+                      <div
+                        id="global-search-combobox"
+                        role="combobox"
+                        aria-expanded="false"
+                        aria-haspopup="listbox"
+                        class="header-fourth-inner-seconddiv"
+                      >
+                        <div class="header-fourth-inner-thirddiv">
+                          <span class="hearder-inner-thirddiv-span"> </span>
+                          <input
+                            type="text"
+                            placeholder="통합검색"
+                            autocomplete="off"
+                            aria-autocomplete="list"
+                            class="hearder-inner-thirddiv-input"
+                            value
+                          />
+                          <div class="hearder-inner-thirddiv-div">
+                            <button
+                              type="button"
+                              tabindex="0"
+                              class="header-input-xbutton"
+                            >
+                              <span class="header-input-xbutton-span"></span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="header-fourth-inner-seconddiv">
+                      <button type="button" class="hearder-fourth-inner-button">
+                        <span class="hearder-fourth-inner-span"></span>
+                      </button>
+                    </div>
+                    <!-- 스크랩북 아이콘 일단 숨겨놓음 -->
+                    <div class="header-scrap">
+                      <a
+                        aria-label="스크랩북 페이지 링크 버튼"
+                        class="header-scrap-a"
+                        href="#"
+                      >
+                        <span class="header-scrap-span"></span>
+                      </a>
+                    </div>
+                    <!-- 알림 아이콘 일단 숨겨놓음 -->
+                    <div class="header-alarm">
+                      <a
+                        aria-lable="내소식 페이지 링크 버튼"
+                        class="header-alarm-a"
+                        href="#"
+                      >
+                        <span class="header-alarm-span"></span>
+                      </a>
+                    </div>
+                    <a
+                      aria-label="장바구니 페이지 링크 버튼"
+                      class="header-cart"
+                      href="#"
+                    >
+                      <span class="header-cart-span"></span>
+                    </a>
+                    <div class="header-info-wrap">
+                      <div class="header-info">
+                        <!-- 프로필 아이콘 일단 숨겨놓음 -->
+                        <span class="header-kakao-wrap">
+                          <button
+                            type="button"
+                            aria-label="프로필 메뉴"
+                            class="header-kakao-button"
+                          >
+                            <picture>
+                              <source
+                                type="image/webp"
+                                src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=72&amp;h=72&amp;c=c&amp;webp=1"
+                                srcset="
+                                  https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=72&amp;h=72&amp;c=c&amp;webp=1   1.5x,
+                                  https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=144&amp;h=144&amp;c=c&amp;webp=1 2x,
+                                  https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=144&amp;h=144&amp;c=c&amp;webp=1 3x
+                                "
+                              />
+                              <img
+                                alt="프로필 사진"
+                                class="header-kakao-image"
+                                src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=72&amp;h=72&amp;c=c"
+                                srcset="
+                                  https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=72&amp;h=72&amp;c=c   1.5x,
+                                  https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=144&amp;h=144&amp;c=c 2x,
+                                  https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=144&amp;h=144&amp;c=c 3x
+                                "
+                              />
+                            </picture>
+                          </button>
+                        </span>
+                        <div
+                          class="header-mymenumodal-wrap"
+                          style="
+                            position: absolute;
+                            inset: 0px auto auto 0px;
+                            transform: translate(945px, 58px);
+                          "
+                          data-popper-reference-hidden="false"
+                          data-popper-escaped="false"
+                          data-popper-placement="bottom"
+                        >
+                          <div class="header-mymenumodal-content">
+                            <div class="header-mymenumodal-contentDiv">
+                              <a class="header-mymenumodal-contenta"
+                                >마이페이지
+                                <svg
+                                  class="header-mymenumodal-contentNew"
+                                  fill="#97A38C"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 18 18"
+                                  width="18"
+                                  height="18"
+                                >
+                                  <path
+                                    d="M0 9a9 9 0 1118 0A9 9 0 010 9z"
+                                    fill="#fff"
+                                  ></path>
+                                  <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M9 18A9 9 0 109 0a9 9 0 000 18zm-1.7-5.25H5.26v-7.5h2.61l2.8 4.2h.03v-4.2h2.06v7.5h-2.3L7.36 8.07h-.05v4.68z"
+                                    fill="#97A38C"
+                                  ></path>
+                                </svg>
+                              </a>
+                              <a class="header-mymenumodal-contenta">이벤트</a>
+                              <a class="header-mymenumodal-contenta"
+                                >강사 신청</a
+                              >
+                              <a class="header-mymenumodal-contenta"
+                                >판매자 신청</a
+                              >
+                              <a class="header-mymenumodal-contenta"
+                                >고객 센터</a
+                              >
+                              <a class="header-mymenumodal-contenta"
+                                >로그 아웃</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <a class="header-info-each" href="#">로그인</a>
+                        <a class="header-info-each" href="#">회원가입</a>
+                        <a class="header-info-each" href="#">고객센터</a>
+                      </div>
+                      <span class="header-write-wrap">
+                        <button type="button" class="header-write-button">
+                          <span class="header-write-content">글쓰기</span>
+                          <span class="header-write-icon"></span>
+                        </button>
+                      </span>
+                      <div
+                        class="header-post-wrap"
+                        style="
+                          position: absolute;
+                          inset: 0px auto auto 0px;
+                          transform: translate(987px, 70px);
+                        "
+                        data-popper-reference-hidden="false"
+                        data-popper-escaped="false"
+                        data-popper-placement="bottom"
+                      >
+                        <div class="header-wrap-content">
+                          <a class="header-content-photo" href="#">
+                            <div class="header-photo-div">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="36"
+                                height="36"
+                                fill="none"
+                              >
+                                <rect
+                                  width="27"
+                                  height="29"
+                                  x="6.54"
+                                  y="3.59"
+                                  fill="#DBDBDB"
+                                  stroke="#000"
+                                  stroke-linejoin="round"
+                                  rx="2.5"
+                                  transform="rotate(4 6.54 3.6)"
+                                ></rect>
+                                <rect
+                                  width="27"
+                                  height="29"
+                                  x="2.5"
+                                  y="1.5"
+                                  fill="#fff"
+                                  stroke="#000"
+                                  stroke-linejoin="round"
+                                  rx="2.5"
+                                ></rect>
+                                <rect
+                                  width="22"
+                                  height="22"
+                                  x="5"
+                                  y="4"
+                                  fill="#FFE2C7"
+                                  rx="1"
+                                ></rect>
+                                <path
+                                  fill="#fff"
+                                  fill-rule="evenodd"
+                                  d="m14 7 5 .45v3.5l-5-.45V7zm0 4.5V15l5 .45v-3.5l-5-.45zm6 .55v3.5l5 .45v-3.5l-5-.45zm5-.55V8l-5-.45v3.5l5 .45z"
+                                  clip-rule="evenodd"
+                                ></path>
+                                <path
+                                  fill="#E6A87C"
+                                  fill-rule="evenodd"
+                                  d="m5 19 22 2v7L5 26v-7z"
+                                  clip-rule="evenodd"
+                                ></path>
+                                <path
+                                  fill="#F1C8A3"
+                                  fill-rule="evenodd"
+                                  d="M5 3.45h5v16l-5 4v-20z"
+                                  clip-rule="evenodd"
+                                ></path>
+                              </svg>
+                            </div>
+                            <div class="header-upload-div">
+                              <div class="header-upload-mainTitle">
+                                강의 리뷰 작성하기
+                              </div>
+                              <div class="header-upload-subTitle">
+                                새로운 지식을 만나고 경험을 공유하세요
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+        <!-- 헤더 끝 -->
+      </div>
+    </div>
+    <!-- 헤더 끝 -->
+  </body>
+  <script src="../../../staticfiles/js/main/web/main.js"></script>
+</html>

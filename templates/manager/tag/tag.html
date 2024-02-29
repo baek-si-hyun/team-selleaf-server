@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 여기서부터 -->
+    <style data-emotion="css-global" data-s="">
+      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
+      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
+      @font-face {
+        font-family: OhouseIcon;
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
+            format("embedded-opentype"),
+          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
+            format("woff2"),
+          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
+            format("woff"),
+          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
+            format("truetype"),
+          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
+            format("svg");
+      }
+      html {
+        font-family: "Pretendard Variable", sans-serif;
+        letter-spacing: -0.3px;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+
+    <!-- 여기까지는 무조건 고정으로 모든 페이지에 복붙하세요 -->
+    <!-- 여기는 각자 css 파일 link하시면 됩니다 -->
+    <link
+      rel="shortcut icon"
+      href="../../../staticfiles/images/selleaf.png"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../staticfiles/css/manager/tag/tag.css"
+    />
+    <title>태그 관리</title>
+  </head>
+  <body class="overflow-hidden">
+    <div class="next">
+      <div class="full-screen">
+        <nav class="benner-wrap">
+          <div>
+            <div class="items-center">
+              <a href="/">
+                <img
+                  class="logo-img"
+                  src="../../../staticfiles/images/logo-lettering-blk.png"
+                  alt=""
+                />
+              </a>
+              <div class="logo-between">|</div>
+              <div class="manager-center">
+                <span>Manager Center</span>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div class="under-container">
+          <nav class="side-benner">
+            <div class="profile-wrap">
+              <div class="profile-container">
+                <div class="profile-inner">
+                  <button
+                    aria-label="profile image"
+                    class="profile-icon"
+                    type="button"
+                    style="width: 68px; height: 68px; outline: none"
+                  >
+                    <img
+                      src="../../../staticfiles/images/favicon.png"
+                      alt="프로필 이미지"
+                      sizes="(max-width: 240px) 100vw, 240px"
+                      decoding="async"
+                      data-nimg="fill"
+                      class="profile-img"
+                      loading="lazy"
+                      style="
+                        position: absolute;
+                        height: 100%;
+                        width: 100%;
+                        inset: 0px;
+                        object-fit: cover;
+                        object-position: center center;
+                        color: transparent;
+                      "
+                    />
+                    <div class="profile-under-cover"></div>
+                  </button>
+                </div>
+                <h2 class="profile-name">관리자</h2>
+                <a target="_blank" href="#">
+                  <button class="mypage" aria-label="button" type="button">
+                    <div class="mypage-name">
+                      <div>로그아웃</div>
+                      <svg
+                        viewBox="0 0 24 24"
+                        class="mypage-link"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="16px"
+                        width="16px"
+                      >
+                        <path
+                          d="M11 7a1 1 0 0 0-1-1H4v14h14v-6a1 1 0 1 0-2 0v4H6V8h4a1 1 0 0 0 1-1Z"
+                        ></path>
+                        <path
+                          d="M19.01 3.829H20v6.656a1 1 0 1 1-2 0V7.244l-5.293 5.293a1 1 0 0 1-1.414-1.415l5.293-5.292h-3.243a1 1 0 1 1 0-2H19.01Z"
+                        ></path>
+                      </svg>
+                    </div>
+                  </button>
+                </a>
+              </div>
+            </div>
+            <ul class="side-function">
+              <li class="function-wrap-2">
+                <a class="function-2" href="#">
+                  <svg
+                    class="function-2"
+                    viewBox="0 0 24 25"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15.078 3.137H8.6a5.6 5.6 0 0 0-5.6 5.6v6.8a5.6 5.6 0 0 0 5.6 5.6h6.8a5.6 5.6 0 0 0 5.6-5.6V8.944l-1.6 1.6v4.993a4 4 0 0 1-4 4H8.6a4 4 0 0 1-4-4v-6.8a4 4 0 0 1 4-4h4.878l1.6-1.6Z"
+                    ></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="m20.692 7.116.534-.534a2.567 2.567 0 1 0-3.63-3.63L9.41 11.138l-1.103 3.74a.8.8 0 0 0 .994.993l3.74-1.103 6.52-6.52.005.004 1.13-1.132-.004-.004Zm-2.262 0-6.233 6.233-1.94.572.572-1.94 6.233-6.233 1.368 1.368Zm1.131-1.132-1.367-1.367.533-.534a.967.967 0 0 1 1.368 1.368l-.534.533Z"
+                    ></path>
+                  </svg>
+                  <span class="function-2">강의 관리</span>
+                </a>
+              </li>
+              <li class="function-wrap-2">
+                <a href="#" class="function-2">
+                  <svg
+                    class="function-2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M15.3 4.3H8.7a4.4 4.4 0 0 0-4.4 4.4v6.6a4.4 4.4 0 0 0 4.4 4.4h6.6a4.4 4.4 0 0 0 4.4-4.4V8.7a4.4 4.4 0 0 0-4.4-4.4ZM8.7 2.7a6 6 0 0 0-6 6v6.6a6 6 0 0 0 6 6h6.6a6 6 0 0 0 6-6V8.7a6 6 0 0 0-6-6H8.7Z"
+                    ></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M8.874 14.516c.129.434.543.734 1.014.734.474 0 .89-.303 1.016-.74l.724-2.501h.66l.724 2.501c.126.437.542.74 1.015.74.472 0 .886-.3 1.015-.734l.743-2.507h.6c.34 0 .615-.264.615-.59a.603.603 0 0 0-.615-.589h-.252l.274-.925c.135-.454-.221-.905-.714-.905a.737.737 0 0 0-.72.539l-.338 1.291h-1.409l-.3-1.113A.992.992 0 0 0 11.96 9a.99.99 0 0 0-.967.721l-.295 1.11H9.283l-.339-1.293A.738.738 0 0 0 8.224 9c-.494 0-.85.451-.715.906l.274.924h-.168a.603.603 0 0 0-.615.59c0 .325.276.589.615.589h.516l.743 2.507Zm.718-2.507h.793l-.368 1.388h-.06l-.365-1.388Zm4.32 1.365-.368-1.365h.783l-.356 1.365h-.06Z"
+                    ></path>
+                  </svg>
+                  <span class="function-2">결제 관리</span>
+                </a>
+              </li>
+              <li class="function-wrap-1">
+                <a href="#" class="function-1">
+                  <svg
+                    class="function-1"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M21.351 10.246c.409-.308.649-.79.649-1.304v-.967A3.967 3.967 0 0 0 18.04 4H5.96A3.967 3.967 0 0 0 2 7.975v.967c0 .513.24.996.649 1.304.534.403.874 1.038.874 1.754s-.34 1.351-.874 1.754c-.409.308-.649.79-.649 1.304v.968A3.967 3.967 0 0 0 5.96 20h12.08c2.187 0 3.96-1.78 3.96-3.974v-.968c0-.513-.24-.996-.649-1.304A2.189 2.189 0 0 1 20.477 12c0-.716.34-1.351.874-1.754ZM10.84 9.461a1.38 1.38 0 0 1-1.374 1.385A1.38 1.38 0 0 1 8.09 9.461a1.38 1.38 0 0 1 1.375-1.385c.759 0 1.374.62 1.374 1.385Zm5.497 4.616a1.38 1.38 0 0 1-1.374 1.385 1.38 1.38 0 0 1-1.375-1.385 1.38 1.38 0 0 1 1.375-1.385c.759 0 1.374.62 1.374 1.385Zm-1.076-5.44a.782.782 0 0 0-1.112 0L8.647 14.18a.797.797 0 0 0 0 1.12c.308.31.805.31 1.113 0l5.501-5.544a.797.797 0 0 0 0-1.12Z"
+                    ></path>
+                  </svg>
+                  <span class="function-1">태그 관리</span>
+                </a>
+              </li>
+              <li class="function-wrap-2">
+                <a href="#" class="function-2">
+                  <svg
+                    class="function-2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.5 11.7h2a6.057 6.057 0 0 1 1.769.265 6.51 6.51 0 0 0-.888 1.335H8.5a4.4 4.4 0 0 0-4.4 4.4v1c0 .22.18.4.4.4h6.881c.295.59.677 1.129 1.129 1.6H4.5a2 2 0 0 1-2-2v-1a6 6 0 0 1 6-6Z"
+                    ></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M10.5 10.2a3.502 3.502 0 0 1 0-7 3.5 3.5 0 1 1 0 7Zm1.9-3.5a1.9 1.9 0 1 1-3.8 0 1.9 1.9 0 0 1 3.8 0ZM13.945 13.147a.665.665 0 0 1 .306-.74l.833-.49a.665.665 0 0 1 .795.092l.46.437c.167.16.398.231.63.23a.892.892 0 0 0 .626-.24l.451-.445a.665.665 0 0 1 .794-.105l.84.476a.665.665 0 0 1 .32.735l-.15.616a.895.895 0 0 0 .116.66c.118.2.298.36.522.423l.61.168c.287.08.486.339.488.636l.008.965a.665.665 0 0 1-.477.644l-.608.179a.892.892 0 0 0-.513.43.898.898 0 0 0-.105.663l.159.614a.665.665 0 0 1-.307.74l-.832.49a.665.665 0 0 1-.795-.092l-.46-.437a.898.898 0 0 0-.63-.23.893.893 0 0 0-.626.24l-.452.445a.665.665 0 0 1-.794.105l-.84-.476a.665.665 0 0 1-.319-.735l.15-.617a.894.894 0 0 0-.117-.66.894.894 0 0 0-.52-.421l-.612-.17a.665.665 0 0 1-.488-.635l-.008-.965a.665.665 0 0 1 .477-.644l.608-.179a.892.892 0 0 0 .514-.43.898.898 0 0 0 .105-.663l-.159-.614Zm3.115 4.278a1.283 1.283 0 1 0 0-2.566 1.283 1.283 0 0 0 0 2.566Z"
+                    ></path>
+                  </svg>
+                  <span class="function-2">유저 관리</span>
+                </a>
+              </li>
+              <li class="function-wrap-2">
+                <a href="#" class="function-2">
+                  <svg
+                    class="function-2"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5.5 7.8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM5.5 13.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM7 17.7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM10 5.4a1 1 0 0 0 0 2h10a1 1 0 1 0 0-2H10ZM9 12a1 1 0 0 1 1-1h10a1 1 0 1 1 0 2H10a1 1 0 0 1-1-1ZM10 16.6a1 1 0 1 0 0 2h10a1 1 0 1 0 0-2H10Z"
+                    ></path>
+                  </svg>
+                  <span class="function-2">공지사항 관리</span>
+                </a>
+              </li>
+              <li class="function-wrap-2">
+                <a href="#" class="function-2">
+                  <svg
+                    class="function-2"
+                    width="24"
+                    height="24"
+                    viewBox="0 -3 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M17 3.7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-1.6 0a1.9 1.9 0 1 1-3.8 0 1.9 1.9 0 0 1 3.8 0ZM8.6 4.599a2.6 2.6 0 1 1-5.2 0 2.6 2.6 0 0 1 5.2 0Zm-1.4 0a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0ZM6.8 13.4a4.8 4.8 0 0 1 4.8-4.8h4a4.8 4.8 0 0 1 4.8 4.8v2a2.8 2.8 0 0 1-2.8 2.8h-8a2.8 2.8 0 0 1-2.8-2.8v-2Zm4.8-3.2a3.2 3.2 0 0 0-3.2 3.2v2a1.2 1.2 0 0 0 1.2 1.2h8a1.2 1.2 0 0 0 1.2-1.2v-2a3.2 3.2 0 0 0-3.2-3.2h-4Z"
+                      fill="#333334"
+                    ></path>
+                    <path
+                      d="M3.6 16.6h1.61c.07.705.507 1.303 1.117 1.6H3.6a2.8 2.8 0 0 1-2.8-2.8v-2a4.8 4.8 0 0 1 4.8-4.8h2.346a4.01 4.01 0 0 0-2.088 1.6H5.6a3.2 3.2 0 0 0-3.2 3.2v2a1.2 1.2 0 0 0 1.2 1.2Z"
+                      fill="#333334"
+                    ></path>
+                  </svg>
+                  <span class="function-2">강사 관리</span>
+                </a>
+              </li>
+              <li class="function-wrap-2">
+                <a href="#" class="function-2">
+                  <svg
+                    class="function-2"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M2 5.111C2 4.498 2.45 4 3.007 4h15.099c.556 0 1.006.498 1.006 1.111 0 .614-.45 1.112-1.006 1.112h-15.1C2.452 6.223 2 5.725 2 5.11ZM2 10.668c0-.614.45-1.111 1.007-1.111h10.946a6.53 6.53 0 0 0-2.418 2.223H3.007C2.45 11.78 2 11.282 2 10.668ZM10.503 15.114H3.007C2.45 15.114 2 15.61 2 16.225s.45 1.111 1.007 1.111h7.818a6.496 6.496 0 0 1-.322-2.222Z"
+                      fill="#333334"
+                    ></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M13.945 12.347a.665.665 0 0 1 .306-.74l.833-.49a.665.665 0 0 1 .795.092l.46.437c.167.16.398.231.63.23a.892.892 0 0 0 .626-.24l.451-.445a.665.665 0 0 1 .794-.105l.84.476a.665.665 0 0 1 .32.735l-.15.616a.895.895 0 0 0 .116.66c.118.2.298.36.522.423l.61.169c.287.079.486.338.488.635l.008.965a.665.665 0 0 1-.477.644l-.608.179a.892.892 0 0 0-.513.43.898.898 0 0 0-.105.663l.159.614a.665.665 0 0 1-.307.74l-.832.49a.665.665 0 0 1-.795-.092l-.46-.437a.898.898 0 0 0-.63-.23.893.893 0 0 0-.626.24l-.452.445a.665.665 0 0 1-.794.105l-.84-.476a.665.665 0 0 1-.319-.734l.15-.618a.894.894 0 0 0-.117-.66.894.894 0 0 0-.52-.421l-.612-.17a.665.665 0 0 1-.488-.635l-.008-.965a.665.665 0 0 1 .477-.643l.608-.18a.892.892 0 0 0 .514-.43.898.898 0 0 0 .105-.663l-.159-.614Zm3.115 4.279a1.283 1.283 0 1 0 0-2.567 1.283 1.283 0 0 0 0 2.567Z"
+                      fill="#333334"
+                    ></path>
+                  </svg>
+                  <span class="function-2">게시물 관리</span>
+                </a>
+              </li>
+              <li class="function-wrap-2">
+                <a href="#" class="function-2">
+                  <svg
+                    class="function-2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.892 9.13a.5.5 0 0 0-.862 0l-.576.977a.5.5 0 0 1-.33.236l-1.112.228a.5.5 0 0 0-.266.83l.748.806a.5.5 0 0 1 .13.394l-.12 1.092a.5.5 0 0 0 .697.513l1.06-.462a.5.5 0 0 1 .4 0l1.06.462a.5.5 0 0 0 .697-.513l-.12-1.092a.5.5 0 0 1 .13-.395l.748-.805a.5.5 0 0 0-.267-.83l-1.11-.228a.5.5 0 0 1-.33-.236l-.577-.977ZM18.108 10.3a.7.7 0 0 1-.7.7h-3.732a.7.7 0 1 1 0-1.4h3.732a.7.7 0 0 1 .7.7ZM17.408 14a.7.7 0 1 0 0-1.4h-3.732a.7.7 0 1 0 0 1.4h3.732Z"
+                    ></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M2.2 8.4A4.4 4.4 0 0 1 6.6 4h10.7a4.4 4.4 0 0 1 4.4 4.4v6.8a4.4 4.4 0 0 1-4.4 4.4H6.6a4.4 4.4 0 0 1-4.4-4.4V8.4Zm4.4-2.8h10.7a2.8 2.8 0 0 1 2.8 2.8v6.8a2.8 2.8 0 0 1-2.8 2.8H6.6a2.8 2.8 0 0 1-2.8-2.8V8.4a2.8 2.8 0 0 1 2.8-2.8Z"
+                    ></path>
+                  </svg>
+                  <span class="function-2">댓글 관리</span>
+                </a>
+              </li>
+              <li class="function-wrap-2">
+                <a href="#" class="function-2">
+                  <svg
+                    class="function-2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M15.4 4.4H8.8a4.4 4.4 0 0 0-4.4 4.4v6.6a4.4 4.4 0 0 0 4.4 4.4h6.6a4.4 4.4 0 0 0 4.4-4.4V8.8a4.4 4.4 0 0 0-4.4-4.4ZM8.8 2.8a6 6 0 0 0-6 6v6.6a6 6 0 0 0 6 6h6.6a6 6 0 0 0 6-6V8.8a6 6 0 0 0-6-6H8.8Z"
+                    ></path>
+                    <path
+                      d="M12.2 12.5a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5ZM12.2 16.4c2.21 0 4-.672 4-1.5s-1.79-1.5-4-1.5-4 .672-4 1.5 1.79 1.5 4 1.5Z"
+                    ></path>
+                  </svg>
+                  <span class="function-2">신고 관리</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="content-wap">
+            <div class="content-container">
+              <div class="content-inner">
+                <div class="content-box">
+                  <div class="header">
+                    <h1 class="header-name">태그 관리</h1>
+                    <div>
+                      <div class="compose-button">
+                        <button
+                          class="delete-button"
+                          aria-label="delete button"
+                          type="button"
+                        >
+                          <svg
+                            class="edit-button"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M10 15.6a.7.7 0 0 1-.7-.7v-3.6a.7.7 0 0 1 1.4 0v3.6a.7.7 0 0 1-.7.7ZM14 15.6a.7.7 0 0 1-.7-.7v-3.6a.7.7 0 1 1 1.4 0v3.6a.7.7 0 0 1-.7.7Z"
+                            ></path>
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M9.6 3.8h4.6c.22 0 .4.178.4.4v1.4H9.2V4.2c0-.222.179-.4.4-.4Zm-2 .4a2 2 0 0 1 2-2h4.6a2 2 0 0 1 2 2v1.4h3.5a.8.8 0 0 1 0 1.6H19v10.4a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V7.2h-.7a.8.8 0 1 1 0-1.6h3.3V4.2Zm-1 3h10.8v10.4A2.4 2.4 0 0 1 15 20H9a2.4 2.4 0 0 1-2.4-2.4V7.2Z"
+                            ></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="header-function-container">
+                    <ul class="header-function-inner">
+                      <li class="header-relative">
+                        <button
+                          class="lecture-info"
+                          aria-label="tab button"
+                          type="button"
+                          id="btn"
+                        >
+                          <div class="flex">
+                            <p class="lecture-info">태그정보</p>
+                            <div class="lecture-info-num">
+                              <p class="lecture-info-num">3</p>
+                            </div>
+                          </div>
+                        </button>
+                        <div class="lecture-underbar" id="under"></div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="all-list">
+                    <div>
+                      <span class="all-name">전체</span>
+                      <span class="all-num">3</span>
+                    </div>
+                    <div class="search-bar">
+                      <label class="search-bar">
+                        <input
+                          class="search-bar"
+                          placeholder="태그 검색"
+                          type="text"
+                          value
+                        />
+                        <button
+                          aria-label="search button"
+                          class="search-bar"
+                          type="button"
+                        >
+                          <img
+                            class="search-logo"
+                            src="../../../staticfiles/images/search-logo/search_icon.png"
+                          />
+                          <img
+                            class="cancel-logo"
+                            src="../../../staticfiles/images/cancel.png"
+                          />
+                        </button>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="category-benner">
+                  <input type="checkbox" class="all-check" />
+                  <div class="category-inner" style="width: 835px">제목</div>
+                  <div class="category-inner">게시물</div>
+                </div>
+                <ul class="list-content">
+                  <li class="list-content">
+                    <input type="checkbox" class="checkbox-input" />
+                    <button class="text-left">
+                      <div class="list-content-wrap">
+                        <div class="list-content-container">
+                          <div class="list-content-inner">
+                            <div class="content-name">
+                              <p class="content-name"># 태그 1</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                    <div class="content-open-wrap"></div>
+                    <div class="content-detail">
+                      <div class="content-detail-a">
+                        <p class="content-detail-num">3</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-content">
+                    <input type="checkbox" class="checkbox-input" />
+                    <button class="text-left">
+                      <div class="list-content-wrap">
+                        <div class="list-content-container">
+                          <div class="list-content-inner">
+                            <div class="content-name">
+                              <p class="content-name"># 태그 2</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                    <div class="content-open-wrap"></div>
+                    <div class="content-detail">
+                      <div class="content-detail-a">
+                        <p class="content-detail-num">5</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="list-content">
+                    <input type="checkbox" class="checkbox-input" />
+                    <button class="text-left">
+                      <div class="list-content-wrap">
+                        <div class="list-content-container">
+                          <div class="list-content-inner">
+                            <div class="content-name">
+                              <p class="content-name"># 태그 3</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                    <div class="content-open-wrap"></div>
+                    <div class="content-detail">
+                      <div class="content-detail-a">
+                        <p class="content-detail-num">7</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="page-count-wrap">
+                  <ul class="page flex">
+                    <li>
+                      <button
+                        class="page-count"
+                        aria-label="page turning button"
+                        disabled
+                        type="button"
+                      >
+                        <svg
+                          class="page-count"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M15.58 3.27c.504.405.563 1.115.13 1.587L9.168 12l6.543 7.143a1.076 1.076 0 0 1-.13 1.586 1.26 1.26 0 0 1-1.695-.122L6 12l7.885-8.607a1.26 1.26 0 0 1 1.695-.122Z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </li>
+                    <li class="page-count">
+                      <button
+                        class="page-count-num page-count-num-choice"
+                        aria-label="page number button"
+                        type="button"
+                      >
+                        <span class="page-count-num">1</span>
+                      </button>
+                    </li>
+                    <li class="page-count">
+                      <button
+                        class="page-count-num"
+                        aria-label="page number button"
+                        type="button"
+                      >
+                        <span class="page-count-num">2</span>
+                      </button>
+                    </li>
+                    <li class="page-count">
+                      <button
+                        class="page-count"
+                        aria-label="page turning button"
+                        disabled
+                        type="button"
+                      >
+                        <svg
+                          class="page-count"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M8.42 20.73a1.076 1.076 0 0 1-.13-1.587L14.832 12 8.289 4.857a1.076 1.076 0 0 1 .13-1.586 1.26 1.26 0 0 1 1.696.122L18 12l-7.885 8.607a1.26 1.26 0 0 1-1.695.122Z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="delete-modal-wrap">
+        <div class="delete-modal-container">
+          <h4 class="delete-modal">태그 삭제</h4>
+          <div class="delete-modal-inner">해당 태그를 삭제하시겠습니까?</div>
+          <div class="delete-modal-box">
+            <div class="modal-cancel">
+              <button class="modal-cancel" aria-label="button" type="button">
+                취소
+              </button>
+            </div>
+            <div class="modal-confirm">
+              <button class="modal-confirm" aria-label="button" type="button">
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="delete-modal-bgcolor"></div>
+      </div>
+    </div>
+  </body>
+  <script src="../../../staticfiles/js/manager/tag/tag.js"></script>
+</html>

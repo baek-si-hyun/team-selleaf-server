@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 여기서부터 -->
+    <style data-emotion="css-global" data-s="">
+      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
+      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
+      @font-face {
+        font-family: OhouseIcon;
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
+            format("embedded-opentype"),
+          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
+            format("woff2"),
+          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
+            format("woff"),
+          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
+            format("truetype"),
+          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
+            format("svg");
+      }
+      html {
+        font-family: "Pretendard Variable", sans-serif;
+        letter-spacing: -0.3px;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+    <link rel="stylesheet" href="/staticfiles/css/common.css" />
+    <!-- 여기까지는 무조건 고정으로 모든 페이지에 복붙하세요 -->
+    <!-- 여기는 각자 css 파일 link하시면 됩니다 -->
+    <link
+      rel="shortcut icon"
+      href="/staticfiles/images/favicon.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/staticfiles/css/register/register.css" />
+    <title>회원가입 | Selleaf</title>
+  </head>
+  <body>
+    <div class="register-wrap">
+      <div class="register-container">
+        <a href="#">
+          <!-- 팀 로고 -->
+          <img
+            src="/staticfiles/images/logo-lettering-blk.png"
+            style="width: 88px"
+          />
+        </a>
+        <div class="except-logo-wrap">
+          <h1 class="register-text">회원가입</h1>
+          <div class="other-sns-wrap">
+            <div class="sns-text">SNS계정으로 간편하게 회원가입</div>
+            <ul class="sns-list">
+              <!-- 구글 로그인 아이콘 -->
+              <li class="sns-icon-wrap">
+                <a href="#" class="sns-icon" title="구글로 가입하기">
+                  <img
+                    src="/staticfiles/images/other-sns-logos/google-logo.svg"
+                    alt=""
+                  />
+                </a>
+              </li>
+              <!-- 카카오 로그인 아이콘 -->
+              <li class="sns-icon-wrap">
+                <a href="#" class="sns-icon" title="카카오로 가입하기">
+                  <img
+                    src="/staticfiles/images/other-sns-logos/kakao-logo.svg"
+                    alt=""
+                  />
+                </a>
+              </li>
+              <!-- 네이버 로그인 아이콘 -->
+              <li class="sns-icon-wrap">
+                <a href="#" class="sns-icon" title="네이버로 가입하기">
+                  <img
+                    src="/staticfiles/images/other-sns-logos/naver-logo.png"
+                    alt=""
+                    style="width: 48px; height: 48px"
+                  />
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- 개인정보 입력란 -->
+          <form>
+            <!-- 이메일 입력란 -->
+            <div class="email-input-wrap">
+              <label class="email-input-text">이메일</label>
+              <div class="email-input-container">
+                <div class="email-input-group">
+                  <span class="email-input-local">
+                    <label>
+                      <!-- 원본의 클래스명은 form-control -->
+                      <!-- 나중에 form-control 클래스 가진 요소들 한 번에 조작하는 js 작업 필요할 수 있으니 참고 바람 -->
+                      <input
+                        class="email-form-control"
+                        placeholder="이메일"
+                        size="1"
+                      />
+                      <span class="email-form-control-blind">
+                        이메일 앞 주소 입력하기
+                      </span>
+                    </label>
+                  </span>
+                  <span class="email-seperator">@</span>
+                  <span class="email-input-domain">
+                    <label>
+                      <select class="email-form-control">
+                        <option value="" disabled selected>선택해주세요</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="hanmail.net">hanmail.net</option>
+                        <option value="daum.net">daum.net</option>
+                        <option value="gmail.com">gmail.com</option>
+                        <option value="nate.com">nate.com</option>
+                        <option value="hotmail.com">hotmail.com</option>
+                        <option value="outlook.com">outlook.com</option>
+                        <option value="icloud.com">icloud.com</option>
+                      </select>
+                      <span class="email-form-control-blind"
+                        >이메일 도메인 선택하기
+                      </span>
+                    </label>
+                    <button
+                      class="domain-select-button"
+                      aria-label="초기화"
+                      type="button"
+                      tabindex="-1"
+                    >
+                      <!-- 도메인 선택 버튼 -->
+                      <svg
+                        width="10"
+                        height="10"
+                        preserveAspectRatio="xMidYMid meet"
+                        style="fill: currentcolor"
+                      >
+                        <path fill-rule="evenodd" d="M0 3l5 5 5-5z"></path>
+                      </svg>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!-- 이메일 인증 버튼 -->
+            <div class="email-verify-button-wrap">
+              <button
+                class="email-verify-button"
+                name="이메일 인증 버튼"
+                type="button"
+              >
+                이메일 인증하기
+              </button>
+            </div>
+            <!-- 인증번호 입력칸 -->
+            <div class="email-code-wrap">
+              <div class="email-code-container">
+                <div class="email-code-info">
+                  이메일로 받은 인증코드를 입력해주세요.
+                </div>
+                <div class="code-input-wrap">
+                  <div class="code-input-container">
+                    <input
+                      type="text"
+                      class="code-input"
+                      placeholder="인증코드 6자리"
+                    />
+                    <span class="left-time">03:00</span>
+                  </div>
+                  <button type="button" class="confirm-button" disabled>
+                    확인
+                  </button>
+                </div>
+                <div class="error-text" style="display: none"></div>
+                <div class="resend-wrap">
+                  <div class="resend-container">
+                    이메일을 받지 못하셨나요?
+                    <a href="#" class="resend">이메일 재전송하기</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 비밀번호 입력 -->
+            <div class="password-wrap">
+              <label class="password-text">비밀번호</label>
+              <div class="password-info">
+                영문, 숫자를 포함한 8자 이상의 비밀번호를 입력해주세요.
+              </div>
+              <label>
+                <input
+                  class="password-input"
+                  type="password"
+                  name="비밀번호"
+                  placeholder="비밀번호"
+                />
+                <span class="password-hidden">비밀번호 입력하기</span>
+              </label>
+            </div>
+            <!-- 비밀번호 확인 -->
+            <div class="password-verify-wrap">
+              <label class="password-verify-text">비밀번호 확인</label>
+              <label class="password-verify">
+                <input
+                  class="password-verify-input"
+                  type="password"
+                  name="비밀번호 확인"
+                  placeholder="비밀번호 확인"
+                />
+                <span class="password-verify-hidden"
+                  >입력한 비밀번호 확인하기
+                </span>
+              </label>
+            </div>
+            <!-- 지역 입력란 -->
+            <div class="region-input-wrap">
+              <label class="region-input-text">주소지</label>
+              <div class="region-input-container">
+                <div class="region-input-group">
+                  <!-- "도" 지역이나 광역시, 서울, 제주 등을 선택하는 드롭박스 -->
+                  <span class="region-input-local">
+                    <label>
+                      <!-- 기본값은 서울특별시 -->
+                      <select class="region-form-control">
+                        <option value="서울특별시">서울특별시</option>
+                        <option value="인천광역시">인천광역시</option>
+                        <option value="대전광역시">대전광역시</option>
+                        <option value="세종특별자치시">세종특별자치시</option>
+                        <option value="광주광역시">광주광역시</option>
+                        <option value="부산광역시">부산광역시</option>
+                        <option value="대구광역시">대구광역시</option>
+                        <option value="울산광역시">울산광역시</option>
+                        <option value="제주특별자치도">제주특별자치도</option>
+                        <option value="경기도">경기도</option>
+                        <option value="강원도">강원도</option>
+                        <option value="충청북도">충청북도</option>
+                        <option value="충청남도">충청남도</option>
+                        <option value="전라북도">전라북도</option>
+                        <option value="전라남도">전라남도</option>
+                        <option value="경상북도">경상북도</option>
+                        <option value="경상남도">경상남도</option>
+                      </select>
+                      <span class="region-form-control-blind">
+                        시/도 선택하기
+                      </span>
+                    </label>
+                    <button
+                      class="region-select-button"
+                      aria-label="초기화"
+                      type="button"
+                      tabindex="-1"
+                    >
+                      <!-- 도메인 선택 버튼 -->
+                      <svg
+                        width="10"
+                        height="10"
+                        preserveAspectRatio="xMidYMid meet"
+                        style="fill: currentcolor"
+                      >
+                        <path fill-rule="evenodd" d="M0 3l5 5 5-5z"></path>
+                      </svg>
+                    </button>
+                  </span>
+                  <span class="region-seperator">&nbsp;</span>
+                  <!-- 위 드롭박스에서의 선택에 따라 서로 다른 세부 구역을 보여주는 드롭박스 -->
+                  <span class="region-input-domain">
+                    <label>
+                      <!-- 기본값은 서울을 기준으로 했지만, 위쪽 선택에 따라 다른 걸 보여줘야 됨(JS로) -->
+                      <!-- 아래의 서울 내 지역도 따로 배열로 제작 -->
+                      <select class="region-form-control">
+                        <option value="종로구">종로구</option>
+                        <option value="중구">중구</option>
+                        <option value="용산구">용산구</option>
+                        <option value="성동구">성동구</option>
+                        <option value="광진구">광진구</option>
+                        <option value="동대문구">동대문구</option>
+                        <option value="중랑구">중랑구</option>
+                        <option value="성북구">성북구</option>
+                        <option value="강북구">강북구</option>
+                        <option value="도봉구">도봉구</option>
+                        <option value="노원구">노원구</option>
+                        <option value="은평구">은평구</option>
+                        <option value="서대문구">서대문구</option>
+                        <option value="마포구">마포구</option>
+                        <option value="양천구">양천구</option>
+                        <option value="강서구">강서구</option>
+                        <option value="구로구">구로구</option>
+                        <option value="금천구">금천구</option>
+                        <option value="영등포구">영등포구</option>
+                        <option value="동작구">동작구</option>
+                        <option value="관악구">관악구</option>
+                        <option value="서초구">서초구</option>
+                        <option value="강남구">강남구</option>
+                        <option value="송파구">송파구</option>
+                        <option value="강동구">강동구</option>
+                      </select>
+                      <span class="region-form-control-blind">
+                        세부지역 선택
+                      </span>
+                    </label>
+                    <button
+                      class="region-select-button"
+                      aria-label="초기화"
+                      type="button"
+                      tabindex="-1"
+                    >
+                      <!-- 도메인 선택 버튼 -->
+                      <svg
+                        width="10"
+                        height="10"
+                        preserveAspectRatio="xMidYMid meet"
+                        style="fill: currentcolor"
+                      >
+                        <path fill-rule="evenodd" d="M0 3l5 5 5-5z"></path>
+                      </svg>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <!-- 닉네임 입력란 -->
+            <div class="nickname-wrap">
+              <label class="nickname-text">이름</label>
+              <div class="nickname-info">이름을 입력해주세요.</div>
+              <label>
+                <input
+                  class="nickname-input"
+                  name="이름"
+                  placeholder="이름 (2~15자)"
+                />
+                <span class="nickname-hidden">이름 입력하기</span>
+              </label>
+            </div>
+            <!-- 약관동의 -->
+            <div class="terms-wrap">
+              <label class="terms-text">약관동의</label>
+              <div class="terms-container">
+                <div class="all-agree-wrap">
+                  <label class="all-agree-container">
+                    <div class="all-check-wrap">
+                      <div class="all-check-container">
+                        <span class="all-check-area"></span>
+                      </div>
+                      <input
+                        class="all-check-input"
+                        type="checkbox"
+                        name="전체동의"
+                        value="false"
+                      />
+                    </div>
+                    <span class="all-check-text-wrap">
+                      <span class="all-check-text-container">
+                        전체동의
+                        <span class="all-check-detail">
+                          선택항목에 대한 동의 포함
+                        </span>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+                <hr class="terms-seperator" />
+                <!-- 여기서부터는 필수 동의 사항 -->
+                <!-- 만 14세 이상 -->
+                <div class="essential-terms-wrap">
+                  <label class="essential-terms-container">
+                    <div class="essential-check-wrap">
+                      <div class="essential-check-container">
+                        <span class="essential-check-area"></span>
+                      </div>
+                      <input
+                        class="essential-check-input"
+                        type="checkbox"
+                        name="필수항목1"
+                        value="false"
+                      />
+                    </div>
+                    <span class="essential-text-wrap">
+                      <span class="essential-text-container" required>
+                        만 14세 이상입니다
+                      </span>
+                    </span>
+                  </label>
+                </div>
+                <!-- 이용약관 -->
+                <div class="essential-terms-wrap">
+                  <label class="essential-terms-container">
+                    <div class="essential-check-wrap">
+                      <div class="essential-check-container">
+                        <span class="essential-check-area"></span>
+                      </div>
+                      <input
+                        class="essential-check-input"
+                        type="checkbox"
+                        name="필수항목2"
+                        value="false"
+                      />
+                    </div>
+                    <span class="essential-text-wrap">
+                      <span class="essential-text-container" required>
+                        이용약관
+                      </span>
+                    </span>
+                  </label>
+                  <a href="#" class="terms-link-wrap">
+                    <span class="terms-link-container"></span>
+                  </a>
+                </div>
+                <!-- 개인정보수집 및 이용동의 -->
+                <div class="essential-terms-wrap">
+                  <label class="essential-terms-container">
+                    <div class="essential-check-wrap">
+                      <div class="essential-check-container">
+                        <span class="essential-check-area"></span>
+                      </div>
+                      <input
+                        class="essential-check-input"
+                        type="checkbox"
+                        name="필수항목3"
+                        value="false"
+                      />
+                    </div>
+                    <span class="essential-text-wrap">
+                      <span class="essential-text-container" required>
+                        개인정보수집 및 이용동의
+                      </span>
+                    </span>
+                  </label>
+                  <a href="#" class="terms-link-wrap">
+                    <span class="terms-link-container"></span>
+                  </a>
+                </div>
+                <!-- 여기서부터는 선택 동의 사항 -->
+                <!-- 개인정보 마케팅 활용 동의 -->
+                <div class="optional-terms-wrap">
+                  <label class="optional-terms-container">
+                    <div class="optional-check-wrap">
+                      <div class="optional-check-container">
+                        <span class="optional-check-area"></span>
+                      </div>
+                      <input
+                        class="optional-check-input"
+                        type="checkbox"
+                        name="마케팅동의"
+                        value="false"
+                      />
+                    </div>
+                    <span class="optional-text-wrap">
+                      <span class="optional-text-container">
+                        개인정보 마케팅 활용 동의
+                      </span>
+                    </span>
+                  </label>
+                  <a href="#" class="terms-link-wrap">
+                    <span class="terms-link-container"></span>
+                  </a>
+                </div>
+                <!-- 이벤트, 특가, 쿠폰 알림 및 SMS 등 수신 -->
+                <div class="optional-terms-wrap">
+                  <label class="optional-terms-container">
+                    <div class="optional-check-wrap">
+                      <div class="optional-check-container">
+                        <span class="optional-check-area"></span>
+                      </div>
+                      <input
+                        class="optional-check-input"
+                        type="checkbox"
+                        name="sns수신"
+                        value="false"
+                      />
+                    </div>
+                    <span class="optional-text-wrap">
+                      <span class="optional-text-container">
+                        이벤트, 특가, 쿠폰 알림 및 SMS 등 수신
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <button class="register-button" type="button">회원가입하기</button>
+          </form>
+          <!-- 나중에 로그인 페이지랑 연결 -->
+          <p class="already-registered-wrap">
+            이미 아이디가 있으신가요?
+            <a href="#" class="login-link">로그인</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="/staticfiles/js/register/register.js"></script>
+</html>

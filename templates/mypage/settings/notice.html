@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 여기서부터 -->
+    <style data-emotion="css-global" data-s="">
+      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
+      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
+      @font-face {
+        font-family: OhouseIcon;
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
+            format("embedded-opentype"),
+          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
+            format("woff2"),
+          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
+            format("woff"),
+          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
+            format("truetype"),
+          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
+            format("svg");
+      }
+      html {
+        font-family: "Pretendard Variable", sans-serif;
+        letter-spacing: -0.3px;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+    <link rel="stylesheet" href="/staticfiles/css/common.css" />
+    <!-- 여기까지는 무조건 고정으로 모든 페이지에 복붙하세요 -->
+    <!-- 여기는 각자 css 파일 link하시면 됩니다 -->
+    <link
+      rel="shortcut icon"
+      href="/staticfiles/images/favicon.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/staticfiles/css/mypage/settings/notice.css" />
+    <title>Selleaf | 알림 설정</title>
+  </head>
+  <body>
+    <div class="whole-page-wrap">
+      <div class="whole-page-container">
+        <!-- 나중에 메인 페이지에서 작업하면 추가 -->
+        <header style="height: 80.75px"></header>
+        <div class="main-wrap">
+          <!-- 마이페이지 내 네비게이션 바 -->
+          <div class="navigation-wrap">
+            <div class="main-category-wrap">
+              <ul
+                class="main-category-container"
+                style="transform: translateX(0px)"
+              >
+                <li class="main-category-item">
+                  <a href="#">내 활동</a>
+                </li>
+                <li class="main-category-item">
+                  <a href="#">거래 내역</a>
+                </li>
+                <li class="main-category-item">
+                  <a href="#">수강 내역</a>
+                </li>
+                <li class="main-category-item teacher">
+                  <a href="#">강의 현황</a>
+                </li>
+                <li class="main-category-item">
+                  <a href="#" class="active">설정</a>
+                </li>
+              </ul>
+            </div>
+            <div class="sub-category-wrap">
+              <ul
+                class="sub-category-container"
+                style="transform: translateX(0px)"
+              >
+                <li class="sub-category-item">
+                  <a href="#">회원정보수정</a>
+                </li>
+                <li class="sub-category-item">
+                  <a href="#" class="active">알림 설정</a>
+                </li>
+                <li class="sub-category-item">
+                  <a href="#">비밀번호 변경</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- 알림 설정 페이지 내용 -->
+          <div class="notice-page-wrap">
+            <h1 class="notice-page-title">SNS 알림 설정</h1>
+            <p class="notice-page-explain">
+              Selleaf의 소식을 더욱 빠르게 접해보세요.
+            </p>
+            <ul class="sns-options-wrap">
+              <li class="sns-options-container">
+                <span class="sns-type-text">이메일</span>
+                <span class="notice-option-wrap">
+                  <input
+                    type="checkbox"
+                    class="notice-option-input"
+                    name="이메일 수신 동의"
+                  />
+                  <span class="visual-notice-option"></span>
+                </span>
+              </li>
+              <li class="sns-options-container">
+                <span class="sns-type-text">문자 메세지</span>
+                <span class="notice-option-wrap">
+                  <input
+                    type="checkbox"
+                    class="notice-option-input"
+                    name="문자 수신 동의"
+                  />
+                  <span class="visual-notice-option"></span>
+                </span>
+              </li>
+            </ul>
+            <p class="notice-page-info">
+              알림 수신에 동의하시면
+              <a href="#">개인 정보의 마케팅 활용</a>에 동의하는 것으로
+              간주됩니다.
+            </p>
+          </div>
+        </div>
+        <!-- 나중에 메인 페이지에서 작업하면 추가 -->
+        <footer style="height: 320px"></footer>
+      </div>
+    </div>
+  </body>
+  <script src="/staticfiles/js/mypage/settings/notice.js"></script>
+</html>

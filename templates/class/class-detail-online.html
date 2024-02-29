@@ -1,0 +1,3398 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style data-emotion="css-global" data-s="">
+      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
+      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
+      @font-face {
+        font-family: OhouseIcon;
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
+            format("embedded-opentype"),
+          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
+            format("woff2"),
+          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
+            format("woff"),
+          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
+            format("truetype"),
+          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
+            format("svg");
+      }
+      html {
+        font-family: "Pretendard Variable", sans-serif;
+        letter-spacing: -0.3px;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+    <link rel="stylesheet" href="/staticfiles/css/common.css" />
+    <!-- 여기까지는 무조건 고정으로 모든 페이지에 복붙하세요 -->
+    <!-- 여기는 각자 css 파일 link하시면 됩니다 -->
+    <link
+      rel="shortcut icon"
+      href="/staticfiles/images/favicon.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/staticfiles/css/class/class-detail.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>온라인 상세</title>
+  </head>
+  <body>
+    <div class="declaration-modal-wrap">
+      <div class="declaration-modal-container">
+        <div class="declaration-modal-title-box">
+          <span class="declaration-modal-title">신고 사유를 선택해주세요</span>
+          <button type="button" class="declaration-modal-cancel-btn">
+            <span class="cancel-btn-icon"></span>
+          </button>
+        </div>
+        <div class="declaration-modal-content">
+          <ul class="declaration-list">
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box declaration-choice">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                    checked
+                  />
+                </div>
+                <span class="declaration-text">주제와 맞지 않음</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">정보가 부정확함</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">지나친 광고성 게시물</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">도배 및 중복 게시물</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">저작권 침해가 우려됨</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">욕설/비방이 심함</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">외설적인 게시물</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">개인정보노출</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">기타</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="declaration-btn-wrap">
+          <div class="declaration-btn-container">
+            <button class="declaration-btn">신고하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a id="top"></a>
+    <div class="product-selling-wrap">
+      <div class="product-overview-wrap">
+        <nav class="product-category-wrap">
+          <ol class="product-category-container">
+            <li class="product-category-inner">
+              <a href="/templates/class/class-total.html" class="link"
+                >대구분</a
+              >
+              <svg
+                class="icon"
+                width="8"
+                height="8"
+                viewBox="0 0 8 8"
+                fill="currentColor"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <path
+                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
+                ></path>
+              </svg>
+            </li>
+            <li class="product-category-inner">
+              <a href="/templates/class/class-total.html" class="link"
+                >중분류</a
+              >
+              <svg
+                class="icon"
+                width="8"
+                height="8"
+                viewBox="0 0 8 8"
+                fill="currentColor"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <path
+                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
+                ></path>
+              </svg>
+            </li>
+            <li class="product-category-inner">
+              <a href="/templates/class/class-total.html" class="link"
+                >소분류</a
+              >
+              <svg
+                class="icon"
+                width="8"
+                height="8"
+                viewBox="0 0 8 8"
+                fill="currentColor"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <path
+                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
+                ></path>
+              </svg>
+            </li>
+            <li class="product-category-inner">
+              <a href="/templates/class/class-total.html" class="link">제품</a>
+            </li>
+          </ol>
+        </nav>
+        <div class="product-overview-container">
+          <div class="product-overview-image-wrap">
+            <div class="product-overview-image-container">
+              <div
+                class="product-overview-image-inner"
+                role="region"
+                aria-roledescription="carousel"
+              >
+                <div class="product-overview-main-image">
+                  <div
+                    class="carousel-list-wrap"
+                    aria-live="polite"
+                    style="
+                      transform: translateX(-100%);
+                      transition: transform 0s ease 0s;
+                    "
+                  >
+                    <div
+                      class="carousel-list-container"
+                      role="group"
+                      aria-roledescription="slide"
+                      aria-label="1 of 4"
+                      style="width: 100%"
+                    >
+                      <img
+                        class="product-cover-image"
+                        tabindex="0"
+                        src="/staticfiles/images/blank-image.png"
+                        alt="상품서브이미지"
+                      />
+                    </div>
+                    <div
+                      class="carousel-list-container"
+                      role="group"
+                      aria-roledescription="slide"
+                      aria-label="2 of 4"
+                      style="width: 100%"
+                    >
+                      <img
+                        class="product-cover-image"
+                        tabindex="0"
+                        src="/staticfiles/images/blank-image.png"
+                        alt="상품서브이미지"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <ul class="product-small-image-list">
+                  <li class="product-small-image-item">
+                    <button
+                      class="product-small-image-button"
+                      type="button"
+                      aria-label="1 of 8"
+                    >
+                      <img
+                        class="product-small-image"
+                        src="/staticfiles/images/blank-image.png"
+                        alt="상품 이미지"
+                      />
+                    </button>
+                  </li>
+                  <li class="product-small-image-item">
+                    <button
+                      class="product-small-image-button"
+                      type="button"
+                      aria-label="1 of 8"
+                    >
+                      <img
+                        class="product-small-image"
+                        src="/staticfiles/images/blank-image.png"
+                        alt="상품 이미지"
+                      />
+                    </button>
+                  </li>
+                  <li class="product-small-image-item">
+                    <button
+                      class="product-small-image-button"
+                      type="button"
+                      aria-label="1 of 8"
+                    >
+                      <img
+                        class="product-small-image"
+                        src="/staticfiles/images/blank-image.png"
+                        alt="상품 이미지"
+                      />
+                    </button>
+                  </li>
+                  <li class="product-small-image-item">
+                    <button
+                      class="product-small-image-button"
+                      type="button"
+                      aria-label="1 of 8"
+                    >
+                      <img
+                        class="product-small-image"
+                        src="/staticfiles/images/blank-image.png"
+                        alt="상품 이미지"
+                      />
+                    </button>
+                  </li>
+                </ul>
+                <div class="product-image-paginator">
+                  <ul class="carousel-paginator">
+                    <li>
+                      <span class="carousel-paginator-page" data-key="1"></span>
+                    </li>
+                    <li>
+                      <span class="carousel-paginator-page" data-key="2"></span>
+                    </li>
+                    <li>
+                      <span class="carousel-paginator-page" data-key="3"></span>
+                    </li>
+                    <li>
+                      <span class="carousel-paginator-page" data-key="4"></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-overview-contents-wrap">
+            <div class="product-overview-contents-header">
+              <h1 class="product-overview-contents-title">
+                <p class="product-overview-user-wrap">
+                  <a href="해당유저페이지" class="product-overview-user"
+                    >유저이름</a
+                  >
+                </p>
+                <div class="product-overview-title">
+                  <span class="product-title">제목을 입력하세요.</span>
+                  <div class="product-title-icon-wrap">
+                    <button class="update-button" type="button">
+                      <img
+                        class="update-icon"
+                        src="/staticfiles/images/update_icon.png"
+                      />
+                      <span class="update-label">수정</span>
+                    </button>
+                    <button class="scrap-button" type="button">
+                      <img
+                        class="scrap-off"
+                        src="/staticfiles/images/scrap-off-blk.png"
+                      />
+                      <span class="scrap-count">0</span>
+                    </button>
+                    <div class="share-button-wrap">
+                      <button class="share-button" type="button">
+                        <svg
+                          class="icon"
+                          aria-label="공유하기"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          preserveAspectRatio="xMidYMid meet"
+                        >
+                          <path
+                            d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </h1>
+              <div class="product-overview-contents-container">
+                <p class="product-contents-review-wrap">
+                  <a href="#product-review" class="product-review">
+                    <span class="rating" aria-label="별점 5점">
+                      <svg
+                        fill="#134F2C"
+                        width="1em"
+                        height="1em"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 24 24"
+                      >
+                        <defs>
+                          <path
+                            id="star-path-110"
+                            d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                          ></path>
+                          <clipPath id="star-clip-110">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                          </clipPath>
+                        </defs>
+                        <use xlink:href="#star-path-110" fill="#DBDBDB"></use>
+                        <use
+                          clip-path="url(#star-clip-110)"
+                          xlink:href="#star-path-110"
+                        ></use>
+                      </svg>
+                      <svg
+                        fill="#134F2C"
+                        width="1em"
+                        height="1em"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 24 24"
+                      >
+                        <defs>
+                          <path
+                            id="star-path-110"
+                            d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                          ></path>
+                          <clipPath id="star-clip-110">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                          </clipPath>
+                        </defs>
+                        <use xlink:href="#star-path-110" fill="#DBDBDB"></use>
+                        <use
+                          clip-path="url(#star-clip-110)"
+                          xlink:href="#star-path-110"
+                        ></use>
+                      </svg>
+                      <svg
+                        fill="#134F2C"
+                        width="1em"
+                        height="1em"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 24 24"
+                      >
+                        <defs>
+                          <path
+                            id="star-path-110"
+                            d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                          ></path>
+                          <clipPath id="star-clip-110">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                          </clipPath>
+                        </defs>
+                        <use xlink:href="#star-path-110" fill="#DBDBDB"></use>
+                        <use
+                          clip-path="url(#star-clip-110)"
+                          xlink:href="#star-path-110"
+                        ></use>
+                      </svg>
+                      <svg
+                        fill="#134F2C"
+                        width="1em"
+                        height="1em"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 24 24"
+                      >
+                        <defs>
+                          <path
+                            id="star-path-110"
+                            d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                          ></path>
+                          <clipPath id="star-clip-110">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                          </clipPath>
+                        </defs>
+                        <use xlink:href="#star-path-110" fill="#DBDBDB"></use>
+                        <use
+                          clip-path="url(#star-clip-110)"
+                          xlink:href="#star-path-110"
+                        ></use>
+                      </svg>
+                      <svg
+                        fill="#134F2C"
+                        width="1em"
+                        height="1em"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 24 24"
+                      >
+                        <defs>
+                          <path
+                            id="star-path-110"
+                            d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                          ></path>
+                          <clipPath id="star-clip-110">
+                            <rect x="0" y="0" width="24" height="24"></rect>
+                          </clipPath>
+                        </defs>
+                        <use xlink:href="#star-path-110" fill="#DBDBDB"></use>
+                        <use
+                          clip-path="url(#star-clip-110)"
+                          xlink:href="#star-path-110"
+                        ></use>
+                      </svg>
+                    </span>
+                    <span class="review-counting-text">
+                      <span class="review-counting">30</span>
+                      <span class="review-text">개 리뷰</span>
+                    </span>
+                  </a>
+                </p>
+                <div class="product-contents-price-wrap">
+                  <span class="product-contents-price-container">
+                    <span class="product-price-info">
+                      <button class="product-price-info-button"></button>
+                    </span>
+                    <span class="product-price-separator"></span>
+                    <div class="product-final-price-wrap">
+                      <div class="product-final-price-container">
+                        <span class="final-price-number">13,500</span>
+                        <span class="krw">원</span>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="product-overview-info-wrap">
+                <div class="product-info-container">
+                  <div class="product-info-title">
+                    <span>정보</span>
+                  </div>
+                  <div class="product-info-contents">
+                    <span class="main-info-keyword">
+                      <b>키워드</b>
+                    </span>
+                    <span class="info-type">
+                      <span>주문제작</span>
+                      <span>일반배송</span>
+                    </span>
+                    <span class="info-particulars-wrap">
+                      <span class="info-particulars-container">
+                        <img
+                          src="/staticfiles/images/button-down.png"
+                          class="check-icon"
+                        />
+                        <span>파손주의 등등</span>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <a href="유저페이지 이동링크" class="user-info-link">
+                <div class="user-link-name-wrap">
+                  <svg
+                    width="24"
+                    height="24"
+                    fill="none"
+                    preserveAspectRatio="xMidYMid meet"
+                  >
+                    <path
+                      d="M3.972 8.694c0-.26.212-.472.472-.472h12.278a.472.472 0 010 .945H4.444a.472.472 0 01-.472-.473z"
+                      fill="#35C5F0"
+                    ></path>
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M17.51 5.5H6.492a1 1 0 00-.93.632l-.99 2.5A1 1 0 005.498 10h13.004a1 1 0 00.927-1.368l-.99-2.5a1 1 0 00-.93-.632zM3.642 8.263a2.002 2.002 0 001.397 2.684V17.5a2.5 2.5 0 002.5 2.5H16.474a2.5 2.5 0 002.487-2.5v-6.553a2.002 2.002 0 001.398-2.684l-.99-2.5a2 2 0 00-1.86-1.263H6.493a2 2 0 00-1.86 1.263l-.99 2.5zM6.04 17.5V11h11.921v6.5a1.5 1.5 0 01-1.487 1.5v-4a2 2 0 00-2-2h-.97a2 2 0 00-2 2v4H7.54a1.5 1.5 0 01-1.5-1.5zm6.464 1.5h2.97v-4a1 1 0 00-1-1h-.97a1 1 0 00-1 1v1h.847a.5.5 0 110 1h-.847v2zM8 13h1.5v1.5H8V13zm-1 0a1 1 0 011-1h1.5a1 1 0 011 1v1.5a1 1 0 01-1 1H8a1 1 0 01-1-1V13z"
+                      fill="#3F474D"
+                    ></path>
+                  </svg>
+                  <div class="user-link-name-container">
+                    <span class="user-link-name">유저이름</span>
+                  </div>
+                </div>
+                <div class="user-link-icon-wrap">
+                  <span>유저홈</span>
+                  <svg
+                    width="14"
+                    height="14"
+                    fill="none"
+                    preserveAspectRatio="xMidYMid meet"
+                  >
+                    <path
+                      d="M4.083 11.375L8.312 7 4.083 2.625l.803-.875L9.916 7l-5.03 5.25-.803-.875z"
+                      fill="#828C94"
+                    ></path>
+                  </svg>
+                </div>
+              </a>
+            </div>
+            <div class="product-option-wrap">
+              <section class="product-option-container">
+                <div class="product-option-inner">
+                  <div class="product-option-input">
+                    <div class="product-option-first-wrap">
+                      <span class="info-dropdown-box">
+                        <span class="info-title">날짜 선택</span>
+                        <div class="info-dropdown-wrap">
+                          <div class="weekday-selection">
+                            <span>2023-02-12 월</span>
+                          </div>
+                          <div class="weekday-selection">
+                            <span>2023-02-13 화</span>
+                          </div>
+                          <div class="weekday-selection">
+                            <span>2023-02-14 수</span>
+                          </div>
+                          <div class="weekday-selection">
+                            <span>2023-02-15 목</span>
+                          </div>
+                          <div class="weekday-selection">
+                            <span>2023-02-16 금</span>
+                          </div>
+                          <div class="weekday-selection">
+                            <span>2023-02-17 토</span>
+                          </div>
+                          <div class="weekday-selection">
+                            <span>2023-02-18 일</span>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                    <div
+                      class="product-option-second-wrap"
+                      style="display: none"
+                    >
+                      <span class="info-dropdown-box">
+                        <span class="info-title">DIY 키트 선택</span>
+                        <div class="info-dropdown-wrap">
+                          <div class="kit-selection">
+                            <div class="kit-title">키트 이름 1</div>
+                            <div>강사가 입력한 키트 소개</div>
+                          </div>
+                          <div class="kit-selection">
+                            <div class="kit-title">키트 이름 2</div>
+                            <div>강사가 입력한 키트 소개</div>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                  <article
+                    class="selected-product-list-container"
+                    style="display: none"
+                  >
+                    <h2 class="selected-product-name">
+                      <span>날짜:</span>
+                      <span class="selected-date">선택한날짜</span>
+                      /
+                      <span>키트:</span>
+                      <span class="selected-kit">선택한 시간</span>
+                    </h2>
+                    <button
+                      class="delete-button-wrap"
+                      aria-label="삭제"
+                      type="button"
+                    >
+                      <span class="delete-button-container">
+                        <img src="/staticfiles/images/cancel.png" alt="" />
+                      </span>
+                    </button>
+                    <div class="student-count-title">인원</div>
+                    <div class="selected-product-botton-wrap">
+                      <div class="selected-product-count">
+                        <span class="sub-count">
+                          <img src="/staticfiles/images/sub.png" alt="" />
+                        </span>
+                        <button class="counted-number">0</button>
+                        <span class="add-count">
+                          <img src="/staticfiles/images/add.png" alt="" />
+                        </span>
+                      </div>
+                      <div class="selected-price-wrap">
+                        <span class="selected-price">32,000</span>
+                        <span class="won">원</span>
+                      </div>
+                    </div>
+                  </article>
+                  <ul class="selected-student-list-wrap" style="display: none">
+                    <li>
+                      <div class="each-info">
+                        <div class="info-title">예약자 이름</div>
+                        <div class="info-dropdown-wrap">
+                          <div class="info-dropdown-container">
+                            <div class="student-info-inner"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+              <p class="product-total-price">
+                <span class="product-order-text">주문금액</span>
+                <span class="product-order-price">
+                  <span class="total-price">32,000</span>원
+                </span>
+              </p>
+              <div class="product-order-button-wrap">
+                <button class="add-cart-button" type="button">장바구니</button>
+                <button class="order-button" type="button">바로구매</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="product-detail-nav-wrap"
+        style="position: sticky; top: 131.5px; transition: top 0.1s ease 0s"
+      >
+        <div class="product-detail-nav-container" style="position: relative">
+          <nav class="product-detail-nav-inner">
+            <ol class="product-detail-nav-list">
+              <li>
+                <a class="product-detail-nav-item active" href="#detail-info">
+                  상품정보</a
+                >
+              </li>
+              <li>
+                <a class="product-detail-nav-item" href="#product-review">
+                  리뷰
+                  <span class="review-counting">32</span>
+                </a>
+              </li>
+              <li>
+                <a class="product-detail-nav-item" href="#product-ask">
+                  문의
+                </a>
+              </li>
+              <li>
+                <a class="product-detail-nav-item" href="#product-suggestion">
+                  추천
+                </a>
+              </li>
+              <li>
+                <a class="product-detail-nav-item" href="#product-extra-info">
+                  반품/기타
+                </a>
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div class="product-detail-wrap">
+        <div class="product-detail-container">
+          <div class="product-detail-inner">
+            <div class="product-detail-contents-wrap">
+              <a id="detail-info"></a>
+              <section class="detail-info-wrap">
+                <header class="detail-info-title">
+                  <h1 class="detail-info-title-text">상품정보</h1>
+                </header>
+                <div class="detail-info-contents-wrap">
+                  <div class="detail-info-contents-thumbnail">
+                    <button class="expended-info" type="button">
+                      펼치기
+                      <svg
+                        class="icon"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 16 16"
+                        preserveAspectRatio="xMidYMid meet"
+                      >
+                        <path
+                          fill="currentColor"
+                          fill-rule="evenodd"
+                          d="M2.87 4L1.33 5.5 8 12l6.67-6.5L13.13 4 8 9z"
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
+                  <img
+                    class="detail-info-image"
+                    src="/staticfiles/images/blank-image.png"
+                    alt="판매자 등록이미지"
+                  />
+                  <img
+                    class="detail-info-image"
+                    src="/staticfiles/images/blank-image.png"
+                    alt="판매자 등록이미지"
+                  />
+                  <img
+                    class="detail-info-image"
+                    src="/staticfiles/images/blank-image.png"
+                    alt="판매자 등록이미지"
+                  />
+                  <div
+                    class="detail-info-contents-container"
+                    style="image-rendering: -webkit-optimize-contrast"
+                  >
+                    <p>
+                      <img
+                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
+                        alt="상품의 상세 설명 이미지"
+                      />
+                    </p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>
+                      <img
+                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
+                        alt="상품의 상세 설명 이미지"
+                      />
+                    </p>
+                    <p>
+                      <img
+                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
+                        alt="상품의 상세 설명 이미지"
+                      />
+                    </p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                  </div>
+
+                  <table class="detail-info-table">
+                    <tbody>
+                      <tr>
+                        <th>제품 소재</th>
+                        <td>상세페이지 참조</td>
+                      </tr>
+                      <tr>
+                        <th>색상</th>
+                        <td>상세페이지 참조</td>
+                      </tr>
+                      <tr>
+                        <th>치수</th>
+                        <td>상세페이지 참조</td>
+                      </tr>
+                      <tr>
+                        <th>제품구성</th>
+                        <td>상세페이지 참조</td>
+                      </tr>
+                      <tr>
+                        <th>제조자, 수입품의 경우 수입자를 함께 표기</th>
+                        <td>그래이불</td>
+                      </tr>
+
+                      <tr>
+                        <th>제조국</th>
+                        <td>국내</td>
+                      </tr>
+
+                      <tr>
+                        <th>세탁방법 및 취급시 주의사항</th>
+                        <td>상세페이지 참조</td>
+                      </tr>
+                      <tr>
+                        <th>품질보증기준</th>
+                        <td>상세페이지 참조</td>
+                      </tr>
+                      <tr>
+                        <th>A/S 책임자와 전화번호</th>
+                        <td>010.3565.3997</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+              <a id="product-review"></a>
+              <section class="product-review-wrap">
+                <header class="detail-header">
+                  <h1 class="detail-title-text">
+                    리뷰
+                    <span class="review-counting">32</span>
+                  </h1>
+                  <div class="review-post-button-wrap">
+                    <button type="button" class="review-post-button">
+                      리뷰쓰기
+                    </button>
+                  </div>
+                </header>
+                <div class="product-review-feed-wrap">
+                  <div class="product-review-feed-container">
+                    <div class="product-review-feed-rating-wrap">
+                      <div class="product-review-feed-total-rating">
+                        <span class="icon" aria-label="별점 4.8점">
+                          <svg
+                            fill="#135f2c"
+                            width="1em"
+                            height="1em"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 24 24"
+                          >
+                            <defs>
+                              <path
+                                id="star-path-115"
+                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                              ></path>
+                              <clipPath id="star-clip-115">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                              </clipPath>
+                            </defs>
+                            <use
+                              xlink:href="#star-path-115"
+                              fill="#DBDBDB"
+                            ></use>
+                            <use
+                              clip-path="url(#star-clip-115)"
+                              xlink:href="#star-path-115"
+                            ></use>
+                          </svg>
+                          <svg
+                            fill="#135f2c"
+                            width="1em"
+                            height="1em"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 24 24"
+                          >
+                            <defs>
+                              <path
+                                id="star-path-116"
+                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                              ></path>
+                              <clipPath id="star-clip-116">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                              </clipPath>
+                            </defs>
+                            <use
+                              xlink:href="#star-path-116"
+                              fill="#DBDBDB"
+                            ></use>
+                            <use
+                              clip-path="url(#star-clip-116)"
+                              xlink:href="#star-path-116"
+                            ></use>
+                          </svg>
+                          <svg
+                            fill="#135f2c"
+                            width="1em"
+                            height="1em"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 24 24"
+                          >
+                            <defs>
+                              <path
+                                id="star-path-117"
+                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                              ></path>
+                              <clipPath id="star-clip-117">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                              </clipPath>
+                            </defs>
+                            <use
+                              xlink:href="#star-path-117"
+                              fill="#DBDBDB"
+                            ></use>
+                            <use
+                              clip-path="url(#star-clip-117)"
+                              xlink:href="#star-path-117"
+                            ></use>
+                          </svg>
+                          <svg
+                            fill="#135f2c"
+                            width="1em"
+                            height="1em"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 24 24"
+                          >
+                            <defs>
+                              <path
+                                id="star-path-118"
+                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                              ></path>
+                              <clipPath id="star-clip-118">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                              </clipPath>
+                            </defs>
+                            <use
+                              xlink:href="#star-path-118"
+                              fill="#DBDBDB"
+                            ></use>
+                            <use
+                              clip-path="url(#star-clip-118)"
+                              xlink:href="#star-path-118"
+                            ></use>
+                          </svg>
+                          <svg
+                            fill="#135f2c"
+                            width="1em"
+                            height="1em"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 24 24"
+                          >
+                            <defs>
+                              <path
+                                id="star-path-119"
+                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                              ></path>
+                              <clipPath id="star-clip-119">
+                                <rect
+                                  x="0"
+                                  y="0"
+                                  width="18.548148148148158"
+                                  height="24"
+                                ></rect>
+                              </clipPath>
+                            </defs>
+                            <use
+                              xlink:href="#star-path-119"
+                              fill="#DBDBDB"
+                            ></use>
+                            <use
+                              clip-path="url(#star-clip-119)"
+                              xlink:href="#star-path-119"
+                            ></use>
+                          </svg> </span
+                        ><span class="total-rating">4.8</span>
+                      </div>
+
+                      <div class="detail-rating-wrap">
+                        <div class="detail-rating-contianer">
+                          <div class="detail-rating-inner">
+                            <div class="detail-rating-label label-selected">
+                              5점
+                            </div>
+                            <div class="detail-rating-label-bar">
+                              <div class="detail-rating-label-full"></div>
+                              <div
+                                class="detail-rating-label-gauging"
+                                style="width: 80.9053%"
+                              ></div>
+                            </div>
+                            <div class="detail-rating-number label_selected">
+                              1,966
+                            </div>
+                          </div>
+                          <div class="detail-rating-inner">
+                            <div class="detail-rating-label">4점</div>
+                            <div class="detail-rating-label-bar">
+                              <div class="detail-rating-label-full"></div>
+                              <div
+                                class="detail-rating-label-gauging"
+                                style="width: 80.9053%"
+                              ></div>
+                            </div>
+                            <div class="detail-rating-number">1,966</div>
+                          </div>
+                          <div class="detail-rating-inner">
+                            <div class="detail-rating-label">3점</div>
+                            <div class="detail-rating-label-bar">
+                              <div class="detail-rating-label-full"></div>
+                              <div
+                                class="detail-rating-label-gauging"
+                                style="width: 80.9053%"
+                              ></div>
+                            </div>
+                            <div class="detail-rating-number">1,966</div>
+                          </div>
+                          <div class="detail-rating-inner">
+                            <div class="detail-rating-label">2점</div>
+                            <div class="detail-rating-label-bar">
+                              <div class="detail-rating-label-full"></div>
+                              <div
+                                class="detail-rating-label-gauging"
+                                style="width: 80.9053%"
+                              ></div>
+                            </div>
+                            <div class="detail-rating-number">1,966</div>
+                          </div>
+                          <div class="detail-rating-inner">
+                            <div class="detail-rating-label">1점</div>
+                            <div class="detail-rating-label-bar">
+                              <div class="detail-rating-label-full"></div>
+                              <div
+                                class="detail-rating-label-gauging"
+                                style="width: 80.9053%"
+                              ></div>
+                            </div>
+                            <div class="detail-rating-number">1,966</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="review-filter-wrap">
+                    <div class="review-filter-container">
+                      <div class="review-filter-inner">
+                        <div class="review-filter-preview-wrap">
+                          <button
+                            class="review-filter-preview-button preview-active"
+                            aria-pressed="true"
+                            type="button"
+                          >
+                            베스트순
+                          </button>
+                          <button
+                            class="review-filter-preview-button"
+                            aria-pressed="false"
+                            type="button"
+                          >
+                            최신순
+                          </button>
+                          <button
+                            class="review-filter-preview-button preview-photo"
+                            aria-pressed="false"
+                            type="button"
+                          >
+                            <svg
+                              class="icon"
+                              width="18"
+                              height="18"
+                              viewBox="0 0 18 18"
+                              preserveAspectRatio="xMidYMid meet"
+                            >
+                              <path
+                                fill="currentColor"
+                                d="M15.821 3a.67.67 0 0 1 .679.672v10.656a.67.67 0 0 1-.679.672H2.18a.67.67 0 0 1-.679-.672V3.672c0-.375.3-.672.679-.672H15.82zm-.679 1.344H2.858v8.14L7.01 7.781c.094-.125.284-.125.394 0l2.321 2.657c.048.046.063.109.048.156l-.3 1.375c-.016.11.11.172.173.094l2.369-2.579a.202.202 0 0 1 .284 0l2.842 3.094V4.344zm-2.526 3.61a1.1 1.1 0 0 1-1.105-1.095 1.1 1.1 0 0 1 1.105-1.093 1.1 1.1 0 0 1 1.105 1.093 1.1 1.1 0 0 1-1.105 1.094z"
+                              ></path>
+                            </svg>
+                            <div>사진리뷰</div>
+                          </button>
+                        </div>
+                        <ul class="review-filter-list-button">
+                          <li class="review-filter-list-rating">
+                            <div class="review-filter-rating">
+                              <button class="review-rating-button">
+                                별점순
+                                <svg
+                                  class="icon"
+                                  width="12"
+                                  height="12"
+                                  viewBox="0 0 12 12"
+                                  fill="currentColor"
+                                  preserveAspectRatio="xMidYMid meet"
+                                >
+                                  <path
+                                    d="M6.069 6.72l4.123-3.783 1.216 1.326-5.32 4.881L.603 4.273l1.196-1.346z"
+                                  ></path>
+                                </svg>
+                              </button>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product-review-list-wrap">
+                    <div class="product-review-list-container">
+                      <article class="product-review-list-inner">
+                        <div class="product-review-user-wrap">
+                          <a href="/사용자 마이페이지"
+                            ><img
+                              src="https://image.ohou.se/image/central_crop/bucketplace-v2-development/uploads-users-profile_images-169503542042594135.jpeg/80/80"
+                              class="product-reveiw-user-img"
+                              alt=""
+                          /></a>
+                          <a id="product-ask"></a>
+                          <div class="product-review-user-info-wrap">
+                            <p class="product-review-user-name">유저이름</p>
+                            <button
+                              class="product-review-rating-wrap"
+                              type="button"
+                            >
+                              <span
+                                class="product-review-rating-container"
+                                aria-label="별점 4.0점"
+                              >
+                                <svg
+                                  fill="#135f2c"
+                                  width="1em"
+                                  height="1em"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <defs>
+                                    <path
+                                      id="star-path-120"
+                                      d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                                    ></path>
+                                    <clipPath id="star-clip-120">
+                                      <rect
+                                        x="0"
+                                        y="0"
+                                        width="24"
+                                        height="24"
+                                      ></rect>
+                                    </clipPath>
+                                  </defs>
+                                  <use
+                                    xlink:href="#star-path-120"
+                                    fill="#DBDBDB"
+                                  ></use>
+                                  <use
+                                    clip-path="url(#star-clip-120)"
+                                    xlink:href="#star-path-120"
+                                  ></use>
+                                </svg>
+                                <svg
+                                  fill="#135f2c"
+                                  width="1em"
+                                  height="1em"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <defs>
+                                    <path
+                                      id="star-path-121"
+                                      d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                                    ></path>
+                                    <clipPath id="star-clip-121">
+                                      <rect
+                                        x="0"
+                                        y="0"
+                                        width="24"
+                                        height="24"
+                                      ></rect>
+                                    </clipPath>
+                                  </defs>
+                                  <use
+                                    xlink:href="#star-path-121"
+                                    fill="#DBDBDB"
+                                  ></use>
+                                  <use
+                                    clip-path="url(#star-clip-121)"
+                                    xlink:href="#star-path-121"
+                                  ></use>
+                                </svg>
+                                <svg
+                                  fill="#135f2c"
+                                  width="1em"
+                                  height="1em"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <defs>
+                                    <path
+                                      id="star-path-122"
+                                      d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                                    ></path>
+                                    <clipPath id="star-clip-122">
+                                      <rect
+                                        x="0"
+                                        y="0"
+                                        width="24"
+                                        height="24"
+                                      ></rect>
+                                    </clipPath>
+                                  </defs>
+                                  <use
+                                    xlink:href="#star-path-122"
+                                    fill="#DBDBDB"
+                                  ></use>
+                                  <use
+                                    clip-path="url(#star-clip-122)"
+                                    xlink:href="#star-path-122"
+                                  ></use>
+                                </svg>
+                                <svg
+                                  fill="#135f2c"
+                                  width="1em"
+                                  height="1em"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <defs>
+                                    <path
+                                      id="star-path-123"
+                                      d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                                    ></path>
+                                    <clipPath id="star-clip-123">
+                                      <rect
+                                        x="0"
+                                        y="0"
+                                        width="24"
+                                        height="24"
+                                      ></rect>
+                                    </clipPath>
+                                  </defs>
+                                  <use
+                                    xlink:href="#star-path-123"
+                                    fill="#DBDBDB"
+                                  ></use>
+                                  <use
+                                    clip-path="url(#star-clip-123)"
+                                    xlink:href="#star-path-123"
+                                  ></use>
+                                </svg>
+                                <svg
+                                  fill="#135f2c"
+                                  width="1em"
+                                  height="1em"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <defs>
+                                    <path
+                                      id="star-path-124"
+                                      d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                                    ></path>
+                                    <clipPath id="star-clip-124">
+                                      <rect
+                                        x="0"
+                                        y="0"
+                                        width="0"
+                                        height="24"
+                                      ></rect>
+                                    </clipPath>
+                                  </defs>
+                                  <use
+                                    xlink:href="#star-path-124"
+                                    fill="#DBDBDB"
+                                  ></use>
+                                  <use
+                                    clip-path="url(#star-clip-124)"
+                                    xlink:href="#star-path-124"
+                                  ></use>
+                                </svg>
+                              </span>
+                              <svg
+                                class="product-review-rating-down"
+                                width="10"
+                                height="10"
+                                viewBox="0 0 10 10"
+                                fill="currentColor"
+                                preserveAspectRatio="xMidYMid meet"
+                              >
+                                <path
+                                  d="M1.8 2.5l-.97.94L5 7.5l4.17-4.06-.97-.94L5 5.63z"
+                                ></path>
+                              </svg>
+                            </button>
+                            <span class="product-review-date">
+                              2024.01.14 구매
+                            </span>
+                          </div>
+                        </div>
+                        <div class="product-review-item-name">
+                          <p class="product-review-item-text">
+                            사이즈/ 색상: Q퀸 화이트 / 구성:
+                            풀세트(이불+베개커버2+패드)
+                          </p>
+                        </div>
+                        <button type="button" class="product-review-img-button">
+                          <img
+                            class="product-review-img"
+                            src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1"
+                            srcset="
+                              https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;webp=1 1.5x,
+                              https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1 2x,
+                              https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 3x
+                            "
+                          />
+                        </button>
+                        <p class="product-review-description">
+                          새집 이사와 이불 새로 장만했네요 화이트 색상 고급지고
+                          바스락 그려요 개인적으로 몸에 닿는 무거운 느낌을
+                          좋아하는데 극세사이불에 적응되었을까요? 코튼이라
+                          그런지 뭉글뭉글 가벼워요 쓰면 또 익숙해지지 않을까
+                          싶네요
+                        </p>
+                        <div class="product-review-help">
+                          <button
+                            type="button"
+                            class="product-review-help-button"
+                          >
+                            도움이 돼요
+                          </button>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                  <ul class="product-review-page-button">
+                    <!-- js추가 -->
+                    <li class="prev-button-wrap">
+                      <button class="prev-button" type="button">
+                        <svg width="1em" height="1em" viewBox="0 0 24 24">
+                          <path
+                            fill="currentColor"
+                            d="M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </li>
+                    <a id="product-suggestion"></a>
+                    <li>
+                      <button
+                        class="product-review-page selected-page"
+                        type="button"
+                      >
+                        1
+                      </button>
+                    </li>
+                    <li>
+                      <button class="product-review-page" type="button">
+                        2
+                      </button>
+                    </li>
+                    <li>
+                      <button class="product-review-page" type="button">
+                        3
+                      </button>
+                    </li>
+                    <li>
+                      <button class="product-review-page" type="button">
+                        4
+                      </button>
+                    </li>
+                    <li>
+                      <button class="product-review-page" type="button">
+                        5
+                      </button>
+                    </li>
+                    <li>
+                      <button class="product-review-page" type="button">
+                        6
+                      </button>
+                    </li>
+                    <li>
+                      <button class="product-review-page" type="button">
+                        7
+                      </button>
+                    </li>
+                    <li>
+                      <button class="product-review-page" type="button">
+                        8
+                      </button>
+                    </li>
+                    <li>
+                      <button class="product-review-page" type="button">
+                        9
+                      </button>
+                    </li>
+                    <li>
+                      <button class="next-button" type="button">
+                        <svg width="1em" height="1em" viewBox="0 0 24 24">
+                          <path
+                            fill="currentColor"
+                            d="M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="product-ask-wrap">
+                <header class="product-ask-container">
+                  <h1 class="product-ask-title">문의</h1>
+                  <div class="product-ask-link">
+                    <button type="button" class="product-ask-button">
+                      판매자 문의
+                    </button>
+                  </div>
+                </header>
+              </section>
+
+              <div>
+                <section class="product-suggestion-wrap">
+                  <header class="product-suggestion-header">
+                    <h1 class="product-suggestion-title">비슷한 상품추천</h1>
+                  </header>
+                  <div class="product-suggestion-scroller-wrap">
+                    <div class="product-suggestion-scroller-container">
+                      <div class="scroller-contents-wrap" tabindex="-1">
+                        <div
+                          class="scroller-contents-container"
+                          style="transform: translateX(0px)"
+                        >
+                          <ul class="scroller-list-contents-inner">
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 1
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 2
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 3
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 4
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 5
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 6
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 7
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 8
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 9
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 10
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 11
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 12
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 13
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 14
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+
+                            <div class="product-suggestion-each-contents">
+                              <article class="product-suggestion-contents-wrap">
+                                <a
+                                  class="product-suggestion-contents-overlay"
+                                  href="/productions/1978932/selling"
+                                ></a>
+                                <div class="product-suggestion-contents-image">
+                                  <img
+                                    class="image"
+                                    alt=""
+                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
+                                    srcset="
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
+                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
+                                    "
+                                  />
+                                  <button
+                                    class="img-scrap-button"
+                                    type="button"
+                                  >
+                                    <img
+                                      src="/staticfiles/images/scrap-off.png"
+                                      alt=""
+                                    />
+                                  </button>
+                                  <div class="product_dark-overlay"></div>
+                                </div>
+                                <div class="product-suggestion-content">
+                                  <h1
+                                    class="product-suggestion-contents-header"
+                                  >
+                                    <span class="product-suggestion-user">
+                                      그래이불
+                                    </span>
+                                    <span class="product-suggestion-name">
+                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
+                                      차렵이불세트 건조기 사용가능
+                                    </span>
+                                  </h1>
+                                  <span class="product-suggestion-price-wrap">
+                                    <span class="product-suggestion-price">
+                                      107,800
+                                    </span>
+                                  </span>
+                                  <p class="product-contents-review-star">
+                                    <svg
+                                      class="icon"
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <path
+                                        fill="#97a38c"
+                                        fill-rule="evenodd"
+                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
+                                      ></path>
+                                    </svg>
+                                    <strong class="avg">5</strong> 리뷰 15
+                                  </p>
+                                  <span class="product-suggestion-tag">
+                                    <svg
+                                      class="icon"
+                                      aria-label="무료배송"
+                                      width="47"
+                                      height="20"
+                                      viewBox="0 0 47 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <g fill="none" fill-rule="evenodd">
+                                        <rect
+                                          width="47"
+                                          height="20"
+                                          fill="#000"
+                                          fill-opacity=".07"
+                                          fill-rule="nonzero"
+                                          rx="4"
+                                        ></rect>
+                                        <path
+                                          fill="#757575"
+                                          d="M12.73 5.38v3.96h-6.6V5.38h6.6zm-2.68 9.43H8.76v-3.25H5v-1.03h8.86v1.03h-3.81v3.25zm1.4-6.49V6.41H7.43v1.91h4.04zm11.08 2.7h-1.42v1.54h2.26v1.02h-8.86v-1.02h2.24v-1.53h-1.1V7.78h5.32V6.65H15.6V5.63h6.66V8.8h-5.33v1.18h5.61v1.04zm-4.53 0v1.54h1.87v-1.53H18zm14.37 3.78h-1.23V9.86h-.8v4.49h-1.2V5.18h1.2v3.66h.8V5h1.23v9.8zm-4.2-2.54h-3.9V6.01h1.27v2.26h1.36V6h1.28v6.26zm-1.27-1.01v-2h-1.36v2h1.36zm14.49 1.71c0 1.13-1.25 1.82-3.41 1.82s-3.42-.7-3.42-1.82 1.25-1.82 3.4-1.82c2.18 0 3.43.7 3.43 1.82zm-3.41-6.05c-.5 1.13-2.1 1.9-3.51 2.1l-.54-1c1.64-.17 3.39-1.06 3.39-2.54V5.2h1.33v.28c0 1.48 1.99 2.47 3.4 2.53l-.55 1.01c-1.31-.18-3.03-.97-3.52-2.1zm4.42 3.78h-8.86V9.66h3.79V8.4h1.29v1.26h3.78v1.03zm-2.33 2.27c0-.5-.83-.8-2.1-.8s-2.08.3-2.08.8c0 .51.81.8 2.08.8s2.1-.29 2.1-.8z"
+                                        ></path>
+                                      </g>
+                                    </svg>
+                                    <svg
+                                      class="icon"
+                                      aria-label="특가"
+                                      width="30"
+                                      height="20"
+                                      viewBox="0 0 30 20"
+                                      preserveAspectRatio="xMidYMid meet"
+                                    >
+                                      <rect
+                                        width="30"
+                                        height="20"
+                                        fill="#F77"
+                                        rx="4"
+                                      ></rect>
+                                      <path
+                                        fill="#fff"
+                                        d="M12.83 7.93v-.97H7.93v-.555h5.228v-.991H6.655v4.063h6.59v-.992H7.928V7.93h4.901zm-6.295 3.747v1.002h5.326v2.037h1.274v-3.04h-6.6zm7.733-.588v-1.024H5.5v1.024h8.768zM23.91 9.782V8.725h-1.405V5H21.24v9.705h1.264V9.782h1.405zm-3.954-3.79h-4.53v1.056h3.147c-.174 1.938-1.623 3.975-3.736 4.945l.773.958c2.974-1.612 4.259-4.03 4.346-6.96z"
+                                      ></path>
+                                    </svg>
+                                  </span>
+                                </div>
+                              </article>
+                            </div>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="scroller-ui">
+                        <div
+                          class="scroller-ui-prev"
+                          style="top: 108.662px; display: none"
+                        >
+                          <svg
+                            class="prev-icon"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 40 40"
+                            preserveAspectRatio="xMidYMid meet"
+                          >
+                            <g fill="none">
+                              <circle
+                                cx="20"
+                                cy="20"
+                                r="20"
+                                fill="#FFF"
+                                class="circle"
+                              ></circle>
+                              <path
+                                fill="#424242"
+                                d="M17 20l7.5 7.5-1.4 1.4-8.4-8.4-.5-.5.5-.5 8.4-8.4 1.4 1.4-7.5 7.5z"
+                                class="arrow"
+                              ></path>
+                            </g>
+                          </svg>
+                          <svg
+                            class="active"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 40 40"
+                            preserveAspectRatio="xMidYMid meet"
+                          >
+                            <g fill="none">
+                              <circle
+                                cx="20"
+                                cy="20"
+                                r="20"
+                                fill="#97a38c"
+                              ></circle>
+                              <path
+                                fill="#FFF"
+                                d="M17 20l7.5 7.5-1.4 1.4-8.4-8.4-.5-.5.5-.5 8.4-8.4 1.4 1.4-7.5 7.5z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </div>
+                        <div
+                          class="scroller-ui-next"
+                          style="top: 108.662px; display: block"
+                        >
+                          <svg
+                            class="inactive"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 40 40"
+                            preserveAspectRatio="xMidYMid meet"
+                          >
+                            <g fill="none" transform="matrix(-1 0 0 1 40 0)">
+                              <circle
+                                cx="20"
+                                cy="20"
+                                r="20"
+                                fill="#FFF"
+                                class="circle"
+                              ></circle>
+                              <path
+                                fill="#424242"
+                                d="M17 20l7.5 7.5-1.4 1.4-8.4-8.4-.5-.5.5-.5 8.4-8.4 1.4 1.4-7.5 7.5z"
+                                class="arrow"
+                              ></path>
+                            </g>
+                          </svg>
+                          <svg
+                            class="active"
+                            width="40"
+                            height="40"
+                            viewBox="0 0 40 40"
+                            preserveAspectRatio="xMidYMid meet"
+                          >
+                            <g fill="none" transform="matrix(-1 0 0 1 40 0)">
+                              <circle
+                                cx="20"
+                                cy="20"
+                                r="20"
+                                fill="#97a38c"
+                              ></circle>
+                              <path
+                                fill="#FFF"
+                                d="M17 20l7.5 7.5-1.4 1.4-8.4-8.4-.5-.5.5-.5 8.4-8.4 1.4 1.4-7.5 7.5z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <a id="product-extra-info"></a>
+              <section class="product-extra-info-wrap">
+                <header class="product-extra-info-title">
+                  <h1 class="product-extra-info-title-text">교환/환불</h1>
+                </header>
+                <div class="product-refund-wrap">
+                  <table class="product-info-table">
+                    <tbody>
+                      <tr>
+                        <th>반품배송비</th>
+                        <td>
+                          3,000원 (최초 배송비가 무료인 경우 6,000원 부과)
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>교환배송비</th>
+                        <td>6,000원</td>
+                      </tr>
+                      <tr>
+                        <th>보내실 곳</th>
+                        <td>
+                          (42697) 대구 달서구 성서로68길 39 (갈산동) 그래이불
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <h2 class="product-detail-title">
+                    반품/교환 사유에 따른 요청 가능 기간
+                  </h2>
+                  <p class="product-detail-note">
+                    반품 시 먼저 판매자와 연락하셔서 반품사유, 택배사, 배송비,
+                    반품지 주소 등을 협의하신 후 반품상품을 발송해 주시기
+                    바랍니다.
+                  </p>
+                  <ol class="product-detail-list">
+                    <li>
+                      구매자 단순 변심은 상품 수령 후 7일 이내&nbsp;<small
+                        >(구매자 반품배송비 부담)</small
+                      >
+                    </li>
+                    <li>
+                      표시/광고와 상이, 계약내용과 다르게 이행된 경우 상품 수령
+                      후 3개월 이내, 그 사실을 안 날 또는 알 수 있었던 날로부터
+                      30일 이내.<br />둘 중 하나 경과 시 반품/교환
+                      불가&nbsp;<small>(판매자 반품배송비 부담)</small>
+                    </li>
+                  </ol>
+                  <h2 class="product-detail-title">
+                    반품/교환 사유에 따른 요청 가능 기간
+                  </h2>
+                  <p class="product-detail-note">
+                    반품 시 먼저 판매자와 연락하셔서 반품사유, 택배사, 배송비,
+                    반품지 주소 등을 협의하신 후 반품상품을 발송해 주시기
+                    바랍니다.
+                  </p>
+                  <ol class="product-detail-list">
+                    <li>
+                      구매자 단순 변심은 상품 수령 후 7일 이내&nbsp;<small
+                        >(구매자 반품배송비 부담)</small
+                      >
+                    </li>
+                    <li>
+                      표시/광고와 상이, 계약내용과 다르게 이행된 경우 상품 수령
+                      후 3개월 이내, 그 사실을 안 날 또는 알 수 있었던 날로부터
+                      30일 이내.<br />둘 중 하나 경과 시 반품/교환
+                      불가&nbsp;<small>(판매자 반품배송비 부담)</small>
+                    </li>
+                  </ol>
+                </div>
+              </section>
+              <section>
+                <header class="product-extra-info-title">
+                  <h1 class="product-extra-info-title-text">판매자 정보</h1>
+                  <button type="button" class="report-button">신고</button>
+                </header>
+                <div class="product-refund-wrap">
+                  <table class="product-info-table">
+                    <tbody>
+                      <tr>
+                        <th>반품배송비</th>
+                        <td>
+                          3,000원 (최초 배송비가 무료인 경우 6,000원 부과)
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>교환배송비</th>
+                        <td>6,000원</td>
+                      </tr>
+                      <tr>
+                        <th>보내실 곳</th>
+                        <td>
+                          (42697) 대구 달서구 성서로68길 39 (갈산동) 그래이불
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+          </div>
+          <!-- 사이드바 -->
+          <div class="product-detail-sidebar-wrap">
+            <div
+              class="product-detail-sidebar-container"
+              style="height: 598.25px"
+            >
+              <div
+                class="product-detail-sidebar-inner"
+                style="
+                  position: absolute;
+                  height: 598.25px;
+                  box-sizing: border-box;
+                  transition: top 0.1s ease 0s;
+                  top: 131.75px;
+                  width: 365.25px;
+                "
+              >
+                <section class="sidebar-contents-wrap">
+                  <div class="sidebar-content-container">
+                    <section class="sidebar-option-list-wrap">
+                      <ul class="sidebar-selected-product-wrap">
+                        <li>
+                          <article
+                            class="sidebar-selected-product-container"
+                            style="display: none"
+                          >
+                            <h2 class="sidebar-selected-product-option">
+                              <span>날짜:</span>
+                              <span class="selected-date">선택한날짜</span>
+                              /
+                              <span>키트:</span>
+                              <span class="selected-kit">선택한 시간</span>
+                            </h2>
+                            <button
+                              type="button"
+                              aria-label="삭제"
+                              class="sidebar-delete-button-wrap"
+                            >
+                              <span class="sidebar-delete-button">
+                                <img
+                                  src="/staticfiles/images/cancel.png"
+                                  alt=""
+                                />
+                              </span>
+                            </button>
+                            <div class="sidebar-student-count-title">인원</div>
+                            <div class="sidebar-selected-botton-wrap">
+                              <div class="sidebar-selected-count-wrap">
+                                <span class="sidebar-sub-count">
+                                  <img src="/staticfiles/images/sub.png" />
+                                </span>
+                                <button class="sidebar-count-number">0</button>
+                                <span class="sidebar-add-count">
+                                  <img
+                                    src="/staticfiles/images/add.png"
+                                    alt=""
+                                  />
+                                </span>
+                              </div>
+                              <div class="sidebar-selected-price-wrap">
+                                <span class="sidebar-selected-price"
+                                  >32,000</span
+                                >
+                              </div>
+                            </div>
+                          </article>
+                        </li>
+                      </ul>
+                    </section>
+                    <p class="sidebar-total-price-wrap">
+                      <span class="sidebar-total-text">주문금액</span>
+                      <span class="sidebar-total-price">
+                        <span>32,000</span>
+                        원
+                      </span>
+                    </p>
+                    <div class="sidebar-button-wrap">
+                      <button class="sidebar-addcart-button" type="button">
+                        장바구니
+                      </button>
+                      <button class="sidebar-buy-button" type="button">
+                        바로구매
+                      </button>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="#top">
+        <div class="top-button-wrap">
+          <button type="button" class="top-button-container">
+            <span class="arrow-up">
+              <img src="/staticfiles/images/button-down.png" alt="" />
+            </span>
+          </button>
+        </div>
+      </a>
+    </div>
+  </body>
+  <script src="/staticfiles/js/class/class-detail.js"></script>
+</html>

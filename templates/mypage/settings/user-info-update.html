@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 여기서부터 -->
+    <style data-emotion="css-global" data-s="">
+      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
+      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
+      @font-face {
+        font-family: OhouseIcon;
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
+            format("embedded-opentype"),
+          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
+            format("woff2"),
+          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
+            format("woff"),
+          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
+            format("truetype"),
+          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
+            format("svg");
+      }
+      html {
+        font-family: "Pretendard Variable", sans-serif;
+        letter-spacing: -0.3px;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+    <link rel="stylesheet" href="/staticfiles/css/common.css" />
+    <!-- 여기까지는 무조건 고정으로 모든 페이지에 복붙하세요 -->
+    <!-- 여기는 각자 css 파일 link하시면 됩니다 -->
+    <link
+      rel="shortcut icon"
+      href="/staticfiles/images/favicon.png"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="/staticfiles/css/mypage/settings/user-info-update.css"
+    />
+    <title>Selleaf | 회원정보수정</title>
+  </head>
+  <body>
+    <div class="whole-page-wrap">
+      <div class="whole-page-container">
+        <!-- 나중에 메인 페이지에서 작업하면 추가 -->
+        <header style="height: 80.75px"></header>
+        <div class="main-wrap">
+          <!-- 마이페이지 내 네비게이션 바 -->
+          <div class="navigation-wrap">
+            <div class="main-category-wrap">
+              <ul
+                class="main-category-container"
+                style="transform: translateX(0px)"
+              >
+                <li class="main-category-item">
+                  <a href="#">내 활동</a>
+                </li>
+                <li class="main-category-item">
+                  <a href="#">거래 내역</a>
+                </li>
+                <li class="main-category-item">
+                  <a href="#">수강 내역</a>
+                </li>
+                <li class="main-category-item teacher">
+                  <a href="#">강의 현황</a>
+                </li>
+                <li class="main-category-item">
+                  <a href="#" class="active">설정</a>
+                </li>
+              </ul>
+            </div>
+            <div class="sub-category-wrap">
+              <ul
+                class="sub-category-container"
+                style="transform: translateX(0px)"
+              >
+                <li class="sub-category-item">
+                  <a href="#" class="active">회원정보수정</a>
+                </li>
+                <li class="sub-category-item">
+                  <a href="#">알림 설정</a>
+                </li>
+                <li class="sub-category-item">
+                  <a href="#">비밀번호 변경</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- 회원정보수정 페이지 내용 -->
+          <div class="user-info-update-wrap">
+            <div class="user-info-update-header">
+              <div class="user-info-update-title">회원정보수정</div>
+              <a class="user-withdrawal" href="#">탈퇴하기</a>
+            </div>
+            <!-- 회원정보수정 서식 -->
+            <form class="update-form-wrap">
+              <!-- 각 정보를 감싸는 클래스는 동일하게 -->
+              <!-- 이메일 입력란(필수) -->
+              <!-- 현재 수정 못하게 막아놓은 상태 -->
+              <div class="info-items-wrap">
+                <div class="info-items-title">
+                  이메일
+                  <div class="required-items">* 필수항목</div>
+                </div>
+                <div class="user-info-items-wrap">
+                  <div class="user-info-items-container">
+                    <div class="email-input-wrap">
+                      <span class="email-input-local">
+                        <label>
+                          <!-- focus-event: focus 되면 테두리 변화 -->
+                          <input
+                            class="email-input-form focus-event"
+                            value="selleaf_test"
+                            size="1"
+                            placeholder="이메일"
+                            readonly
+                          />
+                        </label>
+                      </span>
+                      <span class="email-seperator">@</span>
+                      <span class="email-input-domain">
+                        <label>
+                          <input
+                            class="email-input-form focus-event"
+                            value="gmail.com"
+                            size="1"
+                            placeholder="이메일"
+                            readonly
+                          />
+                        </label>
+                      </span>
+                    </div>
+                    <div class="item-warning">현재 수정이 불가능합니다.</div>
+                  </div>
+                </div>
+              </div>
+              <!-- 이름 입력란(필수) -->
+              <div class="info-items-wrap">
+                <div class="info-items-title">
+                  이름
+                  <div class="required-items">* 필수항목</div>
+                </div>
+                <div class="user-info-items-wrap">
+                  <div class="user-info-items-container">
+                    <div class="user-name-input-wrap">
+                      <input
+                        class="user-name-input-form focus-event"
+                        value="Selleaf Test"
+                      />
+                      <!-- 값 미입력 시 innerText 추가 -->
+                      <div class="user-info-error"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 성별 입력란 -->
+              <div class="info-items-wrap">
+                <div class="info-items-title">성별</div>
+                <div class="user-info-items-wrap">
+                  <div class="user-info-items-container gender">
+                    <ul class="gender-radio-wrap">
+                      <li>
+                        <div class="gender-input-wrap">
+                          <label class="gender-input-container">
+                            <input
+                              class="gender-radio"
+                              type="radio"
+                              name="gender"
+                            />
+                            <span class="radio-button-image"> </span>
+                            <span>남성</span>
+                          </label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="gender-input-wrap">
+                          <label class="gender-input-container">
+                            <input
+                              class="gender-radio"
+                              type="radio"
+                              name="gender"
+                            />
+                            <span class="radio-button-image"> </span>
+                            <span>여성</span>
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- 생년월일 입력란 -->
+              <!-- JS 이벤트로 형식 검사 필요(keyup, focus, blur 등) -->
+              <!-- 형식 오류 발생 시 아래에 div 요소도 추가됨 -->
+              <div class="info-items-wrap">
+                <div class="info-items-title">생년월일</div>
+                <div class="user-info-items-wrap">
+                  <div class="user-info-items-container">
+                    <div class="birth-input-wrap">
+                      <!-- 날짜 제한 걸어놓은 상태 -->
+                      <input
+                        type="date"
+                        class="birth-input-form focus-event"
+                        data-placeholder="YYYY-MM-DD"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 프로필 이미지 입력창 -->
+              <!-- 전에 배웠던 이미지 넣기 이벤트 추가 필요 -->
+              <div class="info-items-wrap">
+                <div class="info-items-title">프로필 이미지</div>
+                <div class="user-info-items-wrap">
+                  <div class="user-info-items-container profile">
+                    <!-- 여기를 클릭하면 새 이미지를 불러오는 JS 이벤트 발생 -->
+                    <div class="user-profile-image-wrap">
+                      <ul class="user-profile-image-container">
+                        <li class="new-image-wrap">
+                          <div class="new-image-container">
+                            <label for="new-image">
+                              <!-- 새 이미지 넣으면 이미지 url이 변경 -->
+                              <div class="current-profile-image"></div>
+                            </label>
+                          </div>
+                          <input
+                            type="file"
+                            id="new-image"
+                            style="display: none"
+                            accept="image/*"
+                          />
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- 새 이미지 넣으면 삭제 버튼 표시 -->
+                    <!-- 평소에는 display = none -->
+                    <button class="image-delete-button" style="display: none">
+                      <img
+                        class="delete-image"
+                        src="/staticfiles/images/settings/delete_icon.svg"
+                      />
+                      삭제
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- 한줄 소개 입력란 -->
+              <div class="info-items-wrap">
+                <div class="info-items-title">한줄 소개</div>
+                <div class="user-info-items-wrap">
+                  <div class="user-info-items-container">
+                    <input
+                      class="introduce-input-form focus-event"
+                      maxlength="40"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- 회원정보수정 버튼 -->
+              <!-- 클릭하면 양식 검사 후 alert 출력 -->
+              <button class="update-submit-button" type="button">
+                회원 정보 수정
+              </button>
+            </form>
+          </div>
+        </div>
+        <!-- 나중에 메인 페이지에서 작업하면 추가 -->
+        <footer style="height: 320px"></footer>
+      </div>
+      <!-- 경고 모달 -->
+      <div class="confirm-total-wrap withdrawal-warning" style="display: none">
+        <div class="confirm-wrap">
+          <div class="confirm-title-container">
+            <p class="confirm-title">
+              정말로 Selleaf에서 회원탈퇴 하시겠습니까?
+            </p>
+          </div>
+          <div class="confirm-button-wrap">
+            <div class="confirm-button-container">
+              <button class="confirm-cancel">취소</button>
+              <button class="confirm">확인</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 탈퇴완료 시 띄울 모달 -->
+      <div class="confirm-total-wrap withdrawal-complete" style="display: none">
+        <div class="confirm-wrap">
+          <div class="confirm-title-container">
+            <p class="confirm-title">탈퇴가 완료되었습니다.</p>
+          </div>
+          <div class="confirm-button-wrap">
+            <div class="confirm-button-container">
+              <button class="confirm withdrawal-confirm">확인</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="/staticfiles/js/mypage/settings/user-info-update.js"></script>
+</html>

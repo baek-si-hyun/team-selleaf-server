@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style data-emotion="css-global" data-s="">
+      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
+      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
+      @font-face {
+        font-family: OhouseIcon;
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
+            format("embedded-opentype"),
+          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
+            format("woff2"),
+          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
+            format("woff"),
+          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
+            format("truetype"),
+          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
+            format("svg");
+      }
+      html {
+        font-family: "Pretendard Variable", sans-serif;
+        letter-spacing: -0.3px;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+    <link rel="stylesheet" href="/staticfiles/css/common.css" />
+    <!-- 여기까지는 무조건 고정으로 모든 페이지에 복붙하세요 -->
+    <!-- 여기는 각자 css 파일 link하시면 됩니다 -->
+    <link
+      rel="shortcut icon"
+      href="/staticfiles/images/favicon.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/staticfiles/css/cart/cart.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Selleaf | 내 장바구니</title>
+  </head>
+  <body>
+    <header></header>
+    <div class="payment-wrap">
+      <form class="payment-container">
+        <article class="paymeny-inner">
+          <h1 class="paymeny-title">장바구니</h1>
+          <!-- 장바구니에 담은 상품이 있다면 표시 -->
+          <section class="section">
+            <div class="section-title">
+              <h2 class="title-text">내가 담은 상품들</h2>
+              <p class="product-count-wrap">
+                <span class="product-count">5건</span>
+              </p>
+            </div>
+            <!-- 상품이 없다면 이 부분의 텍스트 및 버튼 표시 -->
+            <div class="no-items-wrap">
+              <h1 class="no-items-text">아직 장바구니에 담은 상품이 없어요.</h1>
+              <div class="purchase-link-button-wrap">
+                <a href="#" class="purchase-link-button">구매 바로가기</a>
+              </div>
+            </div>
+            <!-- 상품이 하나라도 있다면 아래의 article 태그 display = block -->
+            <article class="contents-wrap">
+              <ul>
+                <!-- 장바구니에 담은 상품 리스트 -->
+                <li class="product-preview-wrap">
+                  <div class="product-preview-container">
+                    <div class="product-preview-inner">
+                      <h3 class="user-name">판매유저이름</h3>
+                      <div class="delivery-condition">무료배송</div>
+                    </div>
+                    <hr class="divide" />
+                    <div class="delivery-note">업체직접배송</div>
+                  </div>
+                  <div class="order-product-info">
+                    <figure class="product-preview-image">
+                      <img
+                        src="/staticfiles/images/blank-image.png"
+                        class="product-image"
+                      />
+                    </figure>
+                    <div class="product-info-contents">
+                      <p class="product-name">
+                        [5%쿠폰]드레스덴 정품 조야패브릭 호텔식 침대프레임
+                        SS/Q/K/LK/CK
+                      </p>
+                      <p class="product-option">
+                        추가상품 - 베이직 본넬 매트리스 퀸Q
+                      </p>
+                      <div class="product-price">
+                        <span class="price-number">120,000</span
+                        ><span class="won">원</span> &nbsp;
+                        <div class="selected-product-count">
+                          <span class="sub-count">
+                            <img src="/staticfiles/images/sub.png" alt="" />
+                          </span>
+                          <button type="button" class="counted-number">
+                            1
+                          </button>
+                          <span class="add-count">
+                            <img src="/staticfiles/images/add.png" alt="" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="product-preview-wrap">
+                  <div class="product-preview-container">
+                    <div class="product-preview-inner">
+                      <h3 class="user-name">판매유저이름</h3>
+                      <div class="delivery-condition">무료배송</div>
+                    </div>
+                    <hr class="divide" />
+                    <div class="delivery-note">업체직접배송</div>
+                  </div>
+                  <div class="order-product-info">
+                    <figure class="product-preview-image">
+                      <img
+                        src="/staticfiles/images/blank-image.png"
+                        class="product-image"
+                      />
+                    </figure>
+                    <div class="product-info-contents">
+                      <p class="product-name">
+                        [5%쿠폰]드레스덴 정품 조야패브릭 호텔식 침대프레임
+                        SS/Q/K/LK/CK
+                      </p>
+                      <p class="product-option">
+                        추가상품 - 베이직 본넬 매트리스 퀸Q
+                      </p>
+                      <div class="product-price">
+                        <span class="price-number">119,000</span
+                        ><span class="won">원</span> &nbsp;
+                        <!-- <span class="quantity">1개</span> -->
+                        <div class="selected-product-count">
+                          <span class="sub-count">
+                            <img src="/staticfiles/images/sub.png" alt="" />
+                          </span>
+                          <button type="button" class="counted-number">
+                            1
+                          </button>
+                          <span class="add-count">
+                            <img src="/staticfiles/images/add.png" alt="" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="product-preview-wrap">
+                  <div class="product-preview-container">
+                    <div class="product-preview-inner">
+                      <h3 class="user-name">판매유저이름</h3>
+                      <div class="delivery-condition">무료배송</div>
+                    </div>
+                    <hr class="divide" />
+                    <div class="delivery-note">업체직접배송</div>
+                  </div>
+                  <div class="order-product-info">
+                    <figure class="product-preview-image">
+                      <img
+                        src="/staticfiles/images/blank-image.png"
+                        class="product-image"
+                      />
+                    </figure>
+                    <div class="product-info-contents">
+                      <p class="product-name">
+                        [5%쿠폰]드레스덴 정품 조야패브릭 호텔식 침대프레임
+                        SS/Q/K/LK/CK
+                      </p>
+                      <p class="product-option">
+                        추가상품 - 베이직 본넬 매트리스 퀸Q
+                      </p>
+                      <div class="product-price">
+                        <span class="price-number">119,000</span
+                        ><span class="won">원</span> &nbsp;
+                        <!-- <span class="quantity">1개</span> -->
+                        <div class="selected-product-count">
+                          <span class="sub-count">
+                            <img src="/staticfiles/images/sub.png" alt="" />
+                          </span>
+                          <button type="button" class="counted-number">
+                            1
+                          </button>
+                          <span class="add-count">
+                            <img src="/staticfiles/images/add.png" alt="" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="product-preview-wrap">
+                  <div class="product-preview-container">
+                    <div class="product-preview-inner">
+                      <h3 class="user-name">판매유저이름</h3>
+                      <div class="delivery-condition">무료배송</div>
+                    </div>
+                    <hr class="divide" />
+                    <div class="delivery-note">업체직접배송</div>
+                  </div>
+                  <div class="order-product-info">
+                    <figure class="product-preview-image">
+                      <img
+                        src="/staticfiles/images/blank-image.png"
+                        class="product-image"
+                      />
+                    </figure>
+                    <div class="product-info-contents">
+                      <p class="product-name">
+                        [5%쿠폰]드레스덴 정품 조야패브릭 호텔식 침대프레임
+                        SS/Q/K/LK/CK
+                      </p>
+                      <p class="product-option">
+                        추가상품 - 베이직 본넬 매트리스 퀸Q
+                      </p>
+                      <div class="product-price">
+                        <span class="price-number">119,000</span
+                        ><span class="won">원</span> &nbsp;
+                        <!-- <span class="quantity">1개</span> -->
+                        <div class="selected-product-count">
+                          <span class="sub-count">
+                            <img src="/staticfiles/images/sub.png" alt="" />
+                          </span>
+                          <button type="button" class="counted-number">
+                            1
+                          </button>
+                          <span class="add-count">
+                            <img src="/staticfiles/images/add.png" alt="" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="product-preview-wrap">
+                  <div class="product-preview-container">
+                    <div class="product-preview-inner">
+                      <h3 class="user-name">판매유저이름</h3>
+                      <div class="delivery-condition">무료배송</div>
+                    </div>
+                    <hr class="divide" />
+                    <div class="delivery-note">업체직접배송</div>
+                  </div>
+                  <div class="order-product-info">
+                    <figure class="product-preview-image">
+                      <img
+                        src="/staticfiles/images/blank-image.png"
+                        class="product-image"
+                      />
+                    </figure>
+                    <div class="product-info-contents">
+                      <p class="product-name">
+                        [5%쿠폰]드레스덴 정품 조야패브릭 호텔식 침대프레임
+                        SS/Q/K/LK/CK
+                      </p>
+                      <p class="product-option">
+                        추가상품 - 베이직 본넬 매트리스 퀸Q
+                      </p>
+                      <div class="product-price">
+                        <span class="price-number">119,000</span
+                        ><span class="won">원</span> &nbsp;
+                        <!-- <span class="quantity">1개</span> -->
+                        <div class="selected-product-count">
+                          <span class="sub-count">
+                            <img src="/staticfiles/images/sub.png" alt="" />
+                          </span>
+                          <button type="button" class="counted-number">
+                            1
+                          </button>
+                          <span class="add-count">
+                            <img src="/staticfiles/images/add.png" alt="" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </article>
+          </section>
+        </article>
+        <!-- 사이드바 -->
+        <aside class="sidebar-wrap">
+          <article class="sidebar-container">
+            <div class="payment-detail-info-wrap">
+              <section class="payment-detail-container">
+                <div class="payment-datail-title">
+                  <h2 class="payment-title-text">결제금액</h2>
+                </div>
+                <article class="detail-price-wrap">
+                  <div class="price-title-text">
+                    총 상품 금액<span class="emphasis price">418,000</span>원
+                  </div>
+                  <div class="price-title-text">
+                    배송비<span class="price">0원</span>
+                  </div>
+                  <div class="price-title-text">
+                    쿠폰 사용<span class="price">0원</span>
+                  </div>
+                  <div class="price-title-text">
+                    포인트 사용<span class="price">0원</span>
+                  </div>
+                  <hr class="line" />
+                  <div class="total-price-wrap">
+                    <span class="total-text">최종 결제 금액</span>
+                    <span class="total-price">418,000원</span>
+                  </div>
+                  <p class="expected-mileage">
+                    <span class="value">418 P </span>적립 예정
+                  </p>
+                </article>
+              </section>
+            </div>
+            <div class="pay-button-wrap">
+              <button type="submit" class="summit">바로 구매</button>
+            </div>
+          </article>
+        </aside>
+      </form>
+    </div>
+  </body>
+  <script src="/staticfiles/js/cart/cart.js"></script>
+</html>

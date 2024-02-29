@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 여기서부터 -->
+    <style data-emotion="css-global" data-s="">
+      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
+      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
+      @font-face {
+        font-family: OhouseIcon;
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
+        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
+            format("embedded-opentype"),
+          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
+            format("woff2"),
+          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
+            format("woff"),
+          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
+            format("truetype"),
+          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
+            format("svg");
+      }
+      html {
+        font-family: "Pretendard Variable", sans-serif;
+        letter-spacing: -0.3px;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+    <link rel="stylesheet" href="/staticfiles/css/common.css" />
+    <!-- 여기까지는 무조건 고정으로 모든 페이지에 복붙하세요 -->
+    <!-- 여기는 각자 css 파일 link하시면 됩니다 -->
+    <link
+      rel="shortcut icon"
+      href="/staticfiles/images/favicon.png"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="/staticfiles/css/mypage/lecture/my-lectures.css"
+    />
+    <!-- 나중에 DB, 서버 연동으로 (닉네임)님의 수강내역 으로 바꾸기 -->
+    <!-- 여기는 내가 들은 강의를 저장하는 페이지 -->
+    <title>Selleaf | 나의 수강내역</title>
+  </head>
+  <body>
+    <div class="whole-page-wrap">
+      <div class="whole-page-container">
+        <!-- 나중에 메인 페이지에서 작업하면 추가 -->
+        <header style="height: 80.75px"></header>
+        <div class="main-wrap">
+          <!-- 마이페이지 내 네비게이션 바 -->
+          <div class="navigation-wrap">
+            <div class="main-category-wrap">
+              <ul
+                class="main-category-container"
+                style="transform: translateX(0px)"
+              >
+                <li class="main-category-item">
+                  <a href="#">내 활동</a>
+                </li>
+                <li class="main-category-item">
+                  <a href="#">거래 내역</a>
+                </li>
+                <li class="main-category-item">
+                  <a href="#" class="active">수강 내역</a>
+                </li>
+                <li class="main-category-item teacher">
+                  <a href="#">강의 현황</a>
+                </li>
+                <li class="main-category-item">
+                  <a href="#">설정</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- 거래페이지 내 탭 별 내용 - 이 탭은 내 거래 -->
+          <div class="content-wrap">
+            <div class="content-container">
+              <div class="sidebar-wrap">
+                <div
+                  class="sidebar-container"
+                  style="
+                    position: sticky;
+                    top: 80.75px;
+                    transition: top 0.1s ease 0s;
+                  "
+                >
+                  <div class="sidebar-content" style="position: relative">
+                    <div>
+                      <div class="my-info-wrap">
+                        <div class="share-drop-down-wrap">
+                          <div class="share-drop-down-container">
+                            <!-- 클릭하면 요소(모달창) 추가 -->
+                            <button
+                              class="share-drop-down-button"
+                              type="button"
+                              aria-pressed="false"
+                              aria-label="공유"
+                            >
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                preserveAspectRatio="xMidYMid meet"
+                              >
+                                <path
+                                  d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
+                                ></path>
+                              </svg>
+                            </button>
+                            <div class="modal-wrap">
+                              <div
+                                class="modal-container"
+                                style="
+                                  position: absolute;
+                                  z-index: 1000;
+                                  transform: translateX(-40%);
+                                "
+                              >
+                                <div class="share-modal-wrap">
+                                  <div class="share-modal-container">
+                                    <!-- 카카오 공유 버튼 -->
+                                    <button
+                                      type="button"
+                                      class="kakao-share-button"
+                                    >
+                                      <img
+                                        src="/staticfiles/images/other-sns-logos/kakao-logo.svg"
+                                      />
+                                    </button>
+                                    <!-- 클립보드 복사 버튼 -->
+                                    <button
+                                      type="button"
+                                      class="cilpboard-button"
+                                    >
+                                      <svg
+                                        class="icon"
+                                        aria-label="주소 복사"
+                                        width="40"
+                                        height="40"
+                                        viewBox="0 0 40 40"
+                                        fill="none"
+                                        preserveAspectRatio="xMidYMid meet"
+                                      >
+                                        <circle
+                                          cx="20"
+                                          cy="20"
+                                          r="20"
+                                          fill="#EAEDEF"
+                                        ></circle>
+                                        <path
+                                          d="M25.0001 20.65H15.0001V19.35H25.0001V20.65Z"
+                                          fill="#2F3438"
+                                        ></path>
+                                        <path
+                                          d="M10.3501 20C10.3501 17.4319 12.432 15.35 15.0001 15.35H18.0001V16.65H15.0001C13.1499 16.65 11.6501 18.1498 11.6501 20C11.6501 21.8501 13.1499 23.35 15.0001 23.35H18.0001V24.65H15.0001C12.432 24.65 10.3501 22.5681 10.3501 20Z"
+                                          fill="#2F3438"
+                                        ></path>
+                                        <path
+                                          d="M29.6501 20C29.6501 17.4319 27.5682 15.35 25.0001 15.35H22.0001V16.65H25.0001C26.8503 16.65 28.3501 18.1498 28.3501 20C28.3501 21.8501 26.8503 23.35 25.0001 23.35H22.0001V24.65H25.0001C27.5682 24.65 29.6501 22.5681 29.6501 20Z"
+                                          fill="#2F3438"
+                                        ></path>
+                                      </svg>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="my-profile-wrap">
+                          <div class="profile-image-wrap">
+                            <img
+                              class="profile-image"
+                              src="/staticfiles/images/mypage/base-profile-image.avif"
+                            />
+                          </div>
+                          <div class="personal-info-wrap">
+                            <div class="user-nickname">Selleaf Test</div>
+                            <div class="follow-settings-wrap">
+                              <!-- 나중에 팔로우 페이지랑 연결 -->
+                              <!-- <dl class="follow-wrap">
+                                <dt class="follow-text">팔로워</dt>
+                                <dd class="follow-count">
+                                  <a href="#" class="follow-num">123</a>
+                                </dd>
+                                <dt class="follow-text">팔로잉</dt>
+                                <dd class="follow-count">
+                                  <a href="#" class="follow-num">45</a>
+                                </dd>
+                              </dl> -->
+                              <!-- 나중에 설정 페이지랑 연결 -->
+                              <div class="settings-button-wrap">
+                                <a class="settings-button" href="#">설정</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- 스크랩, 좋아요, 마일리지, 쿠폰 -->
+                        <div class="scraps-likes-wrap">
+                          <div class="scraps-likes-container">
+                            <!-- 스크랩 -->
+                            <a class="scraps-likes-content-wrap" href="#">
+                              <div class="scraps-likes-icon">
+                                <img
+                                  src="/staticfiles/images/scrap-off-blk.png"
+                                />
+                              </div>
+                              <div class="scraps-likes-text">스크랩북</div>
+                              <div class="scraps-likes-count">0</div>
+                            </a>
+                            <!-- 좋아요 -->
+                            <a class="scraps-likes-content-wrap" href="#">
+                              <div class="scraps-likes-icon">
+                                <img src="/staticfiles/images/like-off.png" />
+                              </div>
+                              <div class="scraps-likes-text">좋아요</div>
+                              <div class="scraps-likes-count">0</div>
+                            </a>
+                            <!-- 마일리지 -->
+                            <a class="scraps-likes-content-wrap" href="#">
+                              <div class="scraps-likes-icon">
+                                <img
+                                  src="/staticfiles/images/maileage/mileage.png"
+                                />
+                              </div>
+                              <div class="scraps-likes-text">마일리지</div>
+                              <div class="scraps-likes-count">0</div>
+                            </a>
+                            <!-- 쿠폰 -->
+                            <!-- <a class="scraps-likes-content-wrap" href="#">
+                              <div class="scraps-likes-icon">
+                                <svg
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  preserveAspectRatio="xMidYMid meet"
+                                >
+                                  <path
+                                    fill="#424242"
+                                    fill-rule="nonzero"
+                                    d="M22.588 3H1.413C.633 3 0 3.638 0 4.426L0 9.53l.605-.088c.12-.017.243-.026.367-.026 1.413 0 2.558 1.157 2.558 2.584S2.385 14.584.972 14.584c-.124 0-.247-.009-.367-.026L0 14.47l.001 5.104C.001 20.362.633 21 1.413 21h21.175c.78 0 1.412-.638 1.412-1.426V4.426C24 3.638 23.368 3 22.588 3zM1.413 4.07h21.175c.195 0 .353.159.353.356v15.148c0 .197-.158.357-.353.357H1.413l-.071-.008c-.161-.033-.282-.176-.282-.349l-.002-3.923-.086.002c1.997 0 3.617-1.635 3.617-3.653l-.004-.182C4.493 9.945 3.006 8.443 1.152 8.35l-.094-.003.002-3.922c0-.197.158-.357.353-.357zm14.646 2.138c.293 0 .53.237.53.53v1.614c0 .292-.237.53-.53.53-.292 0-.53-.238-.53-.53V6.737c0-.292.238-.53.53-.53zm0 4.455c.293 0 .53.237.53.53v1.614c0 .293-.237.53-.53.53-.292 0-.53-.237-.53-.53v-1.614c0-.293.238-.53.53-.53zm0 4.456c.293 0 .53.237.53.53v1.614c0 .292-.237.53-.53.53-.292 0-.53-.238-.53-.53v-1.615c0-.292.238-.53.53-.53z"
+                                  ></path>
+                                </svg>
+                              </div>
+                              <div class="scraps-likes-text">쿠폰</div>
+                              <div class="scraps-likes-count">0</div>
+                            </a> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="seperator-wrap">
+                <div class="content-seperator"></div>
+              </div>
+              <!-- 사진 등의 내용물이 표시되는 공간 -->
+              <div class="main-content-wrap">
+                <div class="main-content-container">
+                  <div class="menu-bar-wrap">
+                    <div class="lecture-page-link-wrap">
+                      <a href="#" class="lecture-page-link">강의 바로가기</a>
+                    </div>
+                  </div>
+                  <div class="lecture-history-wrap">
+                    <!-- 아무것도 없을 때 표시할 태그 -->
+                    <h1>아직 신청한 강의가 없어요.</h1>
+                    <p>더 많은 강의를 들어보세요!</p>
+                    <!-- 내역이 있을 때는 여기를 표시 -->
+                    <div class="lecture-history-item-wrap">
+                      <a href="#" class="lecture-history-link"></a>
+                      <div class="lecture-history-item-container">
+                        <div class="lecture-item-image-wrap">
+                          <img
+                            class="lecture-item-image"
+                            src="/staticfiles/images/blank-image.png"
+                          />
+                        </div>
+                        <div class="lecture-item-title-wrap">
+                          <span>강의 테스트 1</span>
+                        </div>
+                        <div class="lecture-item-article-wrap">
+                          <span>강의 내역 본문 예시입니다.</span>
+                        </div>
+                        <div class="write-review-wrap">
+                          <a href="#" class="write-review-button">
+                            강의 리뷰 쓰기
+                          </a>
+                        </div>
+                        <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
+                        <div class="lecture-item-info-wrap">
+                          <div class="article-info-wrap">
+                            <!-- 작성자 -->
+                            <div class="user-info-wrap">
+                              <div class="user-profile-wrap">
+                                <img
+                                  class="user-profile-image"
+                                  src="/staticfiles/images/mypage/base-profile-image.avif"
+                                />
+                              </div>
+                              Selleaf 테스트 1
+                            </div>
+                            <!-- 올린 시간, 조회수, 지역 -->
+                            <div class="item-info-wrap">
+                              <div class="item-infos">
+                                2024년 02월 15일 수강
+                              </div>
+                              <div class="item-infos">9:30</div>
+                              <div class="item-infos">온라인</div>
+                            </div>
+                          </div>
+                          <!-- 태그 -->
+                          <div class="item-tags-wrap">
+                            <ul class="item-tags-container">
+                              <li class="item-tags">
+                                <div>
+                                  <button
+                                    class="item-tags-button"
+                                    type="button"
+                                  >
+                                    테라리움
+                                  </button>
+                                </div>
+                              </li>
+                              <li class="item-tags">
+                                <div>
+                                  <button
+                                    class="item-tags-button"
+                                    type="button"
+                                  >
+                                    DIY
+                                  </button>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 나중에 메인 페이지에서 작업하면 추가 -->
+        <footer style="height: 320px"></footer>
+      </div>
+    </div>
+  </body>
+  <script src="/staticfiles/js/mypage/lectures/my-lectures.js"></script>
+</html>
