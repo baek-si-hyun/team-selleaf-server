@@ -16,7 +16,7 @@ class MemberCheckIdView(APIView):
 
 class MemberJoinView(View):
     def get(self, request):
-        return render(request, 'member/join.html')
+        return render(request, 'member/join/join.html')
 
     def post(self, request):
         data = request.POST
@@ -36,7 +36,7 @@ class MemberJoinView(View):
 
 class MemberLoginView(View):
     def get(self, request):
-        return render(request, 'member/login.html')
+        return render(request, 'member/login/login.html')
 
     def post(self, request):
         data = request.POST
@@ -47,23 +47,9 @@ class MemberLoginView(View):
         members = Member.objects.filter(member_id=data['member_id'], member_password=data['member_password'])
         if members.exists():
             request.session['member'] = MemberSerializer(members.first()).data
+            # 메인 화면으로 가기
             return redirect('/post/list?page=1')
 
-        return render(request, 'member/login.html', {'check': False})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return render(request, 'member/login/login.html', {'check': False})
 
 
