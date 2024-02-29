@@ -29,10 +29,3 @@ class TeacherInfoFile(File):
         db_table = 'tbl_teacher_info_file'
         ordering = ['-id']
 
-# 강의 장소 사진 테이블
-class TeacherPlaceFile(File):
-    teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT, null=False)
-
-    class Meta:
-        db_table = 'tbl_teacher_place_file'
-        ordering = ['-id']
