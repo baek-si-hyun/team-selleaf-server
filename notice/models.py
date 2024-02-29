@@ -1,6 +1,7 @@
 from django.db import models
 
 from notice.managers import NoticeManager
+from selleaf.models import Period
 
 
 class Notice(Period):
@@ -8,7 +9,7 @@ class Notice(Period):
     notice_content = models.CharField(max_length=255, null=False, blank=False)
 
     # 공지사항 게시 상태 - 게시 중(1), 삭제됨(0)
-    notice_status = models.BooleanField(null=False, blank=False, default=1)
+    notice_status = models.BooleanField(null=False, blank=False, default=True)
 
     # Managers
     objects = models.Manager()
