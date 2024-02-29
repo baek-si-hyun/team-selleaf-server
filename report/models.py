@@ -1,5 +1,6 @@
 from django.db import models
 
+from member.models import Member
 from report.managers import ReportManager
 from selleaf.models import Period
 

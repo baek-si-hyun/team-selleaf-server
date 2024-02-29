@@ -2,7 +2,9 @@ from django.contrib.auth.models import User
 from django.db import models
 
 from lecture.manager import LectureManager
+from member.models import Member
 from selleaf.models import File, Scrap, Plant
+from selleaf.period import Period
 from teacher.models import Teacher
 
 class LectureCategory(Period):
