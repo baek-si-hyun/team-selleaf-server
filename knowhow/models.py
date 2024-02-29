@@ -11,7 +11,7 @@ class Knowhow(Period):
     knowhow_content = models.CharField(max_length=500, null=False)
     knowhow_count = models.IntegerField(default=0, null=False)
     knowhow_category = models.CharField(null=False)
-    member = models.ForeignKey(Member, on_delete=models.PROTECT)
+    member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_knowhow'
@@ -19,7 +19,7 @@ class Knowhow(Period):
 
 
 class KnowhowFile(File):
-    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT)
+    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_knowhow_file'
@@ -27,7 +27,7 @@ class KnowhowFile(File):
 
 
 class KnowhowLike(Like):
-    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT)
+    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_knowhow_like'
@@ -35,7 +35,7 @@ class KnowhowLike(Like):
 
 
 class KnowhowPlant(Plant):
-    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT)
+    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_knowhow_plant'
@@ -44,14 +44,14 @@ class KnowhowPlant(Plant):
 class KnowhowRecommend(Period):
     recommend_url = models.CharField(null=False)
     recommend_content = models.CharField(null=False, max_length=30)
-    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT)
+    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_knowhow_recommend'
 
 
 class KnowhowScrap(Scrap):
-    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT)
+    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_knowhow_scrap'
@@ -59,7 +59,7 @@ class KnowhowScrap(Scrap):
 
 
 class KnowhowTag(Tag):
-    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT)
+    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_knowhow_tag'
@@ -67,8 +67,8 @@ class KnowhowTag(Tag):
 
 class KnowhowReply(Period):
     knowhow_reply_content = models.CharField(null=False, max_length=50)
-    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT)
-    member = models.ForeignKey(Member, on_delete=models.PROTECT)
+    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
+    member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_knowhow_reply'
@@ -76,7 +76,7 @@ class KnowhowReply(Period):
 
 
 class KnowhowReplyLike(Like):
-    knowhow_reply = models.ForeignKey(KnowhowReply, on_delete=models.PROTECT)
+    knowhow_reply = models.ForeignKey(KnowhowReply, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_knowhow_reply_like'

@@ -1,8 +1,8 @@
 from django.db import models
 
 from lecture.models import Kit
-from member.models import Member
-from selleaf.models import Address, Mileage
+from member.models import Member, MemberAddress
+from selleaf.models import Mileage
 from selleaf.period import Period
 
 
@@ -17,7 +17,7 @@ class Order(Period):
     order_receiver = models.CharField(max_length=100, null=False, blank=False)
     phone = models.CharField(max_length=50, null=False, blank=False)
     kit = models.ForeignKey(Kit, on_delete=models.PROTECT, null=False)
-    address = models.ForeignKey(Address, on_delete=models.PROTECT, null=False)
+    address = models.ForeignKey(MemberAddress, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_order'
