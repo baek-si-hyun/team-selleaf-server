@@ -1,6 +1,6 @@
 from django.db import models
 from member.models import Member
-from selleaf.Period import Period
+from selleaf.period import Period
 
 
 class Address(Period):

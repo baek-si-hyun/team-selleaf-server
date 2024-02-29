@@ -1,6 +1,6 @@
 from django.db import models
 
-from selleaf.Period import Period
+from selleaf.period import Period
 
 
 class Knowhow(Period):
