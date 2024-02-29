@@ -1,12 +1,7 @@
 from django.db import models
-from django.utils import timezone
+from member.models import Member
+from selleaf.period import Period
 
-class Period(models.Model):
-    created_date = models.DateTimeField(null=False, auto_now_add=True)
-    updated_date = models.DateTimeField(null=False, default=timezone.now)
-
-    class Meta:
-        abstract = True
 
 class Address(Period):
     address_zipcode = models.CharField(max_length=60,null=False,blank=False)
@@ -17,30 +12,34 @@ class Address(Period):
     class Meta:
         abstract = True
 
+
 class City(Period):
-    area_name = models.CharField(max_length=255,null=False,blank=False)
-    city_name = models.CharField(max_length=50, null=False,blank=False)
+    city_name = models.CharField(max_length=255,null=False,blank=False)
 
     class Meta:
         abstract = True
+
+
+class District(City):
+    district_name = models.CharField(max_length=255,null=False,blank=False)
+
+    class Meta:
+        abstract = True
+
 
 class File(Period):
-    file_url = models.FileField(upload_to='file/%Y/%m/%d')
+    file_url = models.ImageField(upload_to='file/%Y/%m/%d')
 
     class Meta:
         abstract = True
+
 
 class Like(Period):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    member = models.ForeignKey(Member, on_delete=models.PROTECT)
 
     class Meta:
         abstract = True
 
-class District(Period):
-    city = models.ForeignKey(City, on_delete=models.PROTECT)
-
-    class Meta:
-        abstract = True
 
 class Mileage(Period):
     mileage_status = models.BooleanField(default=True)
@@ -50,21 +49,25 @@ class Mileage(Period):
         abstract = True
 
 
-class Plant(Period):
-    plant_name = models.CharField(max_length=50,null=False,blank=False)
-
-    class Meta:
-        abstract = True
-
-
 class Scrap(Period):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    member = models.ForeignKey(Member, on_delete=models.PROTECT)
 
     class Meta:
         abstract = True
+
 
 class Tag(Period):
     tag_name = models.CharField(max_length=50,null=False,blank=False)
+
+    class Meta:
+        abstract = True
+
+
+class Alarm(Period):
+    sender = models.ForeignKey(Member, on_delete=models.PROTECT, null=True, related_name='sender')
+    receiver = models.ForeignKey(Member, on_delete=models.PROTECT, null=True, related_name='reciever', blank=True)
+    # 확인 True 미확인 False
+    alarm_status = models.BooleanField(null=True, default=False)
 
     class Meta:
         abstract = True
