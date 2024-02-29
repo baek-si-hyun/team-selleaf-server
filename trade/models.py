@@ -27,6 +27,7 @@ class Trade(Period):
 class TradeAddress(Address):
     trade = models.ForeignKey(Trade, on_delete=models.PROTECT, null=False)
 
+
     class Meta:
         db_table = 'tbl_trade_address'
         ordering = ['-id']
