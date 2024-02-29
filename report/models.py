@@ -1,18 +1,28 @@
 from django.db import models
 
 from report.managers import ReportManager
+from selleaf.models import Period
 
 
+# 신고 사유 카테고리 테이블
+class ReportCategory(Period):
+    # 각 신고 사유 별 명칭
+    report_category_name = models.CharField(max_length=255, null=False, blank=False)
+
+    class Meta:
+        db_table = 'tbl_report_category'
+
+
+# 신고 내역 테이블
 class Report(Period):
     report_name = models.CharField(max_length=255, null=False, blank=False)
 
-    # 각 신고 사유를 id로 구분
-    # 나중에 id 별 상세 정보를 담은 테이블이 필요?
-    category = models.IntegerField(null=False, blank=False, default=0)
-    user_id = models.ForeignKey(User, null=False, on_delete=models.PROTECT)
+    # 신고 사유와 신고자 정보를 FK로 받아옴
+    report_category = models.ForeignKey(ReportCategory,null=False, blank=False)
+    member_id = models.ForeignKey(Member, null=False, on_delete=models.PROTECT)
 
     # 신고사항 처리 상태 - 게시 중(1), 삭제됨(0)
-    report_status = models.BooleanField(null=False, blank=False, default=1)
+    report_status = models.BooleanField(null=False, blank=False, default=True)
 
     # Managers
     objects = models.Manager()
