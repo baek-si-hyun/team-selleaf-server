@@ -675,7 +675,7 @@ input[type="date"]:valid::before {
   width: 100%;
   height: 100%;
   cursor: pointer;
-  background-image: url("../../../../../../selleaf/public/static/images/mypage/base-profile-image.avif");
+  background-image: url("../../../../../../selleaf/static/public/images/mypage/base-profile-image.avif");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
