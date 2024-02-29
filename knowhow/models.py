@@ -1,6 +1,7 @@
 from django.db import models
 
-from selleaf.models import Period, File, Like, Plant, Scrap, Tag
+from selleaf.models import File, Like, Scrap, Tag
+from selleaf.period import Period
 
 
 class Knowhow(Period):
