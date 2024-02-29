@@ -19,6 +19,7 @@ class Address(Period):
 
 class City(Period):
     area_name = models.CharField(max_length=255,null=False,blank=False)
+    city_name = models.CharField(max_length=50, null=False,blank=False)
 
     class Meta:
         abstract = True
