@@ -1,5 +1,8 @@
 from django.db import models
 
+from selleaf.models import Scrap, Period, Plant, File, Address
+from trade.managers import TradeManager
+
 
 class Trade(Period):
     TRADE_STATUS = [
@@ -10,8 +13,11 @@ class Trade(Period):
     trade_title = models.CharField(null=False, blank=False, max_length=80)
     trade_content = models.CharField(null=False, blank=False, max_length=200)
     status = models.BooleanField(null=False, blank=False, default=True, choices=TRADE_STATUS)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, null=False)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, null=False)
+    member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
+    trade_category = models.ForeignKey(TradeCategory, on_delete=models.PROTECT, null=False)
+
+    objects = models.Manager()
+    enabled_objects = TradeManager()
 
     class Meta:
         db_table = 'tbl_trade'
