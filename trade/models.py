@@ -2,14 +2,17 @@ from django.db import models
 
 from member.models import Member
 from plant.models import Plant
-from selleaf.models import Scrap, Period, File, Address
+from selleaf.models import Scrap, File, Address
 from trade.managers import TradeManager
+from selleaf.period import Period
+
 
 class TradeCategory(Period):
     category_name = models.CharField(null=False, blank=False, max_length=10)
 
     class Meta:
         db_table = 'tbl_trade_category'
+
 
 class Trade(Period):
     TRADE_STATUS = [
@@ -34,10 +37,10 @@ class Trade(Period):
 class TradeAddress(Address):
     trade = models.ForeignKey(Trade, on_delete=models.PROTECT, null=False)
 
-
     class Meta:
         db_table = 'tbl_trade_address'
         ordering = ['-id']
+
 
 class TradeFile(File):
     trade = models.ForeignKey(Trade, on_delete=models.PROTECT, null=False)
@@ -45,6 +48,7 @@ class TradeFile(File):
     class Meta:
         db_table = 'tbl_trade_file'
         ordering = ['-id']
+
 
 class TradePlant(Period):
     trade = models.ForeignKey(Trade, on_delete=models.PROTECT, null=False)

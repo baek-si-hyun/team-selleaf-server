@@ -1,7 +1,7 @@
 from django.db import models
 
 from qna.managers import QnAManager
-from selleaf.models import Period
+from selleaf.period import Period
 
 
 class QnA(Period):

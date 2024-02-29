@@ -23,4 +23,3 @@ class TeacherInfoFile(File):
     class Meta:
         db_table = 'tbl_teacher_info_file'
         ordering = ['-id']
-

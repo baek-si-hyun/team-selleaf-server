@@ -3,7 +3,8 @@ from django.db import models
 
 from lecture.manager import LectureManager
 from member.models import Member
-from selleaf.models import File, Scrap, Plant
+from plant.models import Plant
+from selleaf.models import File, Scrap
 from selleaf.period import Period
 from teacher.models import Teacher
 
