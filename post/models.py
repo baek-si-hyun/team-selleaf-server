@@ -10,7 +10,6 @@ class Post(Period):
     post_title = models.CharField(max_length=50, null=False)
     post_content = models.CharField(max_length=500, null=False)
     post_count = models.IntegerField(default=0, null=False)
-    post_category = models.CharField(null=False)
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
 
     class Meta:
