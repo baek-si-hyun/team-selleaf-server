@@ -15,7 +15,8 @@ class Member(Period):
     sms_agree = models.BooleanField(default=False)
 
     class Meta:
-        db_table = 'tbl_user'
+        db_table = 'tbl_member'
+        ordering = ['-id']
 
 
 class MemberAddress(Address):
@@ -23,8 +24,12 @@ class MemberAddress(Address):
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
 
     class Meta:
-        db_table = 'tbl_user_address'
+        db_table = 'tbl_member_address'
 
 
 class MemberProfile(File):
-    member = models.ForeignKey(Member, on_delete=models.PROTECT)
+    member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
+
+    class Meta:
+        db_table = 'tbl_member_profile'
+        ordering = ['-id']
