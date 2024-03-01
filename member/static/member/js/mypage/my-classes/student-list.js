@@ -56,7 +56,7 @@ if (isOnline) {
 
 // 각 내역 클릭하면 동반 수강생 목록 표시
 // 각 수강 신청 내역들
-const entries = document.querySelectorAll(".class-histories-wrap");
+const entries = document.querySelectorAll(".my_lecture-histories-wrap");
 
 // 각 내역에 click 이벤트 추가
 entries.forEach((item) => {
