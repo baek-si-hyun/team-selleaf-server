@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'report',
     'teacher',
     'trade',
+    'selleaf',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
