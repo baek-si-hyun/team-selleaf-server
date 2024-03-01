@@ -1,14 +1,9 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'public/web/css/header-web.css' %}">
-    <link rel="stylesheet" href="{% static '푸터 css 파일링크' %}">
-    {# font 이부분은 아마 다 똑같을 거임 #}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style data-emotion="css-global" data-s="">
       @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
       @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
@@ -32,16 +27,15 @@
         -webkit-font-smoothing: antialiased;
       }
     </style>
-    <link rel="stylesheet" href="{% static 'common css 파일 링크' %}" />
-    <link rel="shortcut icon" href="{% static '파비콘 링크' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'public/web/css/common/common.css' %}" />
+    <link rel="shortcut icon" href="{% static 'public/web/images/common/favicon.png' %}" type="image/x-icon" />
     {% block static %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
-</head>
-<body loaded {#<-뭔지 모름#}>
-    {% include '헤더html링크' %}
+  </head>
+  <body loaded>
+    {% include 'fix/header.html' %}
     {% block content %}{% endblock %}
-    {% include '푸터html링크' %}
-</body>
-<script src="{% static '헤더 js 링크' %}"></script>
-{% block js %}{% endblock %}
+    {% include 'fix/footer.html' %}
+  </body>
+    {% block js %}{% endblock %}
 </html>
