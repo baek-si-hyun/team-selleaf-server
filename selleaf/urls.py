@@ -16,7 +16,7 @@ urlpatterns = [
     path('qna/', include('qna.urls')),
     path('report/', include('report.urls')),
     path('teacher/', include('teacher.urls')),
-    path('my_trade/', include('trade.urls')),
+    path('trade/', include('trade.urls')),
     path('oauth/', include('oauth.urls'))
 ]
 

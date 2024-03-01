@@ -38,7 +38,7 @@ document.addEventListener("click", (e) => {
 */
 
 // 우선 모든 내역을 가져옴
-const tradedItems = document.querySelectorAll(".my_trade-history-item-wrap");
+const tradedItems = document.querySelectorAll(".trade-history-item-wrap");
 
 // 각 내역에 mouseover, mouseout 이벤트 추가
 tradedItems.forEach((item) => {
@@ -62,7 +62,7 @@ tradedItems.forEach((item) => {
 
 /*
 
-  거래 내역의 유무에 따라 my_trade-history-wrap 안에서 표시할 내용 변경
+  거래 내역의 유무에 따라 trade-history-wrap 안에서 표시할 내용 변경
   
   나중에 서버 들어갔을 때는
   거래 내역들(tradedItems)의 length가 1 이상이면 표시하게 변경할 계획
@@ -73,8 +73,8 @@ tradedItems.forEach((item) => {
 let isTradeExists = true; // 거래 내역 유무
 
 // 거래 내역이 없을 때 보이는 텍스트들
-const nothingTextBold = document.querySelector(".my_trade-history-wrap > h1");
-const nothingText = document.querySelector(".my_trade-history-wrap > p");
+const nothingTextBold = document.querySelector(".trade-history-wrap > h1");
+const nothingText = document.querySelector(".trade-history-wrap > p");
 
 // 각 거래 내역 사이의 구분선
 const itemsSeperator = document.querySelectorAll(".items-seperator");

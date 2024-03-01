@@ -3,32 +3,15 @@ from member.models import Member
 from selleaf.period import Period
 
 
-class Address(Period):
-    address_zipcode = models.CharField(max_length=60,null=False,blank=False)
-    address_city = models.CharField(max_length=255,null=False,blank=False)
-    address_district = models.CharField(max_length=255,null=False,blank=False)
-    address_detail = models.CharField(max_length=255,null=False,blank=False)
-
-    class Meta:
-        abstract = True
-
-
 class City(Period):
-    city_name = models.CharField(max_length=255,null=False,blank=False)
+    city_name = models.CharField(max_length=255, null=False, blank=False)
 
     class Meta:
         abstract = True
 
 
 class District(City):
-    district_name = models.CharField(max_length=255,null=False,blank=False)
-
-    class Meta:
-        abstract = True
-
-
-class File(Period):
-    file_url = models.ImageField(upload_to='file/%Y/%m/%d')
+    district_name = models.CharField(max_length=255, null=False, blank=False)
 
     class Meta:
         abstract = True
@@ -57,7 +40,7 @@ class Scrap(Period):
 
 
 class Tag(Period):
-    tag_name = models.CharField(max_length=50,null=False,blank=False)
+    tag_name = models.CharField(max_length=50, null=False, blank=False)
 
     class Meta:
         abstract = True
