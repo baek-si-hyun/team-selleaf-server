@@ -1,46 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- 여기서부터 -->
-    <style data-emotion="css-global" data-s="">
-      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
-      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
-      @font-face {
-        font-family: OhouseIcon;
-        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
-        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
-            format("embedded-opentype"),
-          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
-            format("woff2"),
-          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
-            format("woff"),
-          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
-            format("truetype"),
-          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
-            format("svg");
-      }
-      html {
-        font-family: "Pretendard Variable", sans-serif;
-        letter-spacing: -0.3px;
-        -webkit-font-smoothing: antialiased;
-      }
-    </style>
-    <link rel="stylesheet" href="/staticfiles/css/common.css" />
-    <!-- 여기까지는 무조건 고정으로 모든 페이지에 복붙하세요 -->
-    <!-- 여기는 각자 css 파일 link하시면 됩니다 -->
-    <link
-      rel="shortcut icon"
-      href="/staticfiles/images/favicon.png"
-      type="image/x-icon"
-    />
-    <link
-      rel="stylesheet"
-      href="/staticfiles/css/transaction/web/transaction.css"
-    />
-    <title>상품홈</title>
-  </head>
+{% extends 'trade/web/base.html' %}
+{% load static %}
+{% block static %}
+    <link rel="stylesheet" href="{% static 'trade/css/web/trade.css' %}">
+{% endblock %}
+{% block title %}상품홈{% endblock %}
+{% block content %}
   <body>
     <div class="layout">
       <header></header>
@@ -649,5 +613,7 @@
       </div>
     </div>
   </body>
-  <script src="/staticfiles/js/transaction/web/transaction.js"></script>
-</html>
+{% endblock %}
+{% block js %}
+  <script src="{% static 'trade/js/web/trade.js' %}"></script>
+{% endblock %}
