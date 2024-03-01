@@ -1,12 +1,12 @@
 from django.db import models
 
-from selleaf.models import Address, File
+from selleaf.address import Address
+from selleaf.file import File
 from selleaf.period import Period
 
 
 class Member(Period):
     member_email = models.CharField(max_length=255, null=False, blank=False)
-    # member_password = models.CharField(max_length=255, null=False, blank=False)
     member_name = models.CharField(max_length=255, null=False, blank=False)
     # True: 휴면, False: 비휴면
     member_status = models.BooleanField(default=False)
