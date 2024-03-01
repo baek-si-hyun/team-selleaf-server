@@ -1,5 +1,5 @@
 const prevImgBox = document.querySelector(".prev-img-box");
-const inputs = document.querySelectorAll(".lecture-input");
+const inputs = document.querySelectorAll(".my_lecture-input");
 
 inputs.forEach((input, index) => {
   input.addEventListener("change", (e) => {
@@ -40,7 +40,7 @@ const cancelBtns = document.querySelectorAll(".cancel-btn");
 cancelBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const prevBox = e.target.closest(".prev-img-box-item");
-    const input = prevBox.querySelector(".lecture-input");
+    const input = prevBox.querySelector(".my_lecture-input");
     hideImageAndInput(prevBox, input);
     const label = e.target.closest(".upload-wrap").querySelector(".upload-btn");
 

@@ -201,7 +201,7 @@ else {
 }
 
 // 현재 강의 개수를 페이지 상단 메뉴, 편집 눌렀을 때 나오는 전체 개시물 개수에 표시
-const lectureCount = document.querySelector(".lecture");
+const lectureCount = document.querySelector(".my_lecture");
 
 // 현재 체크된 박스 개수와 전체 게시물 개수를 표시할 태그
 const checkedCount = document.querySelector(".content-count-container");
