@@ -1,3 +1,16 @@
+{% extends 'manager/base.html' %}
+{% load static %}
+{% block static %}
+    <link rel="stylesheet" href="{% static 'public/web/css/manager/manager-notice/manager-notice/manager-notice.css' %}">
+{% endblock %}
+{% block title %}공지사항 관리{% endblock %}
+{% block content %}
+  
+{% endblock %}
+{% block js %}
+  <script src="{% static 'public/web/js/manager/manager-notice/manager-notice/manager-notice.js' %}"></script>
+{% endblock %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
