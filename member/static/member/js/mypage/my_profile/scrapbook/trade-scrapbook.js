@@ -249,11 +249,11 @@ document.addEventListener("click", (e) => {
 //         let itemCount = 0;
 
 //         // 리스트 내 요소의 정보가 담긴 html 태그 생성
-//         let subCategoryItem = `<li class="second-categories-wrap" title="${item}">
-//           <button class="second-categories-container">
-//             <div class="second-category-title-wrap">
-//               <span class="second-caregory-title">${item}</span>
-//               <span class="second-category-count">${itemCount}</span>
+//         let subCategoryItem = `<li my_lecture="second-categories-wrap" title="${item}">
+//           <button my_lecture="second-categories-container">
+//             <div my_lecture="second-category-title-wrap">
+//               <span my_lecture="second-caregory-title">${item}</span>
+//               <span my_lecture="second-category-count">${itemCount}</span>
 //             </div>
 //           </button>
 //         </li>`;
