@@ -779,7 +779,7 @@ input[type="checkbox"] {
     
     /* 체크됐을 때 스타일링 */
     input[type="checkbox"]:checked {
-        background-image: url(../../../images/checker.png);
+        background-image: url(../../../images/common/checker.png);
         background-size: contain;
         background-position: center;
         background-repeat: no-repeat;

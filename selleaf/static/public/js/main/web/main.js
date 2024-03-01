@@ -127,9 +127,9 @@ beforeButton.addEventListener("click", () => {
 });
 
 // 원데이 클래스 부분에 사진 올리면 확대되고 내리면 축소되게 만들어야함
-const searchOnedayImg = document.querySelectorAll(".realmain-lecture-photo");
+const searchOnedayImg = document.querySelectorAll(".realmain-my_lecture-photo");
 const searchOnedayA = document.querySelectorAll(
-  ".realmain-lecture-explanationA"
+  ".realmain-my_lecture-explanationA"
 );
 
 searchOnedayA.forEach((atag, i) => {
@@ -235,7 +235,7 @@ recommendScrapButton.forEach((scrap) => {
 
 // 원데이 클래스, 인기 콘텐츠 부분에 스크랩 on off 기능
 const popularScrapButton = document.querySelectorAll(
-  ".realmain-lecture-scrapbutton"
+  ".realmain-my_lecture-scrapbutton"
 );
 
 popularScrapButton.forEach((scrap) => {

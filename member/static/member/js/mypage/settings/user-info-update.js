@@ -4,13 +4,13 @@
     별명 입력란에 아무것도 입력되지 않았을 경우
     input 테두리 색, focus 되었을 때 box-shadow 색 변경
 
-    아래쪽 user-info-error(div) 에 innerText 추가
+    아래쪽 member-info-error(div) 에 innerText 추가
 */
 
 // 필요한 객체 가져오기
-const nicknameInput = document.querySelector(".user-name-input-form");
+const nicknameInput = document.querySelector(".member-name-input-form");
 const nicknameErrorWrap = document.querySelector(
-  ".user-name-input-wrap .user-info-error"
+  ".member-name-input-wrap .member-info-error"
 );
 
 // 출력할 메세지 변수화
@@ -98,7 +98,7 @@ birthInput.max = maxDate.toISOString().substring(0, 10);
 // 필요한 객체 가져오기
 const newImageInput = document.querySelector("#new-image"); // 프로필 이미지 입력칸
 const imageDeleteButton = document.querySelector(".image-delete-button"); // 이미지 삭제 버튼
-const currentImage = document.querySelector(".current-profile-image"); // 화면에 표시되는 현재 이미지
+const currentImage = document.querySelector(".current-my_profile-image"); // 화면에 표시되는 현재 이미지
 
 // 이미지 파일인지를 검사하기 위해, 유효한 형식들을 배열로 만들어놓음
 const imageTypes = [];
@@ -167,7 +167,7 @@ if (isTeacher) {
 */
 
 // 탈퇴 버튼과 탈퇴 확인 모달
-const widthdrawButton = document.querySelector(".user-withdrawal");
+const widthdrawButton = document.querySelector(".member-withdrawal");
 const confirmModal = document.querySelector(".withdrawal-warning");
 
 // 탈퇴 완료 모달과 그 안의 확인 버튼
