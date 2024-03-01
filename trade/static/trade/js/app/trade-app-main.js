@@ -41,7 +41,7 @@ function hidePopup() {
 }
 
 // 스크랩 버튼
-const contentLineBox = document.querySelector(".my_trade-contents-wrap");
+const contentLineBox = document.querySelector(".trade-contents-wrap");
 const scrapPopup = document.querySelector(".scrap-popup-wrap");
 const scrapCancel = document.querySelector(".scrap-popup-cancel-wrap");
 
