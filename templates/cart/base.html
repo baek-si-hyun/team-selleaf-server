@@ -1,0 +1,23 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="{% static 'public/web/images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'cart/css/cart/cart.css' %}">
+    <link rel="stylesheet" href="{% static 'public/web/css/common/common.css' %}">
+    <link rel="stylesheet" href="{% static 'public/css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'public/css/footer.css' %}">
+    {% block static %}{% endblock %}
+    <title>{%  block title %}{% endblock %}</title>
+</head>
+<body>
+    {% include 'fix/header.html' %}
+    {% block content %}{% endblock %}
+    {% include 'fix/footer.html' %}
+</body>
+{% block js %}{% endblock %}
+</html>
