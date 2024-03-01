@@ -5,9 +5,19 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('alarm/', include('member.urls')),
-    path('accounts/', include('allauth.urls')),
-    # path('oauth/', include('oauth.urls'))
+    path('alarm/', include('alarm.urls')),
+    path('apply/', include('apply.urls')),
+    path('cart/', include('cart.urls')),
+    path('knowhow/', include('knowhow.urls')),
+    path('post/', include('post.urls')),
+    path('mamber/', include('member.urls')),
+    path('my_lecture/', include('lecture.urls')),
+    path('notice/', include('notice.urls')),
+    path('qna/', include('qna.urls')),
+    path('report/', include('report.urls')),
+    path('teacher/', include('teacher.urls')),
+    path('my_trade/', include('trade.urls')),
+    path('oauth/', include('oauth.urls'))
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
