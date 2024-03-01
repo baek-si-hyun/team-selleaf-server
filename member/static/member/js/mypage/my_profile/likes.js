@@ -110,7 +110,7 @@ document.addEventListener("click", (e) => {
   const filter = e.target.closest(".filter-modal-content-item");
   if (filter) {
     const filterBtn = document.querySelector(".filter-btn");
-    const fliterIcon = '<span class="filter-drop-down-icon"></span>';
+    const fliterIcon = '<span my_lecture="filter-drop-down-icon"></span>';
     filter.innerText === "게시물"
       ? (filterBtn.innerHTML = "게시물" + fliterIcon)
       : (filterBtn.innerHTML = "댓글" + fliterIcon);
