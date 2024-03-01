@@ -1,10 +1,9 @@
 {% extends 'trade/web/base.html' %}
 {% load static %}
 {% block static %}
-    <link rel="stylesheet" href="{% static 'selleaf/static/css/transaction/transaction-main.css' %}">
+    <link rel="stylesheet" href="{% static 'trade/css/web/trade-detail.css' %}">
 {% endblock %}
 {% block title %}거래상세보기{% endblock %}
-
 {% block content %}
   <body>
     <header></header>
@@ -2157,7 +2156,6 @@
     </div>
   </body>
 {% endblock %}
-  <script src="/staticfiles/js/transaction/web/transaction-detail.js"></script>
 {% block js %}
-  <script src="/staticfiles/js/transaction/web/transaction-detail.js"></script>
+  <script src="{% static 'trade/js/web/trade-detail.js' %}"></script>
 {% endblock %}
