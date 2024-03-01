@@ -303,7 +303,7 @@ else {
 }
 
 // 현재 거래 게시물 개수를 페이지 상단 메뉴, 편집 버튼을 누르면 나오는 전체 게시물 개수에 표시
-const tradeCount = document.querySelector(".trade");
+const tradeCount = document.querySelector(".my_trade");
 
 // 현재 체크된 박스 개수와 전체 게시물 개수를 표시할 태그
 const checkedCount = document.querySelector(".content-count-container");

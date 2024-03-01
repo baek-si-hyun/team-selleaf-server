@@ -75,15 +75,15 @@ modalBtns.forEach((modalBtn) => {
 const catebtns = document.querySelectorAll("#btn");
 const cateUnder = document.querySelectorAll("#under");
 cateUnder[0].classList.add("underbar-checked");
-catebtns[0].classList.add("lecture-checked");
+catebtns[0].classList.add("my_lecture-checked");
 
 catebtns.forEach((btn, i) => {
   btn.addEventListener("click", () => {
     catebtns.forEach((btn, i) => {
-      btn.classList.remove("lecture-checked");
+      btn.classList.remove("my_lecture-checked");
       cateUnder[i].classList.remove("underbar-checked");
     });
-    btn.classList.add("lecture-checked");
+    btn.classList.add("my_lecture-checked");
     cateUnder[i].classList.add("underbar-checked");
   });
 });
