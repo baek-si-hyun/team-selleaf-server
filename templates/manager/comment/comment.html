@@ -14,7 +14,7 @@
               <a href="/">
                 <img
                   class="logo-img"
-                  src="../../../../staticfiles/images/logo-lettering-blk.png"
+                  src="{% static 'public/web/images/common/logo-lettering-blk.png' %}"
                   alt=""
                 />
               </a>
@@ -37,7 +37,7 @@
                     style="width: 68px; height: 68px; outline: none"
                   >
                     <img
-                      src="../../../staticfiles/images/favicon.png"
+                      src="{% static 'public/web/images/common/favicon.png' %}"
                       alt="프로필 이미지"
                       sizes="(max-width: 240px) 100vw, 240px"
                       decoding="async"
@@ -48,7 +48,7 @@
                         position: absolute;
                         height: 100%;
                         width: 100%;
-                        inset: 0px;
+                        inset: 0;
                         object-fit: cover;
                         object-position: center center;
                         color: transparent;
@@ -338,11 +338,11 @@
                           >
                             <img
                               class="search-logo"
-                              src="../../../../staticfiles/images/search-logo/search_icon.png"
+                              src="{% static 'public/web/images/common/search_icon.png' %}"
                             />
                             <img
                               class="cancel-logo"
-                              src="../../../../staticfiles/images/cancel.png"
+                              src="{% static 'public/web/images/common/cancel.png' %}"
                             />
                           </button>
                         </label>
