@@ -38,7 +38,7 @@ document.addEventListener("click", (e) => {
 */
 
 // 우선 모든 내역을 가져옴
-const classesItems = document.querySelectorAll(".classes-history-item-wrap");
+const classesItems = document.querySelectorAll(".my_classes-history-item-wrap");
 
 // 각 내역에 mouseover, mouseout 이벤트 추가
 classesItems.forEach((item) => {
@@ -62,7 +62,7 @@ classesItems.forEach((item) => {
 
 /*
 
-  강의 내역의 유무에 따라 classes-history-wrap 안에서 표시할 내용 변경
+  강의 내역의 유무에 따라 my_classes-history-wrap 안에서 표시할 내용 변경
   
   나중에 서버 들어갔을 때는
   강의 내역들(classesItems)의 length가 1 이상이면 표시하게 변경할 계획
@@ -73,8 +73,8 @@ classesItems.forEach((item) => {
 let isClassesExists = true; // 강의 내역 유무
 
 // 강의 내역이 없을 때 보이는 텍스트들
-const nothingTextBold = document.querySelector(".classes-history-wrap > h1");
-const nothingText = document.querySelector(".classes-history-wrap > p");
+const nothingTextBold = document.querySelector(".my_classes-history-wrap > h1");
+const nothingText = document.querySelector(".my_classes-history-wrap > p");
 
 // 각 강의 내역 사이의 구분선
 const itemsSeperator = document.querySelectorAll(".items-seperator");
