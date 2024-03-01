@@ -1,6 +1,8 @@
 {% extends 'cart/base.html' %}
 {% load static %}
-
+{% block static %}
+    <link rel="stylesheet" href="{% static 'cart/css/cart/cart.css' %}">
+{% endblock %}
 {% block title %}CART{% endblock %}
 {% block content %}
     <div class="payment-wrap">
@@ -38,7 +40,7 @@
                   <div class="order-product-info">
                     <figure class="product-preview-image">
                       <img
-                        src="/staticfiles/images/blank-image.png"
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         class="product-image"
                       />
                     </figure>
@@ -55,13 +57,13 @@
                         ><span class="won">원</span> &nbsp;
                         <div class="selected-product-count">
                           <span class="sub-count">
-                            <img src="/staticfiles/images/sub.png" alt="" />
+                            <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
                           </span>
                           <button type="button" class="counted-number">
                             1
                           </button>
                           <span class="add-count">
-                            <img src="/staticfiles/images/add.png" alt="" />
+                            <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
                           </span>
                         </div>
                       </div>
@@ -80,7 +82,7 @@
                   <div class="order-product-info">
                     <figure class="product-preview-image">
                       <img
-                        src="/staticfiles/images/blank-image.png"
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         class="product-image"
                       />
                     </figure>
@@ -98,13 +100,13 @@
                         <!-- <span class="quantity">1개</span> -->
                         <div class="selected-product-count">
                           <span class="sub-count">
-                            <img src="/staticfiles/images/sub.png" alt="" />
+                            <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
                           </span>
                           <button type="button" class="counted-number">
                             1
                           </button>
                           <span class="add-count">
-                            <img src="/staticfiles/images/add.png" alt="" />
+                            <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
                           </span>
                         </div>
                       </div>
@@ -123,7 +125,7 @@
                   <div class="order-product-info">
                     <figure class="product-preview-image">
                       <img
-                        src="/staticfiles/images/blank-image.png"
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         class="product-image"
                       />
                     </figure>
@@ -141,13 +143,13 @@
                         <!-- <span class="quantity">1개</span> -->
                         <div class="selected-product-count">
                           <span class="sub-count">
-                            <img src="/staticfiles/images/sub.png" alt="" />
+                            <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
                           </span>
                           <button type="button" class="counted-number">
                             1
                           </button>
                           <span class="add-count">
-                            <img src="/staticfiles/images/add.png" alt="" />
+                            <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
                           </span>
                         </div>
                       </div>
@@ -166,7 +168,7 @@
                   <div class="order-product-info">
                     <figure class="product-preview-image">
                       <img
-                        src="/staticfiles/images/blank-image.png"
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         class="product-image"
                       />
                     </figure>
@@ -184,13 +186,13 @@
                         <!-- <span class="quantity">1개</span> -->
                         <div class="selected-product-count">
                           <span class="sub-count">
-                            <img src="/staticfiles/images/sub.png" alt="" />
+                            <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
                           </span>
                           <button type="button" class="counted-number">
                             1
                           </button>
                           <span class="add-count">
-                            <img src="/staticfiles/images/add.png" alt="" />
+                            <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
                           </span>
                         </div>
                       </div>
@@ -209,7 +211,7 @@
                   <div class="order-product-info">
                     <figure class="product-preview-image">
                       <img
-                        src="/staticfiles/images/blank-image.png"
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         class="product-image"
                       />
                     </figure>
@@ -227,13 +229,13 @@
                         <!-- <span class="quantity">1개</span> -->
                         <div class="selected-product-count">
                           <span class="sub-count">
-                            <img src="/staticfiles/images/sub.png" alt="" />
+                            <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
                           </span>
                           <button type="button" class="counted-number">
                             1
                           </button>
                           <span class="add-count">
-                            <img src="/staticfiles/images/add.png" alt="" />
+                            <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
                           </span>
                         </div>
                       </div>
@@ -285,5 +287,5 @@
     </div>
 {% endblock %}
 {% block js %}
-    <script src="{% static 'cart/js/cart.js' %}"></script>
+    <script src="{% static 'cart/js/cart/cart.js' %}"></script>
 {% endblock %}
