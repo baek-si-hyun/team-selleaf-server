@@ -65,7 +65,7 @@ html {
   color: #2f3438;
   line-height: 20px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(4, 1fr);
   font-size: 17px;
   font-weight: 700;
   text-align: center;
@@ -99,34 +99,58 @@ html {
   align-items: center;
   width: 100%;
   box-sizing: border-box;
-  font-size: 15px;
+  font-size: 16px;
   color: #2f3438;
   line-height: 20px;
   border-bottom: 1px solid #eaedef;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(4, 1fr);
   place-items: center;
+  cursor: pointer;
 }
-/* 
-.class-histories-content-box {
-  width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: grid;
-  grid-template-columns: 1fr;
-  -webkit-box-pack: justify;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-} */
 
 .class-history-items {
-  margin-bottom: 6px;
   display: block;
   color: #2f3438;
 }
 
-/* .class-histories-wrap::after {
+/* 각 내역을 누르면 펼쳐지는 동반 수강생 전체 목록 */
+.student-list-wrap {
+  height: 0;
+  width: inherit;
+  overflow: hidden;
+  transition: height 0.35s ease;
+  background-color: rgba(234, 237, 239, 0.3);
+}
+
+.student-list-wrap.open {
+  height: 80px;
+}
+
+.student-list-container {
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: -0.3px;
+  text-align: center;
+  white-space: pre-line;
+  color: #2f3438;
+  padding: 10px 0;
+}
+
+.student-list {
+  display: flex;
+}
+
+.student-list > .student-list-items {
+  display: inline-block;
+  margin-left: 40px;
+}
+
+.student-list > .student-list-items:first-child {
+  margin-left: 114px;
+}
+
+/* .my_lecture-histories-wrap::after {
   left: 0;
   right: 0;
   content: "";
