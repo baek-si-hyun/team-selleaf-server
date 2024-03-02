@@ -2,7 +2,8 @@ from django.db import models
 
 from member.models import Member
 from plant.models import Plant
-from selleaf.models import Scrap, File, Address
+from selleaf.file import File
+from selleaf.models import Scrap
 from trade.managers import TradeManager
 from selleaf.period import Period
 

@@ -2,7 +2,8 @@ from django.db import models
 
 from member.models import Member
 from plant.models import Plant
-from selleaf.models import File, Like, Scrap, Tag
+from selleaf.file import File
+from selleaf.models import Like, Scrap, Tag
 from selleaf.period import Period
 
 
@@ -41,8 +42,8 @@ class KnowhowPlant(Plant):
 
 
 class KnowhowRecommend(Period):
-    recommend_url = models.CharField(null=False)
-    recommend_content = models.CharField(null=False, max_length=30)
+    recommend_url = models.CharField(max_length=255)
+    recommend_content = models.CharField(max_length=30)
     knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
 
     class Meta:
