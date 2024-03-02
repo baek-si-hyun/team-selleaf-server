@@ -8,23 +8,7 @@
   <body class="overflow-hidden">
     <div class="next">
       <div class="full-screen">
-        <nav class="benner-wrap">
-          <div>
-            <div class="items-center">
-              <a href="/">
-                <img
-                  class="logo-img"
-                  src="{% static 'public/web/images/common/logo-lettering-blk.png' %}"
-                  alt=""
-                />
-              </a>
-              <div class="logo-between">|</div>
-              <div class="manager-center">
-                <span>Manager Center</span>
-              </div>
-            </div>
-          </div>
-        </nav>
+        {% include 'manager/fix/manager-header.html' %}
         <div class="compose-wrap">
           <div class="compose-container">
             <div class="compose-inner-left">
