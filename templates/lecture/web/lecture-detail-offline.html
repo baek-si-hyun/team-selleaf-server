@@ -1,42 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <style data-emotion="css-global" data-s="">
-      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
-      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
-      @font-face {
-        font-family: OhouseIcon;
-        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
-        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
-            format("embedded-opentype"),
-          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
-            format("woff2"),
-          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
-            format("woff"),
-          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
-            format("truetype"),
-          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
-            format("svg");
-      }
-      html {
-        font-family: "Pretendard Variable", sans-serif;
-        letter-spacing: -0.3px;
-        -webkit-font-smoothing: antialiased;
-      }
-    </style>
-    <link rel="stylesheet" href="/staticfiles/css/common.css" />
-    <!-- 여기까지는 무조건 고정으로 모든 페이지에 복붙하세요 -->
-    <!-- 여기는 각자 css 파일 link하시면 됩니다 -->
-    <link
-      rel="shortcut icon"
-      href="/staticfiles/images/favicon.png"
-      type="image/x-icon"
-    />
-    <link rel="stylesheet" href="/staticfiles/css/class/class-detail.css" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>오프라인강의 상세</title>
-  </head>
+{% extends 'lecture/web/base.html' %}
+{% load static %}
+{% block static %}
+    <link rel="stylesheet" href="{% static 'lecture/css/lecture/web/lecture-detail.css' %}">
+{% endblock %}
+{% block title %}오프라인 강의 상세보기{% endblock %}
+{% block content %}
   <body>
     <div class="declaration-modal-wrap">
       <div class="declaration-modal-container">
@@ -254,7 +222,7 @@
                       <img
                         class="product-cover-image"
                         tabindex="0"
-                        src="/staticfiles/images/blank-image.png"
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         alt="상품서브이미지"
                       />
                     </div>
@@ -268,7 +236,7 @@
                       <img
                         class="product-cover-image"
                         tabindex="0"
-                        src="/staticfiles/images/blank-image.png"
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         alt="상품서브이미지"
                       />
                     </div>
@@ -283,7 +251,7 @@
                     >
                       <img
                         class="product-small-image"
-                        src="/staticfiles/images/blank-image.png"
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         alt="상품 이미지"
                       />
                     </button>
@@ -296,7 +264,7 @@
                     >
                       <img
                         class="product-small-image"
-                        src="/staticfiles/images/blank-image.png"
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         alt="상품 이미지"
                       />
                     </button>
@@ -309,7 +277,7 @@
                     >
                       <img
                         class="product-small-image"
-                        src="/staticfiles/images/blank-image.png"
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         alt="상품 이미지"
                       />
                     </button>
@@ -322,7 +290,7 @@
                     >
                       <img
                         class="product-small-image"
-                        src="/staticfiles/images/blank-image.png"
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         alt="상품 이미지"
                       />
                     </button>
@@ -361,14 +329,14 @@
                     <button class="update-button" type="button">
                       <img
                         class="update-icon"
-                        src="/staticfiles/images/update_icon.png"
+                        src="{% static 'public/web/images/common/update_icon.png' %}"
                       />
                       <span class="update-label">수정</span>
                     </button>
                     <button class="scrap-button" type="button">
                       <img
                         class="scrap-off"
-                        src="/staticfiles/images/scrap-off-blk.png"
+                        src="{% static 'public/web/images/common/scrap-off-blk.png' %}"
                       />
                       <span class="scrap-count">0</span>
                     </button>
@@ -544,7 +512,7 @@
                     <span class="info-particulars-wrap">
                       <span class="info-particulars-container">
                         <img
-                          src="/staticfiles/images/button-down.png"
+                          src = "{% static 'public/web/images/common/button-down.png' %}"
                           class="check-icon"
                         />
                         <span>파손주의 등등</span>
@@ -673,18 +641,18 @@
                       type="button"
                     >
                       <span class="delete-button-container">
-                        <img src="/staticfiles/images/cancel.png" alt="" />
+                        <img src="{% static 'public/web/images/common/cancel.png' %}" alt="" />
                       </span>
                     </button>
                     <div class="student-count-title">인원</div>
                     <div class="selected-product-botton-wrap">
                       <div class="selected-product-count">
                         <span class="sub-count">
-                          <img src="/staticfiles/images/sub.png" alt="" />
+                          <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
                         </span>
                         <button class="counted-number">0</button>
                         <span class="add-count">
-                          <img src="/staticfiles/images/add.png" alt="" />
+                          <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
                         </span>
                       </div>
                       <div class="selected-price-wrap">
@@ -788,17 +756,17 @@
                   </div>
                   <img
                     class="detail-info-image"
-                    src="/staticfiles/images/blank-image.png"
+                    src="{% static 'public/web/images/common/blank-image.png' %}"
                     alt="판매자 등록이미지"
                   />
                   <img
                     class="detail-info-image"
-                    src="/staticfiles/images/blank-image.png"
+                    src="{% static 'public/web/images/common/blank-image.png' %}"
                     alt="판매자 등록이미지"
                   />
                   <img
                     class="detail-info-image"
-                    src="/staticfiles/images/blank-image.png"
+                    src="{% static 'public/web/images/common/blank-image.png' %}"
                     alt="판매자 등록이미지"
                   />
                   <div
@@ -1503,7 +1471,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -1574,7 +1542,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -1645,7 +1613,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -1716,7 +1684,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -1787,7 +1755,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -1858,7 +1826,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -1929,7 +1897,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -2000,7 +1968,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -2071,7 +2039,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -2146,7 +2114,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -2217,7 +2185,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -2292,7 +2260,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -2363,7 +2331,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -2434,7 +2402,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -2506,7 +2474,7 @@
                                     type="button"
                                   >
                                     <img
-                                      src="/staticfiles/images/scrap-off.png"
+                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
                                       alt=""
                                     />
                                   </button>
@@ -2799,7 +2767,7 @@
                             >
                               <span class="sidebar-delete-button">
                                 <img
-                                  src="/staticfiles/images/cancel.png"
+                                  {% static "public/web/images/common/cancel.png" %}
                                   alt=""
                                 />
                               </span>
@@ -2808,12 +2776,12 @@
                             <div class="sidebar-selected-botton-wrap">
                               <div class="sidebar-selected-count-wrap">
                                 <span class="sidebar-sub-count">
-                                  <img src="/staticfiles/images/sub.png" />
+                                  <img src="{% static 'public/web/images/common/sub.png' %}" />
                                 </span>
                                 <button class="sidebar-count-number">0</button>
                                 <span class="sidebar-add-count">
                                   <img
-                                    src="/staticfiles/images/add.png"
+                                    src="{% static 'public/web/images/common/add.png' %}"
                                     alt=""
                                   />
                                 </span>
@@ -2855,12 +2823,14 @@
         <div class="top-button-wrap">
           <button type="button" class="top-button-container">
             <span class="arrow-up">
-              <img src="/staticfiles/images/button-down.png" alt="" />
+              <img src="{% static 'public/web/images/common/button-down.png' %}" alt="" />
             </span>
           </button>
         </div>
       </a>
     </div>
   </body>
-  <script src="/staticfiles/js/class/class-detail.js"></script>
-</html>
+{% endblock %}
+{% block js %}
+  <script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>
+{% endblock %}
