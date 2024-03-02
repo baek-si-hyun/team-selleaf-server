@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'post',
     'qna',
     'report',
-    'selleaf',
     'teacher',
     'trade',
     'selleaf',
