@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from django.views import View
 
-# Create your views here.
+
+# 공지사항 페이지 이동 뷰
+class NoticeView(View):
+    def get(self, request):
+        return render(request, 'notice/web/notice.html')
