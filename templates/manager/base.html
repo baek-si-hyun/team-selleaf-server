@@ -6,9 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'public/web/css/fix/header.css' %}">
-    <link rel="stylesheet" href="{% static 'public/web/css/fix/footer.css' %}">
-    {# font 이부분은 아마 다 똑같을 거임 #}
+    <link rel="stylesheet" href="{% static 'public/web/css/manager/fix/manager-header.css' %}">
     <style data-emotion="css-global" data-s="">
       @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
       @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
@@ -38,9 +36,7 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    {% include 'fix/header.html' %}
     {% block content %}{% endblock %}
-    {% include 'fix/footer.html' %}
 </body>
 <script src="{% static 'public/web/js/fix/header.js' %}"></script>
 {% block js %}{% endblock %}
