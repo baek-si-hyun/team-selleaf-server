@@ -46,11 +46,4 @@ class Tag(Period):
         abstract = True
 
 
-class Alarm(Period):
-    sender = models.ForeignKey(Member, on_delete=models.PROTECT, null=True, related_name='sender')
-    receiver = models.ForeignKey(Member, on_delete=models.PROTECT, null=True, related_name='reciever', blank=True)
-    # 확인 True 미확인 False
-    alarm_status = models.BooleanField(null=True, default=False)
 
-    class Meta:
-        abstract = True
