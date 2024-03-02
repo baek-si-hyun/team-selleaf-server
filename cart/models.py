@@ -1,7 +1,5 @@
 from django.db import models
 
-from django.db import models
-
 from lecture.models import Lecture
 from selleaf.period import Period
 from member.models import Member

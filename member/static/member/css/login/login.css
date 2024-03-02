@@ -27,7 +27,13 @@ body {
 }
 
 .except-footer-container {
-  flex: 1 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login-box {
   margin: 0px auto;
   max-width: 300px;
   display: flex;
@@ -37,8 +43,11 @@ body {
   align-items: center;
   flex-direction: column;
   box-sizing: border-box;
-  padding: 40px 0px;
+  padding: 50px 50px 0px 50px;
+  border: 1px solid #dbdbdb;
+  border-radius: 11px;
 }
+
 
 .logo-wrap {
   margin-bottom: 30px;
@@ -217,16 +226,21 @@ body {
   -webkit-transition: 0.1s opacity;
   transition: 0.1s opacity;
 }
-
+.login-with-sns-wrap button{
+  background: none;
+}
+.social-logins{
+  display: flex;
+}
 /* 위 영역 안 아이콘들에 적용 */
-.login-with-sns-wrap > img {
+.login-with-sns-wrap  img {
   width: 48px;
   height: 48px;
   border-radius: 100%;
   opacity: 1;
 }
 
-.login-with-sns-wrap > img:hover {
+.login-with-sns-wrap  img:hover {
   opacity: 0.6;
 }
 
@@ -253,7 +267,6 @@ body {
   font-size: 15px;
   line-height: 1.4;
   color: #424242;
-  margin-bottom: 20px;
   height: 21px;
 }
 
@@ -282,6 +295,85 @@ body {
 .login-footer a:hover {
   text-decoration: underline;
 }
+
+/* 로그인 실패 시 띄울 모달창 */
+.login-error-modal-wrap {
+  position: fixed;
+  width: 470px;
+  left: calc(50% - 235px);
+  bottom: 40px;
+  z-index: 1400;
+  transform: translateY(200%);
+}
+
+.login-error-modal-container {
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 4px;
+  color: #f7f9fa;
+  background-color: rgb(47, 52, 56);
+  margin-top: 15px;
+}
+
+.error-modal-inner {
+  flex: 1 0 0px;
+  display: flex;
+  min-width: 0px;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.error-modal-text {
+  flex: 1 0 0px;
+  min-width: 0px;
+  margin: 0px;
+  text-align: left;
+  white-space: pre-line;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  text-align: center;
+}
+
+/* 모달창에 적용할 애니메이션 */
+@keyframes show-toast {
+  0% {
+    transform: translateY(200%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes hide-toast {
+  0% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(200%);
+    opacity: 0;
+  }
+}
+
+/* 위 애니메이션을 활용하기 위한 클래스 */
+.show-animation {
+  animation-name: show-toast;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.hide-animation {
+  animation-name: hide-toast;
+  animation-duration: 0.7s;
+  animation-fill-mode: forwards;
+}
+
 /* 화면 너비가 768px 이상일 때 적용할 미디어 쿼리 */
 @media (min-width: 768px) {
   body,

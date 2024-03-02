@@ -60,15 +60,15 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.naver',
-    'rest_framework',
+    'rest_framework'
 ]
 
-SITE_ID = 2
+SITE_ID = 3
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGOUT_ON_GET = True
 LOGIN_REDIRECT_URL = '/oauth/login/'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/alarm/login/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/member/login/'
 
 SOCIALACCOUNT_AUTO_SIGNUP = True
 
@@ -124,10 +124,10 @@ DATABASES = {
         'NAME': 'selleaf',
         # 계정 이름
         'USER': 'selleaf',
-        # 비밀번호
+        # 계정 비밀번호
         'PASSWORD': '1234',
-        # DBMS가 설치된 서버 PC의 IP
-        'HOST': '127.0.0.1',
+        # DBMS가 설치된 서버 PC의 IP, (127.0.0.1 = 로컬)
+        'HOST': '43.201.95.223',
         # DBMS의 포트번호
         'PORT': '3306'
     }
