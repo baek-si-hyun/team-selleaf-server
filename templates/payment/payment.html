@@ -1,42 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <style data-emotion="css-global" data-s="">
-      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
-      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
-      @font-face {
-        font-family: OhouseIcon;
-        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
-        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix)
-            format("embedded-opentype"),
-          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2)
-            format("woff2"),
-          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff)
-            format("woff"),
-          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf)
-            format("truetype"),
-          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon)
-            format("svg");
-      }
-      html {
-        font-family: "Pretendard Variable", sans-serif;
-        letter-spacing: -0.3px;
-        -webkit-font-smoothing: antialiased;
-      }
-    </style>
-    <link rel="stylesheet" href="../../staticfiles/css/common.css" />
-    <!-- 여기까지는 무조건 고정으로 모든 페이지에 복붙하세요 -->
-    <!-- 여기는 각자 css 파일 link하시면 됩니다 -->
-    <link
-      rel="shortcut icon"
-      href="/staticfiles/images/favicon.png"
-      type="image/x-icon"
-    />
-    <link rel="stylesheet" href="../../staticfiles/css/payment/payment.css" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>결제페이지</title>
-  </head>
+{% extends 'payment/base.html' %}
+{% load static %}
+{% block static %}
+    <link rel="stylesheet" href="{% static 'order/css/payment/payment.css' %}">
+{% endblock %}
+{% block title %}결제 페이지{% endblock %}
+{% block content %}
   <body>
     <header></header>
     <div class="payment-wrap">
@@ -63,7 +31,7 @@
               <div class="delivery-option-wrap">
                 <div class="delivery-option-container">
                   <span class="dropdown-image-wrap">
-                    <img src="/staticfiles/images/button-down.png" alt="" />
+                    <img {% static "public/web/images/common/button-down.png" %} alt="" />
                   </span>
                   <select class="delivery-option">
                     <option value="">배송시 요청사항을 선택해주세요</option>
@@ -118,7 +86,7 @@
                       <div class="domain-option-container">
                         <span class="dropdown-image-wrap">
                           <img
-                            src="/staticfiles/images/button-down.png"
+                            {% static "public/web/images/common/button-down.png" %}
                             alt=""
                           />
                         </span>
@@ -148,7 +116,7 @@
                       <div class="phone-common-inner">
                         <span class="dropdown-image-wrap">
                           <img
-                            src="/staticfiles/images/button-down.png"
+                            {% static "public/web/images/common/button-down.png" %}
                             alt=""
                           />
                         </span>
@@ -197,7 +165,7 @@
                   <div class="order-product-info">
                     <figure class="product-preview-image">
                       <img
-                        src="/staticfiles/images/blank-image.png"
+                        {% static "public/web/images/common/blank-image.png" %}
                         class="product-image"
                       />
                     </figure>
@@ -517,7 +485,7 @@
             <span class="adress-modal-title">배송지 선택</span>
             <button type="button" class="close-button">
               <span class="cancel-image-wrap">
-                <img src="/staticfiles/images/cancel.png" alt="" />
+                <img {% static "public/web/images/common/cancel.png" %} alt="" />
               </span>
             </button>
           </div>
@@ -579,7 +547,7 @@
           <div class="address-update-title-wrap">
             <button type="button" class="back-button">
               <span class="back-button-image-wrap"
-                ><img src="/staticfiles/images/arrow.png" alt=""
+                ><img {% static "public/web/images/common/arrow.png" %} alt=""
               /></span>
             </button>
             <span class="address-update-title">배송지 수정</span>
@@ -626,7 +594,7 @@
                         <div class="number-input-inner">
                           <span class="dropdown-image-wrap">
                             <img
-                              src="/staticfiles/images/button-down.png"
+                              {% static "public/web/images/common/button-down.png" %}
                               alt=""
                             />
                           </span>
@@ -721,7 +689,7 @@
                           <div class="check-image-wrap">
                             <span class="check-image-container">
                               <img
-                                src="/staticfiles/images/checker.png"
+                                {% static "public/web/images/common/checker.png" %}
                                 alt=""
                               />
                             </span>
@@ -753,13 +721,13 @@
           <div class="add-address-title-wrap">
             <button type="button" class="add-back-button">
               <span class="add-back-button-image-wrap">
-                <img src="/staticfiles/images/arrow.png" alt="" />
+                <img {% static "public/web/images/common/arrow.png" %} alt="" />
               </span>
             </button>
             <span class="add-address-title">배송지 추가</span>
             <button type="button" class="add-cancel-button">
               <span class="add-cancel-image-wrap">
-                <img src="/staticfiles/images/cancel.png" alt="" />
+                <img {% static "public/web/images/common/cancel.png" %} alt="" />
               </span>
             </button>
           </div>
@@ -800,7 +768,7 @@
                         <div class="number-input-inner">
                           <span class="dropdown-image-wrap">
                             <img
-                              src="/staticfiles/images/button-down.png"
+                              {% static "public/web/images/common/button-down.png" %}
                               alt=""
                             />
                           </span>
@@ -891,7 +859,7 @@
                           <div class="check-image-wrap">
                             <span class="check-image-container">
                               <img
-                                src="/staticfiles/images/checker.png"
+                                {% static "public/web/images/common/checker.png" %}
                                 alt=""
                               />
                             </span>
@@ -933,6 +901,7 @@
       </div>
     </div>
   </body>
-  <script src="/staticfiles/js/payment/payment.js"></script>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-</html>
+{% endblock %}
+{% block js %}
+    <script src="{% static 'order/js/payment/payment.js' %}"></script>
+{% endblock %}
