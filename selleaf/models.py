@@ -56,7 +56,7 @@ class Scrap(Period):
     class Meta:
         abstract = True
 
-
+    
 class Tag(Period):
     tag_name = models.CharField(max_length=50,null=False,blank=False)
 
