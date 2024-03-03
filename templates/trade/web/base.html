@@ -38,9 +38,7 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    {% include 'fix/header.html' %}
     {% block content %}{% endblock %}
-    {% include 'fix/footer.html' %}
 </body>
 <script src="{% static 'public/web/js/fix/header.js' %}"></script>
 {% block js %}{% endblock %}
