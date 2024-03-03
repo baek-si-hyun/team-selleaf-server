@@ -6,8 +6,8 @@
 {% block title %}강의 홈{% endblock %}
 {% block content %}
   <body>
+    {% include 'fix/header.html' %}
     <div class="layout">
-      <header></header>
       <!-- 거래 카테고리 탭 -->
       <div class="category-wrap-" style="height: 52px">
         <div
@@ -609,6 +609,7 @@
         </section>
       </div>
     </div>
+  {% include 'fix/footer.html' %}
   </body>
 {% endblock %}
 {% block js %}
