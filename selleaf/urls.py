@@ -3,7 +3,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from main.views import MainView
+
 urlpatterns = [
+    path('', MainView.as_view()),
     path('admin/', admin.site.urls),
     path('member/', include('member.urls')),
     path('lecture/', include('lecture.urls')),
