@@ -7,7 +7,7 @@
 {% block content %}
   <body>
     <div class="layout">
-      <header></header>
+      {% include 'fix/header.html' %}
       <!-- 거래 카테고리 탭 -->
       <div class="category-wrap-" style="height: 52px">
         <div
@@ -83,7 +83,7 @@
                     class="filter-modal"
                     style="
                       position: absolute;
-                      top: -25px;
+                      top: 55px;
                       transform: translate(-70px, 130px);
                       z-index: 3;
                     "
@@ -124,7 +124,7 @@
                     class="filter-modal"
                     style="
                       position: absolute;
-                      top: -25px;
+                      top: 55px;
                       transform: translate(-70px, 130px);
                       z-index: 3;
                     "
@@ -807,6 +807,7 @@
         </div>
       </div>
     </div>
+    {% include 'fix/footer.html' %}
   </body>
 {% endblock %}
 {% block js %}
