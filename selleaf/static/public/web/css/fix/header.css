@@ -512,7 +512,7 @@ input::-webkit-input-placeholder {
 
 .header-info-each {
     font-size: 14px;
-    line-height: 18px;
+    line-height: 40px;
     color: #2F3438;
     padding: 0 10px;
     border-left: 1px solid #EAEDEF;

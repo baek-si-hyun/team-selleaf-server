@@ -3,13 +3,13 @@
 {% load socialaccount %}
 
 {% block static %}
-    <link rel="stylesheet" href="{% static 'public/web/css/main/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}" />
 {% endblock %}
 {% block title %}Selleaf{% endblock %}
 {% block content %}
     <main class="main-wrap">
       <div class="main-container">
-        <header></header>
+           {% include 'fix/header.html' %}
         <!-- 헤더 바로 밑 광고 쪽 -->
         <div class="realmain-wrap">
           <div class="realmain-wrap-container">
@@ -120,20 +120,14 @@
                             <button
                               type="button"
                               aria-label="scrap 토글 버튼"
-                              class="realmain-plantRecommend-scrapbutton"
+                              class="scrap-button"
                             >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
                                   src="{% static 'public/web/images/common/scrap-off.png' %}"
                                   width="24"
                                   height="24"
-                                  class="realmain-plantRecommend-scrapoff"
-                                />
-                                <img
-                                 src="{% static 'public/web/images/common/scrap-on.png' %}"
-                                  width="24"
-                                  height="24"
-                                  class="realmain-plantRecommend-scrapon"
+                                  class="scrap-off-img"
                                 />
                               </span>
                             </button>
@@ -169,20 +163,14 @@
                             <button
                               type="button"
                               aria-label="scrap 토글 버튼"
-                              class="realmain-plantRecommend-scrapbutton"
+                              class="scrap-button"
                             >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
                                   src="{% static 'public/web/images/common/scrap-off.png' %}"
                                   width="24"
                                   height="24"
-                                  class="realmain-plantRecommend-scrapoff"
-                                />
-                                <img
-                                 src="{% static 'public/web/images/common/scrap-on.png' %}"
-                                  width="24"
-                                  height="24"
-                                  class="realmain-plantRecommend-scrapon"
+                                  class="scrap-off-img"
                                 />
                               </span>
                             </button>
@@ -218,20 +206,14 @@
                             <button
                               type="button"
                               aria-label="scrap 토글 버튼"
-                              class="realmain-plantRecommend-scrapbutton"
+                              class="scrap-button"
                             >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
                                   src="{% static 'public/web/images/common/scrap-off.png' %}"
                                   width="24"
                                   height="24"
-                                  class="realmain-plantRecommend-scrapoff"
-                                />
-                                <img
-                                 src="{% static 'public/web/images/common/scrap-on.png' %}"
-                                  width="24"
-                                  height="24"
-                                  class="realmain-plantRecommend-scrapon"
+                                  class="scrap-off-img"
                                 />
                               </span>
                             </button>
@@ -267,20 +249,14 @@
                             <button
                               type="button"
                               aria-label="scrap 토글 버튼"
-                              class="realmain-plantRecommend-scrapbutton"
+                              class="scrap-button"
                             >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
                                   src="{% static 'public/web/images/common/scrap-off.png' %}"
                                   width="24"
                                   height="24"
-                                  class="realmain-plantRecommend-scrapoff"
-                                />
-                                <img
-                                 src="{% static 'public/web/images/common/scrap-on.png' %}"
-                                  width="24"
-                                  height="24"
-                                  class="realmain-plantRecommend-scrapon"
+                                  class="scrap-off-img"
                                 />
                               </span>
                             </button>
@@ -316,20 +292,14 @@
                             <button
                               type="button"
                               aria-label="scrap 토글 버튼"
-                              class="realmain-plantRecommend-scrapbutton"
+                              class="scrap-button"
                             >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
                                   src="{% static 'public/web/images/common/scrap-off.png' %}"
                                   width="24"
                                   height="24"
-                                  class="realmain-plantRecommend-scrapoff"
-                                />
-                                <img
-                                 src="{% static 'public/web/images/common/scrap-on.png' %}"
-                                  width="24"
-                                  height="24"
-                                  class="realmain-plantRecommend-scrapon"
+                                  class="scrap-off-img"
                                 />
                               </span>
                             </button>
@@ -365,20 +335,14 @@
                             <button
                               type="button"
                               aria-label="scrap 토글 버튼"
-                              class="realmain-plantRecommend-scrapbutton"
+                              class="scrap-button"
                             >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
                                   src="{% static 'public/web/images/common/scrap-off.png' %}"
                                   width="24"
                                   height="24"
-                                  class="realmain-plantRecommend-scrapoff"
-                                />
-                                <img
-                                 src="{% static 'public/web/images/common/scrap-on.png' %}"
-                                  width="24"
-                                  height="24"
-                                  class="realmain-plantRecommend-scrapon"
+                                  class="scrap-off-img"
                                 />
                               </span>
                             </button>
@@ -414,20 +378,14 @@
                             <button
                               type="button"
                               aria-label="scrap 토글 버튼"
-                              class="realmain-plantRecommend-scrapbutton"
+                              class="scrap-button"
                             >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
                                   src="{% static 'public/web/images/common/scrap-off.png' %}"
                                   width="24"
                                   height="24"
-                                  class="realmain-plantRecommend-scrapoff"
-                                />
-                                <img
-                                 src="{% static 'public/web/images/common/scrap-on.png' %}"
-                                  width="24"
-                                  height="24"
-                                  class="realmain-plantRecommend-scrapon"
+                                  class="scrap-off-img"
                                 />
                               </span>
                             </button>
@@ -463,20 +421,14 @@
                             <button
                               type="button"
                               aria-label="scrap 토글 버튼"
-                              class="realmain-plantRecommend-scrapbutton"
+                              class="scrap-button"
                             >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
                                   src="{% static 'public/web/images/common/scrap-off.png' %}"
                                   width="24"
                                   height="24"
-                                  class="realmain-plantRecommend-scrapoff"
-                                />
-                                <img
-                                 src="{% static 'public/web/images/common/scrap-on.png' %}"
-                                  width="24"
-                                  height="24"
-                                  class="realmain-plantRecommend-scrapon"
+                                  class="scrap-off-img"
                                 />
                               </span>
                             </button>
@@ -512,20 +464,14 @@
                             <button
                               type="button"
                               aria-label="scrap 토글 버튼"
-                              class="realmain-plantRecommend-scrapbutton"
+                              class="scrap-button"
                             >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
                                   src="{% static 'public/web/images/common/scrap-off.png' %}"
                                   width="24"
                                   height="24"
-                                  class="realmain-plantRecommend-scrapoff"
-                                />
-                                <img
-                                 src="{% static 'public/web/images/common/scrap-on.png' %}"
-                                  width="24"
-                                  height="24"
-                                  class="realmain-plantRecommend-scrapon"
+                                  class="scrap-off-img"
                                 />
                               </span>
                             </button>
@@ -561,20 +507,14 @@
                             <button
                               type="button"
                               aria-label="scrap 토글 버튼"
-                              class="realmain-plantRecommend-scrapbutton"
+                              class="scrap-button"
                             >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
                                   src="{% static 'public/web/images/common/scrap-off.png' %}"
                                   width="24"
                                   height="24"
-                                  class="realmain-plantRecommend-scrapoff"
-                                />
-                                <img
-                                 src="{% static 'public/web/images/common/scrap-on.png' %}"
-                                  width="24"
-                                  height="24"
-                                  class="realmain-plantRecommend-scrapon"
+                                  class="scrap-off-img"
                                 />
                               </span>
                             </button>
@@ -652,14 +592,14 @@
                       <button
                         type="button"
                         aria-label="scrap 토글 버튼"
-                        class="realmain-lecture-scrapbutton"
+                        class="scrap-button"
                       >
                         <span class="realmain-lecture-scrapSpan">
                           <img
                             src="{% static 'public/web/images/common/scrap-off.png' %}"
                             width="24"
                             height="24"
-                            class="realmain-lecture-scrapoff"
+                            class="scrap-off-img"
                           />
                         </span>
                       </button>
@@ -688,14 +628,14 @@
                       <button
                         type="button"
                         aria-label="scrap 토글 버튼"
-                        class="realmain-lecture-scrapbutton"
+                        class="scrap-button"
                       >
                         <span class="realmain-lecture-scrapSpan">
                           <img
                             src="{% static 'public/web/images/common/scrap-off.png' %}"
                             width="24"
                             height="24"
-                            class="realmain-lecture-scrapoff"
+                            class="scrap-off-img"
                           />
                         </span>
                       </button>
@@ -724,14 +664,14 @@
                       <button
                         type="button"
                         aria-label="scrap 토글 버튼"
-                        class="realmain-lecture-scrapbutton"
+                        class="scrap-button"
                       >
                         <span class="realmain-lecture-scrapSpan">
                           <img
                             src="{% static 'public/web/images/common/scrap-off.png' %}"
                             width="24"
                             height="24"
-                            class="realmain-lecture-scrapoff"
+                            class="scrap-off-img"
                           />
                         </span>
                       </button>
@@ -760,14 +700,14 @@
                       <button
                         type="button"
                         aria-label="scrap 토글 버튼"
-                        class="realmain-lecture-scrapbutton"
+                        class="scrap-button"
                       >
                         <span class="realmain-lecture-scrapSpan">
                           <img
                             src="{% static 'public/web/images/common/scrap-off.png' %}"
                             width="24"
                             height="24"
-                            class="realmain-lecture-scrapoff"
+                            class="scrap-off-img"
                           />
                         </span>
                       </button>
@@ -830,7 +770,7 @@
                       <button
                         type="button"
                         aria-label="scrap 토글 버튼"
-                        class="realmain-lecture-scrapbutton popularcontent-scrapbutton"
+                        class="scrap-button popularcontent-scrapbutton"
                       >
                         <span
                           class="realmain-lecture-scrapSpan popularcontent-scrapSpan"
@@ -839,7 +779,7 @@
                             src="{% static 'public/web/images/common/scrap-off.png' %}"
                             width="24"
                             height="24"
-                            class="realmain-lecture-scrapoff popularcontent-scrapoff"
+                            class="scrap-off-img popularcontent-scrapoff"
                           />
                         </span>
                       </button>
@@ -883,7 +823,7 @@
                       <button
                         type="button"
                         aria-label="scrap 토글 버튼"
-                        class="realmain-lecture-scrapbutton popularcontent-scrapbutton"
+                        class="scrap-button popularcontent-scrapbutton"
                       >
                         <span
                           class="realmain-lecture-scrapSpan popularcontent-scrapSpan"
@@ -892,7 +832,7 @@
                             src="{% static 'public/web/images/common/scrap-off.png' %}"
                             width="24"
                             height="24"
-                            class="realmain-lecture-scrapoff popularcontent-scrapoff"
+                            class="scrap-off-img popularcontent-scrapoff"
                           />
                         </span>
                       </button>
@@ -936,7 +876,7 @@
                       <button
                         type="button"
                         aria-label="scrap 토글 버튼"
-                        class="realmain-lecture-scrapbutton popularcontent-scrapbutton"
+                        class="scrap-button popularcontent-scrapbutton"
                       >
                         <span
                           class="realmain-lecture-scrapSpan popularcontent-scrapSpan"
@@ -945,7 +885,7 @@
                             src="{% static 'public/web/images/common/scrap-off.png' %}"
                             width="24"
                             height="24"
-                            class="realmain-lecture-scrapoff popularcontent-scrapoff"
+                            class="scrap-off-img popularcontent-scrapoff"
                           />
                         </span>
                       </button>
@@ -989,7 +929,7 @@
                       <button
                         type="button"
                         aria-label="scrap 토글 버튼"
-                        class="realmain-lecture-scrapbutton popularcontent-scrapbutton"
+                        class="scrap-button popularcontent-scrapbutton"
                       >
                         <span
                           class="realmain-lecture-scrapSpan popularcontent-scrapSpan"
@@ -998,7 +938,7 @@
                             src="{% static 'public/web/images/common/scrap-off.png' %}"
                             width="24"
                             height="24"
-                            class="realmain-lecture-scrapoff popularcontent-scrapoff"
+                            class="scrap-off-img popularcontent-scrapoff"
                           />
                         </span>
                       </button>
@@ -1064,7 +1004,8 @@
                                 />
                                 <button
                                   type="button"
-                                  class="realmain-todayHotdeal-scrapbutton"
+                                  class="scrap-button"
+                                  style="top: 3px; right:8px"
                                 >
                                   <img
                                     src="{% static 'public/web/images/common/scrap-off.png' %}"
@@ -1141,7 +1082,8 @@
                                 />
                                 <button
                                   type="button"
-                                  class="realmain-todayHotdeal-scrapbutton"
+                                  class="scrap-button"
+                                  style="top: 3px; right:8px"
                                 >
                                   <img
                                     src="{% static 'public/web/images/common/scrap-off.png' %}"
@@ -1286,7 +1228,8 @@
                                 />
                                 <button
                                   type="button"
-                                  class="realmain-todayHotdeal-scrapbutton"
+                                  class="scrap-button"
+                                        style="top: 3px; right:8px"
                                 >
                                   <img
                                     src="{% static 'public/web/images/common/scrap-off.png' %}"
@@ -1438,7 +1381,8 @@
                                 />
                                 <button
                                   type="button"
-                                  class="realmain-todayHotdeal-scrapbutton"
+                                  class="scrap-button"
+                                        style="top: 3px; right:8px"
                                 >
                                   <img
                                     src="{% static 'public/web/images/common/scrap-off.png' %}"
@@ -1583,7 +1527,8 @@
                                 />
                                 <button
                                   type="button"
-                                  class="realmain-todayHotdeal-scrapbutton"
+                                  class="scrap-button"
+                                        style="top: 3px; right:8px"
                                 >
                                   <img
                                     src="{% static 'public/web/images/common/scrap-off.png' %}"
@@ -1735,7 +1680,8 @@
                                 />
                                 <button
                                   type="button"
-                                  class="realmain-todayHotdeal-scrapbutton"
+                                  class="scrap-button"
+                                        style="top: 3px; right:8px"
                                 >
                                   <img
                                     src="{% static 'public/web/images/common/scrap-off.png' %}"
@@ -2106,10 +2052,10 @@
                         width="365.33px"
                         height="365.33px"
                       />
-                      <button class="realmain-bestproduct-realPhotoScrapbtn">
+                      <button class="scrap-button" style="top:1px">
                         <img
                           src="{% static 'public/web/images/common/scrap-off.png' %}"
-                          class="realmain-bestproduct-realPhotoScrapOff"
+                          class="scrap-off-img"
                           width="24px"
                           height="24px"
                         />
@@ -2197,10 +2143,10 @@
                         width="365.33px"
                         height="365.33px"
                       />
-                      <button class="realmain-bestproduct-realPhotoScrapbtn">
+                      <button class="scrap-button" style="top:1px">
                         <img
                           src="{% static 'public/web/images/common/scrap-off.png' %}"
-                          class="realmain-bestproduct-realPhotoScrapOff"
+                          class="scrap-off-img"
                           width="24px"
                           height="24px"
                         />
@@ -2287,11 +2233,11 @@
                          src="{% static 'public/web/images/common/blank-image.png' %}"
                         width="365.33px"
                         height="365.33px"
-                      />
-                      <button class="realmain-bestproduct-realPhotoScrapbtn">
+                      />scrap-button
+                      <button class="scrap-button" style="top:1px">
                         <img
                           src="{% static 'public/web/images/common/scrap-off.png' %}"
-                          class="realmain-bestproduct-realPhotoScrapOff"
+                          class="scrap-off-img"
                           width="24px"
                           height="24px"
                         />
@@ -2373,7 +2319,7 @@
             </div>
           </div>
         </div>
-        <footer></footer>
+        {% include 'fix/footer.html' %}
       </div>
     </main>
     <!-- 스크랩북 눌렀을 때 나오는 모달창 -->
@@ -2398,5 +2344,5 @@
     </div>
  {% endblock %}
 {% block js %}
-    <script src="{% static 'public/web/js/main/main.js' %}"></script>
+    <script src="{% static 'main/js/main.js' %}"></script>
 {% endblock %}
