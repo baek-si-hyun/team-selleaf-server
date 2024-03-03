@@ -32,10 +32,8 @@
     {% block static %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
   </head>
-  <body loaded>
-    {% include 'fix/header.html' %}
+  <body>
     {% block content %}{% endblock %}
-    {% include 'fix/footer.html' %}
   </body>
     {% block js %}{% endblock %}
 </html>
