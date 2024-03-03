@@ -1,4 +1,5 @@
-{% extends 'member/mypage/my-classes/base.html' %}
+{% extends 'member/mypage/my_classes/base.html' %}
+
 {% load static %}
 {% block static %}
     <link rel="stylesheet" href="{% static 'member/css/mypage/my-classes/planned-classes.css' %}">
@@ -101,8 +102,8 @@
                                       type="button"
                                       class="kakao-share-button"
                                     >
-                                      <img
-                                        src="/staticfiles/images/other-sns-logos/kakao-logo.svg"
+                                      <img alt=""
+                                        src="{% static 'member/images/login/kakao-logo.svg' %}"
                                       />
                                     </button>
                                     <!-- 클립보드 복사 버튼 -->
@@ -147,9 +148,9 @@
                         </div>
                         <div class="my-profile-wrap">
                           <div class="profile-image-wrap">
-                            <img
+                            <img alt=""
                               class="profile-image"
-                              src="/staticfiles/images/mypage/base-profile-image.avif"
+                              src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                             />
                           </div>
                           <div class="personal-info-wrap">
@@ -179,8 +180,8 @@
                             <!-- 스크랩 -->
                             <a class="scraps-likes-content-wrap" href="#">
                               <div class="scraps-likes-icon">
-                                <img
-                                  src="/staticfiles/images/scrap-off-blk.png"
+                                <img alt=""
+                                  src="{% static 'public/web/images/common/scrap-off-blk.png' %}"
                                 />
                               </div>
                               <div class="scraps-likes-text">스크랩북</div>
@@ -189,7 +190,7 @@
                             <!-- 좋아요 -->
                             <a class="scraps-likes-content-wrap" href="#">
                               <div class="scraps-likes-icon">
-                                <img src="/staticfiles/images/like-off.png" />
+                                <img alt="" src="{% static 'public/web/images/common/like-off.png' %}">
                               </div>
                               <div class="scraps-likes-text">좋아요</div>
                               <div class="scraps-likes-count">0</div>
@@ -197,8 +198,8 @@
                             <!-- 마일리지 -->
                             <a class="scraps-likes-content-wrap" href="#">
                               <div class="scraps-likes-icon">
-                                <img
-                                  src="/staticfiles/images/maileage/mileage.png"
+                                <img alt=""
+                                  src="{% static 'member/images/mypage/mileage.png' %}"
                                 />
                               </div>
                               <div class="scraps-likes-text">마일리지</div>
@@ -246,9 +247,9 @@
                       <a href="#" class="classes-history-link"></a>
                       <div class="classes-history-item-container">
                         <div class="classes-item-image-wrap">
-                          <img
+                          <img alt=""
                             class="classes-item-image"
-                            src="/staticfiles/images/blank-image.png"
+                            src="{% static 'public/web/images/common/blank-image.png' %}"
                           />
                         </div>
                         <div class="classes-item-title-wrap">
@@ -269,9 +270,9 @@
                             <!-- 작성자 -->
                             <div class="user-info-wrap">
                               <div class="user-profile-wrap">
-                                <img
+                                <img alt=""
                                   class="user-profile-image"
-                                  src="/staticfiles/images/mypage/base-profile-image.avif"
+                                  src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                                 />
                               </div>
                               Selleaf Test
@@ -316,9 +317,9 @@
                       <a href="#" class="classes-history-link"></a>
                       <div class="classes-history-item-container">
                         <div class="classes-item-image-wrap">
-                          <img
+                          <img alt=""
                             class="classes-item-image"
-                            src="/staticfiles/images/blank-image.png"
+                            src="{% static 'public/web/images/common/blank-image.png' %}"
                           />
                         </div>
                         <div class="classes-item-title-wrap">
@@ -336,9 +337,9 @@
                           <div class="article-info-wrap">
                             <div class="user-info-wrap">
                               <div class="user-profile-wrap">
-                                <img
+                                <img alt=""
                                   class="user-profile-image"
-                                  src="/staticfiles/images/mypage/base-profile-image.avif"
+                                  src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                                 />
                               </div>
                               Selleaf Test
@@ -381,9 +382,9 @@
                       <a href="#" class="classes-history-link"></a>
                       <div class="classes-history-item-container">
                         <div class="classes-item-image-wrap">
-                          <img
+                          <img alt=""
                             class="classes-item-image"
-                            src="/staticfiles/images/blank-image.png"
+                            src="{% static 'public/web/images/common/blank-image.png' %}"
                           />
                         </div>
                         <div class="classes-item-title-wrap">
@@ -401,9 +402,9 @@
                           <div class="article-info-wrap">
                             <div class="user-info-wrap">
                               <div class="user-profile-wrap">
-                                <img
+                                <img alt=""
                                   class="user-profile-image"
-                                  src="/staticfiles/images/mypage/base-profile-image.avif"
+                                  src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                                 />
                               </div>
                               Selleaf Test
@@ -448,9 +449,9 @@
                       <a href="#" class="classes-history-link"></a>
                       <div class="classes-history-item-container">
                         <div class="classes-item-image-wrap">
-                          <img
+                          <img alt=""
                             class="classes-item-image"
-                            src="/staticfiles/images/blank-image.png"
+                            src="{% static 'public/web/images/common/blank-image.png' %}"
                           />
                         </div>
                         <div class="classes-item-title-wrap">
@@ -468,9 +469,9 @@
                           <div class="article-info-wrap">
                             <div class="user-info-wrap">
                               <div class="user-profile-wrap">
-                                <img
+                                <img alt=""
                                   class="user-profile-image"
-                                  src="/staticfiles/images/mypage/base-profile-image.avif"
+                                  src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                                 />
                               </div>
                               Selleaf Test
@@ -515,9 +516,9 @@
                       <a href="#" class="classes-history-link"></a>
                       <div class="classes-history-item-container">
                         <div class="classes-item-image-wrap">
-                          <img
+                          <img alt=""
                             class="classes-item-image"
-                            src="/staticfiles/images/blank-image.png"
+                            src="{% static 'public/web/images/common/blank-image.png' %}"
                           />
                         </div>
                         <div class="classes-item-title-wrap">
@@ -535,9 +536,9 @@
                           <div class="article-info-wrap">
                             <div class="user-info-wrap">
                               <div class="user-profile-wrap">
-                                <img
+                                <img alt=""
                                   class="user-profile-image"
-                                  src="/staticfiles/images/mypage/base-profile-image.avif"
+                                  src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                                 />
                               </div>
                               Selleaf Test
