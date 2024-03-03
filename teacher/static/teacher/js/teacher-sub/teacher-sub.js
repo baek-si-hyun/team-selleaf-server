@@ -1,7 +1,8 @@
 const prevImgBox = document.querySelector(".prev-img-box");
-const inputs = document.querySelectorAll(".my_lecture-input");
+const inputs = document.querySelectorAll(".lecture-input");
 
 inputs.forEach((input, index) => {
+    console.log(111)
   input.addEventListener("change", (e) => {
     const targetInput = e.target;
     const file = targetInput.files[0];
@@ -9,7 +10,8 @@ inputs.forEach((input, index) => {
 
     reader.onload = (event) => {
       const path = event.target.result;
-      e.target.nextElementSibling.setAttribute("src", path);
+      // e.target.nextElementSibling.setAttribute("src", path);
+       e.target.nextElementSibling.src = path;
       e.target.closest(".prev-img-box-item").style.display = "block";
 
       const label = e.target.closest(".upload-wrap").querySelector(".upload-btn");
@@ -40,7 +42,7 @@ const cancelBtns = document.querySelectorAll(".cancel-btn");
 cancelBtns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const prevBox = e.target.closest(".prev-img-box-item");
-    const input = prevBox.querySelector(".my_lecture-input");
+    const input = prevBox.querySelector(".lecture-input");
     hideImageAndInput(prevBox, input);
     const label = e.target.closest(".upload-wrap").querySelector(".upload-btn");
 
@@ -95,7 +97,6 @@ inputs2.forEach((input, index) => {
 });
 
 function hideImageAndInput2(prevBox2, input2) {
-  console.log(222);
   prevBox2.style.display = "none";
   input2.style.display = "none";
 }

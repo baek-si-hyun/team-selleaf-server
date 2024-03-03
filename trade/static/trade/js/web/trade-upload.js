@@ -127,3 +127,28 @@ plantSelections.forEach((plantSelection) => {
     plantSelection.classList.toggle("select-on");
   });
 });
+
+// 제목창 글자수 세는 코드
+const titleInput = document.querySelector(".title-input");
+const titleInputCount = document.querySelector(".count");
+titleInput.addEventListener("keyup", (e) => {
+  titleInputCount.innerText = 0;
+  e.target.value && (titleInputCount.innerText = e.target.value.length);
+});
+
+//
+const dropBoxGuide = document.querySelector("#guide-header");
+const dropBoxRequired = document.querySelector("#required-info-header");
+const downArrowIcon = document.querySelectorAll(".dropdown-icon");
+const dropBoxes = document.querySelectorAll(".off");
+// dropBoxes[0].style.display = "block";
+
+dropBoxGuide.addEventListener("click", () => {
+  downArrowIcon[0].classList.toggle("down-arrow-open");
+  dropBoxes[0].classList.toggle("guide-open");
+});
+
+dropBoxRequired.addEventListener("click", () => {
+  downArrowIcon[1].classList.toggle("down-arrow-open");
+  dropBoxes[1].classList.toggle("required-open");
+});
