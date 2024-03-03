@@ -5,4 +5,4 @@ from django.views import View
 # 공지사항 페이지 이동 뷰
 class NoticeView(View):
     def get(self, request):
-        return render(request, 'notice/web/notice.html')
+        return render(request, 'manager/manager-notice/manager-qna/manager-qna-compose.html')
