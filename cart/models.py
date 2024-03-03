@@ -33,3 +33,7 @@ class CartDetail(Period):
     quantity = models.IntegerField(blank=False, null=False, default=0)
     # 게시중 0, 결제 완료 1, 상품 삭제 -1
     cart_detail_status = models.IntegerField(blank=False, null=False, default=0, choices=CART_DETAIL_STATUS)
+
+    class Meta:
+        db_table = 'tbl_cart_detail'
+        ordering = ['-id']
