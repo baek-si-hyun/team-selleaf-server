@@ -86,5 +86,5 @@ class LecturePlaceFile(File):
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
 
     class Meta:
-        db_table = 'tbl_teacher_place_file'
+        db_table = 'tbl_lecture_place_file'
         ordering = ['-id']
