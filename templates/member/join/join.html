@@ -12,14 +12,15 @@
         <a href="javascript:void(0)">
           <!-- 팀 로고 -->
           <img
-            src="{% static 'public/web/images/common/selleaf.png' %}" 
+            src="{% static 'public/web/images/common/logo-lettering-blk.png' %}" 
             style="width: 88px"
           />
         </a>
         <div class="except-logo-wrap">
           <h1 class="register-text">회원가입</h1>
           <!-- 개인정보 입력란 -->
-          <form>
+          <form action="{% url 'member:join' %}" method="post" name="join-form">
+            {% csrf_token %}
             <!-- 이메일 입력란 -->
             <div class="email-input-wrap">
               <label class="email-input-text">이메일</label>
@@ -31,87 +32,17 @@
                       <!-- 나중에 form-control 클래스 가진 요소들 한 번에 조작하는 js 작업 필요할 수 있으니 참고 바람 -->
                       <input
                         class="email-form-control"
-                        placeholder="이메일"
+                        name="member-email"
                         size="1"
+                        type="email"
+                        value="{{ member_email }}"
+                        disabled
                       />
                       <span class="email-form-control-blind">
                         이메일 앞 주소 입력하기
                       </span>
                     </label>
                   </span>
-                  <span class="email-seperator">@</span>
-                  <span class="email-input-domain">
-                    <label>
-                      <select class="email-form-control">
-                        <option value="" disabled selected>선택해주세요</option>
-                        <option value="naver.com">naver.com</option>
-                        <option value="hanmail.net">hanmail.net</option>
-                        <option value="daum.net">daum.net</option>
-                        <option value="gmail.com">gmail.com</option>
-                        <option value="nate.com">nate.com</option>
-                        <option value="hotmail.com">hotmail.com</option>
-                        <option value="outlook.com">outlook.com</option>
-                        <option value="icloud.com">icloud.com</option>
-                      </select>
-                      <span class="email-form-control-blind"
-                        >이메일 도메인 선택하기
-                      </span>
-                    </label>
-                    <button
-                      class="domain-select-button"
-                      aria-label="초기화"
-                      type="button"
-                      tabindex="-1"
-                    >
-                      <!-- 도메인 선택 버튼 -->
-                      <svg
-                        width="10"
-                        height="10"
-                        preserveAspectRatio="xMidYMid meet"
-                        style="fill: currentcolor"
-                      >
-                        <path fill-rule="evenodd" d="M0 3l5 5 5-5z"></path>
-                      </svg>
-                    </button>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <!-- 이메일 인증 버튼 -->
-            <div class="email-verify-button-wrap">
-              <button
-                class="email-verify-button"
-                name="이메일 인증 버튼"
-                type="button"
-              >
-                이메일 인증하기
-              </button>
-            </div>
-            <!-- 인증번호 입력칸 -->
-            <div class="email-code-wrap">
-              <div class="email-code-container">
-                <div class="email-code-info">
-                  이메일로 받은 인증코드를 입력해주세요.
-                </div>
-                <div class="code-input-wrap">
-                  <div class="code-input-container">
-                    <input
-                      type="text"
-                      class="code-input"
-                      placeholder="인증코드 6자리"
-                    />
-                    <span class="left-time">03:00</span>
-                  </div>
-                  <button type="button" class="confirm-button" disabled>
-                    확인
-                  </button>
-                </div>
-                <div class="error-text" style="display: none"></div>
-                <div class="resend-wrap">
-                  <div class="resend-container">
-                    이메일을 받지 못하셨나요?
-                    <a href="#" class="resend">이메일 재전송하기</a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -124,7 +55,7 @@
                   <span class="region-input-local">
                     <label>
                       <!-- 기본값은 서울특별시 -->
-                      <select class="region-form-control">
+                      <select class="region-form-control" name="address-city">
                         <option value="서울특별시">서울특별시</option>
                         <option value="인천광역시">인천광역시</option>
                         <option value="대전광역시">대전광역시</option>
@@ -170,7 +101,7 @@
                     <label>
                       <!-- 기본값은 서울을 기준으로 했지만, 위쪽 선택에 따라 다른 걸 보여줘야 됨(JS로) -->
                       <!-- 아래의 서울 내 지역도 따로 배열로 제작 -->
-                      <select class="region-form-control">
+                      <select class="region-form-control" name="address-district">
                         <option value="종로구">종로구</option>
                         <option value="중구">중구</option>
                         <option value="용산구">용산구</option>
@@ -222,14 +153,26 @@
               </div>
             </div>
             <!-- 닉네임 입력란 -->
+              <div class="address-wrap">
+              <label class="address-text">상세주소</label>
+              <div class="address-info">상세주소를 입력해주세요.</div>
+              <label>
+                <input
+                  class="address-input"
+                  name="address-detail"
+                  placeholder="상세주소"
+                />
+              </label>
+            </div>
             <div class="nickname-wrap">
               <label class="nickname-text">이름</label>
               <div class="nickname-info">이름을 입력해주세요.</div>
               <label>
                 <input
                   class="nickname-input"
-                  name="이름"
-                  placeholder="이름 (2~15자)"
+                  name="member-name"
+                  value="{{ member_name }}"
+                  disabled
                 />
                 <span class="nickname-hidden">이름 입력하기</span>
               </label>
@@ -247,7 +190,6 @@
                       <input
                         class="all-check-input"
                         type="checkbox"
-                        name="전체동의"
                         value="false"
                       />
                     </div>
@@ -273,7 +215,6 @@
                       <input
                         class="essential-check-input"
                         type="checkbox"
-                        name="필수항목1"
                         value="false"
                       />
                     </div>
@@ -294,7 +235,6 @@
                       <input
                         class="essential-check-input"
                         type="checkbox"
-                        name="필수항목2"
                         value="false"
                       />
                     </div>
@@ -318,7 +258,6 @@
                       <input
                         class="essential-check-input"
                         type="checkbox"
-                        name="필수항목3"
                         value="false"
                       />
                     </div>
@@ -343,7 +282,7 @@
                       <input
                         class="optional-check-input"
                         type="checkbox"
-                        name="마케팅동의"
+                        name="marketing-agree"
                         value="false"
                       />
                     </div>
@@ -367,7 +306,7 @@
                       <input
                         class="optional-check-input"
                         type="checkbox"
-                        name="sns수신"
+                        name="sms-agree"
                         value="false"
                       />
                     </div>
@@ -380,7 +319,7 @@
                 </div>
               </div>
             </div>
-            <button class="register-button" type="button">회원가입하기</button>
+            <button class="register-button">회원가입하기</button>
           </form>
           <!-- 나중에 로그인 페이지랑 연결 -->
           <p class="already-registered-wrap">
@@ -392,6 +331,5 @@
     </div>
 {% endblock %}
 {% block js %}
-    <script>const memberEmail = `{{ memberEmail }}`</script>
     <script src="{% static 'member/js/join/join.js' %}"></script>
 {% endblock %}

@@ -42,6 +42,9 @@ input:-webkit-autofill {
 }
 
 /* 이메일 입력란 */
+.email-input-wrap{
+    margin-bottom: 20px;
+}
 .email-input-text {
     display: block;
     margin-bottom: 12px;
@@ -489,6 +492,54 @@ input:-webkit-autofill {
 }
 
 .nickname-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(99, 112, 88, 0.5);
+}
+
+/* 닉네임 입력란 */
+.address-wrap {
+    margin-bottom: 30px;
+}
+
+.address-text {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    color: rgb(47, 52, 56);
+    letter-spacing: -0.3px;
+    word-break: keep-all;
+}
+
+.address-info {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 18px;
+    color: rgb(130, 140, 148);
+    letter-spacing: -0.3px;
+}
+
+.address-input {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    border: 1px solid #dbdbdb;
+    background-color: #fff;
+    color: #000;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: Noto Sans KR, Noto Sans CJK KR, 맑은 고딕, Malgun Gothic,
+    sans-serif;
+    font-size: 15px;
+    line-height: 21px;
+    transition: border-color 0.1s, background-color 0.1s;
+    resize: none;
+    padding: 8px 15px 9px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.address-input:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(99, 112, 88, 0.5);
 }
