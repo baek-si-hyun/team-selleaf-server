@@ -11,6 +11,6 @@ urlpatterns = [
     path('detail/offline/', LectureDetailOfflineView.as_view(), name='detail-offline'),
     path('total/', LectureTotalView.as_view(), name='total'),
     path('upload/online/', LectureUploadOnlineView.as_view(), name='upload-online'),
-    path('upload/offline/', LectureUploadOfflineView.as_view(), name='upload')
+    path('upload/offline/', LectureUploadOfflineView.as_view(), name='upload-offline')
 
 ]
