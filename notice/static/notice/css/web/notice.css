@@ -1,11 +1,11 @@
 h3{
-    margin-block-start: 0em;
-    margin-block-end: 0em;
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 p{
-    margin-block-start: 0em;
-    margin-block-end: 0em;
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 button {
@@ -15,14 +15,14 @@ button {
     word-spacing: normal;
     line-height: normal;
     text-transform: none;
-    text-indent: 0px;
+    text-indent: 0;
     text-shadow: none;
     display: inline-block;
     text-align: center;
     align-items: flex-start;
     cursor: default;
     box-sizing: border-box;
-    margin: 0em;
+    margin: 0;
     padding-block: 1px;
     padding-inline: 6px;
     border-width: 2px;
@@ -30,8 +30,8 @@ button {
     border-image: initial;
 }
 
-div.notice-wrap{
-    height: 100%;
+.notice-wrap {
+    height: auto;
 }
 
 div.notice-container{
@@ -43,7 +43,6 @@ div.notice-container{
     -webkit-box-direction: normal;
     -webkit-box-orient: vertical;
     -webkit-flex-direction: column;
-    -moz-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
     min-height: 100vh;
@@ -55,14 +54,13 @@ div.notice-inner{
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 auto;
     -moz-box-flex: 0;
-    -moz-flex: 0 0 auto;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
 }
 
 div.help-wrap{
     max-width: 850px;
-    margin: 0px auto;
+    margin: 0 auto;
 }
 
 div.help-container{
@@ -95,7 +93,7 @@ li.help-example{
 
 span.help-q{
     position: absolute;
-    left: 0px;
+    left: 0;
     top: -2px;
     width: 28px;
     height: 28px;
@@ -109,12 +107,12 @@ span.help-q{
     line-height: 20px;
     color: #c06888;
     border: 1px solid rgb(234, 237, 239);
-    box-shadow: rgba(63, 71, 77, 0.05) 0px 2px 6px;
+    box-shadow: rgba(63, 71, 77, 0.05) 0 2px 6px;
 }
 
 hr.help-between-center{
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     height: 10px;
     border: none;
     background-color: rgb(247, 249, 250);
@@ -180,7 +178,7 @@ span.center-number{
 
 button.kakao{
     grid-column: 1 / 3;
-    margin: 0px;
+    margin: 0;
     border: none;
     background: none #F7E600;
     font-style: inherit;
@@ -201,7 +199,7 @@ button.kakao{
     width: auto;
     height: 44px;
     border-radius: 4px;
-    padding: 0px 16px;
+    padding: 0 16px;
     font-weight: 400;
     box-sizing: border-box;
     text-align: center;
@@ -215,7 +213,7 @@ button.kakao:hover{
 a.contact-email{
     background-color: rgb(255, 255, 255);
     grid-row: 2;
-    margin: 0px;
+    margin: 0;
     background: none;
     font-style: inherit;
     font-variant: inherit;
@@ -235,7 +233,7 @@ a.contact-email{
     width: auto;
     height: 44px;
     border-radius: 4px;
-    padding: 0px 16px;
+    padding: 0 16px;
     font-weight: 400;
     box-sizing: border-box;
     text-align: center;
@@ -250,7 +248,7 @@ a.contact-email:hover{
 button.contact-email{
     background-color: rgb(255, 255, 255);
     grid-row: 2;
-    margin: 0px;
+    margin: 0;
     background: none;
     font-style: inherit;
     font-variant: inherit;
@@ -270,7 +268,7 @@ button.contact-email{
     width: auto;
     height: 44px;
     border-radius: 4px;
-    padding: 0px 16px;
+    padding: 0 16px;
     font-weight: 400;
     box-sizing: border-box;
     text-align: center;
@@ -279,8 +277,8 @@ button.contact-email{
 }
 
 hr.halfline{
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     height: 10px;
     border: none;
     background-color: rgb(247, 249, 250);
@@ -294,7 +292,7 @@ nav.benner-container{
     box-sizing: border-box;
     background-color: rgb(255, 255, 255);
     text-align: center;
-    padding: 40px 24px 0px;
+    padding: 40px 24px 0;
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;
@@ -302,10 +300,10 @@ nav.benner-container{
 
 input.benner-button-1{
     position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 0px;
-    height: 0px;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
     opacity: 0;
 }
 
@@ -394,10 +392,10 @@ label.benner-inner-checked::before{
 
 input.benner-button-2{
     position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 0px;
-    height: 0px;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
     opacity: 0;
 }
 
@@ -411,7 +409,7 @@ span.benner-button-2{
 
 div.list-wrap{
     max-width: 850px;
-    margin: 0px auto;
+    margin: 0 auto;
 }
 
 ul.list-container{
@@ -431,7 +429,7 @@ h3.list-inner{
     font-weight: 400;
     color: rgb(47, 52, 56);
     border-bottom: 1px solid rgb(234, 237, 239);
-    padding: 8px 0px;
+    padding: 8px 0;
     font-size: 16px;
     line-height: 28px;
 }
@@ -442,7 +440,7 @@ h3.list-inner-open{
 
 button.list-q{
     display: inline-block;
-    margin: 0px;
+    margin: 0;
     border: none;
     background: none;
     font: inherit;
@@ -455,7 +453,7 @@ button.list-q{
 
 span.question-q{
     position: absolute;
-    left: 0px;
+    left: 0;
     top: 8px;
     width: 28px;
     height: 28px;
@@ -469,11 +467,11 @@ span.question-q{
     line-height: 20px;
     color: #c06888;
     border: 1px solid rgb(234, 237, 239);
-    box-shadow: rgba(63, 71, 77, 0.05) 0px 2px 6px;
+    box-shadow: rgba(63, 71, 77, 0.05) 0 2px 6px;
 }
 span.question-text{
     display: inline-block;
-    margin: 0px;
+    margin: 0;
     border: none;
     background: none;
     font: inherit;
@@ -512,9 +510,9 @@ div.question{
     border-radius: 4px;
     transition: all 0.2s ease 0s;
     box-sizing: border-box;
-    padding: 0px 16px;
+    padding: 0 16px;
     opacity: 0;
-    height: 0px;
+    height: 0;
 }
 
 div.question-open{
