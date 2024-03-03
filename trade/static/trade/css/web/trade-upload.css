@@ -395,6 +395,19 @@
     padding-top: 5px;
 }
 
+.down-arrow-open {
+  font-size: 18px;
+  color: rgb(130, 140, 148);
+  transition: transform 0.2s ease 0s;
+  transform: rotate(180deg);
+}
+
+.guide-open {
+  height: 290px;
+}
+.required-open {
+  height: 560px;
+}
 .dropdown-icon-wrap > .dropdown-icon{
     font-size: 18px;
     color: rgb(130, 140, 148);
@@ -406,12 +419,14 @@
 
 
 .off{
-    display:none
+    display:none;
+    transition: height 0.2s ease 0s;
+    /*height: 0;*/
 }
 
 
 .required-off{
-    display:none
+    display:none;
 }
 
 .expended{
@@ -811,10 +826,10 @@
     line-height: 0;
   }
   
-  .expanded {
-    transition: height 0.2s ease 0s;
-    height: 0;
-  }
+  /*.expanded {*/
+  /*  transition: height 0.2s ease 0s;*/
+  /*  !*height: 0;*!*/
+  /*}*/
   .open {
     height: 436px;
   }
