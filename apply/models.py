@@ -20,6 +20,7 @@ class Apply(Period):
         db_table = 'tbl_apply'
         ordering = ['-id']
 
+
 class Trainee(Period):
     trainee_name = models.CharField(null=False, blank=False, max_length=100)
     apply = models.ForeignKey(Apply, on_delete=models.PROTECT, null=False)

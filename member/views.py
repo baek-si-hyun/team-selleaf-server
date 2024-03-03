@@ -42,7 +42,7 @@ class MemberJoinView(View):
         }
         Member.objects.create(**data)
 
-        return redirect('member:login')
+        return redirect('/')
 
 
 class MemberLoginView(View):
