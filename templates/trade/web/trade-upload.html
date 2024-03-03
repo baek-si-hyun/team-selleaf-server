@@ -5,6 +5,8 @@
 {% endblock %}
 {% block title %}거래포스팅{% endblock %}
 {% block content %}
+<form action="{% url 'trade:upload' %}" method="post" name="trade-upload">
+{% csrf_token %}
   <body>
     <div class="layout-wrap">
       <div class="layout-container">
@@ -29,15 +31,15 @@
                 </a>
                 <div class="save-button-wrap">
                   <div class="save-button-container">
-                    <div class="temporary-save-wrap">
-                      <div class="temporary-save-container">
-                        <button type="button" disabled class="temporary-save">
-                          <span class="temporary-save-letter">임시저장</span>
-                          <span class="save-letter">저장</span>
-                        </button>
-                      </div>
-                    </div>
-                    <button type="button" class="establish">
+{#                    <div class="temporary-save-wrap">#}
+{#                      <div class="temporary-save-container">#}
+{#                        <button type="button" disabled class="temporary-save">#}
+{#                          <span class="temporary-save-letter">임시저장</span>#}
+{#                          <span class="save-letter">저장</span>#}
+{#                        </button>#}
+{#                      </div>#}
+{#                    </div>#}
+                    <button class="establish">
                       <span class="establish-ask-letter">등록하기</span>
                       <span class="establish-letter">등록</span>
                     </button>
@@ -492,6 +494,7 @@
       </div>
     </div>
   </body>
+</form>
 {% endblock %}
 {% block js %}
   <script src="{% static 'trade/js/web/trade-upload.js' %}"></script>

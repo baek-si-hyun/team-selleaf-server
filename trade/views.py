@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 
 
@@ -17,3 +17,7 @@ class TradeTotalView(View):
 class TradeUploadView(View):
     def get(self, request):
         return render(request, "trade/web/trade-upload.html")
+
+    def post(self, request):
+        request.session
+        return redirect('trade:detail')
