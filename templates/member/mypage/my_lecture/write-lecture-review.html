@@ -1,4 +1,4 @@
-{% extends 'member/mypage/my_classes/base.html' %}
+{% extends 'member/mypage/my_lecture/base.html' %}
 {% load static %}
 {% block static %}
     <link rel="stylesheet" href="{% static 'member/css/mypage/my_lecture/write-lecture-review.css' %}">
@@ -11,7 +11,7 @@
           class="sticky-header-wrap"
           style="
             position: sticky;
-            top: 0px;
+            top: 0;
             transition: top 0.1s ease 0s;
             z-index: 500;
           "
@@ -22,7 +22,7 @@
                 <a href="#" aria-label="selleaf" class="logo-wrap">
                   <img
                     class="logo"
-                    src="/staticfiles/images/logo-lettering-blk.png"
+                    src="{% static 'public/web/images/common/logo-lettering-blk.png' %}"
                     alt=""
                   />
                 </a>
@@ -172,7 +172,7 @@
                     <div class="cancel-div">
                       <button type="button" class="cancel-btn">
                         <img
-                          src="/staticfiles/images/cancel.png"
+                          src="{% static 'public/web/images/common/cancel.png' %}"
                           alt=""
                           class="cancel-img"
                         />
@@ -190,7 +190,7 @@
                     <div class="cancel-div">
                       <button type="button" class="cancel-btn">
                         <img
-                          src="/staticfiles/images/cancel.png"
+                          src="{% static 'public/web/images/common/cancel.png' %}"
                           alt=""
                           class="cancel-img"
                         />
@@ -208,7 +208,7 @@
                     <div class="cancel-div">
                       <button type="button" class="cancel-btn">
                         <img
-                          src="/staticfiles/images/cancel.png"
+                          src="{% static 'public/web/images/common/cancel.png' %}"
                           alt=""
                           class="cancel-img"
                         />
@@ -226,7 +226,7 @@
                     <div class="cancel-div">
                       <button type="button" class="cancel-btn">
                         <img
-                          src="/staticfiles/images/cancel.png"
+                          src="{% static 'public/web/images/common/cancel.png' %}"
                           alt=""
                           class="cancel-img"
                         />
@@ -244,7 +244,7 @@
                     <div class="cancel-div">
                       <button type="button" class="cancel-btn">
                         <img
-                          src="/staticfiles/images/cancel.png"
+                          src="{% static 'public/web/images/common/cancel.png' %}"
                           alt=""
                           class="cancel-img"
                         />
@@ -405,14 +405,15 @@
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                           >
-                            <path
-                              d="M682.666667 533.333333a21.333333 21.333333 0 0 1-15.146667-6.186666l-298.666667-298.666667a21.333333 21.333333 0 0 1 30.293334-30.293333l298.666666 298.666666a21.333333 21.333333 0 0 1 0 30.293334A21.333333 21.333333 0 0 1 682.666667 533.333333z"
-                              fill="#333333"
-                            />
-                            <path
-                              d="M384 832a21.333333 21.333333 0 0 1-15.146667-6.186667 21.333333 21.333333 0 0 1 0-30.293333l298.666667-298.666667a21.333333 21.333333 0 0 1 30.293333 30.293334l-298.666666 298.666666A21.333333 21.333333 0 0 1 384 832z"
-                              fill="#333333"
-                            />
+{#                              오류 발생#}
+{#                            <path#}
+{#                              d="M682.666667 533.333333a21.333333 21.333333 0 0 1-15.146667-6.186666l-298.666667-298.666667a21.333333 21.333333 0 0 1 30.293334-30.293333l298.666666 298.666666a21.333333 21.333333 0 0 1 0 30.293334A21.333333 21.333333 0 0 1 682.666667 533.333333z"#}
+{#                              fill="#333333"#}
+{#                            />#}
+{#                            <path#}
+{#                              d="M384 832a21.333333 21.333333 0 0 1-15.146667-6.186667 21.333333 21.333333 0 0 1 0-30.293333l298.666667-298.666667a21.333333 21.333333 0 0 1 30.293333 30.293334l-298.666666 298.666666A21.333333 21.333333 0 0 1 384 832z"#}
+{#                              fill="#333333"#}
+{#                            />#}
                           </svg>
                         </button>
                       </div>

@@ -113,8 +113,8 @@
                                       type="button"
                                       class="kakao-share-button"
                                     >
-                                      <img
-                                        src="/staticfiles/images/other-sns-logos/kakao-logo.svg"
+                                      <img alt=""
+                                        src="{% static 'member/images/login/kakao-logo.svg' %}"
                                       />
                                     </button>
                                     <!-- 클립보드 복사 버튼 -->
@@ -159,9 +159,9 @@
                         </div>
                         <div class="my-profile-wrap">
                           <div class="profile-image-wrap">
-                            <img
+                            <img alt=""
                               class="profile-image"
-                              src="/staticfiles/images/mypage/base-profile-image.avif"
+                              src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                             />
                           </div>
                           <div class="personal-info-wrap">
@@ -191,8 +191,9 @@
                             <!-- 스크랩 -->
                             <a class="scraps-likes-content-wrap" href="#">
                               <div class="scraps-likes-icon">
-                                <img
-                                  src="/staticfiles/images/scrap-off-blk.png"
+                                <img alt=""
+                                  src="{% static 'public/web/images/common/scrap-off-blk.png' %}
+"
                                 />
                               </div>
                               <div class="scraps-likes-text">스크랩북</div>
@@ -201,7 +202,8 @@
                             <!-- 좋아요 -->
                             <a class="scraps-likes-content-wrap" href="#">
                               <div class="scraps-likes-icon">
-                                <img src="/staticfiles/images/like-off.png" />
+                                <img alt="" src="{% static 'public/web/images/common/like-off.png' %}
+" />
                               </div>
                               <div class="scraps-likes-text">좋아요</div>
                               <div class="scraps-likes-count">0</div>
@@ -209,8 +211,8 @@
                             <!-- 마일리지 -->
                             <a class="scraps-likes-content-wrap" href="#">
                               <div class="scraps-likes-icon">
-                                <img
-                                  src="/staticfiles/images/maileage/mileage.png"
+                                <img alt=""
+                                  src="{% static 'member/images/mypage/mileage.png' %}"
                                 />
                               </div>
                               <div class="scraps-likes-text">마일리지</div>
@@ -260,9 +262,9 @@
                       </div>
                       <!-- 게시글 없을 때 표시 -->
                       <a class="photo-upload-wrap no-posts" href="#">
-                        <img
+                        <img alt=""
                           class="add-icon"
-                          src="/staticfiles/images/mypage/add-icon.svg"
+                          src="{% static 'member/images/mypage/add-icon.svg' %}"
                         />
                         첫 번째 게시글을 올려보세요
                       </a>
@@ -278,7 +280,7 @@
                                   <div class="post-image-inner">
                                     <div class="post-image"></div>
                                     <img
-                                      src="/staticfiles/images/blank-image.png"
+                                      src="{% static 'public/web/images/common/blank-image.png' %}"
                                       alt=""
                                       class="image"
                                     />
@@ -325,7 +327,7 @@
                                   <div class="post-image-inner">
                                     <div class="post-image"></div>
                                     <img
-                                      src="/staticfiles/images/blank-image.png"
+                                      src="{% static 'public/web/images/common/blank-image.png' %}"
                                       alt=""
                                       class="image"
                                     />
@@ -372,7 +374,7 @@
                                   <div class="post-image-inner">
                                     <div class="post-image"></div>
                                     <img
-                                      src="/staticfiles/images/blank-image.png"
+                                      src="{% static 'public/web/images/common/blank-image.png' %}"
                                       alt=""
                                       class="image"
                                     />
@@ -419,7 +421,7 @@
                                   <div class="post-image-inner">
                                     <div class="post-image"></div>
                                     <img
-                                      src="/staticfiles/images/blank-image.png"
+                                      src="{% static 'public/web/images/common/blank-image.png' %}"
                                       alt=""
                                       class="image"
                                     />
@@ -466,7 +468,7 @@
                                   <div class="post-image-inner">
                                     <div class="post-image"></div>
                                     <img
-                                      src="/staticfiles/images/blank-image.png"
+                                      src="{% static 'public/web/images/common/blank-image.png' %}"
                                       alt=""
                                       class="image"
                                     />
@@ -513,7 +515,7 @@
                                   <div class="post-image-inner">
                                     <div class="post-image"></div>
                                     <img
-                                      src="/staticfiles/images/blank-image.png"
+                                      src="{% static 'public/web/images/common/blank-image.png' %}"
                                       alt=""
                                       class="image"
                                     />
@@ -560,7 +562,7 @@
                                   <div class="post-image-inner">
                                     <div class="post-image"></div>
                                     <img
-                                      src="/staticfiles/images/blank-image.png"
+                                      src="{% static 'public/web/images/common/blank-image.png' %}"
                                       alt=""
                                       class="image"
                                     />
@@ -607,7 +609,7 @@
                                   <div class="post-image-inner">
                                     <div class="post-image"></div>
                                     <img
-                                      src="/staticfiles/images/blank-image.png"
+                                      src="{% static 'public/web/images/common/blank-image.png' %}"
                                       alt=""
                                       class="image"
                                     />
@@ -657,9 +659,9 @@
                       </div>
                       <!-- 리뷰 없을 때 표시 -->
                       <a class="photo-upload-wrap no-reviews" href="#">
-                        <img
+                        <img alt=""
                           class="add-icon"
-                          src="/staticfiles/images/mypage/add-icon.svg"
+                          src="{% static 'member/images/mypage/add-icon.svg' %}"
                         />
                         첫 번째 리뷰를 올려보세요
                       </a>
@@ -671,9 +673,9 @@
                             class="reviews-item-image-wrap"
                             style="opacity: 1"
                           >
-                            <img
+                            <img alt=""
                               class="reviews-item-image"
-                              src="/staticfiles/images/blank-image.png"
+                              src="{% static 'public/web/images/common/blank-image.png' %}"
                             />
                           </div>
                           <div
@@ -694,9 +696,9 @@
                               <!-- 작성자 -->
                               <div class="user-info-wrap">
                                 <div class="user-profile-wrap">
-                                  <img
+                                  <img alt=""
                                     class="user-profile-image"
-                                    src="/staticfiles/images/mypage/base-profile-image.avif"
+                                    src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                                   />
                                 </div>
                                 Selleaf Test
@@ -754,9 +756,9 @@
                             class="reviews-item-image-wrap"
                             style="opacity: 1"
                           >
-                            <img
+                            <img alt=""
                               class="reviews-item-image"
-                              src="/staticfiles/images/blank-image.png"
+                              src="{% static 'public/web/images/common/blank-image.png' %}"
                             />
                           </div>
                           <div
@@ -777,9 +779,9 @@
                               <!-- 작성자 -->
                               <div class="user-info-wrap">
                                 <div class="user-profile-wrap">
-                                  <img
+                                  <img alt=""
                                     class="user-profile-image"
-                                    src="/staticfiles/images/mypage/base-profile-image.avif"
+                                    src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                                   />
                                 </div>
                                 Selleaf Test
@@ -837,9 +839,9 @@
                             class="reviews-item-image-wrap"
                             style="opacity: 1"
                           >
-                            <img
+                            <img alt=""
                               class="reviews-item-image"
-                              src="/staticfiles/images/blank-image.png"
+                              src="{% static 'public/web/images/common/blank-image.png' %}"
                             />
                           </div>
                           <div
@@ -860,9 +862,9 @@
                               <!-- 작성자 -->
                               <div class="user-info-wrap">
                                 <div class="user-profile-wrap">
-                                  <img
+                                  <img alt=""
                                     class="user-profile-image"
-                                    src="/staticfiles/images/mypage/base-profile-image.avif"
+                                    src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                                   />
                                 </div>
                                 Selleaf Test
@@ -920,9 +922,9 @@
                             class="reviews-item-image-wrap"
                             style="opacity: 1"
                           >
-                            <img
+                            <img alt=""
                               class="reviews-item-image"
-                              src="/staticfiles/images/blank-image.png"
+                              src="{% static 'public/web/images/common/blank-image.png' %}"
                             />
                           </div>
                           <div
@@ -943,9 +945,9 @@
                               <!-- 작성자 -->
                               <div class="user-info-wrap">
                                 <div class="user-profile-wrap">
-                                  <img
+                                  <img alt=""
                                     class="user-profile-image"
-                                    src="/staticfiles/images/mypage/base-profile-image.avif"
+                                    src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                                   />
                                 </div>
                                 Selleaf Test

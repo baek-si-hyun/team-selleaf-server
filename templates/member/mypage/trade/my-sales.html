@@ -1,4 +1,4 @@
-{% extends 'member/mypage/my_profile/base.html' %}
+{% extends 'member/mypage/trade/base.html' %}
 {% load static %}
 {% block static %}
     <link rel="stylesheet" href="{% static 'member/css/mypage/my_trade/my-sales.css' %}">
@@ -100,8 +100,8 @@
                                       type="button"
                                       class="kakao-share-button"
                                     >
-                                      <img
-                                        src="/staticfiles/images/other-sns-logos/kakao-logo.svg"
+                                      <img alt=""
+                                        src="{% static 'member/images/login/kakao-logo.svg' %}"
                                       />
                                     </button>
                                     <!-- 클립보드 복사 버튼 -->
@@ -146,9 +146,9 @@
                         </div>
                         <div class="my-profile-wrap">
                           <div class="profile-image-wrap">
-                            <img
+                            <img  alt=""
                               class="profile-image"
-                              src="/staticfiles/images/mypage/base-profile-image.avif"
+                              src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                             />
                           </div>
                           <div class="personal-info-wrap">
@@ -178,8 +178,8 @@
                             <!-- 스크랩 -->
                             <a class="scraps-likes-content-wrap" href="#">
                               <div class="scraps-likes-icon">
-                                <img
-                                  src="/staticfiles/images/scrap-off-blk.png"
+                                <img  alt=""
+                                  src="{% static 'public/web/images/common/scrap-off-blk.png' %}"
                                 />
                               </div>
                               <div class="scraps-likes-text">스크랩북</div>
@@ -188,7 +188,7 @@
                             <!-- 좋아요 -->
                             <a class="scraps-likes-content-wrap" href="#">
                               <div class="scraps-likes-icon">
-                                <img src="/staticfiles/images/like-off.png" />
+                                <img  alt="" src="{% static 'public/web/images/common/like-off.png' %}" />
                               </div>
                               <div class="scraps-likes-text">좋아요</div>
                               <div class="scraps-likes-count">0</div>
@@ -196,8 +196,8 @@
                             <!-- 마일리지 -->
                             <a class="scraps-likes-content-wrap" href="#">
                               <div class="scraps-likes-icon">
-                                <img
-                                  src="/staticfiles/images/maileage/mileage.png"
+                                <img  alt=""
+                                  src="{% static 'member/images/mypage/mileage.png' %}"
                                 />
                               </div>
                               <div class="scraps-likes-text">마일리지</div>
@@ -253,8 +253,8 @@
                   <div
                     class="empty-space"
                     style="
-                      padding-top: 0px;
-                      padding-bottom: 0px;
+                      padding-top: 0;
+                      padding-bottom: 0;
                       transform: translateY(0px);
                     "
                   ></div>
@@ -267,9 +267,9 @@
                       <a href="#" class="trade-history-link"></a>
                       <div class="trade-history-item-container">
                         <div class="trade-item-image-wrap">
-                          <img
+                          <img  alt=""
                             class="trade-item-image"
-                            src="/staticfiles/images/blank-image.png"
+                            src="{% static 'public/web/images/common/blank-image.png' %}"
                           />
                         </div>
                         <div class="trade-item-title-wrap">
@@ -284,9 +284,9 @@
                             <!-- 작성자 -->
                             <div class="user-info-wrap">
                               <div class="user-profile-wrap">
-                                <img
+                                <img  alt=""
                                   class="user-profile-image"
-                                  src="/staticfiles/images/mypage/base-profile-image.avif"
+                                  src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                                 />
                               </div>
                               Selleaf 테스트 1
@@ -343,9 +343,9 @@
                       <a href="#" class="trade-history-link"></a>
                       <div class="trade-history-item-container">
                         <div class="trade-item-image-wrap">
-                          <img
+                          <img  alt=""
                             class="trade-item-image"
-                            src="/staticfiles/images/blank-image.png"
+                            src="{% static 'public/web/images/common/blank-image.png' %}"
                           />
                         </div>
                         <div class="trade-item-title-wrap">
@@ -360,9 +360,9 @@
                             <!-- 작성자 -->
                             <div class="user-info-wrap">
                               <div class="user-profile-wrap">
-                                <img
+                                <img  alt=""
                                   class="user-profile-image"
-                                  src="/staticfiles/images/mypage/base-profile-image.avif"
+                                  src="{% static 'member/images/mypage/base-profile-image.avif' %}"
                                 />
                               </div>
                               Selleaf 테스트 2
