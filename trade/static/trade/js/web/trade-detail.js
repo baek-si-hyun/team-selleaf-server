@@ -37,10 +37,10 @@ const scrapBtn = document.querySelector(".scrap-button");
 scrapBtn.addEventListener("click", () => {
   const img = scrapBtn.querySelector("img");
   const imgSrc = img.getAttribute("src");
-  if (imgSrc === "/staticfiles/images/scrap-off-blk.png") {
-    img.setAttribute("src", "/staticfiles/images/scrap-on.png");
+  if (imgSrc === "/static/public/web/images/common/scrap-off-blk.png") {
+    img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
   } else {
-    img.setAttribute("src", "/staticfiles/images/scrap-off-blk.png");
+    img.setAttribute("src", "/static/public/web/images/common/scrap-off-blk.png");
   }
 });
 
@@ -53,10 +53,10 @@ scrapButton.forEach((scrap) => {
   scrap.addEventListener("click", () => {
     const img = scrap.querySelector("img");
     const imgSrc = img.getAttribute("src");
-    if (imgSrc === "/staticfiles/images/scrap-off.png") {
-      img.setAttribute("src", "/staticfiles/images/scrap-on.png");
+    if (imgSrc === "/static/public/web/images/common/scrap-off.png") {
+      img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
     } else {
-      img.setAttribute("src", "/staticfiles/images/scrap-off.png");
+      img.setAttribute("src", "/static/public/web/images/common/scrap-off.png");
     }
     // scrapPopup.style.display == "none"
     //   ? (scrapPopup.style.display = "block")

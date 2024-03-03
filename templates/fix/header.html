@@ -1,4 +1,5 @@
 {% load static %}
+<link rel="stylesheet" href="{% static 'public/web/css/fix/header.css' %}" />
 <header>
   <div class="header-wrap" style="height: 81px">
     <div
@@ -26,7 +27,6 @@
           >
             <img
               class="header-second-inner-svg"
-{#              src="../../../staticfiles/images/logo-lettering-blk.png"#}
               src="{% static 'public/web/images/common/logo-lettering-blk.png' %}"
               width="74"
               height="30"
@@ -274,8 +274,7 @@
                   <a class="header-content-photo" href="#">
                     <div class="header-photo-div">
                       <img
-{#                        src="../../../staticfiles/images/main/transationPost.png"#}
-                        src="{% static 'public/web/images/main/transationPost.png' %}"
+                        src="{% static 'main/images/transationPost.png' %}"
                         width="36"
                         height="36"
                       />
@@ -346,8 +345,7 @@
                   <a class="header-content-photo">
                     <div class="header-photo-div">
                       <img
-{#                        src="../../../staticfiles/images/main/knowhow.png"#}
-                        src="{% static 'public/web/images/main/knowhow.png' %}"
+                        src="{% static 'main/images/knowhow.png' %}"
                         width="36"
                         height="36"
                       />
@@ -422,8 +420,7 @@
                   <a class="header-content-photo">
                     <div class="header-photo-div">
                       <img
-{#                        src="../../../staticfiles/images/main/lectureReview.png"#}
-                        src="{% static 'public/web/images/main/lectureReview.png' %}"
+                        src="{% static 'main/images/lectureReview.png' %}"
                         width="36"
                         height="36"
                       />
@@ -497,8 +494,7 @@
                   <a class="header-content-photo">
                     <div class="header-photo-div">
                       <img
-{#                        src="../../../staticfiles/images/main/transationReview.png"#}
-                        src="{% static 'public/web/images/main/transationReview.png' %}"
+                        src="{% static 'main/images/transationReview.png' %}"
                         width="36"
                         height="36"
                       />
@@ -594,7 +590,7 @@
                     <div class="header-photo-div">
                       <img
 {#                        src="../../../staticfiles/images/main/lecture.png"#}
-                        src="{% static 'public/web/images/main/lecture.png' %}"
+                        src="{% static 'main/images/lecture.png' %}"
                         width="36"
                         height="36"
                       />
@@ -714,3 +710,4 @@
     </div>
   </div>
 </header>
+<script src="{% static 'public/web/js/fix/header.js' %}"></script>
