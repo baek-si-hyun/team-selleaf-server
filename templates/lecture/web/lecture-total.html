@@ -6,8 +6,8 @@
 {% block title %}진행중인거래{% endblock %}
 {% block content %}
   <body>
+    {% include 'fix/header.html' %}
     <div class="layout">
-      <header></header>
       <!-- 수강 카테고리 탭 -->
       <div class="category-wrap-" style="height: 52px">
         <div
@@ -83,7 +83,7 @@
                     class="filter-modal"
                     style="
                       position: absolute;
-                      top: -25px;
+                      top: 55px;
                       transform: translate(-70px, 130px);
                       z-index: 3;
                     "
@@ -118,7 +118,7 @@
                     class="filter-modal"
                     style="
                       position: absolute;
-                      top: -25px;
+                      top: 55px;
                       transform: translate(-70px, 130px);
                       z-index: 3;
                     "
@@ -159,7 +159,7 @@
                     class="filter-modal"
                     style="
                       position: absolute;
-                      top: -25px;
+                      top: 55px;
                       transform: translate(-60px, 130px);
                       z-index: 3;
                     "
@@ -200,7 +200,7 @@
                     class="filter-modal"
                     style="
                       position: absolute;
-                      top: -25px;
+                      top: 55px;
                       transform: translate(-70px, 130px);
                       z-index: 3;
                     "
@@ -488,7 +488,7 @@
                           />
                           <button class="scrap-button" type="button">
                             <img
-                              src="/{% static 'public/web/images/common/scrap-off.png' %}"
+                              src="{% static 'public/web/images/common/scrap-off.png' %}"
                               alt
                               class="scrap-off"
                             />
@@ -883,6 +883,7 @@
         </div>
       </div>
     </div>
+  {% include 'fix/footer.html' %}
   </body>
 {% endblock %}
 {% block js %}
