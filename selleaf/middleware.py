@@ -17,17 +17,20 @@ def pre_handle_request(get_response):
 
         # 따라서 로그인이 필요한 서비스는 반드시 로그인 상태에서만 이용할 수 있게 됨
 
+        # 03/04 - 조건식 수정 중
         # 만약 요청한 경로가 아래 서비스들(관리자, 계정, oAuth, API) 중 그 어느 것도 아니면서
-        # 이 조건은 로그인 필요 없는 페이지들 추린 다음에 수정할 예정
         if 'admin' not in uri and 'accounts' not in uri and 'oauth' not in uri and 'api' not in uri:
             # 회원가입, 로그인 서비스도 아니고
             if 'join' not in uri and 'login' not in uri:
-                # 로그인조차 하지 않은 상태라면
-                if request.session.get('member') is None:
-                    # 요청한 경로를 session에 담아놓은 뒤
-                    request.session['previous_uri'] = uri
-                    # 로그인 페이지로 이동시킨다
-                    return redirect('/member/login')
+                # 게시물 작성, 마이페이지, 강사 신청 서비스 중 하나일 때 - 03/04 추가
+                if 'lecture/upload' in uri or 'trade/upload' in uri or 'knowhow/create' in uri or 'mypage' in uri or 'teacher' in uri:
+                    # 로그인조차 하지 않은 상태라면
+                    if request.session.get('member') is None:
+                        # 여기에 들어온 경로 = 로그인이 필요한 서비스들
+                        # 요청한 경로를 session에 담아놓은 뒤
+                        request.session['previous_uri'] = uri
+                        # 로그인 페이지로 이동시킨다
+                        return redirect('/member/login')
 
             # 모바일 환경에서 요청을 했지만
             if request.user_agent.is_mobile:
