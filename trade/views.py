@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
+from django.utils.datastructures import MultiValueDictKeyError
 from django.views import View
+
+from plant.models import Plant
 
 
 class TradeDetailView(View):
@@ -16,8 +19,22 @@ class TradeTotalView(View):
 
 class TradeUploadView(View):
     def get(self, request):
+        member = request.session['member']
         return render(request, "trade/web/trade-upload.html")
 
     def post(self, request):
-        request.session
+        trade_data = request.POST
+        member = request.session['member']
+        print(member)
+        print(trade_data['product-index'])
+        print(trade_data.getlist('plant-type'))
+        plant = {
+            'plant_name': trade_data.getlist('plant-type')
+        }
+        # plant = Plant.objects.get(id=1)
+        # print(type(plant.plant_name))
+        # trade_data = {
+        #     ''
+        # }
+
         return redirect('trade:detail')

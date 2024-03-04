@@ -876,7 +876,7 @@
     margin-top: 2.5px;
     padding: 8px 12px;
     border:  1px solid #135f2c;
-    /* background-color: rgba(33, 38, 41, 0.8); */
+     /*background-color: rgba(33, 38, 41, 0.8); */
     color: #135f2c;
     font-size: 14px;
     line-height: 18px;
@@ -885,7 +885,7 @@
     transition: background-color 0.1s ease 0s;
   }
 
-  div.select-on{
+ .select-on{
     border:  1px solid #135f2c;
     background-color: #135f2d;
     color: #fff;

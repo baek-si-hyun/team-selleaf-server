@@ -223,10 +223,10 @@
                                       >
                                         선택해주세요.
                                       </option>
-                                      <option value="0">상품</option>
-                                      <option value="1">식물</option>
-                                      <option value="2">수공예품</option>
-                                      <option value="3">기타</option>
+                                      <option value="상품">상품</option>
+                                      <option value="식물">식물</option>
+                                      <option value="수공예품">수공예품</option>
+                                      <option value="기타">기타</option>
                                     </select>
                                   </div>
                                 </span>
@@ -244,12 +244,35 @@
                           <div class="info-dropdown-wrap">
                             <div class="info-dropdown-container">
                               <div class="info-dropdown-inner">
-                                <div class="plant-selection">관엽식물</div>
-                                <div class="plant-selection">침엽식물</div>
-                                <div class="plant-selection">희귀식물</div>
-                                <div class="plant-selection">다육/선인장</div>
-                                <div class="plant-selection">테라리움</div>
-                                <div class="plant-selection">기타</div>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="관엽식물" style="display: none">
+                                    <div>관엽식물</div>
+                                </label>
+                                
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="침엽식물" style="display: none">
+                                    <div>침엽식물</div>
+                                </label>
+                                
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="희귀식물" style="display: none">
+                                    <div>희귀식물</div>
+                                </label>
+                                
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="다육/선인장" style="display: none">
+                                    <div>다육/선인장</div>
+                                </label>
+                                
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="테라리움" style="display: none">
+                                    <div>테라리움</div>
+                                </label>
+                                
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="기타" style="display: none">
+                                    <div>기타</div>
+                                </label>
                               </div>
                             </div>
                           </div>
@@ -305,10 +328,28 @@
                                   <div class="info-list-wrap">
                                     <input
                                       class="price-input"
-                                      placeholder="가격을 입력하세요"
+                                      placeholder="가격을 입력하세요."
                                       name="price-input"
                                     />
                                     <span class="price-index">원</span>
+                                  </div>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="each-info">
+                          <div class="info-title">채팅방</div>
+                          <div class="info-dropdown-wrap">
+                            <div class="info-dropdown-container">
+                              <div class="info-dropdown-inner">
+                                <span class="info-dropdown-box">
+                                  <div class="info-list-wrap">
+                                    <input
+                                      class="price-input"
+                                      placeholder="거래할 채팅방 링크를 입력해주세요."
+                                      name="price-input"
+                                    />
                                   </div>
                                 </span>
                               </div>
