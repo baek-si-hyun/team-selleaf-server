@@ -1,8 +1,10 @@
 from django.db import models
 
-from lecture.models import Lecture
+from lecture.models import Lecture, Kit
+from selleaf.date import Date
 from selleaf.period import Period
 from member.models import Member
+from selleaf.time import Time
 
 
 class Cart(Period):
@@ -30,13 +32,14 @@ class CartDetail(Period):
         (-1, '상품 삭제'),
         (1, '결제 완료')
     ]
-
+    date = models.ForeignKey(Date,on_delete=models.PROTECT, null=False)
+    time = models.ForeignKey(Time, on_delete=models.PROTECT, null=False)
+    kit = models.ForeignKey(Kit, on_delete=models.PROTECT, default='offline')
     cart = models.ForeignKey(Cart, on_delete=models.PROTECT, null=False, blank=False)
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False, blank=False)
     quantity = models.IntegerField(blank=False, null=False, default=1)
     # 게시중 0, 결제 완료 1, 상품 삭제 -1
     cart_detail_status = models.IntegerField(blank=False, null=False, default=0, choices=CART_DETAIL_STATUS)
-
     class Meta:
         db_table = 'tbl_cart_detail'
         ordering = ['-id']
