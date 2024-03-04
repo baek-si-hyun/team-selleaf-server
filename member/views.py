@@ -54,3 +54,4 @@ class MemberLogoutView(View):
     def get(self, request):
         request.session.clear()
         return redirect('member:login')
+

@@ -1,4 +1,5 @@
 from django.db import models
+
 from member.models import Member
 from selleaf.period import Period
 
@@ -38,7 +39,7 @@ class Scrap(Period):
     class Meta:
         abstract = True
 
-
+    
 class Tag(Period):
     tag_name = models.CharField(max_length=50, null=False, blank=False)
 
