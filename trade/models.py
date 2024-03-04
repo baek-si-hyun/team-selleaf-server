@@ -23,6 +23,7 @@ class Trade(Period):
     status = models.BooleanField(null=False, blank=False, default=True)
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
     trade_category = models.ForeignKey(TradeCategory, on_delete=models.PROTECT, null=False)
+    kakao_talk_url = models.CharField(null=False, blank=False, max_length=500)
 
     objects = models.Manager()
     enabled_objects = TradeManager()
