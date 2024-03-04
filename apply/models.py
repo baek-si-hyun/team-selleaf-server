@@ -1,8 +1,10 @@
 from django.db import models
 
-from lecture.models import Lecture
+from lecture.models import Lecture, Kit
 from member.models import Member
+from selleaf.date import Date
 from selleaf.period import Period
+from selleaf.time import Time
 
 
 class Apply(Period):
@@ -15,6 +17,9 @@ class Apply(Period):
     apply_status = models.IntegerField(choices=APPLY_STATUS, default=0)
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
+    date = models.ForeignKey(Date, on_delete=models.PROTECT, null=False)
+    time = models.ForeignKey(Time, on_delete=models.PROTECT, null=False)
+    kit = models.ForeignKey(Kit, on_delete=models.PROTECT, default='offline')
 
     class Meta:
         db_table = 'tbl_apply'

@@ -88,3 +88,5 @@ class LecturePlaceFile(File):
     class Meta:
         db_table = 'tbl_lecture_place_file'
         ordering = ['-id']
+
+
