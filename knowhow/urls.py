@@ -4,6 +4,7 @@ from knowhow.views import KnowhowCreateView, KnowhowDetailView, KnowhowListView
 
 app_name = 'knowhow'
 
+# asd
 urlpatterns = [
     # 노하우 작성
     path('create/', KnowhowCreateView.as_view(), name='create'),
