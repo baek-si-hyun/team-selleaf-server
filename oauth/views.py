@@ -13,18 +13,15 @@ class OAuthLoginView(View):
         if user.provider == "kakao":
             member_email = oauth_data.get("kakao_account").get("email")
             member_name = oauth_data.get("properties").get("nickname")
-            member_profile_image = oauth_data.get("properties").get("profile_image")
         else:
             member_email = oauth_data.get("email")
             member_name = oauth_data.get("name")
-            member_profile_image = oauth_data.get("picture")
 
         data = {
             'member_email': member_email,
             'member_name': member_name,
-            # 'member_profile_image': member_profile_image,
         }
-        member = Member.objects.filter(member_email=data['member_email'])
+        member = Member.objects.filter(**data)
 
         url = '/'
         if member.exists():
