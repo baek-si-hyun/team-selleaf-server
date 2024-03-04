@@ -229,12 +229,12 @@
                                       >
                                         선택해주세요.
                                       </option>
-                                      <option value="0">리스/트리</option>
-                                      <option value="1">
+                                      <option value="리스/트리">리스/트리</option>
+                                      <option value="바구니/센터피스/박스">
                                         바구니/센터피스/박스
                                       </option>
-                                      <option value="2">가드닝/테라리움</option>
-                                      <option value="3">기타</option>
+                                      <option value="가드닝/테라리움">가드닝/테라리움</option>
+                                      <option value="기타">기타</option>
                                     </select>
                                   </div>
                                 </span>
@@ -255,12 +255,24 @@
                           <div class="info-dropdown-wrap">
                             <div class="info-dropdown-container">
                               <div class="info-dropdown-inner">
-                                <div class="plant-selection">관엽식물</div>
-                                <div class="plant-selection">침엽식물</div>
-                                <div class="plant-selection">희귀식물</div>
-                                <div class="plant-selection">다육/선인장</div>
-                                <div class="plant-selection">테라리움</div>
-                                <div class="plant-selection">기타</div>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="관엽식물" style="display: none"><div>관엽식물</div>
+                                </label>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="침엽식물" style="display: none"><div>침엽식물</div>
+                                </label>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="희귀식물" style="display: none"><div>희귀식물</div>
+                                </label>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="다육/선인장" style="display: none"><div>다육/선인장</div>
+                                </label>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="테라리움" style="display: none"><div>테라리움</div>
+                                </label>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="기타" style="display: none"><div>기타</div>
+                                </label>
                               </div>
                             </div>
                           </div>
@@ -276,9 +288,9 @@
                                 <span class="info-dropdown-box">
                                   <div class="info-list-wrap">
                                     <input
-                                      class="price-input"
+                                      class="member-input"
                                       placeholder="1인당 가격을 입력하세요"
-                                      name="price-input"
+                                      name="member-input"
                                     />
                                     <span class="price-index">원</span>
                                   </div>
@@ -720,11 +732,13 @@
                       </div>
                     </div>
                   </div>
-                  <p
+                  <textarea
                     class="content-text-area"
+                    name="content-text-area"
                     contenteditable="true"
-                    data-ph="내용을 입력해주세요."
-                  ></p>
+                    
+                    placeholder="내용을 입력해주세요."
+                  ></textarea>
                 </div>
               </div>
             </div>
