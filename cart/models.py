@@ -33,7 +33,7 @@ class CartDetail(Period):
 
     cart = models.ForeignKey(Cart, on_delete=models.PROTECT, null=False, blank=False)
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False, blank=False)
-    quantity = models.IntegerField(blank=False, null=False, default=0)
+    quantity = models.IntegerField(blank=False, null=False, default=1)
     # 게시중 0, 결제 완료 1, 상품 삭제 -1
     cart_detail_status = models.IntegerField(blank=False, null=False, default=0, choices=CART_DETAIL_STATUS)
 
