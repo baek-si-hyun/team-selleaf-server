@@ -1,13 +1,14 @@
-{% extends 'community/web/knowhow/base.html' %}
+{% extends 'community/web/create-base.html' %}
 {% load static %}
 {% block static %}
     <link rel="stylesheet" href="{% static 'knowhow/css/web/create-knowhow.css' %}">
 {% endblock %}
 {% block title %}노하우{% endblock %}
 {% block content %}
-  <body>
     <div class="create-post-wrap">
       <div class="create-post-container">
+          <form action="{% url 'knowhow:create' %}" method="post" name="knowhow-create-form">
+              {% csrf_token %}
         <div
           class="sticky-container"
           style="
@@ -22,7 +23,7 @@
               <div class="nav-wrap">
                 <a href="#" class="nav-logo">
                   <img
-                    src="../../../staticfiles/images/logo-lettering-blk.png"
+                    src= "{%  static 'public/web/images/common/logo-lettering-blk.png' %}"
                     width="72px"
                     height="25px"
                     alt=""
@@ -37,7 +38,7 @@
                         </button>
                       </div>
                     </div>
-                    <button type="button" class="publish-btn">
+                    <button type="submit" class="publish-btn">
                       <span class="publish-btn-text">발행신청</span>
                     </button>
                   </div>
@@ -141,6 +142,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="main-slide-item">
                 <button type="button" id="drop-box-required" class="slide-btn">
                   <div class="slide-text-box">
@@ -207,7 +209,7 @@
                             <div class="required-info-item-inner">
                               <span class="required-info-item-box">
                                 <div class="input-group select-input">
-                                  <select name="plant" class="form-control">
+                                  <select name="knowhow-categoty" class="form-control">
                                     <option value="" disabled selected
                                       >선택해주세요.</option
                                     >
@@ -265,7 +267,7 @@
                                   <input
                                     class="tag-input"
                                     placeholder="# 태그"
-                                    name="tags"
+                                    name="knowhow-tag"
                                     maxlength="10"
                                     value=""
                                   />
@@ -371,7 +373,7 @@
                   <div class="cancel-div">
                     <button type="button" class="cancel-btn">
                       <img
-                        src="/staticfiles/images/cancel.png"
+                        src= "{%  static 'public/web/images/common/cancel.png' %}"
                         alt=""
                         class="cancel-img"
                       />
@@ -389,7 +391,7 @@
                   <div class="cancel-div">
                     <button type="button" class="cancel-btn">
                       <img
-                        src="/staticfiles/images/cancel.png"
+                        src= "{%  static 'public/web/images/common/cancel.png' %}"
                         alt=""
                         class="cancel-img"
                       />
@@ -407,7 +409,7 @@
                   <div class="cancel-div">
                     <button type="button" class="cancel-btn">
                       <img
-                        src="/staticfiles/images/cancel.png"
+                        src= "{%  static 'public/web/images/common/cancel.png' %}"
                         alt=""
                         class="cancel-img"
                       />
@@ -425,7 +427,7 @@
                   <div class="cancel-div">
                     <button type="button" class="cancel-btn">
                       <img
-                        src="/staticfiles/images/cancel.png"
+                        src= "{%  static 'public/web/images/common/cancel.png' %}"
                         alt=""
                         class="cancel-img"
                       />
@@ -443,7 +445,7 @@
                   <div class="cancel-div">
                     <button type="button" class="cancel-btn">
                       <img
-                        src="/staticfiles/images/cancel.png"
+                        src= "{%  static 'public/web/images/common/cancel.png' %}"
                         alt=""
                         class="cancel-img"
                       />
@@ -459,6 +461,7 @@
                 maxlength="80"
                 class="title-input"
                 value=""
+                name="knowhow-title"
               />
               <div class="title-count"><span class="count">0</span> / 80</div>
             </div>
@@ -498,18 +501,14 @@
                     </div>
                   </div>
                 </div>
-                <p
-                  class="content-text-area"
-                  contenteditable="true"
-                  data-ph="내용을 입력해주세요."
-                ></p>
+                <input type="text" name="knowhow-content" placeholder="내용을 입력해주세요." class="content-text-area">
               </div>
             </div>
           </div>
         </div>
+      </form>
       </div>
     </div>
-  </body>
 {% endblock %}
 {% block js %}
     <script src="{% static 'knowhow/js/web/create-knowhow.js' %}"></script>
