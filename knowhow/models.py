@@ -81,3 +81,10 @@ class KnowhowReplyLike(Like):
     class Meta:
         db_table = 'tbl_knowhow_reply_like'
         ordering = ['-id']
+
+
+class KnowhowCategory(Period):
+    category_name = models.CharField(max_length=50, null=False)
+
+    class Meta:
+        db_table = 'tbl_knowhow_category'
