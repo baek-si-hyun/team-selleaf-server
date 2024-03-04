@@ -203,8 +203,8 @@ div.category-container{
     align-items: center;
     padding: 14px 16px;
     border-radius: 4px;
-    color: #fff;
-    background-color: #135f2c;
+    color:#f7f9fa;
+    background-color: #2F3438;
     margin-top: 15px;
 }
 
@@ -280,7 +280,7 @@ div.category-container{
     padding: 5px 8px;
     font-size: 16px;
     line-height: 20px;
-    color: #fff;
+    color: #97A38C;
     font-weight: 700;
 }
 

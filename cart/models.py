@@ -22,6 +22,9 @@ class Cart(Period):
         db_table = 'tbl_cart'
         ordering = ['-id']
 
+    def get_absolute_url(self):
+        return f'/cart/cart/?id={self.id}'
+
 
 class CartDetail(Period):
     CART_DETAIL_STATUS = [

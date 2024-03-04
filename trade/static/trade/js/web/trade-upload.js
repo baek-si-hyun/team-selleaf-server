@@ -121,10 +121,42 @@ prevImgBox.addEventListener("mousemove", (e) => {
   prevImgBox.scrollLeft = scrollLeft - walk;
 });
 
-const plantSelections = document.querySelectorAll(".plant-selection");
-plantSelections.forEach((plantSelection) => {
-  plantSelection.addEventListener("click", (e) => {
-    plantSelection.classList.toggle("select-on");
+// 1번 <--이건 안됨
+// const plantSelections = document.querySelectorAll(".plant-selection");
+// plantSelections.forEach((plantSelection) => {
+//   plantSelection.addEventListener("click", (e) => {
+//     plantSelection.classList.toggle("select-on");
+//   });
+// });
+
+// 2번 얜 되는데 단일 선택만 됨
+// const plantSelections = document.querySelectorAll(".plant-selection");
+//
+// plantSelections.forEach((plantSelection) => {
+//   const radioButton = plantSelection.querySelector('input[type="checkbox"]');
+//
+//   plantSelection.addEventListener("click", (e) => {
+//     radioButton.checked = true;
+//     plantSelections.forEach((el) => {
+//       el.classList.remove("select-on");
+//     });
+//     plantSelection.classList.add("select-on");
+//   });
+// });
+
+// 3번
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    checkboxes.forEach((cb) => {
+      const label = cb.closest('.plant-selection');
+      if (cb.checked) {
+        label.classList.add("select-on");
+      } else {
+        label.classList.remove("select-on");
+      }
+    });
   });
 });
 

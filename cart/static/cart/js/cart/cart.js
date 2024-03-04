@@ -62,7 +62,7 @@ addBtns.forEach((addBtn, i) => {
     let count = Number(number.innerText);
     count++;
     number.innerText = `${count}`;
-    price = originPrice[i];
+    var price = originPrice[i];
     replacePrice = Number(price.replace(",", ""));
 
     // 총 상품 금액 부분
@@ -94,7 +94,7 @@ subBtns.forEach((subBtn, i) => {
     }
     count--;
     number.innerText = `${count}`;
-    price = originPrice[i];
+    var price = originPrice[i];
     replacePrice = Number(price.replace(",", ""));
 
     // 총 상품 금액 부분

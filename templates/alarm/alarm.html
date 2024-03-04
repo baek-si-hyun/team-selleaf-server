@@ -1,33 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- 여기서부터 -->
-    <style data-emotion="css-global" data-s="">
-      @import "https://assets.ohou.se/design-system/bbf3fca1e650ee6d.css";
-      @import "https://assets.ohou.se/fonts/pretendard/v1.3.8/pretendardvariable-dynamic-subset.css";
-      @font-face {
-        font-family: OhouseIcon;
-        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot);
-        src: url(https://assets.ohou.se/design-system/3298ed52addbc709.eot#iefix) format("embedded-opentype"),
-          url(https://assets.ohou.se/design-system/d8923b386a66fd50.woff2) format("woff2"),
-          url(https://assets.ohou.se/design-system/9e79341d6a2fe0d2.woff) format("woff"),
-          url(https://assets.ohou.se/design-system/5355f736e6a7bc5b.ttf) format("truetype"),
-          url(https://assets.ohou.se/design-system/3ba7913eab100858.svg#OhouseIcon) format("svg");
-      }
-      html {
-        font-family: "Pretendard Variable", sans-serif;
-        letter-spacing: -0.3px;
-        -webkit-font-smoothing: antialiased;
-      }
-    </style>
-    <link rel="stylesheet" href="/staticfiles/css/common.css" />
-    <link rel="stylesheet" href="/staticfiles/css/notification/notification.css" />
-    <link rel="shortcut icon" href="/staticfiles/images/favicon.png" type="image/x-icon" />
-    <title>알림</title>
-  </head>
-  <body>
+{% extends 'alarm/base.html' %}
+{% load static %}
+{% block static %}
+    <link rel="stylesheet" href="{% static 'alarm/css/notification/notification.css' %}">
+{% endblock %}
+{% block title %}알림{% endblock %}
+{% block content %}
     <div class="layout">
       <header></header>
       <div class="notice-container">
@@ -39,7 +16,7 @@
             <div>
               <div class="notice-contents">
                 <a href="" class="notice-profile-box">
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-profile" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-profile" />
                 </a>
                 <a href="" class="notice-content-box">
                   <div class="inner-txt-wrap">
@@ -49,7 +26,7 @@
                     </span>
                     <span class="last-time">9분</span>
                   </div>
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-img" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-img" />
                 </a>
               </div>
             </div>
@@ -57,7 +34,7 @@
             <div>
               <div class="notice-contents">
                 <a href="" class="notice-profile-box">
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-profile" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-profile" />
                 </a>
                 <a href="" class="notice-content-box">
                   <div class="inner-txt-wrap">
@@ -67,14 +44,14 @@
                     </span>
                     <span class="last-time">9분</span>
                   </div>
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-img" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-img" />
                 </a>
               </div>
             </div>
             <div>
               <div class="notice-contents">
                 <a href="" class="notice-profile-box">
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-profile" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-profile" />
                 </a>
                 <a href="" class="notice-content-box">
                   <div class="inner-txt-wrap">
@@ -84,14 +61,14 @@
                     </span>
                     <span class="last-time">9분</span>
                   </div>
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-img" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-img" />
                 </a>
               </div>
             </div>
             <div>
               <div class="notice-contents">
                 <a href="" class="notice-profile-box">
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-profile" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-profile" />
                 </a>
                 <a href="" class="notice-content-box">
                   <div class="inner-txt-wrap">
@@ -101,14 +78,14 @@
                     </span>
                     <span class="last-time">9분</span>
                   </div>
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-img" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-img" />
                 </a>
               </div>
             </div>
             <div>
               <div class="notice-contents">
                 <a href="" class="notice-profile-box">
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-profile" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-profile" />
                 </a>
                 <a href="" class="notice-content-box">
                   <div class="inner-txt-wrap">
@@ -118,14 +95,14 @@
                     </span>
                     <span class="last-time">9분</span>
                   </div>
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-img" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-img" />
                 </a>
               </div>
             </div>
             <div>
               <div class="notice-contents">
                 <a href="" class="notice-profile-box">
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-profile" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-profile" />
                 </a>
                 <a href="" class="notice-content-box">
                   <div class="inner-txt-wrap">
@@ -135,7 +112,7 @@
                     </span>
                     <span class="last-time">9분</span>
                   </div>
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-img" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-img" />
                 </a>
               </div>
             </div>
@@ -143,7 +120,7 @@
             <div>
               <div class="notice-contents-effect">
                 <a href="" class="notice-profile-box">
-                  <img src="/staticfiles/images/blank-image.png" alt="" class="notice-profile" />
+                  <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-profile" />
                 </a>
                 <a href="" class="notice-content-box">
                   <div class="inner-txt-wrap">
@@ -162,5 +139,6 @@
         </div>
       </div>
     </div>
-  </body>
-</html>
+{% endblock %}
+{% block js %}
+{% endblock %}
