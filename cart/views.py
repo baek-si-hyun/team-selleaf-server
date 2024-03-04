@@ -8,56 +8,56 @@ from member.models import Member
 # 장바구니 서비스
 class CartView(View):
     # 장바구니 페이지로 이동
-    def get(self,request):
-        # member = request.session['member']
-        # print(member)
-        return render(request,'cart/cart.html')
-
-    def post(self,request):
-        # 로그인 정보로 멤버 불러오기
-        member = Member(**request.session['member'])
-        print(member)
-
-        # 장바구니 불러오기
-        my_cart = Cart.objects.filter(status=0, member=member)
-        # 장바구니 검사
-        # 기존 장바구니가 존재하지 않으면
-        if not my_cart.exists():
-            # 새로운 장바구니 생성
-            my_cart = Cart.objects.create(member = member)
-        # 기존 장바구니가 존재하면
+    def get(self, request):
+        member = request.session.get('member')  # 세션에서 멤버 정보 가져오기
+        if member:
+            # 멤버 정보가 있는 경우
+            my_cart = Cart.objects.filter(member=member, cart_status=0).first()
+            if not my_cart:
+                # 장바구니가 없는 경우 새로운 장바구니 생성
+                my_cart = Cart.objects.create(member=member)
         else:
-            # 장바구니를 불러온다.
-            my_cart = my_cart.first()
+            # 멤버 정보가 없는 경우 로그인 페이지로 이동
+            return redirect('login')  # 로그인 페이지의 URL로 수정 필요
 
-        return redirect(my_cart.get_absolute_url())
+        return render(request, 'cart/cart.html', {'cart': my_cart})
+
 
 
 class CartUpdateView(View):
     # lecture detail 페이지에서 버튼을 누르면 정보입력
     # lecture detail urls 에서 작업을 해야하는 부분인가?
 
-    def post(self,request,lecture_id):
+    def post(self, request, lecture_id):
         data = request.POST
-        member = request.session['member']
-        data = {
-            'quantity': data['counted-number'],
-            'cart_id': Cart.objects.filter(member=member).first(),
-            # 이 부분 url에 어떻게 지정되는 지 확인
-            'lecture_id': lecture_id,
-            'date': data['date'],
-            'time': data['time'],
-            'kit': data['kit'],
+        member = request.session.get('member')  # 세션에서 멤버 정보 가져오기
+        if member:
+            my_cart = Cart.objects.filter(member=member, cart_status=0).first()
+            data = {
+                'quantity': data.get('counted-number', 1),
+                'cart': my_cart,
+                'lecture_id': lecture_id,
+                'date': data.get('date'),
+                'time': data.get('time'),
+                'kit': data.get('kit'),
+                'cart_detail_status': 0,  # 장바구니 상세 상태를 게시중으로 설정
+            }
 
-        }
+            # 동일 품목이 있는지 검사
+            existing_item = CartDetail.objects.filter(cart=my_cart, lecture_id=lecture_id).first()
+            if existing_item:
+                existing_item.quantity += 1  # 동일 품목이 있는 경우 수량 증가
+                existing_item.save()
+            else:
+                # 동일 품목이 없는 경우 CartDetail 생성
+                CartDetail.objects.create(**data)
 
+            return redirect('cart')  # 장바구니 페이지로 이동
+        else:
+            # 로그인이 필요한 경우 로그인 페이지로 이동
+            return redirect('login')  # 로그인 페이지의 URL로 수정 필요
 
-        # 동일 품목이 있는지 검사 해야하는 부분
-        # 있다면 quantity에 +1
-        # 없다면 CartDetail에 create
-        cart_detail = CartDetail.objects.create(**data)
-
-        return redirect('cart/detauk')
 
 class CartDetailView(View):
+    # 장바구니 상세 페이지 구현 필요
     pass
