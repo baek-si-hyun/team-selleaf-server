@@ -6,6 +6,7 @@
 {% block title %}온라인 거래 상세보기{% endblock %}
 {% block content %}
   <body>
+    {% include 'fix/header.html' %}
     <div class="declaration-modal-wrap">
       <div class="declaration-modal-container">
         <div class="declaration-modal-title-box">
@@ -3361,6 +3362,7 @@
         </div>
       </a>
     </div>
+  {% include 'fix/footer.html' %}
   </body>
 {% endblock %}
 {% block js %}

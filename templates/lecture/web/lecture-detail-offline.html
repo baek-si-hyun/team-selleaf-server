@@ -6,6 +6,7 @@
 {% block title %}오프라인 강의 상세보기{% endblock %}
 {% block content %}
   <body>
+    {% include 'fix/header.html' %}
     <div class="declaration-modal-wrap">
       <div class="declaration-modal-container">
         <div class="declaration-modal-title-box">
@@ -2829,6 +2830,7 @@
         </div>
       </a>
     </div>
+  {% include 'fix/footer.html' %}
   </body>
 {% endblock %}
 {% block js %}
