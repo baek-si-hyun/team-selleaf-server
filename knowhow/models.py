@@ -18,6 +18,7 @@ class Knowhow(Period):
         ordering = ['-id']
 
 
+
 class KnowhowFile(File):
     knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
 

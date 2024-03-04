@@ -8,6 +8,7 @@
     <div class="create-post-wrap">
       <div class="create-post-container">
           <form action="{% url 'knowhow:create' %}" method="post" name="knowhow-create-form">
+              {% csrf_token %}
         <div
           class="sticky-container"
           style="
