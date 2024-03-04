@@ -5,7 +5,8 @@
 {% endblock %}
 {% block title %}수강포스팅-온라인{% endblock %}
 {% block content %}
-
+<form action="{% url 'lecture:upload-online' %}" method="post" name="lecture-online-upload" >
+{% csrf_token %}
   <body>
     <div class="layout-wrap">
       <div class="layout-container">
@@ -30,16 +31,16 @@
                 </a>
                 <div class="save-button-wrap">
                   <div class="save-button-container">
-                    <div class="temporary-save-wrap">
-                      <div class="temporary-save-container">
-                        <button type="button" disabled class="temporary-save">
-                          <span class="temporary-save-letter">임시저장</span>
-                          <span class="save-letter">저장</span>
-                        </button>
-                      </div>
-                    </div>
+{#                    <div class="temporary-save-wrap">#}
+{#                      <div class="temporary-save-container">#}
+{#                      <button type="button" disabled class="temporary-save">#}
+{#                          <span class="temporary-save-letter">임시저장</span>#}
+{#                          <span class="save-letter">저장</span>#}
+{#                        </button>#}
+{#                      </div>#}
+{#                    </div>#}
                     <!-- 완성된 등록게시물 링크연결 -->
-                    <button type="button" class="establish">
+                    <button class="establish">
                       <span class="establish-ask-letter">등록하기</span>
                       <span class="establish-letter">등록</span>
                     </button>
@@ -732,6 +733,7 @@
       </div>
     </div>
   </body>
+</form>
 {% endblock %}
 {% block js %}
   <script src="{% static 'lecture/js/lecture/web/lecture-upload.js' %}"></script>
