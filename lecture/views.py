@@ -68,9 +68,9 @@ class LectureUploadOnlineView(View):
         for key in plants:
             print(key)
         # 가격
-        print(int(data['price-input']))
+        print(data['price-input'])
         # 인원
-        print(int(data['member-input']))
+        print(data['member-input'])
 
         # 날짜, 시간 넣기
         start_date_input = data['start-date-input']
