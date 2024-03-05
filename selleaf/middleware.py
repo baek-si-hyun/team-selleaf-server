@@ -7,7 +7,7 @@ def pre_handle_request(get_response):
         uri = request.get_full_path()
 
         # 요청 경로를 잘 가져왔는지 검사
-        print(uri)
+        # print(uri)
 
         # 미들웨어에 작성한 코드가 반영되면 안되는 URI = 로그인 안 해도 이용 가능한 페이지들
 
@@ -34,12 +34,14 @@ def pre_handle_request(get_response):
 
                 # 03/05 추가 - 관리자 페이지 요청
                 if 'admin' in uri:
-                    # 세션에 관리자 정보가 없으면
-                    if request.session.get('admin') is None:
-                        # 요청한 경로를 session에 담아놓은 뒤
-                        request.session['previous_uri'] = uri
-                        # 관리자 로그인 페이지로 이동시킨다
-                        return redirect('/member/login')
+                    # 관리자 페이지 중 관리자 로그인 이외의 서비스를 요청했을 때
+                    if 'admin/login' not in uri:
+                        # 세션에 관리자 정보가 없으면
+                        if request.session.get('admin') is None:
+                            # 요청한 경로를 session에 담아놓은 뒤
+                            request.session['previous_uri'] = uri
+                            # 관리자 로그인 페이지로 이동시킨다
+                            return redirect('manager-login')
 
             # 모바일 환경에서 요청을 했지만
             if request.user_agent.is_mobile:

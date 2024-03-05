@@ -7,14 +7,35 @@ from django.views import View
 class ManagerLoginView(View):
     # 관리자 로그인 페이지 이동 뷰
     def get(self, request):
+        # 로그인 한 상태에서 다시 로그인 페이지에 접근하려 했는지 검사
+        if request.session.get('admin') is not None:
+            # 만약 그렇다면 회원 정보 리스트 페이지로 redirect
+            return redirect('manager-member')
+
+        # 로그인이 안 되어있던 상태라면 로그인 페이지로 이동
         return render(request, 'manager/login/login.html')
 
-    # 관리자 로그인 이후의 뷰
+    # 관리자 로그인 버튼 누른 후의 뷰
     def post(self, request):
-        # 관리자 로그인 정보도 세션에 저장
+        # 로그인 정보를 가져옴
+        data = request.POST
+
+        # 관리자 로그인 정보도 'admin' 이라는 키로 세션에 저장
+        request.session['admin'] = data
+
         # 다른 페이지들과 마찬가지로, 이전에 요청한 관리자 페이지 쪽 경로를 redirect 하고
         # 기본적으로는 회원관리 페이지로 redirect
-        return redirect('/')
+        return redirect('manager-member')
+
+
+# 관리자 로그아웃
+class ManagerLogoutView(View):
+    def get(self, request):
+        # 세션 정보 전체 초기화
+        request.session.clear()
+
+        # 관리자 로그인 페이지로 이동
+        return redirect('manager-login')
 
 
 # 회원 관리
