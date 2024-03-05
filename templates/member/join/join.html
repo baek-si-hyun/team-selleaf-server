@@ -35,8 +35,7 @@
                         name="member-email"
                         size="1"
                         type="email"
-                        value="{{ member_email }}"
-                        disabled
+                        value="{{ memberEmail }}"
                       />
                       <span class="email-form-control-blind">
                         이메일 앞 주소 입력하기
@@ -171,8 +170,7 @@
                 <input
                   class="nickname-input"
                   name="member-name"
-                  value="{{ member_name }}"
-                  disabled
+                  value="{{ memberName }}"
                 />
                 <span class="nickname-hidden">이름 입력하기</span>
               </label>
@@ -319,6 +317,8 @@
                 </div>
               </div>
             </div>
+            <input type="hidden" name="member-profile" value="{{ memberProfile }}"/>
+            <input type="hidden" name="member-type" value="{{ memberType }}"/>
             <button class="register-button">회원가입하기</button>
           </form>
           <!-- 나중에 로그인 페이지랑 연결 -->
@@ -329,6 +329,7 @@
         </div>
       </div>
     </div>
+
 {% endblock %}
 {% block js %}
     <script src="{% static 'member/js/join/join.js' %}"></script>

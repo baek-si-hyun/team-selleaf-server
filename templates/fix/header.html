@@ -157,27 +157,12 @@
                     aria-label="프로필 메뉴"
                     class="header-kakao-button"
                   >
-                    <picture>
-                      <source
-                        type="image/webp"
-                        src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=72&amp;h=72&amp;c=c&amp;webp=1"
-                        srcset="
-                          https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=72&amp;h=72&amp;c=c&amp;webp=1   1.5x,
-                          https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=144&amp;h=144&amp;c=c&amp;webp=1 2x,
-                          https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=144&amp;h=144&amp;c=c&amp;webp=1 3x
-                        "
-                      />
+                    
                       <img
                         alt="프로필 사진"
                         class="header-kakao-image"
-                        src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=72&amp;h=72&amp;c=c"
-                        srcset="
-                          https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=72&amp;h=72&amp;c=c   1.5x,
-                          https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=144&amp;h=144&amp;c=c 2x,
-                          https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/160965601830686351.jpeg?w=144&amp;h=144&amp;c=c 3x
-                        "
+                        src="{{ memberProfile }}"
                       />
-                    </picture>
                   </button>
                 </span>
                 <div
@@ -243,7 +228,7 @@
                       <a class="header-mymenumodal-contenta"
                         >고객센터</a
                       >
-                      <a class="header-mymenumodal-contenta"
+                      <a class="header-mymenumodal-contenta" href="/accounts/logout"
                         >로그아웃</a
                       >
                     </div>

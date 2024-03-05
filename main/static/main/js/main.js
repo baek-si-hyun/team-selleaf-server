@@ -101,7 +101,6 @@ userReviewA.forEach((atag, i) => {
 // 베스트 상품의 카테고리 버튼 구현
 const categoryButtons = document.querySelectorAll("#btn");
 categoryButtons[0].parentNode.classList.add("active");
-console.log(categoryButtons);
 categoryButtons.forEach((btn) => {
     btn.addEventListener("click", (e) => {
         // 두번째 버튼을 클릭한 순간 반복문을 돌리면서 버튼들에 active 클래스가 있으면 지워줘야함
