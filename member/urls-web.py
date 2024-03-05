@@ -1,6 +1,6 @@
 from django.urls import path
 
-from member.views import MemberJoinView, MemberCheckIdView, MemberLoginView, MemberLogoutView
+from member.views import MemberJoinView, MemberLoginView, MemberLogoutView
 
 app_name = 'member'
 
