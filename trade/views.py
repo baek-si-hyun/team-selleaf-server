@@ -72,8 +72,10 @@ class TradeUploadView(View):
             'kakao_talk_url': trade_data['chatting-input'],
         }
 
+        trade = Trade.objects.create(**data)
+
         # TradeFile create
         for key in files:
-            TradeFile.objects.create(trade=Trade.objects.create(**data), file_url=files[key])
+            TradeFile.objects.create(trade=trade, file_url=files[key])
 
         return redirect('trade:detail')
