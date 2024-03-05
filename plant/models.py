@@ -8,3 +8,4 @@ class Plant(Period):
 
     class Meta:
         db_table = 'tbl_plant'
+        abstract = True

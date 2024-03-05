@@ -1,7 +1,5 @@
 import random
-
 from django.test import TestCase
-
 from lecture.models import Lecture, LectureCategory, LecturePlant, LectureProductFile, Kit, LectureReview, \
     LecturePlaceFile
 from member.models import Member
@@ -22,7 +20,7 @@ class LectureTestCase(TestCase):
     teacher_queryset = Teacher.objects.all()
     plant_queryset = Plant.objects.all()
     lecture_category_queryset = LectureCategory.objects.all()
-    for i in range(50):
+    for i in range(20):
         lecture_data = {
             'lecture_price': random.randint(100000, 500000),
             'lecture_headcount': i,

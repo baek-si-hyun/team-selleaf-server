@@ -17,7 +17,6 @@ class MemberJoinView(View):
             'memberName': member['member_name'],
             'memberProfile': member['member_profile'],
             'memberType': member['member_type'],
-
         }
         return render(request, 'member/join/join.html', context)
 
