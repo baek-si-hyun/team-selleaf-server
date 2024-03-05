@@ -99,6 +99,7 @@ birthInput.max = maxDate.toISOString().substring(0, 10);
 const newImageInput = document.querySelector("#new-image"); // 프로필 이미지 입력칸
 const imageDeleteButton = document.querySelector(".image-delete-button"); // 이미지 삭제 버튼
 const currentImage = document.querySelector(".current-my_profile-image"); // 화면에 표시되는 현재 이미지
+const imageInput = document.querySelector(".img-input");
 
 // 이미지 파일인지를 검사하기 위해, 유효한 형식들을 배열로 만들어놓음
 const imageTypes = [];
@@ -112,7 +113,6 @@ const imageTypes = [];
 newImageInput.addEventListener("change", (e) => {
   // 불러온 파일을 구조분해 할당으로 변수에 할당
   const [file] = e.target.files;
-
   // 새로운 파일 리더를 변수에 할당
   const reader = new FileReader();
 
@@ -123,20 +123,22 @@ newImageInput.addEventListener("change", (e) => {
   reader.addEventListener("load", (e) => {
     // 가져온 이미지 경로를 변수에 할당
     const imagePath = e.target.result;
-
-    // 이미지 삭제 버튼 표시
-    imageDeleteButton.style.display = "flex";
-
-    // 해당 경로에서 이미지 가져와서 프로필 사진으로 띄움
-    currentImage.style.backgroundImage = `url(${imagePath})`;
-  });
+    if (imagePath.includes('image')) {
+      // 이미지 삭제 버튼 표시
+      imageDeleteButton.style.display = "flex";
+      imageInput.src = imagePath
+    }else {
+      // 해당 경로에서 이미지 가져와서 프로필 사진으로 띄움
+      currentImage.style.backgroundImage = `url(${imagePath})`;
+    }
+    });
 });
 
 // 삭제 버튼 - click 이벤트
 // 클릭 시, 기존의 프로필 이미지로 원복하고, 삭제 버튼 숨김
 imageDeleteButton.addEventListener("click", (e) => {
   // 프로필 이미지 기본값으로 원복
-  currentImage.style.backgroundImage = `../../../images/mypage/base-profile-image.avif`;
+  currentImage.style.backgroundImage = `/static/images/mypage/base-profile-image.avif`;
 
   // 삭제 버튼 숨김
   e.target.style.display = "none";

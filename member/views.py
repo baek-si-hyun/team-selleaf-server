@@ -71,7 +71,8 @@ class MemberLogoutView(View):
 
 class MypageUpdateView(View):
     def get(self,request):
-        request.session['member'] = MemberSerializer(MemberSerializer(Member.objects.get(id=request.session['member']['id'])).data)
+
+        request.session['member'] =MemberSerializer(Member.objects.get(id=request.session['member']['id'])).data
         check = request.GET.get('check')
         context = {'check': check}
         return render(request, 'member/mypage/my_settings/user-info-update.html', context)
