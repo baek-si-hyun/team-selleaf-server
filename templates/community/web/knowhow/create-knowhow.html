@@ -7,7 +7,7 @@
 {% block content %}
     <div class="create-post-wrap">
       <div class="create-post-container">
-          <form action="{% url 'knowhow:create' %}" method="post" name="knowhow-create-form">
+          <form action="{% url 'knowhow:create' %}" method="post" name="knowhow-create-form" enctype="multipart/form-data">
               {% csrf_token %}
         <div
           class="sticky-container"
@@ -213,9 +213,9 @@
                                     <option value="" disabled selected
                                       >선택해주세요.</option
                                     >
-                                    <option value="0">식물 키우기</option>
-                                    <option value="1">관련 제품</option>
-                                    <option value="2">스타일링</option>
+                                    <option value="식물 키우기">식물 키우기</option>
+                                    <option value="관련 제품">관련 제품</option>
+                                    <option value="스타일링">스타일링</option>
                                   </select>
                                   <span class="select-input__icon">
                                     <svg
@@ -297,6 +297,7 @@
                                       class="url-input"
                                       value=""
                                       placeholder="URL 주소를 입력해주세요."
+                                      name="knowhow-recommend-url"
                                     />
                                   </div>
                                 </div>
@@ -306,6 +307,7 @@
                                       class="url-input"
                                       value=""
                                       placeholder="표시할 내용"
+                                      name="knowhow-recommend-content"
                                     />
                                   </div>
                                   <div class="add-and-delete-box">
@@ -501,7 +503,7 @@
                     </div>
                   </div>
                 </div>
-                <input type="text" name="knowhow-content" placeholder="내용을 입력해주세요." class="content-text-area">
+                  <textarea name="knowhow-content" cols="20" rows="10" class="content-text-area">내용을 입력해주세요.</textarea>
               </div>
             </div>
           </div>
