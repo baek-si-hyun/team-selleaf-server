@@ -8,6 +8,7 @@ from selleaf.period import Period
 class Member(Period):
     member_email = models.CharField(max_length=255, null=False, blank=False)
     member_name = models.CharField(max_length=255, null=False, blank=False)
+    member_type = models.TextField(blank=False, default="selleaf")
     # True: 휴면, False: 비휴면
     member_status = models.BooleanField(default=False)
     # True: 수신 동의, False: 수진 비동의
@@ -21,7 +22,7 @@ class Member(Period):
 
 
 class MemberAddress(Address):
-    address_name = models.CharField(max_length=255, null=False, blank=False)
+    address_name = models.CharField(max_length=255, null=False, blank=False, default='가입 주소')
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
 
     class Meta:
