@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 class Period(models.Model):
-    created_date = models.DateTimeField(null=False, auto_now_add=True, default=timezone.now)
+    created_date = models.DateTimeField(null=False, auto_now_add=True)
     updated_date = models.DateTimeField(null=False, default=timezone.now)
 
     class Meta:

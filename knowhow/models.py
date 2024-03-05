@@ -8,8 +8,6 @@ from selleaf.models import Like, Scrap, Tag
 from selleaf.period import Period
 
 
-
-
 class Knowhow(Period):
     knowhow_title = models.CharField(max_length=50, null=False)
     knowhow_content = models.CharField(max_length=500, null=False)
@@ -20,11 +18,9 @@ class Knowhow(Period):
     objects = models.Manager()
     enabled_objects = KnowhowManager()
 
-
     class Meta:
         db_table = 'tbl_knowhow'
         ordering = ['-id']
-
 
 
 class KnowhowFile(File):
@@ -46,7 +42,6 @@ class KnowhowLike(Like):
 class KnowhowPlant(Period):
     knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
     plant = models.ForeignKey(Plant, on_delete=models.PROTECT, null=False)
-
 
     class Meta:
         db_table = 'tbl_knowhow_plant'

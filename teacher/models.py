@@ -5,11 +5,12 @@ from selleaf.file import File
 from selleaf.period import Period
 
 
-class Teacher(Member):
+class Teacher(Period):
     # 강사 약력
     teacher_info = models.CharField(max_length=50, blank=False, null=False)
     # 강의 설명(앞으로 어떤 강의를 할지에 대한 설명)
     lecture_plan = models.CharField(max_length=100, blank=False, null=False)
+    member = models.OneToOneField(Member, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_teacher'
