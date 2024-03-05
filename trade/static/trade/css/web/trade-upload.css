@@ -776,23 +776,52 @@
     position: relative;
     margin: 10px 0px;
   }
-  .content-text-area {
-    overflow-wrap: break-word;
-    transition: background-color 0.1s ease 0s;
-    margin: 2px -3px;
-    padding: 0px 3px;
-    color: rgb(41, 41, 41);
-    font-size: 16px;
-    font-weight: normal;
-    line-height: 28px;
-    min-height: 28px;
-    outline: none;
-  }
-  .content-text-area:empty:not(:focus)::before {
-    content: attr(data-ph);
-    display: block;
-    color: rgb(204, 204, 204);
-  }
+  /*.content-text-area {*/
+  /*  overflow-wrap: break-word;*/
+  /*  transition: background-color 0.1s ease 0s;*/
+  /*  margin: 2px -3px;*/
+  /*  padding: 0px 3px;*/
+  /*  color: rgb(41, 41, 41);*/
+  /*  font-size: 16px;*/
+  /*  font-weight: normal;*/
+  /*  line-height: 28px;*/
+  /*  min-height: 28px;*/
+  /*  outline: none;*/
+  /*}*/
+  /*.content-text-area:empty:not(:focus)::before {*/
+  /*  content: attr(data-ph);*/
+  /*  display: block;*/
+  /*  color: rgb(204, 204, 204);*/
+  /*}*/
+.textarea-container {
+  position: relative;
+}
+
+textarea.content-text-area {
+  overflow-wrap: break-word;
+  transition: background-color 0.1s ease 0s;
+  margin: 2px -3px;
+  padding: 0px 3px;
+  color: rgb(41, 41, 41);
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 28px;
+  min-height: 28px;
+  outline: none;
+  width: 100%;
+  resize: vertical; /* optional: allow vertical resizing */
+}
+
+.textarea-container textarea.content-text-area:empty:not(:focus)::before {
+  content: attr(data-ph);
+  display: block;
+  color: rgb(204, 204, 204);
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%);
+}
+
   .mark-icon-wrap {
     visibility: hidden;
     position: absolute;
