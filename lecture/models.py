@@ -40,9 +40,8 @@ class Lecture(Period):
         ordering = ['-id']
 
 
-class LecturePlant(Period):
+class LecturePlant(Plant):
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
-    plant = models.ForeignKey(Plant, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_lecture_plant'
