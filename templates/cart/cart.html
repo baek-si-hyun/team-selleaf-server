@@ -14,7 +14,7 @@
             <div class="section-title">
               <h2 class="title-text">내가 담은 상품들</h2>
               <p class="product-count-wrap">
-                <span class="product-count">{{  }}건</span>
+                <span class="product-count">{{ quantity }}건</span>
               </p>
             </div>
             <!-- 상품이 없다면 이 부분의 텍스트 및 버튼 표시 -->
@@ -32,10 +32,10 @@
                   <div class="product-preview-container">
                     <div class="product-preview-inner">
                       <h3 class="user-name">{{ lecture.teacher.member.member_name }}</h3>
-                      <div class="delivery-condition">{{ 무료배송 }}</div>
+                      <div class="delivery-condition">{{ '무료배송' }}</div>
                     </div>
                     <hr class="divide" />
-                    <div class="delivery-note">{{ 업체직접배송 }}</div>
+                    <div class="delivery-note">{{ '업체직접배송' }}</div>
                   </div>
                   <div class="order-product-info">
                     <figure class="product-preview-image">
@@ -50,11 +50,11 @@
                           {{lecture.lecture_name}}
                       </p>
                       <p class="product-option">
-                          {{ if kit === 'offline'}}
-                            {{ date.date}}/{{ time.time }}
-                          {{ else }}
-                            {{ date.date}}/{{ time.time }}
-                          {{ endif }}
+{#                          {{ if kit === 'offline'}}#}
+{#                            {{ date.date}}/{{ time.time }}#}
+{#                          {{ else }}#}
+{#                            {{ date.date}}/{{ time.time }}#}
+{#                          {{ endif }}#}
                       </p>
                       <div class="product-price">
                         <span class="price-number">{{ lecture.lecture_price}}</span
@@ -260,7 +260,7 @@
                 </div>
                 <article class="detail-price-wrap">
                   <div class="price-title-text">
-                    총 상품 금액<span class="emphasis price">{{ 최종 금액 }}</span>원
+                    총 상품 금액<span class="emphasis price">{{ '최종 금액' }}</span>원
                   </div>
 {#                  <div class="price-title-text">#}
 {#                    배송비<span class="price">0원</span>#}
@@ -277,7 +277,7 @@
                     <span class="total-price">418,000원</span>
                   </div>
                   <p class="expected-mileage">
-                    <span class="value">{{ 최종금액 * 0.08 }} P </span>적립 예정
+                    <span class="value">{{ '최종금액 * 0.08' }} P </span>적립 예정
                   </p>
                 </article>
               </section>

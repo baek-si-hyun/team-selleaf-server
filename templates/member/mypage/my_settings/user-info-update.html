@@ -110,64 +110,11 @@
                     <div class="user-name-input-wrap">
                       <input
                         class="user-name-input-form focus-event"
-                        value="Selleaf Test"
+                        name="member-name"
+                        value="{{}}"
                       />
                       <!-- 값 미입력 시 innerText 추가 -->
                       <div class="user-info-error"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- 성별 입력란 -->
-              <div class="info-items-wrap">
-                <div class="info-items-title">성별</div>
-                <div class="user-info-items-wrap">
-                  <div class="user-info-items-container gender">
-                    <ul class="gender-radio-wrap">
-                      <li>
-                        <div class="gender-input-wrap">
-                          <label class="gender-input-container">
-                            <input
-                              class="gender-radio"
-                              type="radio"
-                              name="gender"
-                            />
-                            <span class="radio-button-image"> </span>
-                            <span>남성</span>
-                          </label>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="gender-input-wrap">
-                          <label class="gender-input-container">
-                            <input
-                              class="gender-radio"
-                              type="radio"
-                              name="gender"
-                            />
-                            <span class="radio-button-image"> </span>
-                            <span>여성</span>
-                          </label>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <!-- 생년월일 입력란 -->
-              <!-- JS 이벤트로 형식 검사 필요(keyup, focus, blur 등) -->
-              <!-- 형식 오류 발생 시 아래에 div 요소도 추가됨 -->
-              <div class="info-items-wrap">
-                <div class="info-items-title">생년월일</div>
-                <div class="user-info-items-wrap">
-                  <div class="user-info-items-container">
-                    <div class="birth-input-wrap">
-                      <!-- 날짜 제한 걸어놓은 상태 -->
-                      <input
-                        type="date"
-                        class="birth-input-form focus-event"
-                        data-placeholder="YYYY-MM-DD"
-                      />
                     </div>
                   </div>
                 </div>
@@ -209,18 +156,6 @@
                   </div>
                 </div>
               </div>
-              <!-- 한줄 소개 입력란 -->
-              <div class="info-items-wrap">
-                <div class="info-items-title">한줄 소개</div>
-                <div class="user-info-items-wrap">
-                  <div class="user-info-items-container">
-                    <input
-                      class="introduce-input-form focus-event"
-                      maxlength="40"
-                    />
-                  </div>
-                </div>
-              </div>
               <!-- 회원정보수정 버튼 -->
               <!-- 클릭하면 양식 검사 후 alert 출력 -->
               <button class="update-submit-button" type="button">
@@ -243,7 +178,7 @@
           <div class="confirm-button-wrap">
             <div class="confirm-button-container">
               <button class="confirm-cancel">취소</button>
-              <button class="confirm">확인</button>
+              <button class="confirm" name="confirm">확인</button>
             </div>
           </div>
         </div>
@@ -264,5 +199,12 @@
     </div>
 {% endblock %}
 {% block js %}
-  <script src="\{% static 'member/js/mypage/my_settings/user-info-update.js' %}"></script>
+    <script>
+        "{{ request.session.member_files }}"
+        let check = "{{ check }}"
+        if (check === "false"){
+            check = "";
+        }
+    </script>
+    <script src="\{% static 'member/js/mypage/my_settings/user-info-update.js' %}"></script>
 {% endblock %}

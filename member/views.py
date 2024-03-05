@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from django.shortcuts import render, redirect
 from django.views import View
 from rest_framework.response import Response
@@ -66,3 +68,44 @@ class MemberLogoutView(View):
     def get(self, request):
         request.session.clear()
         return redirect('member:login')
+
+class MypageUpdateView(View):
+    def get(self,request):
+        request.session['member'] = MemberSerializer(MemberSerializer(Member.objects.get(id=request.session['member']['id'])).data)
+        check = request.GET.get('check')
+        context = {'check': check}
+        return render(request, 'member/mypage/my_settings/user-info-update.html', context)
+
+
+    def post(self, request):
+        data = request.POST
+        file = request.FILES
+
+        data = {
+            'member_name': data['member-name'],
+        }
+        member = Member.objects.get(id=request.session['member']['id'])
+        member_file = MemberProfile.objects.filter(member_id=member.id)
+
+        if member_file.exists():
+            member_file = member_file.first()
+
+        else:
+            member_file = MemberProfile(member=member)
+
+        for key in file:
+            member_file.path = file[key]
+            member_file.updated_date = timezone.now()
+            member_file.save()
+
+        if data['member_password'] == member.member_password:
+            member.member_name = data['member_name']
+            member.updated_date = timezone.now()
+            member.save(update_fields=['member_name', 'updated_date'])
+            member_files = list(member.memberfile_set.values('path'))
+            if len(member_files) != 0:
+                request.session['member_files'] = member_files
+
+            return redirect("member:mypage")
+
+        return redirect("/member/mypage?check=false")

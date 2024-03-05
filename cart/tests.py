@@ -2,7 +2,7 @@ import random
 
 from django.test import TestCase
 
-from cart.models import Cart
+from cart.models import Cart, CartDetail
 from member.models import Member
 
 
@@ -19,7 +19,7 @@ class CartTest(TestCase):
             'member': member_queryset[random.randint(0, len(member_queryset) - 1)],
         }
         cart_list.append(Cart(**cart_data))
-    Cart.objects.create(cart_list)
+    CartDetail.objects.create(cart_list)
 
 
     member_queryset = Member.objects.all()
