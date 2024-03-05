@@ -1,44 +1,3 @@
-// 회원가입 페이지 용 js
-/*
-    클래스 add, remove를 이용한 스타일 변화
-
-
-    ※ 모든 input란
-
-    - keyup, blur
-
-        각 input 별 조건(정규식)을 만족하지 않으면
-        특정 태그에 .error 클래스 toggle
-
-        .error에 대한 스타일 관리는 css에서
-
-
-        -> 입력창 위 label 태그 텍스트와 border-color,
-           focus 되었을 때의 box-shadow 색 변경
-           + 각 input의 wrap 아래에 빨간색 경고 텍스트(div) 추가
-           
-           맨 아래 이용약관은 label 텍스트와
-           terms-container의 border 색만 변경
-*/
-
-/*
-    ※ 이메일
-
-    - keyup, blur
-
-        앞쪽 직접 입력란과 뒤쪽 드롭박스(선택해주세요 or 직접 입력에 값 없을 때)중 하나라도 값이 없을 경우
-            -> 양쪽과 label 텍스트에 .error 추가, 이메일 인증버튼에 .enabled 클래스 remove
-
-            * 나중에는 keyup 이벤트로 실시간으로 데이터 송수신해서 띄우기
-
-
-        값이 뭐라도 생기면 아래쪽 인증버튼에 .enabled 클래스 toggle
-            -> border와 color, background-color 변경
-
-        * 드롭박스 쪽 직접입력
-            -> 이거 선택하면 input 창으로 바뀌는 건 어떻게 하는 건가...
-                해당 option 안에 input 태그를 넣나?
-*/
 // 이벤트에 사용할 상수 저장
 const emailText = document.querySelector(".email-input-text");
 const emailInput = document.querySelector(".email-form-control:nth-child(1)"); // 정확히 input 태그를 찍어줘야 됨
@@ -52,7 +11,7 @@ const emailVerifyBtn = document.querySelector(".email-verify-button");
 
 // 양쪽 입력창 모두에 적용(forEach)하기 위한 상수
 const emailForm = document.querySelectorAll(".email-form-control");
-
+emailForm.readOnly = true
 // 입력창 별로 error 발생 시, 추가되는 div에 넣을 텍스트들을 미리 저장
 const emailFormErrorMsg = "이메일 형식이 올바르지 않습니다."; // email input에 값 없을 때
 const alreadyRegisteredMsg =
@@ -652,7 +611,7 @@ regionDropbox.addEventListener("change", (e) => {
 const nicknameInput = document.querySelector(".nickname-input");
 const nicknameText = document.querySelector(".nickname-text");
 const nicknameWrap = document.querySelector(".nickname-wrap");
-
+nicknameInput.readOnly = true
 // 닉네임 양식 선언
 const nicknameRegex = /^[A-Za-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]{2,15}$/;
 
