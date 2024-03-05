@@ -2,6 +2,7 @@ from django.db import models
 
 from member.models import Member
 from selleaf.file import File
+from selleaf.period import Period
 
 
 class Teacher(Member):
@@ -12,7 +13,6 @@ class Teacher(Member):
 
     class Meta:
         db_table = 'tbl_teacher'
-        ordering = ['-id']
 
 
 # 강의 품목 예시 테이블

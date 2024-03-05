@@ -1,5 +1,6 @@
 from django.db import models
 
+from knowhow.managers import KnowhowManager
 from member.models import Member
 from plant.models import Plant
 from selleaf.file import File
@@ -7,11 +8,18 @@ from selleaf.models import Like, Scrap, Tag
 from selleaf.period import Period
 
 
+
+
 class Knowhow(Period):
     knowhow_title = models.CharField(max_length=50, null=False)
     knowhow_content = models.CharField(max_length=500, null=False)
     knowhow_count = models.IntegerField(default=0, null=False)
+    knowhow_status = models.BooleanField(default=True, null=False)
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
+
+    objects = models.Manager()
+    enabled_objects = KnowhowManager()
+
 
     class Meta:
         db_table = 'tbl_knowhow'
@@ -35,8 +43,10 @@ class KnowhowLike(Like):
         ordering = ['-id']
 
 
-class KnowhowPlant(Plant):
+class KnowhowPlant(Period):
     knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
+    plant = models.ForeignKey(Plant, on_delete=models.PROTECT, null=False)
+
 
     class Meta:
         db_table = 'tbl_knowhow_plant'
@@ -86,6 +96,7 @@ class KnowhowReplyLike(Like):
 
 class KnowhowCategory(Period):
     category_name = models.CharField(max_length=50, null=False)
+    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_knowhow_category'
