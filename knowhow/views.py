@@ -1,8 +1,10 @@
 from django.db import transaction
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from django.views import View
 
-from knowhow.models import Knowhow, KnowhowFile, KnowhowPlant, KnowhowTag, KnowhowCategory, KnowhowRecommend
+from knowhow.models import Knowhow, KnowhowFile, KnowhowPlant, KnowhowTag, KnowhowCategory, KnowhowRecommend, \
+    KnowhowLike
 from member.models import Member
 
 
@@ -25,21 +27,23 @@ class KnowhowCreateView(View):
             'member': member
         }
 
+        knowhowdata = Knowhow.objects.create(**knowhow)
+
         # 카테고리
         knowhowcategory = {
-            'category_name': data['category-name'],
-            'knowhow': knowhow
+            'category_name': data['knowhow-categoty'],
+            'knowhow': knowhowdata
         }
+
+        KnowhowCategory.objects.create(**knowhowcategory)
 
         # 노하우 태그
         knowhowtag = {
-            'tag_name': data['knowhow-tags'],
-            'knowhow': knowhow
+            'tag_name': data['knowhow-tag'],
+            'knowhow': knowhowdata
         }
 
-        knowhowdata = Knowhow.objects.create(**knowhow)
         KnowhowTag.objects.create(**knowhowtag)
-        KnowhowCategory.objects.create(**knowhowcategory)
 
         plant_types = data.getlist('plant-type')
         recommend_urls = data.getlist('knowhow-recommend-url')
@@ -58,12 +62,34 @@ class KnowhowCreateView(View):
         for key in files:
             # print(key)
             KnowhowFile.objects.create(knowhow=knowhowdata, file_url=files[key])
-
-        return redirect('/knowhow/detail')
+        return redirect(f'/knowhow/detail/?id={knowhowdata.id}')
 
 class KnowhowDetailView(View):
     def get(self, request):
-        return render(request, 'community/web/knowhow/knowhow-detail.html')
+        knowhow = Knowhow.objects.get(id=request.GET['id'])
+        knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')
+        knowhow_likes = KnowhowLike.objects.filter(knowhow_id=knowhow.id)
+        # for tag in knowhow_tags:
+        #     print(tag)
+
+        knowhow.knowhow_count += 1
+        knowhow.save(update_fields=['knowhow_count'])
+
+        knowhow_files = list(knowhow.knowhowfile_set.all())
+        knowhow_file = list(knowhow.knowhowfile_set.all())[0]
+
+        context = {
+            'knowhow': knowhow,
+            'knowhow_files': knowhow_files,
+            'knowhow_file': knowhow_file,
+            'knowhow_tags': knowhow_tags
+        }
+
+        # knowhow.post_read_count += 1
+        # knowhow.updated_date = timezone.now()
+        # post.save(update_fields=['post_read_count', 'updated_date'])
+
+        return render(request, 'community/web/knowhow/knowhow-detail.html', context)
 
 class KnowhowListView(View):
     pass
