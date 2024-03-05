@@ -49,17 +49,27 @@ class LectureUploadOnlineView(View):
         print(int(upload_online_data['price-input']))
 
         # 인원
-        print(upload_online_data['member-input'])
+        print(int(upload_online_data['member-input']))
 
-        #
+        # 날짜, 시간 넣기
 
+        # Diy키드 넣기
+        # kits = upload_online_data.getlist('diy-name-input')
 
+        # 사진넣기
+        
+        # 제목 넣기
+        print(upload_online_data['title-input'])
+        # 내용 넣기
+        print(upload_online_data['content-text-area'])
 
-        # post = Post.objects.create(**data)
 
 
         # for key in file:
         #     PostFile.objects.create(post=post, path=file[key])
+
+
+
 
         return redirect('lecture:detail-online')
 
