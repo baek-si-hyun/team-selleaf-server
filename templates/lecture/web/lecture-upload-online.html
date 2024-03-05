@@ -256,22 +256,22 @@
                             <div class="info-dropdown-container">
                               <div class="info-dropdown-inner">
                                 <label class="plant-selection">
-                                    <input type="checkbox" name="plant-type" value="1" style="display: none"><div>관엽식물</div>
+                                    <input type="checkbox" name="plant-type" value="관엽식물" style="display: none"><div>관엽식물</div>
                                 </label>
                                 <label class="plant-selection">
-                                    <input type="checkbox" name="plant-type" value="2" style="display: none"><div>침엽식물</div>
+                                    <input type="checkbox" name="plant-type" value="침엽식물" style="display: none"><div>침엽식물</div>
                                 </label>
                                 <label class="plant-selection">
-                                    <input type="checkbox" name="plant-type" value="3" style="display: none"><div>희귀식물</div>
+                                    <input type="checkbox" name="plant-type" value="희귀식물" style="display: none"><div>희귀식물</div>
                                 </label>
                                 <label class="plant-selection">
-                                    <input type="checkbox" name="plant-type" value="4" style="display: none"><div>다육/선인장</div>
+                                    <input type="checkbox" name="plant-type" value="다육/선인장" style="display: none"><div>다육/선인장</div>
                                 </label>
                                 <label class="plant-selection">
-                                    <input type="checkbox" name="plant-type" value="5" style="display: none"><div>테라리움</div>
+                                    <input type="checkbox" name="plant-type" value="테라리움" style="display: none"><div>테라리움</div>
                                 </label>
                                 <label class="plant-selection">
-                                    <input type="checkbox" name="plant-type" value="6" style="display: none"><div>기타</div>
+                                    <input type="checkbox" name="plant-type" value="기타" style="display: none"><div>기타</div>
                                 </label>
                               </div>
                             </div>
@@ -288,6 +288,7 @@
                                 <span class="info-dropdown-box">
                                   <div class="info-list-wrap">
                                     <input
+                                      type="number"
                                       class="member-input"
                                       placeholder="1인당 가격을 입력하세요"
                                       name="member-input"
@@ -310,6 +311,7 @@
                                 <span class="info-dropdown-box">
                                   <div class="info-list-wrap">
                                     <input
+                                      type="number"
                                       class="price-input"
                                       placeholder="수업 인원을 입력하세요"
                                       name="price-input"
@@ -334,7 +336,7 @@
                                     <input
                                       type="date"
                                       class="start-date"
-                                      name="date-input"
+                                      name="start-date-input"
                                     />
                                   </div>
                                 </span>
@@ -353,7 +355,7 @@
                                     <input
                                       type="date"
                                       class="end-date"
-                                      name="date-input"
+                                      name="end-date-input"
                                     />
                                   </div>
                                 </span>
@@ -434,20 +436,34 @@
                               <div class="info-dropdown-inner">
                                 <span class="info-dropdown-box">
                                   <div class="info-dropdown-wrap">
-                                    <div class="weekday-selection">월</div>
-                                    <div class="weekday-selection">화</div>
-                                    <div class="weekday-selection">수</div>
-                                    <div class="weekday-selection">목</div>
-                                    <div class="weekday-selection">금</div>
-                                    <div class="weekday-selection">토</div>
-                                    <div class="weekday-selection">일</div>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="0" style="display: none"><div>월</div>
+                                    </label>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="1" style="display: none"><div>화</div>
+                                    </label>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="2" style="display: none"><div>수</div>
+                                    </label>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="3" style="display: none"><div>목</div>
+                                    </label>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="4" style="display: none"><div>금</div>
+                                    </label>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="5" style="display: none"><div>토</div>
+                                    </label>
+				                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="6" style="display: none"><div>일</div>
+                                    </label>
                                   </div>
                                 </span>
                               </div>
                             </div>
                           </div>
                           <div class="info-title">
-                            시간 반복
+                            강의 시간
                             <span class="required">*</span>
                           </div>
                           <div class="info-dropdown-wrap">
@@ -455,9 +471,15 @@
                               <div class="info-dropdown-inner">
                                 <span class="info-dropdown-box">
                                   <div class="info-dropdown-wrap">
-                                    <div class="time-selection">30분</div>
-                                    <div class="time-selection">1시간</div>
-                                    <div class="time-selection">2시간</div>
+                                    <label class="time-selection">
+                                        <input type="radio" name="time-type" value="00:30" style="display: none"><div>30분</div>
+                                    </label>
+                                    <label class="time-selection">
+                                        <input type="radio" name="time-type" value="01:00" style="display: none"><div>1시간</div>
+                                    </label>
+				                    <label class="time-selection">
+                                        <input type="radio" name="time-type" value="02:00" style="display: none"><div>2시간</div>
+                                    </label>
                                   </div>
                                 </span>
                               </div>
@@ -477,7 +499,7 @@
                                     <input
                                       class="diy-input"
                                       placeholder="키트이름을 입력하세요"
-                                      name="diy-name-input"
+                                      name="diy-name-input1"
                                     />
                                   </div>
                                 </span>
@@ -486,7 +508,7 @@
                                     <input
                                       class="diy-input"
                                       placeholder="간단한 설명을 입력하세요"
-                                      name="diy-content-input"
+                                      name="diy-content-input1"
                                     />
                                   </div>
                                 </span>
@@ -546,7 +568,7 @@
                                     <input
                                       class="diy-input"
                                       placeholder="키트 이름을 입력하세요"
-                                      name="diy-name-input"
+                                      name="diy-name-input2"
                                     />
                                   </div>
                                 </span>
@@ -555,7 +577,7 @@
                                     <input
                                       class="diy-input"
                                       placeholder="간단한 설명을 입력하세요"
-                                      name="diy-content-input"
+                                      name="diy-content-input2"
                                     />
                                   </div>
                                 </span>
