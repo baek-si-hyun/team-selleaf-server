@@ -235,6 +235,7 @@ function appendItem() {
         class="url-input"
         value=""
         placeholder="URL 주소를 입력해주세요."
+        name="knowhow-recommend-url"
       />
     </div>
   </div>
@@ -244,6 +245,7 @@ function appendItem() {
         class="url-input"
         value=""
         placeholder="표시할 내용"
+        name="knowhow-recommend-content"
       />
     </div>
     <div class="add-and-delete-box">
@@ -290,9 +292,24 @@ recommendedBox.addEventListener("click", (e) => {
     e.target.closest(".double-item-box").remove();
   }
 });
-const plantSelections = document.querySelectorAll(".plant-selection");
-plantSelections.forEach((plantSelection) => {
-  plantSelection.addEventListener("click", (e) => {
-    plantSelection.classList.toggle("select-on");
+// const plantSelections = document.querySelectorAll(".plant-selection");
+// plantSelections.forEach((plantSelection) => {
+//   plantSelection.addEventListener("click", (e) => {
+//     plantSelection.classList.toggle("select-on");
+//   });
+// });
+
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    checkboxes.forEach((cb) => {
+      const label = cb.closest('.plant-selection');
+      if (cb.checked) {
+        label.classList.add("select-on");
+      } else {
+        label.classList.remove("select-on");
+      }
+    });
   });
 });
