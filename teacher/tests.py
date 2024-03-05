@@ -7,12 +7,11 @@ from teacher.models import Teacher, TeacherInfoFile
 
 
 class TeacherTestCase(TestCase):
-    member = Member.objects.get(id=1)
+    member_queryset = Member.objects.all()
     teacher_data = {
-
-        'teacher_info': f'안녕하세요{3}열심히하겠습니다',
-        'lecture_plan': f'식물을 잘기르는 방법에 대해{3}',
-        'member': member
+        'teacher_info': f'안녕하세요{2}열심히하겠습니다',
+        'lecture_plan': f'식물을 잘기르는 방법에 대해{2}',
+        'member': member_queryset[2],
     }
     teacher = Teacher.objects.create(**teacher_data)
 
