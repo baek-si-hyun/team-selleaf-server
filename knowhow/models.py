@@ -39,9 +39,8 @@ class KnowhowLike(Like):
         ordering = ['-id']
 
 
-class KnowhowPlant(Period):
+class KnowhowPlant(Plant):
     knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
-    plant = models.ForeignKey(Plant, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_knowhow_plant'
