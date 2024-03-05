@@ -1,10 +1,11 @@
+from django.db import transaction
 from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views import View
 
 from member.models import Member
 from plant.models import Plant
-from trade.models import TradeCategory, Trade, TradeFile
+from trade.models import TradeCategory, Trade, TradeFile, TradePlant
 
 
 class TradeDetailView(View):
@@ -24,6 +25,7 @@ class TradeUploadView(View):
         member = request.session['member']
         return render(request, "trade/web/trade-upload.html")
 
+    @transaction.atomic
     def post(self, request):
         trade_data = request.POST
         files = request.FILES
@@ -51,23 +53,24 @@ class TradeUploadView(View):
         # trade_data['content-input']
 
         # Trade create
-        # data = {
-        #     'trade_price': trade_data['price-input'],
-        #     'trade_title': trade_data['title-input'],
-        #     'trade_content': trade_data['content-input'],
-        #     'member': Member.objects.get(id=member['id']),
-        #     'trade_category': TradeCategory.objects.create(category_name=trade_data['product-index']),
-        #     'kakao_talk_url': trade_data['chatting-input'],
-        # }
+        data = {
+            'trade_price': trade_data['price-input'],
+            'trade_title': trade_data['title-input'],
+            'trade_content': trade_data['content-input'],
+            'member': Member.objects.get(id=member['id']),
+            'trade_category': TradeCategory.objects.create(category_name=trade_data['product-index']),
+            'kakao_talk_url': trade_data['chatting-input'],
+        }
 
-        # trade = Trade.objects.create(**data)
+        trade = Trade.objects.create(**data)
 
         # TradeFile create
-        # for key in files:
-            # TradeFile.objects.create(trade=trade, file_url=files[key])
+        for key in files:
+            TradeFile.objects.create(trade=trade, file_url=files[key])
 
-        # TradePlant
+        # TradePlant create
         plant_types = trade_data.getlist('plant-type')
         for plant_type in plant_types:
-            print(plant_type)
+            TradePlant.objects.create(trade=trade, plant_name=plant_type)
+
         return redirect('trade:detail')
