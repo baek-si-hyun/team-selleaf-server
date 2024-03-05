@@ -4,7 +4,7 @@ from django.views import View
 
 from member.models import Member
 from plant.models import Plant
-from trade.models import TradeCategory, Trade
+from trade.models import TradeCategory, Trade, TradeFile
 
 
 class TradeDetailView(View):
@@ -26,6 +26,7 @@ class TradeUploadView(View):
 
     def post(self, request):
         trade_data = request.POST
+        files = request.FILES
 
         # 현재 로그인한 사용자
         member = request.session['member']
@@ -47,22 +48,19 @@ class TradeUploadView(View):
         # 거래게시물등록 서비스에서는 사진을 최대 5장까지 받을 수 있음
         # 하지만 1 ~ 5장까지 사용자가 몇장의 사진을 올렸는지는 모름 따라서
         # 나는 이를 반복문을 통해 해결하였음
-        realPhotos = []
-        photos = [trade_data['img-file1'], trade_data['img-file2'], trade_data['img-file3'], trade_data['img-file4'], trade_data['img-file5']]
-
-        for photo in photos:
-            if photo == '':
-                continue
-            realPhotos.append(photo)
+        # realPhotos = []
+        # photos = [trade_data['img-file1'], trade_data['img-file2'], trade_data['img-file3'], trade_data['img-file4'], trade_data['img-file5']]
+        #
+        # for photo in photos:
+        #     if photo == '':
+        #         continue
+        #     realPhotos.append(photo)
 
         # 거래 게시글 제목
         # trade_data['title-input']
 
         # 거래 게시글 내용
         # trade_data['content-input']
-
-        # TradeCategory create
-        # TradeCategory.objects.create(category_name=trade_data['product-index'])
 
         # Trade create
         data = {
@@ -73,5 +71,9 @@ class TradeUploadView(View):
             'trade_category': TradeCategory.objects.create(category_name=trade_data['product-index']),
             'kakao_talk_url': trade_data['chatting-input'],
         }
-        Trade.objects.create(**data)
+
+        # TradeFile create
+        for key in files:
+            TradeFile.objects.create(trade=Trade.objects.create(**data), file_url=files[key])
+
         return redirect('trade:detail')
