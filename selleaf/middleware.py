@@ -41,7 +41,6 @@ def pre_handle_request(get_response):
                         # 관리자 로그인 페이지로 이동시킨다
                         return redirect('/member/login')
 
-
             # 모바일 환경에서 요청을 했지만
             if request.user_agent.is_mobile:
                 # 요청한 경로에 'mobile' 이라는 단어가 없으면
