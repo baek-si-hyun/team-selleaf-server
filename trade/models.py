@@ -41,9 +41,8 @@ class TradeFile(File):
         ordering = ['-id']
 
 
-class TradePlant(Period):
+class TradePlant(Plant):
     trade = models.ForeignKey(Trade, on_delete=models.PROTECT, null=False)
-    plant = models.ForeignKey(Plant, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_trade_plant'

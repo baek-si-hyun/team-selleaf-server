@@ -19,7 +19,7 @@ def pre_handle_request(get_response):
 
         # 03/04 - 조건식 수정 중
         # 만약 요청한 경로가 아래 서비스들(관리자, 계정, oAuth, API) 중 그 어느 것도 아니면서
-        if 'accounts' not in uri and 'oauth' not in uri and 'api' not in uri:
+        if 'admin' not in uri and 'accounts' not in uri and 'oauth' not in uri and 'api' not in uri:
             # 회원가입, 로그인 서비스도 아니고
             if 'join' not in uri and 'login' not in uri:
                 # 게시물 작성, 마이페이지, 강사 신청 서비스 중 하나일 때 - 03/04 추가
@@ -31,10 +31,6 @@ def pre_handle_request(get_response):
                         request.session['previous_uri'] = uri
                         # 로그인 페이지로 이동시킨다
                         return redirect('/member/login')
-
-                # 관리자 페이지
-                if 'admin' in uri:
-
 
             # 모바일 환경에서 요청을 했지만
             if request.user_agent.is_mobile:
