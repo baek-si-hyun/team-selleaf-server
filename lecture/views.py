@@ -60,6 +60,7 @@ class LectureUploadOnlineView(View):
         
         # 제목 넣기
         print(upload_online_data['title-input'])
+
         # 내용 넣기
         print(upload_online_data['content-text-area'])
 
