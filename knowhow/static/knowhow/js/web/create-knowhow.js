@@ -199,6 +199,32 @@ const requiredInfoItemInner = document.querySelector(
 const guideText = document.querySelector(".guide-text");
 const requiredInfoInner = document.querySelectorAll(".required-info-inner");
 
+
+
+//
+// const addRemoveBtns = document.querySelectorAll('.add-and-delete-btn')
+//
+//
+// addRemoveBtns.forEach((btn, i) => {
+//   console.log(btn)
+//   btn.addEventListener('click', (e) => {
+//     const boxTitle = btn.getAttribute('title')
+//     const doubleItemBox = document.querySelectorAll(".double-item-box");
+//     console.log(btn)
+//     if (boxTitle === "추가") {
+//       console.log('추가')
+//       if (doubleItemBox.length >= 3) return;
+//       appendItem();
+//     }
+//     if (boxTitle === "삭제") {
+//       console.log('삭제')
+//       doubleItemBox.forEach((item) => {
+//         item.remove();
+//       })
+//     }
+//   })
+// })
+
 function appendItem() {
   const insertItem = document.createElement("div");
   insertItem.classList.add("double-item-box");
@@ -251,13 +277,16 @@ function appendItem() {
 const recommendedBox = requiredInfoInner[4];
 recommendedBox.addEventListener("click", (e) => {
   const doubleItemBox = document.querySelectorAll(".double-item-box");
+  // btnItem이 null임
   const btnItem = e.target.closest("button");
   const itemTitle = btnItem.getAttribute("title");
   if (itemTitle === "추가") {
+    console.log('추가')
     if (doubleItemBox.length >= 3) return;
     appendItem();
   }
   if (itemTitle === "삭제") {
+    console.log('삭제')
     e.target.closest(".double-item-box").remove();
   }
 });
