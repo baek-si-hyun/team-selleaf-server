@@ -5,7 +5,7 @@
 {% endblock %}
 {% block title %}거래포스팅{% endblock %}
 {% block content %}
-<form action="{% url 'trade:upload' %}" method="post" name="trade-upload" enctype="multipart/form-data">
+<form action="{% url 'trade:upload' %}" method="post" name="trade-upload">
 {% csrf_token %}
   <body>
     <div class="layout-wrap">
@@ -226,7 +226,6 @@
                                       <option value="상품">상품</option>
                                       <option value="식물">식물</option>
                                       <option value="수공예품">수공예품</option>
-                                      <option value="테라리움">테라리움</option>
                                       <option value="기타">기타</option>
                                     </select>
                                   </div>
@@ -251,7 +250,7 @@
                                 </label>
                                 
                                 <label class="plant-selection">
-                                    <input type="checkbox" name="plant-type" value="침역식물" style="display: none">
+                                    <input type="checkbox" name="plant-type" value="침엽식물" style="display: none">
                                     <div>침엽식물</div>
                                 </label>
                                 
@@ -261,13 +260,13 @@
                                 </label>
                                 
                                 <label class="plant-selection">
-                                    <input type="checkbox" name="plant-type" value="다육" style="display: none">
-                                    <div>다육</div>
+                                    <input type="checkbox" name="plant-type" value="다육/선인장" style="display: none">
+                                    <div>다육/선인장</div>
                                 </label>
                                 
                                 <label class="plant-selection">
-                                    <input type="checkbox" name="plant-type" value="선인장" style="display: none">
-                                    <div>선인장</div>
+                                    <input type="checkbox" name="plant-type" value="테라리움" style="display: none">
+                                    <div>테라리움</div>
                                 </label>
                                 
                                 <label class="plant-selection">
@@ -349,7 +348,7 @@
                                     <input
                                       class="price-input"
                                       placeholder="거래할 채팅방 링크를 입력해주세요."
-                                      name="chatting-input"
+                                      name="price-input"
                                     />
                                   </div>
                                 </span>
@@ -479,7 +478,6 @@
                   placeholder="제목을 입력해주세요."
                   maxlength="80"
                   class="title-input"
-                  name="title-input"
                   value=""
                 />
                 <div class="title-count"><span class="count">0</span> / 80</div>
@@ -524,13 +522,11 @@
                       </div>
                     </div>
                   </div>
-                  <div class="textarea-container">
-                      <textarea
-                        class="content-text-area"
-                        placeholder="내용을 입력해주세요."
-                        name="content-input"
-                      ></textarea>
-                </div>
+                  <p
+                    class="content-text-area"
+                    contenteditable="true"
+                    data-ph="내용을 입력해주세요."
+                  ></p>
                 </div>
               </div>
             </div>

@@ -1,11 +1,8 @@
-from django.db import transaction
 from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views import View
 
-from member.models import Member
 from plant.models import Plant
-from trade.models import TradeCategory, Trade, TradeFile, TradePlant
 
 
 class TradeDetailView(View):
@@ -25,52 +22,19 @@ class TradeUploadView(View):
         member = request.session['member']
         return render(request, "trade/web/trade-upload.html")
 
-    @transaction.atomic
     def post(self, request):
         trade_data = request.POST
-        files = request.FILES
-
-        # 현재 로그인한 사용자
         member = request.session['member']
-
-
-        # 상품 구분
-        # trade_data['product-index']
-
-        # 식물 종류
-        # trade_data.getlist('plant-type')
-
-        # 가격
-        # trade_data['price-input']
-
-        # 오픈 채팅방 링크
-        # trade_data['chatting-input']
-
-        # 거래 게시글 제목
-        # trade_data['title-input']
-
-        # 거래 게시글 내용
-        # trade_data['content-input']
-
-        # Trade create
-        data = {
-            'trade_price': trade_data['price-input'],
-            'trade_title': trade_data['title-input'],
-            'trade_content': trade_data['content-input'],
-            'member': Member.objects.get(id=member['id']),
-            'trade_category': TradeCategory.objects.create(category_name=trade_data['product-index']),
-            'kakao_talk_url': trade_data['chatting-input'],
+        print(member)
+        print(trade_data['product-index'])
+        print(trade_data.getlist('plant-type'))
+        plant = {
+            'plant_name': trade_data.getlist('plant-type')
         }
-
-        trade = Trade.objects.create(**data)
-
-        # TradeFile create
-        for key in files:
-            TradeFile.objects.create(trade=trade, file_url=files[key])
-
-        # TradePlant create
-        plant_types = trade_data.getlist('plant-type')
-        for plant_type in plant_types:
-            TradePlant.objects.create(trade=trade, plant_name=plant_type)
+        # plant = Plant.objects.get(id=1)
+        # print(type(plant.plant_name))
+        # trade_data = {
+        #     ''
+        # }
 
         return redirect('trade:detail')
