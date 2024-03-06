@@ -11,7 +11,7 @@ class TeacherTestCase(TestCase):
     teacher_data = {
         'teacher_info': f'안녕하세요7열심히하겠습니다',
         'lecture_plan': f'식물을 잘기르는 방법에 대해7',
-        'member': member_queryset,
+        'member': member_queryset[1],
     }
     teacher = Teacher.objects.create(**teacher_data)
 
