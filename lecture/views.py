@@ -87,7 +87,7 @@ class LectureUploadOnlineView(View):
         lecture_data = request.POST
         files = request.FILES
 
-        member = request.session['member']
+        member = request.session['member']['id']
 
         # 강의 구분
         # lecture_data['product-index']
@@ -107,39 +107,12 @@ class LectureUploadOnlineView(View):
         # 내용 넣기
         # lecture_data['content-text-area']
 
-        # 날짜, 시간 넣기
-        start_date_input = request.POST.get('start-date-input')
-        end_date_input = request.POST.get('end-date-input')
-        weekday_type = request.POST.getlist('weekday-type')
-
-        # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
-        dates = self.date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
-
-        # 계산된 날짜를 출력
-        for date in dates:
-            print(date)
-
-        # 강의 시간(시작 시간, 종료 시간, 강의 시간)
-        start_time = request.POST.get('start-time-input')
-        end_time = request.POST.get('end-time-input')
-        interval = request.POST.get('time-type')
-
-        # 시간대를 나누고 남은 시간을 추가하여 출력
-        time_intervals = self.divide_time_intervals(start_time, end_time, interval)
-
-        # 계산된 시간대를 출력
-        for interval in time_intervals:
-            times = interval[0], "~", interval[1]
-
-        for time in times:
-            Time.objects.create
-
         data = {
             'lecture_price': lecture_data['price-input'],
             'lecture_headcount': lecture_data['member-input'],
             'lecture_title': lecture_data['title-input'],
             'lecture_content': lecture_data['content-text-area'],
-            'teacher': Teacher.objects.get(id=member['id']),
+            'teacher': Teacher.objects.get(id=member),
             'lecture_category': LectureCategory.objects.create(category_name=lecture_data['product-index']),
         }
         # Lecture create
@@ -154,6 +127,33 @@ class LectureUploadOnlineView(View):
         for key in files:
             LectureProductFile.objects.create(lecture=lecture, file_url=files[key])
 
+        # 날짜, 시간 넣기
+        start_date_input = request.POST.get('start-date-input')
+        end_date_input = request.POST.get('end-date-input')
+        weekday_type = request.POST.getlist('weekday-type')
+
+        # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
+        dates = self.date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
+
+        # 계산된 날짜를 출력
+        # Date Create
+        for date in dates:
+            Date.objects.create(lecture=lecture, lecture_data=date)
+
+        # 강의 시간(시작 시간, 종료 시간, 강의 시간)
+        start_time = request.POST.get('start-time-input')
+        end_time = request.POST.get('end-time-input')
+        interval = request.POST.get('time-type')
+
+        # 시간대를 나누고 남은 시간을 추가하여 출력
+        time_intervals = self.divide_time_intervals(start_time, end_time, interval)
+
+        # 계산된 시간대를 출력
+        for interval in time_intervals:
+            times = interval[0], "~", interval[1]
+        # Time Create
+        for time in times:
+            Time.objects.create(date=date, time=time)
 
         # Kit create
         diy_name_input = lecture_data['diy-name-input']
