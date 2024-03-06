@@ -321,11 +321,11 @@
               <h1 class="product-overview-contents-title">
                 <p class="product-overview-user-wrap">
                   <a href="해당유저페이지" class="product-overview-user"
-                    >유저이름</a
+                    >{{ lecture.teacher.member.member_name }}</a
                   >
                 </p>
                 <div class="product-overview-title">
-                  <span class="product-title">제목을 입력하세요.</span>
+                  <span class="product-title">{{ lecture.lecture_title }}</span>
                   <div class="product-title-icon-wrap">
                     <button class="update-button" type="button">
                       <img
@@ -490,7 +490,7 @@
                     <span class="product-price-separator"></span>
                     <div class="product-final-price-wrap">
                       <div class="product-final-price-container">
-                        <span class="final-price-number">13,500</span>
+                        <span class="final-price-number">{{ lecture.lecture_price }}</span>
                         <span class="krw">원</span>
                       </div>
                     </div>
@@ -569,27 +569,29 @@
                       <span class="info-dropdown-box">
                         <span class="info-title">날짜 선택</span>
                         <div class="info-dropdown-wrap">
-                          <div class="weekday-selection">
-                            <span>2023-02-12 월</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-13 화</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-14 수</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-15 목</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-16 금</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-17 토</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-18 일</span>
-                          </div>
+                          {% for date in lecture_order_date %}
+                              <div class="weekday-selection">
+                                <span>{{ date.date|date:"Y-m-d" }}</span>
+                              </div>
+                          {% endfor %}
+{#                          <div class="weekday-selection">#}
+{#                            <span>2023-02-13 화</span>#}
+{#                          </div>#}
+{#                          <div class="weekday-selection">#}
+{#                            <span>2023-02-14 수</span>#}
+{#                          </div>#}
+{#                          <div class="weekday-selection">#}
+{#                            <span>2023-02-15 목</span>#}
+{#                          </div>#}
+{#                          <div class="weekday-selection">#}
+{#                            <span>2023-02-16 금</span>#}
+{#                          </div>#}
+{#                          <div class="weekday-selection">#}
+{#                            <span>2023-02-17 토</span>#}
+{#                          </div>#}
+{#                          <div class="weekday-selection">#}
+{#                            <span>2023-02-18 일</span>#}
+{#                          </div>#}
                         </div>
                       </span>
                     </div>

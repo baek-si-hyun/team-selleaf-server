@@ -18,7 +18,19 @@ class LectureView(View):
 
 class LectureDetailOnlineView(View):
     def get(self, request):
-        return render(request, 'lecture/web/lecture-detail-online.html')
+        lecture = Lecture.objects.get(id=request.GET['id'])
+        # context = {
+        #     'trade': trade,
+        #     'trade_files': list(trade.tradefile_set.all()),
+        #     'trade_file': list(trade.tradefile_set.all())[0]
+        # }
+        context = {
+            'lecture': lecture,
+            'lecture_files': list(lecture.lectureproductfile_set.all()),
+            'lecture_file': list(lecture.lectureproductfile_set.all())[0],
+            'lecture_order_date': lecture.date_set.all().order_by('date')
+        }
+        return render(request, 'lecture/web/lecture-detail-online.html', context)
 
 
 
@@ -91,7 +103,7 @@ class LectureUploadOnlineView(View):
 
         data = {
             'lecture_price': lecture_data['price-input'],
-            'lecture_headcount': lecture_data['member-input'],
+            'lecture_headcount': lecture_data['number-input'],
             'lecture_title': lecture_data['title-input'],
             'lecture_content': lecture_data['content-text-area'],
             'teacher': Teacher.objects.get(member_id=member['id']),
@@ -104,10 +116,6 @@ class LectureUploadOnlineView(View):
         plant_types = lecture_data.getlist('plant-type')
         for plant_type in plant_types:
             LecturePlant.objects.create(lecture=lecture, plant_name=plant_type)
-
-        # # LectureProductFile create
-        for key in files:
-            LectureProductFile.objects.create(lecture=lecture, file_url=files[key])
 
         # 날짜, 시간 넣기
         start_date_input = request.POST.get('start-date-input')
@@ -135,17 +143,21 @@ class LectureUploadOnlineView(View):
         for date in dates:
             lecture_date = Date.objects.create(lecture=lecture, date=date)
             # Time Create
+
             for time in times:
                 Time.objects.create(date=lecture_date, time=time)
 
+        # # LectureProductFile create
+        for key in files:
+            LectureProductFile.objects.create(lecture=lecture, file_url=files[key])
+
         # Kit create
-        diy_name_input = lecture_data['diy-name-input']
-        diy_content_input = lecture_data['diy-content-input']
+        diy_name_input =  request.POST.getlist('diy-name-input')
+        diy_content_input = request.POST.getlist('diy-content-input')
         for i in range(len(diy_name_input)):
             Kit.objects.create(lecture=lecture, kit_name=diy_name_input[i], kit_content=diy_content_input[i])
 
-
-        return redirect('lecture:detail-online')
+        return redirect(f'/lecture/detail/online/?id={lecture.id}')
 
 class LectureUploadOfflineView(View):
     def get(self, request):
