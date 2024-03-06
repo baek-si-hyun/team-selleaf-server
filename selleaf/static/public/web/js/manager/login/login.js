@@ -32,15 +32,43 @@ const backmodal = document.querySelector("#admin-message-modal-backdrop");
 
 const canclebutton = document.querySelector(".admin-message-modal-left-button");
 
-button.addEventListener("click", () => {
-  // 임시? 아이디비번
-  if ((id.value === "selleaf", pw.value === "1234")) {
-    // 페이지 나오면 페이지이동 url
-    window.location.href = "";
+const adminId = "selleaf";
+const adminPw = "1234"
+
+// 로그인 버튼 - click 이벤트
+button.addEventListener("click", (e) => {
+  // // 임시 아이디비번
+  // if ((id.value === "selleaf", pw.value === "1234")) {
+  //   // 페이지 나오면 페이지이동 url
+  //   window.location.href = "";
+  //   return;
+  // }
+
+  // 아이디가 일치하지 않으면 함수 종료
+  if (id.value !== adminId) {
+    // 로그인 실패 시 모달창 표시
+    modal.classList.remove("hidden");
+    backmodal.classList.remove("hidden");
+
+    // 버튼 비활성화
+    button.disabled = true
     return;
   }
-  modal.classList.remove("hidden");
-  backmodal.classList.remove("hidden");
+
+  // 비번이 일치하지 않아도 함수 종료
+  if (pw.value !== adminPw) {
+    // 로그인 실패 시 모달창 표시
+    modal.classList.remove("hidden");
+    backmodal.classList.remove("hidden");
+
+    // 버튼 비활성화
+    button.disabled = true
+    return;
+  }
+  // 로그인 실패 시 form 태그에서 post 요청 보내면 안 됨
+
+  // 로그인 성공했을 경우
+  //
 });
 
 canclebutton.addEventListener("click", () => {

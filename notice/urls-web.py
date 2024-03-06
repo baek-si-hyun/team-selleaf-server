@@ -1,9 +1,9 @@
 from django.urls import path
 
-from notice.views import NoticeView
+from notice.views import NoticeWebView
 
 app_name = 'notice'
 
 urlpatterns = [
-    path('web/', NoticeView.as_view(), name='web')
+    path('web/', NoticeWebView.as_view(), name='web')
 ]

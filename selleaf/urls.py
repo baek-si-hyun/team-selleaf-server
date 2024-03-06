@@ -4,10 +4,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 from main.views import MainView
+from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView
 
 urlpatterns = [
-    path('',  MainView.as_view()),
-    path('admin/', admin.site.urls),
+    path('', MainView.as_view()),
+    # path('admin/', admin.site.urls),
+    path('admin/login/', ManagerLoginView.as_view(), name='manager-login'),
+    path('admin/logout/', ManagerLogoutView.as_view(), name='manager-logout'),
+    path('admin/member/', MemberManagementView.as_view(), name='manager-member'),
     path('member/', include('member.urls-web')),
     path('lecture/', include('lecture.urls-web')),
     path('order/', include('order.urls-web')),
