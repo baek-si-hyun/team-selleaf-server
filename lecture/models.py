@@ -4,11 +4,9 @@ from django.db import models
 from lecture.manager import LectureManager
 from member.models import Member
 from plant.models import Plant
-from selleaf.date import Date
 from selleaf.file import File
 from selleaf.models import Scrap
 from selleaf.period import Period
-from selleaf.time import Time
 from teacher.models import Teacher
 
 
@@ -25,8 +23,6 @@ class Lecture(Period):
     lecture_headcount = models.IntegerField(null=False, blank=False, default=0)
     lecture_title = models.CharField(null=False, blank=False, max_length=100)
     lecture_content = models.CharField(null=False, blank=False, max_length=225)
-    date = models.ForeignKey(Date, on_delete=models.PROTECT, null=False)
-    time = models.ForeignKey(Time, on_delete=models.PROTECT, null=False)
     # lecture_status : False = 신청중, True = 마감
     lecture_status = models.BooleanField(null=False, blank=False, default=False)
     lecture_category = models.ForeignKey(LectureCategory, on_delete=models.PROTECT, null=False)

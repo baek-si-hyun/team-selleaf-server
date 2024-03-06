@@ -1,15 +1,14 @@
 import random
 from django.test import TestCase
-from lecture.models import Lecture, LectureCategory, LecturePlant, LectureProductFile, Kit, LectureReview, \
+from lecture.models import Lecture, LectureCategory, LectureProductFile, Kit, LectureReview, \
     LecturePlaceFile
 from member.models import Member
-from plant.models import Plant
 from teacher.models import Teacher
 
 
 class LectureTestCase(TestCase):
     lecture_category = []
-    for i in range(50):
+    for i in range(20):
         data = {
             'lecture_category_name': f'강의카테고리{i}',
         }
@@ -18,7 +17,6 @@ class LectureTestCase(TestCase):
 
     member_queryset = Member.objects.all()
     teacher_queryset = Teacher.objects.all()
-    plant_queryset = Plant.objects.all()
     lecture_category_queryset = LectureCategory.objects.all()
     for i in range(20):
         lecture_data = {
@@ -30,13 +28,6 @@ class LectureTestCase(TestCase):
             'teacher': teacher_queryset[random.randint(0, len(teacher_queryset) - 1)],
         }
         lecture = Lecture.objects.create(**lecture_data)
-
-        for j in range(2):
-            lecture_plant_data = {
-                'lecture': lecture,
-                'plant': plant_queryset[random.randint(0, len(plant_queryset) - 1)],
-            }
-            LecturePlant.objects.create(**lecture_plant_data)
 
         for j in range(5):
             lecture_file_data = {

@@ -6,7 +6,7 @@ from django.urls import path, include
 from main.views import MainView
 
 urlpatterns = [
-    path('', MainView.as_view()),
+    path('',  MainView.as_view()),
     path('admin/', admin.site.urls),
     path('member/', include('member.urls-web')),
     path('lecture/', include('lecture.urls-web')),
