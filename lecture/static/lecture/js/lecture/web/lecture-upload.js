@@ -124,12 +124,12 @@ prevImgBox.addEventListener("mousemove", (e) => {
 });
 
 // 요일 선택창 클릭이벤트
-const weekdaySelection = document.querySelectorAll(".weekday-selection");
-weekdaySelection.forEach((selectedDay) => {
-  selectedDay.addEventListener("click", (e) => {
-    e.target.classList.toggle("select-on");
-  });
-});
+// const weekdaySelection = document.querySelectorAll("label.weekday-selection");
+// weekdaySelection.forEach((selectedDay) => {
+//   selectedDay.addEventListener("click", (e) => {
+//     e.target.classList.toggle("select-on");
+//   });
+// });
 
 // 시간 반복 클릭
 const timeSelection = document.querySelectorAll(".time-selection");
@@ -152,9 +152,65 @@ console.log(today);
 // 오늘 이전의 날짜를 비활성화합니다.
 endDate.setAttribute("min", todayString);
 
-const plantSelections = document.querySelectorAll(".plant-selection");
-plantSelections.forEach((plantSelection) => {
-  plantSelection.addEventListener("click", (e) => {
-    plantSelection.classList.toggle("select-on");
+// const plantSelections = document.querySelectorAll(".plant-selection");
+// plantSelections.forEach((plantSelection) => {
+//   plantSelection.addEventListener("click", (e) => {
+//     plantSelection.classList.toggle("select-on");
+//   });
+// });
+
+// 식물 종류 선택한 버튼 복수 선택
+// const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+//
+// checkboxes.forEach((checkbox) => {
+//   checkbox.addEventListener("change", () => {
+//     checkboxes.forEach((cb) => {
+//       const label = cb.closest('.plant-selection');
+//       if (cb.checked) {
+//         label.classList.add("select-on");
+//       } else {
+//         label.classList.remove("select-on");
+//       }
+//     });
+//   });
+// });
+// checkboxes.forEach((checkbox) => {
+//   checkbox.addEventListener("change", () => {
+//     checkboxes.forEach((cb) => {
+//       const label = cb.closest('.weekday-selection');
+//       if (cb.checked) {
+//         label.classList.add("select-on");
+//       } else {
+//         label.classList.remove("select-on");
+//       }
+//     });
+//   });
+// });
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    checkboxes.forEach((cb) => {
+      const label = cb.closest('.plant-selection, .weekday-selection');
+      if (cb.checked) {
+        label.classList.add("select-on");
+      } else {
+        label.classList.remove("select-on");
+      }
+    });
+  });
+});
+
+const timeLabels = document.querySelectorAll('.time-selection');
+
+timeLabels.forEach((label) => {
+  const div = label.querySelector('div');
+  label.addEventListener("click", () => {
+    timeLabels.forEach((l) => {
+      l.classList.remove("select-on");
+      l.querySelector('div').classList.remove("select-on");
+    });
+    label.classList.add("select-on");
+    div.classList.add("select-on");
   });
 });
