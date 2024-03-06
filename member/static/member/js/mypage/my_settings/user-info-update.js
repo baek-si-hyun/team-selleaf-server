@@ -1,16 +1,6 @@
-// 마이페이지/설정/회원정보수정 js 파일
-
-/*
-    별명 입력란에 아무것도 입력되지 않았을 경우
-    input 테두리 색, focus 되었을 때 box-shadow 색 변경
-
-    아래쪽 member-info-error(div) 에 innerText 추가
-*/
-
-// 필요한 객체 가져오기
-const nicknameInput = document.querySelector(".member-name-input-form");
+const nicknameInput = document.querySelector(".user-name-input-form");
 const nicknameErrorWrap = document.querySelector(
-  ".member-name-input-wrap .member-info-error"
+  ".user-name-input-wrap .user-info-error"
 );
 
 // 출력할 메세지 변수화
@@ -61,33 +51,6 @@ nicknameInput.addEventListener("keyup", (e) => {
   // 에러 메시지 출력 태그의 innerText 비우기
   nicknameErrorWrap.innerText = "";
 });
-
-/*
-    생년월일 입력창의 날짜 제한을 현재 시간에 따라 동적으로 변경
-
-    한국 시간이 표준시보다 9시간 빠르기 때문에 그 점까지 반영해서
-    오늘로부터 14년 전을 max로 설정
-    -> Date.now() 하면 한국 표준시로 잘 가져와짐
-
-    추가로, 직접 타자로 입력할 경우 유효성 검사도 실행할 것
-*/
-// 필요한 객체 가져오기
-const birthInput = document.querySelector(".birth-input-form"); // 생년월일 입력창
-
-// const korTimeDiff = 1000 * 60 * 60 * 9; // 한국 - 표준시의 시차(9시간)
-let now = new Date(Date.now()); // 표준시 + 9시간 = 현재 한국 시간
-
-/*
-    max 값으로 설정할 14년 전 날짜 만들기
-    
-    1. 오늘 날짜를 새로운 변수에 할당
-    2. 새로운 변수의 year에서 -14 하기
-*/
-let maxDate = now;
-maxDate.setFullYear(now.getFullYear() - 14);
-
-// 14년 전 날짜를 생년월일 입력창의 max로 설정
-birthInput.max = maxDate.toISOString().substring(0, 10);
 
 /*
     프로필 이미지 클릭 시, 컴퓨터 내 이미지 불러오기 이벤트 발생
@@ -167,7 +130,7 @@ if (isTeacher) {
 */
 
 // 탈퇴 버튼과 탈퇴 확인 모달
-const widthdrawButton = document.querySelector(".member-withdrawal");
+const widthdrawButton = document.querySelector(".user-withdrawal");
 const confirmModal = document.querySelector(".withdrawal-warning");
 
 // 탈퇴 완료 모달과 그 안의 확인 버튼

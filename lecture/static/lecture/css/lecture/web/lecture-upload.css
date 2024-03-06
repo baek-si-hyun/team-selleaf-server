@@ -575,6 +575,28 @@
   transition: border-color 0.1s ease 0s, background-color 0.1s ease 0s;
 }
 
+.member-input {
+  -webkit-font-smoothing: antialiased;
+  padding: 8px 15px 9px;
+  display: inline-block;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  box-sizing: border-box;
+  font-size: 13px;
+  line-height: 21px;
+  resize: none;
+  appearance: none;
+  margin: 0px;
+  padding: 8px 15px 9px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(219, 219, 219);
+  border-image: initial;
+  border-radius: 4px;
+  transition: border-color 0.1s ease 0s, background-color 0.1s ease 0s;
+}
+
 .date-input {
   -webkit-font-smoothing: antialiased;
   padding: 8px 15px 9px;
@@ -784,12 +806,15 @@ input.title-input {
   transition: background-color 0.1s ease 0s;
   margin: 2px -3px;
   padding: 0px 3px;
+  width: 100%;
+  height: 400px;
   color: rgb(41, 41, 41);
   font-size: 16px;
   font-weight: normal;
   line-height: 28px;
   min-height: 28px;
   outline: none;
+  resize: none;
 }
 .content-text-area:empty:not(:focus)::before {
   content: attr(data-ph);
@@ -892,7 +917,22 @@ input.title-input {
   color: #fff;
 }
 
-div.select-on {
+.plant-selection {
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 2.5px;
+  padding: 8px 12px;
+  border: 1px solid #135f2c;
+  /* background-color: rgba(33, 38, 41, 0.8); */
+  color: #135f2c;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  border-radius: 4px;
+  transition: background-color 0.1s ease 0s;
+}
+
+.select-on {
   border: 1px solid #135f2c;
   background-color: #135f2d;
   color: #fff;
@@ -1052,21 +1092,6 @@ div.select-on {
   transition: 0.1s opacity;
 }
 
-.plant-selection {
-  cursor: pointer;
-  display: inline-block;
-  margin-top: 2.5px;
-  padding: 8px 12px;
-  border: 1px solid #135f2c;
-  /* background-color: rgba(33, 38, 41, 0.8); */
-  color: #135f2c;
-  font-size: 14px;
-  line-height: 18px;
-  font-weight: 400;
-  border-radius: 4px;
-  transition: background-color 0.1s ease 0s;
-}
-
 .cancel-button {
   display: inline-block;
   margin: 0;
@@ -1096,4 +1121,14 @@ div.select-on {
 .kit-alert {
   margin-top: 10px;
   color: #c06888;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
 }
