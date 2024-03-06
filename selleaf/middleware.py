@@ -7,9 +7,9 @@ def pre_handle_request(get_response):
         uri = request.get_full_path()
 
         # 요청 경로를 잘 가져왔는지 검사
-        print("="*10)
-        print(uri)
-        print("=" * 10)
+        # print("=" * 10)
+        # print(uri)
+        # print("=" * 10)
 
         # 미들웨어에 작성한 코드가 반영되면 안되는 URI = 로그인 안 해도 이용 가능한 페이지들
 
