@@ -157,9 +157,9 @@
                               />
                               <div class="comment-submit-btn-box">
                                 <button
-                                  type="submit"
+                                  type="button"
                                   class="comment-submit-btn"
-                                  disabled=""
+                                  style="cursor: pointer"
                                 >
                                   입력
                                 </button>
@@ -594,5 +594,8 @@
   </body>
 {% endblock %}
 {% block js %}
+    <script>const csrf_token = '{{ csrf_token }}'</script>
     <script src="{% static 'knowhow/js/web/knowhow-detail.js' %}"></script>
+    <script src="{% static 'knowhow/js/web/reply-module.js' %}"></script>
+    <script src="{% static 'knowhow/js/web/knowhow-detail-reply.js' %}"></script>
 {% endblock %}

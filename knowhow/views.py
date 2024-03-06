@@ -1,10 +1,13 @@
 from django.db import transaction
+from django.db.models import F
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views import View
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from knowhow.models import Knowhow, KnowhowFile, KnowhowPlant, KnowhowTag, KnowhowCategory, KnowhowRecommend, \
-    KnowhowLike
+    KnowhowLike, KnowhowReply
 from member.models import Member
 
 
@@ -91,5 +94,35 @@ class KnowhowDetailView(View):
 
         return render(request, 'community/web/knowhow/knowhow-detail.html', context)
 
+
+
 class KnowhowListView(View):
+    pass
+
+class KnowhowReplyWriteApi(APIView):
+    def post(self, request):
+
+        data = request.data
+        data = {
+            'knowhow_reply_content': data['content'],
+            'knowhow_id': data['knowhow_id'],
+            'member_id': request.session['member']['id']
+        }
+
+        KnowhowReply.objects.create(**data)
+
+        return Response('success')
+
+class KnowhowReplyListApi(APIView):
+    def get(self, request, knowhow_id, page):
+        row_count = 5
+        offset = (page - 1) * row_count
+        limit = row_count * page
+
+        replies = KnowhowReply.objects.filter(knowhow_id=knowhow_id).annotate(member_name=F('member__member_name'))\
+            .values('member_name', 'knowhow__knowhowreply_content', 'member_id', 'created_date', 'id')
+
+        return Response(replies[offset:limit])
+
+class KnowhowReplyApi(APIView):
     pass
