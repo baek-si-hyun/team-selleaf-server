@@ -14,20 +14,20 @@
               <div class="content-inner">
                 <div class="content-title-box">
                   <p class="content-title">
-                    노하우 게시물 제목
+                      {{ knowhow.knowhow_title }}
                   </p>
                   <div class="uploader-data-wrap">
                     <div class="uploader-data-container">
                       <button class="uploader-profile-btn">
                         <figure class="uploader-img-box">
                           <img
-                            src="../../../staticfiles/images/blank-image.png"
+                            src= "{%  static 'public/web/images/common/blank-image.png' %}"
                             height="0"
                             class="uploader-img"
                           />
                         </figure>
                         <div class="uploader-name-box">
-                          <span class="uploader-name">작성자</span>
+                          <span class="uploader-name">{{ knowhow.member.member_name }}</span>
                           <span class="uploader-sub-description">
                             작성자 소개글
                           </span>
@@ -44,7 +44,7 @@
                         <div class="content-img-container">
                           <div class="content-img-inner">
                             <img
-                              src="../../../staticfiles/images/blank-image.png"
+                              src="/upload/{{ knowhow_file.file_url }}"
                               class="content-img"
                               alt=""
                             />
@@ -53,57 +53,18 @@
                       </div>
                     </span>
                     <div class="prev-img-box">
+                      {% for knowhow_file in knowhow_files %}
                       <div class="prev-img-item">
                         <img
-                          src="/staticfiles/images/favicon.png"
+                          src="/upload/{{ knowhow_file.file_url }}"
                           alt=""
                           class="prev-img"
                         />
                       </div>
-                      <div class="prev-img-item">
-                        <img
-                          src="/staticfiles/images/blank-image.png"
-                          alt=""
-                          class="prev-img"
-                        />
-                      </div>
-                      <div class="prev-img-item">
-                        <img
-                          src="/staticfiles/images/favicon.png"
-                          alt=""
-                          class="prev-img"
-                        />
-                      </div>
-                      <div class="prev-img-item">
-                        <img
-                          src="/staticfiles/images/blank-image.png"
-                          alt=""
-                          class="prev-img"
-                        />
-                      </div>
-                      <div class="prev-img-item">
-                        <img
-                          src="/staticfiles/images/favicon.png"
-                          alt=""
-                          class="prev-img"
-                        />
-                      </div>
+                      {% endfor %}
                     </div>
                     <p class="content-text">
-                      안녕하세요. 저는 두 딸을 키우고 있는 엄마입니다. 저희
-                      남편의 직업상 저희는 신혼 때부터 지금까지 이사를 세 번
-                      정도 했어요. 이사를 자주 다니다 보니 이사 준비하는 시간과
-                      비용도 많이 들고 이사 진행 과정에서 스트레스도 받게
-                      되더라구요. <br /><br />아이들도 어린이집에 다니게 되면서
-                      이사를 다니지 않고 한 지역에 정착하면 좋겠다는 생각을
-                      가지게 되었어요. <br /><br />신혼초부터 몇년 동안 남편과
-                      청약 공부도 열심히 하고 청약을 계속 신청하던 중에
-                      감사하게도 서울과 접근성이 좋고 녹지도 많은 지역에
-                      필로티층으로 당첨이 되어서 지난 8월, 입주를 하게
-                      되었습니다.&nbsp; <br /><br />저희 아파트는 계약할 때
-                      마이너스 옵션 선택을 할 수 있었는데 한 번쯤은 제가 원하는
-                      자재들로 나만의 라이프 스타일에 맞춰 집을 꾸며보고
-                      싶었어요.
+                        {{ knowhow.knowhow_content }}
                     </p>
                   </div>
                 </div>
@@ -112,11 +73,11 @@
                     <dl class="content-data">
                       <span class="week-data">2주</span>
                       <dt class="like">좋아요</dt>
-                      <dd class="like-data">446</dd>
+                      <dd class="like-data">{{ knowhow.knowhowlike_set }}</dd>
                       <dt class="scrap">스크랩</dt>
                       <dd class="scrap-data">27</dd>
                       <dt class="check">조회</dt>
-                      <dd class="check-data">3,624</dd>
+                      <dd class="check-data">{{ knowhow.knowhow_count }}</dd>
                     </dl>
                     <div class="declaration-btn-box">
                       <button type="button" class="content-declaration-btn">
@@ -128,30 +89,32 @@
                 <hr class="content-split-top" />
                 <div class="another-tag-box">
                   <div class="another-tag-box-title">다른 노하우 둘러보기</div>
+                    {% for tag in knowhow_tags %} 
                   <div class="tag">
-                    <span class="tag-text"># 태그</span>
+                    <span class="tag-text"># {{ tag.tag_name }}</span>
                   </div>
-                  <div class="tag">
-                    <span class="tag-text"># 태그</span>
-                  </div>
-                  <div class="tag">
-                    <span class="tag-text"># 태그</span>
-                  </div>
-                  <div class="tag">
-                    <span class="tag-text"># 태그</span>
-                  </div>
-                  <div class="tag">
-                    <span class="tag-text"># 태그</span>
-                  </div>
-                  <div class="tag">
-                    <span class="tag-text"># 태그</span>
-                  </div>
-                  <div class="tag">
-                    <span class="tag-text"># 태그</span>
-                  </div>
-                  <div class="tag">
-                    <span class="tag-text"># 태그</span>
-                  </div>
+                    {% endfor %}
+{#                  <div class="tag">#}
+{#                    <span class="tag-text"># 태그</span>#}
+{#                  </div>#}
+{#                  <div class="tag">#}
+{#                    <span class="tag-text"># 태그</span>#}
+{#                  </div>#}
+{#                  <div class="tag">#}
+{#                    <span class="tag-text"># 태그</span>#}
+{#                  </div>#}
+{#                  <div class="tag">#}
+{#                    <span class="tag-text"># 태그</span>#}
+{#                  </div>#}
+{#                  <div class="tag">#}
+{#                    <span class="tag-text"># 태그</span>#}
+{#                  </div>#}
+{#                  <div class="tag">#}
+{#                    <span class="tag-text"># 태그</span>#}
+{#                  </div>#}
+{#                  <div class="tag">#}
+{#                    <span class="tag-text"># 태그</span>#}
+{#                  </div>#}
                 </div>
                 <hr class="content-split-top" />
                 <div class="uploader-bottom-data-wrap">
@@ -194,9 +157,9 @@
                               />
                               <div class="comment-submit-btn-box">
                                 <button
-                                  type="submit"
+                                  type="button"
                                   class="comment-submit-btn"
-                                  disabled=""
+                                  style="cursor: pointer"
                                 >
                                   입력
                                 </button>
@@ -459,7 +422,7 @@
                         <span class="sticky-icon-box">
                           <img
                             class="sticky-icon"
-                            src="../../../staticfiles/images/like-off.png"
+                            src= "{%  static 'public/web/images/common/like-off.png' %}"
                             alt=""
                           />
                         </span>
@@ -469,7 +432,7 @@
                         <span class="sticky-icon-box">
                           <img
                             class="sticky-icon"
-                            src="../../../staticfiles/images/scrap-off-blk.png"
+                            src= "{%  static 'public/web/images/common/scrap-off-blk.png' %}"
                             alt=""
                           />
                         </span>
@@ -631,5 +594,8 @@
   </body>
 {% endblock %}
 {% block js %}
+    <script>const csrf_token = '{{ csrf_token }}'</script>
     <script src="{% static 'knowhow/js/web/knowhow-detail.js' %}"></script>
+    <script src="{% static 'knowhow/js/web/reply-module.js' %}"></script>
+    <script src="{% static 'knowhow/js/web/knowhow-detail-reply.js' %}"></script>
 {% endblock %}
