@@ -2,11 +2,12 @@ import datetime
 import random
 
 from django.test import TestCase
-from lecture.models import Lecture, LectureCategory, LecturePlant, LectureProductFile, Kit, LectureReview, \
-    LecturePlaceFile
+from lecture.models import Lecture, LectureCategory, LectureProductFile, Kit, LectureReview, \
+    LecturePlaceFile, LecturePlant
 from member.models import Member
 from selleaf.date import Date
 from selleaf.time import Time
+
 from teacher.models import Teacher
 
 
@@ -16,7 +17,7 @@ from teacher.models import Teacher
 
 class LectureTestCase(TestCase):
     lecture_category = []
-    for i in range(50):
+    for i in range(20):
         data = {
             'lecture_category_name': f'강의카테고리{i}',
         }
@@ -40,12 +41,14 @@ class LectureTestCase(TestCase):
         }
         lecture = Lecture.objects.create(**lecture_data)
 
+
         for j in range(2):
             lecture_plant_data = {
                 'lecture': lecture,
                 'plant_name':'관엽식물'
             }
             LecturePlant.objects.create(**lecture_plant_data)
+
 
         for j in range(5):
             lecture_file_data = {
