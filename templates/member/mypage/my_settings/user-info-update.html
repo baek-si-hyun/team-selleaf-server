@@ -56,7 +56,8 @@
               <a class="user-withdrawal" href="#">탈퇴하기</a>
             </div>
             <!-- 회원정보수정 서식 -->
-            <form class="update-form-wrap">
+            <form class="update-form-wrap" action="{% url 'member:update' %}", method="post" enctype="multipart/form-data" name="info-update">
+              {% csrf_token %}
               <!-- 각 정보를 감싸는 클래스는 동일하게 -->
               <!-- 이메일 입력란(필수) -->
               <!-- 현재 수정 못하게 막아놓은 상태 -->
@@ -80,18 +81,6 @@
                           />
                         </label>
                       </span>
-{#                      <span class="email-seperator">@</span>#}
-{#                      <span class="email-input-domain">#}
-{#                        <label>#}
-{#                          <input#}
-{#                            class="email-input-form focus-event"#}
-{#                            value="gmail.com"#}
-{#                            size="1"#}
-{#                            placeholder="이메일"#}
-{#                            readonly#}
-{#                          />#}
-{#                        </label>#}
-{#                      </span>#}
                     </div>
                     <div class="item-warning">현재 수정이 불가능합니다.</div>
                   </div>
@@ -131,7 +120,7 @@
                             <label for="new-image">
                               {% if request.session.member_files %}
                                 {% for file in request.session.member_files %}
-                                <img src="/upload/{{ file.path }}">
+                                <img src="/upload/{{ member_files.file_url }}">
                                 {% endfor %}
                               {% else %}
                                   <img src="{% static 'member/images/mypage/base-profile-image.avif' %}">

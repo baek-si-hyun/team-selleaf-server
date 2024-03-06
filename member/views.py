@@ -2,8 +2,6 @@ from django.utils import timezone
 
 from django.shortcuts import render, redirect
 from django.views import View
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from member.models import Member, MemberAddress, MemberProfile
 from member.serializers import MemberSerializer
@@ -86,6 +84,8 @@ class MypageUpdateView(View):
         }
         member = Member.objects.get(id=request.session['member']['id'])
         member_file = MemberProfile.objects.filter(member_id=member.id)
+        print(1)
+        print(member_file)
 
         if member_file.exists():
             member_file = member_file.first()
@@ -94,18 +94,18 @@ class MypageUpdateView(View):
             member_file = MemberProfile(member=member)
 
         for key in file:
-            member_file.path = file[key]
+            member_file.file_url = file[key]
             member_file.updated_date = timezone.now()
             member_file.save()
 
-        if data['member_password'] == member.member_password:
-            member.member_name = data['member_name']
-            member.updated_date = timezone.now()
-            member.save(update_fields=['member_name', 'updated_date'])
-            member_files = list(member.memberfile_set.values('path'))
-            if len(member_files) != 0:
-                request.session['member_files'] = member_files
 
-            return redirect("member:mypage")
+        member.member_name = data['member_name']
+        member.updated_date = timezone.now()
+        member.save(update_fields=['member_name', 'updated_date'])
+        member_files = list(member.memberfile_set.values('file_url'))
+        if len(member_files) != 0:
+            request.session['member_files'] = member_files
 
-        return redirect("/member/mypage?check=false")
+            return redirect("member:update")
+
+        return redirect("/member/update?check=false")

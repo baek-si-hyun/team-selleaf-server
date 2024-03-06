@@ -25,55 +25,7 @@
               {% for cart_detail in cart_details %}
                 <ul>
                 <!-- 장바구니에 담은 상품 리스트 -->
-                <li class="product-preview-wrap">
-                  <div class="product-preview-container">
-                    <div class="product-preview-inner">
-                      <h3 class="user-name">{{ cart_detail.lecture.teacher.member.member_name }}</h3>
-                      <div class="delivery-condition">{{ cart_detail.date.date }}</div>
-                    </div>
-                    <hr class="divide" />
-{#                    <div class="delivery-note">{{ cart_detail.time }}</div>#}
-{#                    {% if cart_detail.kit is not null %}#}
-{#                      <div class="delivery-note">{{ cart_detail.kit }}</div>#}
-{#                    {% endif %}#}
-                  </div>
-                  <div class="order-product-info">
-                    <figure class="product-preview-image">
-                      <img
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-{#                      이부분 cart_detail 에 lectureㅇ- 첫번째 이미지#}
-                        class="product-image" alt=""
-                      />
-                    </figure>
-                    <div class="product-info-contents">
-                      <p class="product-name">
-                          {{cart_detail.lecture.lecture_name}}
-                      </p>
-                      <p class="product-option">
-                          {% if cart_detail.kit == 'offline' %}
-                            {{ cart_detail.date.date }} | {{ cart_detail.time.time }}
-                          {% else %}
-                            {{ cart_detail.date.date }} | {{ cart_detail.time.time }} | {{ cart_detail.kit.kit_name }}
-                          {% endif %}
-                      </p>
-                      <div class="product-price">
-                        <span class="price-number">{{ cart_detail.lecture.lecture_price}}</span
-                        ><span class="won">원</span> &nbsp;
-                        <div class="selected-product-count">
-                          <span class="sub-count">
-                            <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
-                          </span>
-                          <button type="button" class="counted-number">
-                              {{ cart_detail.quantity }}
-                          </button>
-                          <span class="add-count">
-                            <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                
               </ul>
               {% endfor %}
             </article>
@@ -119,13 +71,5 @@
     </div>
 {% endblock %}
 {% block js %}
-    <script>
-        const eachPrices = document.querySelectorAll('.price-number')
-        eachPrices.forEach((eachprice)=>{
-           let price = Number(eachprice.textContent)
-            console.log(price)
-        })
-        
-    </script>
     <script src="{% static 'cart/js/cart/cart.js' %}"></script>
 {% endblock %}

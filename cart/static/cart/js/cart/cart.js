@@ -86,3 +86,49 @@ subBtns.forEach((subBtn, i) => {
     productPrices[i].innerText = (replacePrice * count).toLocaleString();
   });
 });
+
+// innerHTML
+// <li className="product-preview-wrap">
+//   <div className="product-preview-container">
+//     <div className="product-preview-inner">
+//       <h3 className="user-name">{{cart_detail.lecture.teacher.member.member_name}}</h3>
+//       <div className="delivery-condition">{{cart_detail.date.date}}</div>
+//     </div>
+//     <hr className="divide"/>
+//   </div>
+//   <div className="order-product-info">
+//     <figure className="product-preview-image">
+//       <img
+//           src="{% static 'public/web/images/common/blank-image.png' %}"
+//           className="product-image" alt=""
+//       />
+//     </figure>
+//     <div className="product-info-contents">
+//       <p className="product-name">
+//         {{cart_detail.lecture.lecture_name}}
+//       </p>
+//       <p className="product-option">
+//         {% if cart_detail.kit == 'offline' %}
+//         {{cart_detail.date.date}} | {{cart_detail.time.time}}
+//         {% else %}
+//         {{cart_detail.date.date}} | {{cart_detail.time.time}} | {{cart_detail.kit.kit_name}}
+//         {% endif %}
+//       </p>
+//       <div className="product-price">
+//                         <span className="price-number">{{cart_detail.lecture.lecture_price}}</span
+//                         ><span className="won">원</span> &nbsp;
+//         <div className="selected-product-count">
+//                           <span className="sub-count">
+//                             <img src="{% static 'public/web/images/common/sub.png' %}" alt=""/>
+//                           </span>
+//           <button type="button" className="counted-number">
+//             {{cart_detail.quantity}}
+//           </button>
+//           <span className="add-count">
+//                             <img src="{% static 'public/web/images/common/add.png' %}" alt=""/>
+//                           </span>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+// </li>
