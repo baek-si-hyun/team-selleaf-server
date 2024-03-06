@@ -100,11 +100,13 @@ class KnowhowListView(View):
     pass
 
 class KnowhowReplyWriteApi(APIView):
+    @transaction.atomic
     def post(self, request):
 
         data = request.data
+        print(data)
         data = {
-            'knowhow_reply_content': data['content'],
+            'knowhow_reply_content': data['reply_content'],
             'knowhow_id': data['knowhow_id'],
             'member_id': request.session['member']['id']
         }
@@ -120,7 +122,7 @@ class KnowhowReplyListApi(APIView):
         limit = row_count * page
 
         replies = KnowhowReply.objects.filter(knowhow_id=knowhow_id).annotate(member_name=F('member__member_name'))\
-            .values('member_name', 'knowhow__knowhowreply_content', 'member_id', 'created_date', 'id')
+            .values('member_name', 'knowhow__knowhow_content', 'member_id', 'created_date', 'id', 'knowhow_reply_content')
 
         return Response(replies[offset:limit])
 

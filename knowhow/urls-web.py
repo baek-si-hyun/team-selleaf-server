@@ -15,7 +15,7 @@ urlpatterns = [
     path('list/', KnowhowListView.as_view(), name='list'),
     # 댓글작성
     path('replies/write/', KnowhowReplyWriteApi.as_view(), name='reply_write'),
-    path('replies/list<int:knowhow_id>/<int:page>/', KnowhowReplyListApi.as_view(), name='reply_list'),
+    path('replies/list/<int:knowhow_id>/<int:page>/', KnowhowReplyListApi.as_view(), name='reply_list'),
     path('replies/<int:reply_id>/', KnowhowReplyApi.as_view()),
 
 ]

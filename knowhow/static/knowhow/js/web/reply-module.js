@@ -10,8 +10,8 @@ const replyService = (() => {
         });
     }
 
-    const getList = async (post_id, page, callback) => {
-        const response = await fetch(`/knowhow/replies/list/${post_id}/${page}`);
+    const getList = async (knowhow_id, page, callback) => {
+        const response = await fetch(`/knowhow/replies/list/${knowhow_id}/${page}`);
         const replies = await response.json();
         if(callback){
             return callback(replies);
