@@ -8,10 +8,10 @@ from member.models import Member
 
 # 장바구니 서비스
 class CartView(View):
+    # 카트 생성 확인 완료
     def get(self, request):
         member_data = request.session.get('member')  # 세션에서 멤버 정보 가져오기
         member_id = member_data.get('id')  # 멤버의 고유 식별자(ID) 추출
-        print(member_id)
         my_cart = Cart.objects.filter(member_id=member_id, cart_status=0)
         if not my_cart:
             # 장바구니가 없는 경우 새로운 장바구니 생성
@@ -66,7 +66,7 @@ class CartUpdateView(View):
 
 class CartDeleteView(View):
     pass
-    # # 장바구니 상세 페이지 구현 필요
+    # 장바구니 상세 페이지 구현 필요
     # cart_detail = CartDetail.objects.get(id=) # 이부분 어떻게 가져올지 필요
     # cart_detail.cart_status = -1
     # cart_detail.updated_date = timezone.now()

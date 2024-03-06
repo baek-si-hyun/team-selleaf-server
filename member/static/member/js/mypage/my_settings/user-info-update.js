@@ -1,16 +1,6 @@
-// 마이페이지/설정/회원정보수정 js 파일
-
-/*
-    별명 입력란에 아무것도 입력되지 않았을 경우
-    input 테두리 색, focus 되었을 때 box-shadow 색 변경
-
-    아래쪽 member-info-error(div) 에 innerText 추가
-*/
-
-// 필요한 객체 가져오기
-const nicknameInput = document.querySelector(".member-name-input-form");
+const nicknameInput = document.querySelector(".user-name-input-form");
 const nicknameErrorWrap = document.querySelector(
-  ".member-name-input-wrap .member-info-error"
+  ".user-name-input-wrap .user-info-error"
 );
 
 // 출력할 메세지 변수화
@@ -63,33 +53,6 @@ nicknameInput.addEventListener("keyup", (e) => {
 });
 
 /*
-    생년월일 입력창의 날짜 제한을 현재 시간에 따라 동적으로 변경
-
-    한국 시간이 표준시보다 9시간 빠르기 때문에 그 점까지 반영해서
-    오늘로부터 14년 전을 max로 설정
-    -> Date.now() 하면 한국 표준시로 잘 가져와짐
-
-    추가로, 직접 타자로 입력할 경우 유효성 검사도 실행할 것
-*/
-// 필요한 객체 가져오기
-const birthInput = document.querySelector(".birth-input-form"); // 생년월일 입력창
-
-// const korTimeDiff = 1000 * 60 * 60 * 9; // 한국 - 표준시의 시차(9시간)
-let now = new Date(Date.now()); // 표준시 + 9시간 = 현재 한국 시간
-
-/*
-    max 값으로 설정할 14년 전 날짜 만들기
-    
-    1. 오늘 날짜를 새로운 변수에 할당
-    2. 새로운 변수의 year에서 -14 하기
-*/
-let maxDate = now;
-maxDate.setFullYear(now.getFullYear() - 14);
-
-// 14년 전 날짜를 생년월일 입력창의 max로 설정
-birthInput.max = maxDate.toISOString().substring(0, 10);
-
-/*
     프로필 이미지 클릭 시, 컴퓨터 내 이미지 불러오기 이벤트 발생
 
     이미지를 불러올 경우, 이미지 삭제 버튼(image-delete-button)의
@@ -99,7 +62,6 @@ birthInput.max = maxDate.toISOString().substring(0, 10);
 const newImageInput = document.querySelector("#new-image"); // 프로필 이미지 입력칸
 const imageDeleteButton = document.querySelector(".image-delete-button"); // 이미지 삭제 버튼
 const currentImage = document.querySelector(".current-my_profile-image"); // 화면에 표시되는 현재 이미지
-const imageInput = document.querySelector(".img-input");
 
 // 이미지 파일인지를 검사하기 위해, 유효한 형식들을 배열로 만들어놓음
 const imageTypes = [];
@@ -113,6 +75,7 @@ const imageTypes = [];
 newImageInput.addEventListener("change", (e) => {
   // 불러온 파일을 구조분해 할당으로 변수에 할당
   const [file] = e.target.files;
+
   // 새로운 파일 리더를 변수에 할당
   const reader = new FileReader();
 
@@ -123,22 +86,20 @@ newImageInput.addEventListener("change", (e) => {
   reader.addEventListener("load", (e) => {
     // 가져온 이미지 경로를 변수에 할당
     const imagePath = e.target.result;
-    if (imagePath.includes('image')) {
-      // 이미지 삭제 버튼 표시
-      imageDeleteButton.style.display = "flex";
-      imageInput.src = imagePath
-    }else {
-      // 해당 경로에서 이미지 가져와서 프로필 사진으로 띄움
-      currentImage.style.backgroundImage = `url(${imagePath})`;
-    }
-    });
+
+    // 이미지 삭제 버튼 표시
+    imageDeleteButton.style.display = "flex";
+
+    // 해당 경로에서 이미지 가져와서 프로필 사진으로 띄움
+    currentImage.style.backgroundImage = `url(${imagePath})`;
+  });
 });
 
 // 삭제 버튼 - click 이벤트
 // 클릭 시, 기존의 프로필 이미지로 원복하고, 삭제 버튼 숨김
 imageDeleteButton.addEventListener("click", (e) => {
   // 프로필 이미지 기본값으로 원복
-  currentImage.style.backgroundImage = `/static/images/mypage/base-profile-image.avif`;
+  currentImage.style.backgroundImage = `../../../images/mypage/base-profile-image.avif`;
 
   // 삭제 버튼 숨김
   e.target.style.display = "none";
@@ -169,7 +130,7 @@ if (isTeacher) {
 */
 
 // 탈퇴 버튼과 탈퇴 확인 모달
-const widthdrawButton = document.querySelector(".member-withdrawal");
+const widthdrawButton = document.querySelector(".user-withdrawal");
 const confirmModal = document.querySelector(".withdrawal-warning");
 
 // 탈퇴 완료 모달과 그 안의 확인 버튼

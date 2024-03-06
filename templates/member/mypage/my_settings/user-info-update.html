@@ -73,7 +73,7 @@
                           <!-- focus-event: focus 되면 테두리 변화 -->
                           <input
                             class="email-input-form focus-event"
-                            value="{{request.session.member.member_email}}"
+                            value="{{ request.session.member.member_email}}"
                             size="1"
                             placeholder="이메일"
                             readonly
@@ -128,9 +128,14 @@
                       <ul class="user-profile-image-container">
                         <li class="new-image-wrap">
                           <div class="new-image-container">
-                            <label for="new-image" class="img-input">
-                              <!-- 새 이미지 넣으면 이미지 url이 변경 -->
-                              <div class="current-profile-image"></div>
+                            <label for="new-image">
+                              {% if request.session.member_files %}
+                                {% for file in request.session.member_files %}
+                                <img src="/upload/{{ file.path }}">
+                                {% endfor %}
+                              {% else %}
+                                  <img src="{% static 'member/images/mypage/base-profile-image.avif' %}">
+                              {% endif %}
                             </label>
                           </div>
                           <input
@@ -195,6 +200,7 @@
     </div>
 {% endblock %}
 {% block js %}
+    <script src="{% static 'member/js/mypage/my_settings/user-info-update.js' %}"></script>
     <script>
         "{{ request.session.member_files }}"
         let check = "{{ check }}"
@@ -202,5 +208,4 @@
             check = "";
         }
     </script>
-    <script src="\{% static 'member/js/mypage/my_settings/user-info-update.js' %}"></script>
 {% endblock %}
