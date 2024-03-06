@@ -5,7 +5,7 @@ from selleaf.period import Period
 
 
 class Time(Period):
-    time = models.TimeField(null=False, blank=False)
+    time = models.CharField(null=False, blank=False, max_length=100)
     date = models.ForeignKey(Date, on_delete=models.PROTECT, null=False)
 
     class Meta:

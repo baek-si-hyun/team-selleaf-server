@@ -22,7 +22,6 @@ class OAuthLoginView(View):
 
         member_data = {
             'member_email': member_email,
-            'member_name': member_name,
             'member_type': member_type
         }
         is_member = Member.objects.filter(**member_data)
