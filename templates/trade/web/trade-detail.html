@@ -352,19 +352,13 @@
                 <div class="product-overview-title">
                   <span class="product-title">{{trade.trade_title }}</span>
                   <div class="product-title-icon-wrap">
+                    {% if request.session.member.id == trade.member.id %}
                     <button class="update-button" type="button">
                       <img
                         class="update-icon"
                         src="{% static 'public/web/images/common/update_icon.png' %}"
                       />
                       <span class="update-label">수정</span>
-                    </button>
-                    <button class="scrap-button" type="button">
-                      <img
-                        class="scrap-off"
-                        src="{% static 'public/web/images/common/scrap-off-blk.png' %}"
-                      />
-                      <span class="scrap-count">0</span>
                     </button>
                     <div class="share-button-wrap">
                       <button class="share-button" type="button">
@@ -383,6 +377,31 @@
                         </svg>
                       </button>
                     </div>
+                    {% endif %}
+                    <button class="scrap-button" type="button">
+                      <img
+                        class="scrap-off"
+                        src="{% static 'public/web/images/common/scrap-off-blk.png' %}"
+                      />
+                      <span class="scrap-count">0</span>
+                    </button>
+{#                    <div class="share-button-wrap">#}
+{#                      <button class="share-button" type="button">#}
+{#                        <svg#}
+{#                          class="icon"#}
+{#                          aria-label="공유하기"#}
+{#                          width="24"#}
+{#                          height="24"#}
+{#                          viewBox="0 0 24 24"#}
+{#                          fill="currentColor"#}
+{#                          preserveAspectRatio="xMidYMid meet"#}
+{#                        >#}
+{#                          <path#}
+{#                            d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"#}
+{#                          ></path>#}
+{#                        </svg>#}
+{#                      </button>#}
+{#                    </div>#}
                   </div>
                 </div>
               </h1>
@@ -491,7 +510,7 @@
               </li>
               <li>
                 <a class="product-detail-nav-item" href="#product-extra-info">
-                  회원 정보
+                  판매자 정보
                 </a>
               </li>
             </ol>
@@ -527,51 +546,53 @@
                       </svg>
                     </button>
                   </div>
-                  <img
-                    class="detail-info-image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt="판매자 등록이미지"
-                  />
-                  <img
-                    class="detail-info-image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt="판매자 등록이미지"
-                  />
-                  <img
-                    class="detail-info-image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt="판매자 등록이미지"
-                  />
-                  <div
-                    class="detail-info-contents-container"
+                  {% for trade_file in trade_files %}
+                      <img
+                        class="detail-info-image"
+                        src="/upload/{{ trade_file.file_url }}"
+                        alt="판매자 등록이미지"
+                      />
+                  {% endfor %}
+{#                  <img#}
+{#                    class="detail-info-image"#}
+{#                    src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                    alt="판매자 등록이미지"#}
+{#                  />#}
+{#                  <img#}
+{#                    class="detail-info-image"#}
+{#                    src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                    alt="판매자 등록이미지"#}
+{#                  />#}
+{#                  <div#}
+{#                    class="detail-info-contents-container"#}
 {#                    style="image-rendering: -webkit-optimize-contrast"#}
-                  >
-                    <p>
-                      <img
-                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
-                        alt="상품의 상세 설명 이미지"
-                      />
-                    </p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>
-                      <img
-                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
-                        alt="상품의 상세 설명 이미지"
-                      />
-                    </p>
-                    <p>
-                      <img
-                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
-                        alt="상품의 상세 설명 이미지"
-                      />
-                    </p>
-                  </div>
+{#                  >#}
+{#                    <p>#}
+{#                      <img#}
+{#                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"#}
+{#                        alt="상품의 상세 설명 이미지"#}
+{#                      />#}
+{#                    </p>#}
+{#                    <p>&nbsp;</p>#}
+{#                    <p>&nbsp;</p>#}
+{#                    <p>&nbsp;</p>#}
+{#                    <p>&nbsp;</p>#}
+{#                    <p>&nbsp;</p>#}
+{#                    <p>&nbsp;</p>#}
+{#                    <p>&nbsp;</p>#}
+{#                    <p>#}
+{#                      <img#}
+{#                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"#}
+{#                        alt="상품의 상세 설명 이미지"#}
+{#                      />#}
+{#                    </p>#}
+{#                    <p>#}
+{#                      <img#}
+{#                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"#}
+{#                        alt="상품의 상세 설명 이미지"#}
+{#                      />#}
+{#                    </p>#}
+{#                  </div>#}
                 </div>
               </section>
 
@@ -579,7 +600,7 @@
                 <section class="product-suggestion-wrap">
                   <header class="product-suggestion-header">
                     <h1 class="product-suggestion-title">
-                      판매자님이 판매중인상품
+                        {{ trade.member.member_name }}님이 판매중인 상품
                     </h1>
                   </header>
                   <div class="product-suggestion-scroller-wrap">

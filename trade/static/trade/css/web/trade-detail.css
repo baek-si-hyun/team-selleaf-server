@@ -1598,6 +1598,7 @@ li:first-child>.product-detail-nav-item{
 .detail-info-image{
     display: block;
     width: 100%;
+    padding: 30px;
 }
 
 .detail-info-contents-container{
