@@ -17,9 +17,9 @@ class Apply(Period):
     apply_status = models.IntegerField(choices=APPLY_STATUS, default=0)
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
-    date = models.ForeignKey(Date, on_delete=models.PROTECT, null=False)
-    time = models.ForeignKey(Time, on_delete=models.PROTECT, null=False)
-    kit = models.ForeignKey(Kit, on_delete=models.PROTECT, default='offline')
+    date = models.CharField(null=False, blank=False, max_length=100)
+    time = models.CharField(null=False, blank=False, max_length=100)
+    kit = models.CharField(null=False, blank=False, max_length=100, default='offline')
 
     class Meta:
         db_table = 'tbl_apply'
