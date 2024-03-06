@@ -1,5 +1,5 @@
 from django.db import transaction
-from django.db.models import F
+from django.db.models import F, Count
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views import View
@@ -72,8 +72,7 @@ class KnowhowDetailView(View):
         knowhow = Knowhow.objects.get(id=request.GET['id'])
         knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')
         knowhow_likes = KnowhowLike.objects.filter(knowhow_id=knowhow.id)
-        # for tag in knowhow_tags:
-        #     print(tag)
+        reply_count = KnowhowReply.objects.values('id').count()
 
         knowhow.knowhow_count += 1
         knowhow.save(update_fields=['knowhow_count'])
@@ -85,7 +84,8 @@ class KnowhowDetailView(View):
             'knowhow': knowhow,
             'knowhow_files': knowhow_files,
             'knowhow_file': knowhow_file,
-            'knowhow_tags': knowhow_tags
+            'knowhow_tags': knowhow_tags,
+            'reply_count': reply_count
         }
 
         # knowhow.post_read_count += 1

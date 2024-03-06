@@ -135,7 +135,7 @@
                 <div>
                   <div class="comment-section" id="comment-section">
                     <h1 class="comment-section-title">
-                      댓글<span class="comment-count">164</span>
+                      댓글<span class="comment-count">{{ reply_count }}</span>개
                     </h1>
                     <div class="comment-input-wrap">
                       <div class="comment-input-container">
@@ -606,7 +606,7 @@
         console.log(knowhow_id)
         const memberId = '{{ request.session.member.id }}'
     </script>
-    
+
     <script src="{% static 'knowhow/js/web/knowhow-detail.js' %}"></script>
     <script src="{% static 'knowhow/js/web/reply-module.js' %}"></script>
     <script src="{% static 'knowhow/js/web/knowhow-detail-reply.js' %}"></script>
