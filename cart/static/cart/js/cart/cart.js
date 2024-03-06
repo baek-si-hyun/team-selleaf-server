@@ -1,32 +1,5 @@
 // 장바구니 페이지 js 파일
 
-/*
-  장바구니 리스트에 담은 상품(product-preview-wrap)이 하나도 있다면
-  상품 리스트(contents-wrap) 표시하고,
-  상품 없음 메세지와 구매 바로가기 버튼 숨김
-
-
-  없다면 contents-wrap을 숨기고, 상품 없음 메세지와 구매 바로가기 버튼 추가
-*/
-
-// 필요한 객체 가져오기
-const productList = document.querySelectorAll(".product-preview-wrap"); // 길이 n짜리 배열형태
-const noItemsWrap = document.querySelector(".no-items-wrap");
-const productWrap = document.querySelector(".contents-wrap");
-
-// 상품 리스트(productList)의 길이가 1 이상이면 상품 리스트 표시
-// 없으면 텍스트와 구매 바로가기 버튼 표시
-if (productList.length >= 1) {
-  noItemsWrap.style.display = "none";
-  productWrap.style.display = "block";
-} else {
-  noItemsWrap.style.display = "block";
-  productWrap.style.display = "none";
-}
-
-// 해야되는 것들
-// 클래스명 수정
-
 // 수빈 장바구니 페이지 JS 코드친거
 // +-버튼 눌렀을때 상품 개수가 +- 되야함
 const subBtns = document.querySelectorAll(".sub-count");
@@ -113,3 +86,49 @@ subBtns.forEach((subBtn, i) => {
     productPrices[i].innerText = (replacePrice * count).toLocaleString();
   });
 });
+
+// innerHTML
+// <li className="product-preview-wrap">
+//   <div className="product-preview-container">
+//     <div className="product-preview-inner">
+//       <h3 className="user-name">{{cart_detail.lecture.teacher.member.member_name}}</h3>
+//       <div className="delivery-condition">{{cart_detail.date.date}}</div>
+//     </div>
+//     <hr className="divide"/>
+//   </div>
+//   <div className="order-product-info">
+//     <figure className="product-preview-image">
+//       <img
+//           src="{% static 'public/web/images/common/blank-image.png' %}"
+//           className="product-image" alt=""
+//       />
+//     </figure>
+//     <div className="product-info-contents">
+//       <p className="product-name">
+//         {{cart_detail.lecture.lecture_name}}
+//       </p>
+//       <p className="product-option">
+//         {% if cart_detail.kit == 'offline' %}
+//         {{cart_detail.date.date}} | {{cart_detail.time.time}}
+//         {% else %}
+//         {{cart_detail.date.date}} | {{cart_detail.time.time}} | {{cart_detail.kit.kit_name}}
+//         {% endif %}
+//       </p>
+//       <div className="product-price">
+//                         <span className="price-number">{{cart_detail.lecture.lecture_price}}</span
+//                         ><span className="won">원</span> &nbsp;
+//         <div className="selected-product-count">
+//                           <span className="sub-count">
+//                             <img src="{% static 'public/web/images/common/sub.png' %}" alt=""/>
+//                           </span>
+//           <button type="button" className="counted-number">
+//             {{cart_detail.quantity}}
+//           </button>
+//           <span className="add-count">
+//                             <img src="{% static 'public/web/images/common/add.png' %}" alt=""/>
+//                           </span>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+// </li>

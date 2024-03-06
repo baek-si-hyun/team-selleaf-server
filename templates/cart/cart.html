@@ -14,236 +14,29 @@
             <div class="section-title">
               <h2 class="title-text">내가 담은 상품들</h2>
               <p class="product-count-wrap">
-                <span class="product-count">5건</span>
+                <span class="product-count">{{ cart_details.count }}건</span>
               </p>
             </div>
             <!-- 상품이 없다면 이 부분의 텍스트 및 버튼 표시 -->
-            <div class="no-items-wrap">
-              <h1 class="no-items-text">아직 장바구니에 담은 상품이 없어요.</h1>
-              <div class="purchase-link-button-wrap">
-                <a href="#" class="purchase-link-button">구매 바로가기</a>
-              </div>
-            </div>
+            
             <!-- 상품이 하나라도 있다면 아래의 article 태그 display = block -->
-            <article class="contents-wrap">
-              <ul>
+            {% if cart_details %}
+                <article class="contents-wrap">
+              {% for cart_detail in cart_details %}
+                <ul>
                 <!-- 장바구니에 담은 상품 리스트 -->
-                <li class="product-preview-wrap">
-                  <div class="product-preview-container">
-                    <div class="product-preview-inner">
-                      <h3 class="user-name">판매유저이름</h3>
-                      <div class="delivery-condition">무료배송</div>
-                    </div>
-                    <hr class="divide" />
-                    <div class="delivery-note">업체직접배송</div>
-                  </div>
-                  <div class="order-product-info">
-                    <figure class="product-preview-image">
-                      <img
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        class="product-image" alt=""
-                      />
-                    </figure>
-                    <div class="product-info-contents">
-                      <p class="product-name">
-                        [5%쿠폰]드레스덴 정품 조야패브릭 호텔식 침대프레임
-                        SS/Q/K/LK/CK
-                      </p>
-                      <p class="product-option">
-                        추가상품 - 베이직 본넬 매트리스 퀸Q
-                      </p>
-                      <div class="product-price">
-                        <span class="price-number">120,000</span
-                        ><span class="won">원</span> &nbsp;
-                        <div class="selected-product-count">
-                          <span class="sub-count">
-                            <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
-                          </span>
-                          <button type="button" class="counted-number">
-                            1
-                          </button>
-                          <span class="add-count">
-                            <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="product-preview-wrap">
-                  <div class="product-preview-container">
-                    <div class="product-preview-inner">
-                      <h3 class="user-name">판매유저이름</h3>
-                      <div class="delivery-condition">무료배송</div>
-                    </div>
-                    <hr class="divide" />
-                    <div class="delivery-note">업체직접배송</div>
-                  </div>
-                  <div class="order-product-info">
-                    <figure class="product-preview-image">
-                      <img
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        class="product-image" alt=""
-                      />
-                    </figure>
-                    <div class="product-info-contents">
-                      <p class="product-name">
-                        [5%쿠폰]드레스덴 정품 조야패브릭 호텔식 침대프레임
-                        SS/Q/K/LK/CK
-                      </p>
-                      <p class="product-option">
-                        추가상품 - 베이직 본넬 매트리스 퀸Q
-                      </p>
-                      <div class="product-price">
-                        <span class="price-number">119,000</span
-                        ><span class="won">원</span> &nbsp;
-                        <!-- <span class="quantity">1개</span> -->
-                        <div class="selected-product-count">
-                          <span class="sub-count">
-                            <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
-                          </span>
-                          <button type="button" class="counted-number">
-                            1
-                          </button>
-                          <span class="add-count">
-                            <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="product-preview-wrap">
-                  <div class="product-preview-container">
-                    <div class="product-preview-inner">
-                      <h3 class="user-name">판매유저이름</h3>
-                      <div class="delivery-condition">무료배송</div>
-                    </div>
-                    <hr class="divide" />
-                    <div class="delivery-note">업체직접배송</div>
-                  </div>
-                  <div class="order-product-info">
-                    <figure class="product-preview-image">
-                      <img
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        class="product-image" alt=""
-                      />
-                    </figure>
-                    <div class="product-info-contents">
-                      <p class="product-name">
-                        [5%쿠폰]드레스덴 정품 조야패브릭 호텔식 침대프레임
-                        SS/Q/K/LK/CK
-                      </p>
-                      <p class="product-option">
-                        추가상품 - 베이직 본넬 매트리스 퀸Q
-                      </p>
-                      <div class="product-price">
-                        <span class="price-number">119,000</span
-                        ><span class="won">원</span> &nbsp;
-                        <!-- <span class="quantity">1개</span> -->
-                        <div class="selected-product-count">
-                          <span class="sub-count">
-                            <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
-                          </span>
-                          <button type="button" class="counted-number">
-                            1
-                          </button>
-                          <span class="add-count">
-                            <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="product-preview-wrap">
-                  <div class="product-preview-container">
-                    <div class="product-preview-inner">
-                      <h3 class="user-name">판매유저이름</h3>
-                      <div class="delivery-condition">무료배송</div>
-                    </div>
-                    <hr class="divide" />
-                    <div class="delivery-note">업체직접배송</div>
-                  </div>
-                  <div class="order-product-info">
-                    <figure class="product-preview-image">
-                      <img
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        class="product-image" alt=""
-                      />
-                    </figure>
-                    <div class="product-info-contents">
-                      <p class="product-name">
-                        [5%쿠폰]드레스덴 정품 조야패브릭 호텔식 침대프레임
-                        SS/Q/K/LK/CK
-                      </p>
-                      <p class="product-option">
-                        추가상품 - 베이직 본넬 매트리스 퀸Q
-                      </p>
-                      <div class="product-price">
-                        <span class="price-number">119,000</span
-                        ><span class="won">원</span> &nbsp;
-                        <!-- <span class="quantity">1개</span> -->
-                        <div class="selected-product-count">
-                          <span class="sub-count">
-                            <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
-                          </span>
-                          <button type="button" class="counted-number">
-                            1
-                          </button>
-                          <span class="add-count">
-                            <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="product-preview-wrap">
-                  <div class="product-preview-container">
-                    <div class="product-preview-inner">
-                      <h3 class="user-name">판매유저이름</h3>
-                      <div class="delivery-condition">무료배송</div>
-                    </div>
-                    <hr class="divide" />
-                    <div class="delivery-note">업체직접배송</div>
-                  </div>
-                  <div class="order-product-info">
-                    <figure class="product-preview-image">
-                      <img
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        class="product-image" alt=""
-                      />
-                    </figure>
-                    <div class="product-info-contents">
-                      <p class="product-name">
-                        [5%쿠폰]드레스덴 정품 조야패브릭 호텔식 침대프레임
-                        SS/Q/K/LK/CK
-                      </p>
-                      <p class="product-option">
-                        추가상품 - 베이직 본넬 매트리스 퀸Q
-                      </p>
-                      <div class="product-price">
-                        <span class="price-number">119,000</span
-                        ><span class="won">원</span> &nbsp;
-                        <!-- <span class="quantity">1개</span> -->
-                        <div class="selected-product-count">
-                          <span class="sub-count">
-                            <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
-                          </span>
-                          <button type="button" class="counted-number">
-                            1
-                          </button>
-                          <span class="add-count">
-                            <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                
               </ul>
+              {% endfor %}
             </article>
+            {% else %}
+              <div class="no-items-wrap">
+                  <h1 class="no-items-text">아직 장바구니에 담은 상품이 없어요.</h1>
+                  <div class="purchase-link-button-wrap">
+                    <a href="/lecture/total/" class="purchase-link-button">강의 바로가기</a>
+                  </div>
+              </div>
+            {% endif %}
           </section>
         </article>
         <!-- 사이드바 -->
@@ -256,24 +49,15 @@
                 </div>
                 <article class="detail-price-wrap">
                   <div class="price-title-text">
-                    총 상품 금액<span class="emphasis price">418,000</span>원
-                  </div>
-                  <div class="price-title-text">
-                    배송비<span class="price">0원</span>
-                  </div>
-                  <div class="price-title-text">
-                    쿠폰 사용<span class="price">0원</span>
-                  </div>
-                  <div class="price-title-text">
-                    포인트 사용<span class="price">0원</span>
+                    총 상품 금액<span class="emphasis price">{{ total_price }}</span>원
                   </div>
                   <hr class="line" />
                   <div class="total-price-wrap">
                     <span class="total-text">최종 결제 금액</span>
-                    <span class="total-price">418,000원</span>
+                    <span class="total-price">{{total_price}}</span>
                   </div>
                   <p class="expected-mileage">
-                    <span class="value">418 P </span>적립 예정
+                    <span class="value"> <span>{{'0.08'}}</span> P </span>적립 예정
                   </p>
                 </article>
               </section>
