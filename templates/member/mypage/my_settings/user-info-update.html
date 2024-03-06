@@ -120,7 +120,7 @@
                             <label for="new-image">
                               {% if request.session.member_files %}
                                 {% for file in request.session.member_files %}
-                                <img src="/upload/{{ member_files.file_url }}">
+                                <img src="upload/{{ member_files.file_url }}">
                                 {% endfor %}
                               {% else %}
                                   <img src="{% static 'member/images/mypage/base-profile-image.avif' %}">
