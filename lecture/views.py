@@ -132,7 +132,7 @@ class LectureUploadOnlineView(View):
             times = interval[0], "~", interval[1]
 
         for time in times:
-            print(time)
+            Time.objects.create
 
         data = {
             'lecture_price': lecture_data['price-input'],
