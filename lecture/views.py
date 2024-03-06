@@ -4,7 +4,11 @@ from django.db import transaction
 from django.shortcuts import render, redirect
 from django.views import View
 
+from lecture.models import LectureCategory, Lecture, LectureProductFile, LecturePlant, Kit
 from member.models import Member
+from selleaf.date import Date
+from selleaf.time import Time
+from teacher.models import Teacher
 
 
 class LectureView(View):
@@ -55,56 +59,108 @@ class LectureUploadOnlineView(View):
 
         return dates
 
+    def divide_time_intervals(self, start_time, end_time, interval):
+        # 시작 시간과 끝 시간을 datetime 객체로 변환
+        start = datetime.strptime(start_time, "%H:%M")
+        end = datetime.strptime(end_time, "%H:%M")
+
+        # 시간 간격을 분 단위로 변환
+        interval_minutes = int(interval[:-3]) * 60
+
+        # 결과를 저장할 리스트
+        time_intervals = []
+
+        # 시작 시간부터 끝 시간까지 시간 간격만큼씩 더해가며 시간대를 나눔
+        while start + timedelta(minutes=interval_minutes) <= end:
+            next_time = start + timedelta(minutes=interval_minutes)
+            time_intervals.append((start.strftime("%H:%M"), next_time.strftime("%H:%M")))
+            start = next_time
+
+        # 남은 시간을 마지막에 추가
+        if start < end:
+            time_intervals.append((start.strftime("%H:%M"), end.strftime("%H:%M")))
+
+        return time_intervals
+
     @transaction.atomic
     def post(self, request):
-        data = request.POST
-        # 현재 작성하는 사람의 세션을 가져옴
-        # member = request.session['member']
+        lecture_data = request.POST
+        files = request.FILES
+
+        member = request.session['member']
 
         # 강의 구분
-        print(data['product-index'])
+        # lecture_data['product-index']
+
         # 식물 종류
-        plants = data.getlist('plant-type')
-        for key in plants:
-            print(key)
+        # lecture_data.getlist('plant-type')
+
         # 가격
-        print(data['price-input'])
+        # lecture_data['price-input']
+
         # 인원
-        print(data['member-input'])
+        # lecture_data['member-input']
+
+        # 제목 넣기
+        # lecture_data['title-input']
+
+        # 내용 넣기
+        # lecture_data['content-text-area']
 
         # 날짜, 시간 넣기
-        start_date_input = data['start-date-input']
-        end_date_input = data['end-date-input']
-        weekday_type = data['weekday-type']
+        start_date_input = request.POST.get('start-date-input')
+        end_date_input = request.POST.get('end-date-input')
+        weekday_type = request.POST.getlist('weekday-type')
 
         # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
         dates = self.date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
 
         # 계산된 날짜를 출력
-        print(dates)
+        for date in dates:
+            print(date)
 
         # 강의 시간(시작 시간, 종료 시간, 강의 시간)
-        print(data['start-time-input'])
-        print(data['end-time-input'])
-        print(data['time-type'])
-        # Diy키드 넣기
-        name1 = data['diy-name-input1']
-        content1 = data['diy-content-input1']
-        print(name1, content1)
-        name2 = data['diy-name-input2']
-        content2 = data['diy-content-input2']
-        print(name2, content2)
+        start_time = request.POST.get('start-time-input')
+        end_time = request.POST.get('end-time-input')
+        interval = request.POST.get('time-type')
 
-        # 제목 넣기
-        print(data['title-input'])
+        # 시간대를 나누고 남은 시간을 추가하여 출력
+        time_intervals = self.divide_time_intervals(start_time, end_time, interval)
 
-        # 내용 넣기
-        print(data['content-text-area'])
+        # 계산된 시간대를 출력
+        for interval in time_intervals:
+            times = interval[0], "~", interval[1]
 
-        # 사진넣기
+        for time in times:
+            print(time)
 
-        # for key in file:
-        #     PostFile.objects.create(post=post, path=file[key])
+        data = {
+            'lecture_price': lecture_data['price-input'],
+            'lecture_headcount': lecture_data['member-input'],
+            'lecture_title': lecture_data['title-input'],
+            'lecture_content': lecture_data['content-text-area'],
+            'teacher': Teacher.objects.get(id=member['id']),
+            'lecture_category': LectureCategory.objects.create(category_name=lecture_data['product-index']),
+        }
+        # Lecture create
+        lecture = Lecture.objects.create(**data)
+
+        # LecturePlant create
+        plant_types = lecture_data.getlist('plant-type')
+        for plant_type in plant_types:
+            LecturePlant.objects.create(lecture=lecture, plant_name=plant_type)
+
+        # LectureProductFile create
+        for key in files:
+            LectureProductFile.objects.create(lecture=lecture, file_url=files[key])
+
+
+        # Kit create
+        diy_name_input = lecture_data['diy-name-input']
+        diy_content_input = lecture_data['diy-content-input']
+        for i in range(len(diy_name_input)):
+            Kit.objects.create(lecture=lecture, kit_name=diy_name_input[i], kit_content=diy_content_input[i])
+
 
         return redirect('lecture:detail-online')
 
