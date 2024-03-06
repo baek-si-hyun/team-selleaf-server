@@ -10,7 +10,17 @@ from trade.models import TradeCategory, Trade, TradeFile, TradePlant
 
 class TradeDetailView(View):
     def get(self, request):
-        return render(request, "trade/web/trade-detail.html")
+
+        # upload 페이지에서 사용자가 올린 거래 게시물이 detail 화면에서 보여줘야 하기 때문에 trade 가져옴
+        trade = Trade.objects.get(id=request.GET['id'])
+
+        context = {
+            'trade': trade,
+            'trade_files': list(trade.tradefile_set.all()),
+            'trade_file': list(trade.tradefile_set.all())[0]
+        }
+        print(context['trade_files'])
+        return render(request, "trade/web/trade-detail.html", context)
 
 class TradeMainView(View):
     def get(self, request):
@@ -73,4 +83,4 @@ class TradeUploadView(View):
         for plant_type in plant_types:
             TradePlant.objects.create(trade=trade, plant_name=plant_type)
 
-        return redirect('trade:detail')
+        return redirect(f'/trade/detail/?id={trade.id}')
