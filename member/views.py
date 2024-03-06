@@ -32,26 +32,29 @@ class MemberJoinView(View):
             'marketing_agree': marketing_agree,
             'sms_agree': sms_agree
         }
-        member = Member.objects.create(**member_data)
+        is_member = Member.objects.filter(**member_data)
 
-        profile_data = {
-            'file_url': post_data['member-profile'],
-            'member': member
-        }
-        MemberProfile.objects.create(**profile_data)
+        if not is_member.exists():
+            member = Member.objects.create(**member_data)
 
-        address_data = {
-            'address_city': post_data['address-city'],
-            'address_district': post_data['address-district'],
-            'address_detail': post_data['address-detail'],
-            'member': member
-        }
-        MemberAddress.objects.create(**address_data)
+            profile_data = {
+                'file_url': post_data['member-profile'],
+                'member': member
+            }
+            MemberProfile.objects.create(**profile_data)
 
-        request.session['member'] = MemberSerializer(member).data
-        member_files = list(member.memberprofile_set.values('file_url'))
-        if len(member_files) != 0:
-            request.session['member_files'] = member_files
+            address_data = {
+                'address_city': post_data['address-city'],
+                'address_district': post_data['address-district'],
+                'address_detail': post_data['address-detail'],
+                'member': member
+            }
+            MemberAddress.objects.create(**address_data)
+
+            request.session['member'] = MemberSerializer(member).data
+            member_files = list(member.memberprofile_set.values('file_url'))
+            if len(member_files) != 0:
+                request.session['member_files'] = member_files
 
         return redirect('/')
 
@@ -68,16 +71,19 @@ class MemberLogoutView(View):
 
 class MypageUpdateView(View):
     def get(self,request):
-
-        request.session['member'] =MemberSerializer(Member.objects.get(id=request.session['member']['id'])).data
-
+        request.session['member']=MemberSerializer(Member.objects.get(id=request.session['member']['id'])).data
+        # member=Member.objects.get(id=request.GET['id'])
         check = request.GET.get('check')
-        context = {'check': check}
+        context = {
+            'check': check,
+            # 'member_files': list(member.memberprofile_set.all()),
+        }
         return render(request, 'member/mypage/my_settings/user-info-update.html', context)
 
 
     def post(self, request):
         data = request.POST
+        print(data)
         file = request.FILES
 
         data = {
@@ -109,4 +115,4 @@ class MypageUpdateView(View):
 
             return redirect("member:update")
 
-        return redirect("/member/update?check=false")
+        return redirect(f"/member/update?check=false")
