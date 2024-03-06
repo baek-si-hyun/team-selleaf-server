@@ -198,87 +198,45 @@
     <div class="product-selling-wrap">
       <div class="product-overview-wrap">
         <nav class="product-category-wrap">
-          <ol class="product-category-container">
-            <li class="product-category-inner">
-              <a href="#" class="link">대구분</a>
-              <svg
-                class="icon"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="currentColor"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <path
-                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
-                ></path>
-              </svg>
-            </li>
-            <li class="product-category-inner">
-              <a href="#" class="link">중분류</a>
-              <svg
-                class="icon"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="currentColor"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <path
-                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
-                ></path>
-              </svg>
-            </li>
-            <li class="product-category-inner">
-              <a href="#" class="link">소분류</a>
-              <svg
-                class="icon"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="currentColor"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <path
-                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
-                ></path>
-              </svg>
-            </li>
-            <li class="product-category-inner">
-              <a href="#" class="link">제품</a>
-            </li>
-          </ol>
+            <span>{{ trade.member.member_name }}님의 {{ trade.trade_title }} 상품을 보고있어요🤗</span>
+{#          <ol class="product-category-container">#}
+{#            <li class="product-category-inner">#}
+{#              <a href="#" class="link">대구분</a>#}
+{#              <svg class="icon" width="8" height="8" viewBox="0 0 8 8" fill="currentColor" preserveAspectRatio="xMidYMid meet">#}
+{#                <path d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"></path>#}
+{#              </svg>#}
+{#            </li>#}
+{#            <li class="product-category-inner">#}
+{#              <a href="#" class="link">중분류</a>#}
+{#              <svg class="icon" width="8" height="8" viewBox="0 0 8 8" fill="currentColor" preserveAspectRatio="xMidYMid meet">#}
+{#                <path d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"></path>#}
+{#              </svg>#}
+{#            </li>#}
+{#            <li class="product-category-inner">#}
+{#              <a href="#" class="link">소분류</a>#}
+{#              <svg class="icon" width="8" height="8" viewBox="0 0 8 8" fill="currentColor" preserveAspectRatio="xMidYMid meet">#}
+{#                <path d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"></path>#}
+{#              </svg>#}
+{#            </li>#}
+{#            <li class="product-category-inner">#}
+{#              <a href="#" class="link">제품</a>#}
+{#            </li>#}
+{#          </ol>#}
         </nav>
         <div class="product-overview-container">
           <div class="product-overview-image-wrap">
             <div class="product-overview-image-container">
-              <div
-                class="product-overview-image-inner"
-                role="region"
-                aria-roledescription="carousel"
-              >
+              <div class="product-overview-image-inner" role="region" aria-roledescription="carousel">
                 <div class="product-overview-main-image">
-                  <div
-                    class="carousel-list-wrap"
-                    aria-live="polite"
-                    style="
+                  <div class="carousel-list-wrap" aria-live="polite" style="
                       transform: translateX(-100%);
                       transition: transform 0s ease 0s;
-                    "
-                  >
-                    <div
-                      class="carousel-list-container"
-                      role="group"
-                      aria-roledescription="slide"
-                      aria-label="1 of 4"
-                      style="width: 100%"
-                    >
-                      <img
-                        class="product-cover-image"
-                        tabindex="0"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품서브이미지"
-                      />
+                    ">
+                    <div class="carousel-list-container" role="group" aria-roledescription="slide" aria-label="1 of 4" style="width: 100%">
+{#                      <img class="product-cover-image" tabindex="0"#}
+{#                        src=""#}
+{#                        alt="상품서브이미지"#}
+{#                      />#}
                     </div>
                     <div
                       class="carousel-list-container"
@@ -290,65 +248,81 @@
                       <img
                         class="product-cover-image"
                         tabindex="0"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
+                        height="558.33px"
+                        src="/upload/{{ trade_file.file_url }}"
                         alt="상품서브이미지"
                       />
                     </div>
                   </div>
                 </div>
                 <ul class="product-small-image-list">
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
+                  {% for trade_file in trade_files %}
+                      <li class="product-small-image-item">
+                        <button
+                          class="product-small-image-button"
+                          type="button"
+                          aria-label="1 of 8"
+                        >
+                          <img
+                            class="product-small-image"
+                            src="/upload/{{ trade_file.file_url }}"
+                            alt="상품 이미지"
+                          />
+                        </button>
+                      </li>
+                  {% endfor %}
+{#                  <li class="product-small-image-item">#}
+{#                    <button#}
+{#                      class="product-small-image-button"#}
+{#                      type="button"#}
+{#                      aria-label="1 of 8"#}
+{#                    >#}
+{#                      <img#}
+{#                        class="product-small-image"#}
+{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                        alt="상품 이미지"#}
+{#                      />#}
+{#                    </button>#}
+{#                  </li>#}
+{#                  <li class="product-small-image-item">#}
+{#                    <button#}
+{#                      class="product-small-image-button"#}
+{#                      type="button"#}
+{#                      aria-label="1 of 8"#}
+{#                    >#}
+{#                      <img#}
+{#                        class="product-small-image"#}
+{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                        alt="상품 이미지"#}
+{#                      />#}
+{#                    </button>#}
+{#                  </li>#}
+{#                  <li class="product-small-image-item">#}
+{#                    <button#}
+{#                      class="product-small-image-button"#}
+{#                      type="button"#}
+{#                      aria-label="1 of 8"#}
+{#                    >#}
+{#                      <img#}
+{#                        class="product-small-image"#}
+{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                        alt="상품 이미지"#}
+{#                      />#}
+{#                    </button>#}
+{#                  </li>#}
+{#                  <li class="product-small-image-item">#}
+{#                    <button#}
+{#                      class="product-small-image-button"#}
+{#                      type="button"#}
+{#                      aria-label="1 of 8"#}
+{#                    >#}
+{#                      <img#}
+{#                        class="product-small-image"#}
+{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                        alt="상품 이미지"#}
+{#                      />#}
+{#                    </button>#}
+{#                  </li>#}
                 </ul>
                 <div class="product-image-paginator">
                   <ul class="carousel-paginator">
@@ -373,10 +347,10 @@
             <div class="product-overview-contents-header">
               <h1 class="product-overview-contents-title">
                 <p class="product-overview-user-wrap">
-                  <a href="#" class="product-overview-user">유저이름</a>
+                  <a href="#" class="product-overview-user">{{ trade.member.member_name }}</a>
                 </p>
                 <div class="product-overview-title">
-                  <span class="product-title">제목을 입력하세요.</span>
+                  <span class="product-title">{{trade.trade_title }}</span>
                   <div class="product-title-icon-wrap">
                     <button class="update-button" type="button">
                       <img
@@ -419,7 +393,7 @@
                     <span class="product-price-separator"></span>
                     <div class="product-final-price-wrap">
                       <div class="product-final-price-container">
-                        <span class="final-price-number">13,500</span>
+                        <span class="final-price-number">{{ trade.trade_price }}</span>
                         <span class="krw">원</span>
                       </div>
                     </div>
@@ -436,22 +410,23 @@
                       <b>키워드</b>
                     </span>
                     <span class="info-type">
-                      <span>주문제작</span>
-                      <span>일반배송</span>
+                      {% for tradePlant in trade.tradeplant_set.all %}
+                        <span class="info-tag">#{{ tradePlant.plant_name }}</span>
+                      {% endfor %}
                     </span>
-                    <span class="info-particulars-wrap">
-                      <span class="info-particulars-container">
-                        <img
-                          src="{% static 'public/web/images/common/button-down.png' %}"
-                          class="check-icon"
-                        />
-                        <span>파손주의 등등</span>
-                      </span>
-                    </span>
+{#                    <span class="info-particulars-wrap">#}
+{#                      <span class="info-particulars-container">#}
+{#                        <img#}
+{#                          src="{% static 'public/web/images/common/button-down.png' %}"#}
+{#                          class="check-icon"#}
+{#                        />#}
+{#                        <span>파손주의 등등</span>#}
+{#                      </span>#}
+{#                    </span>#}
                   </div>
                 </div>
               </div>
-              <a href="#" class="user-info-link">
+              <a class="user-info-link">
                 <div class="user-link-name-wrap">
                   <svg
                     width="24"
@@ -471,30 +446,28 @@
                     ></path>
                   </svg>
                   <div class="user-link-name-container">
-                    <span class="user-link-name">유저이름</span>
+                    <span class="user-link-name">{{ trade.member.member_name }}님의 판매상품</span>
                   </div>
                 </div>
                 <div class="user-link-icon-wrap">
-                  <span>유저홈</span>
-                  <svg
-                    width="14"
-                    height="14"
-                    fill="none"
-                    preserveAspectRatio="xMidYMid meet"
-                  >
-                    <path
-                      d="M4.083 11.375L8.312 7 4.083 2.625l.803-.875L9.916 7l-5.03 5.25-.803-.875z"
-                      fill="#828C94"
-                    ></path>
-                  </svg>
+                  <span>{{ trade.trade_category.category_name }}</span>
+{#                  <svg#}
+{#                    width="14"#}
+{#                    height="14"#}
+{#                    fill="none"#}
+{#                    preserveAspectRatio="xMidYMid meet">#}
+{#                      <path d="M4.083 11.375L8.312 7 4.083 2.625l.803-.875L9.916 7l-5.03 5.25-.803-.875z" fill="#828C94"></path>#}
+{#                  </svg>#}
                 </div>
               </a>
             </div>
             <div class="product-ask-link">
-              <button type="button" class="user-ask-button">
+              <span>{{ trade.trade_content }}</span>
+              <a href="{{ trade.kakao_talk_url }}">
+                <button type="button" class="user-ask-button">
                 카카오톡 채팅연결
-                <a href="#"></a>
-              </button>
+                </button>
+              </a>
             </div>
           </div>
         </div>
@@ -571,7 +544,7 @@
                   />
                   <div
                     class="detail-info-contents-container"
-                    style="image-rendering: -webkit-optimize-contrast"
+{#                    style="image-rendering: -webkit-optimize-contrast"#}
                   >
                     <p>
                       <img
