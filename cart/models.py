@@ -32,10 +32,10 @@ class CartDetail(Period):
         (-1, '상품 삭제'),
         (1, '결제 완료')
     ]
-    kit = models.ForeignKey(Kit, on_delete=models.PROTECT, default='offline')
     cart = models.ForeignKey(Cart, on_delete=models.PROTECT, null=False, blank=False)
-    date = models.ForeignKey(Date, on_delete=models.PROTECT, null=False)
-    time = models.ForeignKey(Time, on_delete=models.PROTECT, null=False)
+    date = models.CharField(null=False, blank=False, max_length=100)
+    time = models.CharField(null=False, blank=False, max_length=100)
+    kit = models.CharField(null=False, blank=False, max_length=100, default='offline')
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False, blank=False)
     quantity = models.IntegerField(blank=False, null=False, default=1)
     # 게시중 0, 결제 완료 1, 상품 삭제 -1
