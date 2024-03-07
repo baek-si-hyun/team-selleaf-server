@@ -19,17 +19,21 @@ class LectureView(View):
 class LectureDetailOnlineView(View):
     def get(self, request):
         lecture = Lecture.objects.get(id=request.GET['id'])
-        # context = {
-        #     'trade': trade,
-        #     'trade_files': list(trade.tradefile_set.all()),
-        #     'trade_file': list(trade.tradefile_set.all())[0]
-        # }
+
+        dates = lecture.date_set.all()
+        for date in dates:
+            times = date.time_set.all()
+
         context = {
             'lecture': lecture,
             'lecture_files': list(lecture.lectureproductfile_set.all()),
             'lecture_file': list(lecture.lectureproductfile_set.all())[0],
-            'lecture_order_date': lecture.date_set.all().order_by('date')
+            'lecture_order_date': dates.order_by('date'),
+            'lecture_time': times,
         }
+
+        print('lecture_time')
+
         return render(request, 'lecture/web/lecture-detail-online.html', context)
 
 

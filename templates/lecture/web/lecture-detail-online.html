@@ -136,6 +136,43 @@
       </div>
     </div>
     <a id="top"></a>
+    <div class="category-wrap-" style="height: 52px">
+      <div
+        class="category-container"
+        style="
+          position: fixed;
+          z-index: 1101;
+          transition: top 0.1s ease 0s;
+          top: auto;
+          width: 106%;
+        "
+      >
+        <div class="category-inner">
+          <div class="category-button-space">
+            <nav class="category-button-collection">
+              <span class="category-button">
+                <div class="button-space">
+                  <a href="#" class="button-link-unclick">
+                    <div class="button">
+                      <p class="button-letter-unclick">상품홈</p>
+                    </div>
+                  </a>
+                </div>
+              </span>
+              <span class="category-button">
+                <div class="button-space">
+                  <a href="#" class="button-link-unclick">
+                    <div class="button">
+                      <p class="button-letter-unclick">진행중인거래</p>
+                    </div>
+                  </a>
+                </div>
+              </span>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="product-selling-wrap">
       <div class="product-overview-wrap">
         <nav class="product-category-wrap">
@@ -591,6 +628,42 @@
 {#                          </div>#}
 {#                          <div class="weekday-selection">#}
 {#                            <span>2023-02-18 일</span>#}
+{#                          </div>#}
+                        </div>
+                      </span>
+                    </div>
+                  <div
+                      class="product-option-second-wrap"
+                      style="display: none"
+                    >
+                      <span class="info-dropdown-box">
+                        <span class="info-title">시간 선택</span>
+                        <div class="info-dropdown-wrap">
+                          {% for date in lecture_order_date %}
+                            <div class="weekday-selection">
+                              <span>{{ lecture_time.time }}</span>
+                            </div>
+                          {% endfor %}
+{#                          <div class="time-selection">#}
+{#                            <span>09:00</span>#}
+{#                          </div>#}
+{#                          <div class="time-selection">#}
+{#                            <span>10:00</span>#}
+{#                          </div>#}
+{#                          <div class="time-selection">#}
+{#                            <span>11:00</span>#}
+{#                          </div>#}
+{#                          <div class="time-selection">#}
+{#                            <span>14:00</span>#}
+{#                          </div>#}
+{#                          <div class="time-selection">#}
+{#                            <span>15:00</span>#}
+{#                          </div>#}
+{#                          <div class="time-selection">#}
+{#                            <span>16:00</span>#}
+{#                          </div>#}
+{#                          <div class="time-selection">#}
+{#                            <span>17:00</span>#}
 {#                          </div>#}
                         </div>
                       </span>
