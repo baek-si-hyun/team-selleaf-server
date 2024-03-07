@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from knowhow.models import Knowhow, KnowhowFile, KnowhowPlant, KnowhowTag, KnowhowCategory, KnowhowRecommend, \
     KnowhowLike, KnowhowReply
-from member.models import Member
+from member.models import Member, MemberProfile
 
 
 class KnowhowCreateView(View):
@@ -94,16 +94,30 @@ class KnowhowDetailView(View):
 
 class KnowhowListView(View):
     def get(self, request):
-        return render(request, 'community/web/knowhow/knowhow.html')
+
+        knowhow_count = Knowhow.objects.count()
+
+        context = {
+            'knowhow_count': knowhow_count
+        }
+
+        return render(request, 'community/web/knowhow/knowhow.html', context)
 
 class KnowhowListApi(APIView):
     def get(self, request, page):
-        row_count = 9
+        row_count = 6
         offset = (page - 1) * row_count
         limit = row_count * page
 
-        knowhows = Knowhow.objects.annotate(member_name=F('member__member_name'), knowhow_file=F('knowhowfile__file_url'))\
-            .values('knowhow_title', 'member_name', 'knowhow_content', 'knowhow_count', 'knowhow_file')
+
+        knowhows = Knowhow.objects.annotate(member_name=F('member__member_name'))\
+            .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id')
+
+        for knowhow in knowhows:
+            knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
+            profile = MemberProfile.objects.filter(member_id=knowhow['member_id']).values('file_url').first()
+            knowhow['knowhow_file'] = knowhow_file['file_url']
+            knowhow['profile'] = profile['file_url']
         print(knowhows)
 
         return Response(knowhows[offset:limit])
