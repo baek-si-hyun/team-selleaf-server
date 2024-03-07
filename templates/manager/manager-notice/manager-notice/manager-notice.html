@@ -19,23 +19,24 @@
                     <h1 class="header-name">공지사항 관리</h1>
                     <div>
                       <div class="compose-button">
-                        <button
-                          class="edit-button"
-                          aria-label="edit button"
-                          type="button"
-                        >
-                          <svg
-                            class="edit-button"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              clip-rule="evenodd"
-                              d="m15.687 8.163.545-.506c1.024-.951 1.024-2.493 0-3.444-1.024-.95-2.684-.95-3.709 0l-8.362 7.765-1.127 3.547c-.183.577.395 1.113 1.016.943l3.82-1.046 6.661-6.186.005.004 1.155-1.073-.004-.004Zm-2.312 0-6.367 5.912-1.981.543.584-1.84 6.367-5.912 1.397 1.297Zm1.156-1.073-1.397-1.298.545-.506a1.042 1.042 0 0 1 1.397 0 .872.872 0 0 1 0 1.298l-.545.506Z"
-                            ></path>
-                          </svg>
-                        </button>
+{#                          원래 있던 수정 버튼은 임시로 주석처리 #}
+{#                        <button#}
+{#                          class="edit-button"#}
+{#                          aria-label="edit button"#}
+{#                          type="button"#}
+{#                        >#}
+{#                          <svg#}
+{#                            class="edit-button"#}
+{#                            viewBox="0 0 20 20"#}
+{#                            xmlns="http://www.w3.org/2000/svg"#}
+{#                          >#}
+{#                            <path#}
+{#                              fill-rule="evenodd"#}
+{#                              clip-rule="evenodd"#}
+{#                              d="m15.687 8.163.545-.506c1.024-.951 1.024-2.493 0-3.444-1.024-.95-2.684-.95-3.709 0l-8.362 7.765-1.127 3.547c-.183.577.395 1.113 1.016.943l3.82-1.046 6.661-6.186.005.004 1.155-1.073-.004-.004Zm-2.312 0-6.367 5.912-1.981.543.584-1.84 6.367-5.912 1.397 1.297Zm1.156-1.073-1.397-1.298.545-.506a1.042 1.042 0 0 1 1.397 0 .872.872 0 0 1 0 1.298l-.545.506Z"#}
+{#                            ></path>#}
+{#                          </svg>#}
+{#                        </button>#}
                         <button
                           class="delete-button"
                           aria-label="delete button"
@@ -58,9 +59,9 @@
                             ></path>
                           </svg>
                         </button>
-                        <button class="compose-button" type="button">
+                        <a class="compose-button" href="{% url 'notice-write' %}">
                           작성
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -135,58 +136,59 @@
                   <input type="checkbox" class="all-check" />
                   <div class="category-inner" style="width: 600px">제목</div>
                 </div>
-                <ul class="list-content">
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">공지사항 제목 1</p>
-                            </div>
-                            <p class="content-name-detail">공지사항 내용 1</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail"></div>
-                  </li>
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">공지사항 제목 2</p>
-                            </div>
-                            <p class="content-name-detail">공지사항 내용 2</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail"></div>
-                  </li>
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">공지사항 제목 3</p>
-                            </div>
-                            <p class="content-name-detail">공지사항 내용 3</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail"></div>
-                  </li>
+                <ul class="list-content notice-list">
+{#                    원래 있던 목록은 임시로 주석처리 #}
+{#                  <li class="list-content">#}
+{#                    <input type="checkbox" class="checkbox-input" />#}
+{#                    <button class="text-left">#}
+{#                      <div class="list-content-wrap">#}
+{#                        <div class="list-content-container">#}
+{#                          <div class="list-content-inner">#}
+{#                            <div class="content-name">#}
+{#                              <p class="content-name">공지사항 제목 1</p>#}
+{#                            </div>#}
+{#                            <p class="content-name-detail">공지사항 내용 1</p>#}
+{#                          </div>#}
+{#                        </div>#}
+{#                      </div>#}
+{#                    </button>#}
+{#                    <div class="content-open-wrap"></div>#}
+{#                    <div class="content-detail"></div>#}
+{#                  </li>#}
+{#                  <li class="list-content">#}
+{#                    <input type="checkbox" class="checkbox-input" />#}
+{#                    <button class="text-left">#}
+{#                      <div class="list-content-wrap">#}
+{#                        <div class="list-content-container">#}
+{#                          <div class="list-content-inner">#}
+{#                            <div class="content-name">#}
+{#                              <p class="content-name">공지사항 제목 2</p>#}
+{#                            </div>#}
+{#                            <p class="content-name-detail">공지사항 내용 2</p>#}
+{#                          </div>#}
+{#                        </div>#}
+{#                      </div>#}
+{#                    </button>#}
+{#                    <div class="content-open-wrap"></div>#}
+{#                    <div class="content-detail"></div>#}
+{#                  </li>#}
+{#                  <li class="list-content">#}
+{#                    <input type="checkbox" class="checkbox-input" />#}
+{#                    <button class="text-left">#}
+{#                      <div class="list-content-wrap">#}
+{#                        <div class="list-content-container">#}
+{#                          <div class="list-content-inner">#}
+{#                            <div class="content-name">#}
+{#                              <p class="content-name">공지사항 제목 3</p>#}
+{#                            </div>#}
+{#                            <p class="content-name-detail">공지사항 내용 3</p>#}
+{#                          </div>#}
+{#                        </div>#}
+{#                      </div>#}
+{#                    </button>#}
+{#                    <div class="content-open-wrap"></div>#}
+{#                    <div class="content-detail"></div>#}
+{#                  </li>#}
                 </ul>
                 <div class="page-count-wrap">
                   <ul class="page flex">

@@ -5,7 +5,7 @@ from django.urls import path, include
 
 from main.views import MainView
 from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView, WriteNoticeView, \
-    NoticeManagementView
+    NoticeManagementView, NoticeManagementAPI, DeleteNoticeView
 
 urlpatterns = [
     path('', MainView.as_view()),
@@ -15,7 +15,9 @@ urlpatterns = [
     path('admin/logout/', ManagerLogoutView.as_view(), name='manager-logout'),
     path('admin/member/', MemberManagementView.as_view(), name='manager-member'),
     path('admin/notice/', NoticeManagementView.as_view(), name='manager-notice'),
+    path('admin/notice/<int:page>', NoticeManagementAPI.as_view(), name='manager-notice-api'),
     path('admin/notice/write/', WriteNoticeView.as_view(), name='notice-write'),
+    path('admin/notice/delete/', DeleteNoticeView.as_view(), name='notice-delete'),
     path('member/', include('member.urls-web')),
     path('lecture/', include('lecture.urls-web')),
     path('order/', include('order.urls-web')),

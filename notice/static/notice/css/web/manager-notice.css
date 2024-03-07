@@ -431,7 +431,7 @@ div.compose-button{
     display: flex;
 }
 
-button.compose-button{
+a.compose-button{
     padding-left: 16px;
     padding-right: 16px;
     border-radius: 20px;
@@ -664,7 +664,8 @@ input[type="checkbox"] {
     
 /* 체크됐을 때 스타일링 */
 input[type="checkbox"]:checked {
-    background-image: url(../../../../../selleaf/static/public/images/common/checker.png);
+    /* 이미지 경로 제대로 되어있으니 수정하지 말 것 */
+    background-image: url("/static/public/web/images/common/checker.png");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
