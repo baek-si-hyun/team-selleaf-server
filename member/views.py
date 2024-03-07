@@ -69,50 +69,81 @@ class MemberLogoutView(View):
         request.session.clear()
         return redirect('member:login')
 
+
+
 class MypageUpdateView(View):
-    def get(self,request):
-        request.session['member']=MemberSerializer(Member.objects.get(id=request.session['member']['id'])).data
-        # member=Member.objects.get(id=request.GET['id'])
+    def get(self, request):
+        member_id = request.session['member']['id']
+        request.session['member'] = MemberSerializer(Member.objects.get(id=member_id)).data
+        member = Member.objects.get(id=member_id)
         check = request.GET.get('check')
+        member_files = list(member.memberprofile_set.values_list('file_url', flat=True))
         context = {
             'check': check,
-            # 'member_files': list(member.memberprofile_set.all()),
+            'member_files': member_files,
         }
         return render(request, 'member/mypage/my_settings/user-info-update.html', context)
 
-
     def post(self, request):
         data = request.POST
-        print(data)
-        file = request.FILES
+        files = request.FILES.getlist('new-image')
+        member_id = request.session['member']['id']
 
-        data = {
-            'member_name': data['member-name'],
-        }
-        member = Member.objects.get(id=request.session['member']['id'])
-        member_file = MemberProfile.objects.filter(member_id=member.id)
-        print(1)
-        print(member_file)
-
-        if member_file.exists():
-            member_file = member_file.first()
-
-        else:
-            member_file = MemberProfile(member=member)
-
-        for key in file:
-            member_file.file_url = file[key]
-            member_file.updated_date = timezone.now()
-            member_file.save()
-
-
-        member.member_name = data['member_name']
+        member = Member.objects.get(id=member_id)
+        member.member_name = data['member-name']
         member.updated_date = timezone.now()
         member.save(update_fields=['member_name', 'updated_date'])
-        member_files = list(member.memberfile_set.values('file_url'))
-        if len(member_files) != 0:
-            request.session['member_files'] = member_files
 
-            return redirect("member:update")
+        if files:
+            for file in files:
+                member_profile, created = MemberProfile.objects.get_or_create(member=member)
+                member_profile.file_url = file
+                member_profile.updated_date = timezone.now()
+                member_profile.save()
 
-        return redirect(f"/member/update?check=false")
+        return redirect("member:update")
+# class MypageUpdateView(View):
+#     def get(self,request):
+#         request.session['member']=MemberSerializer(Member.objects.get(id=request.session['member']['id'])).data
+#         member=Member.objects.get(id=request.GET['id'])
+#         check = request.GET.get('check')
+#         context = {
+#             'check': check,
+#             'member_files': list(member.memberprofile_set.all()),
+#         }
+#         return render(request, 'member/mypage/my_settings/user-info-update.html', context)
+#
+#
+#     def post(self, request):
+#         data = request.POST
+#         print(data)
+#         file = request.FILES
+#
+#         data = {
+#             'member_name': data['member-name'],
+#         }
+#         member = Member.objects.get(id=request.session['member']['id'])
+#         member_file = MemberProfile.objects.filter(member_id=member.id)
+#
+#         if member_file.exists():
+#             member_file = member_file.first()
+#
+#         else:
+#             member_file = MemberProfile(member=member)
+#
+#         for key in file:
+#             member_file.file_url = file[key]
+#             member_file.updated_date = timezone.now()
+#             member_file.save()
+#
+#
+#         member.member_name = data['member_name']
+#         member.updated_date = timezone.now()
+#         member.save(update_fields=['member_name', 'updated_date'])
+#         member_files = list(member.memberprofile_set.values('file_url'))
+#         if len(member_files) != 0:
+#             request.session['member_files'] = member_files
+#
+#             return redirect("member:update")
+#
+#         return redirect(f"/member/update?id={member.id}check=false")

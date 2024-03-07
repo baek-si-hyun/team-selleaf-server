@@ -1,4 +1,3 @@
-// header 부분
 // 통합검색 인풋에 뭔가를 치면 x버튼이 생기게
 const searchInput = document.querySelector(".hearder-inner-thirddiv-input");
 const xbutton = document.querySelector(".hearder-inner-thirddiv-div");
@@ -39,19 +38,19 @@ const headerkakaoIcon = document.querySelector(".header-kakao-button");
 const isLogin = true;
 const teacherLogin = false;
 
-if (isLogin) {
-  userinfos.forEach((info) => {
-    info.style.display = "none";
-  });
-  if (teacherLogin) {
-    WriteLetterBtnModal[4].style.display = "flex";
-  }
-} else {
-  headerWriteLetterBtn.style.display = "none";
-  headerscrap.style.display = "none";
-  headeralarm.style.display = "none";
-  headerkakaoIcon.style.display = "none";
-}
+// if (isLogin) {
+//   userinfos.forEach((info) => {
+//     info.style.display = "none";
+//   });
+//   if (teacherLogin) {
+//     WriteLetterBtnModal[4].style.display = "flex";
+//   }
+// } else {
+//   headerWriteLetterBtn.style.display = "none";
+//   headerscrap.style.display = "none";
+//   headeralarm.style.display = "none";
+//   headerkakaoIcon.style.display = "none";
+// }
 
 // 알람 버튼 클릭하면 빨간 동그라미 없어지게 하는 구현 코드
 // headerkakaoIcon.addEventListener("click", () => {
