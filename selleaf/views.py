@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from notice.models import Notice
+from qna.models import QnA
 
 
 # 관리자 로그인
@@ -166,8 +167,18 @@ class PaymentManagementView(View):
 class NoticeManagementView(View):
     # 공지사항 내역 페이지 이동 뷰
     def get(self, request):
+        # 현재 작성된 공지사항 및 QnA의 개수를 세서 dict 데이터로 통합
+        notice_count = Notice.enabled_objects.count()
+        qna_count = QnA.enabled_objects.count()
+
+        context = {
+            'notice_count': notice_count,
+            'qna_count': qna_count
+        }
+
+        # 공지사항과 QnA 개수를 화면에 전달
         # 공지사항 내역을 가져오는 것은 아래의 API가 해줌
-        return render(request, 'manager/manager-notice/manager-notice/manager-notice.html')
+        return render(request, 'manager/manager-notice/manager-notice/manager-notice.html', context)
 
 
 class NoticeManagementAPI(APIView):
@@ -247,14 +258,10 @@ class UpdateNoticeView(View):
     # 공지사항 수정 완료 이후의 뷰
     @transaction.atomic
     def post(self, request):
-        print('=' * 10)
-        print('post 요청 들어옴')
-        print('=' * 10)
+        # GET 방식으로 url에서 id를 가져옴
+        notice_id = request.GET['id']
 
-        # 수정한 공지사항의 id를 가져옴
-        id = request.GET['id']
-
-        # POST 방식으로 받은 제목과 내용도 가져옴
+        # POST 방식으로 받은 id와 제목과 내용도 가져옴
         data = request.POST
 
         data = {
@@ -262,8 +269,8 @@ class UpdateNoticeView(View):
             'notice_content': data['notice-content']
         }
 
-        # 가져온 d로 수정할 공지사항 조회
-        notice = Notice.objects.get(id=id)
+        # 가져온 id로 수정할 공지사항 조회
+        notice = Notice.objects.get(id=notice_id)
 
         # 제목과 내용, 갱신 시간 변경하고 저장
         notice.notice_title = data['notice_title']
