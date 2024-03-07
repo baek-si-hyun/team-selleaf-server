@@ -11,7 +11,7 @@ class CartTest(TestCase):
     member = Member.objects.get(id = 7)
     lecture = Lecture.objects.get(id =17)
 
-    # Cart.objects.create(member = member )
+    # Cart.objects.create(member = member)
 
     data = {
         'quantity': 5,

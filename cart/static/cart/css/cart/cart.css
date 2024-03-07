@@ -434,15 +434,16 @@
 }
 
 .user-name {
-  font-size: 14px;
+  font-size: 18px;
   line-height: 18px;
-  font-weight: 600;
+  font-weight: 800;
   flex: 1 1 0%;
 }
 
 .delivery-condition {
-  margin-top: 10px;
-  font-size: 14px;
+  margin-top: 15px;
+  font-size: 16px;
+  font-width: 400;
   line-height: 18px;
 }
 
@@ -495,7 +496,7 @@
   font-size: 14px;
   line-height: 18px;
   color: rgb(47, 52, 56);
-  margin-bottom: 8px;
+  margin: 8px 0;
 }
 
 .product-option {
@@ -1523,6 +1524,7 @@
 }
 
 .selected-product-count{
+  margin-left: 10px;
   width: 70px;
   display: flex;
   -webkit-box-align: center;
@@ -1567,3 +1569,15 @@
   width: 10px;
   margin-bottom: 1px;
 }
+
+
+.delete{
+  cursor: pointer;
+  padding: 6px;
+  color: #fff;
+  border-radius: 3px;
+  border: 1px solid #C06888;
+  background-color: #C06888;
+  margin-left: 380px;
+}
+

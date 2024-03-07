@@ -1,0 +1,21 @@
+const cartService = (()=>{
+    const getList = async (cart_id, callback) =>{
+        const response = await fetch(`/cart/list/${cart_id}`);
+        const details = await response.json();
+        if (callback){
+            return callback(details)
+        }
+        return details
+
+    };
+
+    const remove = async (detailId) => {
+        await fetch(`/${detailId}/`, {
+            method: 'delete',
+            headers: {'X-CSRFToken': csrf_token}
+        });
+    }
+
+    return {getList:getList, remove:remove}
+
+})()

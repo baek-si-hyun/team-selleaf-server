@@ -121,8 +121,12 @@
                               <div class="new-image-container">
                                 <label for="new-image">
                                   {% if request.session.member_files %}  
-                                    {% for member_file in member_files %} 
-                                      <img src="{{ member_file }}" alt="" class="current-profile-image">
+                                    {% for member_file in member_files %}
+                                        {% if member_file in 'https' %}
+                                            <img src="{{ member_file }}" alt="" class="current-profile-image">
+                                        {% else %}
+                                            <img src="/upload/{{ member_file }}" alt="" class="current-profile-image">
+                                        {% endif %}
                                     {% endfor %}   
                                   {% else %}
                                     <img src="/upload/{{ member_file }}/" alt="" class="current-profile-image">

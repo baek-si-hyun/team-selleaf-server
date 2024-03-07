@@ -6,7 +6,7 @@
 {% block title %}CART{% endblock %}
 {% block content %}
     <div class="payment-wrap">
-      <form class="payment-container" action="/cart/" method="post">
+      <form class="payment-container" action="/cart/">
         {% csrf_token %}  
         <article class="paymeny-inner">
           <h1 class="paymeny-title">장바구니</h1>
@@ -15,26 +15,15 @@
             <div class="section-title">
               <h2 class="title-text">내가 담은 상품들</h2>
               <p class="product-count-wrap">
-                <span class="product-count">{{ cart_details.count }}건</span>
+                <span class="product-count">{{ details.count }}건</span>
               </p>
             </div>
             <!-- 상품이 하나라도 있다면 아래의 article 태그 display = block -->
-            {% if cart_details %}
-                <article class="contents-wrap">
-              {% for cart_detail in cart_details %}
-                <ul class="cart-item-wrap">
-                <!-- 장바구니에 담은 상품 리스트 -->
-                </ul>
-              {% endfor %}
+            <article class="contents-wrap">
+            <ul class="cart-item-wrap">
+            <!-- 장바구니에 담은 상품 리스트 -->
+            </ul>
             </article>
-            {% else %}
-              <div class="no-items-wrap">
-                  <h1 class="no-items-text">아직 장바구니에 담은 상품이 없어요.</h1>
-                  <div class="purchase-link-button-wrap">
-                    <a href="/lecture/total/" class="purchase-link-button">강의 바로가기</a>
-                  </div>
-              </div>
-            {% endif %}
           </section>
         </article>
         <!-- 사이드바 -->
@@ -69,5 +58,11 @@
     </div>
 {% endblock %}
 {% block js %}
+    <script>
+        const csrf_token = '{{ csrf_token }}';
+        const cart_id = '{{ cart_id }}'
+        const memberId = '{{ request.session.member.id }}'
+    </script>
+    <script src="{% static 'cart/js/cart/cart-module.js' %}"></script>
     <script src="{% static 'cart/js/cart/cart.js' %}"></script>
 {% endblock %}
