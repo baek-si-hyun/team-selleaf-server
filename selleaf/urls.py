@@ -4,15 +4,18 @@ from django.contrib import admin
 from django.urls import path, include
 
 from main.views import MainView
-from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView, WriteNoticeView
+from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView, WriteNoticeView, \
+    NoticeManagementView
 
 urlpatterns = [
     path('', MainView.as_view()),
     # path('admin/', admin.site.urls),
+    # 관리자 페이지 뷰
     path('admin/login/', ManagerLoginView.as_view(), name='manager-login'),
     path('admin/logout/', ManagerLogoutView.as_view(), name='manager-logout'),
     path('admin/member/', MemberManagementView.as_view(), name='manager-member'),
-    path('admin/notice/write', WriteNoticeView.as_view(), name='notice-write'),
+    path('admin/notice/', NoticeManagementView.as_view(), name='manager-notice'),
+    path('admin/notice/write/', WriteNoticeView.as_view(), name='notice-write'),
     path('member/', include('member.urls-web')),
     path('lecture/', include('lecture.urls-web')),
     path('order/', include('order.urls-web')),

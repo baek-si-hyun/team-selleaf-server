@@ -2,6 +2,8 @@ from django.db import transaction
 from django.shortcuts import render, redirect
 from django.views import View
 
+from notice.models import Notice
+
 
 # 관리자 로그인
 class ManagerLoginView(View):
@@ -27,7 +29,7 @@ class ManagerLoginView(View):
         previous_uri = request.session.get('previous_uri')
 
         # 따로 요청한 경로가 없을 때에는 회원 관리 페이지로 이동
-        path = 'admin/member/'
+        path = '/admin/member/'
 
         # 만약 따로 요청한 페이지가 있었다면
         if previous_uri is not None:
@@ -174,10 +176,20 @@ class WriteNoticeView(View):
     # 공지사항 작성 완료 이후의 뷰
     @transaction.atomic
     def post(self, request):
+        # POST 방식으로 요청한 데이터를 가져옴
         notice_data = request.POST
 
+        # 받아온 데이터에서 특정 정보(제목, 내용)를 가져와서 dict 타입으로 저장
+        data = {
+            'notice_title': notice_data['notice-title'],
+            'notice_content': notice_data['notice-content'],
+        }
+
+        # 받아온 데이터로 tbl_notice에 실행할 insert 쿼리 작성
+        Notice.objects.create(**data)
+
         # 작성한 공지사항 저장 후, 공지사항 리스트 페이지로 redirect
-        return redirect('/')
+        return redirect('manager-notice')
 
 
 class UpdateNoticeView(View):
