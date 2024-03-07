@@ -2,6 +2,8 @@ from django.db import transaction
 from django.shortcuts import render, redirect
 from django.views import View
 
+from notice.models import Notice
+
 
 # 관리자 로그인
 class ManagerLoginView(View):
@@ -23,9 +25,23 @@ class ManagerLoginView(View):
         # 관리자 로그인 정보도 'admin' 이라는 키로 세션에 저장
         request.session['admin'] = data
 
-        # 다른 페이지들과 마찬가지로, 이전에 요청한 관리자 페이지 쪽 경로를 redirect 하고
-        # 기본적으로는 회원관리 페이지로 redirect
-        return redirect('manager-member')
+        # 이전에 요청한 관리자 페이지 내 경로가 있다면 변수에 담음
+        previous_uri = request.session.get('previous_uri')
+
+        # 따로 요청한 경로가 없을 때에는 회원 관리 페이지로 이동
+        path = '/admin/member/'
+
+        # 만약 따로 요청한 페이지가 있었다면
+        if previous_uri is not None:
+            # 이동하려고 하는 경로를 요청한 페이지로 지정
+            path = previous_uri
+
+            # 원래 요청했던 페이지에 대한 정보는 세션에서 제거
+            del request.session['previous_uri']
+
+        # 위 분기에 따라 결정된 페이지로 이동
+        # 기본적으로는 회원 관리 페이지
+        return redirect(path)
 
 
 # 관리자 로그아웃
@@ -160,8 +176,20 @@ class WriteNoticeView(View):
     # 공지사항 작성 완료 이후의 뷰
     @transaction.atomic
     def post(self, request):
+        # POST 방식으로 요청한 데이터를 가져옴
+        notice_data = request.POST
+
+        # 받아온 데이터에서 특정 정보(제목, 내용)를 가져와서 dict 타입으로 저장
+        data = {
+            'notice_title': notice_data['notice-title'],
+            'notice_content': notice_data['notice-content'],
+        }
+
+        # 받아온 데이터로 tbl_notice에 실행할 insert 쿼리 작성
+        Notice.objects.create(**data)
+
         # 작성한 공지사항 저장 후, 공지사항 리스트 페이지로 redirect
-        return redirect('/')
+        return redirect('manager-notice')
 
 
 class UpdateNoticeView(View):
