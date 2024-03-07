@@ -12,15 +12,38 @@ class TradeDetailView(View):
     def get(self, request):
 
         # upload 페이지에서 사용자가 올린 거래 게시물이 detail 화면에서 보여줘야 하기 때문에 trade 가져옴
+        # 방금 올린 거래 게시물
         trade = Trade.objects.get(id=request.GET['id'])
+
+        # 방금 올린 거래 게시물을 작성한 사용자 찾기
+        member_search_trade = Trade.objects.filter(id=request.GET['id']).values('member_id').first()
+
+        # 방금 거래 게시물을 올린 사용자가 작성한 다른 거래 게시물
+        trades = Trade.objects.filter(member=member_search_trade['member_id'], status=True).values()
+
+        for td in trades:
+            product_img = TradeFile.objects.filter(trade_id=td['id']).values('file_url').first()
+            td['product_img'] = product_img['file_url']
+            product_plants = TradePlant.objects.filter(trade_id=td['id']).values('plant_name')
+            product_plants_list = list(product_plants)
+
+            product_list = [item['plant_name'] for item in product_plants_list]
+            td['plant_name'] = product_list
 
         context = {
             'trade': trade,
             'trade_files': list(trade.tradefile_set.all()),
-            'trade_file': list(trade.tradefile_set.all())[0]
+            'trade_file': list(trade.tradefile_set.all())[0],
+            'trades': trades,
         }
-        print(context['trade_files'])
+
         return render(request, "trade/web/trade-detail.html", context)
+
+class TradeUpdateView(View):
+    def get(self, request):
+        trade = Trade.objects.get(id=request.GET['id'])
+        return render(request, "trade/web/trade-update.html", {'trade': trade})
+
 
 class TradeMainView(View):
     def get(self, request):
