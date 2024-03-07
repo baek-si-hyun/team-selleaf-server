@@ -10,7 +10,6 @@
       <div class="full-screen">
         {% include 'manager/fix/manager-header.html' %}
         <form action="{% url 'notice-write' %}" method="post" name="notice-write-form">
-          {% csrf_token %}
           <div class="compose-wrap">
             <div class="compose-container">
               <div class="compose-inner-left">
@@ -64,7 +63,9 @@
                   <button
                     class="compose-storage"
                     aria-label="button"
+                    type="button"
                     disabled="disabled"
+                    
                   >
                     게시
                   </button>
@@ -82,8 +83,7 @@
                         type="text"
                         class="compose-title"
                         placeholder="제목을 입력해주세요."
-                        name="notice-title"
-                        maxlength="30"
+                        value
                       />
                     </label>
                   </div>
@@ -92,7 +92,6 @@
                   <textarea
                     class="compose-content"
                     placeholder="콘텐츠를 작성해주세요."
-                    name="notice-content"
                   ></textarea>
                 </label>
                 <div class="compose-content-bottom">0자</div>
