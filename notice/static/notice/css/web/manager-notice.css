@@ -448,6 +448,10 @@ a.compose-button{
     background-color: #c06888;
 }
 
+a.compose-button:hover {
+    opacity: 0.7;
+}
+
 div.header-function-container{
     margin-top: 26px;
 }
@@ -761,11 +765,17 @@ div.content-open-wrap{
     margin-left: 32px;
 }
 
-div.content-detail{
+a.update-notice {
     column-gap: 32px;
     align-items: center;
     display: flex;
-    margin-left: 32px;
+    margin-right: 16px;
+    color: #C06888;
+    font-weight: 700;
+}
+
+a.update-notice:hover {
+    opacity: 0.7;
 }
 
 div.content-detail-a{
@@ -795,7 +805,7 @@ div.content-detail-c{
 p.content-detail-num{
     font-weight: 500;
     font-size: 14px;
-    line-height: 18px; 
+    line-height: 18px;
 }
 
 p.content-detail{
@@ -832,6 +842,10 @@ button.delete-button{
     height: 40px;
     display: flex;
     border-color: #e6e6e7;
+}
+
+button.delete-button:hover {
+    opacity: 0.7;
 }
 
 svg.edit-button{

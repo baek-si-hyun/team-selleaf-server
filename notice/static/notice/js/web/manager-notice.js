@@ -42,7 +42,7 @@ const showNotice = (notice_info) => {
                       </div>
                     </button>
                     <div class="content-open-wrap"></div>
-                    <div class="content-detail"></div>
+                    <a class="update-notice ${notice.id}">수정</a>
                   </li>
     `
   });

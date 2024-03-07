@@ -182,6 +182,7 @@ class NoticeManagementAPI(APIView):
 
         # 공지사항 표시에 필요한 tbl_notice의 컬럼들
         columns = [
+            'id',
             'notice_title',
             'notice_content'
         ]
@@ -215,7 +216,7 @@ class WriteNoticeView(View):
         # POST 방식으로 요청한 데이터를 가져옴
         notice_data = request.POST
 
-        # 받아온 데이터에서 특정 정보(제목, 내용)를 가져와서 dict 타입으로 저장
+        # 받아온 데이터에서 특정 정보(id, 제목, 내용)를 가져와서 dict 타입으로 저장
         data = {
             'notice_title': notice_data['notice-title'],
             'notice_content': notice_data['notice-content'],
