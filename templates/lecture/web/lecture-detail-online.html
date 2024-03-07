@@ -602,20 +602,6 @@
                     <span class="user-link-name">{{ lecture.teacher.member.member_name }}님의 판매상품</span>
                   </div>
                 </div>
-{#                <div class="user-link-icon-wrap">#}
-{#                  <span>유저홈</span>#}
-{#                  <svg#}
-{#                    width="14"#}
-{#                    height="14"#}
-{#                    fill="none"#}
-{#                    preserveAspectRatio="xMidYMid meet"#}
-{#                  >#}
-{#                    <path#}
-{#                      d="M4.083 11.375L8.312 7 4.083 2.625l.803-.875L9.916 7l-5.03 5.25-.803-.875z"#}
-{#                      fill="#828C94"#}
-{#                    ></path>#}
-{#                  </svg>#}
-{#                </div>#}
               </a>
             </div>
             <div class="product-option-wrap">
@@ -636,7 +622,6 @@
                     </div>
                   <div
                       class="product-option-second-wrap"
-                      style="display: none"
                     >
                       <span class="info-dropdown-box">
                         <span class="info-title">시간 선택</span>
@@ -651,7 +636,6 @@
                     </div>
                   <div
                       class="product-option-third-wrap"
-                      style="display: none"
                     >
                       <span class="info-dropdown-box">
                         <span class="info-title">DIY 키트 선택</span>
@@ -672,7 +656,7 @@
                   >
                     <h2 class="selected-product-name">
                       <span>날짜:</span>
-                      <span class="selected-date">선택한날짜</span>
+                      <span class="selected-date">선택한 날짜</span>
                       /
                       <span>시간:</span>
                       <span class="selected-time">선택한 시간</span>
@@ -706,18 +690,6 @@
                       </div>
                     </div>
                   </article>
-                  <ul class="selected-student-list-wrap" style="display: none">
-                    <li>
-                      <div class="each-info">
-                        <div class="info-title">예약자 이름</div>
-                        <div class="info-dropdown-wrap">
-                          <div class="info-dropdown-container">
-                            <div class="student-info-inner"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
                 </div>
               </section>
               <p class="product-total-price">
@@ -780,117 +752,10 @@
                 <header class="detail-info-title">
                   <h1 class="detail-info-title-text">상품정보</h1>
                 </header>
-                <div class="detail-info-contents-wrap">
-                  <div class="detail-info-contents-thumbnail">
-                    <button class="expended-info" type="button">
-                      펼치기
-                      <svg
-                        class="icon"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 16 16"
-                        preserveAspectRatio="xMidYMid meet"
-                      >
-                        <path
-                          fill="currentColor"
-                          fill-rule="evenodd"
-                          d="M2.87 4L1.33 5.5 8 12l6.67-6.5L13.13 4 8 9z"
-                        ></path>
-                      </svg>
-                    </button>
-                  </div>
-                  <img
-                    class="detail-info-image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt="판매자 등록이미지"
-                  />
-                  <img
-                    class="detail-info-image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt="판매자 등록이미지"
-                  />
-                  <img
-                    class="detail-info-image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt="판매자 등록이미지"
-                  />
-                  <div
-                    class="detail-info-contents-container"
-                    style="image-rendering: -webkit-optimize-contrast"
-                  >
-                    <p>
-                      <img
-                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
-                        alt="상품의 상세 설명 이미지"
-                      />
-                    </p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>
-                      <img
-                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
-                        alt="상품의 상세 설명 이미지"
-                      />
-                    </p>
-                    <p>
-                      <img
-                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
-                        alt="상품의 상세 설명 이미지"
-                      />
-                    </p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                  </div>
-
-{#                  <table class="detail-info-table">#}
-{#                    <tbody>#}
-{#                      <tr>#}
-{#                        <th>제품 소재</th>#}
-{#                        <td>상세페이지 참조</td>#}
-{#                      </tr>#}
-{#                      <tr>#}
-{#                        <th>색상</th>#}
-{#                        <td>상세페이지 참조</td>#}
-{#                      </tr>#}
-{#                      <tr>#}
-{#                        <th>치수</th>#}
-{#                        <td>상세페이지 참조</td>#}
-{#                      </tr>#}
-{#                      <tr>#}
-{#                        <th>제품구성</th>#}
-{#                        <td>상세페이지 참조</td>#}
-{#                      </tr>#}
-{#                      <tr>#}
-{#                        <th>제조자, 수입품의 경우 수입자를 함께 표기</th>#}
-{#                        <td>그래이불</td>#}
-{#                      </tr>#}
-{##}
-{#                      <tr>#}
-{#                        <th>제조국</th>#}
-{#                        <td>국내</td>#}
-{#                      </tr>#}
-{##}
-{#                      <tr>#}
-{#                        <th>세탁방법 및 취급시 주의사항</th>#}
-{#                        <td>상세페이지 참조</td>#}
-{#                      </tr>#}
-{#                      <tr>#}
-{#                        <th>품질보증기준</th>#}
-{#                        <td>상세페이지 참조</td>#}
-{#                      </tr>#}
-{#                      <tr>#}
-{#                        <th>A/S 책임자와 전화번호</th>#}
-{#                        <td>010.3565.3997</td>#}
-{#                      </tr>#}
-{#                    </tbody>#}
-{#                  </table>#}
-                </div>
+{#                 콘텐츠 내용 추가될 항목#}
+{#                {% for lecture_file in lecture_files %}#}
+{#                {% endfor %}#}
+{#                src="/upload/{{ lecture_file.file_url }}"#}
               </section>
               <a id="product-review"></a>
               <section class="product-review-wrap">
@@ -3342,14 +3207,16 @@
                         <li>
                           <article
                             class="sidebar-selected-product-container"
-                            style="display: none"
                           >
                             <h2 class="sidebar-selected-product-option">
                               <span>날짜:</span>
-                              <span class="selected-date">선택한날짜</span>
+                              <span class="selected-date">선택한 날짜</span>
+                              /
+                              <span>시간:</span>
+                              <span class="selected-time">선택한 시간</span>
                               /
                               <span>키트:</span>
-                              <span class="selected-kit">선택한 시간</span>
+                              <span class="selected-kit">선택한 키트</span>
                             </h2>
                             <button
                               type="button"
@@ -3363,8 +3230,7 @@
                                 />
                               </span>
                             </button>
-                            <div class="sidebar-student-count-title">인원</div>
-                            <div class="sidebar-selected-botton-wrap">
+                            <div class="sidebar-selected-botton-wrap" style="display: none">
                               <div class="sidebar-selected-count-wrap">
                                 <span class="sidebar-sub-count">
                                   <img src="{% static 'public/web/images/common/sub.png' %}" />
@@ -3423,7 +3289,7 @@
   </body>
 {% endblock %}
 {% block js %}
-  <script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>
   <script src="{% static 'lecture/js/lecture/web/lecture-detail-online.js' %}"></script>
+  <script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>
 {% endblock %}
 
