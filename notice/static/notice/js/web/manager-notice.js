@@ -42,7 +42,7 @@ const showNotice = (notice_info) => {
                       </div>
                     </button>
                     <div class="content-open-wrap"></div>
-                    <a class="update-notice ${notice.id}">수정</a>
+                    <a class="update-notice" href="/admin/notice/update/?id=${notice.id}">수정</a>
                   </li>
     `
   });

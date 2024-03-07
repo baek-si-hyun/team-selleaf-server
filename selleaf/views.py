@@ -1,5 +1,6 @@
 from django.db import transaction
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -232,14 +233,47 @@ class WriteNoticeView(View):
 class UpdateNoticeView(View):
     # 공지사항 수정 페이지 이동 뷰
     def get(self, request):
-        # 수정할 공지사항 정보 가져오기
-        return render(request, 'manager/manager-notice/manager-notice/manager-notice-modify.html')
+        # 수정 버튼에서 전달한 id를 통해 수정할 공지사항 객체 가져오기
+        notice = Notice.objects.get(id=request.GET['id'])
+
+        # 수정 페이지에 전달할 공지사항의 dict 타입의 데이터 생성
+        context = {
+            'notice': notice
+        }
+
+        # 공지사항 데이터를 가지고 수정 페이지로 이동
+        return render(request, 'manager/manager-notice/manager-notice/manager-notice-modify.html', context)
 
     # 공지사항 수정 완료 이후의 뷰
     @transaction.atomic
     def post(self, request):
+        print('=' * 10)
+        print('post 요청 들어옴')
+        print('=' * 10)
+
+        # 수정한 공지사항의 id를 가져옴
+        id = request.GET['id']
+
+        # POST 방식으로 받은 제목과 내용도 가져옴
+        data = request.POST
+
+        data = {
+            'notice_title': data['notice-title'],
+            'notice_content': data['notice-content']
+        }
+
+        # 가져온 d로 수정할 공지사항 조회
+        notice = Notice.objects.get(id=id)
+
+        # 제목과 내용, 갱신 시간 변경하고 저장
+        notice.notice_title = data['notice_title']
+        notice.notice_content = data['notice_content']
+        notice.updated_date = timezone.now()
+
+        notice.save(update_fields=["notice_title", "notice_content", "updated_date"])
+
         # 기존 공지사항 정보 update 후, 공지사항 리스트 페이지로 redirect
-        return redirect('/')
+        return redirect('manager-notice')
 
 
 class DeleteNoticeView(View):
