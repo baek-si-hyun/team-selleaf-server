@@ -10,12 +10,34 @@ const cartService = (()=>{
     };
 
     const remove = async (detailId) => {
-        await fetch(`/${detailId}/`, {
+        await fetch(`/cart/${detailId}/`, {
             method: 'delete',
-            headers: {'X-CSRFToken': csrf_token}
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'X-CSRFToken': csrf_token
+            }
         });
     }
 
-    return {getList:getList, remove:remove}
+    const select = async (detailId, callback) =>{
+        const response = await fetch(`/cart/${detailId}`);
+        const detail = await response.json();
+        if (callback){
+            return callback(detail)
+        }
+        return detail
+    };
+
+    const selectCancel = async (targetId, callback) =>{
+        const response = await fetch(`cart/${targetId}`);
+        const target = await response.json();
+        if (callback){
+            return callback(target)
+        }
+        return target
+    }
+
+
+    return {getList:getList, remove:remove, select:select}
 
 })()

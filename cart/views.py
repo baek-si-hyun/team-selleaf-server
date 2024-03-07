@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from cart.models import Cart, CartDetail
+from lecture.models import LectureProductFile, Lecture
 from member.models import Member
 
 
@@ -38,9 +39,12 @@ class CartListAPI(APIView):
         details = CartDetail.objects.filter(cart_id=cart_id,cart_detail_status=0)\
         .annotate(lecture_price=F('lecture__lecture_price')
                   ,lecture_title=F('lecture__lecture_title')
-                  ,teacher_name=F('lecture__teacher__member__member_name')
-                  ,lecture_files=F('lecture__lectureproductfile__file_url'))\
-        .values('id','quantity', 'lecture_title','date','kit','time','teacher_name','lecture_price','lecture_files')
+                  ,teacher_name=F('lecture__teacher__member__member_name'))\
+        .values('id','quantity', 'lecture_title','date','kit','time','teacher_name','lecture_price','lecture_id')
+
+        for detail in details:
+            detail_file = Lecture.objects.filter(id = detail['lecture_id']).values('lectureplacefile__file_url').first()
+            detail['lecture_file']= detail_file['lectureplacefile__file_url']
 
         return Response(details)
 
@@ -48,8 +52,18 @@ class CartListAPI(APIView):
 
 class CartAPI(APIView):
     def delete(self,request,detail_id):
-        print(detail_id)
-        detail = CartDetail.objects.filter(id=detail_id)
+        detail = CartDetail.objects.filter(id=detail_id).first()
         detail.cart_detail_status = -1
         detail.updated_date = timezone.now()
         detail.save(update_fields=['cart_detail_status','updated_date'])
+
+        return Response('success')
+
+    def get(self,request,detail_id):
+        print('들어옴')
+        print(detail_id)
+        details = CartDetail.objects.filter(id=detail_id)\
+            .annotate(lecture_title=F('lecture__lecture_title'),lecture_price=F('lecture__lecture_price'))\
+            .values('lecture_title','lecture_price','id')
+        print(details)
+        return Response(details)

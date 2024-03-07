@@ -87,50 +87,65 @@
 //   });
 // });
 
+const showPrice = (detail)=>{
+    let textlist = ``
+    textlist +=`
+      <div class="price-wrap">
+        <div class="name-side">${detail[0]['lecture_title']}</div>
+        <div class="price-side">${detail[0]['lecture_price']}</div>
+        <div class="x ${detail[0]['id']}">X</div>
+      </div>
+    `
+    return textlist
+}
+const checkbox = (targetId)=>{
+    let checkbox = ``
+    checkbox +=`
+      <div class="selection ${detail['id']}"></div>
+    `
+    return checkbox
+}
+
 
 const showCartItems = (details)=>{
   let text =``
+
   details.forEach((detail)=>{
-    text = `
+    text += `
       <li class="product-preview-wrap">
         <div class="product-preview-container">
           <div class="product-preview-inner">
+            <div class="selection ${detail['id']}"></div>
             <h3 class="user-name">${detail['lecture_title']}</h3>
-            <div class="delivery-condition">${detail['teacher_name']}</div>
+            <div class="delete ${detail['id']}">삭제</div>
           </div>
           <hr class="divide"/>
         </div>
         <div class="order-product-info">
           <figure class="product-preview-image">
             <img
-                src="/upload/${detail['lecture_files']}"
+                src="/upload/${detail['lecture_file']}"
                 class="product-image" alt=""
             />
           </figure>
           <div class="product-info-contents">
+            <div class="delivery-condition">강사명 | ${detail['teacher_name']}</div>
             <p class="product-name">
               ${detail['date']} | ${detail['time']} | ${detail['kit']}
             </p>
-            <p class="product-option" style="margin-top: 50px">
+            <p class="product-option">
+            <div class="selected-product-count">
+            수량
+                <div class="counted-number">
+                  ${detail['quantity']}
+                </div>
+              </div>
             </p>
             <div class="product-price">
               <span class="price-number">${detail['lecture_price']}</span>
               <span class="won">원</span> &nbsp;
-              <div class="selected-product-count">
-                <span class="sub-count">
-                  <img src="../../../../../selleaf/static/public/web/images/common/sub.png" alt=""/>
-                </span>
-                <button type="button" class="counted-number">
-                  ${detail['quantity']}
-                </button>
-                <span class="add-count">
-                  <img src=".../../../../../selleaf/static/public/web/images/common/add.png" alt=""/>
-                </span>
-              </div>
-              <div class="delete ${detail['id']}">삭제</div>
             </div>
           </div>
-          
         </div>
       </li>
     `
@@ -144,8 +159,10 @@ const showCartItems = (details)=>{
         </div>
       `
     }
+
   })
   return text;
+
 }
 
 const ul = document.querySelector('.cart-item-wrap')
@@ -154,10 +171,30 @@ cartService.getList(cart_id, showCartItems).then((text) => {
     ul.innerHTML = text;
 });
 
+
+
 ul.addEventListener("click", async (e) => {
-    console.log(e.target)
-    if(e.target.classList[0] ==='delete'){
+    if(e.target.classList[0] === 'delete'){
         const detailId = e.target.classList[1]
         await cartService.remove(detailId)
+        const text = await cartService.getList(cart_id, showCartItems);
+        ul.innerHTML = text;
+    }else if(e.target.classList[0]==='selection'){
+        let target= e.target
+        target.remove()
+        const div = document.querySelector('.product-name-side')
+        const detailId = e.target.classList[1]
+        const textlist = await cartService.select(detailId,showPrice)
+        div.innerHTML += textlist
     }
 })
+
+const sidebar = document.querySelector('.payment-detail-container')
+    sidebar.addEventListener('click', async (e)=>{
+        if(e.target.classList[0] === 'x') {
+            const targetId = e.target.classList[1]
+            e.target.parentElement.remove()
+            const checkbox = await checkbox(targetId)
+            ul.innerHTML += checkbox
+        }
+    })
