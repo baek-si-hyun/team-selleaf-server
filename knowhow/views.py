@@ -1,5 +1,7 @@
+from datetime import timedelta
+
 from django.db import transaction
-from django.db.models import F
+from django.db.models import F, Count
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views import View
@@ -8,7 +10,7 @@ from rest_framework.views import APIView
 
 from knowhow.models import Knowhow, KnowhowFile, KnowhowPlant, KnowhowTag, KnowhowCategory, KnowhowRecommend, \
     KnowhowLike, KnowhowReply
-from member.models import Member
+from member.models import Member, MemberProfile
 
 
 class KnowhowCreateView(View):
@@ -72,8 +74,7 @@ class KnowhowDetailView(View):
         knowhow = Knowhow.objects.get(id=request.GET['id'])
         knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')
         knowhow_likes = KnowhowLike.objects.filter(knowhow_id=knowhow.id)
-        # for tag in knowhow_tags:
-        #     print(tag)
+        reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow.id).values('id').count()
 
         knowhow.knowhow_count += 1
         knowhow.save(update_fields=['knowhow_count'])
@@ -85,26 +86,50 @@ class KnowhowDetailView(View):
             'knowhow': knowhow,
             'knowhow_files': knowhow_files,
             'knowhow_file': knowhow_file,
-            'knowhow_tags': knowhow_tags
+            'knowhow_tags': knowhow_tags,
+            'reply_count': reply_count
         }
-
-        # knowhow.post_read_count += 1
-        # knowhow.updated_date = timezone.now()
-        # post.save(update_fields=['post_read_count', 'updated_date'])
 
         return render(request, 'community/web/knowhow/knowhow-detail.html', context)
 
-
-
 class KnowhowListView(View):
-    pass
+    def get(self, request):
+
+        knowhow_count = Knowhow.objects.count()
+
+        context = {
+            'knowhow_count': knowhow_count
+        }
+
+        return render(request, 'community/web/knowhow/knowhow.html', context)
+
+class KnowhowListApi(APIView):
+    def get(self, request, page):
+        row_count = 6
+        offset = (page - 1) * row_count
+        limit = row_count * page
+
+
+        knowhows = Knowhow.objects.annotate(member_name=F('member__member_name'))\
+            .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id')
+
+        for knowhow in knowhows:
+            knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
+            profile = MemberProfile.objects.filter(member_id=knowhow['member_id']).values('file_url').first()
+            knowhow['knowhow_file'] = knowhow_file['file_url']
+            knowhow['profile'] = profile['file_url']
+        print(knowhows)
+
+        return Response(knowhows[offset:limit])
 
 class KnowhowReplyWriteApi(APIView):
+    @transaction.atomic
     def post(self, request):
 
         data = request.data
+        print(data)
         data = {
-            'knowhow_reply_content': data['content'],
+            'knowhow_reply_content': data['reply_content'],
             'knowhow_id': data['knowhow_id'],
             'member_id': request.session['member']['id']
         }
@@ -120,7 +145,7 @@ class KnowhowReplyListApi(APIView):
         limit = row_count * page
 
         replies = KnowhowReply.objects.filter(knowhow_id=knowhow_id).annotate(member_name=F('member__member_name'))\
-            .values('member_name', 'knowhow__knowhowreply_content', 'member_id', 'created_date', 'id')
+            .values('member_name', 'knowhow__knowhow_content', 'member_id', 'created_date', 'id', 'knowhow_reply_content')
 
         return Response(replies[offset:limit])
 
