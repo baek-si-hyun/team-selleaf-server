@@ -1,10 +1,11 @@
 let page = 1;
 
-const writeButton = document.getElementById("reply-write");
-const ul = document.querySelector("#replies-wrap ul");
+const writeButton = document.querySelector(".comment-submit-btn");
+const replySection = document.querySelector(".reply-section");
 const moreButton = document.getElementById("more-replies");
 
-replyService.getList(post_id, page + 1).then((replies) => {
+
+replyService.getList(knowhow_id, page + 1).then((replies) => {
     if (replies.length !== 0){
         moreButton.style.display = "flex";
     }
@@ -12,50 +13,79 @@ replyService.getList(post_id, page + 1).then((replies) => {
 
 const showList = (replies) => {
     let text = ``;
+
     replies.forEach((reply) => {
+        console.log(reply.created_date)
         text += `
-            <li>
-                <div>
-                    <section class="content-container">
-                        <div class="profile">
-                            <div><img src="/upload/${reply.member_path}" width="15px"></div>
-                            <h6 class="writer">${reply.member_name}</h6>
+            <div class="comment-item-box">
+                      <div class="comment-item">
+                        <div class="comment-user-img-wrap">
+                          <figure class="comment-user-img-container">
+                            <img
+                              src="/static/public/web/images/common/blank-image.png"
+                              height="0"
+                              class="comment-user-img"
+                            />
+                          </figure>
                         </div>
-                        <h4 class="title">${reply.reply_content}</h4>
-                        <section class="reply-update-wrap" id="update-form${reply.id}">
-                            <textarea id="" cols="30" rows="1" placeholder="내 댓글">${reply.reply_content}</textarea>
-                            <div class="button-wrap">
-                                <button class="update-done ${reply.id}">작성완료</button>
-                                <button class="calcel ${reply.id}">취소</button>
+                        <div class="comment-content-box">
+                          <div class="comment-user-name-box">
+                            <div role="link" class="commment-user-name">
+                              ${reply.member_name}
                             </div>
-                        </section>
-                        <h6 clss="post-info">
-                            <span class="date">${timeForToday(reply.created_date)}</span>
+                          </div>
+                          <div class="comment">
+                            ${reply.knowhow_reply_content}
+                          </div>
+                          <div class="comment-data">
+                            <div class="time-before">${timeForToday(reply.created_date)}</div>
+                            <div class="comment-like-btn-box">
+                              <div class="comment-split">・</div>
+                              <button type="button" class="comment-like-btn">
+                                <img
+                                  src="/staticfiles/images/like-off.png"
+                                  class="comment-like-icon"
+                                  alt=""
+                                />
+                                <span class="comment-like-text">좋아요</span>
+                              </button>
+                            </div>
+                            <div class="comment-declaration-btn-box">
+                              <div class="comment-split">・</div>
+                              <button class="comment-declaration-btn">
+                                신고
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
         `;
-        if(reply.member_id === Number(memberId)) {
-            text += `
-                            <span class="date">·</span>
-                            <span class="update ${reply.id}">수정</span>
-                            <span class="date">·</span>
-                            <span class="delete ${reply.id}">삭제</span>
-            `
-        }
-        text += `
-                        </h6>
-                    </section>
-                </div>
-            </li>
-        `;
+        // if(reply.member_id === Number(memberId)) {
+        //     text += `
+        //                     <span class="date">·</span>
+        //                     <span class="update ${reply.id}">수정</span>
+        //                     <span class="date">·</span>
+        //                     <span class="delete ${reply.id}">삭제</span>
+        //     `
+        // }
+        // text += `
+        //                 </h6>
+        //             </section>
+        //         </div>
+        //     </li>
+        // `;
     });
+
     return text;
 }
 
 moreButton.addEventListener("click", (e) => {
-    replyService.getList(post_id, ++page, showList).then((text) => {
-        ul.innerHTML += text;
+    replyService.getList(knowhow_id, ++page, showList).then((text) => {
+        replySection.innerHTML += text;
     });
 
-    replyService.getList(post_id, page + 1).then((replies) => {
+    replyService.getList(knowhow_id, page + 1).then((replies) => {
     if (replies.length === 0){
         moreButton.style.display = "none";
     }
@@ -64,29 +94,36 @@ moreButton.addEventListener("click", (e) => {
 });
 
 writeButton.addEventListener("click", async (e) => {
+    const replyNum = document.getElementById("reply-count");
     const replyContent = document.getElementById("reply-content");
     await replyService.write({
         reply_content: replyContent.value,
-        post_id: post_id
+        knowhow_id: knowhow_id
     });
     replyContent.value = "";
 
     page = 1
-    const text = await replyService.getList(post_id, page, showList);
-    ul.innerHTML = text;
+    const text = await replyService.getList(knowhow_id, page, showList);
+    replySection.innerHTML = text;
 
-    const replies = await replyService.getList(post_id, page + 1);
+    const replies = await replyService.getList(knowhow_id, page + 1);
     if (replies.length !== 0){
         moreButton.style.display = "flex";
     }
+
+
+
+    commentSubmitBtn.disabled = true;
+    commentSubmitBtn.style.cursor = 'context-menu';
+    commentSubmitBtn.style.color = "rgb(194, 200, 204)"
 });
 
-replyService.getList(post_id, page, showList).then((text) => {
-    ul.innerHTML = text;
+replyService.getList(knowhow_id, page, showList).then((text) => {
+    replySection.innerHTML = text;
 });
 
 // ul 태그의 자식 태그까지 이벤트가 위임된다.
-ul.addEventListener("click", async (e) => {
+replySection.addEventListener("click", async (e) => {
     if(e.target.classList[0] === 'update'){
         const replyId = e.target.classList[1]
         const updateForm = document.getElementById(`update-form${replyId}`)
@@ -106,7 +143,7 @@ ul.addEventListener("click", async (e) => {
         await replyService.update({replyId: replyId, replyContent: replyContent.value})
         page = 1
         const text = await replyService.getList(post_id, page, showList);
-        ul.innerHTML = text;
+        replySection.innerHTML = text;
         const replies = await replyService.getList(post_id, page + 1);
         if (replies.length !== 0){
             moreButton.style.display = "flex";
@@ -116,10 +153,10 @@ ul.addEventListener("click", async (e) => {
         const replyId = e.target.classList[1];
         await replyService.remove(replyId);
         page = 1
-        const text = await replyService.getList(post_id, page, showList);
-        ul.innerHTML = text;
+        const text = await replyService.getList(knowhow_id, page, showList);
+        replySection.innerHTML = text;
 
-        const replies = await replyService.getList(post_id, page + 1);
+        const replies = await replyService.getList(knowhow_id, page + 1);
         if (replies.length !== 0){
             moreButton.style.display = "flex";
         }
@@ -129,9 +166,15 @@ ul.addEventListener("click", async (e) => {
 
 
 
-
-
-
+const date = document.querySelector(".week-data")
+let test = new Date(knowhowDate)
+console.log(Date())
+console.log(Date(knowhowDate))
+console.log(Date(knowhowDate).format('%Y-%m-%dT%H:%M:%SZ'))
+// console.log(knowhowDate)
+// console.log(Date().toISOString(knowhowDate))
+// console.log(timeForToday(knowhowDate))
+date.innerText = timeForToday(Date(knowhowDate))
 
 
 
