@@ -97,67 +97,10 @@ deleteBtns.forEach((deleteBtn) => {
     });
   });
 });
-
+// =================================================================================================
 // 날짜 선택 시 색 변하게
-const days = document.querySelectorAll(".weekday-selection");
-const timeSection = document.querySelector(".product-option-second-wrap");
-const inputTarget = document.querySelector(".selected-product-name");
-const sidebarInputTarget = document.querySelector(
-  ".sidebar-selected-product-option"
-);
-days.forEach((day) => {
-  day.addEventListener("click", (e) => {
-    // 모든 요일에서 clicked 클래스를 제거
-    days.forEach((otherday) => {
-      otherday.classList.remove("clicked");
-    });
-    // 클릭된 요일에만 clicked 클래스 추가
-    day.classList.add("clicked");
-    const selectedDay = day.querySelector("span").textContent;
-    var inner = inputTarget.querySelector(".selected-date");
-    var sidebarInner = sidebarInputTarget.querySelector(".selected-date");
-    inner.innerHTML = `${selectedDay}`;
-    sidebarInner.innerHTML = `${selectedDay}`;
-    // 시간 섹션을 보이거나 숨김
-    if (day.classList.contains("clicked")) {
-      timeSection.style.display = "block";
-    } else {
-      timeSection.style.display = "none";
-    }
-  });
-});
 
-// 시간 선택 시 색 변하게
-const times = document.querySelectorAll(".time-selection");
-const check = document.querySelector(".selected-product-list-container");
-const sidebarselectBox = document.querySelector(
-  ".sidebar-selected-product-wrap"
-);
-times.forEach((time) => {
-  time.addEventListener("click", (e) => {
-    // 모든 시간 요소에서 clicked 클래스를 제거
-    times.forEach((othertime) => {
-      othertime.classList.remove("clicked");
-    });
-
-    // 클릭된 시간에만 clicked 클래스 추가
-    time.classList.add("clicked");
-    const selectedTime = time.querySelector("span").textContent;
-    var inner = inputTarget.querySelector(".selected-time");
-    var sidebarInner = sidebarInputTarget.querySelector(".selected-time");
-    inner.innerHTML = `${selectedTime}`;
-    sidebarInner.innerHTML = `${selectedTime}`;
-    // 체크 요소를 보이거나 숨김
-    if (time.classList.contains("clicked")) {
-      check.style.display = "block";
-      sidebarselectBox.style.display = "block";
-    } else {
-      check.style.display = "none";
-      sidebarselectBox.style.display = "none";
-    }
-  });
-});
-
+// =====================================================================================================================
 // 인원 가감
 const number = document.querySelector(".counted-number");
 const add = document.querySelector(".add-count");
@@ -166,7 +109,7 @@ const studentInfo = document.querySelector(".student-info-inner");
 const sidebarNumber = document.querySelector(".sidebar-count-number");
 const sidebarAdd = document.querySelector(".sidebar-add-count");
 const sidebarSub = document.querySelector(".sidebar-sub-count");
-const studentName = document.querySelector(".selected-my_student-list-wrap");
+const studentName = document.querySelector(".selected-student-list-wrap");
 const price = document.querySelector(".total-price");
 const studentAlert = document.querySelector(".student-count-title");
 const sidebarAlert = document.querySelector(".sidebar-student-count-title");
@@ -252,6 +195,9 @@ sidebarAdd.addEventListener("click", (e) => {
   }
 });
 
+
+// =====================================================================================================================
+
 sidebarSub.addEventListener("click", (e) => {
   count == 0 ? (count = 0) : count--;
   number.innerHTML = `${count}`;
@@ -294,35 +240,6 @@ help.addEventListener("click", (e) => {
   help.classList.toggle("help-clicked");
 });
 
-// kit 선택 시 색 변하게
-const kits = document.querySelectorAll(".kit-selection");
-const infoContainer = document.querySelector(
-  ".selected-product-list-container"
-);
-kits.forEach((kit) => {
-  kit.addEventListener("click", (e) => {
-    // 모든 요일에서 clicked 클래스를 제거
-    kits.forEach((otherkit) => {
-      otherkit.classList.remove("clicked");
-    });
-    // 클릭된 요일에만 clicked 클래스 추가
-    kit.classList.add("clicked");
-    console.log(kit);
-    const selectedKit = kit.querySelector(".kit-title").textContent;
-    var inner = inputTarget.querySelector(".selected-kit");
-    var sidebarInner = sidebarInputTarget.querySelector(".selected-kit");
-    inner.innerHTML = `${selectedKit}`;
-    sidebarInner.innerHTML = `${selectedKit}`;
-    // 시간 섹션을 보이거나 숨김
-    if (kit.classList.contains("clicked")) {
-      infoContainer.style.display = "block";
-      sidebarSelected.style.display = "block";
-    } else {
-      infoContainer.style.display = "none";
-      sidebarSelected.style.display = "none";
-    }
-  });
-});
 
 // 별점순 정렬버튼
 const arrange = document.querySelector(".review-rating-button");
@@ -365,3 +282,17 @@ const declarationBtn = document.querySelector(".declaration-btn");
 declarationBtn.addEventListener("click", () => {
   declarationModalWrap.classList.remove("open");
 });
+
+//이미지 미리보기
+const contentImg = document.querySelector(".product-cover-image");
+const prevImgs = document.querySelectorAll(".product-small-image");
+prevImgs.forEach((item) => {
+  item.addEventListener("click", (e) => {
+    const imgSrc = e.target.getAttribute("src");
+    contentImg.setAttribute("src", imgSrc);
+    contentImg.setAttribute("height", "558.33");
+  });
+});
+
+// 총가격을 증가시켜주는 js
+

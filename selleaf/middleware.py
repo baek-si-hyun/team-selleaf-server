@@ -7,7 +7,9 @@ def pre_handle_request(get_response):
         uri = request.get_full_path()
 
         # 요청 경로를 잘 가져왔는지 검사
+        # print("=" * 10)
         # print(uri)
+        # print("=" * 10)
 
         # 미들웨어에 작성한 코드가 반영되면 안되는 URI = 로그인 안 해도 이용 가능한 페이지들
 
@@ -20,8 +22,8 @@ def pre_handle_request(get_response):
         # 03/04 - 조건식 수정 중
         # 만약 요청한 경로가 아래 서비스들(계정, oAuth, API) 중 그 어느 것도 아니면서
         if 'accounts' not in uri and 'oauth' not in uri and 'api' not in uri:
-            # 회원가입, 로그인 서비스도 아니고
-            if 'join' not in uri and 'login' not in uri:
+            # 메인 페이지나 회원가입, 로그인 서비스도 아니고
+            if uri != '/' and 'join' not in uri and 'login' not in uri:
                 # 게시물 작성, 마이페이지, 강사 신청 서비스 중 하나일 때 - 03/04 추가
                 if 'lecture/upload' in uri or 'trade/upload' in uri or 'knowhow/create' in uri or 'mypage' in uri or 'teacher' in uri:
                     # 로그인조차 하지 않은 상태라면
