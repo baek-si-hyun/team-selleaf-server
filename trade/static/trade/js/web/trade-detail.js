@@ -12,7 +12,7 @@ nextButton.addEventListener("click", (e) => {
     transform = `translateX(${xdegree}px)`;
     transition = "transform 0.3s ease 0s";
   }
-  xdegree === -2848
+  xdegree === -2136
     ? (nextButton.style.display = "none")
     : (nextButton.style.display = "block");
   xdegree === -712 && (prevButton.style.display = "block");
@@ -26,7 +26,7 @@ prevButton.addEventListener("click", (e) => {
     transform = `translateX(${xdegree}px)`;
     transition = "transform 0.3s ease 0s";
   }
-  xdegree === -2136 && (nextButton.style.display = "block");
+  xdegree === -1424 && (nextButton.style.display = "block");
   xdegree === 0 && (prevButton.style.display = "none");
   console.log(xdegree);
 });
