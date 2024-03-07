@@ -28,16 +28,17 @@ const cartService = (()=>{
         return detail
     };
 
-    const selectCancel = async (targetId, callback) =>{
-        const response = await fetch(`cart/${targetId}`);
-        const target = await response.json();
-        if (callback){
-            return callback(target)
-        }
-        return target
+    const submit = async (cart_id) =>{
+        await fetch(`/cart/checkout/${cart_id}/`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'X-CSRFToken': csrf_token
+            }
+        });
     }
 
 
-    return {getList:getList, remove:remove, select:select}
+    return {getList:getList, remove:remove, select:select, submit:submit}
 
 })()

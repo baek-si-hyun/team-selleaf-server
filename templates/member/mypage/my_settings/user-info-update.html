@@ -47,7 +47,7 @@
                       <a href="#">알림 설정</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#">비밀번호 변경</a>
+                      <a href="/member/password-update/">비밀번호 변경</a>
                     </li>
                   </ul>
                 </div>
@@ -129,7 +129,7 @@
                                         {% endif %}
                                     {% endfor %}   
                                   {% else %}
-                                    <img src="/upload/{{ member_file }}/" alt="" class="current-profile-image">
+                                    <img src="{% static 'member/images/mypage/base-profile-image.avif' %}" alt="" class="current-profile-image">
                                   {% endif %}  
                                 </label>
                               </div>

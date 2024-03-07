@@ -6,7 +6,7 @@
 {% block title %}CART{% endblock %}
 {% block content %}
     <div class="payment-wrap">
-      <form class="payment-container" action="/cart/">
+      <form class="payment-container" action="/cart/checkout/{{ cart_id }}/" method="post">
         {% csrf_token %}  
         <article class="paymeny-inner">
           <h1 class="paymeny-title">장바구니</h1>
@@ -35,19 +35,13 @@
                 </div>
                 <article class="detail-price-wrap">
                   <div class="product-name-side">
-                      
-                  </div>
-                  <div class="price-title-text">
-                    총 상품 금액<span class="emphasis price">{{ total_price }}</span>원
+                      <div class="selected-item-title">선택한 상품</div>
                   </div>
                   <hr class="line" />
                   <div class="total-price-wrap">
-                    <span class="total-text">최종 결제 금액</span>
+                    <span class="total-text">결제 예정 금액</span>
                     <span class="total-price">{{total_price}}</span>
                   </div>
-                  <p class="expected-mileage">
-                    <span class="value"> <span>{{'0.08'}}</span> P </span>적립 예정
-                  </p>
                 </article>
               </section>
             </div>
@@ -63,7 +57,7 @@
     <script>
         const csrf_token = '{{ csrf_token }}';
         const cart_id = '{{ cart_id }}'
-        const detail = '{{ detail_id }}'
+        {#const detail = '{{ detail_id }}'#}
         const memberId = '{{ request.session.member.id }}'
     </script>
     <script src="{% static 'cart/js/cart/cart-module.js' %}"></script>

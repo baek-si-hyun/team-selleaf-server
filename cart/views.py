@@ -8,8 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from cart.models import Cart, CartDetail
-from lecture.models import LectureProductFile, Lecture
-from member.models import Member
+from lecture.models import Lecture
 
 
 # 장바구니 서비스
@@ -64,6 +63,24 @@ class CartAPI(APIView):
         print(detail_id)
         details = CartDetail.objects.filter(id=detail_id)\
             .annotate(lecture_title=F('lecture__lecture_title'),lecture_price=F('lecture__lecture_price'))\
-            .values('lecture_title','lecture_price','id')
-        print(details)
+            .values('lecture_title','lecture_price','quantity','id')
         return Response(details)
+
+class CartCheckoutAPI(APIView):
+    def post(self, request, cart_id):
+        member_id = request.session['member']['id']
+        cart = Cart.objects.filter(member_id = member_id,cart_status=0).first()
+        if cart.id == cart_id:
+            details = CartDetail.objects.filter(cart_id=cart_id, cart_detail_status=0) \
+                .annotate(lecture_price=F('lecture__lecture_price')
+                          , lecture_title=F('lecture__lecture_title')
+                          , teacher_name=F('lecture__teacher__member__member_name')) \
+                .values('id', 'quantity', 'lecture_title', 'date', 'kit', 'time', 'teacher_name', 'lecture_price',
+                        'lecture_id')
+
+            for detail in details:
+                detail_file = Lecture.objects.filter(id=detail['lecture_id']).values(
+                    'lectureplacefile__file_url').first()
+                detail['lecture_file'] = detail_file['lectureplacefile__file_url']
+            print(details)
+            return redirect('/apply/',details)
