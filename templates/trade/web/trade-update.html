@@ -545,5 +545,7 @@
 </form>
 {% endblock %}
 {% block js %}
+  <script> const tradeFile = '{{ trade.tradefile_set.values }}' </script>
+  <script src="{% static 'trade/js/web/trade-update.js' %}"></script>
   <script src="{% static 'trade/js/web/trade-upload.js' %}"></script>
 {% endblock %}
