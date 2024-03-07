@@ -10,10 +10,14 @@ commentInput.addEventListener("focusout", () => {
 });
 
 const commentSubmitBtn = document.querySelector(".comment-submit-btn");
+
 commentInput.addEventListener("keyup", () => {
-  commentInput.value
-    ? (commentSubmitBtn.style.color = "#c06888")
-    : (commentSubmitBtn.style.color = "rgb(194, 200, 204)");
+  if(commentInput.value){
+    commentSubmitBtn.disabled = false;
+    commentSubmitBtn.style.cursor = 'pointer';
+    commentSubmitBtn.style.color = "#c06888"
+  }
+
 });
 
 const stickyBtns = document.querySelectorAll(".sticky-btn");

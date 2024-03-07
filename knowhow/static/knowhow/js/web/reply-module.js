@@ -37,6 +37,12 @@ const replyService = (() => {
         });
     }
 
+    // const count = async (knowhow_id) => {
+    //     await fetch(`/knowhow/reply/counts`)
+    //
+    //
+    // }
+
     return {write: write, getList: getList, remove: remove, update: update}
 })();
 

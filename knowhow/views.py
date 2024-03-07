@@ -72,7 +72,7 @@ class KnowhowDetailView(View):
         knowhow = Knowhow.objects.get(id=request.GET['id'])
         knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')
         knowhow_likes = KnowhowLike.objects.filter(knowhow_id=knowhow.id)
-        reply_count = KnowhowReply.objects.values('id').count()
+        reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow.id).values('id').count()
 
         knowhow.knowhow_count += 1
         knowhow.save(update_fields=['knowhow_count'])
@@ -97,7 +97,17 @@ class KnowhowDetailView(View):
 
 
 class KnowhowListView(View):
-    pass
+    def get(self, request):
+
+        knowhow = Knowhow.objects.get(id=3)
+        print(knowhow)
+        knowhow_file = list(knowhow.knowhowfile_set.all())[0]
+
+        context = {
+            'knowhow': knowhow,
+            'knowhow_file': knowhow_file,
+        }
+        return render(request, 'community/web/knowhow/knowhow.html', context)
 
 class KnowhowReplyWriteApi(APIView):
     @transaction.atomic

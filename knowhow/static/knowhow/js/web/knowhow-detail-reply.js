@@ -4,6 +4,7 @@ const writeButton = document.querySelector(".comment-submit-btn");
 const replySection = document.querySelector(".reply-section");
 const moreButton = document.getElementById("more-replies");
 
+
 replyService.getList(knowhow_id, page + 1).then((replies) => {
     if (replies.length !== 0){
         moreButton.style.display = "flex";
@@ -12,9 +13,9 @@ replyService.getList(knowhow_id, page + 1).then((replies) => {
 
 const showList = (replies) => {
     let text = ``;
+
     replies.forEach((reply) => {
-        console.log(reply)
-        console.log(reply.knowhow_reply_content)
+        console.log(reply.created_date)
         text += `
             <div class="comment-item-box">
                       <div class="comment-item">
@@ -75,6 +76,7 @@ const showList = (replies) => {
         //     </li>
         // `;
     });
+
     return text;
 }
 
@@ -92,6 +94,7 @@ moreButton.addEventListener("click", (e) => {
 });
 
 writeButton.addEventListener("click", async (e) => {
+    const replyNum = document.getElementById("reply-count");
     const replyContent = document.getElementById("reply-content");
     await replyService.write({
         reply_content: replyContent.value,
@@ -107,6 +110,12 @@ writeButton.addEventListener("click", async (e) => {
     if (replies.length !== 0){
         moreButton.style.display = "flex";
     }
+
+
+
+    commentSubmitBtn.disabled = true;
+    commentSubmitBtn.style.cursor = 'context-menu';
+    commentSubmitBtn.style.color = "rgb(194, 200, 204)"
 });
 
 replyService.getList(knowhow_id, page, showList).then((text) => {
@@ -157,9 +166,15 @@ replySection.addEventListener("click", async (e) => {
 
 
 
-
-
-
+const date = document.querySelector(".week-data")
+let test = new Date(knowhowDate)
+console.log(Date())
+console.log(Date(knowhowDate))
+console.log(Date(knowhowDate).format('%Y-%m-%dT%H:%M:%SZ'))
+// console.log(knowhowDate)
+// console.log(Date().toISOString(knowhowDate))
+// console.log(timeForToday(knowhowDate))
+date.innerText = timeForToday(Date(knowhowDate))
 
 
 
