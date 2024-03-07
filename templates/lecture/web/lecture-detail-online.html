@@ -163,7 +163,7 @@
                 <div class="button-space">
                   <a href="#" class="button-link-unclick">
                     <div class="button">
-                      <p class="button-letter-unclick">진행중인거래</p>
+                      <p class="button-letter-unclick">원데이클래스</p>
                     </div>
                   </a>
                 </div>
@@ -176,62 +176,63 @@
     <div class="product-selling-wrap">
       <div class="product-overview-wrap">
         <nav class="product-category-wrap">
-          <ol class="product-category-container">
-            <li class="product-category-inner">
-              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"
-                >대구분</a
-              >
-              <svg
-                class="icon"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="currentColor"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <path
-                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
-                ></path>
-              </svg>
-            </li>
-            <li class="product-category-inner">
-              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"
-                >중분류</a
-              >
-              <svg
-                class="icon"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="currentColor"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <path
-                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
-                ></path>
-              </svg>
-            </li>
-            <li class="product-category-inner">
-              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"
-                >소분류</a
-              >
-              <svg
-                class="icon"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="currentColor"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <path
-                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
-                ></path>
-              </svg>
-            </li>
-            <li class="product-category-inner">
-              <a href="/templates/lecture/web/class-total.htmlhtml" class="link">제품</a>
-            </li>
-          </ol>
+          <span>{{ lecture.teacher.member.member_name }}님의 {{ lecture.lecture_title }} 상품을 보고있어요🤗</span>
+{#          <ol class="product-category-container">#}
+{#            <li class="product-category-inner">#}
+{#              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"#}
+{#                >대구분</a#}
+{#              >#}
+{#              <svg#}
+{#                class="icon"#}
+{#                width="8"#}
+{#                height="8"#}
+{#                viewBox="0 0 8 8"#}
+{#                fill="currentColor"#}
+{#                preserveAspectRatio="xMidYMid meet"#}
+{#              >#}
+{#                <path#}
+{#                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"#}
+{#                ></path>#}
+{#              </svg>#}
+{#            </li>#}
+{#            <li class="product-category-inner">#}
+{#              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"#}
+{#                >중분류</a#}
+{#              >#}
+{#              <svg#}
+{#                class="icon"#}
+{#                width="8"#}
+{#                height="8"#}
+{#                viewBox="0 0 8 8"#}
+{#                fill="currentColor"#}
+{#                preserveAspectRatio="xMidYMid meet"#}
+{#              >#}
+{#                <path#}
+{#                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"#}
+{#                ></path>#}
+{#              </svg>#}
+{#            </li>#}
+{#            <li class="product-category-inner">#}
+{#              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"#}
+{#                >소분류</a#}
+{#              >#}
+{#              <svg#}
+{#                class="icon"#}
+{#                width="8"#}
+{#                height="8"#}
+{#                viewBox="0 0 8 8"#}
+{#                fill="currentColor"#}
+{#                preserveAspectRatio="xMidYMid meet"#}
+{#              >#}
+{#                <path#}
+{#                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"#}
+{#                ></path>#}
+{#              </svg>#}
+{#            </li>#}
+{#            <li class="product-category-inner">#}
+{#              <a href="/templates/lecture/web/class-total.htmlhtml" class="link">제품</a>#}
+{#            </li>#}
+{#          </ol>#}
         </nav>
         <div class="product-overview-container">
           <div class="product-overview-image-wrap">
@@ -274,65 +275,80 @@
                       <img
                         class="product-cover-image"
                         tabindex="0"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
+                        src="/upload/{{ lecture_file.file_url }}"
                         alt="상품서브이미지"
                       />
                     </div>
                   </div>
                 </div>
                 <ul class="product-small-image-list">
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
+                    {% for lecture_file in lecture_files %}
+                      <li class="product-small-image-item">
+                        <button
+                          class="product-small-image-button"
+                          type="button"
+                          aria-label="1 of 8"
+                        >
+                          <img
+                            class="product-small-image"
+                            src="/upload/{{ lecture_file.file_url }}"
+                            alt="상품 이미지"
+                          />
+                        </button>
+                      </li>
+                  {% endfor %}
+{#                  <li class="product-small-image-item">#}
+{#                    <button#}
+{#                      class="product-small-image-button"#}
+{#                      type="button"#}
+{#                      aria-label="1 of 8"#}
+{#                    >#}
+{#                      <img#}
+{#                        class="product-small-image"#}
+{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                        alt="상품 이미지"#}
+{#                      />#}
+{#                    </button>#}
+{#                  </li>#}
+{#                  <li class="product-small-image-item">#}
+{#                    <button#}
+{#                      class="product-small-image-button"#}
+{#                      type="button"#}
+{#                      aria-label="1 of 8"#}
+{#                    >#}
+{#                      <img#}
+{#                        class="product-small-image"#}
+{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                        alt="상품 이미지"#}
+{#                      />#}
+{#                    </button>#}
+{#                  </li>#}
+{#                  <li class="product-small-image-item">#}
+{#                    <button#}
+{#                      class="product-small-image-button"#}
+{#                      type="button"#}
+{#                      aria-label="1 of 8"#}
+{#                    >#}
+{#                      <img#}
+{#                        class="product-small-image"#}
+{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                        alt="상품 이미지"#}
+{#                      />#}
+{#                    </button>#}
+{#                  </li>#}
+{#                  <li class="product-small-image-item">#}
+{#                    <button#}
+{#                      class="product-small-image-button"#}
+{#                      type="button"#}
+{#                      aria-label="1 of 8"#}
+{#                    >#}
+{#                      <img#}
+{#                        class="product-small-image"#}
+{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                        alt="상품 이미지"#}
+{#                      />#}
+{#                    </button>#}
+{#                  </li>#}
                 </ul>
                 <div class="product-image-paginator">
                   <ul class="carousel-paginator">
@@ -543,23 +559,27 @@
                     <span class="main-info-keyword">
                       <b>키워드</b>
                     </span>
-                    <span class="info-type">
-                      <span>주문제작</span>
-                      <span>일반배송</span>
-                    </span>
-                    <span class="info-particulars-wrap">
-                      <span class="info-particulars-container">
-                        <img
-                          src="{% static 'public/web/images/common/button-down.png' %}"
-                          class="check-icon"
-                        />
-                        <span>파손주의 등등</span>
+                      <span class="info-type">
+                        {% for lecturePlant in lecture.lectureplant_set.all %}
+                          <span class="info-tag">#{{ lecturePlant.plant_name }}</span>
+                        {% endfor %}
                       </span>
-                    </span>
+{#                      <span>주문제작</span>#}
+{#                      <span>일반배송</span>#}
+{#                    </span>#}
+{#                    <span class="info-particulars-wrap">#}
+{#                      <span class="info-particulars-container">#}
+{#                        <img#}
+{#                          src="{% static 'public/web/images/common/button-down.png' %}"#}
+{#                          class="check-icon"#}
+{#                        />#}
+{#                        <span>파손주의 등등</span>#}
+{#                      </span>#}
+{#                    </span>#}
                   </div>
                 </div>
               </div>
-              <a href="유저페이지 이동링크" class="user-info-link">
+              <a href='#' class="user-info-link">
                 <div class="user-link-name-wrap">
                   <svg
                     width="24"
@@ -579,23 +599,23 @@
                     ></path>
                   </svg>
                   <div class="user-link-name-container">
-                    <span class="user-link-name">유저이름</span>
+                    <span class="user-link-name">{{ lecture.teacher.member.member_name }}님의 판매상품</span>
                   </div>
                 </div>
-                <div class="user-link-icon-wrap">
-                  <span>유저홈</span>
-                  <svg
-                    width="14"
-                    height="14"
-                    fill="none"
-                    preserveAspectRatio="xMidYMid meet"
-                  >
-                    <path
-                      d="M4.083 11.375L8.312 7 4.083 2.625l.803-.875L9.916 7l-5.03 5.25-.803-.875z"
-                      fill="#828C94"
-                    ></path>
-                  </svg>
-                </div>
+{#                <div class="user-link-icon-wrap">#}
+{#                  <span>유저홈</span>#}
+{#                  <svg#}
+{#                    width="14"#}
+{#                    height="14"#}
+{#                    fill="none"#}
+{#                    preserveAspectRatio="xMidYMid meet"#}
+{#                  >#}
+{#                    <path#}
+{#                      d="M4.083 11.375L8.312 7 4.083 2.625l.803-.875L9.916 7l-5.03 5.25-.803-.875z"#}
+{#                      fill="#828C94"#}
+{#                    ></path>#}
+{#                  </svg>#}
+{#                </div>#}
               </a>
             </div>
             <div class="product-option-wrap">
@@ -611,24 +631,6 @@
                                 <span>{{ date.date|date:"Y-m-d" }}</span>
                               </div>
                           {% endfor %}
-{#                          <div class="weekday-selection">#}
-{#                            <span>2023-02-13 화</span>#}
-{#                          </div>#}
-{#                          <div class="weekday-selection">#}
-{#                            <span>2023-02-14 수</span>#}
-{#                          </div>#}
-{#                          <div class="weekday-selection">#}
-{#                            <span>2023-02-15 목</span>#}
-{#                          </div>#}
-{#                          <div class="weekday-selection">#}
-{#                            <span>2023-02-16 금</span>#}
-{#                          </div>#}
-{#                          <div class="weekday-selection">#}
-{#                            <span>2023-02-17 토</span>#}
-{#                          </div>#}
-{#                          <div class="weekday-selection">#}
-{#                            <span>2023-02-18 일</span>#}
-{#                          </div>#}
                         </div>
                       </span>
                     </div>
@@ -639,52 +641,29 @@
                       <span class="info-dropdown-box">
                         <span class="info-title">시간 선택</span>
                         <div class="info-dropdown-wrap">
-                          {% for date in lecture_order_date %}
-                            <div class="weekday-selection">
-                              <span>{{ lecture_time.time }}</span>
+                          {% for time in lecture_order_time %}
+                            <div class="time-selection">
+                              <span>{{ time.time }}</span>
                             </div>
                           {% endfor %}
-{#                          <div class="time-selection">#}
-{#                            <span>09:00</span>#}
-{#                          </div>#}
-{#                          <div class="time-selection">#}
-{#                            <span>10:00</span>#}
-{#                          </div>#}
-{#                          <div class="time-selection">#}
-{#                            <span>11:00</span>#}
-{#                          </div>#}
-{#                          <div class="time-selection">#}
-{#                            <span>14:00</span>#}
-{#                          </div>#}
-{#                          <div class="time-selection">#}
-{#                            <span>15:00</span>#}
-{#                          </div>#}
-{#                          <div class="time-selection">#}
-{#                            <span>16:00</span>#}
-{#                          </div>#}
-{#                          <div class="time-selection">#}
-{#                            <span>17:00</span>#}
-{#                          </div>#}
                         </div>
                       </span>
                     </div>
-                    <div
-                      class="product-option-second-wrap"
+                  <div
+                      class="product-option-third-wrap"
                       style="display: none"
                     >
                       <span class="info-dropdown-box">
                         <span class="info-title">DIY 키트 선택</span>
-                        <div class="info-dropdown-wrap">
-                          <div class="kit-selection">
-                            <div class="kit-title">키트 이름 1</div>
-                            <div>강사가 입력한 키트 소개</div>
+                          <div class="info-dropdown-wrap">
+                              {% for kit in lecture_kit %}
+                                <div class="kit-selection">
+                                  <div class="kit-title">{{ kit.kit_name }}</div>
+                                  <div>{{ kit.kit_content }}</div>
+                                </div>
+                              {% endfor %}
                           </div>
-                          <div class="kit-selection">
-                            <div class="kit-title">키트 이름 2</div>
-                            <div>강사가 입력한 키트 소개</div>
-                          </div>
-                        </div>
-                      </span>
+                        </span>
                     </div>
                   </div>
                   <article
@@ -695,8 +674,11 @@
                       <span>날짜:</span>
                       <span class="selected-date">선택한날짜</span>
                       /
+                      <span>시간:</span>
+                      <span class="selected-time">선택한 시간</span>
+                      /
                       <span>키트:</span>
-                      <span class="selected-kit">선택한 시간</span>
+                      <span class="selected-kit">선택한 키트</span>
                     </h2>
                     <button
                       class="delete-button-wrap"
@@ -707,9 +689,9 @@
                         <img src="{% static 'public/web/images/common/cancel.png' %}" alt="" />
                       </span>
                     </button>
-                    <div class="student-count-title">인원</div>
+                    <div class="student-count-title-online"></div>
                     <div class="selected-product-botton-wrap">
-                      <div class="selected-product-count">
+                      <div class="selected-product-count-online">
                         <span class="sub-count">
                           <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
                         </span>
@@ -719,7 +701,7 @@
                         </span>
                       </div>
                       <div class="selected-price-wrap">
-                        <span class="selected-price">32,000</span>
+                        <span class="selected-price">{{ lecture.lecture_price }}</span>
                         <span class="won">원</span>
                       </div>
                     </div>
@@ -741,7 +723,7 @@
               <p class="product-total-price">
                 <span class="product-order-text">주문금액</span>
                 <span class="product-order-price">
-                  <span class="total-price">32,000</span>원
+                  <span class="total-price">{{ lecture.lecture_price }}</span>원
                 </span>
               </p>
               <div class="product-order-button-wrap">
@@ -866,48 +848,48 @@
                     <p>&nbsp;</p>
                   </div>
 
-                  <table class="detail-info-table">
-                    <tbody>
-                      <tr>
-                        <th>제품 소재</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>색상</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>치수</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>제품구성</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>제조자, 수입품의 경우 수입자를 함께 표기</th>
-                        <td>그래이불</td>
-                      </tr>
-
-                      <tr>
-                        <th>제조국</th>
-                        <td>국내</td>
-                      </tr>
-
-                      <tr>
-                        <th>세탁방법 및 취급시 주의사항</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>품질보증기준</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>A/S 책임자와 전화번호</th>
-                        <td>010.3565.3997</td>
-                      </tr>
-                    </tbody>
-                  </table>
+{#                  <table class="detail-info-table">#}
+{#                    <tbody>#}
+{#                      <tr>#}
+{#                        <th>제품 소재</th>#}
+{#                        <td>상세페이지 참조</td>#}
+{#                      </tr>#}
+{#                      <tr>#}
+{#                        <th>색상</th>#}
+{#                        <td>상세페이지 참조</td>#}
+{#                      </tr>#}
+{#                      <tr>#}
+{#                        <th>치수</th>#}
+{#                        <td>상세페이지 참조</td>#}
+{#                      </tr>#}
+{#                      <tr>#}
+{#                        <th>제품구성</th>#}
+{#                        <td>상세페이지 참조</td>#}
+{#                      </tr>#}
+{#                      <tr>#}
+{#                        <th>제조자, 수입품의 경우 수입자를 함께 표기</th>#}
+{#                        <td>그래이불</td>#}
+{#                      </tr>#}
+{##}
+{#                      <tr>#}
+{#                        <th>제조국</th>#}
+{#                        <td>국내</td>#}
+{#                      </tr>#}
+{##}
+{#                      <tr>#}
+{#                        <th>세탁방법 및 취급시 주의사항</th>#}
+{#                        <td>상세페이지 참조</td>#}
+{#                      </tr>#}
+{#                      <tr>#}
+{#                        <th>품질보증기준</th>#}
+{#                        <td>상세페이지 참조</td>#}
+{#                      </tr>#}
+{#                      <tr>#}
+{#                        <th>A/S 책임자와 전화번호</th>#}
+{#                        <td>010.3565.3997</td>#}
+{#                      </tr>#}
+{#                    </tbody>#}
+{#                  </table>#}
                 </div>
               </section>
               <a id="product-review"></a>
@@ -3397,7 +3379,7 @@
                               </div>
                               <div class="sidebar-selected-price-wrap">
                                 <span class="sidebar-selected-price"
-                                  >32,000</span
+                                  >{{ lecture.lecture_price }}</span
                                 >
                               </div>
                             </div>
@@ -3408,7 +3390,7 @@
                     <p class="sidebar-total-price-wrap">
                       <span class="sidebar-total-text">주문금액</span>
                       <span class="sidebar-total-price">
-                        <span>32,000</span>
+                        <span>{{ lecture.lecture_price }}</span>
                         원
                       </span>
                     </p>
@@ -3442,5 +3424,6 @@
 {% endblock %}
 {% block js %}
   <script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>
+  <script src="{% static 'lecture/js/lecture/web/lecture-detail-online.js' %}"></script>
 {% endblock %}
 

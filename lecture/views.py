@@ -19,20 +19,22 @@ class LectureView(View):
 class LectureDetailOnlineView(View):
     def get(self, request):
         lecture = Lecture.objects.get(id=request.GET['id'])
+        date = Date.objects.get(id=request.GET['id'])
 
         dates = lecture.date_set.all()
-        for date in dates:
-            times = date.time_set.all()
-
+        times = date.time_set.all()
+        kits = lecture.kit_set.all()
         context = {
             'lecture': lecture,
             'lecture_files': list(lecture.lectureproductfile_set.all()),
             'lecture_file': list(lecture.lectureproductfile_set.all())[0],
             'lecture_order_date': dates.order_by('date'),
-            'lecture_time': times,
+            'lecture_order_time': times.order_by('time'),
+            'lecture_kit': kits.all()
+
         }
 
-        print('lecture_time')
+        print(context['lecture_kit'])
 
         return render(request, 'lecture/web/lecture-detail-online.html', context)
 
@@ -156,7 +158,7 @@ class LectureUploadOnlineView(View):
             LectureProductFile.objects.create(lecture=lecture, file_url=files[key])
 
         # Kit create
-        diy_name_input =  request.POST.getlist('diy-name-input')
+        diy_name_input = request.POST.getlist('diy-name-input')
         diy_content_input = request.POST.getlist('diy-content-input')
         for i in range(len(diy_name_input)):
             Kit.objects.create(lecture=lecture, kit_name=diy_name_input[i], kit_content=diy_content_input[i])
