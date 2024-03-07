@@ -120,16 +120,16 @@
                             <li class="new-image-wrap">
                               <div class="new-image-container">
                                 <label for="new-image">
-                                  <!-- 새 이미지 넣으면 이미지 url이 변경 -->
-                                  <div class="current-profile-image"></div>
+                                  {% if request.session.member_files %}  
+                                    {% for member_file in member_files %} 
+                                      <img src="{{ member_file }}" alt="" class="current-profile-image">
+                                    {% endfor %}   
+                                  {% else %}
+                                    <img src="/upload/{{ member_file }}/" alt="" class="current-profile-image">
+                                  {% endif %}  
                                 </label>
                               </div>
-                              <input
-                                type="file"
-                                id="new-image"
-                                style="display: none"
-                                accept="image/*"
-                              />
+                              <input type="file" id="new-image" name="new-image" style="display: none" accept="image/*"/>
                             </li>
                           </ul>
                         </div>
@@ -187,6 +187,9 @@
     </form>
 {% endblock %}
 {% block js %}
+    <script>
+        const image = '{{ member_file }}'
+    </script>
     <script src="{% static 'member/js/mypage/my_settings/user-info-update.js' %}"></script>
     <script>
         "{{ request.session.member_files }}"
