@@ -575,7 +575,7 @@
   transition: border-color 0.1s ease 0s, background-color 0.1s ease 0s;
 }
 
-.member-input {
+.number-input {
   -webkit-font-smoothing: antialiased;
   padding: 8px 15px 9px;
   display: inline-block;
@@ -1041,7 +1041,7 @@ input.title-input {
   transition: border-color 0.1s ease 0s, background-color 0.1s ease 0s;
 }
 
-.diy-input {
+.diy-input[type=text] {
   -webkit-font-smoothing: antialiased;
   padding: 8px 15px 9px;
   display: inline-block;

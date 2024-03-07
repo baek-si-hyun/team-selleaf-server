@@ -18,7 +18,25 @@ class LectureView(View):
 
 class LectureDetailOnlineView(View):
     def get(self, request):
-        return render(request, 'lecture/web/lecture-detail-online.html')
+        lecture = Lecture.objects.get(id=request.GET['id'])
+        date = Date.objects.get(id=request.GET['id'])
+
+        dates = lecture.date_set.all()
+        times = date.time_set.all()
+        kits = lecture.kit_set.all()
+        context = {
+            'lecture': lecture,
+            'lecture_files': list(lecture.lectureproductfile_set.all()),
+            'lecture_file': list(lecture.lectureproductfile_set.all())[0],
+            'lecture_order_date': dates.order_by('date'),
+            'lecture_order_time': times.order_by('time'),
+            'lecture_kit': kits.all()
+
+        }
+
+        print(context['lecture_kit'])
+
+        return render(request, 'lecture/web/lecture-detail-online.html', context)
 
 
 
@@ -89,58 +107,13 @@ class LectureUploadOnlineView(View):
 
         member = request.session['member']
 
-        # 강의 구분
-        # lecture_data['product-index']
-
-        # 식물 종류
-        # lecture_data.getlist('plant-type')
-
-        # 가격
-        # lecture_data['price-input']
-
-        # 인원
-        # lecture_data['member-input']
-
-        # 제목 넣기
-        # lecture_data['title-input']
-
-        # 내용 넣기
-        # lecture_data['content-text-area']
-
-        # 날짜, 시간 넣기
-        start_date_input = request.POST.get('start-date-input')
-        end_date_input = request.POST.get('end-date-input')
-        weekday_type = request.POST.getlist('weekday-type')
-
-        # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
-        dates = self.date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
-
-        # 계산된 날짜를 출력
-        for date in dates:
-            print(date)
-
-        # 강의 시간(시작 시간, 종료 시간, 강의 시간)
-        start_time = request.POST.get('start-time-input')
-        end_time = request.POST.get('end-time-input')
-        interval = request.POST.get('time-type')
-
-        # 시간대를 나누고 남은 시간을 추가하여 출력
-        time_intervals = self.divide_time_intervals(start_time, end_time, interval)
-
-        # 계산된 시간대를 출력
-        for interval in time_intervals:
-            times = interval[0], "~", interval[1]
-
-        for time in times:
-            print(time)
-
         data = {
             'lecture_price': lecture_data['price-input'],
-            'lecture_headcount': lecture_data['member-input'],
+            'lecture_headcount': lecture_data['number-input'],
             'lecture_title': lecture_data['title-input'],
             'lecture_content': lecture_data['content-text-area'],
-            'teacher': Teacher.objects.get(id=member['id']),
-            'lecture_category': LectureCategory.objects.create(category_name=lecture_data['product-index']),
+            'teacher': Teacher.objects.get(member_id=member['id']),
+            'lecture_category': LectureCategory.objects.create(lecture_category_name=lecture_data['product-index']),
         }
         # Lecture create
         lecture = Lecture.objects.create(**data)
@@ -150,19 +123,47 @@ class LectureUploadOnlineView(View):
         for plant_type in plant_types:
             LecturePlant.objects.create(lecture=lecture, plant_name=plant_type)
 
-        # LectureProductFile create
+        # 날짜, 시간 넣기
+        start_date_input = request.POST.get('start-date-input')
+        end_date_input = request.POST.get('end-date-input')
+        weekday_type = request.POST.getlist('weekday-type')
+
+        # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
+        dates = self.date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
+
+        # 강의 시간(시작 시간, 종료 시간, 강의 시간)
+        start_time = request.POST.get('start-time-input')
+        end_time = request.POST.get('end-time-input')
+        interval = request.POST.get('time-type')
+
+        # 시간대를 나누고 남은 시간을 추가하여 출력
+        time_intervals = self.divide_time_intervals(start_time, end_time, interval)
+
+        times = []
+        # 계산된 시간대를 출력
+        for interval in time_intervals:
+            times.append(f"{interval[0]}~{interval[1]}")
+
+        # 계산된 날짜를 출력
+        # Date Create
+        for date in dates:
+            lecture_date = Date.objects.create(lecture=lecture, date=date)
+            # Time Create
+
+            for time in times:
+                Time.objects.create(date=lecture_date, time=time)
+
+        # # LectureProductFile create
         for key in files:
             LectureProductFile.objects.create(lecture=lecture, file_url=files[key])
 
-
         # Kit create
-        diy_name_input = lecture_data['diy-name-input']
-        diy_content_input = lecture_data['diy-content-input']
+        diy_name_input = request.POST.getlist('diy-name-input')
+        diy_content_input = request.POST.getlist('diy-content-input')
         for i in range(len(diy_name_input)):
             Kit.objects.create(lecture=lecture, kit_name=diy_name_input[i], kit_content=diy_content_input[i])
 
-
-        return redirect('lecture:detail-online')
+        return redirect(f'/lecture/detail/online/?id={lecture.id}')
 
 class LectureUploadOfflineView(View):
     def get(self, request):
