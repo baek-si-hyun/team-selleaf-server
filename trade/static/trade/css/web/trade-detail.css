@@ -808,9 +808,11 @@ div.category-container{
 }
 
 .info-type{
-    display: block;
+    display: flex;
     margin-bottom: 4px;
     color: #292929;
+    gap: 2px;
+    flex-wrap: wrap;
 }
 
 .info-type>span:first-child{
@@ -834,6 +836,7 @@ div.category-container{
     color: #FFFFFF;
     font-size: 11px;
     font-weight: 600;
+    white-space: nowrap;
 }
 .info-particulars-wrap{
     position: relative;
