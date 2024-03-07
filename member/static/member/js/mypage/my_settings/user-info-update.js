@@ -62,6 +62,7 @@ nicknameInput.addEventListener("keyup", (e) => {
 const newImageInput = document.querySelector("#new-image"); // 프로필 이미지 입력칸
 const imageDeleteButton = document.querySelector(".image-delete-button"); // 이미지 삭제 버튼
 const currentImage = document.querySelector(".current-my_profile-image"); // 화면에 표시되는 현재 이미지
+const prevImage = document.querySelector(".current-profile-image")
 
 // 이미지 파일인지를 검사하기 위해, 유효한 형식들을 배열로 만들어놓음
 const imageTypes = [];
@@ -86,12 +87,13 @@ newImageInput.addEventListener("change", (e) => {
   reader.addEventListener("load", (e) => {
     // 가져온 이미지 경로를 변수에 할당
     const imagePath = e.target.result;
-
+    console.log(imagePath)
     // 이미지 삭제 버튼 표시
     imageDeleteButton.style.display = "flex";
 
     // 해당 경로에서 이미지 가져와서 프로필 사진으로 띄움
-    currentImage.style.backgroundImage = `url(${imagePath})`;
+    currentImage.style.backgroundImage = `(${imagePath})`;
+    prevImage.style.display = 'none';
   });
 });
 
@@ -100,7 +102,7 @@ newImageInput.addEventListener("change", (e) => {
 imageDeleteButton.addEventListener("click", (e) => {
   // 프로필 이미지 기본값으로 원복
   currentImage.style.backgroundImage = `../../../images/mypage/base-profile-image.avif`;
-
+  prevImage.style.display = 'block';
   // 삭제 버튼 숨김
   e.target.style.display = "none";
 

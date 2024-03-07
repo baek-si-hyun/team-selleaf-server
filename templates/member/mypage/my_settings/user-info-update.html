@@ -187,6 +187,9 @@
     </form>
 {% endblock %}
 {% block js %}
+    <script>
+        const image = '{{ member_file }}'
+    </script>
     <script src="{% static 'member/js/mypage/my_settings/user-info-update.js' %}"></script>
     <script>
         "{{ request.session.member_files }}"
