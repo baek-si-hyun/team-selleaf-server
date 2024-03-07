@@ -19,22 +19,20 @@ class LectureView(View):
 class LectureDetailOnlineView(View):
     def get(self, request):
         lecture = Lecture.objects.get(id=request.GET['id'])
-        date = Date.objects.get(id=request.GET['id'])
+        date = Date.objects.filter(lecture_id=request.GET['id']).first()
 
         dates = lecture.date_set.all()
         times = date.time_set.all()
         kits = lecture.kit_set.all()
+
         context = {
             'lecture': lecture,
             'lecture_files': list(lecture.lectureproductfile_set.all()),
             'lecture_file': list(lecture.lectureproductfile_set.all())[0],
             'lecture_order_date': dates.order_by('date'),
             'lecture_order_time': times.order_by('time'),
-            'lecture_kit': kits.all()
-
+            'lecture_kit': kits.all(),
         }
-
-        print(context['lecture_kit'])
 
         return render(request, 'lecture/web/lecture-detail-online.html', context)
 
@@ -149,7 +147,6 @@ class LectureUploadOnlineView(View):
         for date in dates:
             lecture_date = Date.objects.create(lecture=lecture, date=date)
             # Time Create
-
             for time in times:
                 Time.objects.create(date=lecture_date, time=time)
 

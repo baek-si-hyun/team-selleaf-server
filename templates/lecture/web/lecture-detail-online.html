@@ -177,62 +177,6 @@
       <div class="product-overview-wrap">
         <nav class="product-category-wrap">
           <span>{{ lecture.teacher.member.member_name }}님의 {{ lecture.lecture_title }} 상품을 보고있어요🤗</span>
-{#          <ol class="product-category-container">#}
-{#            <li class="product-category-inner">#}
-{#              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"#}
-{#                >대구분</a#}
-{#              >#}
-{#              <svg#}
-{#                class="icon"#}
-{#                width="8"#}
-{#                height="8"#}
-{#                viewBox="0 0 8 8"#}
-{#                fill="currentColor"#}
-{#                preserveAspectRatio="xMidYMid meet"#}
-{#              >#}
-{#                <path#}
-{#                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"#}
-{#                ></path>#}
-{#              </svg>#}
-{#            </li>#}
-{#            <li class="product-category-inner">#}
-{#              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"#}
-{#                >중분류</a#}
-{#              >#}
-{#              <svg#}
-{#                class="icon"#}
-{#                width="8"#}
-{#                height="8"#}
-{#                viewBox="0 0 8 8"#}
-{#                fill="currentColor"#}
-{#                preserveAspectRatio="xMidYMid meet"#}
-{#              >#}
-{#                <path#}
-{#                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"#}
-{#                ></path>#}
-{#              </svg>#}
-{#            </li>#}
-{#            <li class="product-category-inner">#}
-{#              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"#}
-{#                >소분류</a#}
-{#              >#}
-{#              <svg#}
-{#                class="icon"#}
-{#                width="8"#}
-{#                height="8"#}
-{#                viewBox="0 0 8 8"#}
-{#                fill="currentColor"#}
-{#                preserveAspectRatio="xMidYMid meet"#}
-{#              >#}
-{#                <path#}
-{#                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"#}
-{#                ></path>#}
-{#              </svg>#}
-{#            </li>#}
-{#            <li class="product-category-inner">#}
-{#              <a href="/templates/lecture/web/class-total.htmlhtml" class="link">제품</a>#}
-{#            </li>#}
-{#          </ol>#}
         </nav>
         <div class="product-overview-container">
           <div class="product-overview-image-wrap">
@@ -258,12 +202,12 @@
                       aria-label="1 of 4"
                       style="width: 100%"
                     >
-                      <img
-                        class="product-cover-image"
-                        tabindex="0"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품서브이미지"
-                      />
+{#                      <img#}
+{#                        class="product-cover-image"#}
+{#                        tabindex="0"#}
+{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                        alt="상품서브이미지"#}
+{#                      />#}
                     </div>
                     <div
                       class="carousel-list-container"
@@ -752,10 +696,18 @@
                 <header class="detail-info-title">
                   <h1 class="detail-info-title-text">상품정보</h1>
                 </header>
-{#                 콘텐츠 내용 추가될 항목#}
-{#                {% for lecture_file in lecture_files %}#}
-{#                {% endfor %}#}
-{#                src="/upload/{{ lecture_file.file_url }}"#}
+                <div class="detail-info-contents-wrap">
+                  <div class="detail-info-contents-thumbnail">
+                  </div>
+                  {% for lecture_file in lecture_files %}
+                    <img
+                      class="detail-info-image"
+                      src="/upload/{{ lecture_file.file_url }}"
+                      alt="판매자 등록이미지"
+                    />
+                  {% endfor %}
+                </div>
+                <p class="product-review-description">{{ lecture.lecture_content }}</p>
               </section>
               <a id="product-review"></a>
               <section class="product-review-wrap">
@@ -3104,7 +3056,7 @@
                       <tr>
                         <th>보내실 곳</th>
                         <td>
-                          (42697) 대구 달서구 성서로68길 39 (갈산동) 그래이불
+                          <span>{{ lecture.teacher.member.me }}</span>
                         </td>
                       </tr>
                     </tbody>
