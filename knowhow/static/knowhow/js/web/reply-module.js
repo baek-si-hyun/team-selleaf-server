@@ -10,8 +10,8 @@ const replyService = (() => {
         });
     }
 
-    const getList = async (post_id, page, callback) => {
-        const response = await fetch(`/knowhow/replies/list/${post_id}/${page}`);
+    const getList = async (knowhow_id, page, callback) => {
+        const response = await fetch(`/knowhow/replies/list/${knowhow_id}/${page}`);
         const replies = await response.json();
         if(callback){
             return callback(replies);
@@ -36,6 +36,12 @@ const replyService = (() => {
             body: JSON.stringify({'reply_content': reply.replyContent})
         });
     }
+
+    // const count = async (knowhow_id) => {
+    //     await fetch(`/knowhow/reply/counts`)
+    //
+    //
+    // }
 
     return {write: write, getList: getList, remove: remove, update: update}
 })();
