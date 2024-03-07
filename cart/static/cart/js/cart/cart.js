@@ -87,6 +87,11 @@ subBtns.forEach((subBtn, i) => {
   });
 });
 
+const cartItem = document.querySelector(".cart-item-wrap")
+
+
+
+
 // innerHTML
 // <li className="product-preview-wrap">
 //   <div className="product-preview-container">

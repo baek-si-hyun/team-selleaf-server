@@ -6,7 +6,8 @@
 {% block title %}CART{% endblock %}
 {% block content %}
     <div class="payment-wrap">
-      <form class="payment-container">
+      <form class="payment-container" action="/cart/" method="post">
+        {% csrf_token %}  
         <article class="paymeny-inner">
           <h1 class="paymeny-title">장바구니</h1>
           <!-- 장바구니에 담은 상품이 있다면 표시 -->
@@ -17,16 +18,13 @@
                 <span class="product-count">{{ cart_details.count }}건</span>
               </p>
             </div>
-            <!-- 상품이 없다면 이 부분의 텍스트 및 버튼 표시 -->
-            
             <!-- 상품이 하나라도 있다면 아래의 article 태그 display = block -->
             {% if cart_details %}
                 <article class="contents-wrap">
               {% for cart_detail in cart_details %}
-                <ul>
+                <ul class="cart-item-wrap">
                 <!-- 장바구니에 담은 상품 리스트 -->
-                
-              </ul>
+                </ul>
               {% endfor %}
             </article>
             {% else %}

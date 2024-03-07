@@ -102,6 +102,7 @@ class MypageUpdateView(View):
                 member_profile.save()
 
         return redirect("member:update")
+
 # class MypageUpdateView(View):
 #     def get(self,request):
 #         request.session['member']=MemberSerializer(Member.objects.get(id=request.session['member']['id'])).data
