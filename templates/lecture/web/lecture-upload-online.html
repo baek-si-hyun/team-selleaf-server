@@ -5,7 +5,7 @@
 {% endblock %}
 {% block title %}수강포스팅-온라인{% endblock %}
 {% block content %}
-<form action="{% url 'lecture:upload-online' %}" method="post" name="lecture-online-upload" >
+<form action="{% url 'lecture:upload-online' %}" method="post" name="lecture-online-upload" enctype="multipart/form-data">
 {% csrf_token %}
   <body>
     <div class="layout-wrap">
@@ -289,9 +289,9 @@
                                   <div class="info-list-wrap">
                                     <input
                                       type="number"
-                                      class="member-input"
+                                      class="price-input"
                                       placeholder="1인당 가격을 입력하세요"
-                                      name="member-input"
+                                      name="price-input"
                                     />
                                     <span class="price-index">원</span>
                                   </div>
@@ -312,9 +312,9 @@
                                   <div class="info-list-wrap">
                                     <input
                                       type="number"
-                                      class="price-input"
+                                      class="number-input"
                                       placeholder="수업 인원을 입력하세요"
-                                      name="price-input"
+                                      name="number-input"
                                     />
                                     <span class="price-index">명</span>
                                   </div>
@@ -477,9 +477,9 @@
                                     <label class="time-selection">
                                         <input type="radio" name="time-type" value="01:00" style="display: none"><div>1시간</div>
                                     </label>
-				                    <label class="time-selection">
-                                        <input type="radio" name="time-type" value="02:00" style="display: none"><div>2시간</div>
-                                    </label>
+{#				                    <label class="time-selection">#}
+{#                                        <input type="radio" name="time-type" value="02:00" style="display: none"><div>2시간</div>#}
+{#                                    </label>#}
                                   </div>
                                 </span>
                               </div>
@@ -500,6 +500,7 @@
                                       class="diy-input"
                                       placeholder="키트이름을 입력하세요"
                                       name="diy-name-input"
+                                      type="text"
                                     />
                                   </div>
                                 </span>
@@ -509,6 +510,7 @@
                                       class="diy-input"
                                       placeholder="간단한 설명을 입력하세요"
                                       name="diy-content-input"
+                                      type="text"
                                     />
                                   </div>
                                 </span>
@@ -569,6 +571,7 @@
                                       class="diy-input"
                                       placeholder="키트 이름을 입력하세요"
                                       name="diy-name-input"
+                                      type="text"
                                     />
                                   </div>
                                 </span>
@@ -578,6 +581,7 @@
                                       class="diy-input"
                                       placeholder="간단한 설명을 입력하세요"
                                       name="diy-content-input"
+                                      type="text"
                                     />
                                   </div>
                                 </span>
