@@ -67,14 +67,19 @@ function showList() {
   });
 }
 function handleScroll() {
+  // 맨위
   const scrollTop = document.documentElement.scrollTop;
+  // 페이지 높이
   const windowHeight = window.innerHeight;
+  // 암튼 높이
   const totalHeight = document.documentElement.scrollHeight;
+  // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
   if (scrollTop + windowHeight >= totalHeight - 300) {
     showList();
   }
 }
 
+// 스크롤 할대마다 handleScroll 실행
 window.addEventListener("scroll", handleScroll);
 showList();
 

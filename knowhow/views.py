@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import transaction
 from django.db.models import F, Count
 from django.shortcuts import render, redirect
@@ -88,26 +90,23 @@ class KnowhowDetailView(View):
             'reply_count': reply_count
         }
 
-        # knowhow.post_read_count += 1
-        # knowhow.updated_date = timezone.now()
-        # post.save(update_fields=['post_read_count', 'updated_date'])
-
         return render(request, 'community/web/knowhow/knowhow-detail.html', context)
-
-
 
 class KnowhowListView(View):
     def get(self, request):
+        return render(request, 'community/web/knowhow/knowhow.html')
 
-        knowhow = Knowhow.objects.get(id=3)
-        print(knowhow)
-        knowhow_file = list(knowhow.knowhowfile_set.all())[0]
+class KnowhowListApi(APIView):
+    def get(self, request, page):
+        row_count = 9
+        offset = (page - 1) * row_count
+        limit = row_count * page
 
-        context = {
-            'knowhow': knowhow,
-            'knowhow_file': knowhow_file,
-        }
-        return render(request, 'community/web/knowhow/knowhow.html', context)
+        knowhows = Knowhow.objects.annotate(member_name=F('member__member_name'), knowhow_file=F('knowhowfile__file_url'))\
+            .values('knowhow_title', 'member_name', 'knowhow_content', 'knowhow_count', 'knowhow_file')
+        print(knowhows)
+
+        return Response(knowhows[offset:limit])
 
 class KnowhowReplyWriteApi(APIView):
     @transaction.atomic
