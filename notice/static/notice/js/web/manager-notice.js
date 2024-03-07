@@ -1,3 +1,24 @@
+// 페이지가 열릴 때 체크된 박스가 없다면 삭제 버튼 disabled
+const deleteBtn = document.querySelector(".delete-button");
+
+// 현재 체크된 박스의 개수를 세는 함수
+const countCheckBoxes = () => {
+  // 각 체크박스의 상태가 변할 때마다 체크된 박스의 개수를 셈
+  const checkedBoxes = document.querySelectorAll("input[type='checkbox']:checked")
+
+  // 체크된 박스가 하나라도 있다고 가정하고 삭제 버튼의 disabled 해제
+  deleteBtn.disabled = false;
+
+  // 체크된 박스가 하나도 없다면 삭제 버튼 disabled
+  if (checkedBoxes.length === 0) {
+    deleteBtn.disabled = true;
+  }
+}
+
+// 페이지가 열렸을 때 체크된 박스 개수를 셈
+countCheckBoxes();
+
+
 // 가장 최근에 작성된 순으로 10개의 공지사항을 부리기 위해 초기값을 1로 설정
 let page = 1
 
@@ -47,7 +68,7 @@ const showNotice = (notice_info) => {
     `
   });
 
-  // 체크박스 js
+  // 체크박스 관련 js
   const allCheck = document.querySelector(".all-check");
   const checkboxes = document.querySelectorAll(".checkbox-input");
 
@@ -55,6 +76,9 @@ const showNotice = (notice_info) => {
   allCheck.addEventListener("change", function () {
     checkboxes.forEach(function (checkbox) {
       checkbox.checked = allCheck.checked;
+
+      // 현재 체크된 박스 개수를 세서 삭제 버튼의 활성화 여부 조정
+      countCheckBoxes();
     });
   });
 
@@ -84,6 +108,10 @@ const showNotice = (notice_info) => {
     });
   });
 
+  // 체크박스의 체크 상태가 변할 때마다 체크된 박스 개수를 셈
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", countCheckBoxes);
+  });
 }
 
 // 위 함수들을 사용해서 페이지가 열렸을 때 화면에 공지사항 표시
