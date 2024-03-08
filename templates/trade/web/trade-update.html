@@ -5,9 +5,10 @@
 {% endblock %}
 {% block title %}거래포스팅{% endblock %}
 {% block content %}
-<form action="{% url 'trade:update' %}" method="post" name="trade-upload" enctype="multipart/form-data">
-{% csrf_token %}
+<form action="{% url 'trade:update' %}" method="post" name="trade-update" enctype="multipart/form-data">
+  {% csrf_token %}
   <body>
+    <input type="hidden" name="id" value="{{ trade.id }}">
     <div class="layout-wrap">
       <div class="layout-container">
         <div
@@ -39,7 +40,7 @@
 {#                        </button>#}
 {#                      </div>#}
 {#                    </div>#}
-                    <button class="establish">
+                    <button class="establish" type="submit">
                       <span class="establish-ask-letter">수정하기</span>
                       <span class="establish-letter">수정</span>
                     </button>
@@ -545,7 +546,6 @@
 </form>
 {% endblock %}
 {% block js %}
-  <script> const tradeFile = '{{ trade.tradefile_set.values }}' </script>
-  <script src="{% static 'trade/js/web/trade-update.js' %}"></script>
+{#  <script src="{% static 'trade/js/web/trade-update.js' %}"></script>#}
   <script src="{% static 'trade/js/web/trade-upload.js' %}"></script>
 {% endblock %}
