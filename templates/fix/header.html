@@ -159,7 +159,7 @@
                       class="header-kakao-button"
                     >
                         {% if memberProfile %}  
-                           {% if 'https' in memberProfile %}
+                           {% if 'http' in memberProfile %}
                               <img src="{{ memberProfile }}" alt="" class="current-profile-image">
                            {% else %}
                               <img src="/upload/{{ memberProfile }}" alt="" class="current-profile-image">

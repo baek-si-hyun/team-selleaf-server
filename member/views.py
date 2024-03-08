@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 
 from member.models import Member, MemberAddress, MemberProfile
 from member.serializers import MemberSerializer
-from post.models import Post, PostFile, PostPlant
+from post.models import Post, PostFile, PostPlant, PostReply
 
 
 class MemberJoinView(View):
@@ -114,7 +114,6 @@ class MypagePostView(View):
     def get(self,request):
         member = request.session['member']
         member_file = request.session['member_files']
-        print(member_file)
         context = {
             'member':member,
             'memberProfile': member_file[0]['file_url']
@@ -122,32 +121,31 @@ class MypagePostView(View):
         return render(request,'member/mypage/my_profile/my-posts.html',context)
 
 class MypagePostListAPI(APIView):
-    def get(self, request):
-        member_id = request.session['member']['id']
-        posts = Post.objects.filter(member_id = member_id)\
+
+    def get(self, request, member_id):
+        print(member_id)
+        posts = Post.objects.filter(member=member_id)\
             .annotate(member_name=F('member__member_name'))\
             .values(
-            'id',
-            'post_title',
-            'post_content',
-            'post_count',
-            'member_name',
-            'updated_date',
-            'post_file',
-            'post_plant'
-        )
+                'id',
+                'post_title',
+                'post_content',
+                'post_count',
+                'member_name',
+                'updated_date',
+            )
 
         for post in posts:
-            post_file = PostFile.objects.filter(id = post['id']).values('file_url').first()
-            post['post_file']= post_file['file_url']
+            post_file = PostFile.objects.filter(post_id=post['id']).values('file_url').first()
+            if post_file is not None:
+                post['post_file'] = post_file['file_url']
+            else:
+                post['post_file'] = 'file/2024/03/05/blank-image.png'
 
-        for post in posts:
-            post_file_list = []
-            post_plant = PostPlant.objects.filter(id = post['id']).values('plant_name')
-            post_file_list.append(post_plant)
+            tags = PostPlant.objects.filter(post_id=post['id']).values('plant_name')
+            post['post_plant'] = [tag['plant_name'] for tag in tags]
 
-            post['post_plant']= post_file_list
-
-        print(posts)
+            replies = PostReply.objects.filter(post_id=post['id']).values('id')
+            post['post_reply'] = [reply['id'] for reply in replies]
 
         return Response(posts)
