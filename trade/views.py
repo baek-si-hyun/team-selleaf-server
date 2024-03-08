@@ -44,7 +44,18 @@ class TradeUpdateView(View):
         trade = Trade.objects.get(id=request.GET['id'])
         return render(request, "trade/web/trade-update.html", {'trade': trade})
 
+    def post(self, request):
+        data = request.POST
 
+        # 수정할 거래 게시물 가져오기
+        trade = Trade.objects.get(id=data['id'])
+
+
+        # # 게시물중 카테고리 아이디 찾아오기
+        # trade_category_number = Trade.objects.filter(id=trade_id).values('trade_category_id')
+
+
+        return redirect(f'/trade/detail/?id={trade.id}')
 class TradeMainView(View):
     def get(self, request):
         return render(request, "trade/web/trade-main.html")
