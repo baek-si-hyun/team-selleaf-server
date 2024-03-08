@@ -18,7 +18,6 @@ const countCheckBoxes = () => {
 // 페이지가 열렸을 때 체크된 박스 개수를 셈
 countCheckBoxes();
 
-
 // 가장 최근에 작성된 순으로 10개의 공지사항을 부리기 위해 초기값을 1로 설정
 let page = 1
 
@@ -137,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // 삭제 버튼 이벤트 - 체크된 공지사항만 삭제
-  confirmButton.addEventListener("click", async (e) => {
+  confirmButton.addEventListener("click", (e) => {
     modalWrap.style.display = "none";
 
     // 삭제할 공지사항의 id를 담을 빈 배열
@@ -215,7 +214,7 @@ inputField.addEventListener("input", handleInputChange);
 // cancel-logo에 클릭 이벤트 리스너를 추가합니다.
 cancelButton.addEventListener("click", handleCancelClick);
 
-// 공지사항, 자주묻는 질문 목록 선택하는 js
+// 공지사항 선택하는 js
 const catebtns = document.querySelectorAll("#btn");
 const cateUnder = document.querySelectorAll("#under");
 cateUnder[0].classList.add("underbar-checked");

@@ -764,7 +764,7 @@ div.content-open-wrap{
     margin-left: 32px;
 }
 
-a.update-notice {
+a.update-qna {
     column-gap: 32px;
     align-items: center;
     display: flex;
@@ -773,7 +773,7 @@ a.update-notice {
     font-weight: 700;
 }
 
-a.update-notice:hover {
+a.update-qna:hover {
     opacity: 0.7;
 }
 
