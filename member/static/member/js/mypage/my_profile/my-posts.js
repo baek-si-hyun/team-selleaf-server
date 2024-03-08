@@ -74,3 +74,66 @@ else {
   postWrap.style.display = "flex";
   noContentWrap.style.display = "none";
 }
+
+
+const showList = ((posts) => {
+  let text = ``
+  posts.forEach((post) => {
+    post
+  })
+})
+
+
+// <div class="post-container">
+//                     <div class="post-inner">
+//                       <article class="post">
+//                         <a href="#" class="post-link"></a>
+//                         <div class="post-image-wrap_">
+//                           <div class="post-image-container">
+//                             <div class="post-image-inner">
+//                               <div class="post-image"></div>
+//                               <img
+//                                 src="{% static 'public/web/images/common/blank-image.png' %}"
+//                                 alt=""
+//                                 class="image"
+//                               />
+//                               <div class="image__dark-overlay"></div>
+//                             </div>
+//                           </div>
+//                         </div>
+//                         <div class="post-contents-wrap">
+//                           <div class="post-contents-container">
+//                             <h1 class="post-contents-header">
+//                               <span class="post-contents-user">작성자입력</span>
+//                               <span class="post-contents-banner">게시글명</span>
+//                             </h1>
+//                             <span class="post-price">
+//                               <span class="post-price-letter">35,000</span>
+//                             </span>
+//                             <div class="post-content-pc-reply">
+//                               <p class="post-content-reply">댓글 갯수</p>
+//                               <p class="post-content-scrap">스크랩 갯수</p>
+//                             </div>
+//                             <span class="post-tag">
+//                               <span class="post-tag-icon">태그1</span>
+//                             </span>
+//                           </div>
+//                         </div>
+//                       </article>
+//                     </div>
+//                   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

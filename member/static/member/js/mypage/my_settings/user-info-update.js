@@ -73,6 +73,7 @@ const imageTypes = [];
     파일을 불러와서 해당 input의 value가 변경될 때 이벤트 발생
 */
 newImageInput.addEventListener("change", (e) => {
+    const img=  document.querySelector('#image-change')
     // 불러온 파일을 구조분해 할당으로 변수에 할당
     const [file] = e.target.files;
 
@@ -85,7 +86,10 @@ newImageInput.addEventListener("change", (e) => {
       const imagePath = event.target.result;
       // 해당 경로에서 이미지 가져와서 프로필 사진으로 띄움
       prevImage.setAttribute('src', imagePath)
+      const realimg=img.querySelector('img')
+      realimg.setAttribute('src', imagePath)
       imageDeleteButton.style.display = "flex";
+      prevImage.style.display = 'flex';
     };
 
     if (file) {
@@ -97,7 +101,6 @@ newImageInput.addEventListener("change", (e) => {
 // 클릭 시, 기존의 프로필 이미지로 원복하고, 삭제 버튼 숨김
 imageDeleteButton.addEventListener("click", (e) => {
     // 프로필 이미지 기본값으로 원복
-    currentImage.style.backgroundImage = `../../../images/mypage/base-profile-image.avif`;
     prevImage.style.display = 'block';
     // 삭제 버튼 숨김
     e.target.style.display = "none";

@@ -76,8 +76,10 @@ function checkForChanges() {
   // 수정 여부를 확인하여 수정 버튼의 상태를 변경합니다.
   if (currentTitle !== originalTitle || currentContent !== originalContent) {
     editButton.classList.add("compose-storage-checked");
+    editButton.disabled = false;
   } else {
     editButton.classList.remove("compose-storage-checked");
+    editButton.disabled = true;
   }
 }
 

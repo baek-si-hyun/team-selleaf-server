@@ -8,6 +8,7 @@ const sidebarInputTarget = document.querySelector(".sidebar-selected-product-opt
 // 날짜 선택 시 동작
 days.forEach((day) => {
   day.addEventListener("click", (e) => {
+    console.log("날짜들어옴")
     // 모든 요일에서 clicked 클래스를 제거
     days.forEach((otherday) => {
       otherday.classList.remove("clicked");
@@ -22,12 +23,12 @@ days.forEach((day) => {
     sidebarInner.innerHTML = `${selectedDay}`;
 
     // 시간 섹션을 보이거나 숨김
-    if (day.classList.contains("clicked")) {
-      timeSection.style.display = "block";
-      kitSection.style.display = "none"; // 시간 선택 시에는 키트 선택 섹션을 숨김
-    } else {
-      timeSection.style.display = "none";
-    }
+    // if (day.classList.contains("clicked")) {
+    //   timeSection.style.display = "block";
+    //   kitSection.style.display = "none"; // 시간 선택 시에는 키트 선택 섹션을 숨김 ***********8
+    // } else {
+    //   timeSection.style.display = "none";
+    // }
   });
 });
 
@@ -38,6 +39,7 @@ const sidebarselectBox = document.querySelector(".sidebar-selected-product-wrap"
 
 times.forEach((time) => {
   time.addEventListener("click", (e) => {
+    console.log("시간들어옴")
     // 모든 시간 요소에서 clicked 클래스를 제거
     times.forEach((othertime) => {
       othertime.classList.remove("clicked");
@@ -50,16 +52,17 @@ times.forEach((time) => {
     var sidebarInner = sidebarInputTarget.querySelector(".selected-time");
     inner.innerHTML = `${selectedTime}`;
     sidebarInner.innerHTML = `${selectedTime}`;
-
+    console.log("dasdasda")
     // 체크 요소를 보이거나 숨김
-    if (time.classList.contains("clicked")) {
-      check.style.display = "block";
-      sidebarselectBox.style.display = "block";
-      kitSection.style.display = "block"; // 시간 선택 시에는 키트 선택 섹션을 보이게 함
-    } else {
-      check.style.display = "none";
-      sidebarselectBox.style.display = "none";
-    }
+    // if (time.classList.contains("clicked")) {
+    //   console.log("dasdasda")
+    //   check.style.display = "block";
+    //   sidebarselectBox.style.display = "block";
+    //   kitSection.style.display = "block"; // 시간 선택 시에는 키트 선택 섹션을 보이게 함
+    // } else {
+    //   check.style.display = "none";
+    //   sidebarselectBox.style.display = "none";
+    // }
   });
 });
 

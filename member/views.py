@@ -1,10 +1,14 @@
+from django.db.models import Count, F
 from django.utils import timezone
 
 from django.shortcuts import render, redirect
 from django.views import View
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from member.models import Member, MemberAddress, MemberProfile
 from member.serializers import MemberSerializer
+from post.models import Post, PostFile, PostPlant
 
 
 class MemberJoinView(View):
@@ -75,12 +79,14 @@ class MypageUpdateView(View):
     def get(self, request):
         member_id = request.session['member']['id']
         request.session['member'] = MemberSerializer(Member.objects.get(id=member_id)).data
-        member = Member.objects.get(id=member_id)
         check = request.GET.get('check')
-        member_files = list(member.memberprofile_set.values_list('file_url', flat=True))
+        member_files = MemberProfile.objects.filter(id = member_id).first()
+        session_file = request.session['member_files'][0]['file_url']
+        member_file = member_files.file_url
         context = {
             'check': check,
-            'member_files': member_files,
+            'member_file': member_file,
+            'memberProfile': session_file
         }
         return render(request, 'member/mypage/my_settings/user-info-update.html', context)
 
@@ -100,50 +106,48 @@ class MypageUpdateView(View):
                 member_profile.file_url = file
                 member_profile.updated_date = timezone.now()
                 member_profile.save()
-
+        request.session['member_files'] = list(member.memberprofile_set.values('file_url'))
         return redirect("member:update")
-# class MypageUpdateView(View):
-#     def get(self,request):
-#         request.session['member']=MemberSerializer(Member.objects.get(id=request.session['member']['id'])).data
-#         member=Member.objects.get(id=request.GET['id'])
-#         check = request.GET.get('check')
-#         context = {
-#             'check': check,
-#             'member_files': list(member.memberprofile_set.all()),
-#         }
-#         return render(request, 'member/mypage/my_settings/user-info-update.html', context)
-#
-#
-#     def post(self, request):
-#         data = request.POST
-#         print(data)
-#         file = request.FILES
-#
-#         data = {
-#             'member_name': data['member-name'],
-#         }
-#         member = Member.objects.get(id=request.session['member']['id'])
-#         member_file = MemberProfile.objects.filter(member_id=member.id)
-#
-#         if member_file.exists():
-#             member_file = member_file.first()
-#
-#         else:
-#             member_file = MemberProfile(member=member)
-#
-#         for key in file:
-#             member_file.file_url = file[key]
-#             member_file.updated_date = timezone.now()
-#             member_file.save()
-#
-#
-#         member.member_name = data['member_name']
-#         member.updated_date = timezone.now()
-#         member.save(update_fields=['member_name', 'updated_date'])
-#         member_files = list(member.memberprofile_set.values('file_url'))
-#         if len(member_files) != 0:
-#             request.session['member_files'] = member_files
-#
-#             return redirect("member:update")
-#
-#         return redirect(f"/member/update?id={member.id}check=false")
+
+
+class MypagePostView(View):
+    def get(self,request):
+        member = request.session['member']
+        member_file = request.session['member_files']
+        print(member_file)
+        context = {
+            'member':member,
+            'memberProfile': member_file[0]['file_url']
+        }
+        return render(request,'member/mypage/my_profile/my-posts.html',context)
+
+class MypagePostListAPI(APIView):
+    def get(self, request):
+        member_id = request.session['member']['id']
+        posts = Post.objects.filter(member_id = member_id)\
+            .annotate(member_name=F('member__member_name'))\
+            .values(
+            'id',
+            'post_title',
+            'post_content',
+            'post_count',
+            'member_name',
+            'updated_date',
+            'post_file',
+            'post_plant'
+        )
+
+        for post in posts:
+            post_file = PostFile.objects.filter(id = post['id']).values('file_url').first()
+            post['post_file']= post_file['file_url']
+
+        for post in posts:
+            post_file_list = []
+            post_plant = PostPlant.objects.filter(id = post['id']).values('plant_name')
+            post_file_list.append(post_plant)
+
+            post['post_plant']= post_file_list
+
+        print(posts)
+
+        return Response(posts)

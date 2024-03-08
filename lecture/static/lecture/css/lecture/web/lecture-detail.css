@@ -87,6 +87,7 @@ div.category-container{
     color: #FFFFFF;
     font-size: 11px;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 
@@ -684,7 +685,9 @@ div.category-container{
 }
 
 .info-type{
-    display: block;
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
     margin-bottom: 4px;
     color: #292929;
 }

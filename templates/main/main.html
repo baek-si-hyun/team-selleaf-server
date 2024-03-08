@@ -181,9 +181,7 @@
             <div class="realmain-lectureRecommend-lattercontent">
               <div class="realmain-lectureRecommend-lattercond">
                 <div class="realmain-lectureRecommend-lattercondd">
-                  <strong class="realmain-stronglatter"
-                    >쉽게 알려주는 원데이 클래스🤩</strong
-                  >
+                  <strong class="realmain-stronglatter">쉽게 알려주는 원데이 클래스🤩</strong>
                 </div>
               </div>
               <div class="realmain-lecture-seeMore-wrap">
@@ -194,150 +192,44 @@
             </div>
             <div class="realmain-lecture-photoWrap">
               <div class="realmain-lecture-photoDiv">
-                <div class="realmain-lecture-photoEachdiv">
-                  <div class="realmain-lecture-photoEachphoto">
-                    <img
-                       src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="realmain-lecture-photo"
-                    />
-                    <div class="realmain-lecture-why">
-                      <div class="realmain-lecture-whydiv"></div>
+                {% for lecture in lectures %}
+                  <div class="realmain-lecture-photoEachdiv {{ lecture.id }}">
+                      <div class="realmain-lecture-photoEachphoto">
+                        <img
+                           src="/upload/{{ lecture.lecture_file_url }}"
+                          class="realmain-lecture-photo"
+                        />{{ lecture.lecture_file_url }}
+                        <div class="realmain-lecture-why">
+                          <div class="realmain-lecture-whydiv"></div>
+                        </div>
+                        <div class="realmain-lecture-scrap">
+                          <button
+                            type="button"
+                            aria-label="scrap 토글 버튼"
+                            class="scrap-button"
+                          >
+                            <span class="realmain-lecture-scrapSpan">
+                              <img
+                                src="{% static 'public/web/images/common/scrap-off.png' %}"
+                                width="24"
+                                height="24"
+                                class="scrap-off-img"
+                              />
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="realmain-lecture-explanationDiv">
+                        <p class="realmain-lecture-explanationP">
+                          <span class="realmain-lecture-explanationSpan"
+                            >{{ lecture.lecture_title }}</span
+                          >
+                          {{ lecture.lecture_content }}
+                        </p>
+                      </div>
+                      <a class="realmain-lecture-explanationA" href="/lecutre/detail/?id={{ lecture.id }}"></a>
                     </div>
-                    <div class="realmain-lecture-scrap">
-                      <button
-                        type="button"
-                        aria-label="scrap 토글 버튼"
-                        class="scrap-button"
-                      >
-                        <span class="realmain-lecture-scrapSpan">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            width="24"
-                            height="24"
-                            class="scrap-off-img"
-                          />
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="realmain-lecture-explanationDiv">
-                    <p class="realmain-lecture-explanationP">
-                      <span class="realmain-lecture-explanationSpan"
-                        >상품명</span
-                      >
-                      서브타이틀
-                    </p>
-                  </div>
-                  <a class="realmain-lecture-explanationA" href="#"></a>
-                </div>
-                <div class="realmain-lecture-photoEachdiv">
-                  <div class="realmain-lecture-photoEachphoto">
-                    <img
-                       src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="realmain-lecture-photo"
-                    />
-                    <div class="realmain-lecture-why">
-                      <div class="realmain-lecture-whydiv"></div>
-                    </div>
-                    <div class="realmain-lecture-scrap">
-                      <button
-                        type="button"
-                        aria-label="scrap 토글 버튼"
-                        class="scrap-button"
-                      >
-                        <span class="realmain-lecture-scrapSpan">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            width="24"
-                            height="24"
-                            class="scrap-off-img"
-                          />
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="realmain-lecture-explanationDiv">
-                    <p class="realmain-lecture-explanationP">
-                      <span class="realmain-lecture-explanationSpan"
-                        >상품명</span
-                      >
-                      서브타이틀
-                    </p>
-                  </div>
-                  <a class="realmain-lecture-explanationA" href="#"></a>
-                </div>
-                <div class="realmain-lecture-photoEachdiv">
-                  <div class="realmain-lecture-photoEachphoto">
-                    <img
-                       src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="realmain-lecture-photo"
-                    />
-                    <div class="realmain-lecture-why">
-                      <div class="realmain-lecture-whydiv"></div>
-                    </div>
-                    <div class="realmain-lecture-scrap">
-                      <button
-                        type="button"
-                        aria-label="scrap 토글 버튼"
-                        class="scrap-button"
-                      >
-                        <span class="realmain-lecture-scrapSpan">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            width="24"
-                            height="24"
-                            class="scrap-off-img"
-                          />
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="realmain-lecture-explanationDiv">
-                    <p class="realmain-lecture-explanationP">
-                      <span class="realmain-lecture-explanationSpan"
-                        >상품명</span
-                      >
-                      서브타이틀
-                    </p>
-                  </div>
-                  <a class="realmain-lecture-explanationA" href="#"></a>
-                </div>
-                <div class="realmain-lecture-photoEachdiv">
-                  <div class="realmain-lecture-photoEachphoto">
-                    <img
-                       src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="realmain-lecture-photo"
-                    />
-                    <div class="realmain-lecture-why">
-                      <div class="realmain-lecture-whydiv"></div>
-                    </div>
-                    <div class="realmain-lecture-scrap">
-                      <button
-                        type="button"
-                        aria-label="scrap 토글 버튼"
-                        class="scrap-button"
-                      >
-                        <span class="realmain-lecture-scrapSpan">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            width="24"
-                            height="24"
-                            class="scrap-off-img"
-                          />
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="realmain-lecture-explanationDiv">
-                    <p class="realmain-lecture-explanationP">
-                      <span class="realmain-lecture-explanationSpan"
-                        >상품명</span
-                      >
-                      서브타이틀
-                    </p>
-                  </div>
-                  <a class="realmain-lecture-explanationA" href="#"></a>
-                </div>
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -732,69 +624,25 @@
             </div>
             <div class="realmain-userReview-photoWrap">
               <div class="realmain-userReview-photoContent">
-                <div class="realmain-userReview-photoContentD">
-                  <div class="realmain-userReview-photoContentDD">
-                    <img
-                       src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="realmain-userReview-img"
-                    />
-                    <div class="realmain-userReview-whyDiv">
-                      <div class="realmain-userReview-whyDivD"></div>
+                {% for lectureReview in lectureReviews %}
+                    <div class="realmain-userReview-photoContentD {{ lectureReview.lecture_id }}">
+                      <div class="realmain-userReview-photoContentDD">
+                        <img
+                           src="/upload/{{ lectureReview.lecture_file_url }}"
+                          class="realmain-userReview-img"
+                        />
+                        <div class="realmain-userReview-whyDiv">
+                          <div class="realmain-userReview-whyDivD"></div>
+                        </div>
+                      </div>
+                      <div class="realmain-userReview-contentWrap">
+                        <p class="realmain-userReview-contentP">{{ lectureReview.lecture_title }}</p>
+                        <p class="realmain-userReview-contentPP">{{ lectureReview.review_content }}</p>
+                      </div>
+                      <a class="realmain-userReview-contentA" 
+                         href="/lecture/detail/?id={{ lectureReview.lecture_id }}/"></a>
                     </div>
-                  </div>
-                  <div class="realmain-userReview-contentWrap">
-                    <p class="realmain-userReview-contentP">수강강의이름</p>
-                    <p class="realmain-userReview-contentPP">
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                    </p>
-                  </div>
-                  <a class="realmain-userReview-contentA" href="#"></a>
-                </div>
-                <div class="realmain-userReview-photoContentD">
-                  <div class="realmain-userReview-photoContentDD">
-                    <img
-                       src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="realmain-userReview-img"
-                    />
-                    <div class="realmain-userReview-whyDiv">
-                      <div class="realmain-userReview-whyDivD"></div>
-                    </div>
-                  </div>
-                  <div class="realmain-userReview-contentWrap">
-                    <p class="realmain-userReview-contentP">수강강의이름</p>
-                    <p class="realmain-userReview-contentPP">
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                    </p>
-                  </div>
-                  <a class="realmain-userReview-contentA" href="#"></a>
-                </div>
-                <div class="realmain-userReview-photoContentD">
-                  <div class="realmain-userReview-photoContentDD">
-                    <img
-                       src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="realmain-userReview-img"
-                    />
-                    <div class="realmain-userReview-whyDiv">
-                      <div class="realmain-userReview-whyDivD"></div>
-                    </div>
-                  </div>
-                  <div class="realmain-userReview-contentWrap">
-                    <p class="realmain-userReview-contentP">수강강의이름</p>
-                    <p class="realmain-userReview-contentPP">
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                      수강평 수강평 수강평 수강평 수강평 수강평 수강평 수강평
-                    </p>
-                  </div>
-                  <a class="realmain-userReview-contentA" href="#"></a>
-                </div>
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -1210,5 +1058,9 @@
     </div>
  {% endblock %}
 {% block js %}
+    <script>
+        const csrf_token = '{{ csrf_token }}';
+    </script>
+    <script src="{% static 'main/js/scrap-module.js' %}"></script>
     <script src="{% static 'main/js/main.js' %}"></script>
 {% endblock %}

@@ -19,22 +19,43 @@ class LectureView(View):
 class LectureDetailOnlineView(View):
     def get(self, request):
         lecture = Lecture.objects.get(id=request.GET['id'])
-        date = Date.objects.get(id=request.GET['id'])
+        date = Date.objects.filter(lecture_id=request.GET['id']).first()
+
+        # 방금 올린 강의를 작성한 사용자 찾기
+        teacher_id = lecture.teacher_id
+        # print(teacher_id)
+
+        # 방금 강의를 올린 사용자가 작성한 다른 강의
+        lectures = Lecture.objects.filter(teacher_id=teacher_id, lecture_status=True).values()
+        # print(lectures)
+
+        for lte in lectures:
+            lecture_img = LectureProductFile.objects.filter(lecture_id=lte['id']).values('file_url').first()
+            print(lecture_img)
+            if lecture_img:
+                lte['product_img'] = lecture_img['file_url']
+            else:
+                # 기본값이나 스킵 처리 등을 추가할 수 있음
+                lte['product_img'] = None  # 혹은 기본 이미지 URL 설정
+
+            lecture_plants = LecturePlant.objects.filter(lecture_id=lte['id']).values('plant_name')
+            lecture_plants_list = list(lecture_plants)
+            product_list = [item['plant_name'] for item in lecture_plants_list]
+            lte['plant_name'] = product_list
 
         dates = lecture.date_set.all()
         times = date.time_set.all()
         kits = lecture.kit_set.all()
+
         context = {
             'lecture': lecture,
             'lecture_files': list(lecture.lectureproductfile_set.all()),
             'lecture_file': list(lecture.lectureproductfile_set.all())[0],
             'lecture_order_date': dates.order_by('date'),
             'lecture_order_time': times.order_by('time'),
-            'lecture_kit': kits.all()
-
+            'lecture_kit': kits.all(),
+            'lectures': lectures
         }
-
-        print(context['lecture_kit'])
 
         return render(request, 'lecture/web/lecture-detail-online.html', context)
 
@@ -149,7 +170,6 @@ class LectureUploadOnlineView(View):
         for date in dates:
             lecture_date = Date.objects.create(lecture=lecture, date=date)
             # Time Create
-
             for time in times:
                 Time.objects.create(date=lecture_date, time=time)
 
