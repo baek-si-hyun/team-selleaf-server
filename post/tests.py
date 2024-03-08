@@ -8,7 +8,7 @@ from post.models import Post, PostFile
 
 class PostTest(TestCase):
     member_queryset = Member.objects.all()
-    for i in range(1, 50):
+    for i in range(20):
         post_data = {
             'post_title': f'게시물 제목{i}',
             'post_content': f'게시물 내용{i}',
