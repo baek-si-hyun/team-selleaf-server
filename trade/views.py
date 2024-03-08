@@ -46,16 +46,51 @@ class TradeUpdateView(View):
 
     def post(self, request):
         data = request.POST
+        trade_id = data['id']
 
         # 수정할 거래 게시물 가져오기
-        trade = Trade.objects.get(id=data['id'])
-
+        trade = Trade.objects.get(id=trade_id)
 
         # # 게시물중 카테고리 아이디 찾아오기
         # trade_category_number = Trade.objects.filter(id=trade_id).values('trade_category_id')
+        trade_category_number = Trade.objects.get(id=trade_id).trade_category_id
 
+        # 게시물 상품 구분 수정
+        trade_category = TradeCategory.objects.get(id=trade_category_number)
+        trade_category.category_name = data['product-index']
+
+        # 게시물 식물 종류 수정
+        trade_plants = TradePlant.objects.filter(trade_id=trade_id).delete()
+        plant_types = data.getlist('plant-type')
+        for plant_type in plant_types:
+            TradePlant.objects.create(trade=trade, plant_name=plant_type)
+
+        # 게시물 가격 수정
+        trade.trade_price = data['price-input']
+
+        # 게시물 오픈채팅방 링크 수정
+        trade.kakao_talk_url = data['chatting-input']
+
+        # 게시물 제목 수정
+        trade.trade_title = data['title-input']
+
+        # 게시물 내용 수정
+        trade.trade_content = data['content-input']
+
+        # 게시물 update
+        trade.save(update_fields=['trade_price', 'kakao_talk_url', 'trade_title', 'trade_content'])
+
+        # 카테고리 update
+        trade_category.save(update_fields=['category_name'])
 
         return redirect(f'/trade/detail/?id={trade.id}')
+
+class TradeDeleteView(View):
+    def get(self, request):
+        Trade.objects.filter(id=request.GET['id']).update(status=False)
+
+        return redirect('/trade/total')
+
 class TradeMainView(View):
     def get(self, request):
         return render(request, "trade/web/trade-main.html")
