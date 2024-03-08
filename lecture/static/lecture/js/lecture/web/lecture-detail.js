@@ -290,7 +290,7 @@ prevImgs.forEach((item) => {
   item.addEventListener("click", (e) => {
     const imgSrc = e.target.getAttribute("src");
     contentImg.setAttribute("src", imgSrc);
-    contentImg.setAttribute("height", "558.33");
+    // contentImg.setAttribute("height", "558.33");
   });
 });
 
