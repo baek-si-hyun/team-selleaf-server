@@ -74,3 +74,11 @@ else {
   postWrap.style.display = "flex";
   noContentWrap.style.display = "none";
 }
+
+
+const showList = ((posts)=>{
+  let text = ``
+  posts.forEach((post)=>{
+    post
+  })
+})
