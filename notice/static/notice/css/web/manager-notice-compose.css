@@ -268,7 +268,6 @@ button.compose-temporary-storage{
     font-size: 14px;
     line-height: 16px;
     cursor: default;
-    display: flex;
 }
 
 button.compose-temporary-storage-checked{

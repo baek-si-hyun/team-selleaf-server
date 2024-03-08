@@ -304,8 +304,18 @@ class DeleteNoticeView(View):
 class QnAManagementView(View):
     # QnA 내역 페이지 이동 뷰
     def get(self, request):
-        # 모든 QnA 전부 가져옴
-        return render(request, 'manager/manager-notice/manager-qna/manager-qna.html')
+        # 현재 작성된 공지사항 및 QnA의 개수를 세서 dict 데이터로 통합
+        notice_count = Notice.enabled_objects.count()
+        qna_count = QnA.enabled_objects.count()
+
+        context = {
+            'notice_count': notice_count,
+            'qna_count': qna_count
+        }
+
+        # 공지사항과 QnA 개수를 화면에 전달
+        # QnA 내역을 가져오는 것은 아래의 API가 해줌
+        return render(request, 'manager/manager-notice/manager-qna/manager-qna.html', context)
 
 
 class WriteQnAView(View):
@@ -317,8 +327,20 @@ class WriteQnAView(View):
     # QnA 작성 완료 이후의 뷰
     @transaction.atomic
     def post(self, request):
-        # 작성한 QnA 저장 후, QnA 리스트 페이지로 redirect
-        return redirect('/')
+        # POST 방식으로 요청한 데이터를 가져옴
+        qna_data = request.POST
+
+        # 받아온 데이터에서 특정 정보(id, 제목, 내용)를 가져와서 dict 타입으로 저장
+        data = {
+            'qna_title': qna_data['qna-title'],
+            'qna_content': qna_data['qna-content'],
+        }
+
+        # 받아온 데이터로 tbl_qna에 실행할 insert 쿼리 작성
+        QnA.objects.create(**data)
+
+        # 작성한 공지사항 저장 후, QnA 리스트 페이지로 redirect
+        return redirect('manager-qna')
 
 
 class UpdateQnAView(View):
