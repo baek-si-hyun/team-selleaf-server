@@ -97,7 +97,6 @@ newImageInput.addEventListener("change", (e) => {
 // 클릭 시, 기존의 프로필 이미지로 원복하고, 삭제 버튼 숨김
 imageDeleteButton.addEventListener("click", (e) => {
     // 프로필 이미지 기본값으로 원복
-    currentImage.style.backgroundImage = `../../../images/mypage/base-profile-image.avif`;
     prevImage.style.display = 'block';
     // 삭제 버튼 숨김
     e.target.style.display = "none";

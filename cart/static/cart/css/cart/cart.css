@@ -431,18 +431,19 @@
 
 .product-preview-inner {
   display: flex;
+  align-items: center;
 }
 
 .user-name {
-  font-size: 14px;
+  font-size: 18px;
   line-height: 18px;
-  font-weight: 600;
+  font-weight: 800;
   flex: 1 1 0%;
 }
 
 .delivery-condition {
-  margin-top: 10px;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 15px;
   line-height: 18px;
 }
 
@@ -495,7 +496,7 @@
   font-size: 14px;
   line-height: 18px;
   color: rgb(47, 52, 56);
-  margin-bottom: 8px;
+  margin: 8px 0;
 }
 
 .product-option {
@@ -1523,17 +1524,14 @@
 }
 
 .selected-product-count{
+  font-size: 15px;
+  color: rgb(47, 52, 56);
   width: 70px;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
   -webkit-box-pack: justify;
-  justify-content: space-between;
-  padding: 7px 6px;
   background: rgb(255, 255, 255);
-  color: rgb(47, 52, 56);
-  border: 1px solid rgb(218, 221, 224);
-  border-radius: 4px;
   /* margin-top: 12px; */
 }
 
@@ -1549,10 +1547,10 @@
 }
 
 .counted-number{
+  margin-left: 8px;
   font-size: 14px;
   line-height: 18px;
   padding: 0px;
-  border: 0px;
   background: none;
   color: rgb(2, 2, 2);
 }
@@ -1566,4 +1564,65 @@
 .add-count>img{
   width: 10px;
   margin-bottom: 1px;
+}
+
+
+.delete{
+  cursor: pointer;
+  padding: 6px;
+  color: #fff;
+  border-radius: 3px;
+  border: 1px solid #C06888;
+  background-color: #C06888;
+  margin-left: 380px;
+}
+
+.product-name-side{
+  margin-bottom: 8px;
+}
+
+.selection{
+  cursor: pointer;
+  color: #fff;
+  padding: 2px 4px 2px 4px;
+  border: 1px solid #C06888;
+  font-weight: 800;
+  border-radius: 2px;
+  background-color: #FFFFFF;
+  margin-right: 8px;
+}
+
+.selection:hover{
+  border: 2px solid #C06888;
+  border-radius: 2px;
+}
+
+.price-wrap{
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+
+.name-side{
+  width: 320px;
+  align-items: end;
+}
+
+.x{
+  /*color: #FFFFFF;*/
+  /*padding: 2px 4px 2px 4px;*/
+  /*background-color: #C06888;*/
+  /*border-radius: 4px;*/
+  color: #C06888;
+  font-weight: 800;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.selected-item-title{
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 600;
 }
