@@ -74,28 +74,30 @@
           </div>
         </form>
       </div>
-      <input type="hidden" name="id" value="{{ qna.id }}">
-      <div class="delete-modal-wrap">
-        <div class="delete-modal-container">
-          <h4 class="delete-modal">QnA 삭제</h4>
-          <div class="delete-modal-inner">
-            해당 QnA를 삭제하시겠습니까?
-          </div>
-          <div class="delete-modal-box">
-            <div class="modal-cancel">
-              <button class="modal-cancel" aria-label="button" type="button">
-                취소
-              </button>
+      <form action="{% url 'qna-delete' %}" name="qna-delete-form">
+        <input type="hidden" name="id" value="{{ qna.id }}">
+        <div class="delete-modal-wrap">
+          <div class="delete-modal-container">
+            <h4 class="delete-modal">QnA 삭제</h4>
+            <div class="delete-modal-inner">
+              해당 QnA를 삭제하시겠습니까?
             </div>
-            <div class="modal-confirm">
-              <button class="modal-confirm" aria-label="button">
-                확인
-              </button>
+            <div class="delete-modal-box">
+              <div class="modal-cancel">
+                <button class="modal-cancel" aria-label="button" type="button">
+                  취소
+                </button>
+              </div>
+              <div class="modal-confirm">
+                <button class="modal-confirm" aria-label="button">
+                  확인
+                </button>
+              </div>
             </div>
           </div>
+          <div class="delete-modal-bgcolor"></div>
         </div>
-        <div class="delete-modal-bgcolor"></div>
-      </div>
+      </form>
     </div>
   </body>
 {% endblock %}

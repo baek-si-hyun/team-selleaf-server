@@ -287,7 +287,7 @@ class DeleteNoticeView(View):
     # 공지사항 삭제를 위한 뷰
     def get(self, request):
         # 03/07 - 공지사항 리스트에서 체크한 게시물들을 한 번에 가져올 방법을 생각해보자
-        # 삭제할 공지사항들의 id를 통해, 해당 객체들을 가져옴(dict 타입)
+        # 삭제할 공지사항들의 id를 통해 해당 객체들을 가져옴(dict 타입)
         notices = Notice.objects.filter(id=request.GET['id'])
 
         # 위 공지사항들의 status를 0으로 만들어 화면에 뿌리지 않게 만들고, 변동 사항을 저장함
@@ -296,7 +296,7 @@ class DeleteNoticeView(View):
             notice.updated_date = timezone.now()
             notice.save(update_fields=["notice_status", "updated_date"])
 
-        # 상태 업데이트 후, 공지사항 리스트 페이지로 redirect
+        # 상태 업데이트 후 공지사항 리스트 페이지로 redirect
         return redirect('manager-notice')
 
 
@@ -423,8 +423,17 @@ class UpdateQnAView(View):
 class DeleteQnAView(View):
     # QnA 삭제를 위한 뷰
     def get(self, request):
-        # 상태 업데이트 후, QnA 리스트 페이지로 redirect
-        return redirect('/')
+        # 삭제할 QnA들의 id를 통해 해당 객체들을 가져옴
+        qnas = QnA.objects.filter(id=request.GET['id'])
+
+        # 위 QnA 전체를 소프트 딜리트(status = 0)
+        for qna in qnas:
+            qna.qna_status = 0
+            qna.updated_date = timezone.now()
+            qna.save(update_fields=["qna_status", "updated_date"])
+
+        # 상태 업데이트 후 QnA 리스트 페이지로 redirect
+        return redirect('manager-qna')
 
 
 # 신고 내역 관리
