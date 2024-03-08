@@ -14,7 +14,7 @@ const knowhowScrapService = (() => {
 })()
 
 const tradeScrapService = (() => {
-    const update = async (knowhowId) => {
+    const update = async (tradeId) => {
         await fetch(`/trade-scrap/api/`, {
             method: 'PATCH',
             headers: {
