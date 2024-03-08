@@ -1,3 +1,4 @@
+
 const inputWrap = document.querySelector(".input-wrap");
 const inputContainer = document.querySelector(".input-container");
 const commentInput = document.querySelector(".comment-input");

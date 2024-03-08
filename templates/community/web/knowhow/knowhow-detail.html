@@ -199,7 +199,7 @@
                             </span>
                           </span>
                         </a>
-                        <span class="sticky-data" id="reply-count">{{ reply_count }}</span>
+                        <span class="sticky-data" id="reply-count"></span>
                       </button>
                       <button title="공유" class="sticky-btn background-color">
                         <span class="sticky-icon-box background-color">
@@ -350,7 +350,7 @@
     <script>
         const csrf_token = '{{ csrf_token }}'
         const knowhow_id = '{{ knowhow.id }}'
-        const memberId = '{{ request.session.member.id }}'
+        const member_Id = '{{ request.session.member.id }}'
         const replyCount = '{{ reply_count }}'
         const knowhowDate = '{{ knowhow.created_date }}'
         console.log(knowhowDate)

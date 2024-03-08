@@ -118,7 +118,7 @@ class KnowhowListApi(APIView):
             profile = MemberProfile.objects.filter(member_id=knowhow['member_id']).values('file_url').first()
             knowhow['knowhow_file'] = knowhow_file['file_url']
             knowhow['profile'] = profile['file_url']
-        print(knowhows)
+        # print(knowhows)
 
         return Response(knowhows[offset:limit])
 
@@ -127,7 +127,7 @@ class KnowhowReplyWriteApi(APIView):
     def post(self, request):
 
         data = request.data
-        print(data)
+        # print(data)
         data = {
             'knowhow_reply_content': data['reply_content'],
             'knowhow_id': data['knowhow_id'],
@@ -135,6 +135,8 @@ class KnowhowReplyWriteApi(APIView):
         }
 
         KnowhowReply.objects.create(**data)
+
+
 
         return Response('success')
 
@@ -144,10 +146,28 @@ class KnowhowReplyListApi(APIView):
         offset = (page - 1) * row_count
         limit = row_count * page
 
-        replies = KnowhowReply.objects.filter(knowhow_id=knowhow_id).annotate(member_name=F('member__member_name'))\
+        reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow_id).count()
+        print(reply_count)
+
+        replies = KnowhowReply.objects\
+            .filter(knowhow_id=knowhow_id).annotate(member_name=F('member__member_name'))\
             .values('member_name', 'knowhow__knowhow_content', 'member_id', 'created_date', 'id', 'knowhow_reply_content')
 
         return Response(replies[offset:limit])
 
 class KnowhowReplyApi(APIView):
     pass
+
+class KnowhowReplyCountApi(APIView):
+    def get(self, knowhow_id):
+        counts = KnowhowReply.objects.filter(knowhow_id=knowhow_id).count()
+        print(counts)
+
+        return Response(counts)
+
+class KnowhowLikeApi(APIView):
+    @transaction.atomic
+    def patch(self, request, knowhow_id, member_id):
+
+        # KnowhowLike.objects.filter(knowhow_id=knowhow_id).get_or_create()
+        pass

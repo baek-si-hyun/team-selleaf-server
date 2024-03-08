@@ -11,7 +11,7 @@ const replyService = (() => {
     }
 
     const getList = async (knowhow_id, page, callback) => {
-        const response = await fetch(`/knowhow/replies/list/${knowhow_id}/${page}`);
+        const response = await fetch(`/knowhow/replies/list/${knowhow_id}/${page}/`);
         const replies = await response.json();
         if(callback){
             return callback(replies);
@@ -37,13 +37,19 @@ const replyService = (() => {
         });
     }
 
-    // const count = async (knowhow_id) => {
-    //     await fetch(`/knowhow/reply/counts`)
-    //
-    //
-    // }
+    const count = async (knowhow_id) => {
+        const response = await fetch(`/knowhow/replies/count/${knowhow_id}/`);
+        const counts = await response.json();
+        if (callback){
+            return callback(counts)
+        }
+        return counts
+    }
 
-    return {write: write, getList: getList, remove: remove, update: update}
+
+
+
+    return {write: write, getList: getList, remove: remove, update: update, count: count}
 })();
 
 
