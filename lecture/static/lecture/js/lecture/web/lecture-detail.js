@@ -284,15 +284,17 @@ declarationBtn.addEventListener("click", () => {
 });
 
 //이미지 미리보기
-const contentImg = document.querySelector(".product-cover-image");
-const prevImgs = document.querySelectorAll(".product-small-image");
-prevImgs.forEach((item) => {
-  item.addEventListener("click", (e) => {
-    const imgSrc = e.target.getAttribute("src");
-    contentImg.setAttribute("src", imgSrc);
-    // contentImg.setAttribute("height", "558.33");
-  });
-});
-
-// 총가격을 증가시켜주는 js
+// document.addEventListener("DOMContentLoaded", function() {
+//     // JavaScript 코드 작성
+//     const contentImg = document.querySelector(".product-cover-image");
+//     const prevImgs = document.querySelectorAll(".product-small-image");
+//     prevImgs.forEach((item) => {
+//         item.addEventListener("click", (e) => {
+//             console.log("들어옴")
+//             const imgSrc = e.target.getAttribute("src");
+//             contentImg.setAttribute("src", imgSrc);
+//             // contentImg.setAttribute("height", "558.33");
+//         });
+//     });
+// });
 

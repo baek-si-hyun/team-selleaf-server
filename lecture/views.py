@@ -1,10 +1,11 @@
 from datetime import datetime, timedelta
 
 from django.db import transaction
+from django.db.models import Count, Avg, Sum
 from django.shortcuts import render, redirect
 from django.views import View
 
-from lecture.models import LectureCategory, Lecture, LectureProductFile, LecturePlant, Kit
+from lecture.models import LectureCategory, Lecture, LectureProductFile, LecturePlant, Kit, LectureReview
 from member.models import Member
 from selleaf.date import Date
 from selleaf.time import Time
@@ -20,10 +21,39 @@ class LectureDetailOnlineView(View):
     def get(self, request):
         lecture = Lecture.objects.get(id=request.GET['id'])
         date = Date.objects.filter(lecture_id=request.GET['id']).first()
+        # print(lecture)
+
+        review_count = LectureReview.objects.filter(lecture_id=request.GET['id']).count()
+        # print(review_count)
 
         # 방금 올린 강의를 작성한 사용자 찾기
         teacher_id = lecture.teacher_id
         # print(teacher_id)
+
+        # 해당 강의에 대한 별점에 따른 리뷰 개수
+        rating_counts = LectureReview.objects.filter(lecture_id=request.GET['id']).values('review_rating').annotate(
+            count=Count('id'))
+
+        # 별점 범위와 개수
+        rating_dict = {str(i): 0 for i in range(1, 6)}
+
+        # 각 별점에 따른 개수 저장
+        for item in rating_counts:
+            rating_dict[str(item['review_rating'])] = item['count']
+        # print(rating_dict)
+
+        # 리뷰 평균 구하기
+            # 해당 강의에 대한 리뷰들의 총합과 개수를 구함
+        review_sum = LectureReview.objects.filter(lecture_id=request.GET['id']).aggregate(sum_rating=Sum('review_rating'),
+                                                                                   count=Count('id'))
+
+        # 리뷰가 있는 경우에만 평균을 계산
+        if review_sum['count'] > 0:
+            average_rating = round(review_sum['sum_rating'] / review_sum['count'], 1)
+        else:
+            average_rating = 0
+
+        print(average_rating)
 
         # 방금 강의를 올린 사용자가 작성한 다른 강의
         lectures = Lecture.objects.filter(teacher_id=teacher_id, lecture_status=True).values()
@@ -31,7 +61,7 @@ class LectureDetailOnlineView(View):
 
         for lte in lectures:
             lecture_img = LectureProductFile.objects.filter(lecture_id=lte['id']).values('file_url').first()
-            print(lecture_img)
+
             if lecture_img:
                 lte['product_img'] = lecture_img['file_url']
             else:
@@ -46,6 +76,8 @@ class LectureDetailOnlineView(View):
         dates = lecture.date_set.all()
         times = date.time_set.all()
         kits = lecture.kit_set.all()
+        reviews = lecture.lecturereview_set.all()
+        # print(reviews)
 
         context = {
             'lecture': lecture,
@@ -54,7 +86,11 @@ class LectureDetailOnlineView(View):
             'lecture_order_date': dates.order_by('date'),
             'lecture_order_time': times.order_by('time'),
             'lecture_kit': kits.all(),
-            'lectures': lectures
+            'reviews': reviews,
+            'lectures': lectures,
+            'review_count': review_count,
+            'rating_counts': rating_dict,
+            'average_rating': average_rating
         }
 
         return render(request, 'lecture/web/lecture-detail-online.html', context)
