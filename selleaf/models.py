@@ -38,7 +38,7 @@ class Mileage(Period):
 class Scrap(Period):
     member = models.ForeignKey(Member, on_delete=models.PROTECT)
     # Ture: 스크랩 누름, False: 스크랩 안누름
-    status = models.BooleanField(default=False)
+    status = models.BooleanField(default=True)
 
     class Meta:
         abstract = True

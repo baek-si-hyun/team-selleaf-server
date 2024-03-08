@@ -125,7 +125,7 @@ const recommendScrapButton = document.querySelectorAll(
 const realmainWrap = document.querySelector('.realmain-wrap')
 realmainWrap.addEventListener("click", (e) => {
     const scrap = e.target.closest('.scrap-button')
-    const img = scrap.querySelector("img");
+    const img = scrap.querySelector(".scrap-off-img");
     const imgSrc = img.getAttribute("src");
     if (imgSrc === "/static/public/web/images/common/scrap-off.png") {
         img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
@@ -144,87 +144,36 @@ realmainWrap.addEventListener("click", (e) => {
         animationTarget.classList.add("hide-animation");
     }, 3000);
 });
+
+
+const realmainPlantRecommendPhotoul = document.querySelector('.realmain-plantRecommend-photoul')
+realmainPlantRecommendPhotoul.addEventListener('click', async (e)=>{
+    scrapBtn = e.target.closest('.scrap-button')
+    const knowhowContentId = scrapBtn.closest('.realmain-plantRecommend-photoli').classList[1]
+    await knowhowService.update(knowhowContentId)
+
+})
+
+const realmainLecturePhotoEachdiv = document.querySelector('.realmain-lecture-photoEachdiv')
+realmainLecturePhotoEachdiv.addEventListener('click', async (e)=>{
+    scrapBtn = e.target.closest('.scrap-button')
+    const lectureContentId = scrapBtn.closest('.realmain-lecture-photoEachdiv').classList[1]
+    await knowhowService.update(lectureContentId)
+
+})
+
+const realmainTodayHotdealPhotoWrapli = document.querySelector('.realmain-todayHotdeal-photoWrapli')
+realmainTodayHotdealPhotoWrapli.addEventListener('click', async (e)=>{
+    scrapBtn = e.target.closest('.scrap-button')
+    const tradeContentId = scrapBtn.closest('.realmain-todayHotdeal-photoWrapli').classList[1]
+    await knowhowScrapService.update(tradeContentId)
+
+})
+//post
+// const realmainPlantRecommendPhotoul = document.querySelector('.realmain-plantRecommend-photoul')
+// realmainPlantRecommendPhotoul.addEventListener('click', async (e)=>{
+//     scrapBtn = e.target.closest('.scrap-button')
+//     const knowhowContentId = scrapBtn.closest('.realmain-plantRecommend-photoli').classList[1]
+//     await knowhowService.update(knowhowContentId)
 //
-// // 원데이 클래스, 인기 콘텐츠 부분에 스크랩 on off 기능
-// const popularScrapButton = document.querySelectorAll(
-//     ".realmain-my_lecture-scrapbutton"
-// );
-//
-// popularScrapButton.forEach((scrap) => {
-//     scrap.addEventListener("click", () => {
-//         const img = scrap.querySelector("img");
-//         const imgSrc = img.getAttribute("src");
-//         if (imgSrc === "../../../staticfiles/images/scrap-off.png") {
-//             img.setAttribute("src", "../../../staticfiles/images/scrap-on.png");
-//             animationTarget && animationTarget.classList.remove("show-animation");
-//             animationTarget = scrapPopup;
-//         } else {
-//             img.setAttribute("src", "../../../staticfiles/images/scrap-off.png");
-//             animationTarget.classList.remove("show-animation");
-//             animationTarget = scrapCancel;
-//         }
-//         animationTarget.classList.remove("hide-animation");
-//         animationTarget.classList.add("show-animation");
-//         clearTimeout(timeoutId);
-//         timeoutId = setTimeout(() => {
-//             animationTarget.classList.remove("show-animation");
-//             animationTarget.classList.add("hide-animation");
-//         }, 3000);
-//     });
-// });
-//
-// // 오늘의 딜부분에 스크랩 on off 기능
-// const todayScrapButton = document.querySelectorAll(
-//     ".realmain-todayHotdeal-scrapbutton"
-// );
-//
-// todayScrapButton.forEach((scrap) => {
-//     scrap.addEventListener("click", () => {
-//         const img = scrap.querySelector("img");
-//         const imgSrc = img.getAttribute("src");
-//         if (imgSrc === "../../../staticfiles/images/scrap-off.png") {
-//             img.setAttribute("src", "../../../staticfiles/images/scrap-on.png");
-//             animationTarget && animationTarget.classList.remove("show-animation");
-//             animationTarget = scrapPopup;
-//         } else {
-//             img.setAttribute("src", "../../../staticfiles/images/scrap-off.png");
-//             animationTarget.classList.remove("show-animation");
-//             animationTarget = scrapCancel;
-//         }
-//         animationTarget.classList.remove("hide-animation");
-//         animationTarget.classList.add("show-animation");
-//         clearTimeout(timeoutId);
-//         timeoutId = setTimeout(() => {
-//             animationTarget.classList.remove("show-animation");
-//             animationTarget.classList.add("hide-animation");
-//         }, 3000);
-//     });
-// });
-//
-// // 베스트 상품 부분에 스크랩 on off 기능
-// const bestproductScrapButton = document.querySelectorAll(
-//     ".realmain-bestproduct-realPhotoScrapbtn"
-// );
-//
-// bestproductScrapButton.forEach((scrap) => {
-//     scrap.addEventListener("click", () => {
-//         const img = scrap.querySelector("img");
-//         const imgSrc = img.getAttribute("src");
-//         if (imgSrc === "../../../staticfiles/images/scrap-off.png") {
-//             img.setAttribute("src", "../../../staticfiles/images/scrap-on.png");
-//             animationTarget && animationTarget.classList.remove("show-animation");
-//             animationTarget = scrapPopup;
-//         } else {
-//             img.setAttribute("src", "../../../staticfiles/images/scrap-off.png");
-//             animationTarget.classList.remove("show-animation");
-//             animationTarget = scrapCancel;
-//         }
-//         animationTarget.classList.remove("hide-animation");
-//         animationTarget.classList.add("show-animation");
-//         clearTimeout(timeoutId);
-//         timeoutId = setTimeout(() => {
-//             animationTarget.classList.remove("show-animation");
-//             animationTarget.classList.add("hide-animation");
-//         }, 3000);
-//     });
-// });
+// })
