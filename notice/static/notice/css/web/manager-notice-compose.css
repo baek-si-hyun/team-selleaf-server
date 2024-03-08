@@ -341,6 +341,10 @@ button.compose-storage-checked{
     cursor: pointer;
 }
 
+button.compose-storage-checked:hover {
+    opacity: 0.7;
+}
+
 div.main-compose-wrap{
     margin-top: 32px;
 }

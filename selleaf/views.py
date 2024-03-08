@@ -381,14 +381,43 @@ class WriteQnAView(View):
 class UpdateQnAView(View):
     # QnA 수정 페이지 이동 뷰
     def get(self, request):
-        # 수정할 QnA 정보 가져오기
-        return render(request, 'manager/manager-notice/manager-qna/manager-qna-modify.html')
+        # 수정 버튼에서 전달한 id를 통해 수정할 공지사항 객체 가져오기
+        qna = QnA.objects.get(id=request.GET['id'])
+
+        # 수정 페이지에 전달할 QnA의 dict 타입의 데이터 생성
+        context = {
+            'qna': qna
+        }
+
+        # QnA 데이터를 가지고 수정 페이지로 이동
+        return render(request, 'manager/manager-notice/manager-qna/manager-qna-modify.html', context)
 
     # QnA 수정 완료 이후의 뷰
     @transaction.atomic
     def post(self, request):
+        # GET 방식으로 url에서 id를 가져옴
+        qna_id = request.GET['id']
+
+        # POST 방식으로 받은 id와 제목과 내용도 가져옴
+        data = request.POST
+
+        data = {
+            'qna_title': data['qna-title'],
+            'qna_content': data['qna-content']
+        }
+
+        # 가져온 id로 수정할 QnA 조회
+        qna = QnA.objects.get(id=qna_id)
+
+        # 제목과 내용, 갱신 시간 변경하고 저장
+        qna.qna_title = data['qna_title']
+        qna.qna_content = data['qna_content']
+        qna.updated_date = timezone.now()
+
+        qna.save(update_fields=["qna_title", "qna_content", "updated_date"])
+
         # 기존 QnA 정보 update 후, QnA 리스트 페이지로 redirect
-        return redirect('/')
+        return redirect('manager-qna')
 
 
 class DeleteQnAView(View):

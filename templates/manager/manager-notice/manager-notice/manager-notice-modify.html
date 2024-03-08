@@ -11,7 +11,6 @@
         {% include 'manager/fix/manager-header.html' %}
         <form action="/admin/notice/update/?id={{ notice.id }}" method="post" name="notice-update-form">
           {% csrf_token %}
-{#          <input type="hidden" name="notice-id" value="{{ id }}">#}
           <div class="compose-wrap">
             <div class="compose-container">
               <div class="compose-inner-left">

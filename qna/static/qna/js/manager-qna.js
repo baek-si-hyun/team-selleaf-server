@@ -62,7 +62,7 @@ const showQnA = (qna_info) => {
                       </div>
                     </button>
                     <div class="content-open-wrap"></div>
-                    <a class="update-qna" href="/admin/notice/qna/?id=${qna.id}">수정</a>
+                    <a class="update-qna" href="/admin/qna/update/?id=${qna.id}">수정</a>
                   </li>
     `
   });
