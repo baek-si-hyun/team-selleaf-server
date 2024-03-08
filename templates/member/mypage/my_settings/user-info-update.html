@@ -119,15 +119,13 @@
                           <ul class="user-profile-image-container">
                             <li class="new-image-wrap">
                               <div class="new-image-container">
-                                <label for="new-image">
-                                  {% if request.session.member_files %}  
-                                    {% for member_file in member_files %}
-                                        {% if member_file in 'https' %}
-                                            <img src="{{ member_file }}" alt="" class="current-profile-image">
-                                        {% else %}
-                                            <img src="/upload/{{ member_file }}" alt="" class="current-profile-image">
-                                        {% endif %}
-                                    {% endfor %}   
+                                <label for="new-image" id="image-change">
+                                  {% if member_file %}  
+                                     {% if  'https' in member_file%}
+                                        <img src="{{ member_file }}" alt="" class="current-profile-image">
+                                     {% else %}
+                                        <img src="/upload/{{ member_file }}" alt="" class="current-profile-image">
+                                     {% endif %}
                                   {% else %}
                                     <img src="{% static 'member/images/mypage/base-profile-image.avif' %}" alt="" class="current-profile-image">
                                   {% endif %}  

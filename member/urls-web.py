@@ -11,5 +11,5 @@ urlpatterns = [
     path('logout/', MemberLogoutView.as_view(), name='logout'),
     path('update/',MypageUpdateView.as_view(), name='update'),
     path('mypage/myposts/', MypagePostView.as_view(), name='mypost'),
-    path('mypage/myposts/<>', MypagePostListAPI.as_view())
+    path('mypage/myposts/<int:member_id>', MypagePostListAPI.as_view())
 ]

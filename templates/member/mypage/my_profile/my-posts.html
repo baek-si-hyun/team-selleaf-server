@@ -157,14 +157,12 @@
                         </div>
                         <div class="my-profile-wrap">
                           <div class="profile-image-wrap">
-                            {% if request.session.member_files %}  
-                              {% for member_file in member_files %}
-                                 {% if member_file in 'https' %}
-                                    <img src="{{ member_file }}" alt="" class="current-profile-image">
-                                 {% else %}
-                                    <img src="/upload/{{ member_file }}" alt="" class="current-profile-image">
-                                 {% endif %}
-                              {% endfor %}   
+                            {% if memberProfile %}
+                              {% if 'https' in memberProfile %}
+                                 <img src="{{ memberProfile }}" alt="" class="current-profile-image">
+                              {% else %}
+                                 <img src="/upload/{{ memberProfile }}" alt="" class="current-profile-image">
+                              {% endif %}
                             {% else %}
                               <img src="{% static 'member/images/mypage/base-profile-image.avif' %}" alt="" class="current-profile-image">
                             {% endif %}
@@ -589,5 +587,5 @@
     </div>
 {% endblock %}
 {% block js %}
-  <script src="\{% static 'member/js/mypage/my_profile/my-posts.js' %}"></script>
+  <script src="{% static 'member/js/mypage/my_profile/my-posts.js' %}"></script>
 {% endblock %}

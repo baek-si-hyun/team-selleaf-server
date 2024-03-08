@@ -802,3 +802,7 @@ a * {
     display: none;
   }
 }
+
+.current-profile-image{
+  width: 100%;
+}
