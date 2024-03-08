@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from main.views import MainView, KnowhowScrapAPI, TradeScrapAPI, LectureScrapAPI, PostScrapAPI
+from main.views import MainView, KnowhowScrapAPI, TradeScrapAPI, LectureScrapAPI, PostScrapAPI, BestLectureCategoryAPI
 from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView, WriteNoticeView, \
     NoticeManagementView, NoticeManagementAPI, UpdateNoticeView,DeleteNoticeView
 
@@ -13,6 +13,7 @@ urlpatterns = [
     path('trade-scrap/api/', TradeScrapAPI.as_view(), name='trade-scrap-api'),
     path('lecture-scrap/api/', LectureScrapAPI.as_view(), name='lecture-scrap-api'),
     path('post-scrap/api/', PostScrapAPI.as_view(), name='post-scrap-api'),
+    path('lecture-category/api/', BestLectureCategoryAPI.as_view(), name='lecture-category-api'),
     # 관리자 페이지 뷰
     path('admin/login/', ManagerLoginView.as_view(), name='manager-login'),
     path('admin/logout/', ManagerLogoutView.as_view(), name='manager-logout'),
@@ -36,7 +37,6 @@ urlpatterns = [
     path('alarm/', include('alarm.urls-web')),
     path('oauth/', include('oauth.urls')),
     path('accounts/', include('allauth.urls')),
-
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

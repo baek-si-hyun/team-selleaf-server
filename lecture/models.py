@@ -4,6 +4,7 @@ from django.db import models
 from lecture.manager import LectureManager
 from member.models import Member
 from plant.models import Plant
+from selleaf.address import Address
 from selleaf.file import File
 from selleaf.models import Scrap
 from selleaf.period import Period
@@ -87,3 +88,10 @@ class LecturePlaceFile(File):
     class Meta:
         db_table = 'tbl_lecture_place_file'
         ordering = ['-id']
+
+
+class LectureAddress(Address):
+    lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
+
+    class Meta:
+        db_table = 'tbl_lecture_address'
