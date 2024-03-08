@@ -77,15 +77,18 @@ class MemberLogoutView(View):
 
 class MypageUpdateView(View):
     def get(self, request):
-        member_id = request.session['member']['id']
-        request.session['member'] = MemberSerializer(Member.objects.get(id=member_id)).data
-        member = Member.objects.get(id=member_id)
+        member = request.session['member']['id']
+        member_profile = MemberProfile.objects.filter(id = member).first()
+        member_file = member_profile.file_url
+        print(member_file)
         check = request.GET.get('check')
-        member_files = list(member.memberprofile_set.values_list('file_url', flat=True))
         context = {
             'check': check,
-            'member_files': member_files,
+            'member_file': member_file,
+            'memberProfile': f'/upload/{member_file}'
         }
+
+        # print(request.session['member_files'][0]['file_url'])
         return render(request, 'member/mypage/my_settings/user-info-update.html', context)
 
     def post(self, request):
@@ -104,9 +107,14 @@ class MypageUpdateView(View):
                 member_profile.file_url = file
                 member_profile.updated_date = timezone.now()
                 member_profile.save()
+                request.session['member_files'][0]['file_url'] = member_profile.file_url
 
         return redirect("member:update")
 
+
+class MypagePostView(View):
+    def get(self,request):
+        return render(request,'member/mypage/my_profile/my-posts.html')
 
 class MypagePostListAPI(APIView):
     def get(self, request):

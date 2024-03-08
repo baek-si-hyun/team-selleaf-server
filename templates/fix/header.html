@@ -150,7 +150,7 @@
             <div class="header-info-wrap">
               <div class="header-info">
                   <!-- 프로필 아이콘 일단 숨겨놓음 -->
-                  {% if memberProfile %}
+                  {% if request.session.member %}
                   <span class="header-kakao-wrap">
                     <span class="header-alarm-pointer"></span>
                     <button
@@ -161,7 +161,7 @@
                         <img
                           alt="프로필 사진"
                           class="header-kakao-image"
-                          src="{{ memberProfile }}"
+                          src="{{memberProfile}}"
                         />
                     </button>
                   </span>

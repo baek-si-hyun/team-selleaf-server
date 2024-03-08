@@ -8,7 +8,6 @@
     <div class="whole-page-wrap">
       <div class="whole-page-container">
         <!-- 나중에 메인 페이지에서 작업하면 추가 -->
-        <header style="height: 80.75px"></header>
         <div class="main-wrap">
           <!-- 마이페이지 내 네비게이션 바 -->
           <div class="navigation-wrap">
@@ -158,13 +157,20 @@
                         </div>
                         <div class="my-profile-wrap">
                           <div class="profile-image-wrap">
-                            <img alt=""
-                              class="profile-image"
-                              src="{% static 'member/images/mypage/base-profile-image.avif' %}"
-                            />
+                            {% if request.session.member_files %}  
+                              {% for member_file in member_files %}
+                                 {% if member_file in 'https' %}
+                                    <img src="{{ member_file }}" alt="" class="current-profile-image">
+                                 {% else %}
+                                    <img src="/upload/{{ member_file }}" alt="" class="current-profile-image">
+                                 {% endif %}
+                              {% endfor %}   
+                            {% else %}
+                              <img src="{% static 'member/images/mypage/base-profile-image.avif' %}" alt="" class="current-profile-image">
+                            {% endif %}
                           </div>
                           <div class="personal-info-wrap">
-                            <div class="user-nickname">Selleaf Test</div>
+                            <div class="user-nickname">{{ request.session.member.member_name }}</div>
                             <div class="follow-settings-wrap">
                               <!-- 나중에 팔로우 페이지랑 연결 -->
                               <!-- <dl class="follow-wrap">
@@ -579,7 +585,6 @@
           </div>
         </div>
         <!-- 나중에 메인 페이지에서 작업하면 추가 -->
-        <footer style="height: 320px"></footer>
       </div>
     </div>
 {% endblock %}
