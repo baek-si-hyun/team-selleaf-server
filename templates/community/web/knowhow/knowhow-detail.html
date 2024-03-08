@@ -20,8 +20,9 @@
                     <div class="uploader-data-container">
                       <button class="uploader-profile-btn">
                         <figure class="uploader-img-box">
+{#                            프로필 사진#}
                           <img
-                            src= "{%  static 'public/web/images/common/blank-image.png' %}"
+                            src= ""
                             height="0"
                             class="uploader-img"
                           />
@@ -73,9 +74,9 @@
                     <dl class="content-data">
                       <span class="week-data"></span>
                       <dt class="like">좋아요</dt>
-                      <dd class="like-data">{{ knowhow.knowhowlike_set }}</dd>
+                      <dd class="like-data"></dd>
                       <dt class="scrap">스크랩</dt>
-                      <dd class="scrap-data">27</dd>
+                      <dd class="scrap-data"></dd>
                       <dt class="check">조회</dt>
                       <dd class="check-data">{{ knowhow.knowhow_count }}</dd>
                     </dl>
@@ -114,13 +115,14 @@
                 <div>
                   <div class="comment-section" id="comment-section">
                     <h1 class="comment-section-title">
-                      댓글<span class="comment-count">{{ reply_count }}</span>개
+                      댓글<span class="comment-count"></span>개
                     </h1>
                     <div class="comment-input-wrap">
                       <div class="comment-input-container">
                         <figure class="comment-user-icon-box">
+                            {# 프로필 사진#}
                           <img
-                            src="../../../staticfiles/images/blank-image.png"
+                            src=""
                             height="0"
                             class="comment-user-icon"
                           />
@@ -179,7 +181,7 @@
                             alt=""
                           />
                         </span>
-                        <span class="sticky-data" id="like-count">449</span>
+                        <span class="sticky-data" id="like-count"></span>
                       </button>
                       <button title="저장" class="sticky-btn">
                         <span class="sticky-icon-box">
@@ -189,7 +191,7 @@
                             alt=""
                           />
                         </span>
-                        <span class="sticky-data" id="scrap-count">449</span>
+                        <span class="sticky-data" id="scrap-count"></span>
                       </button>
                       <hr class="sticky-btn-split" />
                       <button title="댓글" class="sticky-btn background-color">
@@ -205,7 +207,7 @@
                         <span class="sticky-icon-box background-color">
                           <span class="sticky-icon sticky-icon-share"> </span>
                         </span>
-                        <span class="sticky-data" id="share-count">449</span>
+                        <span class="sticky-data" id="share">공유하기</span>
                       </button>
                     </div>
                   </div>
@@ -352,8 +354,6 @@
         const knowhow_id = '{{ knowhow.id }}'
         const member_Id = '{{ request.session.member.id }}'
         const replyCount = '{{ reply_count }}'
-        const knowhowDate = '{{ knowhow.created_date }}'
-        console.log(knowhowDate)
     </script>
 
     <script src="{% static 'knowhow/js/web/knowhow-detail.js' %}"></script>

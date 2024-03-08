@@ -1,7 +1,7 @@
 from django.urls import path
 
 from knowhow.views import KnowhowCreateView, KnowhowDetailView, KnowhowReplyWriteApi, \
-    KnowhowReplyListApi, KnowhowReplyApi, KnowhowListApi, KnowhowListView, KnowhowLikeApi, KnowhowReplyCountApi
+    KnowhowReplyListApi, KnowhowReplyApi, KnowhowListApi, KnowhowListView
 
 app_name = 'knowhow'
 
@@ -19,8 +19,6 @@ urlpatterns = [
     path('replies/write/', KnowhowReplyWriteApi.as_view(), name='reply_write'),
     path('replies/list/<int:knowhow_id>/<int:page>/', KnowhowReplyListApi.as_view(), name='reply_list'),
     path('replies/<int:reply_id>/', KnowhowReplyApi.as_view()),
-    path('replies/count/<int:reply_id>/', KnowhowReplyCountApi.as_view()),
+    # path('<int:reply_id>/', KnowhowReplyApi.as_view()),
 
-    # 좋아요
-    path('knowhow/<int:knowhow_id>/<int:member_id>/', KnowhowLikeApi.as_view()),
 ]
