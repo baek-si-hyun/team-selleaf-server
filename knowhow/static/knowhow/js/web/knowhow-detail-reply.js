@@ -3,7 +3,7 @@ let page = 1;
 const writeButton = document.querySelector(".comment-submit-btn");
 const replySection = document.querySelector(".reply-section");
 const moreButton = document.getElementById("more-replies");
-
+const replyCount = document.getElementById("reply-count")
 
 replyService.getList(knowhow_id, page + 1).then((replies) => {
     if (replies.length !== 0){
@@ -11,11 +11,18 @@ replyService.getList(knowhow_id, page + 1).then((replies) => {
     }
 });
 
+// replyService.count(knowhow_id).then((counts) => {
+//     console.log(counts);
+// })
+
+const showCount = (counts) => {
+    let replyText = `${counts.counts}`
+}
+
 const showList = (replies) => {
     let text = ``;
-
     replies.forEach((reply) => {
-        console.log(reply.created_date)
+        // console.log(reply.created_date)
         text += `
             <div class="comment-item-box">
                       <div class="comment-item">
@@ -107,6 +114,9 @@ writeButton.addEventListener("click", async (e) => {
     replySection.innerHTML = text;
 
     const replies = await replyService.getList(knowhow_id, page + 1);
+
+
+
     if (replies.length !== 0){
         moreButton.style.display = "flex";
     }
@@ -168,9 +178,9 @@ replySection.addEventListener("click", async (e) => {
 
 const date = document.querySelector(".week-data")
 let test = new Date(knowhowDate)
-console.log(Date())
-console.log(Date(knowhowDate))
-console.log(Date(knowhowDate).format('%Y-%m-%dT%H:%M:%SZ'))
+// console.log(Date())
+// console.log(Date(knowhowDate))
+// console.log(Date(knowhowDate).format('%Y-%m-%dT%H:%M:%SZ'))
 // console.log(knowhowDate)
 // console.log(Date().toISOString(knowhowDate))
 // console.log(timeForToday(knowhowDate))
