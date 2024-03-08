@@ -235,26 +235,26 @@ lists.forEach((list, index) => {
 });
 
 // 도움이 되요 버튼
-const help = document.querySelector(".product-review-help-button");
-help.addEventListener("click", (e) => {
-  help.classList.toggle("help-clicked");
-});
+// const help = document.querySelector(".product-review-help-button");
+// help.addEventListener("click", (e) => {
+//   help.classList.toggle("help-clicked");
+// });
 
 
-// 별점순 정렬버튼
-const arrange = document.querySelector(".review-rating-button");
-
-arrange.addEventListener("click", (e) => {
-  var icon = arrange.querySelector(".icon");
-  // 현재 회전된 각도를 가져오기
-  var currentRotation = icon.style.transform.replace(/[^0-9]/g, "");
-  // 현재 각도가 없는 경우 0으로 설정
-  var currentAngle = parseInt(currentRotation) || 0;
-  // 현재 각도에서 180도씩 더하기
-  var newAngle = currentAngle + 180;
-  // 회전 애니메이션 적용
-  icon.style.transform = `rotate(${newAngle}deg)`;
-});
+// // 별점순 정렬버튼
+// const arrange = document.querySelector(".review-rating-button");
+//
+// arrange.addEventListener("click", (e) => {
+//   var icon = arrange.querySelector(".icon");
+//   // 현재 회전된 각도를 가져오기
+//   var currentRotation = icon.style.transform.replace(/[^0-9]/g, "");
+//   // 현재 각도가 없는 경우 0으로 설정
+//   var currentAngle = parseInt(currentRotation) || 0;
+//   // 현재 각도에서 180도씩 더하기
+//   var newAngle = currentAngle + 180;
+//   // 회전 애니메이션 적용
+//   icon.style.transform = `rotate(${newAngle}deg)`;
+// });
 
 //신고 모달
 const declarationLabels = document.querySelectorAll(".declaration-label");

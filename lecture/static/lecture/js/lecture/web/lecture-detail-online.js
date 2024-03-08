@@ -8,7 +8,6 @@ const sidebarInputTarget = document.querySelector(".sidebar-selected-product-opt
 // 날짜 선택 시 동작
 days.forEach((day) => {
   day.addEventListener("click", (e) => {
-    console.log("날짜들어옴")
     // 모든 요일에서 clicked 클래스를 제거
     days.forEach((otherday) => {
       otherday.classList.remove("clicked");
@@ -39,7 +38,6 @@ const sidebarselectBox = document.querySelector(".sidebar-selected-product-wrap"
 
 times.forEach((time) => {
   time.addEventListener("click", (e) => {
-    console.log("시간들어옴")
     // 모든 시간 요소에서 clicked 클래스를 제거
     times.forEach((othertime) => {
       othertime.classList.remove("clicked");
@@ -52,7 +50,6 @@ times.forEach((time) => {
     var sidebarInner = sidebarInputTarget.querySelector(".selected-time");
     inner.innerHTML = `${selectedTime}`;
     sidebarInner.innerHTML = `${selectedTime}`;
-    console.log("dasdasda")
     // 체크 요소를 보이거나 숨김
     // if (time.classList.contains("clicked")) {
     //   console.log("dasdasda")

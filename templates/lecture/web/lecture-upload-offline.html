@@ -5,6 +5,8 @@
 {% endblock %}
 {% block title %}수강포스팅-오프라인{% endblock %}
 {% block content %}
+<form action="{% url 'lecture:upload-offline' %}" method="post" name="lecture-offline-upload" enctype="multipart/form-data">
+{% csrf_token %}
   <body>
     <div class="layout-wrap">
       <div class="layout-container">
@@ -30,15 +32,15 @@
 
                 <div class="save-button-wrap">
                   <div class="save-button-container">
-                    <div class="temporary-save-wrap">
-                      <div class="temporary-save-container">
-                        <button type="button" disabled class="temporary-save">
-                          <span class="temporary-save-letter">임시저장</span>
-                          <span class="save-letter">저장</span>
-                        </button>
-                      </div>
-                    </div>
-                    <button type="button" class="establish">
+{#                    <div class="temporary-save-wrap">#}
+{#                      <div class="temporary-save-container">#}
+{#                        <button type="button" disabled class="temporary-save">#}
+{#                          <span class="temporary-save-letter">임시저장</span>#}
+{#                          <span class="save-letter">저장</span>#}
+{#                        </button>#}
+{#                      </div>#}
+{#                    </div>#}
+                    <button class="establish">
                       <span class="establish-ask-letter">등록하기</span>
                       <span class="establish-letter">등록</span>
                     </button>
@@ -227,12 +229,12 @@
                                       >
                                         선택해주세요.
                                       </option>
-                                      <option value="0">리스/트리</option>
-                                      <option value="1">
+                                      <option value="리스/트리">리스/트리</option>
+                                      <option value="바구니/센터피스/박스">
                                         바구니/센터피스/박스
                                       </option>
-                                      <option value="2">가드닝/테라리움</option>
-                                      <option value="3">기타</option>
+                                      <option value="가드닝/테라리움">가드닝/테라리움</option>
+                                      <option value="기타">기타</option>
                                     </select>
                                   </div>
                                 </span>
@@ -253,12 +255,21 @@
                           <div class="info-dropdown-wrap">
                             <div class="info-dropdown-container">
                               <div class="info-dropdown-inner">
-                                <div class="plant-selection">관엽식물</div>
-                                <div class="plant-selection">침엽식물</div>
-                                <div class="plant-selection">희귀식물</div>
-                                <div class="plant-selection">다육/선인장</div>
-                                <div class="plant-selection">테라리움</div>
-                                <div class="plant-selection">기타</div>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="관엽식물" style="display: none"><div>관엽식물</div>
+                                </label>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="침엽식물" style="display: none"><div>침엽식물</div>
+                                </label>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="희귀식물" style="display: none"><div>희귀식물</div>
+                                </label>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="다육/선인장" style="display: none"><div>다육/선인장</div>
+                                </label>
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="기타" style="display: none"><div>기타</div>
+                                </label>
                               </div>
                             </div>
                           </div>
@@ -274,8 +285,8 @@
                                 <span class="info-dropdown-box">
                                   <div class="info-list-wrap">
                                     <select
-                                      name="product-index"
-                                      class="product-index"
+                                      name="product-index-local"
+                                      class="product-index-local"
                                     >
                                       <option
                                         value="unselected"
@@ -284,23 +295,23 @@
                                       >
                                         선택해주세요.
                                       </option>
-                                      <option value="0">서울특별시</option>
-                                      <option value="1">부산광역시</option>
-                                      <option value="2">대구광역시</option>
-                                      <option value="3">인천광역시</option>
-                                      <option value="4">광주광역시</option>
-                                      <option value="5">대전광역시</option>
-                                      <option value="6">울산광역시</option>
-                                      <option value="7">강원도</option>
-                                      <option value="8">경기도</option>
-                                      <option value="9">경상남도</option>
-                                      <option value="10">경상북도</option>
-                                      <option value="11">전라남도</option>
-                                      <option value="12">전라북도</option>
-                                      <option value="13">충청남도</option>
-                                      <option value="14">충청북도</option>
-                                      <option value="15">세종특별자치시</option>
-                                      <option value="16">제주특별자치도</option>
+                                      <option value="서울특별시">서울특별시</option>
+                                      <option value="인천광역시">인천광역시</option>
+                                      <option value="대전광역시">대전광역시</option>
+                                      <option value="세종특별자치시">세종특별자치시</option>
+                                      <option value="광주광역시">광주광역시</option>
+                                      <option value="부산광역시">부산광역시</option>
+                                      <option value="대구광역시">대구광역시</option>
+                                      <option value="울산광역시">울산광역시</option>
+                                      <option value="제주특별자치도">제주특별자치도</option>
+                                      <option value="경기도">경기도</option>
+                                      <option value="강원도">강원도</option>
+                                      <option value="충청북도">충청북도</option>
+                                      <option value="충청남도">충청남도</option>
+                                      <option value="전라북도">전라북도</option>
+                                      <option value="전라남도">전라남도</option>
+                                      <option value="경상북도">경상북도</option>
+                                      <option value="경상남도">경상남도</option>
                                     </select>
                                   </div>
                                 </span>
@@ -317,8 +328,8 @@
                                 <span class="info-dropdown-box">
                                   <div class="info-list-wrap">
                                     <select
-                                      name="product-index"
-                                      class="product-index"
+                                      name="product-index-control"
+                                      class="product-index-control"
                                     >
                                       <option
                                         value="unselected"
@@ -327,23 +338,31 @@
                                       >
                                         선택해주세요.
                                       </option>
-                                      <option value="0">성동구</option>
-                                      <option value="1">구</option>
-                                      <option value="2">구</option>
-                                      <option value="3">구</option>
-                                      <option value="4">구</option>
-                                      <option value="5">구</option>
-                                      <option value="6">구</option>
-                                      <option value="7">구</option>
-                                      <option value="8">구</option>
-                                      <option value="9">구</option>
-                                      <option value="10">구</option>
-                                      <option value="11">구</option>
-                                      <option value="12">구</option>
-                                      <option value="13">구</option>
-                                      <option value="14">구</option>
-                                      <option value="15">구</option>
-                                      <option value="16">구</option>
+                                      <option value="종로구">종로구</option>
+                                      <option value="중구">중구</option>
+                                      <option value="용산구">용산구</option>
+                                      <option value="성동구">성동구</option>
+                                      <option value="광진구">광진구</option>
+                                      <option value="동대문구">동대문구</option>
+                                      <option value="중랑구">중랑구</option>
+                                      <option value="성북구">성북구</option>
+                                      <option value="강북구">강북구</option>
+                                      <option value="도봉구">도봉구</option>
+                                      <option value="노원구">노원구</option>
+                                      <option value="은평구">은평구</option>
+                                      <option value="서대문구">서대문구</option>
+                                      <option value="마포구">마포구</option>
+                                      <option value="양천구">양천구</option>
+                                      <option value="강서구">강서구</option>
+                                      <option value="구로구">구로구</option>
+                                      <option value="금천구">금천구</option>
+                                      <option value="영등포구">영등포구</option>
+                                      <option value="동작구">동작구</option>
+                                      <option value="관악구">관악구</option>
+                                      <option value="서초구">서초구</option>
+                                      <option value="강남구">강남구</option>
+                                      <option value="송파구">송파구</option>
+                                      <option value="강동구">강동구</option>
                                     </select>
                                   </div>
                                 </span>
@@ -351,7 +370,6 @@
                             </div>
                           </div>
                         </div>
-
                         <div class="each-info">
                           <div class="info-title">
                             가격
@@ -363,6 +381,7 @@
                                 <span class="info-dropdown-box">
                                   <div class="info-list-wrap">
                                     <input
+                                      type="number"
                                       class="price-input"
                                       placeholder="1인당 가격을 입력하세요"
                                       name="price-input"
@@ -385,9 +404,10 @@
                                 <span class="info-dropdown-box">
                                   <div class="info-list-wrap">
                                     <input
-                                      class="price-input"
+                                      type="number"
+                                      class="number-input"
                                       placeholder="수업 인원을 입력하세요"
-                                      name="price-input"
+                                      name="number-input"
                                     />
                                     <span class="price-index">명</span>
                                   </div>
@@ -409,7 +429,7 @@
                                     <input
                                       type="date"
                                       class="start-date"
-                                      name="date-input"
+                                      name="start-date-input"
                                     />
                                   </div>
                                 </span>
@@ -428,7 +448,7 @@
                                     <input
                                       type="date"
                                       class="end-date"
-                                      name="date-input"
+                                      name="end-date-input"
                                     />
                                   </div>
                                 </span>
@@ -455,9 +475,9 @@
                                               type="time"
                                               min="9:00"
                                               max="21:00"
-                                              step="9000"
+                                              step="1800"
                                               class="time-input"
-                                              name="time-input"
+                                              name="start-time-input"
                                             />
                                           </div>
                                         </span>
@@ -485,9 +505,9 @@
                                               type="time"
                                               min="9:00"
                                               max="21:00"
-                                              step="9000"
+                                              step="1800"
                                               class="time-input"
-                                              name="time-input"
+                                              name="end-time-input"
                                             />
                                           </div>
                                         </span>
@@ -509,20 +529,34 @@
                               <div class="info-dropdown-inner">
                                 <span class="info-dropdown-box">
                                   <div class="info-dropdown-wrap">
-                                    <div class="weekday-selection">월</div>
-                                    <div class="weekday-selection">화</div>
-                                    <div class="weekday-selection">수</div>
-                                    <div class="weekday-selection">목</div>
-                                    <div class="weekday-selection">금</div>
-                                    <div class="weekday-selection">토</div>
-                                    <div class="weekday-selection">일</div>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="0" style="display: none"><div>월</div>
+                                    </label>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="1" style="display: none"><div>화</div>
+                                    </label>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="2" style="display: none"><div>수</div>
+                                    </label>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="3" style="display: none"><div>목</div>
+                                    </label>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="4" style="display: none"><div>금</div>
+                                    </label>
+                                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="5" style="display: none"><div>토</div>
+                                    </label>
+				                    <label class="weekday-selection">
+                                        <input type="checkbox" name="weekday-type" value="6" style="display: none"><div>일</div>
+                                    </label>
                                   </div>
                                 </span>
                               </div>
                             </div>
                           </div>
                           <div class="info-title">
-                            시간 반복
+                            강의 시간
                             <span class="required">*</span>
                           </div>
                           <div class="info-dropdown-wrap">
@@ -530,9 +564,12 @@
                               <div class="info-dropdown-inner">
                                 <span class="info-dropdown-box">
                                   <div class="info-dropdown-wrap">
-                                    <div class="time-selection">30분</div>
-                                    <div class="time-selection">1시간</div>
-                                    <div class="time-selection">2시간</div>
+                                    <label class="time-selection">
+                                      <input type="radio" name="time-type" value="00:30" style="display: none"><div>30분</div>
+                                    </label>
+                                    <label class="time-selection">
+                                      <input type="radio" name="time-type" value="01:00" style="display: none"><div>1시간</div>
+                                    </label>
                                   </div>
                                 </span>
                               </div>
@@ -661,6 +698,7 @@
                   placeholder="제목을 입력해주세요."
                   maxlength="80"
                   class="title-input"
+                  name="title-input"
                   value=""
                 />
                 <div class="title-count"><span class="count">0</span> / 80</div>
@@ -705,11 +743,12 @@
                       </div>
                     </div>
                   </div>
-                  <p
+                  <textarea
                     class="content-text-area"
+                    name="content-text-area"
                     contenteditable="true"
-                    data-ph="내용을 입력해주세요."
-                  ></p>
+                    placeholder="내용을 입력해주세요."
+                  ></textarea>
                 </div>
               </div>
             </div>
@@ -718,8 +757,9 @@
       </div>
     </div>
   </body>
+</form>
 {% endblock %}
 {% block js %}
   <script src="{% static 'lecture/js/lecture/web/lecture-upload.js' %}"></script>
+  <script src="{% static 'lecture/js/lecture/web/lecture-upload-offline.js' %}"></script>
 {% endblock %}
-
