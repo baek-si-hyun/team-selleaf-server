@@ -1,4 +1,4 @@
-from django.db.models import Count, F
+from django.db.models import F
 from django.utils import timezone
 
 from django.shortcuts import render, redirect
@@ -149,3 +149,14 @@ class MypagePostListAPI(APIView):
             post['post_reply'] = [reply['id'] for reply in replies]
 
         return Response(posts)
+
+
+class MypageShowView(View):
+    def get(self,request):
+        member = request.session['member']
+        member_file = request.session['member_files']
+        context = {
+            'member': member,
+            'memberProfile': member_file[0]['file_url']
+        }
+        return render(request,'member/mypage/my_profile/see-all.html',context)
