@@ -884,3 +884,7 @@ input::-webkit-input-placeholder {
 .header-mymenumodal-contenta:hover{
     background-color: rgb(247, 249, 250);
 }
+
+.current-profile-image{
+    width: 100%;
+}
