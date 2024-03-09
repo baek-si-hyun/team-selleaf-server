@@ -5,7 +5,8 @@ from django.urls import path, include
 
 from main.views import MainView, KnowhowScrapAPI, TradeScrapAPI, LectureScrapAPI, PostScrapAPI, BestLectureCategoryAPI
 from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView, WriteNoticeView, \
-    NoticeManagementView, NoticeManagementAPI, UpdateNoticeView,DeleteNoticeView
+    NoticeManagementView, NoticeManagementAPI, UpdateNoticeView, DeleteNoticeView, WriteQnAView, QnAManagementView, \
+    QnAManagementAPI, UpdateQnAView, DeleteQnAView
 
 urlpatterns = [
     path('', MainView.as_view()),
@@ -23,6 +24,11 @@ urlpatterns = [
     path('admin/notice/write/', WriteNoticeView.as_view(), name='notice-write'),
     path('admin/notice/update/', UpdateNoticeView.as_view(), name='notice-update'),
     path('admin/notice/delete/', DeleteNoticeView.as_view(), name='notice-delete'),
+    path('admin/qna/', QnAManagementView.as_view(), name='manager-qna'),
+    path('admin/qna/<int:page>', QnAManagementAPI.as_view(), name='manager-qna-api'),
+    path('admin/qna/write/', WriteQnAView.as_view(), name='qna-write'),
+    path('admin/qna/update/', UpdateQnAView.as_view(), name='qna-update'),
+    path('admin/qna/delete/', DeleteQnAView.as_view(), name='qna-delete'),
     path('member/', include('member.urls-web')),
     path('lecture/', include('lecture.urls-web')),
     path('order/', include('order.urls-web')),

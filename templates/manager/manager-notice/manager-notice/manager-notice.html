@@ -68,11 +68,11 @@
                   <div class="header-function-container">
                     <ul class="header-function-inner">
                       <li class="header-relative-1">
-                        <button
+                        <a
                           class="lecture-info"
                           aria-label="tab button"
-                          type="button"
                           id="btn"
+                          href="{% url "manager-notice" %}"
                         >
                           <div class="flex">
                             <p class="lecture-info">공지사항</p>
@@ -80,23 +80,23 @@
                               <p class="lecture-info-num">{{ notice_count }}</p>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar" id="under"></div>
                       </li>
                       <li class="header-relative-2">
-                        <button
+                        <a
                           class="lecture-info"
                           aria-label="tab button"
-                          type="button"
                           id="btn"
+                          href="{% url "manager-qna" %}"
                         >
                           <div class="flex">
-                            <p class="lecture-info">자주묻는 질문목록</p>
+                            <p class="lecture-info">QnA</p>
                             <div class="lecture-info-num">
                               <p class="lecture-info-num">{{ qna_count }}</p>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar" id="under"></div>
                       </li>
                     </ul>
