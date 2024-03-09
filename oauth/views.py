@@ -31,15 +31,6 @@ class OAuthLoginView(View):
             path = f'/member/join?member_email={member_email}&member_name={member_name}&member_profile={member_profile}&member_type={member_type}'
         else:
             member = is_member.first()
-            member.member_name = member_name
-            member.save(update_fields=['member_name'])
-            member.memberprofile_set.file_url = member_profile
-
-            member_profile_obj = member.memberprofile_set.first()
-            if member_profile_obj:
-                member_profile_obj.file_url = member_profile
-                member_profile_obj.save(update_fields=['file_url'])
-
             request.session['member'] = MemberSerializer(member).data
             member_files = list(member.memberprofile_set.values('file_url'))
             if len(member_files) != 0:
