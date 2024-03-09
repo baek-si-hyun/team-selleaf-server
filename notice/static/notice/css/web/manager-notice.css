@@ -472,7 +472,7 @@ li.header-relative-2{
     position: relative;
 }
 
-button.lecture-info{
+a.lecture-info{
     text-align: left;
     padding-bottom: 16px;
     height: 100%;

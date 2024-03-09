@@ -18,7 +18,6 @@ const countCheckBoxes = () => {
 // 페이지가 열렸을 때 체크된 박스 개수를 셈
 countCheckBoxes();
 
-
 // 가장 최근에 작성된 순으로 10개의 공지사항을 부리기 위해 초기값을 1로 설정
 let page = 1
 
@@ -48,7 +47,7 @@ const showNotice = (notice_info) => {
   // 공지사항의 제목과 내용을 아래의 HTML 태그로 묶어서 공지사항 목록 생성
   notices.forEach((notice) => {
     noticeList.innerHTML += `
-                  <li class="list-content">
+                  <li class="list-content ${notice.id}">
                     <input type="checkbox" class="checkbox-input" />
                     <button class="text-left">
                       <div class="list-content-wrap">
@@ -131,12 +130,29 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelButton = document.querySelector(".modal-cancel button");
   const confirmButton = document.querySelector(".modal-confirm button");
 
+  // 취소 버튼 누르면 모달창 닫힘
   cancelButton.addEventListener("click", (e) => {
     modalWrap.style.display = "none";
   });
 
+  // 삭제 버튼 이벤트 - 체크된 공지사항만 삭제
   confirmButton.addEventListener("click", (e) => {
     modalWrap.style.display = "none";
+
+    // 삭제할 공지사항의 id를 담을 빈 배열
+    let deleteIds = [];
+
+    // 이 시점에서 체크된 박스 개수를 세고
+    const checkedBoxes = document.querySelectorAll(".checkbox-input:checked");
+
+    // 각 체크박스를 감싸는 li 태그의 id를 deleteIds에 추가
+    checkedBoxes.forEach((checkbox) => {
+      deleteIds.push(checkbox.parentElement.classList[1]);
+    })
+
+    // 삭제할 공지사항들 id 추출 완료
+    // 이걸 어떻게 뷰에 보내야 되나...
+    console.log(deleteIds)
   });
 });
 
@@ -198,7 +214,7 @@ inputField.addEventListener("input", handleInputChange);
 // cancel-logo에 클릭 이벤트 리스너를 추가합니다.
 cancelButton.addEventListener("click", handleCancelClick);
 
-// 공지사항, 자주묻는 질문 목록 선택하는 js
+// 공지사항 선택하는 js
 const catebtns = document.querySelectorAll("#btn");
 const cateUnder = document.querySelectorAll("#under");
 cateUnder[0].classList.add("underbar-checked");

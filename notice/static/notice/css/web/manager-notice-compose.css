@@ -268,7 +268,6 @@ button.compose-temporary-storage{
     font-size: 14px;
     line-height: 16px;
     cursor: default;
-    display: flex;
 }
 
 button.compose-temporary-storage-checked{
@@ -340,6 +339,10 @@ button.compose-storage-checked{
     fill: #ffffff;
     background-color: #c06888;
     cursor: pointer;
+}
+
+button.compose-storage-checked:hover {
+    opacity: 0.7;
 }
 
 div.main-compose-wrap{

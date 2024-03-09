@@ -16,23 +16,23 @@ const textarea = document.querySelector("textarea.compose-content");
 // 글자수를 표시할 요소를 가져옵니다.
 const charCountDisplay = document.querySelector("div.compose-content-bottom");
 
-// 텍스트 영역의 입력 이벤트를 감지하여 처리합니다.
-textarea.addEventListener("input", function () {
+// 현재 textarea 안의 글자 수를 세서 화면에 뿌리는 함수
+const countText = () => {
   // 입력된 텍스트의 길이를 가져옵니다.
-  const textLength = this.value.length;
+  const textLength = textarea.value.length;
 
   // 글자수를 표시할 요소에 글자수를 표시합니다.
   charCountDisplay.textContent = textLength + "자";
-});
+}
+
+// 페이지가 열렸을 때 위 함수 사용
+countText();
+
+// 텍스트 영역의 입력 이벤트를 감지하여 처리합니다.
+textarea.addEventListener("input", countText);
 
 // 텍스트 영역의 값이 변경될 때도 처리합니다.
-textarea.addEventListener("change", function () {
-  // 입력된 텍스트의 길이를 가져옵니다.
-  const textLength = this.value.length;
-
-  // 글자수를 표시할 요소에 글자수를 표시합니다.
-  charCountDisplay.textContent = textLength + "자";
-});
+textarea.addEventListener("change", countText);
 
 // 삭제 버튼 누르면 뜨는 모달창
 document.addEventListener("DOMContentLoaded", function () {
