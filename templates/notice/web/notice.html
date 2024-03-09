@@ -2,8 +2,6 @@
 {% load static %}
 {% block static %}
     <link rel="stylesheet" href="{% static 'notice/css/web/notice.css' %}">
-    <link rel="stylesheet" href="{% static 'public/web/css/fix/header.css' %}">
-    <link rel="stylesheet" href="{% static 'public/web/css/fix/footer.css' %}">
 {% endblock %}
 {% block title %}공지사항{% endblock %}
 {% block content %}
@@ -204,6 +202,5 @@
 {% include 'fix/footer.html' %}
 {% endblock %}
 {% block js %}
-  <script src="{% static 'public/web/js/fix/header.js' %}"></script>
   <script src="{% static 'notice/js/web/notice.js' %}"></script>
 {% endblock %}

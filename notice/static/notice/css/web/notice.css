@@ -505,6 +505,7 @@ span.question-v::before{
     content: "\e962";
 }
 
+/* 질문 클릭하면 열리는 답변 부분 */
 div.question{
     background-color: rgb(247, 249, 250);
     border-radius: 4px;

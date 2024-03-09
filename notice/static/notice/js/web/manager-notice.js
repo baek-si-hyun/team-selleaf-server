@@ -24,7 +24,7 @@ let page = 1
 // API 뷰로부터 데이터를 가져오기위한 비동기 통신 함수
 const getNotice = async (callback) => {
   // API에 공지사항 목록을 요청해서 가져옴 - Promise
-  const response = await fetch(`/admin/notice/${page}`);
+  const response = await fetch(`/notice/list/${page}`);
   const notices = await response.json()
 
   // 콜백함수를 전달받았다면, 조회한 목록의 처리를 콜백함수에 맡김
