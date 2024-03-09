@@ -431,7 +431,7 @@ div.compose-button{
     display: flex;
 }
 
-button.compose-button{
+a.compose-button{
     padding-left: 16px;
     padding-right: 16px;
     border-radius: 20px;
@@ -446,6 +446,10 @@ button.compose-button{
     color: #fff;
     fill: #fff;
     background-color: #c06888;
+}
+
+a.compose-button:hover {
+    opacity: 0.7;
 }
 
 div.header-function-container{
@@ -468,7 +472,7 @@ li.header-relative-2{
     position: relative;
 }
 
-button.lecture-info{
+a.lecture-info{
     text-align: left;
     padding-bottom: 16px;
     height: 100%;
@@ -760,11 +764,17 @@ div.content-open-wrap{
     margin-left: 32px;
 }
 
-div.content-detail{
+a.update-qna {
     column-gap: 32px;
     align-items: center;
     display: flex;
-    margin-left: 32px;
+    margin-right: 16px;
+    color: #C06888;
+    font-weight: 700;
+}
+
+a.update-qna:hover {
+    opacity: 0.7;
 }
 
 div.content-detail-a{
@@ -831,6 +841,22 @@ button.delete-button{
     height: 40px;
     display: flex;
     border-color: #e6e6e7;
+    color: #fff;
+    fill: #fff;
+    background-color: #c06888;
+}
+
+button.delete-button:not(:disabled):hover {
+    opacity: 0.7;
+}
+
+button.delete-button:not(:disabled) path {
+    fill: #fff;
+}
+
+button.delete-button:disabled {
+    cursor: default;
+    background-color: #f5f5f5;
 }
 
 svg.edit-button{
@@ -1003,6 +1029,11 @@ button.modal-confirm{
     color: #fff;
     fill: #fff;
     background-color: #c06888;
+}
+
+button.modal-cancel:hover,
+button.modal-confirm:hover {
+    opacity: 0.7;
 }
 
 div.delete-modal-bgcolor{

@@ -287,7 +287,7 @@ class DeleteNoticeView(View):
     # 공지사항 삭제를 위한 뷰
     def get(self, request):
         # 03/07 - 공지사항 리스트에서 체크한 게시물들을 한 번에 가져올 방법을 생각해보자
-        # 삭제할 공지사항들의 id를 통해, 해당 객체들을 가져옴(dict 타입)
+        # 삭제할 공지사항들의 id를 통해 해당 객체들을 가져옴(dict 타입)
         notices = Notice.objects.filter(id=request.GET['id'])
 
         # 위 공지사항들의 status를 0으로 만들어 화면에 뿌리지 않게 만들고, 변동 사항을 저장함
@@ -296,7 +296,7 @@ class DeleteNoticeView(View):
             notice.updated_date = timezone.now()
             notice.save(update_fields=["notice_status", "updated_date"])
 
-        # 상태 업데이트 후, 공지사항 리스트 페이지로 redirect
+        # 상태 업데이트 후 공지사항 리스트 페이지로 redirect
         return redirect('manager-notice')
 
 
@@ -304,8 +304,53 @@ class DeleteNoticeView(View):
 class QnAManagementView(View):
     # QnA 내역 페이지 이동 뷰
     def get(self, request):
-        # 모든 QnA 전부 가져옴
-        return render(request, 'manager/manager-notice/manager-qna/manager-qna.html')
+        # 현재 작성된 공지사항 및 QnA의 개수를 세서 dict 데이터로 통합
+        notice_count = Notice.enabled_objects.count()
+        qna_count = QnA.enabled_objects.count()
+
+        context = {
+            'notice_count': notice_count,
+            'qna_count': qna_count
+        }
+
+        # 공지사항과 QnA 개수를 화면에 전달
+        # QnA 내역을 가져오는 것은 아래의 API가 해줌
+        return render(request, 'manager/manager-notice/manager-qna/manager-qna.html', context)
+
+
+class QnAManagementAPI(APIView):
+    # API에서 QnA 목록을 가져오는 뷰
+    # manager-qna.js에서 fetch로 요청받을 때 이 뷰가 사용된다
+    def get(self, request, page):
+        # 한 페이지 당 공지사항 최대 10개씩 표시
+        row_count = 10
+
+        # 한 페이지에 표시할 공지사항들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 공지사항 표시에 필요한 tbl_notice의 컬럼들
+        columns = [
+            'id',
+            'qna_title',
+            'qna_content'
+        ]
+
+        # 게시 중인 공지사항의 제목과 내용을 10개씩 가져와서 notices에 할당(list)
+        qnas = QnA.enabled_objects.values(*columns)[offset:limit]
+
+        # 다음 페이지에 표시할 공지사항이 있는지 판단하기 위한 변수
+        # js로 페이지네이션을 구현하기 위함
+        has_next_page = QnA.enabled_objects.filter()[limit:limit + 1].exists()
+
+        # manager-notice.js에 보낼 공지사항 목록
+        qna_info = {
+            'qnas': qnas,
+            'hasNext': has_next_page
+        }
+
+        # 요청한 목록 반환
+        return Response(qna_info)
 
 
 class WriteQnAView(View):
@@ -317,28 +362,78 @@ class WriteQnAView(View):
     # QnA 작성 완료 이후의 뷰
     @transaction.atomic
     def post(self, request):
-        # 작성한 QnA 저장 후, QnA 리스트 페이지로 redirect
-        return redirect('/')
+        # POST 방식으로 요청한 데이터를 가져옴
+        qna_data = request.POST
+
+        # 받아온 데이터에서 특정 정보(id, 제목, 내용)를 가져와서 dict 타입으로 저장
+        data = {
+            'qna_title': qna_data['qna-title'],
+            'qna_content': qna_data['qna-content'],
+        }
+
+        # 받아온 데이터로 tbl_qna에 실행할 insert 쿼리 작성
+        QnA.objects.create(**data)
+
+        # 작성한 공지사항 저장 후, QnA 리스트 페이지로 redirect
+        return redirect('manager-qna')
 
 
 class UpdateQnAView(View):
     # QnA 수정 페이지 이동 뷰
     def get(self, request):
-        # 수정할 QnA 정보 가져오기
-        return render(request, 'manager/manager-notice/manager-qna/manager-qna-modify.html')
+        # 수정 버튼에서 전달한 id를 통해 수정할 공지사항 객체 가져오기
+        qna = QnA.objects.get(id=request.GET['id'])
+
+        # 수정 페이지에 전달할 QnA의 dict 타입의 데이터 생성
+        context = {
+            'qna': qna
+        }
+
+        # QnA 데이터를 가지고 수정 페이지로 이동
+        return render(request, 'manager/manager-notice/manager-qna/manager-qna-modify.html', context)
 
     # QnA 수정 완료 이후의 뷰
     @transaction.atomic
     def post(self, request):
+        # GET 방식으로 url에서 id를 가져옴
+        qna_id = request.GET['id']
+
+        # POST 방식으로 받은 id와 제목과 내용도 가져옴
+        data = request.POST
+
+        data = {
+            'qna_title': data['qna-title'],
+            'qna_content': data['qna-content']
+        }
+
+        # 가져온 id로 수정할 QnA 조회
+        qna = QnA.objects.get(id=qna_id)
+
+        # 제목과 내용, 갱신 시간 변경하고 저장
+        qna.qna_title = data['qna_title']
+        qna.qna_content = data['qna_content']
+        qna.updated_date = timezone.now()
+
+        qna.save(update_fields=["qna_title", "qna_content", "updated_date"])
+
         # 기존 QnA 정보 update 후, QnA 리스트 페이지로 redirect
-        return redirect('/')
+        return redirect('manager-qna')
 
 
 class DeleteQnAView(View):
     # QnA 삭제를 위한 뷰
     def get(self, request):
-        # 상태 업데이트 후, QnA 리스트 페이지로 redirect
-        return redirect('/')
+        # 삭제할 QnA들의 id를 통해 해당 객체들을 가져옴
+        qnas = QnA.objects.filter(id=request.GET['id'])
+
+        # 위 QnA 전체를 소프트 딜리트(status = 0)
+        for qna in qnas:
+            qna.qna_status = 0
+            qna.updated_date = timezone.now()
+            qna.save(update_fields=["qna_status", "updated_date"])
+
+        # 상태 업데이트 후 QnA 리스트 페이지로 redirect
+        return redirect('manager-qna')
 
 
 # 신고 내역 관리
