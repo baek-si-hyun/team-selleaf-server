@@ -3423,3 +3423,17 @@ li:first-child>.product-detail-nav-item{
     overflow: hidden;
     margin-right: 4px;
 }
+
+.review-more-button{
+  width: 300px;
+  height: 35px;
+  border-radius: 4px;
+  border: 1px solid #135f2c;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 700;
+  margin: 0 auto; /* 수평 가운데 정렬 */
+  display: block; /* 블록 요소로 설정하여 가로 폭 조절 가능하도록 함 */
+  background-color: #135f2c;
+  padding: 0 10px; /* 양쪽 패딩 추가 */
+}

@@ -324,19 +324,13 @@
                 <div class="product-overview-title">
                   <span class="product-title">{{ lecture.lecture_title }}</span>
                   <div class="product-title-icon-wrap">
+                    {% if request.session.member.id == lecture.teacher.member.id %}
                     <button class="update-button" type="button">
                       <img
                         class="update-icon"
                         src="{% static 'public/web/images/common/update_icon.png' %}"
                       />
                       <span class="update-label">수정</span>
-                    </button>
-                    <button class="scrap-button" type="button">
-                      <img
-                        class="scrap-off"
-                        src="{% static 'public/web/images/common/scrap-off-blk.png' %}"
-                      />
-                      <span class="scrap-count">0</span>
                     </button>
                     <div class="share-button-wrap">
                       <button class="share-button" type="button">
@@ -355,6 +349,14 @@
                         </svg>
                       </button>
                     </div>
+                    {% endif %}
+                    <button class="scrap-button" type="button">
+                      <img
+                        class="scrap-off"
+                        src="{% static 'public/web/images/common/scrap-off-blk.png' %}"
+                      />
+                      <span class="scrap-count">0</span>
+                    </button>
                   </div>
                 </div>
               </h1>
@@ -584,9 +586,7 @@
                         </div>
                       </span>
                     </div>
-                  <div
-                      class="product-option-second-wrap"
-                    >
+                    <div class="product-option-second-wrap">
                       <span class="info-dropdown-box">
                         <span class="info-title">시간 선택</span>
                         <div class="info-dropdown-wrap">
@@ -598,9 +598,7 @@
                         </div>
                       </span>
                     </div>
-                  <div
-                      class="product-option-third-wrap"
-                    >
+                    <div class="product-option-third-wrap">
                       <span class="info-dropdown-box">
                         <span class="info-title">DIY 키트 선택</span>
                           <div class="info-dropdown-wrap">
@@ -614,10 +612,7 @@
                         </span>
                     </div>
                   </div>
-                  <article
-                    class="selected-product-list-container"
-                    style="display: none"
-                  >
+                  <article class="selected-product-list-container" style="display: none">
                     <h2 class="selected-product-name">
                       <span>날짜:</span>
                       <span class="selected-date">선택한 날짜</span>
@@ -628,11 +623,7 @@
                       <span>키트:</span>
                       <span class="selected-kit">선택한 키트</span>
                     </h2>
-                    <button
-                      class="delete-button-wrap"
-                      aria-label="삭제"
-                      type="button"
-                    >
+                    <button class="delete-button-wrap" aria-label="삭제" type="button">
                       <span class="delete-button-container">
                         <img src="{% static 'public/web/images/common/cancel.png' %}" alt="" />
                       </span>
@@ -670,17 +661,12 @@
           </div>
         </div>
       </div>
-      <div
-        class="product-detail-nav-wrap"
-        style="position: sticky; top: 131.5px; transition: top 0.1s ease 0s"
-      >
+      <div class="product-detail-nav-wrap" style="position: sticky; top: 131.5px; transition: top 0.1s ease 0s">
         <div class="product-detail-nav-container" style="position: relative">
           <nav class="product-detail-nav-inner">
             <ol class="product-detail-nav-list">
               <li>
-                <a class="product-detail-nav-item active" href="#detail-info">
-                  상품정보</a
-                >
+                <a class="product-detail-nav-item active" href="#detail-info">상품정보</a>
               </li>
               <li>
                 <a class="product-detail-nav-item" href="#product-review">
@@ -689,19 +675,13 @@
                 </a>
               </li>
               <li>
-                <a class="product-detail-nav-item" href="#product-ask">
-                  문의
-                </a>
+                <a class="product-detail-nav-item" href="#product-ask">문의</a>
               </li>
               <li>
-                <a class="product-detail-nav-item" href="#product-suggestion">
-                  추천
-                </a>
+                <a class="product-detail-nav-item" href="#product-suggestion">추천</a>
               </li>
               <li>
-                <a class="product-detail-nav-item" href="#product-extra-info">
-                  반품/기타
-                </a>
+                <a class="product-detail-nav-item" href="#product-extra-info">반품/기타</a>
               </li>
             </ol>
           </nav>
@@ -720,11 +700,7 @@
                   <div class="detail-info-contents-thumbnail">
                   </div>
                   {% for lecture_file in lecture_files %}
-                    <img
-                      class="detail-info-image"
-                      src="/upload/{{ lecture_file.file_url }}"
-                      alt="판매자 등록이미지"
-                    />
+                    <img class="detail-info-image" src="/upload/{{ lecture_file.file_url }}" alt="판매자 등록이미지"/>
                   {% endfor %}
                 </div>
                 <p class="product-review-description">{{ lecture.lecture_content }}</p>
@@ -752,8 +728,7 @@
                             width="1em"
                             height="1em"
                             preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 24 24"
-                          >
+                            viewBox="0 0 24 24">
                             <defs>
                               <path
                                 id="star-path-115"
@@ -765,12 +740,12 @@
                             </defs>
                             <use
                               xlink:href="#star-path-115"
-                              fill="#DBDBDB"
-                            ></use>
+                              fill="#DBDBDB">
+                            </use>
                             <use
                               clip-path="url(#star-clip-115)"
-                              xlink:href="#star-path-115"
-                            ></use>
+                              xlink:href="#star-path-115">
+                            </use>
                           </svg>
                           <svg
                             fill="{% if average_rating >= 2 %}#135f2c{% else %}#DBDBDB{% endif %}"
@@ -881,77 +856,16 @@
                       </div>
 
                       <div class="detail-rating-wrap">
-                              {% for rating, count in rating_counts.items %}
-                                <div class="detail-rating-inner">
-                                    <div class="detail-rating-label">{{ rating }}점</div>
-                                    <div class="detail-rating-label-bar">
-                                        <div class="detail-rating-label-full"></div>
-                                        <div class="detail-rating-label-gauging" style="width: {{ count }}%"></div>
-                                    </div>
-                                    <div class="detail-rating-number">{{ count }}</div>
-                                </div>
-                              {% endfor %}
-{#                        <div class="detail-rating-contianer">#}
-{#                          <div class="detail-rating-inner">#}
-{#                            <div class="detail-rating-label label-selected">#}
-{#                              5점#}
-{#                            </div>#}
-{#                            <div class="detail-rating-label-bar">#}
-{#                              <div class="detail-rating-label-full"></div>#}
-{#                              <div#}
-{#                                class="detail-rating-label-gauging"#}
-{#                                style="width: 80.9053%"#}
-{#                              ></div>#}
-{#                            </div>#}
-{#                            <div class="detail-rating-number label_selected">#}
-{#                              1,966#}
-{#                            </div>#}
-{#                          </div>#}
-{#                          <div class="detail-rating-inner">#}
-{#                            <div class="detail-rating-label">4점</div>#}
-{#                            <div class="detail-rating-label-bar">#}
-{#                              <div class="detail-rating-label-full"></div>#}
-{#                              <div#}
-{#                                class="detail-rating-label-gauging"#}
-{#                                style="width: 80.9053%"#}
-{#                              ></div>#}
-{#                            </div>#}
-{#                            <div class="detail-rating-number">1,966</div>#}
-{#                          </div>#}
-{#                          <div class="detail-rating-inner">#}
-{#                            <div class="detail-rating-label">3점</div>#}
-{#                            <div class="detail-rating-label-bar">#}
-{#                              <div class="detail-rating-label-full"></div>#}
-{#                              <div#}
-{#                                class="detail-rating-label-gauging"#}
-{#                                style="width: 80.9053%"#}
-{#                              ></div>#}
-{#                            </div>#}
-{#                            <div class="detail-rating-number">1,966</div>#}
-{#                          </div>#}
-{#                          <div class="detail-rating-inner">#}
-{#                            <div class="detail-rating-label">2점</div>#}
-{#                            <div class="detail-rating-label-bar">#}
-{#                              <div class="detail-rating-label-full"></div>#}
-{#                              <div#}
-{#                                class="detail-rating-label-gauging"#}
-{#                                style="width: 80.9053%"#}
-{#                              ></div>#}
-{#                            </div>#}
-{#                            <div class="detail-rating-number">1,966</div>#}
-{#                          </div>#}
-{#                          <div class="detail-rating-inner">#}
-{#                            <div class="detail-rating-label">1점</div>#}
-{#                            <div class="detail-rating-label-bar">#}
-{#                              <div class="detail-rating-label-full"></div>#}
-{#                              <div#}
-{#                                class="detail-rating-label-gauging"#}
-{#                                style="width: 80.9053%"#}
-{#                              ></div>#}
-{#                            </div>#}
-{#                            <div class="detail-rating-number">1,966</div>#}
-{#                          </div>#}
-{#                        </div>#}
+                        {% for rating, count in rating_counts.items %}
+                          <div class="detail-rating-inner">
+                              <div class="detail-rating-label">{{ rating }}점</div>
+                              <div class="detail-rating-label-bar">
+                                  <div class="detail-rating-label-full"></div>
+                                  <div class="detail-rating-label-gauging" style="width: {{ count }}%"></div>
+                              </div>
+                              <div class="detail-rating-number">{{ count }}</div>
+                          </div>
+                      {% endfor %}
                       </div>
                     </div>
                   </div>
@@ -960,57 +874,23 @@
                       <div class="review-filter-inner">
                         <div class="review-filter-preview-wrap">
                           <button
-                            class="review-filter-preview-button preview-active"
-                            aria-pressed="true"
-                            type="button"
-                          >
-                            베스트순
-                          </button>
-                          <button
                             class="review-filter-preview-button"
                             aria-pressed="false"
                             type="button"
                           >
                             최신순
                           </button>
-{#                          <button#}
-{#                            class="review-filter-preview-button preview-photo"#}
-{#                            aria-pressed="false"#}
-{#                            type="button"#}
-{#                          >#}
-{#                            <svg#}
-{#                              class="icon"#}
-{#                              width="18"#}
-{#                              height="18"#}
-{#                              viewBox="0 0 18 18"#}
-{#                              preserveAspectRatio="xMidYMid meet"#}
-{#                            >#}
-{#                              <path#}
-{#                                fill="currentColor"#}
-{#                                d="M15.821 3a.67.67 0 0 1 .679.672v10.656a.67.67 0 0 1-.679.672H2.18a.67.67 0 0 1-.679-.672V3.672c0-.375.3-.672.679-.672H15.82zm-.679 1.344H2.858v8.14L7.01 7.781c.094-.125.284-.125.394 0l2.321 2.657c.048.046.063.109.048.156l-.3 1.375c-.016.11.11.172.173.094l2.369-2.579a.202.202 0 0 1 .284 0l2.842 3.094V4.344zm-2.526 3.61a1.1 1.1 0 0 1-1.105-1.095 1.1 1.1 0 0 1 1.105-1.093 1.1 1.1 0 0 1 1.105 1.093 1.1 1.1 0 0 1-1.105 1.094z"#}
-{#                              ></path>#}
-{#                            </svg>#}
-{#                            <div>사진리뷰</div>#}
-{#                          </button>#}
+                          <button
+                            class="review-filter-preview-button preview-active"
+                            aria-pressed="true"
+                            type="button"
+                          >
+                            별점순
+                          </button>
                         </div>
                         <ul class="review-filter-list-button">
                           <li class="review-filter-list-rating">
                             <div class="review-filter-rating">
-{#                              <button class="review-rating-button">#}
-{#                                별점순#}
-{#                                <svg#}
-{#                                  class="icon"#}
-{#                                  width="12"#}
-{#                                  height="12"#}
-{#                                  viewBox="0 0 12 12"#}
-{#                                  fill="currentColor"#}
-{#                                  preserveAspectRatio="xMidYMid meet"#}
-{#                                >#}
-{#                                  <path#}
-{#                                    d="M6.069 6.72l4.123-3.783 1.216 1.326-5.32 4.881L.603 4.273l1.196-1.346z"#}
-{#                                  ></path>#}
-{#                                </svg>#}
-{#                              </button>#}
                             </div>
                           </li>
                         </ul>
@@ -1074,104 +954,16 @@
                               {{ review.review_title }}
                           </p>
                         </div>
-{#                        <button type="button" class="product-review-img-button">#}
-{#                          <img#}
-{#                            class="product-review-img"#}
-{#                            src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1"#}
-{#                            srcset="#}
-{#                              https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;webp=1 1.5x,#}
-{#                              https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1 2x,#}
-{#                              https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 3x#}
-{#                            "#}
-{#                          />#}
-{#                        </button>#}
                         <p class="product-review-description">
                           {{ review.review_content }}
                         </p>
                         <div class="product-review-help">
-{#                          <button#}
-{#                            type="button"#}
-{#                            class="product-review-help-button"#}
-{#                          >#}
-{#                            도움이 돼요#}
-{#                          </button>#}
                         </div>
                       </article>
                       {% endfor %}
                     </div>
+                  <button class="review-more-button" id="load-more-btn">더 보기</button>
                   </div>
-                  <ul class="product-review-page-button">
-                    <!-- js추가 -->
-                    <li class="prev-button-wrap">
-                      <button class="prev-button" type="button">
-                        <svg width="1em" height="1em" viewBox="0 0 24 24">
-                          <path
-                            fill="currentColor"
-                            d="M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z"
-                          ></path>
-                        </svg>
-                      </button>
-                    </li>
-                    <a id="product-suggestion"></a>
-                    <li>
-                      <button
-                        class="product-review-page selected-page"
-                        type="button"
-                      >
-                        1
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        2
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        3
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        4
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        5
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        6
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        7
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        8
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        9
-                      </button>
-                    </li>
-                    <li>
-                      <button class="next-button" type="button">
-                        <svg width="1em" height="1em" viewBox="0 0 24 24">
-                          <path
-                            fill="currentColor"
-                            d="M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z"
-                          ></path>
-                        </svg>
-                      </button>
-                    </li>
-                  </ul>
                 </div>
               </section>
 
@@ -1608,19 +1400,62 @@
   </body>
 {% endblock %}
 {% block js %}
-  <script src="{% static 'lecture/js/lecture/web/lecture-detail-online.js' %}"></script>
-  <script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    const contentImg = document.querySelector(".product-cover-image");
-    const prevImgs = document.querySelectorAll(".product-small-image");
-    prevImgs.forEach((item) => {
-        item.addEventListener("click", (e) => {
-            const imgSrc = e.target.getAttribute("src");
-            contentImg.setAttribute("src", imgSrc);
-            });
+<script src="{% static 'lecture/js/lecture/web/lecture-detail-online.js' %}"></script>
+<script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+const contentImg = document.querySelector(".product-cover-image");
+const prevImgs = document.querySelectorAll(".product-small-image");
+prevImgs.forEach((item) => {
+    item.addEventListener("click", (e) => {
+        const imgSrc = e.target.getAttribute("src");
+        contentImg.setAttribute("src", imgSrc);
         });
     });
-  </script>
+});
+
+// 리뷰를 3개를 띄우고 더보기 버튼 눌렀을 때 3개씩 추가되기
+document.addEventListener("DOMContentLoaded", function() {
+  const reviewList = document.querySelector(".product-review-list-container");
+  const reviews = reviewList.querySelectorAll(".product-review-list-inner");
+  const loadMoreBtn = document.getElementById("load-more-btn");
+
+  const reviewsPerPage = 3; // 한 번에 로드될 리뷰의 개수
+
+  // 처음에 3개의 리뷰만 표시
+  reviews.forEach((review, index) => {
+    if (index < reviewsPerPage) {
+      review.style.display = "block";
+    } else {
+      review.style.display = "none";
+    }
+  });
+
+  // 더보기 버튼 클릭 시 추가 리뷰 표시
+  loadMoreBtn.addEventListener("click", function() {
+    const hiddenReviews = reviewList.querySelectorAll(
+      ".product-review-list-inner:not([style='display: block;'])"
+    );
+
+    let count = 0;
+    hiddenReviews.forEach((review, index) => {
+      if (count < reviewsPerPage) {
+        review.style.display = "block";
+        count++;
+      }
+    });
+
+    // 더 이상 추가 리뷰가 없을 때 버튼 숨기기
+    if (
+      reviewList.querySelectorAll(
+        ".product-review-list-inner:not([style='display: block;'])"
+      ).length === 0
+    ) {
+      loadMoreBtn.style.display = "none";
+    }
+  });
+});
+
+</script>
 {% endblock %}
 

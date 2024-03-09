@@ -195,9 +195,6 @@ sidebarAdd.addEventListener("click", (e) => {
   }
 });
 
-
-// =====================================================================================================================
-
 sidebarSub.addEventListener("click", (e) => {
   count == 0 ? (count = 0) : count--;
   number.innerHTML = `${count}`;
