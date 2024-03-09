@@ -5,7 +5,8 @@ from django.db.models import Count, Avg, Sum
 from django.shortcuts import render, redirect
 from django.views import View
 
-from lecture.models import LectureCategory, Lecture, LectureProductFile, LecturePlant, Kit, LectureReview
+from lecture.models import LectureCategory, Lecture, LectureProductFile, LecturePlant, Kit, LectureReview, \
+    LectureAddress
 from member.models import Member
 from selleaf.date import Date
 from selleaf.time import Time
@@ -19,7 +20,7 @@ class LectureView(View):
 
 class LectureDetailOnlineView(View):
     def get(self, request):
-        lecture = Lecture.objects.get(id=request.GET['id'])
+        lecture = Lecture.objects.get(id=request.GET['id'], online_status=True)
         date = Date.objects.filter(lecture_id=request.GET['id']).first()
         # print(lecture)
 
@@ -99,7 +100,7 @@ class LectureDetailOnlineView(View):
 
 class LectureDetailOfflineView(View):
     def get(self, request):
-        lecture = Lecture.objects.get(id=request.GET['id'])
+        lecture = Lecture.objects.get(id=request.GET['id'], online_status=False)
         date = Date.objects.filter(lecture_id=request.GET['id']).first()
         # print(lecture)
 
@@ -157,6 +158,8 @@ class LectureDetailOfflineView(View):
         dates = lecture.date_set.all()
         times = date.time_set.all()
         reviews = lecture.lecturereview_set.all()
+        address = lecture.lectureaddress_set.first()
+        print(address)
         # print(reviews)
 
         context = {
@@ -166,6 +169,7 @@ class LectureDetailOfflineView(View):
             'lecture_order_date': dates.order_by('date'),
             'lecture_order_time': times.order_by('time'),
             'reviews': reviews,
+            'address': address,
             'lectures': lectures,
             'review_count': review_count,
             'rating_counts': rating_dict,
@@ -240,12 +244,13 @@ class LectureUploadOnlineView(View):
         member = request.session['member']
 
         data = {
-            'lecture_price': lecture_data['price-input'].toLocaleString('ko-KR'),
+            'lecture_price': lecture_data['price-input'],
             'lecture_headcount': lecture_data['number-input'],
             'lecture_title': lecture_data['title-input'],
             'lecture_content': lecture_data['content-text-area'],
             'teacher': Teacher.objects.get(member_id=member['id']),
             'lecture_category': LectureCategory.objects.create(lecture_category_name=lecture_data['product-index']),
+            'online_status': True,
         }
         # Lecture create
         lecture = Lecture.objects.create(**data)
@@ -354,12 +359,13 @@ class LectureUploadOfflineView(View):
         member = request.session['member']
 
         data = {
-            'lecture_price': lecture_data['price-input'].toLocaleString('ko-KR'),
+            'lecture_price': lecture_data['price-input'],
             'lecture_headcount': lecture_data['number-input'],
             'lecture_title': lecture_data['title-input'],
             'lecture_content': lecture_data['content-text-area'],
             'teacher': Teacher.objects.get(member_id=member['id']),
             'lecture_category': LectureCategory.objects.create(lecture_category_name=lecture_data['product-index']),
+            'online_status': False,
         }
         # Lecture create
         lecture = Lecture.objects.create(**data)
@@ -369,9 +375,10 @@ class LectureUploadOfflineView(View):
         for plant_type in plant_types:
             LecturePlant.objects.create(lecture=lecture, plant_name=plant_type)
 
-        #
-
-
+        # 강의 장소 넣어주기
+        local_selected = request.POST.get('product-index-local')
+        control_selected = request.POST.get('product-index-control')
+        LectureAddress.objects.create(lecture=lecture, address_city=local_selected, address_district=control_selected, address_detail="입니다.")
 
         # 날짜, 시간 넣기
         start_date_input = request.POST.get('start-date-input')

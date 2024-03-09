@@ -1414,7 +1414,7 @@ prevImgs.forEach((item) => {
     });
 });
 
-// 리뷰를 3개를 띄우고 더보기 버튼 눌렀을 때 3개씩 추가되기
+
 document.addEventListener("DOMContentLoaded", function() {
   const reviewList = document.querySelector(".product-review-list-container");
   const reviews = reviewList.querySelectorAll(".product-review-list-inner");
@@ -1422,38 +1422,43 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const reviewsPerPage = 3; // 한 번에 로드될 리뷰의 개수
 
-  // 처음에 3개의 리뷰만 표시
-  reviews.forEach((review, index) => {
-    if (index < reviewsPerPage) {
-      review.style.display = "block";
-    } else {
-      review.style.display = "none";
-    }
-  });
-
-  // 더보기 버튼 클릭 시 추가 리뷰 표시
-  loadMoreBtn.addEventListener("click", function() {
-    const hiddenReviews = reviewList.querySelectorAll(
-      ".product-review-list-inner:not([style='display: block;'])"
-    );
-
-    let count = 0;
-    hiddenReviews.forEach((review, index) => {
-      if (count < reviewsPerPage) {
+  // 처음에 리뷰가 없는 경우 더보기 버튼을 숨깁니다.
+  if (reviews.length === 0) {
+    loadMoreBtn.style.display = "none";
+  } else {
+    // 리뷰가 있는 경우 처음에 3개의 리뷰만 표시
+    reviews.forEach((review, index) => {
+      if (index < reviewsPerPage) {
         review.style.display = "block";
-        count++;
+      } else {
+        review.style.display = "none";
       }
     });
 
-    // 더 이상 추가 리뷰가 없을 때 버튼 숨기기
-    if (
-      reviewList.querySelectorAll(
+    // 더보기 버튼 클릭 시 추가 리뷰 표시
+    loadMoreBtn.addEventListener("click", function() {
+      const hiddenReviews = reviewList.querySelectorAll(
         ".product-review-list-inner:not([style='display: block;'])"
-      ).length === 0
-    ) {
-      loadMoreBtn.style.display = "none";
-    }
-  });
+      );
+
+      let count = 0;
+      hiddenReviews.forEach((review, index) => {
+        if (count < reviewsPerPage) {
+          review.style.display = "block";
+          count++;
+        }
+      });
+
+      // 더 이상 추가 리뷰가 없을 때 버튼 숨기기
+      if (
+        reviewList.querySelectorAll(
+          ".product-review-list-inner:not([style='display: block;'])"
+        ).length === 0
+      ) {
+        loadMoreBtn.style.display = "none";
+      }
+    });
+  }
 });
 
 </script>
