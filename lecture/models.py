@@ -26,6 +26,8 @@ class Lecture(Period):
     lecture_content = models.CharField(null=False, blank=False, max_length=225)
     # lecture_status : False = 신청중, True = 마감
     lecture_status = models.BooleanField(null=False, blank=False, default=False)
+    # online_status : False = 오프라인 강의, True = 온라인 강의
+    online_status = models.BooleanField(null=False, blank=False, default=False)
     lecture_category = models.ForeignKey(LectureCategory, on_delete=models.PROTECT, null=False)
     teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT, null=False)
 
