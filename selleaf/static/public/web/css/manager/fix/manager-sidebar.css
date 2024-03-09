@@ -96,6 +96,10 @@ button.mypage{
     background-color: #fff;
 }
 
+button.mypage:hover {
+    opacity: 0.7;
+}
+
 div.mypage-name{
     justify-content: center;
     align-items: center;
