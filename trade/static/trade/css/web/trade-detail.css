@@ -218,7 +218,9 @@ div.category-container{
     font-weight: 700;
     color: #2F3438;
 }
-
+.button-letter-click:hover{
+    color: #135f2c;
+}
 .button-link-unclick {
     display: inline-block;
     margin: 0;
@@ -256,6 +258,10 @@ div.category-container{
     position: relative;
     font-weight: 500;
     color: #2F3438;
+}
+
+.button-letter-unclick:hover{
+    color: #135f2c;
 }
 .layout {
     display: -webkit-box;
