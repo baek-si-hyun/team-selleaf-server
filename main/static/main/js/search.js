@@ -17,26 +17,7 @@ searchAtag.forEach((atag, i) => {
 });
 
 // 이런 00 찾고 있나요? 부분에 슬라이드 바 구현
-const nextButton = document.querySelector(".realmain-nextbutton");
-const beforeButton = document.querySelector(".realmain-beforebutton");
-const beforeButtonDiv = document.querySelector(
-  ".realmain-plantRecommend-beforebuttonWrap"
-);
-const nextButtonUl = document.querySelector(".realmain-plantRecommend-photoul");
 
-nextButton.addEventListener("click", () => {
-  nextButtonUl.style.transition = `transform 0.5s`;
-  nextButtonUl.style.transform = `translateX(-963.34px)`;
-  nextButton.style.display = "none";
-  beforeButtonDiv.style.display = "block";
-});
-
-beforeButton.addEventListener("click", () => {
-  nextButtonUl.style.transition = `transform 0.5s`;
-  nextButtonUl.style.transform = `translateX(0px)`;
-  nextButton.style.display = "flex";
-  beforeButtonDiv.style.display = "none";
-});
 
 // 원데이 클래스 부분에 사진 올리면 확대되고 내리면 축소되게 만들어야함
 const searchOnedayImg = document.querySelectorAll(".realmain-my_lecture-photo");
@@ -99,8 +80,6 @@ userReviewA.forEach((atag, i) => {
 });
 
 // 베스트 상품의 카테고리 버튼 구현
-
-
 const scrapPopup = document.querySelector(".scrap-popup-wrap");
 const scrapCancel = document.querySelector(".scrap-popup-cancel-wrap");
 let timeoutId;
@@ -259,7 +238,6 @@ const createBestLecture = (bestLectures) => {
   </div>
   `
   })
-
   realmainBestproductRealphotoWrap.innerHTML = bestLectureHTML
 }
 const bestLecturecategoryHandler = async (e) => {
@@ -268,7 +246,6 @@ const bestLecturecategoryHandler = async (e) => {
   let bestLectures;
   if (!category) {
     bestLectures = await lectureCategoryService.list('전체')
-
   } else if(e.target.closest('.realmain-bestproduct-photoCategoryNlC')) {
     console.log(category.innerText)
     if (category.innerText === '전체' || category.innerText === '관엽식물' || category.innerText === '침엽식물' || category.innerText === '희귀식물' || category.innerText === '다육/선인장' || category.innerText === '테라리움' || category.innerText === '기타') {
