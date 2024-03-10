@@ -201,3 +201,90 @@ optionResetBtn.addEventListener("click", () => {
   optionResetBtn.style.display = "none";
   newOption.classList.add("choice");
 });
+
+// 게시물 목록 보기
+let page = 1;
+
+const tradeSection = document.querySelector(".post-wrap");
+
+const showList = (trades) => {
+    let text = ``;
+
+    trades.forEach((trade) => {
+        let tagsHtml = '';
+
+
+        trade.plant_name.forEach((pn) => {
+            tagsHtml += `<span class="post-tag-icon">#${pn}</span>`;
+        });
+
+        text += `
+            <div class="post-container">
+              <div class="post-inner">
+                <article class="post">
+                  <a href="/trade/detail/?id=${trade.id}" class="post-link"></a>
+                  <div class="post-image-wrap_">
+                    <div class="post-image-container">
+                      <div class="post-image-inner">
+                        <div class="post-image"></div>
+                        <img
+                          src="/upload/${trade.trade_file}"
+                          alt
+                          class="image"
+                        />
+                        <button class="scrap-button" type="button">
+                          <img
+                            src="/static/public/web/images/common/scrap-off.png"
+                            alt
+                            class="scrap-off"
+                          />
+                        </button>
+                        <div class="image__dark-overlay"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="post-contents-wrap">
+                    <div class="post-contents-container">
+                      <h1 class="post-contents-header">
+                        <span class="post-contents-user">${trade.member_name}</span>
+                        <span class="post-contents-banner">${trade.trade_title}</span>
+                      </h1>
+                      <span class="post-price">
+                        <span class="post-price-letter">${trade.trade_price}원</span>
+                      </span>
+                      <span class="post-tag">
+                        ${tagsHtml}
+<!--                        <span class="post-tag-icon">태그1</span>-->
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          `;
+    });
+
+    return text;
+}
+
+tradeService.getList(page++, showList).then((text) => {
+            tradeSection.innerHTML += text;
+});
+
+// 스크롤 할때마다 실행
+window.addEventListener("scroll", () => {
+    // 맨위
+    const scrollTop = document.documentElement.scrollTop;
+    // 페이지 높이
+    const windowHeight = window.innerHeight;
+    // 암튼 높이
+    const totalHeight = document.documentElement.scrollHeight;
+    // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
+
+    if (scrollTop + windowHeight >= totalHeight) {
+        tradeService.getList(page++, showList).then((text) => {
+            tradeSection.innerHTML += text;
+
+        });
+    }
+});
