@@ -144,7 +144,6 @@ realmainPlantRecommendPhotoul.addEventListener('click', async (e) => {
   transSrcapBtnFn(scrapBtn)
   const knowhowContentId = scrapBtn.closest('.realmain-plantRecommend-photoli').classList[1]
   await knowhowScrapService.update(knowhowContentId)
-
 })
 
 const realmainLecturePhotoWrap = document.querySelector('.realmain-lecture-photoWrap')
@@ -153,7 +152,6 @@ realmainLecturePhotoWrap.addEventListener('click', async (e) => {
   transSrcapBtnFn(scrapBtn)
   const lectureContentId = scrapBtn.closest('.realmain-lecture-photoEachdiv').classList[1]
   await lectureScrapService.update(lectureContentId)
-
 })
 
 const realmainBestproductRealphotoWrap = document.querySelector('.realmain-bestproduct-realphotoWrap')
@@ -162,7 +160,6 @@ realmainBestproductRealphotoWrap.addEventListener('click', async (e) => {
   transSrcapBtnFn(scrapBtn)
   const lectureContentId = scrapBtn.closest('.realmain-bestproduct-realphotoContent').classList[1]
   await lectureScrapService.update(lectureContentId)
-
 })
 
 const realmainTodayHotdealPhotoWrapUl = document.querySelector('.realmain-todayHotdeal-photoWrapUl')
@@ -171,7 +168,6 @@ realmainTodayHotdealPhotoWrapUl.addEventListener('click', async (e) => {
   transSrcapBtnFn(scrapBtn)
   const tradeContentId = scrapBtn.closest('.realmain-todayHotdeal-photoWrapli').classList[1]
   await tradeScrapService.update(tradeContentId)
-
 })
 
 //post
@@ -192,6 +188,7 @@ const createTag = (tags) => {
   })
   return tagsHTML
 }
+
 const createBestLecture = (bestLectures) => {
   let bestLectureHTML = ``
   if (!bestLectures) return
@@ -268,9 +265,7 @@ const bestLecturecategoryHandler = async (e) => {
   let bestLectures;
   if (!category) {
     bestLectures = await lectureCategoryService.list('전체')
-
   } else if(e.target.closest('.realmain-bestproduct-photoCategoryNlC')) {
-    console.log(category.innerText)
     if (category.innerText === '전체' || category.innerText === '관엽식물' || category.innerText === '침엽식물' || category.innerText === '희귀식물' || category.innerText === '다육/선인장' || category.innerText === '테라리움' || category.innerText === '기타') {
       bestLectures = await lectureCategoryService.list(category.innerText)
       checkboxLabels.forEach((checkbox) => {
