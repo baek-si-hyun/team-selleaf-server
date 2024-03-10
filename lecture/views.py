@@ -12,6 +12,52 @@ from selleaf.date import Date
 from selleaf.time import Time
 from teacher.models import Teacher
 
+def date_range_with_weekdays(start, end, weekday_type):
+    start_date = datetime.strptime(start, "%Y-%m-%d")
+    end_date = datetime.strptime(end, "%Y-%m-%d")
+
+    # 요일 타입 가져오기
+    weekdays = list(map(int, weekday_type))
+
+    target_weekday_numbers = [weekday % 7 for weekday in weekdays]
+
+    dates = []
+    for target_weekday_number in target_weekday_numbers:
+        # 시작 날짜로부터 요일까지의 차이
+        start_weekday_difference = (target_weekday_number - start_date.weekday() + 7) % 7
+
+        # 시작 날짜에 차이를 더해서 해당 요일의 첫 번째 날짜를 구함
+        target_date = start_date + timedelta(days=start_weekday_difference)
+
+        while target_date <= end_date:
+            dates.append(target_date.strftime("%Y-%m-%d"))
+            target_date += timedelta(days=7)  # 한 주 뒤의 같은 요일로 이동
+
+    return dates
+
+def divide_time_intervals(start_time, end_time, interval):
+    # 시작 시간과 끝 시간을 datetime 객체로 변환
+    start = datetime.strptime(start_time, "%H:%M")
+    end = datetime.strptime(end_time, "%H:%M")
+
+    # 시간 간격을 분 단위로 변환
+    interval_minutes = int(interval[:-3]) * 60
+
+    # 결과를 저장할 리스트
+    time_intervals = []
+
+    # 시작 시간부터 끝 시간까지 시간 간격만큼씩 더해가며 시간대를 나눔
+    while start + timedelta(minutes=interval_minutes) <= end:
+        next_time = start + timedelta(minutes=interval_minutes)
+        time_intervals.append((start.strftime("%H:%M"), next_time.strftime("%H:%M")))
+        start = next_time
+
+    # 남은 시간을 마지막에 추가
+    if start < end:
+        time_intervals.append((start.strftime("%H:%M"), end.strftime("%H:%M")))
+
+    return time_intervals
+
 
 class LectureView(View):
     def get(self, request):
@@ -190,52 +236,6 @@ class LectureUploadOnlineView(View):
     def get(self, request):
         return render(request, 'lecture/web/lecture-upload-online.html')
 
-    def date_range_with_weekdays(self, start, end, weekday_type):
-        start_date = datetime.strptime(start, "%Y-%m-%d")
-        end_date = datetime.strptime(end, "%Y-%m-%d")
-
-        # 요일 타입 가져오기
-        weekdays = list(map(int, weekday_type))
-
-        target_weekday_numbers = [weekday % 7 for weekday in weekdays]
-
-        dates = []
-        for target_weekday_number in target_weekday_numbers:
-            # 시작 날짜로부터 요일까지의 차이
-            start_weekday_difference = (target_weekday_number - start_date.weekday() + 7) % 7
-
-            # 시작 날짜에 차이를 더해서 해당 요일의 첫 번째 날짜를 구함
-            target_date = start_date + timedelta(days=start_weekday_difference)
-
-            while target_date <= end_date:
-                dates.append(target_date.strftime("%Y-%m-%d"))
-                target_date += timedelta(days=7)  # 한 주 뒤의 같은 요일로 이동
-
-        return dates
-
-    def divide_time_intervals(self, start_time, end_time, interval):
-        # 시작 시간과 끝 시간을 datetime 객체로 변환
-        start = datetime.strptime(start_time, "%H:%M")
-        end = datetime.strptime(end_time, "%H:%M")
-
-        # 시간 간격을 분 단위로 변환
-        interval_minutes = int(interval[:-3]) * 60
-
-        # 결과를 저장할 리스트
-        time_intervals = []
-
-        # 시작 시간부터 끝 시간까지 시간 간격만큼씩 더해가며 시간대를 나눔
-        while start + timedelta(minutes=interval_minutes) <= end:
-            next_time = start + timedelta(minutes=interval_minutes)
-            time_intervals.append((start.strftime("%H:%M"), next_time.strftime("%H:%M")))
-            start = next_time
-
-        # 남은 시간을 마지막에 추가
-        if start < end:
-            time_intervals.append((start.strftime("%H:%M"), end.strftime("%H:%M")))
-
-        return time_intervals
-
     @transaction.atomic
     def post(self, request):
         lecture_data = request.POST
@@ -266,7 +266,7 @@ class LectureUploadOnlineView(View):
         weekday_type = request.POST.getlist('weekday-type')
 
         # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
-        dates = self.date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
+        dates = date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
 
         # 강의 시간(시작 시간, 종료 시간, 강의 시간)
         start_time = request.POST.get('start-time-input')
@@ -274,7 +274,7 @@ class LectureUploadOnlineView(View):
         interval = request.POST.get('time-type')
 
         # 시간대를 나누고 남은 시간을 추가하여 출력
-        time_intervals = self.divide_time_intervals(start_time, end_time, interval)
+        time_intervals = divide_time_intervals(start_time, end_time, interval)
 
         times = []
         # 계산된 시간대를 출력
@@ -305,51 +305,6 @@ class LectureUploadOfflineView(View):
     def get(self, request):
         return render(request, 'lecture/web/lecture-upload-offline.html')
 
-    def date_range_with_weekdays(self, start, end, weekday_type):
-        start_date = datetime.strptime(start, "%Y-%m-%d")
-        end_date = datetime.strptime(end, "%Y-%m-%d")
-
-        # 요일 타입 가져오기
-        weekdays = list(map(int, weekday_type))
-
-        target_weekday_numbers = [weekday % 7 for weekday in weekdays]
-
-        dates = []
-        for target_weekday_number in target_weekday_numbers:
-            # 시작 날짜로부터 요일까지의 차이
-            start_weekday_difference = (target_weekday_number - start_date.weekday() + 7) % 7
-
-            # 시작 날짜에 차이를 더해서 해당 요일의 첫 번째 날짜를 구함
-            target_date = start_date + timedelta(days=start_weekday_difference)
-
-            while target_date <= end_date:
-                dates.append(target_date.strftime("%Y-%m-%d"))
-                target_date += timedelta(days=7)  # 한 주 뒤의 같은 요일로 이동
-
-        return dates
-
-    def divide_time_intervals(self, start_time, end_time, interval):
-        # 시작 시간과 끝 시간을 datetime 객체로 변환
-        start = datetime.strptime(start_time, "%H:%M")
-        end = datetime.strptime(end_time, "%H:%M")
-
-        # 시간 간격을 분 단위로 변환
-        interval_minutes = int(interval[:-3]) * 60
-
-        # 결과를 저장할 리스트
-        time_intervals = []
-
-        # 시작 시간부터 끝 시간까지 시간 간격만큼씩 더해가며 시간대를 나눔
-        while start + timedelta(minutes=interval_minutes) <= end:
-            next_time = start + timedelta(minutes=interval_minutes)
-            time_intervals.append((start.strftime("%H:%M"), next_time.strftime("%H:%M")))
-            start = next_time
-
-        # 남은 시간을 마지막에 추가
-        if start < end:
-            time_intervals.append((start.strftime("%H:%M"), end.strftime("%H:%M")))
-
-        return time_intervals
 
     @transaction.atomic
     def post(self, request):
@@ -386,7 +341,7 @@ class LectureUploadOfflineView(View):
         weekday_type = request.POST.getlist('weekday-type')
 
         # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
-        dates = self.date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
+        dates = date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
 
         # 강의 시간(시작 시간, 종료 시간, 강의 시간)
         start_time = request.POST.get('start-time-input')
@@ -394,7 +349,7 @@ class LectureUploadOfflineView(View):
         interval = request.POST.get('time-type')
 
         # 시간대를 나누고 남은 시간을 추가하여 출력
-        time_intervals = self.divide_time_intervals(start_time, end_time, interval)
+        time_intervals = divide_time_intervals(start_time, end_time, interval)
 
         times = []
         # 계산된 시간대를 출력
@@ -417,3 +372,55 @@ class LectureUploadOfflineView(View):
 
         return redirect(f'/lecture/detail/offline/?id={lecture.id}')
 
+
+class LectureUpdateOnlineView(View):
+    def get(self, request):
+        lecture = Lecture.objects.get(id=request.GET['id'])
+        context = {
+            'lecture': lecture,
+        }
+        # print(lecture)
+
+        return render(request, "lecture/web/lecture-update-online.html", context)
+    def post(self, request):
+        data = request.POST
+        lecture_id = data['id']
+
+        # 수정할 게시물 가져오기
+        lecture = Lecture.objects.get(id=lecture_id)
+
+        # 게시물중 카테고리 아이디 찾아오기
+        lecture_category_number = Lecture.objects.get(id=lecture_id).lecture_category_id
+
+        # 게시물 강의 구분 수정
+        lecture_category = LectureCategory.objects.get(id=lecture_category_number)
+        lecture_category.category_name = data['product-index']
+
+        # 게시물 식물 종류 수정
+        lecture_plants = LecturePlant.objects.filter(lecture_id=lecture_id).delete()
+        plant_types = data.getlist('plant_type')
+        for plant_type in plant_types:
+            LecturePlant.objects.create(lecture=lecture, plant_name=plant_type)
+        # 게시물 가격 수정
+        lecture.lecture_price = data['price-input']
+        # 게시물 인원 수정
+        lecture.lecture_headcount = data['number-input']
+        # 게시물 제목 수정
+        lecture.lecture_title = data['title-input']
+        # 게시물 내용 수정
+        lecture.lecture_content = data['content-input']
+        # lecture.lecture
+
+        return redirect(f'/lecture/detail/online?id={lecture.id}')
+
+class LectureUpdateOfflineView(View):
+    def get(self, request):
+        lecture = Lecture.objects.get(id=request.GET['id'])
+        context = {
+            'lecture': lecture,
+        }
+        # print(lecture)
+
+        return render(request, "lecture/web/lecture-update-offline.html", context)
+    def post(self):
+        pass

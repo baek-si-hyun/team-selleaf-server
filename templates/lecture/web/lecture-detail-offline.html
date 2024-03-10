@@ -324,13 +324,36 @@
                 <div class="product-overview-title">
                   <span class="product-title">{{ lecture.lecture_title }}</span>
                   <div class="product-title-icon-wrap">
-                    <button class="update-button" type="button">
-                      <img
-                        class="update-icon"
-                        src="{% static 'public/web/images/common/update_icon.png' %}"
-                      />
-                      <span class="update-label">수정</span>
-                    </button>
+                    {% if request.session.member.id == lecture.teacher.member.id %}
+                        <a href="/lecture/update/offline/?id={{ lecture.id }}">
+                            <button class="update-button" type="button">
+                              <img
+                                class="update-icon"
+                                src="{% static 'public/web/images/common/update_icon.png' %}"
+                              />
+                              <span class="update-label">수정</span>
+                            </button>
+                        </a>
+                        <a href="/lecture/delete/?id={{ lecture.id }}">
+                            <div class="share-button-wrap">
+                              <button class="share-button" type="button">
+                                <svg
+                                  class="icon"
+                                  aria-label="공유하기"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="currentColor"
+                                  preserveAspectRatio="xMidYMid meet"
+                                >
+                                  <path
+                                    d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
+                                  ></path>
+                                </svg>
+                              </button>
+                            </div>
+                        </a>
+                    {% endif %}
                     <button class="scrap-button" type="button">
                       <img
                         class="scrap-off"
@@ -338,23 +361,6 @@
                       />
                       <span class="scrap-count">0</span>
                     </button>
-                    <div class="share-button-wrap">
-                      <button class="share-button" type="button">
-                        <svg
-                          class="icon"
-                          aria-label="공유하기"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          preserveAspectRatio="xMidYMid meet"
-                        >
-                          <path
-                            d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
-                          ></path>
-                        </svg>
-                      </button>
-                    </div>
                   </div>
                 </div>
               </h1>
@@ -1068,29 +1074,6 @@
                                             <span class="info-tag">#{{ plant_name }}</span>
                                           {% endfor %}
                                       </span>
-{#                                      <p class="product-contents-review-star">#}
-{#                                        <svg#}
-{#                                          class="icon"#}
-{#                                          width="24"#}
-{#                                          height="24"#}
-{#                                          viewBox="0 0 24 24"#}
-{#                                          preserveAspectRatio="xMidYMid meet"#}
-{#                                        >#}
-{#                                          <path#}
-{#                                            fill="#97a38c"#}
-{#                                            fill-rule="evenodd"#}
-{#                                            d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"#}
-{#                                          ></path>#}
-{#                                        </svg>#}
-{#                                        <strong class="avg">5</strong> 리뷰 1#}
-{#                                      </p>#}
-{#                                      <span class="product-suggestion-tag">#}
-{#                                        <span class="post-tag">#}
-{#                                          <span class="post-tag-icon"#}
-{#                                            >식물종류</span#}
-{#                                          >#}
-{#                                        </span>#}
-{#                                      </span>#}
                                     </div>
                                   </article>
                                 </div>
