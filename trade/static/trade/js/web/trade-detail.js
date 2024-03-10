@@ -31,45 +31,80 @@ prevButton.addEventListener("click", (e) => {
   console.log(xdegree);
 });
 
+const scrapPopup = document.querySelector(".scrap-popup-wrap");
+const scrapCancel = document.querySelector(".scrap-popup-cancel-wrap");
+let timeoutId;
+let animationTarget;
 //스크랩 버튼
-const scrapBtn = document.querySelector(".scrap-button");
-
-scrapBtn.addEventListener("click", () => {
-  const img = scrapBtn.querySelector("img");
+const tradeSrcapBtnFn = (scrap) => {
+  const img = scrap.querySelector(".scrap-img");
   const imgSrc = img.getAttribute("src");
   if (imgSrc === "/static/public/web/images/common/scrap-off-blk.png") {
     img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
+    if (animationTarget) {
+      animationTarget.classList.remove("show-animation");
+    }
+    animationTarget = scrapPopup;
   } else {
     img.setAttribute("src", "/static/public/web/images/common/scrap-off-blk.png");
+    if (animationTarget) {
+      animationTarget.classList.remove("show-animation");
+    }
+    animationTarget = scrapCancel;
   }
-});
+  if (animationTarget) {
+    animationTarget.classList.remove("hide-animation");
+    animationTarget.classList.add("show-animation");
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      animationTarget.classList.remove("show-animation");
+      animationTarget.classList.add("hide-animation");
+    }, 3000);
+  }
+}
 
+const tradeSrcapBtnBlkFn = (scrap) => {
+  const img = scrap.querySelector(".scrap-img");
+  const imgSrc = img.getAttribute("src");
+  if (imgSrc === "/static/public/web/images/common/scrap-off.png") {
+    img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
+    if (animationTarget) {
+      animationTarget.classList.remove("show-animation");
+    }
+    animationTarget = scrapPopup;
+  } else {
+    img.setAttribute("src", "/static/public/web/images/common/scrap-off.png");
+    if (animationTarget) {
+      animationTarget.classList.remove("show-animation");
+    }
+    animationTarget = scrapCancel;
+  }
+  if (animationTarget) {
+    animationTarget.classList.remove("hide-animation");
+    animationTarget.classList.add("show-animation");
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      animationTarget.classList.remove("show-animation");
+      animationTarget.classList.add("hide-animation");
+    }, 3000);
+  }
+}
 const productTitleIconWrap = document.querySelector('.product-title-icon-wrap')
 productTitleIconWrap.addEventListener('click', async (e) => {
-  const tradeContentId = e.target.closest('.scrap-button').classList[1]
+  const scrapBtn = e.target.closest('.scrap-button')
+  tradeSrcapBtnFn(scrapBtn)
+  const tradeContentId = scrapBtn.closest('.product-title-icon-wrap').classList[1]
   await tradeScrapService.update(tradeContentId)
 })
 
+const scrollerListContentsInner = document.querySelector('.scroller-list-contents-inner')
+scrollerListContentsInner.addEventListener('click', async (e) => {
+  const scrapBtn = e.target.closest('.img-scrap-button')
+  tradeSrcapBtnBlkFn(scrapBtn)
+  const tradeContentId = scrapBtn.closest('.product-suggestion-each-contents').classList[1]
+  await tradeScrapService.update(tradeContentId)
+})
 
-// 비슷한 제품 스크랩 버튼
-
-const scrapButton = document.querySelectorAll(".img-scrap-button");
-// const scrapPopup = document.querySelector(".scrap-popup-wrap");
-// const scrapCancel = document.querySelector(".scrap-popup-cancel-wrap");
-scrapButton.forEach((scrap) => {
-  scrap.addEventListener("click", () => {
-    const img = scrap.querySelector("img");
-    const imgSrc = img.getAttribute("src");
-    if (imgSrc === "/static/public/web/images/common/scrap-off-blk.png") {
-      img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
-    } else {
-      img.setAttribute("src", "/static/public/web/images/common/scrap-off-blk.png");
-    }
-    // scrapPopup.style.display == "none"
-    //   ? (scrapPopup.style.display = "block")
-    //   : (scrapPopup.style.display = "none");
-  });
-});
 
 // 퀵네비 클릭시 색변하도록
 const navs = document.querySelectorAll(".product-detail-nav-item");

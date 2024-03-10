@@ -13,35 +13,39 @@ from trade.models import TradeCategory, Trade, TradeFile, TradePlant
 
 class TradeDetailView(View):
     def get(self, request):
-
+        trade_id = request.GET.get('id')
         # upload 페이지에서 사용자가 올린 거래 게시물이 detail 화면에서 보여줘야 하기 때문에 trade 가져옴
         # 방금 올린 거래 게시물
-        trade = Trade.objects.get(id=request.GET['id'])
-
+        trade = Trade.objects.filter(id=trade_id) \
+            .values('id', 'trade_title', 'trade_price', 'trade_content', 'member__member_name', 'kakao_talk_url',
+                    'tradescrap__status').first()
         # 방금 올린 거래 게시물을 작성한 사용자 찾기
-        member_search_trade = Trade.objects.filter(id=request.GET['id']).values('member_id').first()
-
+        member_search_trade = Trade.objects.filter(id=trade_id).values('member_id').first()
         # 방금 거래 게시물을 올린 사용자가 작성한 다른 거래 게시물
-        trades = Trade.objects.filter(member=member_search_trade['member_id'], status=True).values('id', 'trade_title', 'trade_price', 'trade_content', 'member__member_name', 'kakao_talk_url', 'tradescrap__status')
+        trades = Trade.objects.filter(member=member_search_trade['member_id'], status=True).values('id', 'trade_title',
+                                                                                                   'trade_price',
+                                                                                                   'trade_content',
+                                                                                                   'member__member_name',
+                                                                                                   'tradescrap__status')
 
         for td in trades:
             product_img = TradeFile.objects.filter(trade_id=td['id']).values('file_url').first()
             td['product_img'] = product_img['file_url']
             product_plants = TradePlant.objects.filter(trade_id=td['id']).values('plant_name')
             product_plants_list = list(product_plants)
-            print(td['id'],td['tradescrap__status'])
             product_list = [item['plant_name'] for item in product_plants_list]
             td['plant_name'] = product_list
-
         # 스크랩의 status
+        print(trade['tradescrap__status'])
         context = {
             'trade': trade,
-            'trade_files': list(trade.tradefile_set.all()),
-            'trade_file': list(trade.tradefile_set.all())[0],
+            'trade_files': list(TradeFile.objects.filter(trade_id=trade_id).values('file_url')),
+            'trade_file': list(TradeFile.objects.filter(trade_id=trade_id).values('file_url'))[0],
             'trades': trades,
         }
 
         return render(request, "trade/web/trade-detail.html", context)
+
 
 class TradeUpdateView(View):
     def get(self, request):
@@ -90,11 +94,13 @@ class TradeUpdateView(View):
 
         return redirect(f'/trade/detail/?id={trade.id}')
 
+
 class TradeDeleteView(View):
     def get(self, request):
         Trade.objects.filter(id=request.GET['id']).update(status=False)
 
         return redirect('/trade/total')
+
 
 class TradeMainView(View):
     def get(self, request):
@@ -103,10 +109,13 @@ class TradeMainView(View):
         member = request.session['member']
 
         # 로그인한 사용자의 주소를 찾아오기( 주변 상품을 뿌려줄 때 사용해야 하기 때문 )
-        member_home = MemberAddress.objects.filter(member_id=member['id']).values('address_city', 'address_district').first()
+        member_home = MemberAddress.objects.filter(member_id=member['id']).values('address_city',
+                                                                                  'address_district').first()
 
         # member_address 테이블에서 현재 로그인한 사용자와 같은 주소에 사는 사람들을 먼저 찾기
-        local_persons = MemberAddress.objects.filter(address_city=member_home['address_city'], address_district=member_home['address_district']).values('member_id')
+        local_persons = MemberAddress.objects.filter(address_city=member_home['address_city'],
+                                                     address_district=member_home['address_district']).values(
+            'member_id')
 
         # 위의 local_persons가 현재 로그인한 사용자와 같은 지역에 사는 사람들임(자기 포함)
         # 이제 이걸 가지고 local_persons가 쓴 거래 게시물을 찾아서 뿌려주면 끝!
@@ -114,8 +123,8 @@ class TradeMainView(View):
         for local_person in local_persons:
             local_person_list.append(local_person['member_id'])
 
-
-        trades = Trade.objects.filter(status=True, member_id__in=local_person_list).annotate(member_name=F('member__member_name')) \
+        trades = Trade.objects.filter(status=True, member_id__in=local_person_list).annotate(
+            member_name=F('member__member_name')) \
             .values('trade_title', 'trade_price', 'member_name', 'id', 'member_id', 'tradescrap__status')
 
         for trade in trades:
@@ -130,15 +139,17 @@ class TradeMainView(View):
             product_list = [item['plant_name'] for item in product_plants_list]
             trade['plant_name'] = product_list
 
-        context ={
+        context = {
             'trades': trades,
             'member_home': member_home,
         }
         return render(request, "trade/web/trade-main.html", context)
 
+
 class TradeTotalView(View):
     def get(self, request):
         return render(request, "trade/web/trade-total.html")
+
 
 class TradeTotalApi(APIView):
     def get(self, request, page):
@@ -146,8 +157,7 @@ class TradeTotalApi(APIView):
         offset = (page - 1) * row_count
         limit = row_count * page
 
-
-        trades = Trade.objects.filter(status=True).annotate(member_name=F('member__member_name'))\
+        trades = Trade.objects.filter(status=True).annotate(member_name=F('member__member_name')) \
             .values('trade_title', 'trade_price', 'member_name', 'id', 'member_id')
 
         for trade in trades:
@@ -164,6 +174,7 @@ class TradeTotalApi(APIView):
 
         return Response(trades[offset:limit])
 
+
 class TradeUploadView(View):
     def get(self, request):
         member = request.session['member']
@@ -176,7 +187,6 @@ class TradeUploadView(View):
 
         # 현재 로그인한 사용자
         member = request.session['member']
-
 
         # 상품 구분
         # trade_data['product-index']

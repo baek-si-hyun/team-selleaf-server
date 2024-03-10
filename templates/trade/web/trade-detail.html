@@ -389,7 +389,7 @@
                             </div>
                         </a>
                     {% endif %}
-                    <button class="scrap-button {{ trade.id }}" type="button">
+                    <button class="scrap-button" type="button">
                       <img
                         src="{% if trade.tradescrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
                         class="scrap-img"
@@ -646,7 +646,7 @@
                                       >
                                         <img
                                          src="{% if trade.tradescrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
-                                          alt=""
+                                         class="scrap-img"
                                         />
                                       </button>
                                       <div class="product_dark-overlay"></div>

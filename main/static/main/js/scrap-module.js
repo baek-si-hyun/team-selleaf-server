@@ -15,7 +15,6 @@ const knowhowScrapService = (() => {
 
 const tradeScrapService = (() => {
   const update = async (tradeId) => {
-    console.log(tradeId)
     await fetch(`/trade-scrap/api/`, {
       method: 'PATCH',
       headers: {
