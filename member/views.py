@@ -1,4 +1,4 @@
-from django.db.models import F
+from django.db.models import F, Count
 from django.utils import timezone
 
 from django.shortcuts import render, redirect
@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 
 from member.models import Member, MemberAddress, MemberProfile
 from member.serializers import MemberSerializer
-from post.models import Post, PostFile, PostPlant, PostReply
+from post.models import Post, PostFile, PostPlant, PostReply, PostReplyLike
 
 
 class MemberJoinView(View):
@@ -121,7 +121,6 @@ class MypagePostView(View):
         return render(request,'member/mypage/my_profile/my-posts.html',context)
 
 class MypagePostListAPI(APIView):
-
     def get(self, request, member_id):
         print(member_id)
         posts = Post.objects.filter(member=member_id)\
@@ -155,24 +154,28 @@ class MypageShowView(View):
     def get(self,request):
         member = request.session['member']
         member_file = request.session['member_files']
+        post = Post.objects.filter(member_id = member['id'])
+        print(post)
+        reply = PostReply.objects.filter(member_id=member['id'])
         context = {
             'member': member,
-            'memberProfile': member_file[0]['file_url']
+            'memberProfile': member_file[0]['file_url'],
+            'post':post,
+            'reply':reply
         }
         return render(request,'member/mypage/my_profile/see-all.html',context)
 
 class MypageShowListAPI(APIView):
-
     def get(self, request, member_id):
-        print(member_id)
+        print('모든 리스트 가져오기 2')
         posts = Post.objects.filter(member=member_id)\
-            .annotate(member_name=F('member__member_name'))\
+            .annotate(writer=F('member__member_name'))\
             .values(
                 'id',
                 'post_title',
                 'post_content',
                 'post_count',
-                'member_name',
+                'writer',
                 'updated_date',
             )
 
@@ -190,3 +193,55 @@ class MypageShowListAPI(APIView):
             post['post_reply'] = [reply['id'] for reply in replies]
 
         return Response(posts)
+
+class MypageShowReplyAPI(APIView):
+    def get(self, request, member_id):
+        print('모든 리스트 가져오기 2')
+        replies = PostReply.objects.filter(member=member_id)\
+            .annotate(
+                member_name=F('member__member_name'),
+                post_title=F('post__post_title'),
+                post_writer=F('post__member__member_name'),
+                post_count=F('post__post_count'),
+                post_tag=F('post__posttag__tag_name'))\
+            .values(
+                'id',
+                'post_id',
+                'post_reply_content',
+                'member_name',
+                'updated_date',
+                'post_title',
+                'post_writer',
+                'post_count',
+                'post_tag'
+            )
+
+        for reply in replies:
+            post_file = PostFile.objects.filter(post_id=reply['post_id']).values('file_url').first()
+            if post_file is not None:
+                reply['post_file'] = post_file['file_url']
+            else:
+                reply['post_file'] = 'file/2024/03/05/blank-image.png'
+
+            tags = PostPlant.objects.filter(post_id=reply['post_id']).values('plant_name')
+            reply['post_plant'] = [tag['plant_name'] for tag in tags]
+
+            likes = PostReplyLike.objects.filter(post_reply_id=reply['id']).values('id')
+            reply['likes'] = [like['id'] for like in likes]
+
+        return Response(replies)
+
+class MypageReplyView(View):
+    def get(self,request):
+        member = request.session['member']
+        member_file = request.session['member_files']
+        post = Post.objects.filter(member_id = member['id'])
+        print(post)
+        reply = PostReply.objects.filter(member_id=member['id'])
+        context = {
+            'member': member,
+            'memberProfile': member_file[0]['file_url'],
+            'post':post,
+            'reply':reply
+        }
+        return render(request,'member/mypage/my_profile/my-comments.html',context)

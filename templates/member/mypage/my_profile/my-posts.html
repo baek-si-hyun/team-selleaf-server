@@ -44,10 +44,10 @@
                       <a href="/member/mypage/show">모두보기</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#" class="active">내 게시글</a>
+                      <a href="/member/mypage/myposts" class="active">내 게시글</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#">내 댓글</a>
+                      <a href="/member/mypage/myreplies">내 댓글</a>
                     </li>
                     <li class="sub-category-item">
                       <a href="#">내 리뷰</a>
@@ -268,6 +268,6 @@
     <script>
         const member_id = {{ member.id }}
     </script>
-    <script src="{% static 'member/js/mypage/my_profile/myposts-module.js' %}"></script>
+    <script src="{% static 'member/js/mypage/my_profile/myprofile-module.js' %}"></script>
     <script src="{% static 'member/js/mypage/my_profile/my-posts.js' %}"></script>
 {% endblock %}
