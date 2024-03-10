@@ -34,6 +34,12 @@ noticeButton.addEventListener("click", function () {
     // 클릭 이벤트 추가
     addButtonEvent();
   });
+
+  // 이후 스크롤이 맨 아래로 내려가면 새로운 공지사항을 불러오는 이벤트 추가
+  scrollEvent(noticeService.getList(++noticePage, showNotices).then((notices) => {
+    ul.innerHTML += notices;
+    addButtonEvent();
+  }));
 });
 
 
@@ -58,6 +64,12 @@ qnaButton.addEventListener("click", function () {
     // 클릭 이벤트 추가
     addButtonEvent();
   });
+
+  // 이후 스크롤이 맨 아래로 내려가면 새로운 QnA를 불러오는 이벤트 추가
+  scrollEvent(qnaService.getList(++qnaPage, showQnAs).then((qnas) => {
+    ul.innerHTML += qnas;
+    addButtonEvent();
+  }));
 });
 
 
@@ -87,10 +99,25 @@ const addButtonEvent = () => {
 
 // 윈도우 스크롤이 화면의 맨 아래로 내려가면, 다음 페이지 정보를 띄워주는 함수
 // 다음 페이지에 띄울 게 공지사항인지 QnA인지만 다르기 때문에 따로 떼서 함수화
-const scrollEvent = ('callback') => {
+const scrollEvent = (callback) => {
   // 여기에 이벤트 리스너 틍록
   window.addEventListener('scroll', () => {
     // 현재 스크롤 위치
     let currentHeight = document.documentElement.scrollTop;
+
+    let ulHeight = document.querySelector(".list-container").clientHeight;
+
+    // 현재 열린 브라우저 창의 높이
+    let windowHeight = window.innerHeight;
+
+    // 현재 페이지 html의 총 높이
+    let totalHeight = document.documentElement.scrollHeight;
+
+    console.log(currentHeight, windowHeight, ulHeight, totalHeight);
+
+    // 만약 스크롤을 맨 아래로 내리면 콜백함수(데이터 추가) 실행
+    if (currentHeight + windowHeight >= totalHeight) {
+      callback;
+    }
   });
 }
