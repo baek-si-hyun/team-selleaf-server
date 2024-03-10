@@ -22,17 +22,18 @@ class TradeDetailView(View):
         member_search_trade = Trade.objects.filter(id=request.GET['id']).values('member_id').first()
 
         # 방금 거래 게시물을 올린 사용자가 작성한 다른 거래 게시물
-        trades = Trade.objects.filter(member=member_search_trade['member_id'], status=True).values()
+        trades = Trade.objects.filter(member=member_search_trade['member_id'], status=True).values('id', 'trade_title', 'trade_price', 'trade_content', 'member__member_name', 'kakao_talk_url', 'tradescrap__status')
 
         for td in trades:
             product_img = TradeFile.objects.filter(trade_id=td['id']).values('file_url').first()
             td['product_img'] = product_img['file_url']
             product_plants = TradePlant.objects.filter(trade_id=td['id']).values('plant_name')
             product_plants_list = list(product_plants)
-
+            print(td['id'],td['tradescrap__status'])
             product_list = [item['plant_name'] for item in product_plants_list]
             td['plant_name'] = product_list
 
+        # 스크랩의 status
         context = {
             'trade': trade,
             'trade_files': list(trade.tradefile_set.all()),
@@ -115,7 +116,7 @@ class TradeMainView(View):
 
 
         trades = Trade.objects.filter(status=True, member_id__in=local_person_list).annotate(member_name=F('member__member_name')) \
-            .values('trade_title', 'trade_price', 'member_name', 'id', 'member_id')
+            .values('trade_title', 'trade_price', 'member_name', 'id', 'member_id', 'tradescrap__status')
 
         for trade in trades:
             trade_file = TradeFile.objects.filter(trade_id=trade['id']).values('file_url').first()
