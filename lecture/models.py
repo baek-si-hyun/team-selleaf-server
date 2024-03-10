@@ -4,6 +4,7 @@ from django.db import models
 from lecture.manager import LectureManager
 from member.models import Member
 from plant.models import Plant
+from selleaf.address import Address
 from selleaf.file import File
 from selleaf.models import Scrap
 from selleaf.period import Period
@@ -25,6 +26,8 @@ class Lecture(Period):
     lecture_content = models.CharField(null=False, blank=False, max_length=225)
     # lecture_status : False = 신청중, True = 마감
     lecture_status = models.BooleanField(null=False, blank=False, default=False)
+    # online_status : False = 오프라인 강의, True = 온라인 강의
+    online_status = models.BooleanField(null=False, blank=False, default=False)
     lecture_category = models.ForeignKey(LectureCategory, on_delete=models.PROTECT, null=False)
     teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT, null=False)
 
@@ -87,3 +90,10 @@ class LecturePlaceFile(File):
     class Meta:
         db_table = 'tbl_lecture_place_file'
         ordering = ['-id']
+
+
+class LectureAddress(Address):
+    lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
+
+    class Meta:
+        db_table = 'tbl_lecture_address'

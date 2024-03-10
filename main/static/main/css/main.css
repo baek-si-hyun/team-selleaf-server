@@ -1992,6 +1992,7 @@ realmain-plantRecommend-photocontentdiv::after {
 
 .realmain-bestproduct-salepriceSpan {
     display: flex;
+    gap:2px;
 }
 
 .realmain-bestproduct-salepriceSpan > .salepriceicon {
