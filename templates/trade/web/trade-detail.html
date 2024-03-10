@@ -351,7 +351,7 @@
                 </p>
                 <div class="product-overview-title">
                   <span class="product-title">{{trade.trade_title }}</span>
-                  <div class="product-title-icon-wrap">
+                  <div class="product-title-icon-wrap {{ trade.id }}">
                     {% if request.session.member.id == trade.member.id %}
                         <a href="/trade/update/?id={{ trade.id }}">
                             <button class="update-button" type="button">
@@ -389,10 +389,10 @@
                             </div>
                         </a>
                     {% endif %}
-                    <button class="scrap-button" type="button">
+                    <button class="scrap-button {{ trade.id }}" type="button">
                       <img
-                        class="scrap-off"
-                        src="{% static 'public/web/images/common/scrap-off-blk.png' %}"
+                        src="{% if trade.tradescrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
+                        class="scrap-img"
                       />
                       <span class="scrap-count">0</span>
                     </button>
@@ -645,7 +645,7 @@
                                         type="button"
                                       >
                                         <img
-                                          src="{% static 'public/web/images/common/scrap-off.png' %}"
+                                         src="{% if trade.tradescrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                           alt=""
                                         />
                                       </button>
@@ -2169,5 +2169,7 @@
   </body>
 {% endblock %}
 {% block js %}
+  <script>  const csrf_token = '{{ csrf_token }}';</script>
+  <script src="{% static 'trade/js/web/trade-module.js' %}"></script>
   <script src="{% static 'trade/js/web/trade-detail.js' %}"></script>
 {% endblock %}

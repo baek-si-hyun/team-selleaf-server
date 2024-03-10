@@ -59,6 +59,7 @@ class PostTag(Tag):
 
 class PostCategory(Period):
     category_name = models.CharField(max_length=50, null=False)
+    post = models.ForeignKey(Post, on_delete=models.PROTECT, null=False)
 
     class Meta:
         db_table = 'tbl_post_category'
