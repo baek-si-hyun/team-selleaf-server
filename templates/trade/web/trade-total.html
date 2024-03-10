@@ -26,7 +26,7 @@
               <nav class="category-button-collection">
                 <span class="category-button">
                   <div class="button-space">
-                    <a href="#" class="button-link-unclick">
+                    <a href="/trade/main/" class="button-link-unclick">
                       <div class="button">
                         <p class="button-letter-unclick">상품홈</p>
                       </div>
@@ -35,9 +35,9 @@
                 </span>
                 <span class="category-button">
                   <div class="button-space">
-                    <a href="" class="button-link-click">
+                    <a href="/trade/total/" class="button-link-click">
                       <div class="button">
-                        <p class="button-letter-click">진행중인거래</p>
+                        <p class="button-letter-click">최신등록상품</p>
                       </div>
                     </a>
                   </div>
@@ -259,7 +259,7 @@
         <div id="transaction-main-page">
           <section class="popular-wrap wrap-media">
             <header class="popular-header">
-              <h1 class="popular-title">판매중인상품</h1>
+              <h1 class="popular-title">상품피드</h1>
             </header>
             <div class="post-wrap row-media">
                 {#    거래 게시물이 반복될 부분    #}
@@ -272,5 +272,9 @@
   </body>
 {% endblock %}
 {% block js %}
+  <script>
+        const csrf_token = '{{ csrf_token }}'
+  </script>
+  <script src="{% static 'trade/js/web/trade-module.js' %}"></script>
   <script src="{% static 'trade/js/web/trade-total.js' %}"></script>
 {% endblock %}

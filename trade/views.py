@@ -1,9 +1,12 @@
 from django.db import transaction
+from django.db.models import F
 from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views import View
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from member.models import Member
+from member.models import Member, MemberProfile, MemberAddress
 from plant.models import Plant
 from trade.models import TradeCategory, Trade, TradeFile, TradePlant
 
@@ -44,6 +47,7 @@ class TradeUpdateView(View):
         trade = Trade.objects.get(id=request.GET['id'])
         return render(request, "trade/web/trade-update.html", {'trade': trade})
 
+    @transaction.atomic
     def post(self, request):
         data = request.POST
         trade_id = data['id']
@@ -93,11 +97,71 @@ class TradeDeleteView(View):
 
 class TradeMainView(View):
     def get(self, request):
-        return render(request, "trade/web/trade-main.html")
+
+        # 현재 로그인한 사용자 정보 가져오기
+        member = request.session['member']
+
+        # 로그인한 사용자의 주소를 찾아오기( 주변 상품을 뿌려줄 때 사용해야 하기 때문 )
+        member_home = MemberAddress.objects.filter(member_id=member['id']).values('address_city', 'address_district').first()
+
+        # member_address 테이블에서 현재 로그인한 사용자와 같은 주소에 사는 사람들을 먼저 찾기
+        local_persons = MemberAddress.objects.filter(address_city=member_home['address_city'], address_district=member_home['address_district']).values('member_id')
+
+        # 위의 local_persons가 현재 로그인한 사용자와 같은 지역에 사는 사람들임(자기 포함)
+        # 이제 이걸 가지고 local_persons가 쓴 거래 게시물을 찾아서 뿌려주면 끝!
+        local_person_list = []
+        for local_person in local_persons:
+            local_person_list.append(local_person['member_id'])
+
+
+        trades = Trade.objects.filter(status=True, member_id__in=local_person_list).annotate(member_name=F('member__member_name')) \
+            .values('trade_title', 'trade_price', 'member_name', 'id', 'member_id')
+
+        for trade in trades:
+            trade_file = TradeFile.objects.filter(trade_id=trade['id']).values('file_url').first()
+            profile = MemberProfile.objects.filter(member_id=trade['member_id']).values('file_url').first()
+            trade['trade_file'] = trade_file['file_url']
+            trade['profile'] = profile['file_url']
+
+            product_plants = TradePlant.objects.filter(trade_id=trade['id']).values('plant_name')
+            product_plants_list = list(product_plants)
+
+            product_list = [item['plant_name'] for item in product_plants_list]
+            trade['plant_name'] = product_list
+
+        context ={
+            'trades': trades,
+            'member_home': member_home,
+        }
+        return render(request, "trade/web/trade-main.html", context)
 
 class TradeTotalView(View):
     def get(self, request):
         return render(request, "trade/web/trade-total.html")
+
+class TradeTotalApi(APIView):
+    def get(self, request, page):
+        row_count = 8
+        offset = (page - 1) * row_count
+        limit = row_count * page
+
+
+        trades = Trade.objects.filter(status=True).annotate(member_name=F('member__member_name'))\
+            .values('trade_title', 'trade_price', 'member_name', 'id', 'member_id')
+
+        for trade in trades:
+            trade_file = TradeFile.objects.filter(trade_id=trade['id']).values('file_url').first()
+            profile = MemberProfile.objects.filter(member_id=trade['member_id']).values('file_url').first()
+            trade['trade_file'] = trade_file['file_url']
+            trade['profile'] = profile['file_url']
+
+            product_plants = TradePlant.objects.filter(trade_id=trade['id']).values('plant_name')
+            product_plants_list = list(product_plants)
+
+            product_list = [item['plant_name'] for item in product_plants_list]
+            trade['plant_name'] = product_list
+
+        return Response(trades[offset:limit])
 
 class TradeUploadView(View):
     def get(self, request):
