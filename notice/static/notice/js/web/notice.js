@@ -25,6 +25,18 @@ const callFirstNotices = () => {
   });
 }
 
+// 공지사항의 다음 페이지를 띄워주는 함수
+const callNextNotices = () => {
+  // 현재 스크롤이 화면의 맨 아래에 있는지 검사
+
+  // 다음 페이지의 정보를 가져와서 화면에 뿌림
+  noticeService.getList(++noticePage, showNotices).then((notices) => {
+    ul.innerHTML += notices;
+
+    // 클릭 이벤트 추가?
+  });
+}
+
 // QnA의 첫 페이지를 화면에 띄워주는 함수
 const callFirstQnAs = () => {
   // 현재 QnA 페이지를 1로 초기화
@@ -36,6 +48,18 @@ const callFirstQnAs = () => {
 
     // 클릭 이벤트 추가
     addButtonEvent();
+  });
+}
+
+// QnA의 다음 페이지를 띄워주는 함수
+const callNextQnAs = () => {
+  // 현재 스크롤이 화면의 맨 아래에 있는지 검사
+
+  // 다음 페이지의 정보를 가져와서 화면에 뿌림
+  qnaService.getList(++qnaPage, showQnAs()).then((qnas) => {
+    ul.innerHTML += qnas;
+
+    // 클릭 이벤트 추가?
   });
 }
 
@@ -55,6 +79,10 @@ noticeButton.addEventListener("click", () => {
     qnaButton.checked = false;
   }
 
+  // 기존에 있던 QnA 스크롤 이벤트 삭제
+  // 기존에 이 이벤트가 등록되지 않았어도 오류가 발생하지 않음
+  window.removeEventListener('scroll', callNextQnAs);
+
   // 클래스로 인한 스타일 변경
   noticeButton.parentElement.classList.add("benner-inner-checked");
   qnaButton.parentElement.classList.remove("benner-inner-checked");
@@ -62,7 +90,8 @@ noticeButton.addEventListener("click", () => {
   // 공지사항의 첫 페이지를 불러와서 화면에 출력
   callFirstNotices();
 
-  // 스크롤 이벤트 처리
+  // 화면 맨 아래로 스크롤을 내리면 다음 공지사항을 띄워주는 이벤트 추가
+  window.addEventListener('scroll', callNextNotices);
 });
 
 
@@ -73,6 +102,9 @@ qnaButton.addEventListener("click", function () {
     noticeButton.checked = false;
   }
 
+  // 기존에 있던 공지사항 스크롤 이벤트 삭제
+  window.removeEventListener('scroll', callNextNotices);
+
   // 클래스로 인한 스타일 변경
   qnaButton.parentElement.classList.add("benner-inner-checked");
   noticeButton.parentElement.classList.remove("benner-inner-checked");
@@ -80,7 +112,8 @@ qnaButton.addEventListener("click", function () {
   // QnA의 첫 페이지를 불러와서 화면에 출력
   callFirstQnAs();
 
-  // 스크롤 이벤트 처리
+  // 화면 맨 아래로 스크롤을 내리면 다음 QnA를 띄워주는 이벤트 추가
+  window.addEventListener('scroll', callNextQnAs);
 });
 
 
@@ -105,30 +138,5 @@ const addButtonEvent = () => {
       item3.classList.toggle("question-v-open");
       item4.classList.toggle("question-open");
     });
-  });
-}
-
-// 윈도우 스크롤이 화면의 맨 아래로 내려가면, 다음 페이지 정보를 띄워주는 함수
-// 다음 페이지에 띄울 게 공지사항인지 QnA인지만 다르기 때문에 따로 떼서 함수화
-const scrollEvent = (callback) => {
-  // 여기에 이벤트 리스너 틍록
-  window.addEventListener('scroll', () => {
-    // 현재 스크롤 위치
-    let currentHeight = document.documentElement.scrollTop;
-
-    let ulHeight = document.querySelector(".list-container").clientHeight;
-
-    // 현재 열린 브라우저 창의 높이
-    let windowHeight = window.innerHeight;
-
-    // 현재 페이지 html의 총 높이
-    let totalHeight = document.documentElement.scrollHeight;
-
-    console.log(currentHeight, windowHeight, ulHeight, totalHeight);
-
-    // 만약 스크롤을 맨 아래로 내리면 콜백함수(데이터 추가) 실행
-    if (currentHeight + windowHeight >= totalHeight) {
-      callback;
-    }
   });
 }
