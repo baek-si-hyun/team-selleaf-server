@@ -25,7 +25,7 @@
               <nav class="category-button-collection">
                 <span class="category-button">
                   <div class="button-space">
-                    <a href="#" class="button-link-click">
+                    <a href="/trade/main/" class="button-link-click">
                       <div class="button">
                         <p class="button-letter-click">상품홈</p>
                       </div>
@@ -35,11 +35,11 @@
                 <span class="category-button">
                   <div class="button-space">
                     <a
-                      href="/templates/trade/transaction-total.html"
+                      href="/trade/total/"
                       class="button-link-unclick"
                     >
                       <div class="button">
-                        <p class="button-letter-unclick">진행중인거래</p>
+                        <p class="button-letter-unclick">최신등록상품</p>
                       </div>
                     </a>
                   </div>
@@ -75,370 +75,54 @@
       <div id="transaction-main-page">
         <section class="popular-wrap wrap-media">
           <header class="popular-header">
-            <h1 class="popular-title">내 주변 인기 상품</h1>
-            <a class="popular-detail-link" href="#">더보기</a>
+            <h1 class="popular-title">{{ member_home.address_city }} {{ member_home.address_district }}에서 판매중인 상품🌐</h1>
           </header>
           <div class="post-wrap row-media">
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
+            {% for trade in trades %}
+                <div class="post-container">
+                  <div class="post-inner">
+                    <article class="post">
+                      <a href="/trade/detail/?id={{ trade.id }}" class="post-link"></a>
+                      <div class="post-image-wrap_">
+                        <div class="post-image-container">
+                          <div class="post-image-inner">
+                            <div class="post-image"></div>
+                            <img
+                              src="/upload/{{ trade.trade_file }}"
+                              alt
+                              class="image"
+                            />
+                            <button class="scrap-button" type="button">
+                              <img
+                                src="{% static 'public/web/images/common/scrap-off.png' %}"
+                                alt
+                                class="scrap-off"
+                              />
+                            </button>
+                            <div class="image__dark-overlay"></div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">거래제품명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
+                      <div class="post-contents-wrap">
+                        <div class="post-contents-container">
+                          <h1 class="post-contents-header">
+                            <span class="post-contents-user">{{ trade.member_name }}</span>
+                            <span class="post-contents-banner">{{ trade.trade_title }}</span>
+                          </h1>
+                          <span class="post-price">
+                            <span class="post-price-letter">{{ trade.trade_price }}원</span>
+                          </span>
+                          <span class="post-tag">
+                            {% for plant_name in trade.plant_name %}
+                                <span class="post-tag-icon">#{{ plant_name }}</span>
+                            {% endfor %}
+                          </span>
+                        </div>
                       </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">식물종류</span>
-                      </span>
-                    </div>
+                    </article>
                   </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">거래제품명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">식물종류</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">거래제품명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">식물종류</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">거래제품명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">식물종류</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">거래제품명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">식물종류</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">거래제품명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">식물종류</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">거래제품명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">식물종류</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">거래제품명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">식물종류</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
+                </div>
+            {% endfor %}
           </div>
         </section>
         <section class="update-post-wrap wrap-media">
