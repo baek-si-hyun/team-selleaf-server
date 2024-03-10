@@ -173,7 +173,7 @@
             <nav class="category-button-collection">
               <span class="category-button">
                 <div class="button-space">
-                  <a href="#" class="button-link-click">
+                  <a href="/trade/main/" class="button-link-click">
                     <div class="button">
                       <p class="button-letter-click">상품홈</p>
                     </div>
@@ -182,9 +182,9 @@
               </span>
               <span class="category-button">
                 <div class="button-space">
-                  <a href="#" class="button-link-unclick">
+                  <a href="/trade/total/" class="button-link-unclick">
                     <div class="button">
-                      <p class="button-letter-unclick">진행중인거래</p>
+                      <p class="button-letter-unclick">최신등록상품</p>
                     </div>
                   </a>
                 </div>
@@ -365,19 +365,26 @@
                         <a href="/trade/delete/?id={{ trade.id }}">
                             <div class="share-button-wrap">
                               <button class="share-button" type="button">
-                                <svg
-                                  class="icon"
-                                  aria-label="공유하기"
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="currentColor"
-                                  preserveAspectRatio="xMidYMid meet"
-                                >
-                                  <path
-                                    d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
-                                  ></path>
-                                </svg>
+                                  <img
+                                    class="update-icon"
+                                    src="{% static 'public/web/images/common/remove-icon.png' %}"
+                                    width="25px"
+                                    height="27px"
+                                  />
+                                  <span class="update-label">삭제</span>
+{#                                <svg#}
+{#                                  class="icon"#}
+{#                                  aria-label="공유하기"#}
+{#                                  width="24"#}
+{#                                  height="24"#}
+{#                                  viewBox="0 0 24 24"#}
+{#                                  fill="currentColor"#}
+{#                                  preserveAspectRatio="xMidYMid meet"#}
+{#                                >#}
+{#                                  <path#}
+{#                                    d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"#}
+{#                                  ></path>#}
+{#                                </svg>#}
                               </button>
                             </div>
                         </a>
