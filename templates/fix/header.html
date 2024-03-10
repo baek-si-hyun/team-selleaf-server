@@ -1,10 +1,10 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'public/web/css/fix/header.css' %}" />
+<link rel="stylesheet" href="{% static 'public/web/css/fix/header.css' %}"/>
 <header>
   <div class="header-wrap" style="height: 81px">
     <div
-      class="header-second-wrap"
-      style="
+        class="header-second-wrap"
+        style="
         position: fixed;
         transition: top 0.1s ease 0s;
         z-index: 1102;
@@ -21,15 +21,15 @@
         </div>
         <div class="header-second-inner">
           <a
-            class="hearder-second-inner-logo"
-            aria-label="selleaf 로고"
-            href="#"
+              class="hearder-second-inner-logo"
+              aria-label="selleaf 로고"
+              href="#"
           >
             <img
-              class="header-second-inner-svg"
-              src="{% static 'public/web/images/common/logo-lettering-blk.png' %}"
-              width="74"
-              height="30"
+                class="header-second-inner-svg"
+                src="{% static 'public/web/images/common/logo-lettering-blk.png' %}"
+                width="74"
+                height="30"
             />
             <!-- <svg
               class="header-second-inner-svg"
@@ -69,45 +69,48 @@
         </div>
         <div class="header-third-inner">
           <a class="header-third-inner-firsta" href="#"
-            ><span class="header-third-inner-firstsp">커뮤니티</span>
+          ><span class="header-third-inner-firstsp">커뮤니티</span>
           </a>
           <a class="header-third-inner-seconda" href="#"
-            ><span class="header-third-inner-secondsp">수강</span></a
+          ><span class="header-third-inner-secondsp">수강</span></a
           >
           <a class="header-third-inner-seconda" href="#"
-            ><span class="header-third-inner-secondsp">거래</span></a
+          ><span class="header-third-inner-secondsp">거래</span></a
           >
           <a class="header-third-inner-seconda" href="#"
-            ><span class="header-third-inner-secondsp"
-              >회사소개</span
-            ></a
+          ><span class="header-third-inner-secondsp"
+          >회사소개</span
+          ></a
           >
         </div>
         <div class="header-fourth-inner">
           <div class="header-fourth-second-inner">
             <div class="header-fourth-inner-firstdiv">
               <div
-                id="global-search-combobox"
-                role="combobox"
-                aria-expanded="false"
-                aria-haspopup="listbox"
-                class="header-fourth-inner-seconddiv"
+                  id="global-search-combobox"
+                  role="combobox"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  class="header-fourth-inner-seconddiv"
               >
                 <div class="header-fourth-inner-thirddiv">
                   <span class="hearder-inner-thirddiv-span"> </span>
-                  <input
-                    type="text"
-                    placeholder="통합검색"
-                    autocomplete="off"
-                    aria-autocomplete="list"
-                    class="hearder-inner-thirddiv-input"
-                    value
-                  />
+                  <form action="{% url  'search' %}" name="search-form" style="flex:1">
+                    <input
+                        type="text"
+                        placeholder="통합검색"
+                        autocomplete="off"
+                        aria-autocomplete="list"
+                        class="hearder-inner-thirddiv-input"
+
+                        name="query"
+                    />
+                  </form>
                   <div class="hearder-inner-thirddiv-div">
                     <button
-                      type="button"
-                      tabindex="0"
-                      class="header-input-xbutton"
+                        type="button"
+                        tabindex="0"
+                        class="header-input-xbutton"
                     >
                       <span class="header-input-xbutton-span"></span>
                     </button>
@@ -123,9 +126,9 @@
             <!-- 스크랩북 아이콘 일단 숨겨놓음 -->
             <div class="header-scrap">
               <a
-                aria-label="스크랩북 페이지 링크 버튼"
-                class="header-scrap-a"
-                href="#"
+                  aria-label="스크랩북 페이지 링크 버튼"
+                  class="header-scrap-a"
+                  href="#"
               >
                 <span class="header-scrap-span"></span>
               </a>
@@ -141,33 +144,34 @@
               </a>
             </div> -->
             <a
-              aria-label="장바구니 페이지 링크 버튼"
-              class="header-cart"
-              href="#"
+                aria-label="장바구니 페이지 링크 버튼"
+                class="header-cart"
+                href="#"
             >
               <span class="header-cart-span"></span>
             </a>
             <div class="header-info-wrap">
               <div class="header-info">
-                  <!-- 프로필 아이콘 일단 숨겨놓음 -->
-                  {% if request.session.member %}
+                <!-- 프로필 아이콘 일단 숨겨놓음 -->
+                {% if request.session.member %}
                   <span class="header-kakao-wrap">
                     <span class="header-alarm-pointer"></span>
                     <button
-                      type="button"
-                      aria-label="프로필 메뉴"
-                      class="header-kakao-button"
+                        type="button"
+                        aria-label="프로필 메뉴"
+                        class="header-kakao-button"
                     >
-                        {% if memberProfile %}  
-                           {% if 'http' in memberProfile %}
-                              <img src="{{ memberProfile }}" alt="" class="current-profile-image">
-                           {% else %}
-                              <img src="/upload/{{ memberProfile }}" alt="" class="current-profile-image">
-                           {% endif %}
+                        {% if memberProfile %}
+                          {% if 'http' in memberProfile %}
+                            <img src="{{ memberProfile }}" alt="" class="current-profile-image">
+                          {% else %}
+                            <img src="/upload/{{ memberProfile }}" alt="" class="current-profile-image">
+                          {% endif %}
                         {% else %}
-                           <img src="{% static 'member/images/mypage/base-profile-image.avif' %}" alt="" class="current-profile-image">
+                          <img src="{% static 'member/images/mypage/base-profile-image.avif' %}" alt=""
+                               class="current-profile-image">
                         {% endif %}
-{#                        <img#}
+                      {#                        <img#}
 {#                          alt="프로필 사진"#}
 {#                          class="header-kakao-image"#}
 {#                          src="{{memberProfile}}"#}
@@ -175,80 +179,80 @@
                     </button>
                   </span>
                   <div
-                    class="header-mymenumodal-wrap"
-                    style="
+                      class="header-mymenumodal-wrap"
+                      style="
                       position: absolute;
                       inset: 0px auto auto 0px;
                       transform: translate(945px, 58px);
                     "
-                    data-popper-reference-hidden="false"
-                    data-popper-escaped="false"
-                    data-popper-placement="bottom"
+                      data-popper-reference-hidden="false"
+                      data-popper-escaped="false"
+                      data-popper-placement="bottom"
                   >
                     <div class="header-mymenumodal-content">
                       <div class="header-mymenumodal-contentDiv">
                         <a class="header-mymenumodal-contenta"
-                          >마이페이지
+                        >마이페이지
                           <svg
-                            class="header-mymenumodal-contentNew"
-                            fill="#DB4455"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 18 18"
-                            width="18"
-                            height="18"
+                              class="header-mymenumodal-contentNew"
+                              fill="#DB4455"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 18 18"
+                              width="18"
+                              height="18"
                           >
                             <path
-                              d="M0 9a9 9 0 1118 0A9 9 0 010 9z"
-                              fill="#fff"
+                                d="M0 9a9 9 0 1118 0A9 9 0 010 9z"
+                                fill="#fff"
                             ></path>
                             <path
-                              fill-rule="evenodd"
-                              clip-rule="evenodd"
-                              d="M9 18A9 9 0 109 0a9 9 0 000 18zm-1.7-5.25H5.26v-7.5h2.61l2.8 4.2h.03v-4.2h2.06v7.5h-2.3L7.36 8.07h-.05v4.68z"
-                              fill="#DB4455"
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M9 18A9 9 0 109 0a9 9 0 000 18zm-1.7-5.25H5.26v-7.5h2.61l2.8 4.2h.03v-4.2h2.06v7.5h-2.3L7.36 8.07h-.05v4.68z"
+                                fill="#DB4455"
                             ></path>
                           </svg>
                         </a>
                         <a class="header-mymenumodal-contenta"
-                          >알림
+                        >알림
                           <svg
-                            class="header-mymenumodal-contentNew"
-                            fill="#DB4455"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 18 18"
-                            width="18"
-                            height="18"
+                              class="header-mymenumodal-contentNew"
+                              fill="#DB4455"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 18 18"
+                              width="18"
+                              height="18"
                           >
                             <path
-                              d="M0 9a9 9 0 1118 0A9 9 0 010 9z"
-                              fill="#fff"
+                                d="M0 9a9 9 0 1118 0A9 9 0 010 9z"
+                                fill="#fff"
                             ></path>
                             <path
-                              fill-rule="evenodd"
-                              clip-rule="evenodd"
-                              d="M9 18A9 9 0 109 0a9 9 0 000 18zm-1.7-5.25H5.26v-7.5h2.61l2.8 4.2h.03v-4.2h2.06v7.5h-2.3L7.36 8.07h-.05v4.68z"
-                              fill="#DB4455"
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M9 18A9 9 0 109 0a9 9 0 000 18zm-1.7-5.25H5.26v-7.5h2.61l2.8 4.2h.03v-4.2h2.06v7.5h-2.3L7.36 8.07h-.05v4.68z"
+                                fill="#DB4455"
                             ></path>
                           </svg>
                         </a>
                         <a class="header-mymenumodal-contenta"
-                          >강사신청</a
+                        >강사신청</a
                         >
                         <a class="header-mymenumodal-contenta"
-                          >고객센터</a
+                        >고객센터</a
                         >
                         <a class="header-mymenumodal-contenta" href="/accounts/logout"
-                          >로그아웃</a
+                        >로그아웃</a
                         >
                       </div>
                     </div>
                   </div>
-                  {% else %}
+                {% else %}
                   <a class="header-info-each" href="#">로그인</a>
                   <a class="header-info-each" href="#">회원가입</a>
                   <a class="header-info-each" href="#">고객센터</a>
-                  {% endif %}
-                </div>
+                {% endif %}
+              </div>
               <span class="header-write-wrap">
                 <button type="button" class="header-write-button">
                   <span class="header-write-content">글쓰기</span>
@@ -256,23 +260,23 @@
                 </button>
               </span>
               <div
-                class="header-post-wrap"
-                style="
+                  class="header-post-wrap"
+                  style="
                   position: absolute;
                   inset: 0px auto auto 0px;
                   transform: translate(987px, 70px);
                 "
-                data-popper-reference-hidden="false"
-                data-popper-escaped="false"
-                data-popper-placement="bottom"
+                  data-popper-reference-hidden="false"
+                  data-popper-escaped="false"
+                  data-popper-placement="bottom"
               >
                 <div class="header-wrap-content">
                   <a class="header-content-photo" href="#">
                     <div class="header-photo-div">
                       <img
-                        src="{% static 'main/images/transationPost.png' %}"
-                        width="36"
-                        height="36"
+                          src="{% static 'main/images/transationPost.png' %}"
+                          width="36"
+                          height="36"
                       />
                       <!-- <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -341,9 +345,9 @@
                   <a class="header-content-photo">
                     <div class="header-photo-div">
                       <img
-                        src="{% static 'main/images/knowhow.png' %}"
-                        width="36"
-                        height="36"
+                          src="{% static 'main/images/knowhow.png' %}"
+                          width="36"
+                          height="36"
                       />
                       <!-- <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -416,9 +420,9 @@
                   <a class="header-content-photo">
                     <div class="header-photo-div">
                       <img
-                        src="{% static 'main/images/lectureReview.png' %}"
-                        width="36"
-                        height="36"
+                          src="{% static 'main/images/lectureReview.png' %}"
+                          width="36"
+                          height="36"
                       />
                       <!-- <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -490,9 +494,9 @@
                   <a class="header-content-photo">
                     <div class="header-photo-div">
                       <img
-                        src="{% static 'main/images/transationReview.png' %}"
-                        width="36"
-                        height="36"
+                          src="{% static 'main/images/transationReview.png' %}"
+                          width="36"
+                          height="36"
                       />
                       <!-- <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -585,10 +589,10 @@
                   <a class="header-content-photo">
                     <div class="header-photo-div">
                       <img
-{#                        src="../../../staticfiles/images/main/lecture.png"#}
-                        src="{% static 'main/images/lecture.png' %}"
-                        width="36"
-                        height="36"
+                          {#                        src="../../../staticfiles/images/main/lecture.png"#}
+                          src="{% static 'main/images/lecture.png' %}"
+                          width="36"
+                          height="36"
                       />
                       <!-- <svg
                         xmlns="http://www.w3.org/2000/svg"
