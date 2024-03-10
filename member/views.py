@@ -160,3 +160,33 @@ class MypageShowView(View):
             'memberProfile': member_file[0]['file_url']
         }
         return render(request,'member/mypage/my_profile/see-all.html',context)
+
+class MypageShowListAPI(APIView):
+
+    def get(self, request, member_id):
+        print(member_id)
+        posts = Post.objects.filter(member=member_id)\
+            .annotate(member_name=F('member__member_name'))\
+            .values(
+                'id',
+                'post_title',
+                'post_content',
+                'post_count',
+                'member_name',
+                'updated_date',
+            )
+
+        for post in posts:
+            post_file = PostFile.objects.filter(post_id=post['id']).values('file_url').first()
+            if post_file is not None:
+                post['post_file'] = post_file['file_url']
+            else:
+                post['post_file'] = 'file/2024/03/05/blank-image.png'
+
+            tags = PostPlant.objects.filter(post_id=post['id']).values('plant_name')
+            post['post_plant'] = [tag['plant_name'] for tag in tags]
+
+            replies = PostReply.objects.filter(post_id=post['id']).values('id')
+            post['post_reply'] = [reply['id'] for reply in replies]
+
+        return Response(posts)

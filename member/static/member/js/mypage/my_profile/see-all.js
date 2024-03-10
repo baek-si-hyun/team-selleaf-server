@@ -50,32 +50,12 @@ if (isTeacher) {
   myClassMenu.style.display = "none";
 }
 
-/*
-  게시글 유무에 따라 표시되는 내용 변경
-
-  또한, 현재 게시글 개수도 표시
-*/
-
-// 조건에 따라 표시할 div 태그들
-const postWrap = document.querySelector(".post-wrap");
-const noContentWrap = document.querySelector(".no-posts");
 
 // 스크랩 한 게시글 개수
 let posts = document.querySelectorAll(".post-wrap .post-container");
 
 // 게시글 수를 표시할 span 태그
 const postCount = document.querySelector(".post-count");
-
-// 게시글 없으면 내용 없음 표시
-if (posts.length == 0) {
-  postWrap.style.display = "none";
-  noContentWrap.style.display = "block";
-}
-// 게시글이 하나라도 있으면 게시글 묶음 표시
-else {
-  postWrap.style.display = "flex";
-  noContentWrap.style.display = "none";
-}
 
 // 현재 게시글 개수를 span 태그 안에 표시
 postCount.innerText = posts.length;
@@ -155,3 +135,100 @@ const reviewCount = document.querySelector(".review-count");
 
 // 현재 리뷰 개수를 span 태그 안에 표시
 reviewCount.innerText = reviewsItems.length;
+
+
+const showList = (posts) => {
+  let text = ``
+  console.log('리스트 보여주기')
+  posts.forEach((post) => {
+    if (post.length === 0) {
+      text = `
+      <a class="photo-upload-wrap no-posts" href="#">
+        <img alt=""
+          class="add-icon"
+          src="../../../images/mypage/add-icon.svg"
+        />
+        첫 번째 게시글을 올려보세요
+      </a>
+    `
+    }else {
+      text += `
+      <div class="post-container">
+        <div class="post-inner">
+          <article class="post">
+            <a href="#" class="post-link"></a>
+            <div class="post-image-wrap_">
+              <div class="post-image-container">
+                <div class="post-image-inner">
+                  <div class="post-image"></div>
+                  <img
+                    src="/upload/${post.post_file}"
+                    alt=""
+                    class="image"
+                  />
+                  <div class="image__dark-overlay"></div>
+                </div>
+              </div>
+            </div>
+            <div class="post-contents-wrap">
+              <div class="post-contents-container">
+                <h1 class="post-contents-header">
+                  <span class="post-contents-user"
+                    >${post.member_name}</span
+                  >
+                  <span class="post-contents-banner"
+                    >${post.post_title}</span
+                  >
+                </h1>
+                <span class="post-price">
+                  <span class="post-price-letter"
+                    >${post.post_content}</span
+                  >
+                </span>
+                <div class="post-content-pc-reply">
+                  <p class="post-content-reply">댓글  ${post.post_reply.length}</p>
+                  <p class="post-content-scrap">
+                    조회수  ${post.post_count}
+                  </p>
+                </div>
+                <span class="post-tag">
+                  ${post.post_plant.forEach((plant)=> {
+                    const tag = document.querySelector('.post-tag')
+                    tag.innerHTML = <span className="post-tag-icon">${plant}</span>
+                  })}
+                </span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    `
+    }
+
+  })
+  return text
+}
+
+const wrap = document.querySelector('.post-wrap')
+
+postService.getList(member_id,showList).then((text)=>{
+  wrap.innerHTML = text
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
