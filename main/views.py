@@ -203,6 +203,7 @@ class TradeScrapAPI(APIView):
         trade_scrap, created = TradeScrap.objects.get_or_create(trade_id=data['trade_id'], member_id=data['member_id'])
         if not created:
             is_scrap = False if trade_scrap.status else True
+            print(is_scrap)
             trade_scrap.status = is_scrap
             trade_scrap.save()
 
@@ -216,7 +217,6 @@ class LectureScrapAPI(APIView):
             'lecture_id': data['lecture_id'],
             'member_id': request.session['member']['id']
         }
-
         lecture_scrap, created = LectureScrap.objects.get_or_create(lecture_id=data['lecture_id'],
                                                                     member_id=data['member_id'])
         if not created:
