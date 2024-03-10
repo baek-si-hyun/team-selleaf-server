@@ -489,6 +489,11 @@ div.category-container{
     height: 27px;
 }
 
+.remove-icon{
+    width:25px;
+    height: 25px;
+}
+
 .update-label{
     display: block;
     margin-top: 2px;

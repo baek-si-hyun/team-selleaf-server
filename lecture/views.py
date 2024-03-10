@@ -382,6 +382,8 @@ class LectureUpdateOnlineView(View):
         # print(lecture)
 
         return render(request, "lecture/web/lecture-update-online.html", context)
+
+    @transaction.atomic
     def post(self, request):
         data = request.POST
         lecture_id = data['id']
@@ -389,7 +391,7 @@ class LectureUpdateOnlineView(View):
         # 수정할 게시물 가져오기
         lecture = Lecture.objects.get(id=lecture_id)
 
-        # 게시물중 카테고리 아이디 찾아오기
+        # 게시물 중 카테고리 아이디 찾아오기
         lecture_category_number = Lecture.objects.get(id=lecture_id).lecture_category_id
 
         # 게시물 강의 구분 수정
@@ -397,10 +399,41 @@ class LectureUpdateOnlineView(View):
         lecture_category.category_name = data['product-index']
 
         # 게시물 식물 종류 수정
-        lecture_plants = LecturePlant.objects.filter(lecture_id=lecture_id).delete()
+        LecturePlant.objects.filter(lecture_id=lecture_id).delete()
         plant_types = data.getlist('plant_type')
         for plant_type in plant_types:
             LecturePlant.objects.create(lecture=lecture, plant_name=plant_type)
+
+        # 날짜 정보 수정
+        start_date_input = data.get('start-date-input')
+        end_date_input = data.get('end-date-input')
+        weekday_type = data.getlist('weekday-type')
+
+        # 날짜 및 시간 데이터 삭제
+        lecture.date_set.all().delete()
+
+        # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
+        dates = date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
+
+        # 강의 시간(시작 시간, 종료 시간, 강의 시간)
+        start_time = data.get('start-time-input')
+        end_time = data.get('end-time-input')
+        interval = data.get('time-type')
+
+        # 시간대를 나누고 남은 시간을 추가하여 출력
+        time_intervals = divide_time_intervals(start_time, end_time, interval)
+
+        times = []
+        # 계산된 시간대를 출력
+        for interval in time_intervals:
+            times.append(f"{interval[0]}~{interval[1]}")
+
+        # 날짜 및 시간 데이터 생성
+        for date in dates:
+            lecture_date = Date.objects.create(lecture=lecture, date=date)
+            for time in times:
+                Time.objects.create(date=lecture_date, time=time)
+
         # 게시물 가격 수정
         lecture.lecture_price = data['price-input']
         # 게시물 인원 수정
@@ -409,9 +442,13 @@ class LectureUpdateOnlineView(View):
         lecture.lecture_title = data['title-input']
         # 게시물 내용 수정
         lecture.lecture_content = data['content-input']
-        # lecture.lecture
+
+        # 게시물 및 카테고리 정보 저장
+        lecture.save(update_fields=['lecture_price', 'lecture_headcount', 'lecture_title', 'lecture_content'])
+        lecture_category.save(update_fields=['category_name'])
 
         return redirect(f'/lecture/detail/online?id={lecture.id}')
+
 
 class LectureUpdateOfflineView(View):
     def get(self, request):
@@ -422,5 +459,74 @@ class LectureUpdateOfflineView(View):
         # print(lecture)
 
         return render(request, "lecture/web/lecture-update-offline.html", context)
-    def post(self):
-        pass
+
+    def post(self, request):
+        data = request.POST
+        lecture_id = data['id']
+
+        # 수정할 게시물 가져오기
+        lecture = Lecture.objects.get(id=lecture_id)
+
+        # 게시물 중 카테고리 아이디 찾아오기
+        lecture_category_number = Lecture.objects.get(id=lecture_id).lecture_category_id
+
+        # 게시물 강의 구분 수정
+        lecture_category = LectureCategory.objects.get(id=lecture_category_number)
+        lecture_category.category_name = data['product-index']
+
+        # 게시물 중 강의 지역 가져오기
+
+        # 게시물 식물 종류 수정
+        lecture_plants = LecturePlant.objects.filter(lecture_id=lecture_id).delete()
+        plant_types = data.getlist('plant_type')
+        for plant_type in plant_types:
+            LecturePlant.objects.create(lecture=lecture, plant_name=plant_type)
+
+        # 날짜 정보 수정
+        start_date_input = data.get('start-date-input')
+        end_date_input = data.get('end-date-input')
+        weekday_type = data.getlist('weekday-type')
+
+        # 날짜 및 시간 데이터 삭제
+        lecture.date_set.all().delete()
+
+        # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
+        dates = date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
+
+        # 강의 시간(시작 시간, 종료 시간, 강의 시간)
+        start_time = data.get('start-time-input')
+        end_time = data.get('end-time-input')
+        interval = data.get('time-type')
+
+        # 시간대를 나누고 남은 시간을 추가하여 출력
+        time_intervals = divide_time_intervals(start_time, end_time, interval)
+
+        times = []
+        # 계산된 시간대를 출력
+        for interval in time_intervals:
+            times.append(f"{interval[0]}~{interval[1]}")
+
+        # 날짜 및 시간 데이터 생성
+        for date in dates:
+            lecture_date = Date.objects.create(lecture=lecture, date=date)
+            for time in times:
+                Time.objects.create(date=lecture_date, time=time)
+
+
+        # 게시물 가격 수정
+        lecture.lecture_price = data['price-input']
+        # 게시물 인원 수정
+        lecture.lecture_headcount = data['number-input']
+        # 게시물 제목 수정
+        lecture.lecture_title = data['title-input']
+        # 게시물 내용 수정
+        lecture.lecture_content = data['content-input']
+
+        # 게시물 update
+        lecture.save(update_fields=['lecture_price', 'lecture_headcount', 'lecture_title', 'lecture_content'])
+
+        # 카테고리 update
+        lecture_category.save(update_fields=['category_name'])
+
+        return redirect(f'/lecture/detail/offline?id={lecture.id}')
+

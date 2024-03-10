@@ -152,16 +152,16 @@
             <nav class="category-button-collection">
               <span class="category-button">
                 <div class="button-space">
-                  <a href="#" class="button-link-unclick">
+                  <a href="/lecture/main/" class="button-link-unclick">
                     <div class="button">
-                      <p class="button-letter-unclick">상품홈</p>
+                      <p class="button-letter-unclick">강의홈</p>
                     </div>
                   </a>
                 </div>
               </span>
               <span class="category-button">
                 <div class="button-space">
-                  <a href="#" class="button-link-unclick">
+                  <a href="/lecture/total/" class="button-link-unclick">
                     <div class="button">
                       <p class="button-letter-unclick">원데이클래스</p>
                     </div>
@@ -241,58 +241,6 @@
                         </button>
                       </li>
                   {% endfor %}
-{#                  <li class="product-small-image-item">#}
-{#                    <button#}
-{#                      class="product-small-image-button"#}
-{#                      type="button"#}
-{#                      aria-label="1 of 8"#}
-{#                    >#}
-{#                      <img#}
-{#                        class="product-small-image"#}
-{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
-{#                        alt="상품 이미지"#}
-{#                      />#}
-{#                    </button>#}
-{#                  </li>#}
-{#                  <li class="product-small-image-item">#}
-{#                    <button#}
-{#                      class="product-small-image-button"#}
-{#                      type="button"#}
-{#                      aria-label="1 of 8"#}
-{#                    >#}
-{#                      <img#}
-{#                        class="product-small-image"#}
-{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
-{#                        alt="상품 이미지"#}
-{#                      />#}
-{#                    </button>#}
-{#                  </li>#}
-{#                  <li class="product-small-image-item">#}
-{#                    <button#}
-{#                      class="product-small-image-button"#}
-{#                      type="button"#}
-{#                      aria-label="1 of 8"#}
-{#                    >#}
-{#                      <img#}
-{#                        class="product-small-image"#}
-{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
-{#                        alt="상품 이미지"#}
-{#                      />#}
-{#                    </button>#}
-{#                  </li>#}
-{#                  <li class="product-small-image-item">#}
-{#                    <button#}
-{#                      class="product-small-image-button"#}
-{#                      type="button"#}
-{#                      aria-label="1 of 8"#}
-{#                    >#}
-{#                      <img#}
-{#                        class="product-small-image"#}
-{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
-{#                        alt="상품 이미지"#}
-{#                      />#}
-{#                    </button>#}
-{#                  </li>#}
                 </ul>
                 <div class="product-image-paginator">
                   <ul class="carousel-paginator">
@@ -335,23 +283,13 @@
                             </button>
                         </a>
                         <a href="/lecture/delete/?id={{ lecture.id }}">
-                            <div class="share-button-wrap">
-                              <button class="share-button" type="button">
-                                <svg
-                                  class="icon"
-                                  aria-label="공유하기"
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="currentColor"
-                                  preserveAspectRatio="xMidYMid meet"
-                                >
-                                  <path
-                                    d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
-                                  ></path>
-                                </svg>
-                              </button>
-                            </div>
+                          <button class="remove-button" type="button">
+                            <img
+                            class="remove-icon"
+                            src="{% static 'public/web/images/common/remove-icon.png' %}"
+                          />
+                          <span class="update-label">삭제</span>
+                          </button>
                         </a>
                     {% endif %}
                     <button class="scrap-button" type="button">
