@@ -10,19 +10,8 @@ const noticeButton = document.getElementById("notice");
 // 공지사항 및 QnA을 표시할 리스트
 const ul = document.querySelector(".list-container");
 
-// 공지사항 버튼을 클릭했을 때의 이벤트
-// 공지사항 버튼에 불 들어오고, qna 버튼은 꺼짐
-// 또한 공지사항 목록의 1페이지를 불러옴
-noticeButton.addEventListener("click", function () {
-  // 공지사항 버튼 체크 시, QnA 버튼 체크 해체
-  if (noticeButton.checked) {
-    qnaButton.checked = false;
-  }
-
-  // 클래스로 인한 스타일 변경
-  noticeButton.parentElement.classList.add("benner-inner-checked");
-  qnaButton.parentElement.classList.remove("benner-inner-checked");
-
+// 공지사항의 첫 페이지를 화면에 띄워주는 함수
+const callFirstNotices = () => {
   // 현재 공지사항 페이지를 1로 초기화
   noticePage = 1;
 
@@ -34,12 +23,46 @@ noticeButton.addEventListener("click", function () {
     // 클릭 이벤트 추가
     addButtonEvent();
   });
+}
 
-  // 이후 스크롤이 맨 아래로 내려가면 새로운 공지사항을 불러오는 이벤트 추가
-  scrollEvent(noticeService.getList(++noticePage, showNotices).then((notices) => {
-    ul.innerHTML += notices;
+// QnA의 첫 페이지를 화면에 띄워주는 함수
+const callFirstQnAs = () => {
+  // 현재 QnA 페이지를 1로 초기화
+  qnaPage = 1;
+
+  // QnA 목록 1페이지의 데이터 표시
+  qnaService.getList(qnaPage, showQnAs).then((qnas) => {
+    ul.innerHTML = qnas;
+
+    // 클릭 이벤트 추가
     addButtonEvent();
-  }));
+  });
+}
+
+// 페이지가 열렸을 때 어떤 버튼이 눌려있는지에 따라 다른 정보(공지사항 or QnA) 출력
+if (noticeButton.checked) {
+  callFirstNotices();
+} else {
+  callFirstQnAs();
+}
+
+// 공지사항 버튼을 클릭했을 때의 이벤트
+// 공지사항 버튼에 불 들어오고, qna 버튼은 꺼짐
+// 또한, 위의 callFirstNotices 함수 사용
+noticeButton.addEventListener("click", () => {
+  // 공지사항 버튼 체크 시, QnA 버튼 체크 해체
+  if (noticeButton.checked) {
+    qnaButton.checked = false;
+  }
+
+  // 클래스로 인한 스타일 변경
+  noticeButton.parentElement.classList.add("benner-inner-checked");
+  qnaButton.parentElement.classList.remove("benner-inner-checked");
+
+  // 공지사항의 첫 페이지를 불러와서 화면에 출력
+  callFirstNotices();
+
+  // 스크롤 이벤트 처리
 });
 
 
@@ -54,22 +77,10 @@ qnaButton.addEventListener("click", function () {
   qnaButton.parentElement.classList.add("benner-inner-checked");
   noticeButton.parentElement.classList.remove("benner-inner-checked");
 
-  // 현재 QnA 페이지를 1로 초기화
-  qnaPage = 1;
+  // QnA의 첫 페이지를 불러와서 화면에 출력
+  callFirstQnAs();
 
-  // QnA 목록 1페이지의 데이터 표시
-  qnaService.getList(qnaPage, showQnAs).then((qnas) => {
-    ul.innerHTML = qnas;
-
-    // 클릭 이벤트 추가
-    addButtonEvent();
-  });
-
-  // 이후 스크롤이 맨 아래로 내려가면 새로운 QnA를 불러오는 이벤트 추가
-  scrollEvent(qnaService.getList(++qnaPage, showQnAs).then((qnas) => {
-    ul.innerHTML += qnas;
-    addButtonEvent();
-  }));
+  // 스크롤 이벤트 처리
 });
 
 
