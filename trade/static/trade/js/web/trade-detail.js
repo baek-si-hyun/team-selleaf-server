@@ -44,6 +44,13 @@ scrapBtn.addEventListener("click", () => {
   }
 });
 
+const productTitleIconWrap = document.querySelector('.product-title-icon-wrap')
+productTitleIconWrap.addEventListener('click', async (e) => {
+  const tradeContentId = e.target.closest('.scrap-button').classList[1]
+  await tradeScrapService.update(tradeContentId)
+})
+
+
 // 비슷한 제품 스크랩 버튼
 
 const scrapButton = document.querySelectorAll(".img-scrap-button");
@@ -53,10 +60,10 @@ scrapButton.forEach((scrap) => {
   scrap.addEventListener("click", () => {
     const img = scrap.querySelector("img");
     const imgSrc = img.getAttribute("src");
-    if (imgSrc === "/static/public/web/images/common/scrap-off.png") {
+    if (imgSrc === "/static/public/web/images/common/scrap-off-blk.png") {
       img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
     } else {
-      img.setAttribute("src", "/static/public/web/images/common/scrap-off.png");
+      img.setAttribute("src", "/static/public/web/images/common/scrap-off-blk.png");
     }
     // scrapPopup.style.display == "none"
     //   ? (scrapPopup.style.display = "block")

@@ -504,20 +504,12 @@ min-height: 1px;
     right: 12px;
 }
 
-.scrap-button >.scrap-off{
+.scrap-button >.scrap-img{
     position: relative;
     width: 24px;
     top: 0;
     left: 0;
     transition: opacity .1s; 
-}
-
-.scrap-button > .scrap-on{
-    width: 24px;
-    position: relative;
-    top: 0;
-    left: 0;
-    transition: opacity .1s;
 }
 
 .image__dark-overlay {
@@ -769,3 +761,13 @@ div.update-post-contents-wrap {
     right: 0;
 }
 
+.no-result-message-box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.no-result-message-box span{
+    font-size: 17px;
+    color: #d2d2d2
+}

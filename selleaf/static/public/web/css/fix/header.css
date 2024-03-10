@@ -321,7 +321,6 @@
 } */
 
 .header-fourth-inner-thirddiv {
-    display: -webkit-inline-box;
     display: -webkit-inline-flex;
     display: -ms-inline-flexbox;
     display: inline-flex;
@@ -360,9 +359,6 @@
 
 .hearder-inner-thirddiv-input {
     box-sizing: border-box;
-    -webkit-flex: 1 0 0%;
-    -ms-flex: 1 0 0%;
-    flex: 1 0 0%;
     vertical-align: middle;
     outline: none;
     display: inline-block;
@@ -887,4 +883,15 @@ input::-webkit-input-placeholder {
 
 .current-profile-image{
     width: 100%;
+}
+
+.no-result-message-box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.no-result-message-box span{
+    font-size: 17px;
+    color: #d2d2d2
 }
