@@ -74,10 +74,10 @@
           >
             <label
               class="benner-inner-1 benner-inner-checked"
-              for="공지사항"
+              for="notice"
             >
               <input
-                id="공지사항"
+                id="notice"
                 type="checkbox"
                 class="benner-button-1"
               />
@@ -91,6 +91,7 @@
         </div>
         <div id="question_list_section" class="list-wrap">
           <ul class="list-container">
+{#              리스트 하나 #}
             <li class="list-inner-box">
               <h3 class="list-inner">
                 <button class="list-q">
@@ -202,5 +203,9 @@
 {% include 'fix/footer.html' %}
 {% endblock %}
 {% block js %}
+  <script src="{% static 'notice/js/web/notice-module.js' %}"></script>
+  <script src="{% static 'notice/js/web/show-notice.js' %}"></script>
+  <script src="{% static 'qna/js/qna-module.js' %}"></script>
+  <script src="{% static 'qna/js/show-qnas.js' %}"></script>
   <script src="{% static 'notice/js/web/notice.js' %}"></script>
 {% endblock %}

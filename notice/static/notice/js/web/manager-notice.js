@@ -25,11 +25,11 @@ let page = 1
 const getNotice = async (callback) => {
   // API에 공지사항 목록을 요청해서 가져옴 - Promise
   const response = await fetch(`/notice/list/${page}`);
-  const notices = await response.json()
+  const notices = await response.json();
 
   // 콜백함수를 전달받았다면, 조회한 목록의 처리를 콜백함수에 맡김
   if(callback) {
-    callback(notices)
+    callback(notices);
   }
 }
 
@@ -39,10 +39,10 @@ const showNotice = (notice_info) => {
 
 
   // 공지사항 리스트를 뿌릴 위치(객체)를 querySelector로 가져옴
-  const noticeList = document.querySelector("ul.notice-list")
+  const noticeList = document.querySelector("ul.notice-list");
 
   // fetch 요청으로 받아온 데이터 할당
-  let notices = notice_info.notices
+  let notices = notice_info.notices;
 
   // 공지사항의 제목과 내용을 아래의 HTML 태그로 묶어서 공지사항 목록 생성
   notices.forEach((notice) => {
