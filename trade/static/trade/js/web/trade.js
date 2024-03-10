@@ -1,5 +1,4 @@
 // 스크랩 버튼
-
 const scrapBtn = document.querySelector(".post-wrap");
 const scrapPopup = document.querySelector(".scrap-popup-wrap");
 const scrapCancel = document.querySelector(".scrap-popup-cancel-wrap");
@@ -108,6 +107,12 @@ newDetail.addEventListener("mouseout", handleMouseOverAndOut);
 //   e.target.style.opacity = "100%";
 // });
 
+scrapBtn.addEventListener('click', async (e) => {
+  const scrapButton = e.target.closest('.scrap-button')
+  const tradeContentId = scrapButton.closest('.post-container').classList[1]
+  await tradeScrapService.update(tradeContentId)
+})
+
 // 이미지에 마우스 대면 커지기
 const images = document.querySelector(".image");
 
@@ -116,3 +121,5 @@ images.forEach((image, i) => {
     image[i].style.transform = "scale(1.05)";
   });
 });
+
+// const postWrap = document.querySelector('.post-wrap')
