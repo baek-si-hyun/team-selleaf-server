@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalWrap = document.querySelector(".delete-modal-wrap");
 
   deleteButtons.forEach(function (deleteButton) {
-    deleteButton.addEventListener("click", (e) => {
+    deleteButton.addEventListener("click", () => {
       modalWrap.style.display = "flex";
     });
   });
@@ -55,48 +55,48 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelButton = document.querySelector(".modal-cancel button");
   const confirmButton = document.querySelector(".modal-confirm button");
 
-  cancelButton.addEventListener("click", (e) => {
+  cancelButton.addEventListener("click", () => {
     modalWrap.style.display = "none";
   });
 
-  confirmButton.addEventListener("click", (e) => {
+  confirmButton.addEventListener("click", () => {
     modalWrap.style.display = "none";
   });
 });
 
-// 마일리지 버튼 눌러서 해당 마일리지 수정해주는 js코드
-document.addEventListener("DOMContentLoaded", function () {
-  const editButtons = document.querySelectorAll("button.edit-button");
-
-  editButtons.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const btnAttribute = e.target
-        .closest("button")
-        .getAttribute("aria-label");
-      if (btnAttribute == "mileage button") {
-        const parentLi = e.target.closest("li");
-        const mileageInput = parentLi.querySelector("input.content-detail-num");
-        mileageInput.disabled = false;
-        mileageInput.style.outline = "1px solid #c06888";
-      }
-    });
-  });
-
-  const mileageInputs = document.querySelectorAll("input.content-detail-num");
-  mileageInputs.forEach((input) => {
-    input.addEventListener("blur", () => {
-      input.disabled = true;
-      input.style.outline = "none";
-    });
-
-    input.addEventListener("keyup", (e) => {
-      if (e.keyCode == 13) {
-        input.disabled = true;
-        input.style.outline = "none";
-      }
-    });
-  });
-});
+// // 마일리지 버튼 눌러서 해당 마일리지 수정해주는 js코드
+// document.addEventListener("DOMContentLoaded", function () {
+//   const editButtons = document.querySelectorAll("button.edit-button");
+//
+//   editButtons.forEach((btn) => {
+//     btn.addEventListener("click", (e) => {
+//       const btnAttribute = e.target
+//         .closest("button")
+//         .getAttribute("aria-label");
+//       if (btnAttribute == "mileage button") {
+//         const parentLi = e.target.closest("li");
+//         const mileageInput = parentLi.querySelector("input.content-detail-num");
+//         mileageInput.disabled = false;
+//         mileageInput.style.outline = "1px solid #c06888";
+//       }
+//     });
+//   });
+//
+//   const mileageInputs = document.querySelectorAll("input.content-detail-num");
+//   mileageInputs.forEach((input) => {
+//     input.addEventListener("blur", () => {
+//       input.disabled = true;
+//       input.style.outline = "none";
+//     });
+//
+//     input.addEventListener("keyup", (e) => {
+//       if (e.keyCode == 13) {
+//         input.disabled = true;
+//         input.style.outline = "none";
+//       }
+//     });
+//   });
+// });
 
 //아래 게시물 창 버튼
 const paginationBtn = document.querySelectorAll(".page-count-num");
@@ -115,7 +115,7 @@ paginationBox.addEventListener("click", (e) => {
 
 // 검색창 눌렀을때 검색바에 아웃라인주기
 const searchBar = document.querySelector("label.search-bar");
-const mileageInput = document.querySelector("input.content-detail-num");
+// const mileageInput = document.querySelector("input.content-detail-num");
 
 document.addEventListener("click", (e) => {
   if (e.target.closest("label.search-bar")) {
