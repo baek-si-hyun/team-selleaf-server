@@ -12,6 +12,7 @@ from selleaf.date import Date
 from selleaf.time import Time
 from teacher.models import Teacher
 
+
 def date_range_with_weekdays(start, end, weekday_type):
     start_date = datetime.strptime(start, "%Y-%m-%d")
     end_date = datetime.strptime(end, "%Y-%m-%d")
@@ -34,6 +35,7 @@ def date_range_with_weekdays(start, end, weekday_type):
             target_date += timedelta(days=7)  # 한 주 뒤의 같은 요일로 이동
 
     return dates
+
 
 def divide_time_intervals(start_time, end_time, interval):
     # 시작 시간과 끝 시간을 datetime 객체로 변환
@@ -90,9 +92,10 @@ class LectureDetailOnlineView(View):
         # print(rating_dict)
 
         # 리뷰 평균 구하기
-            # 해당 강의에 대한 리뷰들의 총합과 개수를 구함
-        review_sum = LectureReview.objects.filter(lecture_id=request.GET['id']).aggregate(sum_rating=Sum('review_rating'),
-                                                                                   count=Count('id'))
+        # 해당 강의에 대한 리뷰들의 총합과 개수를 구함
+        review_sum = LectureReview.objects.filter(lecture_id=request.GET['id']).aggregate(
+            sum_rating=Sum('review_rating'),
+            count=Count('id'))
 
         # 리뷰가 있는 경우에만 평균을 계산
         if review_sum['count'] > 0:
@@ -141,7 +144,6 @@ class LectureDetailOnlineView(View):
         }
 
         return render(request, 'lecture/web/lecture-detail-online.html', context)
-
 
 
 class LectureDetailOfflineView(View):
@@ -205,7 +207,6 @@ class LectureDetailOfflineView(View):
         times = date.time_set.all()
         reviews = lecture.lecturereview_set.all()
         address = lecture.lectureaddress_set.first()
-        print(address)
         # print(reviews)
 
         context = {
@@ -219,12 +220,10 @@ class LectureDetailOfflineView(View):
             'lectures': lectures,
             'review_count': review_count,
             'rating_counts': rating_dict,
-            'average_rating': average_rating
+            'average_rating': average_rating,
         }
 
         return render(request, 'lecture/web/lecture-detail-offline.html', context)
-
-
 
 
 class LectureTotalView(View):
@@ -301,10 +300,10 @@ class LectureUploadOnlineView(View):
 
         return redirect(f'/lecture/detail/online/?id={lecture.id}')
 
+
 class LectureUploadOfflineView(View):
     def get(self, request):
         return render(request, 'lecture/web/lecture-upload-offline.html')
-
 
     @transaction.atomic
     def post(self, request):
@@ -333,7 +332,8 @@ class LectureUploadOfflineView(View):
         # 강의 장소 넣어주기
         local_selected = request.POST.get('product-index-local')
         control_selected = request.POST.get('product-index-control')
-        LectureAddress.objects.create(lecture=lecture, address_city=local_selected, address_district=control_selected, address_detail="입니다.")
+        LectureAddress.objects.create(lecture=lecture, address_city=local_selected, address_district=control_selected,
+                                      address_detail="입니다.")
 
         # 날짜, 시간 넣기
         start_date_input = request.POST.get('start-date-input')
@@ -368,8 +368,6 @@ class LectureUploadOfflineView(View):
         for key in files:
             LectureProductFile.objects.create(lecture=lecture, file_url=files[key])
 
-
-
         return redirect(f'/lecture/detail/offline/?id={lecture.id}')
 
 
@@ -399,7 +397,7 @@ class LectureUpdateOnlineView(View):
 
         # 게시물 강의 구분 수정
         lecture_category = LectureCategory.objects.get(id=lecture_category_number)
-        lecture_category.category_name = data['product-index']
+        lecture_category.lecture_category_name = data['product-index']
 
         # 게시물 식물 종류 수정
         LecturePlant.objects.filter(lecture_id=lecture_id).delete()
@@ -424,12 +422,7 @@ class LectureUpdateOnlineView(View):
         diy_content_inputs = request.POST.getlist('diy-content-input')
 
         kits = Kit.objects.filter(lecture_id=lecture.id)
-        # kits[0].kit_name = diy_name_inputs[0]
-        # kits[0].kit_content = diy_content_inputs[0]
-        # kits[0].save(update_fields=['kit_name', 'kit_content'])
-        # kits[1].kit_name = diy_name_inputs[1]
-        # kits[1].kit_content = diy_content_inputs[1]
-        # kits[1].save(update_fields=['kit_name', 'kit_content'])
+
         for i, kit in enumerate(kits):
             if i < len(diy_name_inputs):
                 kit.kit_name = diy_name_inputs[i]
@@ -441,7 +434,6 @@ class LectureUpdateOnlineView(View):
         start_date_input = data.get('start-date-input')
         end_date_input = data.get('end-date-input')
         weekday_type = data.getlist('weekday-type')
-
 
         # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
         dates = date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
@@ -486,8 +478,12 @@ class LectureUpdateOnlineView(View):
 class LectureUpdateOfflineView(View):
     def get(self, request):
         lecture = Lecture.objects.get(id=request.GET['id'])
+        address = LectureAddress.objects.get(lecture_id=lecture.id)
+        print(address)
+
         context = {
             'lecture': lecture,
+            'address': address,
         }
         # print(lecture)
 
@@ -501,32 +497,46 @@ class LectureUpdateOfflineView(View):
         # 수정할 게시물 가져오기
         lecture = Lecture.objects.get(id=lecture_id)
 
-        # 게시물 중 카테고리 아이디 찾아오기
+        # # 게시물 중 카테고리 아이디 찾아오기
         lecture_category_number = Lecture.objects.get(id=lecture_id).lecture_category_id
 
         # 게시물 강의 구분 수정
         lecture_category = LectureCategory.objects.get(id=lecture_category_number)
-        lecture_category.category_name = data['product-index']
+        lecture_category.lecture_category_name = data['product-index']
 
-        # 게시물 중 강의 지역 가져오기
+        lecture_address = LectureAddress.objects.get(lecture_id=lecture.id)
+        lecture_address.address_city = data['product-index-local']
+        lecture_address.address_district = data['product-index-control']
+
+        lecture_address.save(update_fields=['address_city', 'address_district'])
 
         # 게시물 식물 종류 수정
-        lecture_plants = LecturePlant.objects.filter(lecture_id=lecture_id).delete()
-        plant_types = data.getlist('plant_type')
+        LecturePlant.objects.filter(lecture_id=lecture_id).delete()
+        plant_types = data.getlist('plant-type')
         for plant_type in plant_types:
             LecturePlant.objects.create(lecture=lecture, plant_name=plant_type)
 
-        # 날짜 정보 수정
+        # 현재 강의에서 Date id 찾아오기
+        deleteDates = Date.objects.filter(lecture_id=lecture.id).values('id')
+        deleteDateList = []
+        for deleteDate in deleteDates:
+            deleteDateList.append(deleteDate['id'])
+
+        # 현재 강의에서 날짜를 통해 시간 찾아와서 삭제해주기
+        deleteTime = Time.objects.filter(date_id__in=deleteDateList).delete()
+
+        # 현재 강의에서 날짜를 찾아 해당 날짜들 삭제해주기
+        realDeleteDate = Date.objects.filter(lecture_id=lecture.id).delete()
+
+        # # 날짜 정보 수정
         start_date_input = data.get('start-date-input')
         end_date_input = data.get('end-date-input')
         weekday_type = data.getlist('weekday-type')
 
-        # 날짜 및 시간 데이터 삭제
-        # lecture.date_set.all().delete()
-        print(lecture.date_set.all())
-
         # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
         dates = date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
+
+        # # 삭제할 강의를 찾고 그 시간을 없애주면 됨
 
         # 강의 시간(시작 시간, 종료 시간, 강의 시간)
         start_time = data.get('start-time-input')
@@ -547,7 +557,6 @@ class LectureUpdateOfflineView(View):
             for time in times:
                 Time.objects.create(date=lecture_date, time=time)
 
-
         # 게시물 가격 수정
         lecture.lecture_price = data['price-input']
         # 게시물 인원 수정
@@ -555,15 +564,14 @@ class LectureUpdateOfflineView(View):
         # 게시물 제목 수정
         lecture.lecture_title = data['title-input']
         # 게시물 내용 수정
-        lecture.lecture_content = data['content-input']
+        lecture.lecture_content = data['content-text-area']
 
-        # 게시물 update
+        # 게시물 및 카테고리 정보 저장
         lecture.save(update_fields=['lecture_price', 'lecture_headcount', 'lecture_title', 'lecture_content'])
-
-        # 카테고리 update
-        lecture_category.save(update_fields=['category_name'])
+        lecture_category.save(update_fields=['lecture_category_name'])
 
         return redirect(f'/lecture/detail/offline?id={lecture.id}')
+
 
 class LectureDeleteView(View):
     def get(self, request):
