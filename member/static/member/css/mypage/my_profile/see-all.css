@@ -190,7 +190,7 @@ a * {
 .sidebar-wrap {
   box-sizing: border-box;
   position: relative;
-  padding-top: 30px;
+  padding-top: 50px;
   padding-left: 10px;
   padding-right: 10px;
   width: 25%;
@@ -660,6 +660,9 @@ a * {
 }
 
 .post-contents-wrap {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   display: flex;
   -webkit-box-flex: 1;
   -webkit-flex: 1 0 0px;
@@ -676,6 +679,7 @@ a * {
   margin: 0;
   margin-left: -9px;
 }
+
 
 .post-contents-header {
   margin-top: 9px;
@@ -706,21 +710,21 @@ a * {
   margin-bottom: 4px;
 }
 
+
 .post-price {
   margin: 2px 0 0;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  font-size: 17px;
+  font-size: 14px;
   line-height: 23px;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .post-price-letter {
   color: #000;
   margin-right: 4px;
 }
-
 .post-content-pc-reply {
   display: block;
   margin-block-start: 0px;
@@ -797,7 +801,6 @@ a * {
   overflow: hidden;
   margin: 5px -16px 0 30px;
   width: 110px;
-  height: 110px;
 }
 
 .reviews-item-image {
@@ -1019,4 +1022,13 @@ a * {
   .content-seperator {
     display: none;
   }
+}
+
+.current-profile-image{
+  width: 100%;
+}
+
+.post-contents-container{
+  width: 100%;
+  overflow: hidden;
 }
