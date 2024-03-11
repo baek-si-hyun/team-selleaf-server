@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from member.models import Member
 from notice.models import Notice
 from qna.models import QnA
+from teacher.models import Teacher
 
 
 # 관리자 로그인
@@ -118,25 +119,32 @@ class MemberInfoAPI(APIView):
 
 
 # 회원 상세 정보 관리(특정 회원 한 명)
-class MemberDetailManagementView(View):
-    # 특정 회원의 강의 구매 내역 페이지로 이동하기 위한 뷰
-    # 결제 내역 관리 페이지가 따로 있기 때문에 상의 후 삭제할지 말지 결정
-    def get(self, request):
-        # 특정 회원의 정보와 강의 구매 내역을 join 해서 가지고 가야됨
-        return render(request, 'manager/member/member-detail/member-detail.html')
+# class MemberDetailManagementView(View):
+#     # 특정 회원의 강의 구매 내역 페이지로 이동하기 위한 뷰
+#     # 결제 내역 관리 페이지가 따로 있기 때문에 상의 후 삭제할지 말지 결정
+#     def get(self, request):
+#         # 특정 회원의 정보와 강의 구매 내역을 join 해서 가지고 가야됨
+#         return render(request, 'manager/member/member-detail/member-detail.html')
 
 
 # 강사 관리
 class TeacherManagementView(View):
     # 강사 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 강사 정보를 가져가야 됨
-        return render(request, 'manager/teacher/teacher.html')
+        # 현재 강사 수
+        teachers = Teacher.objects.count()
 
-    # 강사 정보(status) 변경 후, 해당 정보를 업데이트하기 위한 뷰
-    def post(self, request):
-        # status를 변경할 강사들의 정보를 가져와야 됨
-        return render(request, 'manager/teacher/teacher.html')
+        # 블랙 리스트 수 - 임시로 회원 테이블의 휴면 중인 회원 가져옴, 나중에 별도의 status 필요
+        black_lists = Teacher.objects.filter(member__member_status=1).count()
+
+        # 강사 수를 화면에서 쓸 수 있게 dict 형태로 만들어줌
+        context = {
+            "teachers": teachers,
+            "black_lists": black_lists
+        }
+
+        # 위의 dict 데이터를 teacher.html에 실어서 보냄
+        return render(request, 'manager/teacher/teacher.html', context)
 
 
 # 게시물 관리
