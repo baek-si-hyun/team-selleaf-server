@@ -119,7 +119,7 @@ const transSrcapBtnFn = (scrap) => {
 
 const realmainPlantRecommendPhotoul = document.querySelector('.realmain-plantRecommend-photoul')
 realmainPlantRecommendPhotoul.addEventListener('click', async (e) => {
-  scrapBtn = e.target.closest('.scrap-button')
+  const scrapBtn = e.target.closest('.scrap-button')
   transSrcapBtnFn(scrapBtn)
   const knowhowContentId = scrapBtn.closest('.realmain-plantRecommend-photoli').classList[1]
   await knowhowScrapService.update(knowhowContentId)
@@ -128,7 +128,7 @@ realmainPlantRecommendPhotoul.addEventListener('click', async (e) => {
 
 const realmainLecturePhotoWrap = document.querySelector('.realmain-lecture-photoWrap')
 realmainLecturePhotoWrap.addEventListener('click', async (e) => {
-  scrapBtn = e.target.closest('.scrap-button')
+  const scrapBtn = e.target.closest('.scrap-button')
   transSrcapBtnFn(scrapBtn)
   const lectureContentId = scrapBtn.closest('.realmain-lecture-photoEachdiv').classList[1]
   await lectureScrapService.update(lectureContentId)
@@ -137,7 +137,7 @@ realmainLecturePhotoWrap.addEventListener('click', async (e) => {
 
 const realmainBestproductRealphotoWrap = document.querySelector('.realmain-bestproduct-realphotoWrap')
 realmainBestproductRealphotoWrap.addEventListener('click', async (e) => {
-  scrapBtn = e.target.closest('.scrap-button')
+  const scrapBtn = e.target.closest('.scrap-button')
   transSrcapBtnFn(scrapBtn)
   const lectureContentId = scrapBtn.closest('.realmain-bestproduct-realphotoContent').classList[1]
   await lectureScrapService.update(lectureContentId)
@@ -146,11 +146,10 @@ realmainBestproductRealphotoWrap.addEventListener('click', async (e) => {
 
 const realmainTodayHotdealPhotoWrapUl = document.querySelector('.realmain-todayHotdeal-photoWrapUl')
 realmainTodayHotdealPhotoWrapUl.addEventListener('click', async (e) => {
-  scrapBtn = e.target.closest('.scrap-button')
+  const scrapBtn = e.target.closest('.scrap-button')
   transSrcapBtnFn(scrapBtn)
   const tradeContentId = scrapBtn.closest('.realmain-todayHotdeal-photoWrapli').classList[1]
   await tradeScrapService.update(tradeContentId)
-
 })
 
 //post

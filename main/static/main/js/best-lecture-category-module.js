@@ -10,6 +10,5 @@ const lectureCategoryService = (() => {
     });
     return await response.json();
   }
-
   return {list: list}
 })()
