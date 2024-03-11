@@ -1,8 +1,102 @@
 // 통합검색 인풋에 뭔가를 치면 x버튼이 생기게
 const searchInput = document.querySelector(".hearder-inner-thirddiv-input");
 const xbutton = document.querySelector(".hearder-inner-thirddiv-div");
+const recentSearchesBox = document.querySelector('.recent-searches-box')
+const recentSearchesList = document.querySelector('.recent-searches-list')
+const relatedSearchBox = document.querySelector('.related-search-box')
 
-searchInput.addEventListener("keydown", (e) => {
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.recent-searches-box') || !e.target.closest('.hearder-inner-thirddiv-input')) {
+    recentSearchesBox.classList.remove('show-modal')
+  }
+})
+recentSearchesBox.addEventListener('click', (e) => {
+  const items = recentSearchesBox.querySelectorAll('.recent-searches')
+  if (e.target.closest('.recent-searches') && !e.target.closest('.recent-searches-delete-button')) {
+    const query = e.target.closest('.recent-searches').innerText
+    searchInput.value = query
+    window.location.href = `/search/?query=${query}`;
+  }
+  if (e.target.closest('.recent-searches-delete-button')) {
+    e.target.closest('.recent-searches').remove()
+  }
+  if (e.target.closest('.recent-searches-all-delete')) {
+    items.forEach((item) => {
+      item.remove()
+    })
+  }
+  if (recentSearchesBox.querySelectorAll('.recent-searches').length < 1) {
+    recentSearchesBox.classList.remove('show-modal')
+  }
+})
+
+const createSearchList = (listValues) => {
+  if (!listValues) return;
+  const itemList = [...new Set(listValues.map(JSON.stringify))].map(JSON.parse);
+  recentSearchesBox.classList.add('show-modal')
+  let modalInnerHTML = ''
+  itemList.forEach((item) => {
+    modalInnerHTML += `
+      <li role="option" tabindex="0" class="recent-searches">
+        <div class="recent-searches-inner">
+          <span class="recent-searches-text">${item.prev_search}</span>
+          <button type="button" class="recent-searches-delete-button">
+            <span class="recent-searches-delete-button-icon"></span>
+          </button>
+        </div>
+      </li>
+    `
+  })
+  recentSearchesList.innerHTML = modalInnerHTML
+}
+
+// const searchHandler = async (searchValue) => {
+//   const listValues = await searchService.getList(searchValue)
+//   createSearchList(listValues)
+// }
+
+
+searchInput.addEventListener('paste', function (event) {
+  let pastedText = (event.clipboardData || window.clipboardData).getData('text');
+  searchWordHandler(pastedText)
+});
+relatedSearchBox.addEventListener('click', (e) => {
+  const query = e.target.closest('.related-search-item').innerText
+  window.location.href = `/search/?query=${query}`;
+})
+
+const relatedSearchList = document.querySelector('.related-search-list')
+const createSearchWordsList = (listValues) => {
+  if (!listValues) return;
+  if (listValues.length === 0) {
+    relatedSearchBox.classList.remove('show-modal')
+    return;
+  }
+  console.log(listValues)
+  const itemList = [...new Set(listValues.map(JSON.stringify))].map(JSON.parse);
+  relatedSearchBox.classList.add('show-modal')
+  let modalInnerHTML = ''
+  itemList.forEach((item) => {
+    modalInnerHTML += `
+      <li role="option" tabindex="0" class="related-search-item">
+        <div class="related-search-item-inner">
+          <span class="related-search-icon"></span>
+          <div class="related-search-text">
+            ${item.prev_search}
+          </div>
+        </div>
+      </li>
+    `
+  })
+  relatedSearchList.innerHTML = modalInnerHTML
+}
+const searchWordHandler = async (searchValue) => {
+  if (searchValue) {
+    const listValues = await searchService.getList(searchValue)
+    createSearchWordsList(listValues)
+  }
+}
+searchInput.addEventListener("keyup", (e) => {
   xbutton.style.display = "flex";
   // 입력한 값 가져오기
   const realInput = searchInput.value.trim();
@@ -10,11 +104,19 @@ searchInput.addEventListener("keydown", (e) => {
     xbutton.addEventListener("click", (e) => {
       searchInput.value = "";
       xbutton.style.display = "none";
+      relatedSearchBox.classList.add('show-modal')
+      recentSearchesBox.classList.remove('show-modal')
     });
   } else {
     xbutton.style.display = "none";
+    relatedSearchBox.classList.remove('show-modal')
+    createSearchList()
+    recentSearchesBox.classList.add('show-modal')
   }
+  searchWordHandler(searchInput.value)
 });
+
+
 const borderinput = document.querySelector(".header-fourth-inner-thirddiv");
 searchInput.addEventListener("focus", () => {
   borderinput.style.border = "1px solid #134F2C";
@@ -22,6 +124,7 @@ searchInput.addEventListener("focus", () => {
 searchInput.addEventListener("blur", () => {
   borderinput.style.border = "1px solid #DADDE0";
 });
+
 
 // 강사 로그인 시 글쓰기 버튼 눌렀을 때 강의 시작하기가 생겨야함 원래는 없어야하고
 const WriteLetterBtnModal = document.querySelectorAll(".header-content-photo");
@@ -84,3 +187,5 @@ document.addEventListener("click", (e) => {
     modal.classList.remove("modalOpen");
   }
 });
+
+
