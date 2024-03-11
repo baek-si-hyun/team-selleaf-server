@@ -1,9 +1,16 @@
 // 이미지 버튼 슬라이싱
-
 const nextButton = document.querySelector(".scroller-ui-next");
 const prevButton = document.querySelector(".scroller-ui-prev");
 const target = document.querySelector(".scroller-contents-container");
 const prevSvg = document.querySelector(".prev-icon");
+
+const scrapCount = document.querySelector(".scrap-count");
+
+const countUpdate = () => {
+    scrapCountService.scrapCount(trade_id).then((count) => {
+    scrapCount.innerText = count;
+  });
+}
 
 var xdegree = 0;
 nextButton.addEventListener("click", (e) => {
@@ -31,11 +38,12 @@ prevButton.addEventListener("click", (e) => {
   console.log(xdegree);
 });
 
+//스크랩 버튼
 const scrapPopup = document.querySelector(".scrap-popup-wrap");
 const scrapCancel = document.querySelector(".scrap-popup-cancel-wrap");
 let timeoutId;
 let animationTarget;
-//스크랩 버튼
+
 const tradeSrcapBtnFn = (scrap) => {
   const img = scrap.querySelector(".scrap-img");
   const imgSrc = img.getAttribute("src");
@@ -89,12 +97,14 @@ const tradeSrcapBtnBlkFn = (scrap) => {
     }, 3000);
   }
 }
+countUpdate();
 const productTitleIconWrap = document.querySelector('.product-title-icon-wrap')
 productTitleIconWrap.addEventListener('click', async (e) => {
   const scrapBtn = e.target.closest('.scrap-button')
   tradeSrcapBtnFn(scrapBtn)
   const tradeContentId = scrapBtn.closest('.product-title-icon-wrap').classList[1]
   await tradeScrapService.update(tradeContentId)
+  countUpdate();
 })
 
 const scrollerListContentsInner = document.querySelector('.scroller-list-contents-inner')
@@ -104,7 +114,6 @@ scrollerListContentsInner.addEventListener('click', async (e) => {
   const tradeContentId = scrapBtn.closest('.product-suggestion-each-contents').classList[1]
   await tradeScrapService.update(tradeContentId)
 })
-
 
 // 퀵네비 클릭시 색변하도록
 const navs = document.querySelectorAll(".product-detail-nav-item");
@@ -118,7 +127,8 @@ navs.forEach((nav, index) => {
     nav.classList.add("active");
   });
 });
-//신고 모달
+
+// 신고 모달
 const declarationLabels = document.querySelectorAll(".declaration-label");
 const declarationInputs = document.querySelectorAll(".declaration-input");
 declarationLabels.forEach((item) => {
@@ -132,20 +142,24 @@ declarationLabels.forEach((item) => {
     });
   });
 });
-//신고모달 띄우기
+
+// 신고 모달 띄우기
 const declarationModalWrap = document.querySelector(".declaration-modal-wrap");
 const contentDeclarationBtn = document.querySelector(".report-button");
 contentDeclarationBtn.addEventListener("click", () => {
   declarationModalWrap.classList.add("open");
 });
 
-//신고 모달 없애기
-const declarationBtn = document.querySelector(".declaration-btn");
-declarationBtn.addEventListener("click", () => {
+// 신고 모달 없애기
+const declarationBtns = document.querySelectorAll(".declaration-btn");
+declarationBtns.forEach((declarationBtn)=>{
+  declarationBtn.addEventListener("click", () => {
   declarationModalWrap.classList.remove("open");
 });
+})
 
-//이미지 미리보기
+
+// 이미지 미리보기
 const contentImg = document.querySelector(".product-cover-image");
 const prevImgs = document.querySelectorAll(".product-small-image");
 prevImgs.forEach((item) => {
@@ -155,3 +169,5 @@ prevImgs.forEach((item) => {
     contentImg.setAttribute("height", "558.33");
   });
 });
+
+// 신고 모달창 취소하기 버튼 눌렀을때

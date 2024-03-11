@@ -1,14 +1,17 @@
 from django.urls import path
 
 from trade.views import TradeMainView, TradeDetailView, TradeTotalView, TradeUploadView, TradeUpdateView, \
-    TradeDeleteView, TradeTotalApi
+    TradeDeleteView, TradeTotalApi, TradeDetailApi, TradeReportView
 
 app_name = 'trade'
 
 urlpatterns = [
     # 거래 게시물 상세 페이지
     path('detail/', TradeDetailView.as_view(), name='detail'),
+    path('detail/<int:trade_id>', TradeDetailApi.as_view(), name='detail'),
 
+    # 거래 게시물 신고 뷰
+    path('report/', TradeReportView.as_view(), name='report'),
     # 거래 게시물 수정 페이지
     path('update/', TradeUpdateView.as_view(), name='update'),
 

@@ -26,3 +26,17 @@ const tradeScrapService = (() => {
 
   return {update: update}
 })()
+
+const scrapCountService = (() => {
+
+    const scrapCount = async (trade_id, callback) => {
+        const response = await fetch(`/trade/detail/${trade_id}`);
+        const trades = await response.json();
+        if(callback){
+            return callback(trades);
+        }
+        return trades;
+    }
+
+    return {scrapCount: scrapCount}
+})();
