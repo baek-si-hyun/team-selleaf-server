@@ -1,10 +1,13 @@
 from django.db import transaction
+from django.db.models import F, CharField, Value
+from django.db.models.functions import Concat
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from member.models import Member
 from notice.models import Notice
 from qna.models import QnA
 
@@ -62,12 +65,56 @@ class ManagerLogoutView(View):
 class MemberManagementView(View):
     # 회원관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 회원 정보를 가지고 가야됨(context)
-        return render(request, 'manager/member/member/member.html')
+        # 현재 가입한 회원 수(휴면 + 비휴면)
+        member_count = Member.objects.count()
 
-    # 회원 삭제(status 변경) 눌렀을 때, 해당 정보를 업데이트하기 위한 뷰
-    def post(self, request):
-        return render(request, 'manager/member/member/member.html')
+        # 화면에 보내기 전에 dict 데이터로 만들어 줌
+        context = {'member_count': member_count}
+
+        # member.html을 불러오면서 화면에 회원 수 전달
+        return render(request, 'manager/member/member/member.html',context)
+
+
+class MemberInfoAPI(APIView):
+    def get(self, request, page):
+        # 한 페이지에 띄울 회원 수
+        row_count = 10
+
+        # 한 페이지에 표시할 회원 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 회원 정보 표시에 필요한 tbl_member와 tbl_member_address의 컬럼들
+        columns = [
+            'id',
+            'member_name',
+            'member_email',
+            'member_address',
+            'member_type',
+            'member_status'
+        ]
+
+        # 최근에 가입한 순서대로 10명의 회원을 가져옴
+        # 기존에 tbl_member에 없던 주소는 tbl_member_address에서 가져와서 문자열 합치기
+        members = Member.objects\
+                      .annotate(member_address=Concat(F('memberaddress__address_city'),
+                                                      Value(" "),
+                                                      F('memberaddress__address_district'),
+                                                      output_field=CharField()
+                                                      )
+                                )\
+                      .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Member.objects.filter()[limit:limit + 1].exists()
+
+        # 완성된 회원정보 목록
+        member_info = {
+            'members': members,
+            'hasNext': has_next_page,
+        }
+
+        return Response(member_info)
 
 
 # 회원 상세 정보 관리(특정 회원 한 명)
