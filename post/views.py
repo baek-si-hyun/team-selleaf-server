@@ -2,8 +2,8 @@ from django.db import transaction
 from django.shortcuts import render, redirect
 from django.views import View
 
-from member.models import Member
-from post.models import Post, PostCategory, PostTag, PostPlant, PostFile
+from member.models import Member, MemberProfile
+from post.models import Post, PostCategory, PostTag, PostPlant, PostFile, PostReply
 
 
 # Create your views here.
@@ -60,5 +60,29 @@ class PostCreateView(View):
         return redirect(f'/post/detail/?id={post_data.id}')
 
 class PostDetailView(View):
-    def get(self):
-        pass
+    def get(self, request):
+        post = Post.objects.get(id=request.GET['id'])
+        post_tags = PostTag.objects.filter(post_id__gte=1).values('tag_name')
+        reply_count = PostReply.objects.filter(post_id=post.id).values('id').count()
+        member_profile = MemberProfile.objects.filter(id=post.member_id).values('file_url')
+        post_category = PostCategory.objects.filter(post_id=post).values('category_name').first()
+        post_plant = PostPlant.objects.filter(post_id=post.id).values('plant_name')
+
+        post.post_count += 1
+        post.save(update_fields=['post_count'])
+
+        post_files = list(post.postfile_set.all())
+        post_file = list(post.postfile_set.all())[0]
+
+        context = {
+            'post': post,
+            'post_files': post_files,
+            'post_file': post_file,
+            'post_tags': post_tags,
+            'reply_count': reply_count,
+            'member_profile': member_profile,
+            'post_category': post_category,
+            'post_plant': post_plant
+        }
+
+        return render(request, 'community/web/post/post-detail.html', context)

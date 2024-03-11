@@ -5,6 +5,7 @@ from django.db.models import F, Count, Q
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views import View
+from django.views.generic import DetailView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -91,6 +92,10 @@ class KnowhowDetailView(View):
         }
 
         return render(request, 'community/web/knowhow/knowhow-detail.html', context)
+
+class KnowhowDetailUpdateView(DetailView):
+    def get(self):
+        pass
 
 class KnowhowListView(View):
     def get(self, request):
