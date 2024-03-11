@@ -88,28 +88,25 @@ class MainView(View):
     def get(self, request):
         member = request.session['member']
         profile = request.session['member_files'][0]
-
         if member is not None:
             profile = request.session['member_files'][0]
-            context = {
-                'memberProfile': profile['file_url']
-            }
 
         today = timezone.now().date()
         start_of_week = today - timedelta(days=today.weekday())
         end_of_week = start_of_week + timedelta(days=6)
-        knowhows = Knowhow.objects.filter(created_date__range=(start_of_week, end_of_week)).order_by(
+        # created_date__range = (start_of_week, end_of_week)
+        knowhows = Knowhow.objects.filter().order_by(
             'knowhow_count').annotate(member_profile=F('member__memberprofile__file_url'),
                                       member_name=F('member__member_name')).values('member_profile', 'member_name',
-                                                                                   'id', 'knowhowscrap__status', 'knowhow_title')[:10]
+                                                                                   'id', 'knowhowscrap__status',
+                                                                                   'knowhow_title')[:10]
         for knowhow in knowhows:
             knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
             knowhow['knowhow_file_url'] = knowhow_file['file_url']
-
         # 데이터가 너무 적어 하루단위를 일단 일주일 단위로 바꿈
         # start_of_day = datetime(today.year, today.month, today.day, 0, 0, 0)
         # end_of_day = datetime(today.year, today.month, today.day, 23, 59, 59)
-        trades = Trade.enabled_objects.filter(created_date__range=(start_of_week, end_of_week)) \
+        trades = Trade.enabled_objects.filter() \
                      .order_by('-id') \
                      .annotate(trade_category_name=F('trade_category__category_name')) \
                      .values('id', 'trade_title', 'trade_content', 'trade_price', \
@@ -117,18 +114,16 @@ class MainView(View):
         for trade in trades:
             trade_file = TradeFile.objects.filter(trade_id=trade['id']).values('file_url').first()
             trade['trade_file_url'] = trade_file['file_url']
-
-        posts = Post.objects.filter(created_date__range=(start_of_week, end_of_week)).order_by(
+        posts = Post.objects.filter().order_by(
             'post_count').values()[:3]
 
-        lectures = Lecture.enabled_objects.filter(created_date__range=(start_of_week, end_of_week)).order_by(
+        lectures = Lecture.enabled_objects.filter().order_by(
             '-id').values('id', 'lecture_title', 'lecture_content', 'lecturescrap__status')[:4]
         for lecture in lectures:
             lecture_file = LecturePlaceFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
             lecture['lecture_file_url'] = lecture_file['file_url']
-
         # 데이터가 너무 적어 하루단위를 일단 일주일 단위로 바꿈
-        lecture_reviews = LectureReview.objects.filter(created_date__range=(start_of_week, end_of_week)).order_by(
+        lecture_reviews = LectureReview.objects.filter().order_by(
             '-id').annotate(lecture_title=F('lecture__lecture_title'), ).values('id', 'lecture_title', 'review_content',
                                                                                 'lecture_id')[:3]
         for lecture_review in lecture_reviews:
