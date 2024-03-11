@@ -198,7 +198,7 @@
     <div class="product-selling-wrap">
       <div class="product-overview-wrap">
         <nav class="product-category-wrap">
-            <span>{{ trade.member.member_name }}님의 {{ trade.trade_title }} 상품을 보고있어요🤗</span>
+            <span>{{ trade.member__member_name }}님의 {{ trade.trade_title }} 상품을 보고있어요🤗</span>
 {#          <ol class="product-category-container">#}
 {#            <li class="product-category-inner">#}
 {#              <a href="#" class="link">대구분</a>#}
@@ -2140,8 +2140,8 @@
                   <table class="product-info-table">
                     <tbody>
                       <tr>
-                        <th>판매자소개</th>
-                        <td>{{ trade.member.member_name }}</td>
+                        <th>판매자이름</th>
+                        <td>{{ trade.member__member_name }}</td>
                       </tr>
                       <tr>
                         <th>오픈채팅방</th>

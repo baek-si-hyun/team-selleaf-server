@@ -35,8 +35,7 @@ class TradeDetailView(View):
             product_plants_list = list(product_plants)
             product_list = [item['plant_name'] for item in product_plants_list]
             td['plant_name'] = product_list
-        # 스크랩의 status
-        print(trade['tradescrap__status'])
+
         context = {
             'trade': trade,
             'trade_files': list(TradeFile.objects.filter(trade_id=trade_id).values('file_url')),
