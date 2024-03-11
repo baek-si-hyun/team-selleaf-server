@@ -65,7 +65,7 @@ def divide_time_intervals(start_time, end_time, interval):
 
 class LectureMainView(View):
     def get(self, request):
-        # member = request.session['member']
+        member = request.session['member']
         # 현재 로그인한 사용자의 주소 정보 가져오기
         member_address = MemberAddress.objects.get(member_id=request.session['member']['id'])
         address_city = member_address.address_city

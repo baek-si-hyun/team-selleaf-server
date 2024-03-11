@@ -214,3 +214,52 @@ timeLabels.forEach((label) => {
     div.classList.add("select-on");
   });
 });
+
+// 모든 항목이 입력되어야 버튼을 사용할 수 있게 함
+document.addEventListener('DOMContentLoaded', function() {
+    // 필수 입력 필드 모두 선택
+    var requiredFields = document.querySelectorAll('.required');
+
+    // 등록하기 버튼 선택
+    var establishButton = document.querySelector('.establish');
+
+    // 등록하기 버튼 비활성화 함수
+    function disableEstablishButton() {
+        establishButton.disabled = true;
+        establishButton.classList.add('disabled');
+    }
+
+    // 등록하기 버튼 활성화 함수
+    function enableEstablishButton() {
+        establishButton.disabled = false;
+        establishButton.classList.remove('disabled');
+    }
+
+    // 필수 입력 필드가 모두 입력되었는지 확인하는 함수
+    function checkRequiredFields() {
+        for (var i = 0; i < requiredFields.length; i++) {
+            var field = requiredFields[i];
+            if (!field.value.trim()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 각 필드의 입력 상태를 확인하고 버튼 상태 갱신
+    function updateButtonState() {
+        if (checkRequiredFields()) {
+            enableEstablishButton();
+        } else {
+            disableEstablishButton();
+        }
+    }
+
+    // 각 필드에 대한 이벤트 리스너 추가
+    for (var i = 0; i < requiredFields.length; i++) {
+        requiredFields[i].addEventListener('input', updateButtonState);
+    }
+
+    // 페이지 로드시 버튼 상태 초기화
+    updateButtonState();
+});
