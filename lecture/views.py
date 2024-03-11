@@ -1,13 +1,15 @@
 from datetime import datetime, timedelta
 
 from django.db import transaction
-from django.db.models import Count, Avg, Sum
+from django.db.models import Count, Avg, Sum, F
 from django.shortcuts import render, redirect
 from django.views import View
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from lecture.models import LectureCategory, Lecture, LectureProductFile, LecturePlant, Kit, LectureReview, \
-    LectureAddress
-from member.models import Member, MemberAddress
+    LectureAddress, LectureScrap
+from member.models import Member, MemberAddress, MemberProfile
 from selleaf.date import Date
 from selleaf.time import Time
 from teacher.models import Teacher
@@ -63,12 +65,111 @@ def divide_time_intervals(start_time, end_time, interval):
 
 class LectureMainView(View):
     def get(self, request):
+        # member = request.session['member']
+        # 현재 로그인한 사용자의 주소 정보 가져오기
+        member_address = MemberAddress.objects.get(member_id=request.session['member']['id'])
+        address_city = member_address.address_city
+        address_district = member_address.address_district
+        # print(member_address)
+        # print('=' * 10)
+        # 같은 주소에 있는 강의 찾기
+        lectures_with_same_address = Lecture.objects.filter(lectureaddress__address_city=address_city,
+                                                            lectureaddress__address_district=address_district)
+
+        # 필터링된 강의 목록 출력
+        # for lecture in lectures_with_same_address:
+            # print(lecture)
+
+        # 위의 lectures_with_same_address가 현재 로그인한 사용자와 같은 지역에서 하는 강의임
+        lectures_with_same_address = Lecture.objects.filter(
+            lectureaddress__address_city=address_city,
+            lectureaddress__address_district=address_district,
+            lecture_status=False  # 현재 진행 중인 강의만 가져오도록 수정
+        ).annotate(
+            member_name=F('teacher__member__member_name')
+        ).values(
+            'lecture_title',
+            'lecture_price',
+            'member_name',
+            'id',
+            'teacher__member_id',
+            'lecture_status'
+        )
+
+        for lecture in lectures_with_same_address:
+            print(lecture)
+
+        # 필터링된 강의 목록에 대한 추가 정보 가져오기
+        for lecture in lectures_with_same_address:
+            lecture_file = LectureProductFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
+            profile = MemberProfile.objects.filter(member_id=lecture['teacher__member_id']).values('file_url').first()
+            lecture['lecture_file'] = lecture_file['file_url'] if lecture_file else None
+            lecture['profile'] = profile['file_url'] if profile else None
+
+            lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'],
+                                                        member_id=request.session['member']['id']).values('status').first()
+            lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
+
+            product_plants = LecturePlant.objects.filter(lecture_id=lecture['id']).values('plant_name')
+            product_list = [item['plant_name'] for item in product_plants]
+            lecture['plant_name'] = product_list
+
+        context = {
+            'lectures': lectures_with_same_address,
+            'member_address': member_address,
+        }
+
+        return render(request, 'lecture/web/lecture-main.html', context)
+
+
+class LectureTotalView(View):
+    def get(self, request):
+        return render(request, 'lecture/web/lecture-total.html')
+
+
+class LectureTotalApi(APIView):
+    def get(self, request, page):
+        # 현재 로그인한 사용자 정보 가져오기
         member = request.session['member']
+        # 페이지당 행 수와 오프셋 설정
+        row_count = 8
+        offset = (page - 1) * row_count
+        limit = row_count * page
 
-        member_home = MemberAddress.objects.filter(member_id=member['id']).values('address_city', 'address_district').first
-        print(member_home)
+        # 강의 목록 가져오기 (마감되지 않은 강의)
+        lectures = Lecture.objects.filter(lecture_status=False).annotate(
+            member_name=F('teacher__member__member_name')
+        ).values(
+            'lecture_title',
+            'lecture_price',
+            'member_name',
+            'id',
+            'teacher__member_id',  # 강사의 멤버 ID 가져오도록 수정
+            'lecture_status'
+        )
 
-        return render(request, 'lecture/web/lecture-main.html')
+        # 각 강의에 대한 추가 정보 가져오기
+        for lecture in lectures:
+            # 강의 파일 정보 가져오기
+            lecture_file = LectureProductFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
+            lecture['lecture_file'] = lecture_file['file_url'] if lecture_file else None
+
+            # 강사 프로필 정보 가져오기
+            profile = MemberProfile.objects.filter(member_id=lecture['teacher__member_id']).values('file_url').first()
+            lecture['profile'] = profile['file_url'] if profile else None
+
+            # 강의 스크랩 정보 가져오기
+            lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values(
+                'status').first()
+            lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
+
+            # 강의 관련 식물 정보 가져오기
+            product_plants = LecturePlant.objects.filter(lecture_id=lecture['id']).values('plant_name')
+            product_list = [item['plant_name'] for item in product_plants]
+            lecture['plant_name'] = product_list
+
+        # 페이징된 결과 반환
+        return Response(lectures[offset:limit])
 
 
 class LectureDetailOnlineView(View):
@@ -229,11 +330,6 @@ class LectureDetailOfflineView(View):
         }
 
         return render(request, 'lecture/web/lecture-detail-offline.html', context)
-
-
-class LectureTotalView(View):
-    def get(self, request):
-        return render(request, 'lecture/web/lecture-total.html')
 
 
 class LectureUploadOnlineView(View):

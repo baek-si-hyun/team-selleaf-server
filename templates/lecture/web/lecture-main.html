@@ -75,370 +75,58 @@
       <div id="transaction-main-page">
         <section class="popular-wrap wrap-media">
           <header class="popular-header">
-            <h1 class="popular-title">내 주변 인기 강의</h1>
-{#            <a class="popular-detail-link" href="#">더보기</a>#}
+            <h1 class="popular-title">{{ member_address.address_city }} {{ member_address.address_district }} 에서 강의 중인 강의</h1>
           </header>
           <div class="post-wrap row-media">
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
+            {% if lectures %}
+              {% for lecture in lectures %}
+                <div class="post-container" {{ lecture.id }}>
+                  <div class="post-inner">
+                    <article class="post">
+                      <a href="/lecture/detail/offline/?id={{ lecture.id }}" class="post-link"></a>
+                      <div class="post-image-wrap_">
+                        <div class="post-image-container">
+                          <div class="post-image-inner">
+                            <div class="post-image"></div>
+                            <img
+                              src="/upload/{{ lecture.lecture_file }}"
+                              alt
+                              class="image"
+                            />
+                            <button class="scrap-button" type="button">
+                              <img
+                                src="{% if lecture.lecture_scrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                                alt
+                                class="scrap-off"
+                              />
+                            </button>
+                            <div class="image__dark-overlay"></div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">강의명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
+                      <div class="post-contents-wrap">
+                        <div class="post-contents-container">
+                          <h1 class="post-contents-header">
+                            <span class="post-contents-user">{{ lecture.member_name }}</span>
+                            <span class="post-contents-banner">{{ lecture.lecture_title }}</span>
+                          </h1>
+                          <span class="post-price">
+                            <span class="post-price-letter">{{ lecture.lecture_price }}원</span>
+                          </span>
+                          <span class="post-tag">
+                             {% for plant_name in lecture.plant_name %}
+                                <span class="post-tag-icon">#{{ plant_name }}</span>
+                             {% endfor %}
+                          </span>
+                        </div>
                       </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">태그1</span>
-                      </span>
-                    </div>
+                    </article>
                   </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">강의명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">태그1</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">강의명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">태그1</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">강의명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">태그1</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">강의명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">태그1</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">강의명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">태그1</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">강의명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">태그2</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="post-container">
-              <div class="post-inner">
-                <article class="post">
-                  <a href="#" class="post-link"></a>
-                  <div class="post-image-wrap_">
-                    <div class="post-image-container">
-                      <div class="post-image-inner">
-                        <div class="post-image"></div>
-                        <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
-                          alt
-                          class="image"
-                        />
-                        <button class="scrap-button" type="button">
-                          <img
-                            src="{% static 'public/web/images/common/scrap-off.png' %}"
-                            alt
-                            class="scrap-off"
-                          />
-                        </button>
-                        <div class="image__dark-overlay"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="post-contents-wrap">
-                    <div class="post-contents-container">
-                      <h1 class="post-contents-header">
-                        <span class="post-contents-user">작성자입력</span>
-                        <span class="post-contents-banner">강의명</span>
-                      </h1>
-                      <span class="post-price">
-                        <span class="post-price-letter">35,000</span>
-                      </span>
-                      <div class="post-content-pc-reply">
-                        <p class="post-content-reply">리뷰 갯수</p>
-                        <p class="post-content-scrap">스크랩 갯수</p>
-                      </div>
-                      <span class="post-tag">
-                        <span class="post-tag-icon">태그1</span>
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
+                </div>
+              {% endfor %}
+            {% else %}
+                <div class="no-result-message-box"><span>검색 결과가 없습니다.</span></div>
+            {% endif %}
           </div>
         </section>
         <section class="update-post-wrap wrap-media">

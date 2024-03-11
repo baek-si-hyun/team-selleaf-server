@@ -293,3 +293,78 @@ plantSelections.forEach((plantSelection) => {
     plantSelection.innerHTML = `<img>`;
   });
 });
+
+// 게시물 목록 보기
+let page = 1;
+
+const lectureSection = document.querySelector(".post-wrap");
+
+const showList = (lectures) => {
+  let text = ``;
+
+  // 강의 목록을 순회하면서 HTML 템플릿 생성
+  lectures.forEach((lecture) => {
+    let tagsHtml = '';
+    lecture.plant_name.forEach((pn) => {
+      tagsHtml += `<span class="post-tag-icon">#${pn}</span>`;
+    });
+    text += `
+            <div class="post-container ${lecture.id}">
+                <div class="post-inner">
+                    <article class="post">
+                        <a href="/lecture/detail/?id=${lecture.id}" class="post-link"></a>
+                        <div class="post-image-wrap_">
+                            <div class="post-image-container">
+                                <div class="post-image-inner">
+                                    <div class="post-image"></div>
+                                    <img src="/upload/${lecture.lecture_file}" alt class="image"/>
+                                    <button class="scrap-button" type="button">
+                                        <img src="${lecture.lecture_scrap ? '/static/public/web/images/common/scrap-on.png' : '/static/public/web/images/common/scrap-off.png'}" alt class="scrap-img"/>
+                                    </button>
+                                    <div class="image__dark-overlay"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-contents-wrap">
+                            <div class="post-contents-container">
+                                <h1 class="post-contents-header">
+                                    <span class="post-contents-user">${lecture.member_name}</span>
+                                    <span class="post-contents-banner">${lecture.lecture_title}</span>
+                                </h1>
+                                <span class="post-price">
+                                    <span class="post-price-letter">${lecture.lecture_price}원</span>
+                                </span>
+                                <span class="post-tag">${tagsHtml}</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        `;
+
+    });
+
+    return text;
+}
+
+lectureService.getList(page++, showList).then((text) => {
+            lectureSection.innerHTML += text;
+});
+
+// 스크롤 할때마다 실행
+window.addEventListener("scroll", () => {
+    // 맨위
+    const scrollTop = document.documentElement.scrollTop;
+    // 페이지 높이
+    const windowHeight = window.innerHeight;
+    // 암튼 높이
+    const totalHeight = document.documentElement.scrollHeight;
+    // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
+
+    if (scrollTop + windowHeight >= totalHeight) {
+        lectureService.getList(page++, showList).then((text) => {
+            lectureSection.innerHTML += text;
+
+        });
+    }
+});
