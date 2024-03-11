@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const deleteButtons = document.querySelectorAll(".delete-button");
   const modalWrap = document.querySelector(".delete-modal-wrap");
 
-  console.log(deleteButtons);
-
   deleteButtons.forEach(function (deleteButton) {
     deleteButton.addEventListener("click", (e) => {
       modalWrap.style.display = "flex";
