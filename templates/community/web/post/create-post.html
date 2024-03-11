@@ -1,13 +1,15 @@
-{% extends 'community/web/knowhow/../base.html' %}
+{% extends 'community/web/create-base.html' %}
 {% load static %}
 {% block static %}
     <link rel="stylesheet" href="{% static 'post/css/web/create-post.css' %}">
 {% endblock %}
 {% block title %}노하우{% endblock %}
 {% block content %}
-  <body>
     <div class="create-post-wrap">
       <div class="create-post-container">
+          <form action="{% url 'post:create' %}" method="post" name="post-create-form" enctype="multipart/form-data">
+                            {% csrf_token %}
+
         <div
           class="sticky-container"
           style="
@@ -22,7 +24,7 @@
               <div class="nav-wrap">
                 <a href="#" class="nav-logo">
                   <img
-                    src="../../../staticfiles/images/logo-lettering-blk.png"
+                    src= "{%  static 'public/web/images/common/logo-lettering-blk.png' %}"
                     width="72px"
                     height="25px"
                     alt=""
@@ -37,7 +39,7 @@
                         </button>
                       </div>
                     </div>
-                    <button type="button" class="publish-btn">
+                    <button type="submit" class="publish-btn">
                       <span class="publish-btn-text">발행신청</span>
                     </button>
                   </div>
@@ -212,13 +214,14 @@
                             <div class="required-info-item-inner">
                               <span class="required-info-item-box">
                                 <div class="input-group select-input">
-                                  <select name="plant" class="form-control">
+                                  <select name="post-category" class="form-control">
                                     <option value="" disabled selected
                                       >선택해주세요.</option
                                     >
-                                    <option value="0">식물 키우기</option>
-                                    <option value="1">관련 제품</option>
-                                    <option value="2">스타일링</option>
+                                    <option value="식물 키우기">식물 키우기</option>
+                                    <option value="관련 제품">관련 제품</option>
+                                    <option value="테라리움">테라리움</option>
+                                    <option value="스타일링">스타일링</option>
                                   </select>
                                   <span class="select-input__icon">
                                     <svg
@@ -248,12 +251,35 @@
                         <div class="required-info-item-wrap">
                           <div class="required-info-item">
                             <div class="info-dropdown-inner">
-                              <div class="plant-selection">관엽식물</div>
-                              <div class="plant-selection">침엽식물</div>
-                              <div class="plant-selection">희귀식물</div>
-                              <div class="plant-selection">다육/선인장</div>
-                              <div class="plant-selection">테라리움</div>
-                              <div class="plant-selection">기타</div>
+                              <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="관엽식물" style="display: none">
+                                    <div>관엽식물</div>
+                                </label>
+                                
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="침엽식물" style="display: none">
+                                    <div>침엽식물</div>
+                                </label>
+                                
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="희귀식물" style="display: none">
+                                    <div>희귀식물</div>
+                                </label>
+                                
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="다육" style="display: none">
+                                    <div>다육</div>
+                                </label>
+                                
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="선인장" style="display: none">
+                                    <div>선인장</div>
+                                </label>
+                                
+                                <label class="plant-selection">
+                                    <input type="checkbox" name="plant-type" value="기타" style="display: none">
+                                    <div>기타</div>
+                                </label>
                             </div>
                           </div>
                         </div>
@@ -270,7 +296,7 @@
                                   <input
                                     class="tag-input"
                                     placeholder="# 태그"
-                                    name="tags"
+                                    name="post-tags"
                                     maxlength="10"
                                     value=""
                                   />
@@ -331,6 +357,7 @@
                 placeholder="제목을 입력해주세요."
                 maxlength="80"
                 class="title-input"
+                name="post-title"
                 value=""
               />
               <div class="title-count"><span class="count">0</span> / 80</div>
@@ -341,49 +368,23 @@
           <div class="content-text-input-container">
             <div class="content-text-input-inner">
               <div class="content-text-input-box">
-                <div class="mark-icon-wrap">
-                  <div class="mark-icon-container">
-                    <div class="mark-icon-box">
-                      <button type="button" title="도구" class="mark-icon-btn">
-                        <svg
-                          class="svg-icon"
-                          style="
-                            width: 27px;
-                            height: 27px;
-                            vertical-align: middle;
-                            fill: currentColor;
-                            overflow: hidden;
-                          "
-                          viewBox="0 0 1024 1024"
-                          version="1.1"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M682.666667 533.333333a21.333333 21.333333 0 0 1-15.146667-6.186666l-298.666667-298.666667a21.333333 21.333333 0 0 1 30.293334-30.293333l298.666666 298.666666a21.333333 21.333333 0 0 1 0 30.293334A21.333333 21.333333 0 0 1 682.666667 533.333333z"
-                            fill="#333333"
-                          />
-                          <path
-                            d="M384 832a21.333333 21.333333 0 0 1-15.146667-6.186667 21.333333 21.333333 0 0 1 0-30.293333l298.666667-298.666667a21.333333 21.333333 0 0 1 30.293333 30.293334l-298.666666 298.666666A21.333333 21.333333 0 0 1 384 832z"
-                            fill="#333333"
-                          />
-                        </svg>
-                      </button>
-                    </div>
+                  <textarea name="post-content" cols="87" rows="5" placeholder="내용을 입력해주세요." maxlength="3000" minlength="1"
+                            class="content-text-area"></textarea>
+                  <div class="knowhow-content-count">
+                      <span class="content-count">0 </span> /
+                      3000
                   </div>
-                </div>
-                <p
-                  class="content-text-area"
-                  contenteditable="true"
-                  data-ph="내용을 입력해주세요."
-                ></p>
+
               </div>
             </div>
           </div>
         </div>
+       </form>
       </div>
     </div>
-  </body>
 {% endblock %}
 {% block js %}
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
     <script src="{% static 'post/js/web/create-post.js' %}"></script>
 {% endblock %}
