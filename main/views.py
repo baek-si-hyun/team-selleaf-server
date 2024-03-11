@@ -103,7 +103,6 @@ class MainView(View):
         for knowhow in knowhows:
             knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
             knowhow['knowhow_file_url'] = knowhow_file['file_url']
-        print(knowhows)
         # 데이터가 너무 적어 하루단위를 일단 일주일 단위로 바꿈
         # start_of_day = datetime(today.year, today.month, today.day, 0, 0, 0)
         # end_of_day = datetime(today.year, today.month, today.day, 23, 59, 59)
@@ -115,7 +114,6 @@ class MainView(View):
         for trade in trades:
             trade_file = TradeFile.objects.filter(trade_id=trade['id']).values('file_url').first()
             trade['trade_file_url'] = trade_file['file_url']
-        print(trades)
         posts = Post.objects.filter().order_by(
             'post_count').values()[:3]
 
@@ -124,12 +122,10 @@ class MainView(View):
         for lecture in lectures:
             lecture_file = LecturePlaceFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
             lecture['lecture_file_url'] = lecture_file['file_url']
-        print(lectures)
         # 데이터가 너무 적어 하루단위를 일단 일주일 단위로 바꿈
         lecture_reviews = LectureReview.objects.filter().order_by(
             '-id').annotate(lecture_title=F('lecture__lecture_title'), ).values('id', 'lecture_title', 'review_content',
                                                                                 'lecture_id')[:3]
-        print(lecture_reviews)
         for lecture_review in lecture_reviews:
             lecture_review_file = Lecture.objects.filter(id=lecture_review['lecture_id']).values(
                 'lectureplacefile__file_url').first()
