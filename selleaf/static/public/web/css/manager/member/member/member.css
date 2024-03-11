@@ -582,6 +582,10 @@ a.member-info-wrap{
     width: 880px;
 }
 
+a.member-info-wrap:hover {
+    opacity: 0.7;
+}
+
 div.member-info{
     overflow: hidden;
     display: -webkit-box;
@@ -690,6 +694,22 @@ button.delete-button{
     height: 40px;
     display: flex;
     border-color: #e6e6e7;
+    color: #fff;
+    fill: #fff;
+    background-color: #c06888;
+}
+
+button.delete-button:not(:disabled):hover {
+    opacity: 0.7;
+}
+
+button.delete-button:not(:disabled) path {
+    fill: #fff;
+}
+
+button.delete-button:disabled {
+    cursor: default;
+    background-color: #f5f5f5;
 }
 
 svg.edit-button{
@@ -860,6 +880,11 @@ button.modal-confirm{
     color: #fff;
     fill: #fff;
     background-color: #c06888;
+}
+
+button.modal-cancel:hover,
+button.modal-confirm:hover {
+    opacity: 0.7;
 }
 
 div.delete-modal-bgcolor{
