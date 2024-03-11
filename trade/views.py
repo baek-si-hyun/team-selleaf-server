@@ -18,14 +18,16 @@ class TradeDetailView(View):
         # upload 페이지에서 사용자가 올린 거래 게시물이 detail 화면에서 보여줘야 하기 때문에 trade 가져옴
         # 방금 올린 거래 게시물
         trade = Trade.objects.filter(id=trade_id) \
-            .values('id', 'trade_title', 'trade_price', 'trade_content', 'member__member_name', 'kakao_talk_url').first()
+            .values('id', 'trade_title', 'trade_price', 'trade_content', 'member__member_name', 'kakao_talk_url', 'member_id', 'trade_category__category_name').first()
+
         trade_scrap = TradeScrap.objects.filter(trade_id=trade['id'], member_id=member['id']).values('status').first()
         trade['trade_scrap'] = trade_scrap['status'] if trade_scrap and 'status' in trade_scrap else False
+
         # 방금 올린 거래 게시물을 작성한 사용자 찾기
         member_search_trade = Trade.objects.filter(id=trade_id).values('member_id').first()
-        # 방금 거래 게시물을 올린 사용자가 작성한 다른 거래 게시물
+        # 방금 거래 게시물을 올린 사용자가 작성한 다른 거래 게시물들
         trades = Trade.objects.filter(member=member_search_trade['member_id'], status=True)\
-            .values('id', 'trade_title','trade_price','trade_content','member__member_name')
+            .values('id', 'trade_title', 'trade_price', 'trade_content', 'member__member_name', 'member_id')
 
         for td in trades:
             trade_scrap = TradeScrap.objects.filter(trade_id=td['id'], member_id=member['id']).values('status').first()
@@ -37,16 +39,31 @@ class TradeDetailView(View):
             product_list = [item['plant_name'] for item in product_plants_list]
             td['plant_name'] = product_list
 
-        # 스크랩의 status
+        # 거래 게시물의 스크랩을 누른 사람 구하기
+        # 스크랩이 눌린것 중 해당 게시글의 개수를 구해주면 됨
+        trade_count = TradeScrap.objects.filter(status=True, trade_id=trade['id']).count()
+
         context = {
             'trade': trade,
             'trade_files': list(TradeFile.objects.filter(trade_id=trade_id).values('file_url')),
             'trade_file': list(TradeFile.objects.filter(trade_id=trade_id).values('file_url'))[0],
-            'trades': trades
+            'trades': trades,
+            'trade_count': trade_count,
         }
 
         return render(request, "trade/web/trade-detail.html", context)
+class TradeReportView(View):
+    def post(self, request):
+        pass
 
+class TradeDetailApi(APIView):
+    def get(self, request, trade_id):
+        member = request.session['member']
+
+        # 거래 게시물의 스크랩을 누른 사람 구하기
+        # 스크랩이 눌린것 중 해당 게시글의 개수를 구해주면 됨
+        trade_count = TradeScrap.objects.filter(status=True, trade_id=trade_id).count()
+        return Response(trade_count)
 
 class TradeUpdateView(View):
     def get(self, request):
@@ -126,7 +143,7 @@ class TradeMainView(View):
 
         trades = Trade.objects.filter(status=True, member_id__in=local_person_list).annotate(
             member_name=F('member__member_name')) \
-            .values('trade_title', 'trade_price', 'member_name', 'id', 'member_id', 'tradescrap__status')
+            .values('trade_title', 'trade_price', 'member_name', 'id', 'member_id')
 
         for trade in trades:
             trade_file = TradeFile.objects.filter(trade_id=trade['id']).values('file_url').first()
