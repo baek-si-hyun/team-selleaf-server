@@ -16,7 +16,6 @@ class ReportCategory(Period):
 
 # 신고 내역 테이블
 class Report(Period):
-    report_name = models.CharField(max_length=255, null=False, blank=False)
     # 신고 사유와 신고자 정보를 FK로 받아옴
     report_category = models.ForeignKey(ReportCategory, null=False, on_delete=models.PROTECT)
     member = models.ForeignKey(Member, null=False, on_delete=models.PROTECT)
