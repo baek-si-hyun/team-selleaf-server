@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from main.views import MainView, KnowhowScrapAPI, TradeScrapAPI, LectureScrapAPI, PostScrapAPI, BestLectureCategoryAPI, \
-    SearchView
+    SearchView, SearchAPI, SearchHistoryAPI
 from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView, WriteNoticeView, \
     NoticeManagementView, UpdateNoticeView, DeleteNoticeView, WriteQnAView, QnAManagementView, \
     UpdateQnAView, DeleteQnAView
@@ -12,6 +12,8 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
 urlpatterns = [
     path('', MainView.as_view()),
     path('search/', SearchView.as_view(), name='search'),
+    path('search/api/', SearchAPI.as_view(), name='search-api'),
+    path('search-history/api/', SearchHistoryAPI.as_view(), name='search-history-api'),
     path('knowhow-scrap/api/', KnowhowScrapAPI.as_view(), name='knowhow-scrap-api'),
     path('trade-scrap/api/', TradeScrapAPI.as_view(), name='trade-scrap-api'),
     path('lecture-scrap/api/', LectureScrapAPI.as_view(), name='lecture-scrap-api'),
