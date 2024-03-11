@@ -54,17 +54,6 @@ const showList = (posts) => {
   let text = ``
   console.log('리스트 보여주기')
   posts.forEach((post) => {
-    if (post.length === 0) {
-      text = `
-        <a class="photo-upload-wrap no-posts" href="#">
-          <img alt=""
-            class="add-icon"
-            src="../../../images/mypage/add-icon.svg"
-          />
-          첫 번째 게시글을 올려보세요
-        </a>
-      `;
-    } else {
       const postLength = post.post_plant.length;
       const postPlantTags = post.post_plant.map(plant => `<span class="post-tag-icon">${plant}</span>`).join('');
 
@@ -106,7 +95,7 @@ const showList = (posts) => {
           </div>
         </div>
       `;
-    }
+    
   });
 
   return text;

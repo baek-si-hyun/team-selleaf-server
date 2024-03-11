@@ -159,7 +159,7 @@
                                 <div class="my-profile-wrap">
                                   <div class="profile-image-wrap">
                                     {% if memberProfile %}
-                                      {% if 'https' in memberProfile %}
+                                      {% if 'http' in memberProfile %}
                                          <img src="{{ memberProfile }}" alt="" class="current-profile-image">
                                       {% else %}
                                          <img src="/upload/{{ memberProfile }}" alt="" class="current-profile-image">
@@ -252,8 +252,20 @@
                             </h1>
                             <div class="title-empty-area"></div>
                           </div>
-                          <div class="post-wrap">
-                          </div>
+                          {% if post.count == 0 %}
+                              <a class="photo-upload-wrap no-posts" href="#">
+                                <img alt=""
+                                    class="add-icon"
+                                    src="../../../images/mypage/add-icon.svg"
+                                />
+                                첫 번째 게시글을 올려보세요
+                              </a>
+                              <div class="post-wrap">
+                              </div>
+                          {% else %}  
+                              <div class="post-wrap">
+                              </div>
+                          {% endif %}
                         </div>
                         <!-- 리뷰 -->
                         <div class="content-section-wrap">
@@ -265,10 +277,22 @@
                             <div class="title-empty-area"></div>
                           </div>
                           <!-- 리뷰 없을 때 표시 -->
-                          
+                          {% if post.count == 0 %}
+                              <a class="photo-upload-wrap no-reviews" href="#">
+                                  <img alt=""
+                                    class="add-icon"
+                                    src="../../../images/mypage/add-icon.svg"
+                                  />
+                                  첫 번째 리뷰를 올려보세요
+                              </a>
+                              <div class="here">
+                              </div>
+                          {% else %}  
+                              <div class="here">
+                              </div>
+                          {% endif %}  
                           <!-- 리뷰 있을 때 표시 -->
-                          <div class="here">
-                          </div>
+                          
                         </div>
                       </div>
                     </div>

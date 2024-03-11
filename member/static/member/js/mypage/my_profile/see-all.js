@@ -139,20 +139,8 @@
 
 const showallList = (posts) => {
   let text = ``;
-  console.log('모든 리스트 보여주기3');
-
+  let postlist = [...posts].values()
   posts.forEach((post) => {
-    if (post.length === 0) {
-      text = `
-        <a class="photo-upload-wrap no-posts" href="#">
-          <img alt=""
-            class="add-icon"
-            src="../../../images/mypage/add-icon.svg"
-          />
-          첫 번째 게시글을 올려보세요
-        </a>
-      `;
-    } else {
       const postLength = post.post_plant.length;
       const postPlantTags = post.post_plant.map(plant => `<span class="post-tag-icon">${plant}</span>`).join('');
 
@@ -194,7 +182,7 @@ const showallList = (posts) => {
           </div>
         </div>
       `;
-    }
+
   });
 
   return text;
@@ -213,18 +201,6 @@ const showReplyList = (replies) => {
   replies.forEach((reply) => {
     let postPlantTags = ""; // postPlantTags 변수를 미리 정의하고 초기화
 
-    if (reply.length === 0) {
-      text += `
-        <a class="photo-upload-wrap no-reviews" href="#">
-          <img alt=""
-            class="add-icon"
-            src="../../../images/mypage/add-icon.svg"
-          />
-          첫 번째 리뷰를 올려보세요
-        </a>
-      `;
-    } else {
-      const postLength = reply.post_plant.length;
       postPlantTags = reply.post_plant.map(plant => `
                   <li class="item-tags">
                     <div>
@@ -286,7 +262,7 @@ const showReplyList = (replies) => {
           </div>
         </div>
       `;
-    }
+    
   });
 
   return text;

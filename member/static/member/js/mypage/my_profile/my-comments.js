@@ -128,22 +128,6 @@ const showReplyList = (replies) => {
 
   replies.forEach((reply) => {
     let postPlantTags = ""; // postPlantTags 변수를 미리 정의하고 초기화
-
-    if (reply.length === 0) {
-      text += `
-        <div class="no-content-wrap">
-          <div
-            class="no-contents"
-            style="
-              padding-top: 0;
-              padding-bottom: 0;
-              transform: translateY(0px);
-            "
-          ></div>
-          <p class="user-feed-empty">올린 댓글이 없어요.</p>
-        </div>
-      `;
-    } else {
       const postLength = reply.post_plant.length;
       postPlantTags = reply.post_plant.map(plant => `
                   <li class="item-tags">
@@ -192,7 +176,6 @@ const showReplyList = (replies) => {
           </div>
         </div>
       `;
-    }
   });
 
   return text;

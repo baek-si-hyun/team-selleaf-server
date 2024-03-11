@@ -1,7 +1,8 @@
 from django.urls import path
 
 from member.views import MemberJoinView, MemberLoginView, MemberLogoutView, MypageUpdateView, MypagePostListAPI, \
-    MypagePostView, MypageShowView, MypageShowListAPI, MypageShowReplyAPI, MypageReplyView
+    MypagePostView, MypageShowView, MypageShowListAPI, MypageShowReplyAPI, MypageReplyView, MypageShowReviewAPI, \
+    MypageReviewView
 
 app_name = 'member'
 
@@ -16,4 +17,6 @@ urlpatterns = [
     path('mypage/show/<int:member_id>/', MypageShowListAPI.as_view()),
     path('mypage/show/replies/<int:member_id>/', MypageShowReplyAPI.as_view()),
     path('mypage/myreplies/', MypageReplyView.as_view()),
+    path('mypage/show/reviews/<int:member_id>/', MypageShowReviewAPI.as_view()),
+    path('mypage/myreviews/', MypageReviewView.as_view()),
 ]

@@ -194,7 +194,7 @@ a * {
 .sidebar-wrap {
   box-sizing: border-box;
   position: relative;
-  padding-top: 30px;
+  padding-top: 50px;
   padding-left: 10px;
   padding-right: 10px;
   width: 25%;
@@ -552,7 +552,7 @@ a * {
   overflow: hidden;
   margin: 5px -16px 0 30px;
   width: 110px;
-  height: 110px;
+
 }
 
 .comments-item-image {
