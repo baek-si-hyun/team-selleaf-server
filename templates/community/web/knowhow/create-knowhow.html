@@ -209,7 +209,7 @@
                             <div class="required-info-item-inner">
                               <span class="required-info-item-box">
                                 <div class="input-group select-input">
-                                  <select name="knowhow-categoty" class="form-control">
+                                  <select name="knowhow-categoty" class="form-control" onchange="PlantValue()">
                                     <option value="" disabled selected
                                       >선택해주세요.</option
                                     >
@@ -217,6 +217,13 @@
                                     <option value="관련 제품">관련 제품</option>
                                     <option value="테라리움">테라리움</option>
                                     <option value="스타일링">스타일링</option>
+{#                                    <option#}
+{#                                      >선택해주세요.</option#}
+{#                                    >#}
+{#                                    <option value="1">식물 키우기</option>#}
+{#                                    <option value="2">관련 제품</option>#}
+{#                                    <option value="3">테라리움</option>#}
+{#                                    <option value="4">스타일링</option>#}
                                   </select>
                                   <span class="select-input__icon">
                                     <svg
@@ -484,12 +491,13 @@
               <input
                 type="text"
                 placeholder="제목을 입력해주세요."
-                maxlength="80"
+                minlength="1"
+                maxlength="50"
                 class="title-input"
                 value=""
                 name="knowhow-title"
               />
-              <div class="title-count"><span class="count">0</span> / 80</div>
+              <div class="title-count"><span class="count">0</span> / 50</div>
             </div>
           </div>
         </div>
@@ -497,37 +505,13 @@
           <div class="content-text-input-container">
             <div class="content-text-input-inner">
               <div class="content-text-input-box">
-                <div class="mark-icon-wrap">
-                  <div class="mark-icon-container">
-                    <div class="mark-icon-box">
-                      <button type="button" title="도구" class="mark-icon-btn">
-                        <svg
-                          class="svg-icon"
-                          style="
-                            width: 27px;
-                            height: 27px;
-                            vertical-align: middle;
-                            fill: currentColor;
-                            overflow: hidden;
-                          "
-                          viewBox="0 0 1024 1024"
-                          version="1.1"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M682.666667 533.333333a21.333333 21.333333 0 0 1-15.146667-6.186666l-298.666667-298.666667a21.333333 21.333333 0 0 1 30.293334-30.293333l298.666666 298.666666a21.333333 21.333333 0 0 1 0 30.293334A21.333333 21.333333 0 0 1 682.666667 533.333333z"
-                            fill="#333333"
-                          />
-                          <path
-                            d="M384 832a21.333333 21.333333 0 0 1-15.146667-6.186667 21.333333 21.333333 0 0 1 0-30.293333l298.666667-298.666667a21.333333 21.333333 0 0 1 30.293333 30.293334l-298.666666 298.666666A21.333333 21.333333 0 0 1 384 832z"
-                            fill="#333333"
-                          />
-                        </svg>
-                      </button>
-                    </div>
+                  <textarea name="knowhow-content" cols="87" rows="5" placeholder="내용을 입력해주세요." maxlength="3000" minlength="1"
+                            class="content-text-area"></textarea>
+                  <div class="knowhow-content-count">
+                      <span class="content-count">0 </span> /
+                      3000
                   </div>
-                </div>
-                  <textarea name="knowhow-content" cols="20" rows="10" class="content-text-area">내용을 입력해주세요.</textarea>
+
               </div>
             </div>
           </div>
@@ -537,5 +521,7 @@
     </div>
 {% endblock %}
 {% block js %}
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
     <script src="{% static 'knowhow/js/web/create-knowhow.js' %}"></script>
 {% endblock %}

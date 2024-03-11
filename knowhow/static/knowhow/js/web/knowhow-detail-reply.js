@@ -2,26 +2,46 @@ let page = 1;
 
 const writeButton = document.querySelector(".comment-submit-btn");
 const replySection = document.querySelector(".reply-section");
+const replyCountMain = document.querySelector(".comment-count");
 const moreButton = document.getElementById("more-replies");
-const replyCount = document.getElementById("reply-count")
+const replyCountSpan = document.getElementById("reply-count")
+const knowhowUpDate = document.querySelector(".week-data")
+const likeCountdd = document.querySelector(".like-data")
+const scrapCountdd = document.querySelector(".scrap-data")
+const likeCountSpan = document.getElementById("like-count")
+const scrapCountSpan = document.getElementById("scrap-count")
 
 replyService.getList(knowhow_id, page + 1).then((replies) => {
-    if (replies.length !== 0){
+    if (replies['replies'].length !== 0){
         moreButton.style.display = "flex";
     }
 });
 
-// replyService.count(knowhow_id).then((counts) => {
-//     console.log(counts);
-// })
-
-const showCount = (counts) => {
-    let replyText = `${counts.counts}`
+const countReply = (replies) => {
+    let replyCount = `${replies['reply_count']}`
+    return replyCount
 }
+
+const countLike = (replies) => {
+    let likeCount = `${replies['like_count']}`
+    return likeCount
+}
+
+const countScrap = (replies) => {
+    let scrapCount = `${replies['scrap_count']}`
+    return scrapCount
+}
+
+const getKnowhowDate = (replies) => {
+    let upDate = `${timeForToday(replies['knowhow_date'][0].created_date)}`
+    return upDate
+}
+
+
 
 const showList = (replies) => {
     let text = ``;
-    replies.forEach((reply) => {
+    replies['replies'].forEach((reply) => {
         // console.log(reply.created_date)
         text += `
             <div class="comment-item-box">
@@ -44,6 +64,15 @@ const showList = (replies) => {
                           <div class="comment">
                             ${reply.knowhow_reply_content}
                           </div>
+                          
+                          <section class="reply-update-wrap" id="update-form${reply.id}">
+                            <textarea id="" cols="30" rows="1" placeholder="내 댓글">${reply.knowhow_reply_content}</textarea>
+                            <div class="button-wrap">
+                                <button class="update-done ${reply.id}">작성완료</button>
+                                <button class="cancel-btn ${reply.id}">취소</button>
+                            </div>
+                          </section>
+                        
                           <div class="comment-data">
                             <div class="time-before">${timeForToday(reply.created_date)}</div>
                             <div class="comment-like-btn-box">
@@ -54,34 +83,43 @@ const showList = (replies) => {
                                   class="comment-like-icon"
                                   alt=""
                                 />
-                                <span class="comment-like-text">좋아요</span>
+                                <span class="comment-like-text ">좋아요</span>
                               </button>
                             </div>
-                            <div class="comment-declaration-btn-box">
-                              <div class="comment-split">・</div>
-                              <button class="comment-declaration-btn">
-                                신고
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-        `;
-        // if(reply.member_id === Number(memberId)) {
-        //     text += `
-        //                     <span class="date">·</span>
-        //                     <span class="update ${reply.id}">수정</span>
-        //                     <span class="date">·</span>
-        //                     <span class="delete ${reply.id}">삭제</span>
-        //     `
-        // }
-        // text += `
-        //                 </h6>
-        //             </section>
-        //         </div>
-        //     </li>
-        // `;
+                            `;
+                            
+                            if(reply.member_id === Number(member_Id)) {
+                                text += `
+                                    <div class="comment-declaration-btn-box">
+                                      <div class="comment-split">・</div>
+                                      <button type="button" class="update-btn ${reply.id}">
+                                        수정
+                                      </button>
+                                    </div>
+                                    <div class="comment-declaration-btn-box">
+                                      <div class="comment-split">・</div>
+                                      <button type="button" class="remove-btn ${reply.id}">
+                                        삭제
+                                      </button>
+                                    </div>
+                                `}else {
+                                text += `
+                                    <div class="comment-declaration-btn-box">
+                                                  <div class="comment-split">・</div>
+                                                  <button type="button" class="comment-declaration-btn">
+                                                    신고
+                                                  </button>
+                                                </div>
+                                `
+                            }
+
+                            text += `
+                                                
+                                               </div>
+                                              </div>
+                                            </div>
+                                           </div>
+                            `;
     });
 
     return text;
@@ -93,7 +131,7 @@ moreButton.addEventListener("click", (e) => {
     });
 
     replyService.getList(knowhow_id, page + 1).then((replies) => {
-    if (replies.length === 0){
+    if (replies['replies'].length === 0){
         moreButton.style.display = "none";
     }
 });
@@ -101,8 +139,8 @@ moreButton.addEventListener("click", (e) => {
 });
 
 writeButton.addEventListener("click", async (e) => {
-    const replyNum = document.getElementById("reply-count");
     const replyContent = document.getElementById("reply-content");
+    console.log(replyContent.value)
     await replyService.write({
         reply_content: replyContent.value,
         knowhow_id: knowhow_id
@@ -116,8 +154,13 @@ writeButton.addEventListener("click", async (e) => {
     const replies = await replyService.getList(knowhow_id, page + 1);
 
 
+    const replyCountNum = await replyService.getList(knowhow_id, page, countReply);
+    replyCountSpan.innerText = replyCountNum
+    replyCountMain.innerText = replyCountNum
 
-    if (replies.length !== 0){
+
+
+    if (replies['replies'].length !== 0){
         moreButton.style.display = "flex";
     }
 
@@ -131,35 +174,61 @@ writeButton.addEventListener("click", async (e) => {
 replyService.getList(knowhow_id, page, showList).then((text) => {
     replySection.innerHTML = text;
 });
+replyService.getList(knowhow_id, page, getKnowhowDate).then((knowhowDate) => {
+    knowhowUpDate.innerText = knowhowDate;
+});
+
+replyService.getList(knowhow_id, page, countReply).then((replyCount) => {
+    replyCountSpan.innerHTML = replyCount;
+    replyCountMain.innerText = replyCount
+});
+replyService.getList(knowhow_id, page, countLike).then((likeCount) => {
+    likeCountdd.innerText = likeCount;
+    likeCountSpan.innerText = likeCount;
+});
+replyService.getList(knowhow_id, page, countScrap).then((scrapCount) => {
+    scrapCountdd.innerText = scrapCount;
+    scrapCountSpan.innerText = scrapCount;
+});
+
+
 
 // ul 태그의 자식 태그까지 이벤트가 위임된다.
 replySection.addEventListener("click", async (e) => {
-    if(e.target.classList[0] === 'update'){
+    if(e.target.classList[0] === 'update-btn'){
         const replyId = e.target.classList[1]
         const updateForm = document.getElementById(`update-form${replyId}`)
+        const commentData = e.target.closest(".comment-data")
+        // const commentData = document.querySelector(".comment-data")
 
         updateForm.style.display = "block";
         updateForm.previousElementSibling.style.display = "none";
 
-    }else if(e.target.classList[0] === 'calcel'){
+        commentData.style.display = "none"
+
+    }else if(e.target.classList[0] === 'cancel-btn'){
         const replyId = e.target.classList[1]
         const updateForm = document.getElementById(`update-form${replyId}`)
+        const commentData = updateForm.nextElementSibling
+
         updateForm.style.display = "none";
         updateForm.previousElementSibling.style.display = "block";
+        commentData.style.display = "flex"
+
 
     }else if(e.target.classList[0] === 'update-done'){
         const replyId = e.target.classList[1]
         const replyContent = document.querySelector(`#update-form${replyId} textarea`);
         await replyService.update({replyId: replyId, replyContent: replyContent.value})
         page = 1
-        const text = await replyService.getList(post_id, page, showList);
+        const text = await replyService.getList(knowhow_id, page, showList);
         replySection.innerHTML = text;
-        const replies = await replyService.getList(post_id, page + 1);
-        if (replies.length !== 0){
+        const replies = await replyService.getList(knowhow_id, page + 1);
+        if (replies['replies'].length !== 0){
             moreButton.style.display = "flex";
         }
 
-    }else if(e.target.classList[0] === 'delete'){
+    }else if(e.target.classList[0] === 'remove-btn'){
         const replyId = e.target.classList[1];
         await replyService.remove(replyId);
         page = 1
@@ -167,26 +236,11 @@ replySection.addEventListener("click", async (e) => {
         replySection.innerHTML = text;
 
         const replies = await replyService.getList(knowhow_id, page + 1);
-        if (replies.length !== 0){
+        if (replies['replies'].length !== 0){
             moreButton.style.display = "flex";
         }
     }
 });
-
-
-
-
-const date = document.querySelector(".week-data")
-let test = new Date(knowhowDate)
-// console.log(Date())
-// console.log(Date(knowhowDate))
-// console.log(Date(knowhowDate).format('%Y-%m-%dT%H:%M:%SZ'))
-// console.log(knowhowDate)
-// console.log(Date().toISOString(knowhowDate))
-// console.log(timeForToday(knowhowDate))
-date.innerText = timeForToday(Date(knowhowDate))
-
-
 
 
 function timeForToday(datetime) {

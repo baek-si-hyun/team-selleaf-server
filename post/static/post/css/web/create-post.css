@@ -1,3 +1,5 @@
+
+
 .create-post-wrap {
   height: 100%;
 }
@@ -522,6 +524,9 @@ input.title-input {
   margin: 10px 0px;
 }
 .content-text-area {
+        border-radius: 1%;
+    border: 1px solid #0000001a;
+  resize: none;
   overflow-wrap: break-word;
   transition: background-color 0.1s ease 0s;
   margin: 2px -3px;

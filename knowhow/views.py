@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from knowhow.models import Knowhow, KnowhowFile, KnowhowPlant, KnowhowTag, KnowhowCategory, KnowhowRecommend, \
-    KnowhowLike, KnowhowReply
+    KnowhowLike, KnowhowReply, KnowhowScrap
 from member.models import Member, MemberProfile
 
 
@@ -73,9 +73,8 @@ class KnowhowDetailView(View):
     def get(self, request):
         knowhow = Knowhow.objects.get(id=request.GET['id'])
         knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')
-        knowhow_likes = KnowhowLike.objects.filter(knowhow_id=knowhow.id)
         reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow.id).values('id').count()
-
+        member_profile = MemberProfile.objects.filter(id=knowhow.member_id).values('file_url')
         knowhow.knowhow_count += 1
         knowhow.save(update_fields=['knowhow_count'])
 
@@ -87,7 +86,8 @@ class KnowhowDetailView(View):
             'knowhow_files': knowhow_files,
             'knowhow_file': knowhow_file,
             'knowhow_tags': knowhow_tags,
-            'reply_count': reply_count
+            'reply_count': reply_count,
+            'member_profile': member_profile
         }
 
         return render(request, 'community/web/knowhow/knowhow-detail.html', context)
@@ -147,27 +147,38 @@ class KnowhowReplyListApi(APIView):
         limit = row_count * page
 
         reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow_id).count()
+        like_count = KnowhowLike.objects.filter(knowhow_id=knowhow_id).count()
+        scrap_count = KnowhowScrap.objects.filter(knowhow_id=knowhow_id).count()
+        knowhow_date = Knowhow.objects.filter(id=knowhow_id).values('created_date')
         print(reply_count)
 
         replies = KnowhowReply.objects\
             .filter(knowhow_id=knowhow_id).annotate(member_name=F('member__member_name'))\
-            .values('member_name', 'knowhow__knowhow_content', 'member_id', 'created_date', 'id', 'knowhow_reply_content')
+            .values('member_name', 'knowhow__knowhow_content', 'member_id', 'created_date', 'id', 'knowhow_reply_content')[offset:limit]
 
-        return Response(replies[offset:limit])
+        data = {
+            'replies': replies,
+            'reply_count': reply_count,
+            'knowhow_date': knowhow_date,
+            'like_count': like_count,
+            'scrap_count': scrap_count
+        }
+
+        return Response(data)
 
 class KnowhowReplyApi(APIView):
-    pass
+    def delete(self, request, reply_id):
+        KnowhowReply.objects.filter(id=reply_id).delete()
+        return Response('success')
 
-class KnowhowReplyCountApi(APIView):
-    def get(self, knowhow_id):
-        counts = KnowhowReply.objects.filter(knowhow_id=knowhow_id).count()
-        print(counts)
+    def patch(self, request, reply_id):
+        print(request)
+        reply_content = request.data['reply_content']
+        updated_date = timezone.now()
 
-        return Response(counts)
+        reply = KnowhowReply.objects.get(id=reply_id)
+        reply.knowhow_reply_content = reply_content
+        reply.updated_date = updated_date
+        reply.save(update_fields=['knowhow_reply_content', 'updated_date'])
 
-class KnowhowLikeApi(APIView):
-    @transaction.atomic
-    def patch(self, request, knowhow_id, member_id):
-
-        # KnowhowLike.objects.filter(knowhow_id=knowhow_id).get_or_create()
-        pass
+        return Response('success')

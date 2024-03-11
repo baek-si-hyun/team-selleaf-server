@@ -1,3 +1,6 @@
+autosize($("textarea"));
+
+
 const dropBoxGuide = document.querySelector("#drop-box-guide");
 const dropBoxRequired = document.querySelector("#drop-box-required");
 const downArrowIcon = document.querySelectorAll(".down-arrow");
@@ -5,11 +8,18 @@ const dropBoxes = document.querySelectorAll(".expanded");
 const titleInput = document.querySelector(".title-input");
 const titleInputCount = document.querySelector(".count");
 const contentTextArea = document.querySelector(".content-text-area");
+const contentCount = document.querySelector(".content-count");
 const textInputContainer = document.querySelector(
   ".content-text-input-container"
 );
 
 const markIconWrap = document.querySelector(".mark-icon-wrap");
+function PlantValue() {
+  const selectBox = document.querySelector(".form-control")
+  const selectValue = selectBox.option[selectBox.selectedIndex].value
+  console.log(selectValue)
+
+}
 
 dropBoxGuide.addEventListener("click", () => {
   downArrowIcon[0].classList.toggle("down-arrow-open");
@@ -313,3 +323,7 @@ checkboxes.forEach((checkbox) => {
     });
   });
 });
+
+contentTextArea.addEventListener("keyup", () => {
+  contentCount.innerText = contentTextArea.value.length
+})

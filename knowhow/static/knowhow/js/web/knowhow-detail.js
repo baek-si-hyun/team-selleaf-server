@@ -2,21 +2,39 @@
 const inputWrap = document.querySelector(".input-wrap");
 const inputContainer = document.querySelector(".input-container");
 const commentInput = document.querySelector(".comment-input");
+const commentSubmitBtn = document.querySelector(".comment-submit-btn");
 
 commentInput.addEventListener("focus", () => {
   inputContainer.style.border = "1px solid #c06888";
+  console.log(commentInput.value)
+  if (commentInput.value){
+    commentSubmitBtn.disabled = false;
+    commentSubmitBtn.style.cursor = 'pointer';
+    commentSubmitBtn.style.color = "#c06888"
+  }else {
+    commentSubmitBtn.disabled = true;
+    commentSubmitBtn.style.cursor = 'default';
+    commentSubmitBtn.style.color = "rgb(194, 200, 204)";
+
+  }
+
 });
 commentInput.addEventListener("focusout", () => {
   inputContainer.style.border = "1px solid rgb(218, 221, 224)";
 });
 
-const commentSubmitBtn = document.querySelector(".comment-submit-btn");
 
 commentInput.addEventListener("keyup", () => {
+  console.log(commentInput.value)
+
   if(commentInput.value){
     commentSubmitBtn.disabled = false;
     commentSubmitBtn.style.cursor = 'pointer';
     commentSubmitBtn.style.color = "#c06888"
+  }else {
+    commentSubmitBtn.disabled = true;
+    commentSubmitBtn.style.cursor = 'default';
+    commentSubmitBtn.style.color = "rgb(194, 200, 204)";
   }
 
 });

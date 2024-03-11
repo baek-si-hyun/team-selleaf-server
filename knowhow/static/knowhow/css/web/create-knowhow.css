@@ -539,6 +539,8 @@ input.title-input {
   margin: 10px 0px;
 }
 .content-text-area {
+      border-radius: 1%;
+    border: 1px solid #0000001a;
   resize: none;
   overflow-wrap: break-word;
   transition: background-color 0.1s ease 0s;
@@ -556,6 +558,19 @@ input.title-input {
   display: block;
   color: rgb(204, 204, 204);
 }
+
+.knowhow-content-count {
+  display: flex;
+    justify-content: right;
+  color: rgb(130, 140, 148);
+  margin-top: 5px;
+}
+
+.content-count {
+  font-family: inherit;
+  color: rgb(130, 140, 148);
+}
+
 .mark-icon-wrap {
   visibility: hidden;
   position: absolute;
