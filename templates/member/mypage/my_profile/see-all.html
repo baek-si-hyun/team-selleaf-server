@@ -43,19 +43,19 @@
                       <a href="/member/mypage/show" class="active">모두보기</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="/member/mypage/myposts/">내 게시글</a>
+                      <a href="/member/mypage/posts/">내 게시글</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="/member/mypage/myreplies">내 댓글</a>
+                      <a href="/member/mypage/replies">내 댓글</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#">내 리뷰</a>
+                      <a href="/member/mypage/reviews">내 리뷰</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#">좋아요</a>
+                      <a href="/member/mypage/likes">좋아요</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#">스크랩북</a>
+                      <a href="/member/mypage/scraps">스크랩북</a>
                     </li>
                   </ul>
                 </div>
@@ -198,7 +198,7 @@
                                         <img alt="" src="{% static 'public/web/images/common/like-off.png' %}" />
                                       </div>
                                       <div class="scraps-likes-text">좋아요</div>
-                                      <div class="scraps-likes-count">0</div>
+                                      <div class="scraps-likes-count">{{ like_count }}</div>
                                     </a>
                                     <!-- 마일리지 -->
                                     <a class="scraps-likes-content-wrap" href="#">
@@ -266,13 +266,17 @@
                               <div class="post-wrap">
                               </div>
                           {% endif %}
+                            <div class="more">
+                                <a href="/member/mypage/posts/">더보기</a>
+                            </div>
                         </div>
+
                         <!-- 리뷰 -->
                         <div class="content-section-wrap">
                           <div class="content-title-wrap">
                             <h1 class="content-title">
                               리뷰
-                              <span class="content-count review-count">{{ reply.count }}</span>
+                              <span class="content-count review-count">{{ review.count }}</span>
                             </h1>
                             <div class="title-empty-area"></div>
                           </div>
@@ -292,8 +296,10 @@
                               </div>
                           {% endif %}  
                           <!-- 리뷰 있을 때 표시 -->
-                          
                         </div>
+                             <div class="more">
+                                <a href="/member/mypage/reviews/">더보기</a>
+                             </div>
                       </div>
                     </div>
                   </div>

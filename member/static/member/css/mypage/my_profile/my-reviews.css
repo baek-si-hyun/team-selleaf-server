@@ -9,9 +9,6 @@ a * {
   border: none;
 }
 
-.whole-page-wrap {
-  height: 100%;
-}
 
 .whole-page-container {
   height: 100%;
@@ -493,6 +490,7 @@ a * {
 .main-content-wrap {
   box-sizing: border-box;
   padding-left: 10px;
+  padding-top: 20px;
   padding-right: 10px;
   width: 66.6667%;
 }
@@ -554,6 +552,7 @@ a * {
 
 .reviews-item-image {
   width: 100%;
+  height: 100%;
   border-radius: 8px;
   transition: 0.1s opacity;
 }

@@ -33,68 +33,95 @@ document.addEventListener("click", (e) => {
   // 상위 요소가 모달일 경우(모달 클릭한 경우) 아무 것도 실행 안함(상태 유지)
 });
 
-/*
-  강사 여부에 따라 게시글 묶음 메뉴 표시/숨김
-*/
 
-// 강사 여부
-let isTeacher = false;
-
-// 게시글 묶음 객체
-const myClassMenu = document.querySelector(".teacher");
-
-// 강사면 게시글 묶음 메뉴 표시, 아니면 숨김
-if (isTeacher) {
-  myClassMenu.style.display = "inline-block";
-} else {
-  myClassMenu.style.display = "none";
-}
+let page = 1;
 
 const showList = (posts) => {
   let text = ``
   console.log('리스트 보여주기')
   posts.forEach((post) => {
-      const postLength = post.post_plant.length;
+      if('post_title' in post) {
       const postPlantTags = post.post_plant.map(plant => `<span class="post-tag-icon">${plant}</span>`).join('');
 
-      text += `
-        <div class="post-container">
-          <div class="post-inner">
-            <article class="post">
-              <a href="#" class="post-link"></a>
-              <div class="post-image-wrap_">
-                <div class="post-image-container">
-                  <div class="post-image-inner">
-                    <div class="post-image"></div>
-                    <img
-                      src="/upload/${post.post_file}"
-                      alt=""
-                      class="image"
-                    />
-                    <div class="image__dark-overlay"></div>
+          text += `
+            <div class="post-container">
+              <div class="post-inner">
+                <article class="post">
+                  <a href="#" class="post-link"></a>
+                  <div class="post-image-wrap_">
+                    <div class="post-image-container">
+                      <div class="post-image-inner">
+                        <div class="post-image"></div>
+                        <img
+                          src="/upload/${post.post_file}"
+                          alt=""
+                          class="image"
+                        />
+                        <div class="image__dark-overlay"></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="post-contents-wrap">
-                <div class="post-contents-container">
-                  <h1 class="post-contents-header">
-                    <span class="post-contents-user">${post.writer}</span>
-                    <span class="post-contents-banner">${post.post_title}</span>
-                  </h1>
-                  <span class="post-price">
-                    <span class="post-price-letter">${post.post_content}</span>
-                  </span>
-                  <div class="post-content-pc-reply">
-                    <p class="post-content-reply">댓글 ${post.post_reply.length}</p>
-                    <p class="post-content-scrap">조회수 ${post.post_count}</p>
+                  <div class="post-contents-wrap">
+                    <div class="post-contents-container">
+                      <h1 class="post-contents-header">
+                        <span class="post-contents-user">${post.writer}</span>
+                        <span class="post-contents-banner">${post.post_title}</span>
+                      </h1>
+                      <span class="post-price">
+                        <span class="post-price-letter">${post.post_content}</span>
+                      </span>
+                      <div class="post-content-pc-reply">
+                        <p class="post-content-reply">댓글 ${post.post_reply.length}</p>
+                        <p class="post-content-scrap">조회수 ${post.post_count}</p>
+                      </div>
+                      <span class="post-tag">${postPlantTags}</span>
+                    </div>
                   </div>
-                  <span class="post-tag">${postPlantTags}</span>
-                </div>
+                </article>
               </div>
-            </article>
-          </div>
-        </div>
-      `;
+            </div>
+          `;
+      }else if('knowhow_title' in post){
+      const knowhowPlantTags = post.knowhow_plant.map(knowhow_plant => `<span class="post-tag-icon">${knowhow_plant}</span>`).join('');
+          text += `
+            <div class="post-container">
+              <div class="post-inner">
+                <article class="post">
+                  <a href="#" class="post-link"></a>
+                  <div class="post-image-wrap_">
+                    <div class="post-image-container">
+                      <div class="post-image-inner">
+                        <div class="post-image"></div>
+                        <img
+                          src="/upload/${post.knowhow_file}"
+                          alt=""
+                          class="image"
+                        />
+                        <div class="image__dark-overlay"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="post-contents-wrap">
+                    <div class="post-contents-container">
+                      <h1 class="post-contents-header">
+                        <span class="post-contents-user">${post.writer}</span>
+                        <span class="post-contents-banner">${post.knowhow_title}</span>
+                      </h1>
+                      <span class="post-price">
+                        <span class="post-price-letter">${post.knowhow_content}</span>
+                      </span>
+                      <div class="post-content-pc-reply">
+                        <p class="post-content-reply">댓글 ${post.knowhow_reply.length}</p>
+                        <p class="post-content-scrap">조회수 ${post.knowhow_count}</p>
+                      </div>
+                      <span class="post-tag">${knowhowPlantTags}</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          `;
+      }
     
   });
 
@@ -103,9 +130,26 @@ const showList = (posts) => {
 
 const wrap = document.querySelector('.post-wrap')
 
-postService.getList(member_id,showList).then((text)=>{
-  wrap.innerHTML = text
+postService.getList(page++,showList).then((text)=>{
+  wrap.innerHTML += text
 })
+
+window.addEventListener("scroll", () => {
+    // 맨위
+    const scrollTop = document.documentElement.scrollTop;
+    // 페이지 높이
+    const windowHeight = window.innerHeight;
+    // 암튼 높이
+    const totalHeight = document.documentElement.scrollHeight;
+    // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
+
+    if (scrollTop + windowHeight >= totalHeight) {
+        postService.getList(page++,showList).then((text)=>{
+          wrap.innerHTML += text
+        })
+    }
+});
+
 
 
 

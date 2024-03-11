@@ -25,12 +25,19 @@
                     <li class="main-category-item">
                       <a href="#">수강 내역</a>
                     </li>
-                    <li class="main-category-item teacher">
-                      <a href="#">강의 현황</a>
                     </li>
-                    <li class="main-category-item">
-                      <a href="#">설정</a>
-                    </li>
+                    {% if teacher.count == 0 %}
+                        <li class="main-category-item">
+                          <a href="#">설정</a>
+                        </li>
+                    {% else %}
+                        <li class="main-category-item ">
+                          <a href="#">강의 현황</a>
+                        </li>
+                        <li class="main-category-item">
+                          <a href="#">설정</a>
+                        </li>
+                    {% endif %}
                   </ul>
                 </div>
                 <div class="sub-category-wrap">
@@ -42,19 +49,19 @@
                       <a href="/member/mypage/show">모두보기</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="/member/mypage/myposts" >내 게시글</a>
+                      <a href="/member/mypage/posts" >내 게시글</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="/member/mypage/myreplies" class="active">내 댓글</a>
+                      <a href="/member/mypage/replies" class="active">내 댓글</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#">내 리뷰</a>
+                      <a href="/member/mypage/reviews">내 리뷰</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#">좋아요</a>
+                      <a href="/member/mypage/likes">좋아요</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#">스크랩북</a>
+                      <a href="/member/mypage/scraps">스크랩북</a>
                     </li>
                   </ul>
                 </div>
@@ -207,7 +214,7 @@
                                     <img alt="" src="{% static 'public/web/images/common/like-off.png' %}" />
                                   </div>
                                   <div class="scraps-likes-text">좋아요</div>
-                                  <div class="scraps-likes-count">0</div>
+                                  <div class="scraps-likes-count">{{ like_count }}</div>
                                 </a>
                                 <!-- 마일리지 -->
                                 <a class="scraps-likes-content-wrap" href="#">
