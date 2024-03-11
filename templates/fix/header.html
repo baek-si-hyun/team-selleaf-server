@@ -95,16 +95,16 @@
               >
                 <div class="header-fourth-inner-thirddiv">
                   <span class="hearder-inner-thirddiv-span"> </span>
-                  <form action="{% url  'search' %}" name="search-form" style="flex:1">
+                  <form action="{% url  'search' %}" name="search-form" style="flex:1; position: relative">
                     <input
                         type="text"
                         placeholder="통합검색"
                         autocomplete="off"
                         aria-autocomplete="list"
                         class="hearder-inner-thirddiv-input"
-
                         name="query"
                     />
+
                   </form>
                   <div class="hearder-inner-thirddiv-div">
                     <button
@@ -115,6 +115,66 @@
                       <span class="header-input-xbutton-span"></span>
                     </button>
                   </div>
+                </div>
+                <div class="recent-searches-box">
+                  <div class="recent-searches-title-box">
+                    <span class="recent-searches-title">최근 검색어</span>
+                    <button type="button" class="recent-searches-all-delete">전체 삭제</button>
+                  </div>
+                  <ul class="recent-searches-list">
+                    <li role="option" tabindex="0" class="recent-searches">
+                      <div class="recent-searches-inner">
+                        <span class="recent-searches-text">다육이화분</span>
+                        <button type="button" class="recent-searches-delete-button">
+                          <span class="recent-searches-delete-button-icon"></span>
+                        </button>
+                      </div>
+                    </li>
+                    <li role="option" tabindex="0" class="recent-searches">
+                      <div class="recent-searches-inner">
+                        <span class="recent-searches-text">다육이화분</span>
+                        <button type="button" class="recent-searches-delete-button">
+                          <span class="recent-searches-delete-button-icon"></span>
+                        </button>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="related-search-box">
+                  <ul class="related-search-list">
+                    <li role="option" tabindex="0" class="related-search-item">
+                      <div class="related-search-item-inner">
+                        <span class="related-search-icon"></span>
+                        <div class="related-search-text">
+                          다육이
+                        </div>
+                      </div>
+                    </li>
+                    <li role="option" tabindex="0" class="related-search-item">
+                      <div class="related-search-item-inner">
+                        <span class="related-search-icon"></span>
+                        <div class="related-search-text">
+                          다육이
+                        </div>
+                      </div>
+                    </li>
+                    <li role="option" tabindex="0" class="related-search-item">
+                      <div class="related-search-item-inner">
+                        <span class="related-search-icon"></span>
+                        <div class="related-search-text">
+                          다육이
+                        </div>
+                      </div>
+                    </li>
+                    <li role="option" tabindex="0" class="related-search-item">
+                      <div class="related-search-item-inner">
+                        <span class="related-search-icon"></span>
+                        <div class="related-search-text">
+                          다육이
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>

@@ -6,27 +6,40 @@ const scrapCancel = document.querySelector(".scrap-popup-cancel-wrap");
 let timeoutId;
 let animationTarget;
 
-scrapBtn.addEventListener("click", (e) => {
-  const target = e.target.closest(".scrap-button");
-  const img = target.querySelector("img");
+const tradeSrcapBtnFn = (scrap) => {
+  const img = scrap.querySelector(".scrap-img");
   const imgSrc = img.getAttribute("src");
   if (imgSrc === "/static/public/web/images/common/scrap-off.png") {
     img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
-    animationTarget && animationTarget.classList.remove("show-animation");
+    if (animationTarget) {
+      animationTarget.classList.remove("show-animation");
+    }
     animationTarget = scrapPopup;
   } else {
     img.setAttribute("src", "/static/public/web/images/common/scrap-off.png");
-    animationTarget.classList.remove("show-animation");
+    if (animationTarget) {
+      animationTarget.classList.remove("show-animation");
+    }
     animationTarget = scrapCancel;
   }
-  animationTarget.classList.remove("hide-animation");
-  animationTarget.classList.add("show-animation");
-  clearTimeout(timeoutId);
-  timeoutId = setTimeout(() => {
-    animationTarget.classList.remove("show-animation");
-    animationTarget.classList.add("hide-animation");
-  }, 3000);
-});
+  if (animationTarget) {
+    animationTarget.classList.remove("hide-animation");
+    animationTarget.classList.add("show-animation");
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      animationTarget.classList.remove("show-animation");
+      animationTarget.classList.add("hide-animation");
+    }, 3000);
+  }
+}
+const postWrap = document.querySelector('.post-wrap')
+postWrap.addEventListener('click', async (e) => {
+  const scrapBtn = e.target.closest('.scrap-button')
+  tradeSrcapBtnFn(scrapBtn)
+  console.log(scrapBtn.closest('.post-container').classList[1])
+  const tradeContentId = scrapBtn.closest('.post-container').classList[1]
+  await tradeScrapService.update(tradeContentId)
+})
 
 // 필터
 
@@ -212,14 +225,11 @@ const showList = (trades) => {
 
     trades.forEach((trade) => {
         let tagsHtml = '';
-
-
         trade.plant_name.forEach((pn) => {
             tagsHtml += `<span class="post-tag-icon">#${pn}</span>`;
         });
-
         text += `
-            <div class="post-container">
+            <div class="post-container ${trade.id}">
               <div class="post-inner">
                 <article class="post">
                   <a href="/trade/detail/?id=${trade.id}" class="post-link"></a>
@@ -234,9 +244,9 @@ const showList = (trades) => {
                         />
                         <button class="scrap-button" type="button">
                           <img
-                            src="/static/public/web/images/common/scrap-off.png"
+                            src="${trade.trade_scrap ? '/static/public/web/images/common/scrap-on.png' : '/static/public/web/images/common/scrap-off.png'}"
                             alt
-                            class="scrap-off"
+                            class="scrap-img"
                           />
                         </button>
                         <div class="image__dark-overlay"></div>
