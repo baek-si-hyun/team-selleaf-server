@@ -380,7 +380,7 @@ class LectureUpdateOnlineView(View):
 
         context = {
             'lecture': lecture,
-            'kits' : kits
+            'kits': kits
         }
         # print(lecture)
 
