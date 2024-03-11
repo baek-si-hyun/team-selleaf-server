@@ -6,8 +6,8 @@ from django.urls import path, include
 from main.views import MainView, KnowhowScrapAPI, TradeScrapAPI, LectureScrapAPI, PostScrapAPI, BestLectureCategoryAPI, \
     SearchView
 from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView, WriteNoticeView, \
-    NoticeManagementView, NoticeManagementAPI, UpdateNoticeView, DeleteNoticeView, WriteQnAView, QnAManagementView, \
-    QnAManagementAPI, UpdateQnAView, DeleteQnAView
+    NoticeManagementView, UpdateNoticeView, DeleteNoticeView, WriteQnAView, QnAManagementView, \
+    UpdateQnAView, DeleteQnAView
 
 urlpatterns = [
     path('', MainView.as_view()),
@@ -22,12 +22,10 @@ urlpatterns = [
     path('admin/logout/', ManagerLogoutView.as_view(), name='manager-logout'),
     path('admin/member/', MemberManagementView.as_view(), name='manager-member'),
     path('admin/notice/', NoticeManagementView.as_view(), name='manager-notice'),
-    path('admin/notice/<int:page>', NoticeManagementAPI.as_view(), name='manager-notice-api'),
     path('admin/notice/write/', WriteNoticeView.as_view(), name='notice-write'),
     path('admin/notice/update/', UpdateNoticeView.as_view(), name='notice-update'),
     path('admin/notice/delete/', DeleteNoticeView.as_view(), name='notice-delete'),
     path('admin/qna/', QnAManagementView.as_view(), name='manager-qna'),
-    path('admin/qna/<int:page>', QnAManagementAPI.as_view(), name='manager-qna-api'),
     path('admin/qna/write/', WriteQnAView.as_view(), name='qna-write'),
     path('admin/qna/update/', UpdateQnAView.as_view(), name='qna-update'),
     path('admin/qna/delete/', DeleteQnAView.as_view(), name='qna-delete'),
