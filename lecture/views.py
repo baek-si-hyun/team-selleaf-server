@@ -7,7 +7,7 @@ from django.views import View
 
 from lecture.models import LectureCategory, Lecture, LectureProductFile, LecturePlant, Kit, LectureReview, \
     LectureAddress
-from member.models import Member
+from member.models import Member, MemberAddress
 from selleaf.date import Date
 from selleaf.time import Time
 from teacher.models import Teacher
@@ -61,8 +61,13 @@ def divide_time_intervals(start_time, end_time, interval):
     return time_intervals
 
 
-class LectureView(View):
+class LectureMainView(View):
     def get(self, request):
+        member = request.session['member']
+
+        member_home = MemberAddress.objects.filter(member_id=member['id']).values('address_city', 'address_district').first
+        print(member_home)
+
         return render(request, 'lecture/web/lecture-main.html')
 
 
