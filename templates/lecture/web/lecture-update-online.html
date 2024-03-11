@@ -3,11 +3,12 @@
 {% block static %}
     <link rel="stylesheet" href="{% static 'lecture/css/lecture/web/lecture-upload.css' %}">
 {% endblock %}
-{% block title %}수강포스팅-오프라인{% endblock %}
+{% block title %}수강포스팅-온라인{% endblock %}
 {% block content %}
-<form action="{% url 'lecture:upload-offline' %}" method="post" name="lecture-offline-upload" enctype="multipart/form-data">
+<form action="{% url 'lecture:update-online' %}" method="post" name="lecture-online-update" enctype="multipart/form-data">
 {% csrf_token %}
   <body>
+  <input type="hidden" name="id" value="{{ lecture.id }}">
     <div class="layout-wrap">
       <div class="layout-container">
         <div
@@ -29,17 +30,8 @@
                     alt=""
                   />
                 </a>
-
                 <div class="save-button-wrap">
                   <div class="save-button-container">
-{#                    <div class="temporary-save-wrap">#}
-{#                      <div class="temporary-save-container">#}
-{#                        <button type="button" disabled class="temporary-save">#}
-{#                          <span class="temporary-save-letter">임시저장</span>#}
-{#                          <span class="save-letter">저장</span>#}
-{#                        </button>#}
-{#                      </div>#}
-{#                    </div>#}
                     <button class="establish">
                       <span class="establish-ask-letter">등록하기</span>
                       <span class="establish-letter">등록</span>
@@ -227,7 +219,7 @@
                                         disabled
                                         selected
                                       >
-                                        선택해주세요.
+                                        {{ lecture.lecture_category.lecture_category_name }}
                                       </option>
                                       <option value="리스/트리">리스/트리</option>
                                       <option value="바구니/센터피스/박스">
@@ -276,102 +268,6 @@
                         </div>
                         <div class="each-info">
                           <div class="info-title">
-                            강의지역
-                            <span class="required">*</span>
-                          </div>
-                          <div class="info-dropdown-wrap">
-                            <div class="info-dropdown-container">
-                              <div class="info-dropdown-inner">
-                                <span class="info-dropdown-box">
-                                  <div class="info-list-wrap">
-                                    <select
-                                      name="product-index-local"
-                                      class="product-index-local"
-                                    >
-                                      <option
-                                        value="unselected"
-                                        disabled
-                                        selected
-                                      >
-                                        선택해주세요.
-                                      </option>
-                                      <option value="서울특별시">서울특별시</option>
-                                      <option value="인천광역시">인천광역시</option>
-                                      <option value="대전광역시">대전광역시</option>
-                                      <option value="세종특별자치시">세종특별자치시</option>
-                                      <option value="광주광역시">광주광역시</option>
-                                      <option value="부산광역시">부산광역시</option>
-                                      <option value="대구광역시">대구광역시</option>
-                                      <option value="울산광역시">울산광역시</option>
-                                      <option value="제주특별자치도">제주특별자치도</option>
-                                      <option value="경기도">경기도</option>
-                                      <option value="강원도">강원도</option>
-                                      <option value="충청북도">충청북도</option>
-                                      <option value="충청남도">충청남도</option>
-                                      <option value="전라북도">전라북도</option>
-                                      <option value="전라남도">전라남도</option>
-                                      <option value="경상북도">경상북도</option>
-                                      <option value="경상남도">경상남도</option>
-                                    </select>
-                                  </div>
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="info-title">
-                            상세지역
-                            <span class="required">*</span>
-                          </div>
-                          <div class="info-dropdown-wrap">
-                            <div class="info-dropdown-container">
-                              <div class="info-dropdown-inner">
-                                <span class="info-dropdown-box">
-                                  <div class="info-list-wrap">
-                                    <select
-                                      name="product-index-control"
-                                      class="product-index-control"
-                                    >
-                                      <option
-                                        value="unselected"
-                                        disabled
-                                        selected
-                                      >
-                                        선택해주세요.
-                                      </option>
-                                      <option value="종로구">종로구</option>
-                                      <option value="중구">중구</option>
-                                      <option value="용산구">용산구</option>
-                                      <option value="성동구">성동구</option>
-                                      <option value="광진구">광진구</option>
-                                      <option value="동대문구">동대문구</option>
-                                      <option value="중랑구">중랑구</option>
-                                      <option value="성북구">성북구</option>
-                                      <option value="강북구">강북구</option>
-                                      <option value="도봉구">도봉구</option>
-                                      <option value="노원구">노원구</option>
-                                      <option value="은평구">은평구</option>
-                                      <option value="서대문구">서대문구</option>
-                                      <option value="마포구">마포구</option>
-                                      <option value="양천구">양천구</option>
-                                      <option value="강서구">강서구</option>
-                                      <option value="구로구">구로구</option>
-                                      <option value="금천구">금천구</option>
-                                      <option value="영등포구">영등포구</option>
-                                      <option value="동작구">동작구</option>
-                                      <option value="관악구">관악구</option>
-                                      <option value="서초구">서초구</option>
-                                      <option value="강남구">강남구</option>
-                                      <option value="송파구">송파구</option>
-                                      <option value="강동구">강동구</option>
-                                    </select>
-                                  </div>
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="each-info">
-                          <div class="info-title">
                             가격
                             <span class="required">*</span>
                           </div>
@@ -385,6 +281,7 @@
                                       class="price-input"
                                       placeholder="1인당 가격을 입력하세요"
                                       name="price-input"
+                                      value="{{ lecture.lecture_price }}"
                                     />
                                     <span class="price-index">원</span>
                                   </div>
@@ -408,6 +305,7 @@
                                       class="number-input"
                                       placeholder="수업 인원을 입력하세요"
                                       name="number-input"
+                                      value="{{ lecture.lecture_headcount }}"
                                     />
                                     <span class="price-index">명</span>
                                   </div>
@@ -565,17 +463,132 @@
                                 <span class="info-dropdown-box">
                                   <div class="info-dropdown-wrap">
                                     <label class="time-selection">
-                                      <input type="radio" name="time-type" value="00:30" style="display: none"><div>30분</div>
+                                        <input type="radio" name="time-type" value="00:30" style="display: none"><div>30분</div>
                                     </label>
                                     <label class="time-selection">
-                                      <input type="radio" name="time-type" value="01:00" style="display: none"><div>1시간</div>
+                                        <input type="radio" name="time-type" value="01:00" style="display: none"><div>1시간</div>
                                     </label>
+{#				                    <label class="time-selection">#}
+{#                                        <input type="radio" name="time-type" value="02:00" style="display: none"><div>2시간</div>#}
+{#                                    </label>#}
                                   </div>
                                 </span>
                               </div>
                             </div>
                           </div>
                         </div>
+                        <div class="each-info">
+                          <div class="info-title">
+                            DIY키트
+                            <span class="required">*</span>
+                          </div>
+                          <div class="info-dropdown-wrap">
+                            <div class="info-dropdown-container">
+                              {% for kit in kits %}
+                                  <div class="info-dropdown-inner">
+                                    <span class="info-dropdown-box">
+                                      <div class="info-list-wrap" id="diy-kit">
+                                        <input
+                                          class="diy-input"
+                                          placeholder="키트이름을 입력하세요"
+                                          name="diy-name-input"
+                                          type="text"
+                                          value="{{ kit.kit_name }}"
+                                        />
+                                      </div>
+                                    </span>
+                                    <span class="info-dropdown-box">
+                                      <div class="info-list-wrap" id="diy-kit">
+                                        <input
+                                          class="diy-input"
+                                          placeholder="간단한 설명을 입력하세요"
+                                          name="diy-content-input"
+                                          type="text"
+                                          value="{{ kit.kit_content }}"
+                                        />
+                                      </div>
+                                    </span>
+                                  </div>
+                              {% endfor %}
+                            </div>
+                          </div>
+                          <div class="add-cancel">
+                            <button
+                              type="button"
+                              title="추가"
+                              class="add-button"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="29"
+                                height="29"
+                                viewBox="-3 -5 29 29"
+                                class="icon"
+                              >
+                                <path
+                                  d="M10.8 3.8v5H5.7c-.4 0-.7.3-.7.7 0 .4.3.7.7.7h5.1v5c0 .4.3.7.7.7.4 0 .7-.3.7-.7v-5h5.1c.4 0 .7-.3.7-.7 0-.4-.3-.7-.7-.7h-5.1v-5c0-.4-.3-.7-.7-.7-.4 0-.7.3-.7.7z"
+                                  fill="#525B61"
+                                  stroke="#525B61"
+                                  stroke-width="0.5"
+                                ></path>
+                              </svg>
+                            </button>
+                            <button
+                              type="button"
+                              title="삭제"
+                              class="cancel-button"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="29"
+                                height="29"
+                                viewBox="-3 -11 29 29"
+                                class="icon"
+                              >
+                                <path
+                                  d="M10.8 2.8H5.7c-.4 0-.7.3-.7.7 0 .4.3.7.7.7h11.6c.4 0 .7-.3.7-.7 0-.4-.3-.7-.7-.7h-6.5z"
+                                  fill="#525B61"
+                                  stroke="#525B61"
+                                  stroke-width="0.5"
+                                ></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+{#                        <div class="add-diy-kit">#}
+{#                          <div class="info-title"></div>#}
+{#                          <div class="info-dropdown-wrap">#}
+{#                            <div class="info-dropdown-container">#}
+{#                              <div class="info-dropdown-inner">#}
+{#                                <span class="info-dropdown-box">#}
+{#                                  <div class="info-list-wrap" id="diy-kit">#}
+{#                                    <input#}
+{#                                      class="diy-input"#}
+{#                                      placeholder="키트 이름을 입력하세요"#}
+{#                                      name="diy-name-input"#}
+{#                                      type="text"#}
+{#                                      value="{{ lecture.kit_set.kit_name }}"#}
+{#                                    />#}
+{#                                  </div>#}
+{#                                </span>#}
+{#                                <span class="info-dropdown-box">#}
+{#                                  <div class="info-list-wrap" id="diy-kit">#}
+{#                                    <input#}
+{#                                      class="diy-input"#}
+{#                                      placeholder="간단한 설명을 입력하세요"#}
+{#                                      name="diy-content-input"#}
+{#                                      type="text"#}
+{#                                      value="{{ lecture.kit_set.kit_content }}"#}
+{#                                    />#}
+{#                                  </div>#}
+{#                                </span>#}
+{#                              </div>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                          <div class="kit-alert">#}
+{#                            최대 2개까지 입력가능합니다.#}
+{#                          </div>#}
+{#                        </div>#}
                       </div>
                     </div>
                   </div>
@@ -699,7 +712,7 @@
                   maxlength="80"
                   class="title-input"
                   name="title-input"
-                  value=""
+                  value="{{ lecture.lecture_title }}"
                 />
                 <div class="title-count"><span class="count">0</span> / 80</div>
               </div>
@@ -748,7 +761,7 @@
                     name="content-text-area"
                     contenteditable="true"
                     placeholder="내용을 입력해주세요."
-                  ></textarea>
+                  >{{ lecture.lecture_content }}</textarea>
                 </div>
               </div>
             </div>
@@ -761,5 +774,6 @@
 {% endblock %}
 {% block js %}
   <script src="{% static 'lecture/js/lecture/web/lecture-upload.js' %}"></script>
-  <script src="{% static 'lecture/js/lecture/web/lecture-upload-offline.js' %}"></script>
+  <script src="{% static 'lecture/js/lecture/web/lecture-onlione-upload.js' %}"></script>
 {% endblock %}
+

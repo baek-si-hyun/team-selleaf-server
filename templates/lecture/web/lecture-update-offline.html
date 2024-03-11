@@ -8,6 +8,7 @@
 <form action="{% url 'lecture:upload-offline' %}" method="post" name="lecture-offline-upload" enctype="multipart/form-data">
 {% csrf_token %}
   <body>
+  <input type="hidden" name="id" value="{{ lecture.id }}">
     <div class="layout-wrap">
       <div class="layout-container">
         <div
@@ -227,7 +228,7 @@
                                         disabled
                                         selected
                                       >
-                                        선택해주세요.
+                                      {{ lecture.lecture_category.lecture_category_name }}
                                       </option>
                                       <option value="리스/트리">리스/트리</option>
                                       <option value="바구니/센터피스/박스">
@@ -293,7 +294,7 @@
                                         disabled
                                         selected
                                       >
-                                        선택해주세요.
+                                        {{ lecture.lectureaddress_set.address_city }}
                                       </option>
                                       <option value="서울특별시">서울특별시</option>
                                       <option value="인천광역시">인천광역시</option>
@@ -385,6 +386,7 @@
                                       class="price-input"
                                       placeholder="1인당 가격을 입력하세요"
                                       name="price-input"
+                                      value="{{ lecture.lecture_price }}"
                                     />
                                     <span class="price-index">원</span>
                                   </div>
@@ -408,6 +410,7 @@
                                       class="number-input"
                                       placeholder="수업 인원을 입력하세요"
                                       name="number-input"
+                                      value="{{ lecture.lecture_headcount }}"
                                     />
                                     <span class="price-index">명</span>
                                   </div>
@@ -699,7 +702,7 @@
                   maxlength="80"
                   class="title-input"
                   name="title-input"
-                  value=""
+                  value="{{ lecture.lecture_title }}"
                 />
                 <div class="title-count"><span class="count">0</span> / 80</div>
               </div>
@@ -748,7 +751,7 @@
                     name="content-text-area"
                     contenteditable="true"
                     placeholder="내용을 입력해주세요."
-                  ></textarea>
+                  >{{ lecture.lecture_content }}</textarea>
                 </div>
               </div>
             </div>

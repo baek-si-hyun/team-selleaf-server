@@ -136,65 +136,47 @@
       </div>
     </div>
     <a id="top"></a>
+    <div class="category-wrap-" style="height: 52px">
+      <div
+        class="category-container"
+        style="
+          position: fixed;
+          z-index: 1101;
+          transition: top 0.1s ease 0s;
+          top: auto;
+          width: 106%;
+        "
+      >
+        <div class="category-inner">
+          <div class="category-button-space">
+            <nav class="category-button-collection">
+              <span class="category-button">
+                <div class="button-space">
+                  <a href="/lecture/main/" class="button-link-unclick">
+                    <div class="button">
+                      <p class="button-letter-unclick">강의홈</p>
+                    </div>
+                  </a>
+                </div>
+              </span>
+              <span class="category-button">
+                <div class="button-space">
+                  <a href="/lecture/total/" class="button-link-unclick">
+                    <div class="button">
+                      <p class="button-letter-unclick">원데이클래스</p>
+                    </div>
+                  </a>
+                </div>
+              </span>
+            </nav>
+          </div>
+        </div>
+      </div>
+</div>
     <div class="product-selling-wrap">
       <div class="product-overview-wrap">
         <nav class="product-category-wrap">
-          <ol class="product-category-container">
-            <li class="product-category-inner">
-              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"
-                >대구분</a
-              >
-              <svg
-                class="icon"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="currentColor"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <path
-                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
-                ></path>
-              </svg>
-            </li>
-            <li class="product-category-inner">
-              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"
-                >중분류</a
-              >
-              <svg
-                class="icon"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="currentColor"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <path
-                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
-                ></path>
-              </svg>
-            </li>
-            <li class="product-category-inner">
-              <a href="/templates/lecture/web/class-total.htmlhtml" class="link"
-                >소분류</a
-              >
-              <svg
-                class="icon"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="currentColor"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                <path
-                  d="M4.95 4L2.12 1.19l.7-.71 3.54 3.54-3.53 3.53-.7-.7z"
-                ></path>
-              </svg>
-            </li>
-            <li class="product-category-inner">
-              <a href="/templates/lecture/web/class-total.htmlhtml" class="link">제품</a>
-            </li>
-          </ol>
+          <span>{{ lecture.teacher.member.member_name }}님의 {{ lecture.lecture_title }} 상품을 보고있어요🤗</span>
         </nav>
         <div class="product-overview-container">
           <div class="product-overview-image-wrap">
@@ -220,12 +202,12 @@
                       aria-label="1 of 4"
                       style="width: 100%"
                     >
-                      <img
-                        class="product-cover-image"
-                        tabindex="0"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품서브이미지"
-                      />
+{#                      <img#}
+{#                        class="product-cover-image"#}
+{#                        tabindex="0"#}
+{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                        alt="상품서브이미지"#}
+{#                      />#}
                     </div>
                     <div
                       class="carousel-list-container"
@@ -237,65 +219,28 @@
                       <img
                         class="product-cover-image"
                         tabindex="0"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
+                        src="/upload/{{ lecture_file.file_url }}"
                         alt="상품서브이미지"
                       />
                     </div>
                   </div>
                 </div>
                 <ul class="product-small-image-list">
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
-                  <li class="product-small-image-item">
-                    <button
-                      class="product-small-image-button"
-                      type="button"
-                      aria-label="1 of 8"
-                    >
-                      <img
-                        class="product-small-image"
-                        src="{% static 'public/web/images/common/blank-image.png' %}"
-                        alt="상품 이미지"
-                      />
-                    </button>
-                  </li>
+                    {% for lecture_file in lecture_files %}
+                      <li class="product-small-image-item">
+                        <button
+                          class="product-small-image-button"
+                          type="button"
+                          aria-label="1 of 8"
+                        >
+                          <img
+                            class="product-small-image"
+                            src="/upload/{{ lecture_file.file_url }}"
+                            alt="상품 이미지"
+                          />
+                        </button>
+                      </li>
+                    {% endfor %}
                 </ul>
                 <div class="product-image-paginator">
                   <ul class="carousel-paginator">
@@ -321,19 +266,32 @@
               <h1 class="product-overview-contents-title">
                 <p class="product-overview-user-wrap">
                   <a href="해당유저페이지" class="product-overview-user"
-                    >유저이름</a
+                    >{{ lecture.teacher.member.member_name }}</a
                   >
                 </p>
                 <div class="product-overview-title">
-                  <span class="product-title">제목을 입력하세요.</span>
+                  <span class="product-title">{{ lecture.lecture_title }}</span>
                   <div class="product-title-icon-wrap">
-                    <button class="update-button" type="button">
-                      <img
-                        class="update-icon"
-                        src="{% static 'public/web/images/common/update_icon.png' %}"
-                      />
-                      <span class="update-label">수정</span>
-                    </button>
+                    {% if request.session.member.id == lecture.teacher.member.id %}
+                        <a href="/lecture/update/offline/?id={{ lecture.id }}">
+                            <button class="update-button" type="button">
+                              <img
+                                class="update-icon"
+                                src="{% static 'public/web/images/common/update_icon.png' %}"
+                              />
+                              <span class="update-label">수정</span>
+                            </button>
+                        </a>
+                        <a href="/lecture/delete/?id={{ lecture.id }}">
+                          <button class="remove-button" type="button">
+                            <img
+                            class="remove-icon"
+                            src="{% static 'public/web/images/common/remove-icon.png' %}"
+                          />
+                          <span class="update-label">삭제</span>
+                          </button>
+                        </a>
+                    {% endif %}
                     <button class="scrap-button" type="button">
                       <img
                         class="scrap-off"
@@ -341,143 +299,146 @@
                       />
                       <span class="scrap-count">0</span>
                     </button>
-                    <div class="share-button-wrap">
-                      <button class="share-button" type="button">
-                        <svg
-                          class="icon"
-                          aria-label="공유하기"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          preserveAspectRatio="xMidYMid meet"
-                        >
-                          <path
-                            d="M9.64 14.646a4.5 4.5 0 1 1 0-5.292l4.54-2.476a4.5 4.5 0 1 1 .63.795l-4.675 2.55c.235.545.365 1.146.365 1.777s-.13 1.232-.365 1.777l4.675 2.55a4.5 4.5 0 1 1-.63.795l-4.54-2.476zM18 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM6 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM18 23a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
-                          ></path>
-                        </svg>
-                      </button>
-                    </div>
                   </div>
                 </div>
               </h1>
               <div class="product-overview-contents-container">
                 <p class="product-contents-review-wrap">
                   <a href="#product-review" class="product-review">
-                    <span class="rating" aria-label="별점 5점">
-                      <svg
-                        fill="#134F2C"
-                        width="1em"
-                        height="1em"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 24 24"
-                      >
-                        <defs>
-                          <path
-                            id="star-path-110"
-                            d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                          ></path>
-                          <clipPath id="star-clip-110">
-                            <rect x="0" y="0" width="24" height="24"></rect>
-                          </clipPath>
-                        </defs>
-                        <use xlink:href="#star-path-110" fill="#DBDBDB"></use>
-                        <use
-                          clip-path="url(#star-clip-110)"
-                          xlink:href="#star-path-110"
-                        ></use>
-                      </svg>
-                      <svg
-                        fill="#134F2C"
-                        width="1em"
-                        height="1em"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 24 24"
-                      >
-                        <defs>
-                          <path
-                            id="star-path-110"
-                            d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                          ></path>
-                          <clipPath id="star-clip-110">
-                            <rect x="0" y="0" width="24" height="24"></rect>
-                          </clipPath>
-                        </defs>
-                        <use xlink:href="#star-path-110" fill="#DBDBDB"></use>
-                        <use
-                          clip-path="url(#star-clip-110)"
-                          xlink:href="#star-path-110"
-                        ></use>
-                      </svg>
-                      <svg
-                        fill="#134F2C"
-                        width="1em"
-                        height="1em"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 24 24"
-                      >
-                        <defs>
-                          <path
-                            id="star-path-110"
-                            d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                          ></path>
-                          <clipPath id="star-clip-110">
-                            <rect x="0" y="0" width="24" height="24"></rect>
-                          </clipPath>
-                        </defs>
-                        <use xlink:href="#star-path-110" fill="#DBDBDB"></use>
-                        <use
-                          clip-path="url(#star-clip-110)"
-                          xlink:href="#star-path-110"
-                        ></use>
-                      </svg>
-                      <svg
-                        fill="#134F2C"
-                        width="1em"
-                        height="1em"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 24 24"
-                      >
-                        <defs>
-                          <path
-                            id="star-path-110"
-                            d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                          ></path>
-                          <clipPath id="star-clip-110">
-                            <rect x="0" y="0" width="24" height="24"></rect>
-                          </clipPath>
-                        </defs>
-                        <use xlink:href="#star-path-110" fill="#DBDBDB"></use>
-                        <use
-                          clip-path="url(#star-clip-110)"
-                          xlink:href="#star-path-110"
-                        ></use>
-                      </svg>
-                      <svg
-                        fill="#134F2C"
-                        width="1em"
-                        height="1em"
-                        preserveAspectRatio="xMidYMid meet"
-                        viewBox="0 0 24 24"
-                      >
-                        <defs>
-                          <path
-                            id="star-path-110"
-                            d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                          ></path>
-                          <clipPath id="star-clip-110">
-                            <rect x="0" y="0" width="24" height="24"></rect>
-                          </clipPath>
-                        </defs>
-                        <use xlink:href="#star-path-110" fill="#DBDBDB"></use>
-                        <use
-                          clip-path="url(#star-clip-110)"
-                          xlink:href="#star-path-110"
-                        ></use>
-                      </svg>
-                    </span>
+                   <span class="rating" aria-label="별점3.9점">
+                          <svg
+                            fill="{% if average_rating >= 1 %}#135f2c{% else %}#DBDBDB{% endif %}"
+                            width="1em"
+                            height="1em"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 24 24"
+                          >
+                            <defs>
+                              <path
+                                id="star-path-115"
+                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                              ></path>
+                              <clipPath id="star-clip-115">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                              </clipPath>
+                            </defs>
+                            <use
+                              xlink:href="#star-path-115"
+                              fill="#DBDBDB"
+                            ></use>
+                            <use
+                              clip-path="url(#star-clip-115)"
+                              xlink:href="#star-path-115"
+                            ></use>
+                          </svg>
+                          <svg
+                            fill="{% if average_rating >= 2 %}#135f2c{% else %}#DBDBDB{% endif %}"
+                            width="1em"
+                            height="1em"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 24 24"
+                          >
+                            <defs>
+                              <path
+                                id="star-path-116"
+                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                              ></path>
+                              <clipPath id="star-clip-116">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                              </clipPath>
+                            </defs>
+                            <use
+                              xlink:href="#star-path-116"
+                              fill="#DBDBDB"
+                            ></use>
+                            <use
+                              clip-path="url(#star-clip-116)"
+                              xlink:href="#star-path-116"
+                            ></use>
+                          </svg>
+                          <svg
+                            fill="{% if average_rating >= 3 %}#135f2c{% else %}#DBDBDB{% endif %}"
+                            width="1em"
+                            height="1em"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 24 24"
+                          >
+                            <defs>
+                              <path
+                                id="star-path-117"
+                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                              ></path>
+                              <clipPath id="star-clip-117">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                              </clipPath>
+                            </defs>
+                            <use
+                              xlink:href="#star-path-117"
+                              fill="#DBDBDB"
+                            ></use>
+                            <use
+                              clip-path="url(#star-clip-117)"
+                              xlink:href="#star-path-117"
+                            ></use>
+                          </svg>
+                          <svg
+                            fill="{% if average_rating >= 4 %}#135f2c{% else %}#DBDBDB{% endif %}"
+                            width="1em"
+                            height="1em"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 24 24"
+                          >
+                            <defs>
+                              <path
+                                id="star-path-118"
+                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                              ></path>
+                              <clipPath id="star-clip-118">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                              </clipPath>
+                            </defs>
+                            <use
+                              xlink:href="#star-path-118"
+                              fill="#DBDBDB"
+                            ></use>
+                            <use
+                              clip-path="url(#star-clip-118)"
+                              xlink:href="#star-path-118"
+                            ></use>
+                          </svg>
+                          <svg
+                            fill="{% if average_rating >= 5 %}#135f2c{% else %}#DBDBDB{% endif %}"
+                            width="1em"
+                            height="1em"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 24 24"
+                          >
+                            <defs>
+                              <path
+                                id="star-path-119"
+                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                              ></path>
+                              <clipPath id="star-clip-119">
+                                <rect
+                                  x="0"
+                                  y="0"
+                                  width="18.548148148148158"
+                                  height="24"
+                                ></rect>
+                              </clipPath>
+                            </defs>
+                            <use
+                              xlink:href="#star-path-119"
+                              fill="#DBDBDB"
+                            ></use>
+                            <use
+                              clip-path="url(#star-clip-119)"
+                              xlink:href="#star-path-119"
+                            ></use>
+                          </svg> </span
+                        >
                     <span class="review-counting-text">
-                      <span class="review-counting">30</span>
+                      <span class="review-counting">{{ review_count }}</span>
                       <span class="review-text">개 리뷰</span>
                     </span>
                   </a>
@@ -490,11 +451,23 @@
                     <span class="product-price-separator"></span>
                     <div class="product-final-price-wrap">
                       <div class="product-final-price-container">
-                        <span class="final-price-number">13,500</span>
+                        <span class="final-price-number">{{ lecture.lecture_price }}</span>
                         <span class="krw">원</span>
                       </div>
                     </div>
                   </span>
+                </div>
+              </div>
+              <div class="product-overview-info-wrap">
+                <div class="product-info-container">
+                  <div class="product-info-title">
+                    <span>위치</span>
+                  </div>
+                  <div class="product-info-contents">
+                    <span class="main-info-keyword">
+                      <b>{{ address.address_city }} {{ address.address_district }}</b>
+                    </span>
+                  </div>
                 </div>
               </div>
               <div class="product-overview-info-wrap">
@@ -507,22 +480,14 @@
                       <b>키워드</b>
                     </span>
                     <span class="info-type">
-                      <span>주문제작</span>
-                      <span>일반배송</span>
-                    </span>
-                    <span class="info-particulars-wrap">
-                      <span class="info-particulars-container">
-                        <img
-                          src = "{% static 'public/web/images/common/button-down.png' %}"
-                          class="check-icon"
-                        />
-                        <span>파손주의 등등</span>
-                      </span>
+                        {% for lecturePlant in lecture.lectureplant_set.all %}
+                          <span class="info-tag">#{{ lecturePlant.plant_name }}</span>
+                        {% endfor %}
                     </span>
                   </div>
                 </div>
               </div>
-              <a href="유저페이지 이동링크" class="user-info-link">
+              <a href="#" class="user-info-link">
                 <div class="user-link-name-wrap">
                   <svg
                     width="24"
@@ -542,22 +507,8 @@
                     ></path>
                   </svg>
                   <div class="user-link-name-container">
-                    <span class="user-link-name">유저이름</span>
+                    <span class="user-link-name">{{ lecture.teacher.member.member_name }}님의 판매상품</span>
                   </div>
-                </div>
-                <div class="user-link-icon-wrap">
-                  <span>유저홈</span>
-                  <svg
-                    width="14"
-                    height="14"
-                    fill="none"
-                    preserveAspectRatio="xMidYMid meet"
-                  >
-                    <path
-                      d="M4.083 11.375L8.312 7 4.083 2.625l.803-.875L9.916 7l-5.03 5.25-.803-.875z"
-                      fill="#828C94"
-                    ></path>
-                  </svg>
                 </div>
               </a>
             </div>
@@ -569,27 +520,11 @@
                       <span class="info-dropdown-box">
                         <span class="info-title">날짜 선택</span>
                         <div class="info-dropdown-wrap">
-                          <div class="weekday-selection">
-                            <span>2023-02-12 월</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-13 화</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-14 수</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-15 목</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-16 금</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-17 토</span>
-                          </div>
-                          <div class="weekday-selection">
-                            <span>2023-02-18 일</span>
-                          </div>
+                          {% for date in lecture_order_date %}
+                              <div class="weekday-selection">
+                                <span>{{ date.date|date:"Y-m-d" }}</span>
+                              </div>
+                          {% endfor %}
                         </div>
                       </span>
                     </div>
@@ -600,27 +535,11 @@
                       <span class="info-dropdown-box">
                         <span class="info-title">시간 선택</span>
                         <div class="info-dropdown-wrap">
-                          <div class="time-selection">
-                            <span>09:00</span>
-                          </div>
-                          <div class="time-selection">
-                            <span>10:00</span>
-                          </div>
-                          <div class="time-selection">
-                            <span>11:00</span>
-                          </div>
-                          <div class="time-selection">
-                            <span>14:00</span>
-                          </div>
-                          <div class="time-selection">
-                            <span>15:00</span>
-                          </div>
-                          <div class="time-selection">
-                            <span>16:00</span>
-                          </div>
-                          <div class="time-selection">
-                            <span>17:00</span>
-                          </div>
+                          {% for time in lecture_order_time %}
+                            <div class="time-selection">
+                              <span>{{ time.time }}</span>
+                            </div>
+                          {% endfor %}
                         </div>
                       </span>
                     </div>
@@ -657,7 +576,7 @@
                         </span>
                       </div>
                       <div class="selected-price-wrap">
-                        <span class="selected-price">32,000</span>
+                        <span class="selected-price">{{ lecture.lecture_price }}</span>
                         <span class="won">원</span>
                       </div>
                     </div>
@@ -679,7 +598,7 @@
               <p class="product-total-price">
                 <span class="product-order-text">주문금액</span>
                 <span class="product-order-price">
-                  <span class="total-price">32,000</span>원
+                  <span class="total-price">{{ lecture.lecture_price }}</span>원
                 </span>
               </p>
               <div class="product-order-button-wrap">
@@ -705,7 +624,7 @@
               <li>
                 <a class="product-detail-nav-item" href="#product-review">
                   리뷰
-                  <span class="review-counting">32</span>
+                  <span class="review-counting">{{ review_count }}</span>
                 </a>
               </li>
               <li>
@@ -738,122 +657,23 @@
                 </header>
                 <div class="detail-info-contents-wrap">
                   <div class="detail-info-contents-thumbnail">
-                    <button class="expended-info" type="button">
-                      펼치기
-                      <svg
-                        class="icon"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 16 16"
-                        preserveAspectRatio="xMidYMid meet"
-                      >
-                        <path
-                          fill="currentColor"
-                          fill-rule="evenodd"
-                          d="M2.87 4L1.33 5.5 8 12l6.67-6.5L13.13 4 8 9z"
-                        ></path>
-                      </svg>
-                    </button>
                   </div>
-                  <img
-                    class="detail-info-image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt="판매자 등록이미지"
-                  />
-                  <img
-                    class="detail-info-image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt="판매자 등록이미지"
-                  />
-                  <img
-                    class="detail-info-image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt="판매자 등록이미지"
-                  />
-                  <div
-                    class="detail-info-contents-container"
-                    style="image-rendering: -webkit-optimize-contrast"
-                  >
-                    <p>
-                      <img
-                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
-                        alt="상품의 상세 설명 이미지"
-                      />
-                    </p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>
-                      <img
-                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
-                        alt="상품의 상세 설명 이미지"
-                      />
-                    </p>
-                    <p>
-                      <img
-                        src="https://prs.ohou.se/apne2/any/uploads/productions/descriptions/url/v1-207409409667200.jpg"
-                        alt="상품의 상세 설명 이미지"
-                      />
-                    </p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                  </div>
-
-                  <table class="detail-info-table">
-                    <tbody>
-                      <tr>
-                        <th>제품 소재</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>색상</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>치수</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>제품구성</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>제조자, 수입품의 경우 수입자를 함께 표기</th>
-                        <td>그래이불</td>
-                      </tr>
-
-                      <tr>
-                        <th>제조국</th>
-                        <td>국내</td>
-                      </tr>
-
-                      <tr>
-                        <th>세탁방법 및 취급시 주의사항</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>품질보증기준</th>
-                        <td>상세페이지 참조</td>
-                      </tr>
-                      <tr>
-                        <th>A/S 책임자와 전화번호</th>
-                        <td>010.3565.3997</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  {% for lecture_file in lecture_files %}
+                    <img
+                      class="detail-info-image"
+                      src="/upload/{{ lecture_file.file_url }}"
+                      alt="판매자 등록이미지"
+                    />
+                  {% endfor %}
                 </div>
+                <p class="product-review-description">{{ lecture.lecture_content }}</p>
               </section>
               <a id="product-review"></a>
               <section class="product-review-wrap">
                 <header class="detail-header">
                   <h1 class="detail-title-text">
                     리뷰
-                    <span class="review-counting">32</span>
+                    <span class="review-counting">{{ review_count }}</span>
                   </h1>
                   <div class="review-post-button-wrap">
                     <button type="button" class="review-post-button">
@@ -867,7 +687,7 @@
                       <div class="product-review-feed-total-rating">
                         <span class="icon" aria-label="별점 4.8점">
                           <svg
-                            fill="#135f2c"
+                            fill="{% if average_rating >= 1 %}#135f2c{% else %}#DBDBDB{% endif %}"
                             width="1em"
                             height="1em"
                             preserveAspectRatio="xMidYMid meet"
@@ -892,7 +712,7 @@
                             ></use>
                           </svg>
                           <svg
-                            fill="#135f2c"
+                            fill="{% if average_rating >= 2 %}#135f2c{% else %}#DBDBDB{% endif %}"
                             width="1em"
                             height="1em"
                             preserveAspectRatio="xMidYMid meet"
@@ -917,7 +737,7 @@
                             ></use>
                           </svg>
                           <svg
-                            fill="#135f2c"
+                            fill="{% if average_rating >= 3 %}#135f2c{% else %}#DBDBDB{% endif %}"
                             width="1em"
                             height="1em"
                             preserveAspectRatio="xMidYMid meet"
@@ -942,7 +762,7 @@
                             ></use>
                           </svg>
                           <svg
-                            fill="#135f2c"
+                            fill="{% if average_rating >= 4 %}#135f2c{% else %}#DBDBDB{% endif %}"
                             width="1em"
                             height="1em"
                             preserveAspectRatio="xMidYMid meet"
@@ -967,7 +787,7 @@
                             ></use>
                           </svg>
                           <svg
-                            fill="#135f2c"
+                            fill="{% if average_rating >= 5 %}#135f2c{% else %}#DBDBDB{% endif %}"
                             width="1em"
                             height="1em"
                             preserveAspectRatio="xMidYMid meet"
@@ -996,71 +816,20 @@
                               xlink:href="#star-path-119"
                             ></use>
                           </svg> </span
-                        ><span class="total-rating">4.8</span>
+                        ><span class="total-rating">{{ average_rating }}</span>
                       </div>
 
                       <div class="detail-rating-wrap">
-                        <div class="detail-rating-contianer">
-                          <div class="detail-rating-inner">
-                            <div class="detail-rating-label label-selected">
-                              5점
-                            </div>
-                            <div class="detail-rating-label-bar">
-                              <div class="detail-rating-label-full"></div>
-                              <div
-                                class="detail-rating-label-gauging"
-                                style="width: 80.9053%"
-                              ></div>
-                            </div>
-                            <div class="detail-rating-number label_selected">
-                              1,966
-                            </div>
-                          </div>
-                          <div class="detail-rating-inner">
-                            <div class="detail-rating-label">4점</div>
-                            <div class="detail-rating-label-bar">
-                              <div class="detail-rating-label-full"></div>
-                              <div
-                                class="detail-rating-label-gauging"
-                                style="width: 80.9053%"
-                              ></div>
-                            </div>
-                            <div class="detail-rating-number">1,966</div>
-                          </div>
-                          <div class="detail-rating-inner">
-                            <div class="detail-rating-label">3점</div>
-                            <div class="detail-rating-label-bar">
-                              <div class="detail-rating-label-full"></div>
-                              <div
-                                class="detail-rating-label-gauging"
-                                style="width: 80.9053%"
-                              ></div>
-                            </div>
-                            <div class="detail-rating-number">1,966</div>
-                          </div>
-                          <div class="detail-rating-inner">
-                            <div class="detail-rating-label">2점</div>
-                            <div class="detail-rating-label-bar">
-                              <div class="detail-rating-label-full"></div>
-                              <div
-                                class="detail-rating-label-gauging"
-                                style="width: 80.9053%"
-                              ></div>
-                            </div>
-                            <div class="detail-rating-number">1,966</div>
-                          </div>
-                          <div class="detail-rating-inner">
-                            <div class="detail-rating-label">1점</div>
-                            <div class="detail-rating-label-bar">
-                              <div class="detail-rating-label-full"></div>
-                              <div
-                                class="detail-rating-label-gauging"
-                                style="width: 80.9053%"
-                              ></div>
-                            </div>
-                            <div class="detail-rating-number">1,966</div>
-                          </div>
-                        </div>
+                          {% for rating, count in rating_counts.items %}
+                                <div class="detail-rating-inner">
+                                    <div class="detail-rating-label">{{ rating }}점</div>
+                                    <div class="detail-rating-label-bar">
+                                        <div class="detail-rating-label-full"></div>
+                                        <div class="detail-rating-label-gauging" style="width: {{ count }}%"></div>
+                                    </div>
+                                    <div class="detail-rating-number">{{ count }}</div>
+                                </div>
+                          {% endfor %}
                       </div>
                     </div>
                   </div>
@@ -1069,13 +838,6 @@
                       <div class="review-filter-inner">
                         <div class="review-filter-preview-wrap">
                           <button
-                            class="review-filter-preview-button preview-active"
-                            aria-pressed="true"
-                            type="button"
-                          >
-                            베스트순
-                          </button>
-                          <button
                             class="review-filter-preview-button"
                             aria-pressed="false"
                             type="button"
@@ -1083,43 +845,16 @@
                             최신순
                           </button>
                           <button
-                            class="review-filter-preview-button preview-photo"
-                            aria-pressed="false"
+                            class="review-filter-preview-button preview-active"
+                            aria-pressed="true"
                             type="button"
                           >
-                            <svg
-                              class="icon"
-                              width="18"
-                              height="18"
-                              viewBox="0 0 18 18"
-                              preserveAspectRatio="xMidYMid meet"
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M15.821 3a.67.67 0 0 1 .679.672v10.656a.67.67 0 0 1-.679.672H2.18a.67.67 0 0 1-.679-.672V3.672c0-.375.3-.672.679-.672H15.82zm-.679 1.344H2.858v8.14L7.01 7.781c.094-.125.284-.125.394 0l2.321 2.657c.048.046.063.109.048.156l-.3 1.375c-.016.11.11.172.173.094l2.369-2.579a.202.202 0 0 1 .284 0l2.842 3.094V4.344zm-2.526 3.61a1.1 1.1 0 0 1-1.105-1.095 1.1 1.1 0 0 1 1.105-1.093 1.1 1.1 0 0 1 1.105 1.093 1.1 1.1 0 0 1-1.105 1.094z"
-                              ></path>
-                            </svg>
-                            <div>사진리뷰</div>
+                            별점순
                           </button>
                         </div>
                         <ul class="review-filter-list-button">
                           <li class="review-filter-list-rating">
                             <div class="review-filter-rating">
-                              <button class="review-rating-button">
-                                별점순
-                                <svg
-                                  class="icon"
-                                  width="12"
-                                  height="12"
-                                  viewBox="0 0 12 12"
-                                  fill="currentColor"
-                                  preserveAspectRatio="xMidYMid meet"
-                                >
-                                  <path
-                                    d="M6.069 6.72l4.123-3.783 1.216 1.326-5.32 4.881L.603 4.273l1.196-1.346z"
-                                  ></path>
-                                </svg>
-                              </button>
                             </div>
                           </li>
                         </ul>
@@ -1128,7 +863,8 @@
                   </div>
                   <div class="product-review-list-wrap">
                     <div class="product-review-list-container">
-                      <article class="product-review-list-inner">
+                      {% for review in reviews %}
+                        <article class="product-review-list-inner">
                         <div class="product-review-user-wrap">
                           <a href="/사용자 마이페이지"
                             ><img
@@ -1138,165 +874,26 @@
                           /></a>
                           <a id="product-ask"></a>
                           <div class="product-review-user-info-wrap">
-                            <p class="product-review-user-name">유저이름</p>
+                            <p class="product-review-user-name">{{ review.member.member_name }}</p>
                             <button
                               class="product-review-rating-wrap"
                               type="button"
                             >
                               <span
                                 class="product-review-rating-container"
-                                aria-label="별점 4.0점"
+                                aria-label=""
                               >
-                                <svg
-                                  fill="#135f2c"
-                                  width="1em"
-                                  height="1em"
-                                  preserveAspectRatio="xMidYMid meet"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <defs>
-                                    <path
-                                      id="star-path-120"
-                                      d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                                    ></path>
-                                    <clipPath id="star-clip-120">
-                                      <rect
-                                        x="0"
-                                        y="0"
-                                        width="24"
-                                        height="24"
-                                      ></rect>
-                                    </clipPath>
-                                  </defs>
-                                  <use
-                                    xlink:href="#star-path-120"
-                                    fill="#DBDBDB"
-                                  ></use>
-                                  <use
-                                    clip-path="url(#star-clip-120)"
-                                    xlink:href="#star-path-120"
-                                  ></use>
-                                </svg>
-                                <svg
-                                  fill="#135f2c"
-                                  width="1em"
-                                  height="1em"
-                                  preserveAspectRatio="xMidYMid meet"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <defs>
-                                    <path
-                                      id="star-path-121"
-                                      d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                                    ></path>
-                                    <clipPath id="star-clip-121">
-                                      <rect
-                                        x="0"
-                                        y="0"
-                                        width="24"
-                                        height="24"
-                                      ></rect>
-                                    </clipPath>
-                                  </defs>
-                                  <use
-                                    xlink:href="#star-path-121"
-                                    fill="#DBDBDB"
-                                  ></use>
-                                  <use
-                                    clip-path="url(#star-clip-121)"
-                                    xlink:href="#star-path-121"
-                                  ></use>
-                                </svg>
-                                <svg
-                                  fill="#135f2c"
-                                  width="1em"
-                                  height="1em"
-                                  preserveAspectRatio="xMidYMid meet"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <defs>
-                                    <path
-                                      id="star-path-122"
-                                      d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                                    ></path>
-                                    <clipPath id="star-clip-122">
-                                      <rect
-                                        x="0"
-                                        y="0"
-                                        width="24"
-                                        height="24"
-                                      ></rect>
-                                    </clipPath>
-                                  </defs>
-                                  <use
-                                    xlink:href="#star-path-122"
-                                    fill="#DBDBDB"
-                                  ></use>
-                                  <use
-                                    clip-path="url(#star-clip-122)"
-                                    xlink:href="#star-path-122"
-                                  ></use>
-                                </svg>
-                                <svg
-                                  fill="#135f2c"
-                                  width="1em"
-                                  height="1em"
-                                  preserveAspectRatio="xMidYMid meet"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <defs>
-                                    <path
-                                      id="star-path-123"
-                                      d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                                    ></path>
-                                    <clipPath id="star-clip-123">
-                                      <rect
-                                        x="0"
-                                        y="0"
-                                        width="24"
-                                        height="24"
-                                      ></rect>
-                                    </clipPath>
-                                  </defs>
-                                  <use
-                                    xlink:href="#star-path-123"
-                                    fill="#DBDBDB"
-                                  ></use>
-                                  <use
-                                    clip-path="url(#star-clip-123)"
-                                    xlink:href="#star-path-123"
-                                  ></use>
-                                </svg>
-                                <svg
-                                  fill="#135f2c"
-                                  width="1em"
-                                  height="1em"
-                                  preserveAspectRatio="xMidYMid meet"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <defs>
-                                    <path
-                                      id="star-path-124"
-                                      d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                                    ></path>
-                                    <clipPath id="star-clip-124">
-                                      <rect
-                                        x="0"
-                                        y="0"
-                                        width="0"
-                                        height="24"
-                                      ></rect>
-                                    </clipPath>
-                                  </defs>
-                                  <use
-                                    xlink:href="#star-path-124"
-                                    fill="#DBDBDB"
-                                  ></use>
-                                  <use
-                                    clip-path="url(#star-clip-124)"
-                                    xlink:href="#star-path-124"
-                                  ></use>
-                                </svg>
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= review.review_rating %}
+                                        <svg class="star" fill="#135f2c" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                            <path d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"></path>
+                                        </svg>
+                                    {% else %}
+                                        <svg class="star" fill="#DBDBDB" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                                            <path d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"></path>
+                                        </svg>
+                                    {% endif %}
+                                {% endfor %}
                               </span>
                               <svg
                                 class="product-review-rating-down"
@@ -1318,111 +915,25 @@
                         </div>
                         <div class="product-review-item-name">
                           <p class="product-review-item-text">
-                            사이즈/ 색상: Q퀸 화이트 / 구성:
-                            풀세트(이불+베개커버2+패드)
+                            {{ review.review_title }}
                           </p>
                         </div>
-                        <button type="button" class="product-review-img-button">
-                          <img
-                            class="product-review-img"
-                            src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=144&amp;h=144&amp;c=c&amp;webp=1"
-                            srcset="
-                              https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=240&amp;h=240&amp;c=c&amp;webp=1 1.5x,
-                              https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=320&amp;h=320&amp;c=c&amp;webp=1 2x,
-                              https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/snapshots/170520341486491128.jpeg?gif=1&amp;w=480&amp;h=480&amp;c=c&amp;webp=1 3x
-                            "
-                          />
-                        </button>
                         <p class="product-review-description">
-                          새집 이사와 이불 새로 장만했네요 화이트 색상 고급지고
-                          바스락 그려요 개인적으로 몸에 닿는 무거운 느낌을
-                          좋아하는데 극세사이불에 적응되었을까요? 코튼이라
-                          그런지 뭉글뭉글 가벼워요 쓰면 또 익숙해지지 않을까
-                          싶네요
+                          {{ review.review_content }}
                         </p>
                         <div class="product-review-help">
-                          <button
-                            type="button"
-                            class="product-review-help-button"
-                          >
-                            도움이 돼요
-                          </button>
+{#                          <button#}
+{#                            type="button"#}
+{#                            class="product-review-help-button"#}
+{#                          >#}
+{#                            도움이 돼요#}
+{#                          </button>#}
                         </div>
                       </article>
+                      {% endfor %}
                     </div>
+                  <button class="review-more-button" id="load-more-btn">더 보기</button>
                   </div>
-                  <ul class="product-review-page-button">
-                    <!-- js추가 -->
-                    <li class="prev-button-wrap">
-                      <button class="prev-button" type="button">
-                        <svg width="1em" height="1em" viewBox="0 0 24 24">
-                          <path
-                            fill="currentColor"
-                            d="M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z"
-                          ></path>
-                        </svg>
-                      </button>
-                    </li>
-                    <a id="product-suggestion"></a>
-                    <li>
-                      <button
-                        class="product-review-page selected-page"
-                        type="button"
-                      >
-                        1
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        2
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        3
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        4
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        5
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        6
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        7
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        8
-                      </button>
-                    </li>
-                    <li>
-                      <button class="product-review-page" type="button">
-                        9
-                      </button>
-                    </li>
-                    <li>
-                      <button class="next-button" type="button">
-                        <svg width="1em" height="1em" viewBox="0 0 24 24">
-                          <path
-                            fill="currentColor"
-                            d="M6 19.692L8.25 22 18 12 8.25 2 6 4.308 13.5 12z"
-                          ></path>
-                        </svg>
-                      </button>
-                    </li>
-                  </ul>
                 </div>
               </section>
 
@@ -1430,9 +941,10 @@
                 <header class="product-ask-container">
                   <h1 class="product-ask-title">문의</h1>
                   <div class="product-ask-link">
-                    <button type="button" class="product-ask-button">
-                      판매자 문의
-                    </button>
+                    <h3 style="color: #134F2C">{{ lecture.teacher.member.member_email }}</h3>
+{#                    <button type="button" class="product-ask-button">#}
+{#                      판매자 문의#}
+{#                    </button>#}
                   </div>
                 </header>
               </section>
@@ -1440,7 +952,7 @@
               <div>
                 <section class="product-suggestion-wrap">
                   <header class="product-suggestion-header">
-                    <h1 class="product-suggestion-title">비슷한 상품추천</h1>
+                    <h1 class="product-suggestion-title">강사의 강의추천</h1>
                   </header>
                   <div class="product-suggestion-scroller-wrap">
                     <div class="product-suggestion-scroller-container">
@@ -1450,1080 +962,60 @@
                           style="transform: translateX(0px)"
                         >
                           <ul class="scroller-list-contents-inner">
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 1
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
+                            {% for lecture in lectures %}
+                                <div class="product-suggestion-each-contents">
+                                  <article class="product-suggestion-contents-wrap">
+                                    <a
+                                      class="product-suggestion-contents-overlay"
+                                      href="/lecture/detail/offline?id={{ lecture.id }}"
+                                    ></a>
+                                    <div class="product-suggestion-contents-image">
+                                      <img
+                                        class="image"
+                                        alt=""
+                                        src="/upload/{{ lecture.product_img }}"
+{#                                        srcset="#}
+{#                                          https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,#}
+{#                                          https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,#}
+{#                                          https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x#}
+{#                                        "#}
+                                      />
+                                      <button
+                                        class="img-scrap-button"
+                                        type="button"
                                       >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 2
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
+                                        <img
+                                          src="{% static 'public/web/images/common/scrap-off.png' %}"
+                                          alt=""
+                                        />
+                                      </button>
+                                      <div class="product_dark-overlay"></div>
+                                    </div>
+                                    <div class="product-suggestion-content">
+                                      <h1
+                                        class="product-suggestion-contents-header"
                                       >
-                                    </span>
-                                  </span>
+                                        <span class="product-suggestion-user">
+                                          {{ lecture.lecture_title }}
+                                        </span>
+                                        <span class="product-suggestion-name">
+                                          {{ lecture.lecture_content }}
+                                        </span>
+                                      </h1>
+                                      <span class="product-suggestion-price-wrap">
+                                        <span class="product-suggestion-price">
+                                          {{ lecture.lecture_price }}원
+                                        </span>
+                                      </span>
+                                      <span class="info-type">
+                                          {% for plant_name in lecture.plant_name %}
+                                            <span class="info-tag">#{{ plant_name }}</span>
+                                          {% endfor %}
+                                      </span>
+                                    </div>
+                                  </article>
                                 </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 3
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 4
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 5
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 6
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 7
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 8
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-discount">
-                                      64
-                                      <span class="percentage">% </span>
-                                    </span>
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 9
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 10
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-discount">
-                                      64
-                                      <span class="percentage">% </span>
-                                    </span>
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 11
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 12
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 13
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 14
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
-
-                            <div class="product-suggestion-each-contents">
-                              <article class="product-suggestion-contents-wrap">
-                                <a
-                                  class="product-suggestion-contents-overlay"
-                                  href="/productions/1978932/selling"
-                                ></a>
-                                <div class="product-suggestion-contents-image">
-                                  <img
-                                    class="image"
-                                    alt=""
-                                    src="https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=360&amp;h=360&amp;c=c&amp;q=0.8&amp;webp=1"
-                                    srcset="
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=640&amp;h=640&amp;c=c&amp;q=0.8&amp;webp=1   1.5x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=720&amp;h=720&amp;c=c&amp;q=0.8&amp;webp=1   2x,
-                                      https://image.ohou.se/i/bucketplace-v2-development/uploads/productions/167988416631010167.jpg?gif=1&amp;w=1080&amp;h=1080&amp;c=c&amp;q=0.8&amp;webp=1 3x
-                                    "
-                                  />
-                                  <button
-                                    class="img-scrap-button"
-                                    type="button"
-                                  >
-                                    <img
-                                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                                      alt=""
-                                    />
-                                  </button>
-                                  <div class="product_dark-overlay"></div>
-                                </div>
-                                <div class="product-suggestion-content">
-                                  <h1
-                                    class="product-suggestion-contents-header"
-                                  >
-                                    <span class="product-suggestion-user">
-                                      그래이불
-                                    </span>
-                                    <span class="product-suggestion-name">
-                                      비건 숨쉬는 오가닉 듀폰소로나 알러지케어
-                                      차렵이불세트 건조기 사용가능
-                                    </span>
-                                  </h1>
-                                  <span class="product-suggestion-price-wrap">
-                                    <span class="product-suggestion-price">
-                                      107,800
-                                    </span>
-                                  </span>
-                                  <p class="product-contents-review-star">
-                                    <svg
-                                      class="icon"
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      preserveAspectRatio="xMidYMid meet"
-                                    >
-                                      <path
-                                        fill="#97a38c"
-                                        fill-rule="evenodd"
-                                        d="M12 19.72l-5.677 2.405c-.76.322-1.318-.094-1.247-.906l.533-6.142-4.042-4.656c-.54-.624-.317-1.283.477-1.467l6.006-1.39L11.23 2.28c.426-.707 1.122-.699 1.542 0l3.179 5.282 6.006 1.391c.805.187 1.011.851.477 1.467l-4.042 4.656.533 6.142c.072.822-.497 1.224-1.247.906L12 19.72z"
-                                      ></path>
-                                    </svg>
-                                    <strong class="avg">5</strong> 리뷰 15
-                                  </p>
-                                  <span class="product-suggestion-tag">
-                                    <span class="post-tag">
-                                      <span class="post-tag-icon"
-                                        >식물종류</span
-                                      >
-                                    </span>
-                                  </span>
-                                </div>
-                              </article>
-                            </div>
+                            {% endfor %}
                           </ul>
                         </div>
                       </div>
@@ -2789,7 +1281,7 @@
                               </div>
                               <div class="sidebar-selected-price-wrap">
                                 <span class="sidebar-selected-price"
-                                  >32,000</span
+                                  >{{ lecture.lecture_price }}</span
                                 >
                               </div>
                             </div>
@@ -2800,7 +1292,7 @@
                     <p class="sidebar-total-price-wrap">
                       <span class="sidebar-total-text">주문금액</span>
                       <span class="sidebar-total-price">
-                        <span>32,000</span>
+                        <span>{{ lecture.lecture_price }}</span>
                         원
                       </span>
                     </p>
@@ -2834,6 +1326,65 @@
   </body>
 {% endblock %}
 {% block js %}
-  <script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>
-  <script src="{% static 'lecture/js/lecture/web/lecture-detail-offline.js' %}"></script>
+<script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>
+<script src="{% static 'lecture/js/lecture/web/lecture-detail-offline.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+const contentImg = document.querySelector(".product-cover-image");
+const prevImgs = document.querySelectorAll(".product-small-image");
+prevImgs.forEach((item) => {
+    item.addEventListener("click", (e) => {
+        const imgSrc = e.target.getAttribute("src");
+        contentImg.setAttribute("src", imgSrc);
+        });
+    });
+});  
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  const reviewList = document.querySelector(".product-review-list-container");
+  const reviews = reviewList.querySelectorAll(".product-review-list-inner");
+  const loadMoreBtn = document.getElementById("load-more-btn");
+
+  const reviewsPerPage = 3; // 한 번에 로드될 리뷰의 개수
+
+  // 처음에 리뷰가 없는 경우 더보기 버튼을 숨깁니다.
+  if (reviews.length === 0) {
+    loadMoreBtn.style.display = "none";
+  } else {
+    // 리뷰가 있는 경우 처음에 3개의 리뷰만 표시
+    reviews.forEach((review, index) => {
+      if (index < reviewsPerPage) {
+        review.style.display = "block";
+      } else {
+        review.style.display = "none";
+      }
+    });
+
+    // 더보기 버튼 클릭 시 추가 리뷰 표시
+    loadMoreBtn.addEventListener("click", function() {
+      const hiddenReviews = reviewList.querySelectorAll(
+        ".product-review-list-inner:not([style='display: block;'])"
+      );
+
+      let count = 0;
+      hiddenReviews.forEach((review, index) => {
+        if (count < reviewsPerPage) {
+          review.style.display = "block";
+          count++;
+        }
+      });
+
+      // 더 이상 추가 리뷰가 없을 때 버튼 숨기기
+      if (
+        reviewList.querySelectorAll(
+          ".product-review-list-inner:not([style='display: block;'])"
+        ).length === 0
+      ) {
+        loadMoreBtn.style.display = "none";
+      }
+    });
+  }
+});
+</script>
 {% endblock %}
