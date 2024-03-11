@@ -100,7 +100,7 @@ class LectureDetailOnlineView(View):
         else:
             average_rating = 0
 
-        print(average_rating)
+        # print(average_rating)
 
         # 방금 강의를 올린 사용자가 작성한 다른 강의
         lectures = Lecture.objects.filter(teacher_id=teacher_id, lecture_status=True).values()
@@ -376,8 +376,11 @@ class LectureUploadOfflineView(View):
 class LectureUpdateOnlineView(View):
     def get(self, request):
         lecture = Lecture.objects.get(id=request.GET['id'])
+        kits = Kit.objects.filter(lecture_id=lecture.id).values()
+
         context = {
             'lecture': lecture,
+            'kits' : kits
         }
         # print(lecture)
 
@@ -400,20 +403,50 @@ class LectureUpdateOnlineView(View):
 
         # 게시물 식물 종류 수정
         LecturePlant.objects.filter(lecture_id=lecture_id).delete()
-        plant_types = data.getlist('plant_type')
+        plant_types = data.getlist('plant-type')
         for plant_type in plant_types:
             LecturePlant.objects.create(lecture=lecture, plant_name=plant_type)
 
-        # 날짜 정보 수정
+        # 현재 강의에서 Date id 찾아오기
+        deleteDates = Date.objects.filter(lecture_id=lecture.id).values('id')
+        deleteDateList = []
+        for deleteDate in deleteDates:
+            deleteDateList.append(deleteDate['id'])
+
+        # 현재 강의에서 날짜를 통해 시간 찾아와서 삭제해주기
+        deleteTime = Time.objects.filter(date_id__in=deleteDateList).delete()
+
+        # 현재 강의에서 날짜를 찾아 해당 날짜들 삭제해주기
+        realDeleteDate = Date.objects.filter(lecture_id=lecture.id).delete()
+
+        # kit 수정
+        diy_name_inputs = request.POST.getlist('diy-name-input')
+        diy_content_inputs = request.POST.getlist('diy-content-input')
+
+        kits = Kit.objects.filter(lecture_id=lecture.id)
+        # kits[0].kit_name = diy_name_inputs[0]
+        # kits[0].kit_content = diy_content_inputs[0]
+        # kits[0].save(update_fields=['kit_name', 'kit_content'])
+        # kits[1].kit_name = diy_name_inputs[1]
+        # kits[1].kit_content = diy_content_inputs[1]
+        # kits[1].save(update_fields=['kit_name', 'kit_content'])
+        for i, kit in enumerate(kits):
+            if i < len(diy_name_inputs):
+                kit.kit_name = diy_name_inputs[i]
+            if i < len(diy_content_inputs):
+                kit.kit_content = diy_content_inputs[i]
+            kit.save(update_fields=['kit_name', 'kit_content'])
+
+        # # 날짜 정보 수정
         start_date_input = data.get('start-date-input')
         end_date_input = data.get('end-date-input')
         weekday_type = data.getlist('weekday-type')
 
-        # 날짜 및 시간 데이터 삭제
-        lecture.date_set.all().delete()
 
         # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
         dates = date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
+
+        # # 삭제할 강의를 찾고 그 시간을 없애주면 됨
 
         # 강의 시간(시작 시간, 종료 시간, 강의 시간)
         start_time = data.get('start-time-input')
@@ -441,11 +474,11 @@ class LectureUpdateOnlineView(View):
         # 게시물 제목 수정
         lecture.lecture_title = data['title-input']
         # 게시물 내용 수정
-        lecture.lecture_content = data['content-input']
+        lecture.lecture_content = data['content-text-area']
 
         # 게시물 및 카테고리 정보 저장
         lecture.save(update_fields=['lecture_price', 'lecture_headcount', 'lecture_title', 'lecture_content'])
-        lecture_category.save(update_fields=['category_name'])
+        lecture_category.save(update_fields=['lecture_category_name'])
 
         return redirect(f'/lecture/detail/online?id={lecture.id}')
 
@@ -460,6 +493,7 @@ class LectureUpdateOfflineView(View):
 
         return render(request, "lecture/web/lecture-update-offline.html", context)
 
+    @transaction.atomic
     def post(self, request):
         data = request.POST
         lecture_id = data['id']
@@ -488,7 +522,8 @@ class LectureUpdateOfflineView(View):
         weekday_type = data.getlist('weekday-type')
 
         # 날짜 및 시간 데이터 삭제
-        lecture.date_set.all().delete()
+        # lecture.date_set.all().delete()
+        print(lecture.date_set.all())
 
         # 날짜 범위 및 요일 유형을 기반으로 날짜 리스트 가져오기
         dates = date_range_with_weekdays(start_date_input, end_date_input, weekday_type)
@@ -530,3 +565,8 @@ class LectureUpdateOfflineView(View):
 
         return redirect(f'/lecture/detail/offline?id={lecture.id}')
 
+class LectureDeleteView(View):
+    def get(self, request):
+        Lecture.objects.filter(id=request.GET['id']).update(lecture_status=True)
+
+        return redirect('/lecture/total')

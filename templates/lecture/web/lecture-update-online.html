@@ -5,7 +5,7 @@
 {% endblock %}
 {% block title %}수강포스팅-온라인{% endblock %}
 {% block content %}
-<form action="{% url 'lecture:upload-online' %}" method="post" name="lecture-online-upload" enctype="multipart/form-data">
+<form action="{% url 'lecture:update-online' %}" method="post" name="lecture-online-update" enctype="multipart/form-data">
 {% csrf_token %}
   <body>
   <input type="hidden" name="id" value="{{ lecture.id }}">
@@ -484,30 +484,32 @@
                           </div>
                           <div class="info-dropdown-wrap">
                             <div class="info-dropdown-container">
-                              <div class="info-dropdown-inner">
-                                <span class="info-dropdown-box">
-                                  <div class="info-list-wrap" id="diy-kit">
-                                    <input
-                                      class="diy-input"
-                                      placeholder="키트이름을 입력하세요"
-                                      name="diy-name-input"
-                                      type="text"
-                                      value="{{ lecture.kit.kit_name }}"
-                                    />
+                              {% for kit in kits %}
+                                  <div class="info-dropdown-inner">
+                                    <span class="info-dropdown-box">
+                                      <div class="info-list-wrap" id="diy-kit">
+                                        <input
+                                          class="diy-input"
+                                          placeholder="키트이름을 입력하세요"
+                                          name="diy-name-input"
+                                          type="text"
+                                          value="{{ kit.kit_name }}"
+                                        />
+                                      </div>
+                                    </span>
+                                    <span class="info-dropdown-box">
+                                      <div class="info-list-wrap" id="diy-kit">
+                                        <input
+                                          class="diy-input"
+                                          placeholder="간단한 설명을 입력하세요"
+                                          name="diy-content-input"
+                                          type="text"
+                                          value="{{ kit.kit_content }}"
+                                        />
+                                      </div>
+                                    </span>
                                   </div>
-                                </span>
-                                <span class="info-dropdown-box">
-                                  <div class="info-list-wrap" id="diy-kit">
-                                    <input
-                                      class="diy-input"
-                                      placeholder="간단한 설명을 입력하세요"
-                                      name="diy-content-input"
-                                      type="text"
-                                      value="{{ lecture.kit.kit_content }}"
-                                    />
-                                  </div>
-                                </span>
-                              </div>
+                              {% endfor %}
                             </div>
                           </div>
                           <div class="add-cancel">
@@ -553,40 +555,40 @@
                             </button>
                           </div>
                         </div>
-                        <div class="add-diy-kit">
-                          <div class="info-title"></div>
-                          <div class="info-dropdown-wrap">
-                            <div class="info-dropdown-container">
-                              <div class="info-dropdown-inner">
-                                <span class="info-dropdown-box">
-                                  <div class="info-list-wrap" id="diy-kit">
-                                    <input
-                                      class="diy-input"
-                                      placeholder="키트 이름을 입력하세요"
-                                      name="diy-name-input"
-                                      type="text"
-                                      value="{{ lecture.kit_set.kit_name }}"
-                                    />
-                                  </div>
-                                </span>
-                                <span class="info-dropdown-box">
-                                  <div class="info-list-wrap" id="diy-kit">
-                                    <input
-                                      class="diy-input"
-                                      placeholder="간단한 설명을 입력하세요"
-                                      name="diy-content-input"
-                                      type="text"
-                                      value="{{ lecture.kit_set.kit_content }}"
-                                    />
-                                  </div>
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="kit-alert">
-                            최대 2개까지 입력가능합니다.
-                          </div>
-                        </div>
+{#                        <div class="add-diy-kit">#}
+{#                          <div class="info-title"></div>#}
+{#                          <div class="info-dropdown-wrap">#}
+{#                            <div class="info-dropdown-container">#}
+{#                              <div class="info-dropdown-inner">#}
+{#                                <span class="info-dropdown-box">#}
+{#                                  <div class="info-list-wrap" id="diy-kit">#}
+{#                                    <input#}
+{#                                      class="diy-input"#}
+{#                                      placeholder="키트 이름을 입력하세요"#}
+{#                                      name="diy-name-input"#}
+{#                                      type="text"#}
+{#                                      value="{{ lecture.kit_set.kit_name }}"#}
+{#                                    />#}
+{#                                  </div>#}
+{#                                </span>#}
+{#                                <span class="info-dropdown-box">#}
+{#                                  <div class="info-list-wrap" id="diy-kit">#}
+{#                                    <input#}
+{#                                      class="diy-input"#}
+{#                                      placeholder="간단한 설명을 입력하세요"#}
+{#                                      name="diy-content-input"#}
+{#                                      type="text"#}
+{#                                      value="{{ lecture.kit_set.kit_content }}"#}
+{#                                    />#}
+{#                                  </div>#}
+{#                                </span>#}
+{#                              </div>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                          <div class="kit-alert">#}
+{#                            최대 2개까지 입력가능합니다.#}
+{#                          </div>#}
+{#                        </div>#}
                       </div>
                     </div>
                   </div>

@@ -1,7 +1,8 @@
 from django.urls import path
 
 from lecture.views import LectureView, LectureDetailOnlineView, LectureDetailOfflineView, LectureTotalView, \
-    LectureUploadOnlineView, LectureUploadOfflineView, LectureUpdateOnlineView, LectureUpdateOfflineView
+    LectureUploadOnlineView, LectureUploadOfflineView, LectureUpdateOnlineView, LectureUpdateOfflineView, \
+    LectureDeleteView
 
 app_name = 'lecture'
 
@@ -14,5 +15,5 @@ urlpatterns = [
     path('upload/offline/', LectureUploadOfflineView.as_view(), name='upload-offline'),
     path('update/online/', LectureUpdateOnlineView.as_view(), name='update-online'),
     path('update/offline/', LectureUpdateOfflineView.as_view(), name='update-offline'),
-
+    path('delete/', LectureDeleteView.as_view(), name='delete'),
 ]
