@@ -299,20 +299,25 @@ let page = 1;
 
 const lectureSection = document.querySelector(".post-wrap");
 
-const showList = (lectures) => {
-  let text = ``;
+const showList = (lectures, onlineStatus) => {
+    let text = ``;
 
-  // 강의 목록을 순회하면서 HTML 템플릿 생성
-  lectures.forEach((lecture) => {
-    let tagsHtml = '';
-    lecture.plant_name.forEach((pn) => {
-      tagsHtml += `<span class="post-tag-icon">#${pn}</span>`;
-    });
-    text += `
+    // 강의 목록을 순회하면서 HTML 템플릿 생성
+    lectures.forEach((lecture) => {
+        let tagsHtml = '';
+        lecture.plant_name.forEach((pn) => {
+            tagsHtml += `<span class="post-tag-icon">#${pn}</span>`;
+        });
+
+        // 온라인 상태에 따라 링크 주소 결정
+        const detailLink = onlineStatus ? `/lecture/detail/online?id=${lecture.id}` : `/lecture/detail/offline?id=${lecture.id}`;
+
+        // HTML 템플릿 생성
+        text += `
             <div class="post-container ${lecture.id}">
                 <div class="post-inner">
                     <article class="post">
-                        <a href="/lecture/detail/?id=${lecture.id}" class="post-link"></a>
+                        <a href="${detailLink}" class="post-link"></a>
                         <div class="post-image-wrap_">
                             <div class="post-image-container">
                                 <div class="post-image-inner">
@@ -341,11 +346,10 @@ const showList = (lectures) => {
                 </div>
             </div>
         `;
-
     });
 
     return text;
-}
+};
 
 lectureService.getList(page++, showList).then((text) => {
             lectureSection.innerHTML += text;
