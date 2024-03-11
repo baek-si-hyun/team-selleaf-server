@@ -64,6 +64,7 @@ class SearchView(View):
             lecture['lecture_file_url'] = lecture_file['file_url']
             tags = LecturePlant.objects.filter(lecture_id=lecture['id']).values('plant_name')
             lecture_file['lecture_tags'] = [tag['plant_name'] for tag in tags]
+
             if lecture['lecture_rating'] is None:
                 lecture['lecture_rating'] = 0
 
@@ -95,40 +96,48 @@ class MainView(View):
         start_of_week = today - timedelta(days=today.weekday())
         end_of_week = start_of_week + timedelta(days=6)
         # created_date__range = (start_of_week, end_of_week)
-        knowhows = Knowhow.objects.filter().order_by(
-            'knowhow_count').annotate(member_profile=F('member__memberprofile__file_url'),
-                                      member_name=F('member__member_name')).values('member_profile', 'member_name',
-                                                                                   'id', 'knowhowscrap__status',
-                                                                                   'knowhow_title')[:10]
+        knowhows = Knowhow.objects.filter().order_by('knowhow_count') \
+                       .annotate(member_profile=F('member__memberprofile__file_url'),
+                                 member_name=F('member__member_name')) \
+                       .values('member_profile', 'member_name', 'id', 'knowhow_title')[:10]
+
         for knowhow in knowhows:
             knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
             knowhow['knowhow_file_url'] = knowhow_file['file_url']
+            knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values('status').first()
+            knowhow['knowhow_scrap'] = knowhow_scrap['status'] if knowhow_scrap and 'status' in knowhow_scrap else False
         # 데이터가 너무 적어 하루단위를 일단 일주일 단위로 바꿈
         # start_of_day = datetime(today.year, today.month, today.day, 0, 0, 0)
         # end_of_day = datetime(today.year, today.month, today.day, 23, 59, 59)
         trades = Trade.enabled_objects.filter() \
                      .order_by('-id') \
                      .annotate(trade_category_name=F('trade_category__category_name')) \
-                     .values('id', 'trade_title', 'trade_content', 'trade_price', \
-                             'trade_category_name', 'tradescrap__status')[:6]
+                     .values('id', 'trade_title', 'trade_content', 'trade_price',\
+                             'trade_category_name')[:6]
         for trade in trades:
             trade_file = TradeFile.objects.filter(trade_id=trade['id']).values('file_url').first()
-            trade['trade_file_url'] = trade_file['file_url']
+            trade['trade_file_url'] = trade_file['file_url'] if trade_file else None
+            trade_scrap = TradeScrap.objects.filter(trade_id=trade['id'], member_id=member['id']).values(
+                'status').first()
+            trade['trade_scrap'] = trade_scrap['status'] if trade_scrap and 'status' in trade_scrap else False
+
         posts = Post.objects.filter().order_by(
             'post_count').values()[:3]
 
-        lectures = Lecture.enabled_objects.filter().order_by(
-            '-id').values('id', 'lecture_title', 'lecture_content', 'lecturescrap__status')[:4]
+        lectures = Lecture.enabled_objects.filter().order_by('-id') \
+                       .values('id', 'lecture_title', 'lecture_content', 'lecturescrap__status')[:4]
         for lecture in lectures:
             lecture_file = LecturePlaceFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
             lecture['lecture_file_url'] = lecture_file['file_url']
+            lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values('status').first()
+            lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
+
         # 데이터가 너무 적어 하루단위를 일단 일주일 단위로 바꿈
-        lecture_reviews = LectureReview.objects.filter().order_by(
-            '-id').annotate(lecture_title=F('lecture__lecture_title'), ).values('id', 'lecture_title', 'review_content',
-                                                                                'lecture_id')[:3]
+        lecture_reviews = LectureReview.objects.filter().order_by('-id') \
+                              .annotate(lecture_title=F('lecture__lecture_title')) \
+                              .values('id', 'lecture_title', 'review_content', 'lecture_id')[:3]
         for lecture_review in lecture_reviews:
-            lecture_review_file = Lecture.objects.filter(id=lecture_review['lecture_id']).values(
-                'lectureplacefile__file_url').first()
+            lecture_review_file = Lecture.objects.filter(id=lecture_review['lecture_id']).values('lectureplacefile__file_url').first()
             lecture_review['lecture_file_url'] = lecture_review_file['lectureplacefile__file_url']
 
         context = {
@@ -144,6 +153,7 @@ class MainView(View):
 
 class BestLectureCategoryAPI(APIView):
     def post(self, request):
+        member = request.session['member']
         data = request.data
         catagory = data['category']
         if not catagory == '전체':
@@ -163,6 +173,8 @@ class BestLectureCategoryAPI(APIView):
             best_lecture['lecture_file_url'] = lecture_file['file_url']
             tags = LecturePlant.objects.filter(lecture_id=best_lecture['id']).values('plant_name')
             best_lecture['lecture_tags'] = [tag['plant_name'] for tag in tags]
+            lecture_scrap = LectureScrap.objects.filter(lecture_id=best_lecture['id'], member_id=member['id']).values('status').first()
+            best_lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
             if best_lecture['lecture_rating'] is None:
                 best_lecture['lecture_rating'] = 0
 

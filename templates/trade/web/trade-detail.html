@@ -391,7 +391,7 @@
                     {% endif %}
                     <button class="scrap-button" type="button">
                       <img
-                        src="{% if trade.tradescrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
+                        src="{% if trade.trade_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
                         class="scrap-img"
                       />
                       <span class="scrap-count">0</span>
@@ -623,7 +623,7 @@
                         >
                           <ul class="scroller-list-contents-inner">
                             {% for trade in trades %}
-                                <div class="product-suggestion-each-contents">
+                                <div class="product-suggestion-each-contents {{ trade.id }}">
                                   <article class="product-suggestion-contents-wrap">
                                     <a
                                       class="product-suggestion-contents-overlay"
@@ -645,7 +645,7 @@
                                         type="button"
                                       >
                                         <img
-                                         src="{% if trade.tradescrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                                         src="{% if trade.trade_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                          class="scrap-img"
                                         />
                                       </button>

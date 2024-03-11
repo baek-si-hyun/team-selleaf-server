@@ -8,27 +8,28 @@ from rest_framework.views import APIView
 
 from member.models import Member, MemberProfile, MemberAddress
 from plant.models import Plant
-from trade.models import TradeCategory, Trade, TradeFile, TradePlant
+from trade.models import TradeCategory, Trade, TradeFile, TradePlant, TradeScrap
 
 
 class TradeDetailView(View):
     def get(self, request):
+        member = request.session['member']
         trade_id = request.GET.get('id')
         # upload 페이지에서 사용자가 올린 거래 게시물이 detail 화면에서 보여줘야 하기 때문에 trade 가져옴
         # 방금 올린 거래 게시물
         trade = Trade.objects.filter(id=trade_id) \
-            .values('id', 'trade_title', 'trade_price', 'trade_content', 'member__member_name', 'kakao_talk_url',
-                    'tradescrap__status').first()
+            .values('id', 'trade_title', 'trade_price', 'trade_content', 'member__member_name', 'kakao_talk_url').first()
+        trade_scrap = TradeScrap.objects.filter(trade_id=trade['id'], member_id=member['id']).values('status').first()
+        trade['trade_scrap'] = trade_scrap['status'] if trade_scrap and 'status' in trade_scrap else False
         # 방금 올린 거래 게시물을 작성한 사용자 찾기
         member_search_trade = Trade.objects.filter(id=trade_id).values('member_id').first()
         # 방금 거래 게시물을 올린 사용자가 작성한 다른 거래 게시물
-        trades = Trade.objects.filter(member=member_search_trade['member_id'], status=True).values('id', 'trade_title',
-                                                                                                   'trade_price',
-                                                                                                   'trade_content',
-                                                                                                   'member__member_name',
-                                                                                                   'tradescrap__status')
+        trades = Trade.objects.filter(member=member_search_trade['member_id'], status=True)\
+            .values('id', 'trade_title','trade_price','trade_content','member__member_name')
 
         for td in trades:
+            trade_scrap = TradeScrap.objects.filter(trade_id=td['id'], member_id=member['id']).values('status').first()
+            td['trade_scrap'] = trade_scrap['status'] if trade_scrap and 'status' in trade_scrap else False
             product_img = TradeFile.objects.filter(trade_id=td['id']).values('file_url').first()
             td['product_img'] = product_img['file_url']
             product_plants = TradePlant.objects.filter(trade_id=td['id']).values('plant_name')
@@ -36,11 +37,12 @@ class TradeDetailView(View):
             product_list = [item['plant_name'] for item in product_plants_list]
             td['plant_name'] = product_list
 
+
         context = {
             'trade': trade,
             'trade_files': list(TradeFile.objects.filter(trade_id=trade_id).values('file_url')),
             'trade_file': list(TradeFile.objects.filter(trade_id=trade_id).values('file_url'))[0],
-            'trades': trades,
+            'trades': trades
         }
 
         return render(request, "trade/web/trade-detail.html", context)
@@ -131,6 +133,9 @@ class TradeMainView(View):
             profile = MemberProfile.objects.filter(member_id=trade['member_id']).values('file_url').first()
             trade['trade_file'] = trade_file['file_url']
             trade['profile'] = profile['file_url']
+            trade_scrap = TradeScrap.objects.filter(trade_id=trade['id'], member_id=member['id']).values(
+                'status').first()
+            trade['trade_scrap'] = trade_scrap['status'] if trade_scrap and 'status' in trade_scrap else False
 
             product_plants = TradePlant.objects.filter(trade_id=trade['id']).values('plant_name')
             product_plants_list = list(product_plants)
@@ -152,6 +157,7 @@ class TradeTotalView(View):
 
 class TradeTotalApi(APIView):
     def get(self, request, page):
+        member = request.session['member']
         row_count = 8
         offset = (page - 1) * row_count
         limit = row_count * page
@@ -164,9 +170,13 @@ class TradeTotalApi(APIView):
             profile = MemberProfile.objects.filter(member_id=trade['member_id']).values('file_url').first()
             trade['trade_file'] = trade_file['file_url']
             trade['profile'] = profile['file_url']
+            trade_scrap = TradeScrap.objects.filter(trade_id=trade['id'], member_id=member['id']).values(
+                'status').first()
+            trade['trade_scrap'] = trade_scrap['status'] if trade_scrap and 'status' in trade_scrap else False
 
             product_plants = TradePlant.objects.filter(trade_id=trade['id']).values('plant_name')
             product_plants_list = list(product_plants)
+            print(trade['trade_scrap'])
 
             product_list = [item['plant_name'] for item in product_plants_list]
             trade['plant_name'] = product_list
