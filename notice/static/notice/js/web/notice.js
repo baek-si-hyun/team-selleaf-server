@@ -27,14 +27,22 @@ const callFirstNotices = () => {
 
 // 공지사항의 다음 페이지를 띄워주는 함수
 const callNextNotices = () => {
-  // 현재 스크롤이 화면의 맨 아래에 있는지 검사
+  // 현재 스크롤 위치
+  let currentScroll = document.documentElement.scrollTop;
 
-  // 다음 페이지의 정보를 가져와서 화면에 뿌림
-  noticeService.getList(++noticePage, showNotices).then((notices) => {
-    ul.innerHTML += notices;
+  // 현재 ul 태그의 높이
+  let listHeight = ul.clientHeight;
 
-    // 클릭 이벤트 추가?
-  });
+  // 현재 스크롤이 ul 태그의 끝 부근에 있는지 검사
+  if (currentScroll + 350 >= listHeight) {
+    // 다음 페이지의 정보를 가져와서 화면에 뿌림
+    noticeService.getList(++noticePage, showNotices).then((notices) => {
+      ul.innerHTML += notices;
+
+      // 클릭 이벤트 추가
+      addButtonEvent();
+    });
+  }
 }
 
 // QnA의 첫 페이지를 화면에 띄워주는 함수
@@ -53,21 +61,35 @@ const callFirstQnAs = () => {
 
 // QnA의 다음 페이지를 띄워주는 함수
 const callNextQnAs = () => {
-  // 현재 스크롤이 화면의 맨 아래에 있는지 검사
+  // 현재 스크롤 위치
+  let currentScroll = document.documentElement.scrollTop;
 
-  // 다음 페이지의 정보를 가져와서 화면에 뿌림
-  qnaService.getList(++qnaPage, showQnAs()).then((qnas) => {
-    ul.innerHTML += qnas;
+  // 현재 ul 태그의 높이
+  let listHeight = ul.clientHeight;
 
-    // 클릭 이벤트 추가?
-  });
+  // 현재 스크롤이 ul 태그의 끝 부근에 있는지 검사
+  if (currentScroll + 350 >= listHeight) {
+    // 다음 페이지의 정보를 가져와서 화면에 뿌림
+    qnaService.getList(++qnaPage, showQnAs).then((qnas) => {
+      ul.innerHTML += qnas;
+
+      // 클릭 이벤트 추가
+      addButtonEvent();
+    });
+  }
 }
 
 // 페이지가 열렸을 때 어떤 버튼이 눌려있는지에 따라 다른 정보(공지사항 or QnA) 출력
 if (noticeButton.checked) {
   callFirstNotices();
+
+  // 화면 맨 아래로 스크롤을 내리면 다음 공지사항을 띄워주는 이벤트 추가
+  window.addEventListener('scroll', callNextNotices);
 } else {
   callFirstQnAs();
+
+  // 화면 맨 아래로 스크롤을 내리면 다음 QnA를 띄워주는 이벤트 추가
+  window.addEventListener('scroll', callNextQnAs);
 }
 
 // 공지사항 버튼을 클릭했을 때의 이벤트
