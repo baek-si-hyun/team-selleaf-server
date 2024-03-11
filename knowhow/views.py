@@ -73,9 +73,8 @@ class KnowhowDetailView(View):
     def get(self, request):
         knowhow = Knowhow.objects.get(id=request.GET['id'])
         knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')
-        knowhow_likes = KnowhowLike.objects.filter(knowhow_id=knowhow.id)
         reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow.id).values('id').count()
-
+        member_profile = MemberProfile.objects.filter(id=knowhow.member_id).values('file_url')
         knowhow.knowhow_count += 1
         knowhow.save(update_fields=['knowhow_count'])
 
@@ -87,7 +86,8 @@ class KnowhowDetailView(View):
             'knowhow_files': knowhow_files,
             'knowhow_file': knowhow_file,
             'knowhow_tags': knowhow_tags,
-            'reply_count': reply_count
+            'reply_count': reply_count,
+            'member_profile': member_profile
         }
 
         return render(request, 'community/web/knowhow/knowhow-detail.html', context)

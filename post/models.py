@@ -60,6 +60,7 @@ class PostTag(Tag):
 class PostCategory(Period):
     category_name = models.CharField(max_length=50, null=False)
 
+
     class Meta:
         db_table = 'tbl_post_category'
 

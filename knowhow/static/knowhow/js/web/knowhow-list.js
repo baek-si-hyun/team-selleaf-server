@@ -8,7 +8,7 @@ const showList = (knowhows) => {
 
     knowhows.forEach((knowhow) => {
         text += `
-            <a href="/knowhow/detail/?id=${knowhow.id}">
+            <a href="/knowhow/detail/?id=${knowhow.id}" class="knowhow-content-wrap">
                 <div class="content-item-wrap">
                   <div class="content-item-container">
                     <div class="content-img-box">
