@@ -206,7 +206,7 @@ const createBestLecture = (bestLectures) => {
         />
         <button class="scrap-button" style="top:1px">
           <img
-              src="${bestLecture.lecturescrap__status ? '/static/public/web/images/common/scrap-on.png' : '/static/public/web/images/common/scrap-off.png'}"
+              src="${bestLecture.lecture_scrap ? '/static/public/web/images/common/scrap-on.png' : '/static/public/web/images/common/scrap-off.png'}"
               class="scrap-img"
               width="24px"
               height="24px"
