@@ -208,7 +208,7 @@
   transform: scale(1.05);
 }
 .knowhow-content-wrap {
-  /*width: 30%;*/
+  width: 100%;
 }
 
 .content-item-wrap {
@@ -386,9 +386,9 @@
   justify-content: center;
   margin-top: 8px;
 }
-.content-data-box span + span {
-  margin-right: 0;
-}
+/*.content-data-box span + span {*/
+/*  margin-right: 0;*/
+/*}*/
 .scrap-data {
   font-size: 14px;
   line-height: 18px;
@@ -432,7 +432,8 @@
   margin-right: 8px;
   color: #828c94;
 }
-.content-data:last-child:before {
+
+.count-content:before {
   content: "";
   position: absolute;
   top: 0;
@@ -444,6 +445,33 @@
   border-radius: 100%;
   background: #828c94;
 }
+
+.like-content:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -4px;
+  bottom: 0;
+  width: 2px;
+  height: 2px;
+  margin: auto;
+  border-radius: 100%;
+  background: #828c94;
+}
+
+
+/*.content-data:last-child:before {*/
+/*  content: "";*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  left: -4px;*/
+/*  bottom: 0;*/
+/*  width: 2px;*/
+/*  height: 2px;*/
+/*  margin: auto;*/
+/*  border-radius: 100%;*/
+/*  background: #828c94;*/
+/*}*/
 .scrap-popup-wrap {
   position: fixed;
   width: 470px;

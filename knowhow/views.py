@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django.db import transaction
-from django.db.models import F, Count
+from django.db.models import F, Count, Q
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views import View
@@ -104,23 +104,148 @@ class KnowhowListView(View):
         return render(request, 'community/web/knowhow/knowhow.html', context)
 
 class KnowhowListApi(APIView):
-    def get(self, request, page):
+    def get(self, request, page, sorting, filters, type):
         row_count = 6
         offset = (page - 1) * row_count
         limit = row_count * page
 
+        print(type)
 
-        knowhows = Knowhow.objects.annotate(member_name=F('member__member_name'))\
-            .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id')
+        condition = Q()
+        sort1 = '-id'
+        sort2 = '-id'
 
+        if type == '식물 키우기':
+            condition |= Q(knowhowcategory__category_name__contains='식물 키우기')
+        elif type == '제품 추천':
+            condition |= Q(knowhowcategory__category_name__contains='제품 추천')
+        elif type == '스타일링':
+            condition |= Q(knowhowcategory__category_name__contains='스타일링')
+        elif type == '전체':
+            condition |= Q()
+
+        filters = filters.split(',')
+        for filter in filters:
+            # print(filter.replace(',', ''))
+            if filter.replace(',', '') == '관엽식물':
+                condition |= Q(knowhowplant__plant_name__contains='관엽식물')
+
+            elif filter.replace(',', '') == '침엽식물':
+                condition |= Q(knowhowplant__plant_name__contains='침엽식물')
+
+            elif filter.replace(',', '') == '희귀식물':
+                condition |= Q(knowhowplant__plant_name__contains='희귀식물')
+
+            elif filter.replace(',', '') == '다육':
+                condition |= Q(knowhowplant__plant_name__contains='다육')
+
+            elif filter.replace(',', '') == '선인장':
+                condition |= Q(knowhowplant__plant_name__contains='선인장')
+
+            elif filter.replace(',', '') == '기타':
+                condition |= Q(knowhowplant__plant_name__contains='기타')
+
+            elif filter.replace(',', '') == '전체':
+                condition = Q()
+
+        print(condition)
+
+        # if sorting == '최신순':
+        #     columns = [
+        #         'knowhow_title',
+        #         'member_name',
+        #         'knowhow_count',
+        #         'id',
+        #         'member_id'
+        #     ]
+        #     knowhows = Knowhow.objects.select_related('knowhowscrap').filter(condition) \
+        #         .annotate(member_name=F('member__member_name')) \
+        #         .values(*columns) \
+        #         .annotate(scrap_count=Count('knowhowscrap')) \
+        #         .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'scrap_count')\
+        #         .order_by('-id').distinct()
+        #
+        # elif sorting == '인기순':
+        #     columns = [
+        #         'knowhow_title',
+        #         'member_name',
+        #         'knowhow_count',
+        #         'id',
+        #         'member_id'
+        #     ]
+        #     # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
+        #     # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
+        #     knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition) \
+        #         .annotate(member_name=F('member__member_name')) \
+        #         .values(*columns) \
+        #         .annotate(like_count=Count('knowhowlike'), scrap_count=Count('knowhowscrap')) \
+        #         .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count', 'scrap_count').order_by(
+        #         '-like_count', '-knowhow_count').distinct()
+        #
+        #     # for knowhow in knowhows:
+        #     #     print(knowhow['id'], knowhow['like_count'], sep=", ")
+        #
+        # elif sorting == "스크랩순":
+        #     columns = [
+        #         'knowhow_title',
+        #         'member_name',
+        #         'knowhow_count',
+        #         'id',
+        #         'member_id'
+        #     ]
+        #     knowhows = Knowhow.objects.select_related('knowhowscrap').filter(condition) \
+        #         .annotate(member_name=F('member__member_name')) \
+        #         .values(*columns) \
+        #         .annotate(scrap_count=Count('knowhowscrap')) \
+        #         .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'scrap_count').order_by(
+        #         '-scrap_count', '-id').distinct()
+
+            # for knowhow in knowhows:
+            #     print(knowhow['id'], knowhow['scrap_count'], sep=", ")
+
+        # print(knowhows)
+
+        if sorting == '최신순':
+            sort1 = '-id'
+            sort2 = '-created_date'
+
+        elif sorting == '인기순':
+            sort1 = '-like_count'
+            sort2 = '-knowhow_count'
+
+        elif sorting == "스크랩순":
+            sort1 = '-scrap_count'
+            sort2 = '-id'
+
+        columns = [
+            'knowhow_title',
+            'member_name',
+            'knowhow_count',
+            'id',
+            'member_id'
+        ]
+
+        # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
+        # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
+        knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition) \
+            .annotate(member_name=F('member__member_name')) \
+            .values(*columns) \
+            .annotate(like_count=Count('knowhowlike'), scrap_count=Count('knowhowscrap')) \
+            .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count',
+                    'scrap_count')\
+            .order_by(sort1, sort2).distinct()
+
+        # knowhow에 knowhow_file을 가상 컬럼을 만들어서 하나씩 추가해줌
         for knowhow in knowhows:
             knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
             profile = MemberProfile.objects.filter(member_id=knowhow['member_id']).values('file_url').first()
             knowhow['knowhow_file'] = knowhow_file['file_url']
             knowhow['profile'] = profile['file_url']
+
         # print(knowhows)
 
         return Response(knowhows[offset:limit])
+
 
 class KnowhowReplyWriteApi(APIView):
     @transaction.atomic
@@ -150,7 +275,7 @@ class KnowhowReplyListApi(APIView):
         like_count = KnowhowLike.objects.filter(knowhow_id=knowhow_id).count()
         scrap_count = KnowhowScrap.objects.filter(knowhow_id=knowhow_id).count()
         knowhow_date = Knowhow.objects.filter(id=knowhow_id).values('created_date')
-        print(reply_count)
+        # print(reply_count)
 
         replies = KnowhowReply.objects\
             .filter(knowhow_id=knowhow_id).annotate(member_name=F('member__member_name'))\
@@ -172,7 +297,7 @@ class KnowhowReplyApi(APIView):
         return Response('success')
 
     def patch(self, request, reply_id):
-        print(request)
+        # print(request)
         reply_content = request.data['reply_content']
         updated_date = timezone.now()
 

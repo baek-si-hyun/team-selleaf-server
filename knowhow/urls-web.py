@@ -13,7 +13,7 @@ urlpatterns = [
     path('detail/', KnowhowDetailView.as_view(), name='detail'),
     # 노하우 목록
     path('list/', KnowhowListView.as_view(), name='list'),
-    path('list/<int:page>', KnowhowListApi.as_view(), name='list'),
+    path('list/<int:page>/<str:filters>/<str:sorting>/<str:type>', KnowhowListApi.as_view(), name='list'),
 
     # 댓글
     path('replies/write/', KnowhowReplyWriteApi.as_view(), name='reply_write'),

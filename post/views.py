@@ -40,7 +40,7 @@ class PostCreateView(View):
 
         # 포스트 태그
         post_tag = {
-            'tag_name': data['post-tag'],
+            'tag_name': data['post-tags'],
             'post': post_data
         }
 
@@ -58,3 +58,7 @@ class PostCreateView(View):
             # print(key)
             PostFile.objects.create(post=post_data, file_url=files[key])
         return redirect(f'/post/detail/?id={post_data.id}')
+
+class PostDetailView(View):
+    def get(self):
+        pass
