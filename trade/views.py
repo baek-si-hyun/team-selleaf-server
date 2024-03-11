@@ -176,7 +176,6 @@ class TradeTotalApi(APIView):
 
             product_plants = TradePlant.objects.filter(trade_id=trade['id']).values('plant_name')
             product_plants_list = list(product_plants)
-            print(trade['trade_scrap'])
 
             product_list = [item['plant_name'] for item in product_plants_list]
             trade['plant_name'] = product_list

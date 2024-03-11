@@ -260,4 +260,3 @@ const bestLecturecategoryHandler = async (e) => {
 bestLecturecategoryHandler()
 realmainBestproductPhotoCategoryUl.addEventListener("click", bestLecturecategoryHandler);
 
-

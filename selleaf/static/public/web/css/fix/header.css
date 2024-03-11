@@ -1117,3 +1117,7 @@ input::-webkit-input-placeholder {
   overflow: hidden;
   margin-left: 8px;
 }
+
+.show-modal{
+  display: block;
+}
