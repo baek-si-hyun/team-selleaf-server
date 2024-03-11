@@ -14,8 +14,10 @@
               <div class="content-container">
                 <div class="content-sub-description-box">
                   <div class="content-sub-description">
-                    <button class="content-top-btn">식물 키우기</button>
-                    <button class="content-top-btn">관엽식물</button>
+                    <button class="content-top-btn">{{ post_category.category_name }}</button>
+                      {% for plant in post_plant %}
+                          <button class="content-top-btn">{{ plant.plant_name }}</button>
+                      {% endfor %}
                   </div>
                 </div>
                 <div>
@@ -24,7 +26,7 @@
                       <div class="img-box">
                         <div class="img-inner">
                           <img
-                            src="../../../staticfiles/images/blank-image.png"
+                            src="/upload/{{ post_file.file_url }}"
                             alt=""
                             class="content-img"
                           />

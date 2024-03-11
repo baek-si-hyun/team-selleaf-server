@@ -96,6 +96,7 @@ sortSelecter.addEventListener("click", (e) => {
   }
   childObserver();
 });
+
 const fieldSelecter = document.querySelector(".field-selecter");
 fieldSelecter.addEventListener("click", (e) => {
   const modalMenuBtns = fieldSelecter.querySelectorAll(".modal-menu-btn");
