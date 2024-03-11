@@ -24,7 +24,6 @@ const tradeScrapService = (() => {
       body: JSON.stringify({'trade_id': tradeId})
     });
   }
-
   return {update: update}
 })()
 
