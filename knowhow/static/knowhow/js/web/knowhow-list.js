@@ -134,7 +134,7 @@ const showList = (knowhows) => {
                         >
                           <span class="scrap-icon-box">
                             <img
-                              src="../../../staticfiles/images/scrap-off.png"
+                              src=""
                               alt=""
                             />
                           </span>
@@ -147,10 +147,29 @@ const showList = (knowhows) => {
                     <div class="content-bottom-box">
                       <div class="content-uploader">
                         <div class="uploader-img-box">
+            `;
+            if(knowhow.profile.includes('http://') || knowhow.profile.includes('https://')) {
+                text += `
                           <img
                             src="${knowhow.profile}"
                             class="uploader-img"
                           />
+                         `;
+            }else if (knowhow.profile.includes('file/20')) {
+                text += `
+                            <img src="/upload/${knowhow.profile}"
+                                 class="uploader-img"
+                              />
+                        `;
+            }else {
+                        `
+                            <img src="/selleaf/static/public/web/images/common/selleaf.png"
+                                 class="uploader-img"
+                              />
+                        `;
+            }
+
+            text += `
                         </div>
                         <span class="uploader-name">${knowhow.member_name}</span>
                       </div>
@@ -169,7 +188,7 @@ const showList = (knowhows) => {
                   </div>
                 </div>
             </a>
-          `;
+            `;
     });
 
     return text;
