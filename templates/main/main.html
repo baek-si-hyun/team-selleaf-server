@@ -15,17 +15,17 @@
         <div class="realmain-wrap-container">
           <div class="realmain-image-wrap">
             <section class="realmain-image-section">
-              <a class="realmain-image-firsta"         href="/knowhow/detail/?id={{ knowhow.id }}">
+              <a class="realmain-image-firsta" href="/knowhow/detail/?id={{ knowhow.id }}">
                 <img
                     class="realmain-image"
-                          src="/upload/{{ best_knowhow.knowhow_file_url }}"
+                    src="/upload/{{ best_knowhow.knowhow_file_url }}"
                 />
                 <div class="realmain-image-content">
                   <p class="realmain-image-contentp">최고의 작품😊</p>
                   <span class="realmain-image-contentspan">
                       <img
                           class="realmain-image-contentspan-image"
-                                 src="/upload/{{ best_knowhow.member_profile }}"
+                          src="/upload/{{ best_knowhow.member_profile }}"
                       />
                       <span class="realmain-image-contentspan-span"
                       >{{ best_knowhow.member_name }}</span
@@ -128,6 +128,7 @@
                                     src="
                                         
                                         
+                                        
                                         {% if knowhow.knowhow_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                     width="24"
                                     height="24"
@@ -216,6 +217,7 @@
                                   src="
                                       
                                       
+                                      
                                       {% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                   width="24"
                                   height="24"
@@ -291,7 +293,8 @@
                             class="realmain-lecture-scrapSpan popularcontent-scrapSpan"
                         >
                           <img
-                              src="{% if post.post_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                              src="
+                                  {% if post.post_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                               width="24"
                               height="24"
                               class="scrap-img popularcontent-scrapoff"
@@ -366,6 +369,7 @@
                                 >
                                   <img
                                       src="
+                                          
                                           
                                           
                                           {% if trade.trade_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
