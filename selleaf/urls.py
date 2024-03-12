@@ -7,7 +7,7 @@ from main.views import MainView, KnowhowScrapAPI, TradeScrapAPI, LectureScrapAPI
     SearchView, SearchAPI, SearchHistoryAPI
 from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView, WriteNoticeView, \
     NoticeManagementView, UpdateNoticeView, DeleteNoticeView, WriteQnAView, QnAManagementView, \
-    UpdateQnAView, DeleteQnAView, MemberInfoAPI, TeacherManagementView
+    UpdateQnAView, DeleteQnAView, MemberInfoAPI, TeacherManagementView, TeacherInfoAPI
 
 urlpatterns = [
     path('', MainView.as_view()),
@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/member/', MemberManagementView.as_view(), name='manager-member'),
     path('admin/member/<int:page>', MemberInfoAPI.as_view(), name='member-info'),
     path('admin/teacher/', TeacherManagementView.as_view(), name='manager-teacher'),
+    path('admin/teacher/<int:page>', TeacherInfoAPI.as_view(), name='teacher-info'),
     path('admin/notice/', NoticeManagementView.as_view(), name='manager-notice'),
     path('admin/notice/write/', WriteNoticeView.as_view(), name='notice-write'),
     path('admin/notice/update/', UpdateNoticeView.as_view(), name='notice-update'),

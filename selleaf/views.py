@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import transaction
 from django.db.models import F, CharField, Value
 from django.db.models.functions import Concat
@@ -145,6 +147,46 @@ class TeacherManagementView(View):
 
         # 위의 dict 데이터를 teacher.html에 실어서 보냄
         return render(request, 'manager/teacher/teacher.html', context)
+
+
+class TeacherInfoAPI(APIView):
+    def get(self, request, page):
+        # 한 페이지에 띄울 강사 수
+        row_count = 10
+
+        # 한 페이지에 표시할 강사 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 강사 정보 표시에 필요한 tbl_member와 tbl_teacher의 컬럼들
+        columns = [
+            'id',
+            'teacher_name',
+            'teacher_info',
+            'lecture_plan',
+            'created_date',
+        ]
+
+        # 최근에 승인된 순으로 강사 10명의 정보를 가져옴
+        teachers = Teacher.objects.annotate(teacher_name=F('member__member_name'))\
+            .values(*columns).order_by('-id')[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Member.objects.filter()[limit:limit + 1].exists()
+
+        # 강사 승인 날짜(created_date)를 YYYY-MM-DD 형식으로 변환
+        date_str = teachers.get('created_date')
+
+        teachers['created_date'] = datetime.strptime(date_str).strftime("%Y-%m-%d")
+
+        # 완성된 강사정보 목록
+        member_info = {
+            'teachers': teachers,
+            'hasNext': has_next_page,
+        }
+
+        # 요청한 데이터 반환
+        return Response(member_info)
 
 
 # 게시물 관리

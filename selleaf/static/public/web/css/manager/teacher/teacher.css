@@ -604,9 +604,10 @@ div.teacher-info{
     font-weight: 400;
     font-size: 15px;
     line-height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 div.content-open-wrap{
