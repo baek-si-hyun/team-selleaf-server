@@ -8,7 +8,7 @@ from main.views import MainView, KnowhowScrapAPI, TradeScrapAPI, LectureScrapAPI
 from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView, WriteNoticeView, \
     NoticeManagementView, UpdateNoticeView, DeleteNoticeView, WriteQnAView, QnAManagementView, \
     UpdateQnAView, DeleteQnAView, MemberInfoAPI, TeacherManagementView, TeacherInfoAPI, TeacherEntryManagementView, \
-    TeacherEntriesInfoAPI
+    TeacherEntriesInfoAPI, DeleteManyNoticeView
 
 urlpatterns = [
     path('', MainView.as_view()),
@@ -36,6 +36,7 @@ urlpatterns = [
     path('admin/notice/write/', WriteNoticeView.as_view(), name='notice-write'),
     path('admin/notice/update/', UpdateNoticeView.as_view(), name='notice-update'),
     path('admin/notice/delete/', DeleteNoticeView.as_view(), name='notice-delete'),
+    path('admin/notice/delete/<str:notice_ids>', DeleteManyNoticeView.as_view(), name='many-notice-delete'),
     # QnA 관리
     path('admin/qna/', QnAManagementView.as_view(), name='manager-qna'),
     path('admin/qna/write/', WriteQnAView.as_view(), name='qna-write'),

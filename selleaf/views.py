@@ -420,6 +420,26 @@ class DeleteNoticeView(View):
         return redirect('manager-notice')
 
 
+class DeleteManyNoticeView(APIView):
+    # 한 번에 여러 개의 공지사항을 삭제(소프트 딜리트)하는 뷰
+    def patch(self, request, notice_ids):
+        # 요청 경로에 담긴 notice_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        notice_ids = notice_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for notice_id in notice_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_notice에서 해당 id를 가진 객체를 가져옴
+            if notice_id != '':
+                notice = Notice.objects.get(id=notice_id)
+
+                # 해당 객체의 status를 0으로 만들고, 변경 시간과 같이 저장
+                notice.notice_status = 0
+                notice.updated_date = timezone.now()
+                notice.save(update_fields=["notice_status", "updated_date"])
+
+        return Response('성공')
+
+
 # QnA 관리
 class QnAManagementView(View):
     # QnA 내역 페이지 이동 뷰
