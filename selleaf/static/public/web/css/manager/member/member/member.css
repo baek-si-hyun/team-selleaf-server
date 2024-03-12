@@ -498,11 +498,16 @@ div.category-benner{
     border-color: #e6e6e7;
 }
 
+div.category-wrap {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 1fr;
+    width: 880px;
+}
+
 div.category-inner{
-    width: 100px;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    flex-shrink: 0;
     display: flex;
     font-weight: 500;
     font-size: 13px;
@@ -554,7 +559,6 @@ ul.list-content{
     flex-direction: column;
     display: flex;
     margin-top: 8px;
-    grid-column: 1/-1;
 }
 
 li.list-content{
@@ -569,46 +573,32 @@ li.list-content{
     border-color: #f3f3f4;
 }
 
-button.text-left{
-    text-align: left;
-    width: 280px;
-    display: block;
-    margin: -180px;
-}
-
-div.list-content-wrap{
-    row-gap: 2px;
-    flex-direction: column;
-    display: flex;
+a.member-info-wrap{
     color: #333334;
     fill: #333334;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 1fr;
+    width: 880px;
 }
 
-div.list-content-container{
-    gap: 12px;
-    display: flex;
+a.member-info-wrap:hover {
+    opacity: 0.7;
 }
 
-div.list-content-inner{
-    flex-direction: column;
-    display: flex;
-}
-
-div.content-name{
-    gap: 2px;
-    display: flex;
-}
-
-p.content-name{
+div.member-info{
     overflow: hidden;
     display: -webkit-box;
     word-break: break-word;
     word-wrap: break-word;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
-    font-weight: 500;
-    font-size: 18px;
+    font-weight: 400;
+    font-size: 15px;
     line-height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 div.content-open-wrap{
@@ -704,6 +694,22 @@ button.delete-button{
     height: 40px;
     display: flex;
     border-color: #e6e6e7;
+    color: #fff;
+    fill: #fff;
+    background-color: #c06888;
+}
+
+button.delete-button:not(:disabled):hover {
+    opacity: 0.7;
+}
+
+button.delete-button:not(:disabled) path {
+    fill: #fff;
+}
+
+button.delete-button:disabled {
+    cursor: default;
+    background-color: #f5f5f5;
 }
 
 svg.edit-button{
@@ -874,6 +880,11 @@ button.modal-confirm{
     color: #fff;
     fill: #fff;
     background-color: #c06888;
+}
+
+button.modal-cancel:hover,
+button.modal-confirm:hover {
+    opacity: 0.7;
 }
 
 div.delete-modal-bgcolor{

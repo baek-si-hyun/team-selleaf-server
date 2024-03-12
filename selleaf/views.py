@@ -1,12 +1,16 @@
 from django.db import transaction
+from django.db.models import F, CharField, Value
+from django.db.models.functions import Concat
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from member.models import Member
 from notice.models import Notice
 from qna.models import QnA
+from teacher.models import Teacher
 
 
 # 관리자 로그인
@@ -62,34 +66,125 @@ class ManagerLogoutView(View):
 class MemberManagementView(View):
     # 회원관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 회원 정보를 가지고 가야됨(context)
-        return render(request, 'manager/member/member/member.html')
+        # 현재 가입한 회원 수(휴면 + 비휴면)
+        member_count = Member.objects.count()
 
-    # 회원 삭제(status 변경) 눌렀을 때, 해당 정보를 업데이트하기 위한 뷰
-    def post(self, request):
-        return render(request, 'manager/member/member/member.html')
+        # 화면에 보내기 전에 dict 데이터로 만들어 줌
+        context = {'member_count': member_count}
+
+        # member.html을 불러오면서 화면에 회원 수 전달
+        return render(request, 'manager/member/member/member.html',context)
+
+
+class MemberInfoAPI(APIView):
+    def get(self, request, page):
+        # 한 페이지에 띄울 회원 수
+        row_count = 10
+
+        # 한 페이지에 표시할 회원 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 회원 정보 표시에 필요한 tbl_member와 tbl_member_address의 컬럼들
+        columns = [
+            'id',
+            'member_name',
+            'member_email',
+            'member_address',
+            'member_type',
+            'member_status'
+        ]
+
+        # 최근에 가입한 순서대로 10명의 회원을 가져옴
+        # 기존에 tbl_member에 없던 주소는 tbl_member_address에서 가져와서 문자열 합치기
+        members = Member.objects\
+                      .annotate(member_address=Concat(F('memberaddress__address_city'),
+                                                      Value(" "),
+                                                      F('memberaddress__address_district'),
+                                                      output_field=CharField()
+                                                      )
+                                )\
+                      .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Member.objects.filter()[limit:limit + 1].exists()
+
+        # 완성된 회원정보 목록
+        member_info = {
+            'members': members,
+            'hasNext': has_next_page,
+        }
+
+        return Response(member_info)
 
 
 # 회원 상세 정보 관리(특정 회원 한 명)
-class MemberDetailManagementView(View):
-    # 특정 회원의 강의 구매 내역 페이지로 이동하기 위한 뷰
-    # 결제 내역 관리 페이지가 따로 있기 때문에 상의 후 삭제할지 말지 결정
-    def get(self, request):
-        # 특정 회원의 정보와 강의 구매 내역을 join 해서 가지고 가야됨
-        return render(request, 'manager/member/member-detail/member-detail.html')
+# class MemberDetailManagementView(View):
+#     # 특정 회원의 강의 구매 내역 페이지로 이동하기 위한 뷰
+#     # 결제 내역 관리 페이지가 따로 있기 때문에 상의 후 삭제할지 말지 결정
+#     def get(self, request):
+#         # 특정 회원의 정보와 강의 구매 내역을 join 해서 가지고 가야됨
+#         return render(request, 'manager/member/member-detail/member-detail.html')
 
 
 # 강사 관리
 class TeacherManagementView(View):
     # 강사 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 강사 정보를 가져가야 됨
-        return render(request, 'manager/teacher/teacher.html')
+        # 현재 강사 수
+        teachers = Teacher.enabled_objects.count()
 
-    # 강사 정보(status) 변경 후, 해당 정보를 업데이트하기 위한 뷰
-    def post(self, request):
-        # status를 변경할 강사들의 정보를 가져와야 됨
-        return render(request, 'manager/teacher/teacher.html')
+        # 블랙 리스트 수 - 임시로 회원 테이블의 휴면 중인 회원 가져옴, 나중에 별도의 status 필요
+        black_lists = Teacher.objects.filter(teacher_status=0).count()
+
+        # 강사 수를 화면에서 쓸 수 있게 dict 형태로 만들어줌
+        context = {
+            "teachers": teachers,
+            "black_lists": black_lists
+        }
+
+        # 위의 dict 데이터를 teacher.html에 실어서 보냄
+        return render(request, 'manager/teacher/teacher.html', context)
+
+
+class TeacherInfoAPI(APIView):
+    # 강사 정보를 가져오는 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 강사 수
+        row_count = 10
+
+        # 한 페이지에 표시할 강사 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 강사 정보 표시에 필요한 tbl_member와 tbl_teacher의 컬럼들
+        columns = [
+            'id',
+            'teacher_name',
+            'teacher_info',
+            'lecture_plan',
+            'created_date',
+        ]
+
+        # 최근에 승인된 순으로 강사 10명의 정보를 가져옴
+        teachers = Teacher.objects.annotate(teacher_name=F('member__member_name'))\
+            .values(*columns).order_by('-id')[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Teacher.objects.filter()[limit:limit + 1].exists()
+
+        # 각각의 강사 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for teacher in teachers:
+            teacher['created_date'] = teacher['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 강사정보 목록
+        member_info = {
+            'teachers': teachers,
+            'hasNext': has_next_page,
+        }
+
+        # 요청한 데이터 반환
+        return Response(member_info)
 
 
 # 게시물 관리
