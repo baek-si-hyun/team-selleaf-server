@@ -12,6 +12,7 @@ urlpatterns = [
 
     # 거래 게시물 신고 뷰
     path('report/', TradeReportView.as_view(), name='report'),
+
     # 거래 게시물 수정 페이지
     path('update/', TradeUpdateView.as_view(), name='update'),
 
@@ -23,7 +24,7 @@ urlpatterns = [
 
     # 전체 거래 게시물 보기 페이지
     path('total/', TradeTotalView.as_view(), name='total'),
-    path('total/<int:page>', TradeTotalApi.as_view(), name='total'),
+    path('total/<int:page>/<str:filters>/<str:sorting>/<str:type>', TradeTotalApi.as_view(), name='total'),
 
     # 거래 게시물 작성 페이지
     path('upload/', TradeUploadView.as_view(), name='upload'),

@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
-
+{% load socialaccount %}
 {% block static %}
   <link rel="stylesheet" href="{% static 'main/css/search.css' %}"/>
 {% endblock %}
@@ -47,7 +47,7 @@
                               >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
-                                    src="{% if knowhow.knowhowscrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                                    src="{% if knowhow.knowhow_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                     width="24"
                                     height="24"
                                     class="scrap-img"
@@ -109,7 +109,7 @@
               >
                 <strong
                     class="realmain-stronglatter popularcontent-stronglatter"
-                >게시물 <span class="search-count">1533</span></strong>
+                >게시물 <span class="search-count">{{ count.post_count }}</span></strong>
               </div>
             </div>
             <div class="realmain-lecture-seeMore-wrap">
@@ -119,17 +119,17 @@
             </div>
           </div>
           <div class="realmain-lecture-photoWrap popularcontent-photoWrap">
-            {% if '1234' %}
+            {% if posts %}
               <div class="realmain-lecture-photoDiv popularcontent-photoDiv">
-                {% for i in '12345678' %}
+                {% for post in posts %}
                   <div
-                      class="realmain-lecture-photoEachdiv popularcontent-photoEachdiv"
+                      class="realmain-lecture-photoEachdiv popularcontent-photoEachdiv {{ post.id }}"
                   >
                     <div
                         class="realmain-lecture-photoEachphoto popularcontent-photoEachphoto"
                     >
                       <img
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
+                          src="/upload/{{ post.post_file_url }}"
                           class="realmain-lecture-photo popularcontent-photo"
                       />
                       <div class="realmain-lecture-why popularcontent-why">
@@ -147,7 +147,8 @@
                             class="realmain-lecture-scrapSpan popularcontent-scrapSpan"
                         >
                           <img
-                              src="{% static 'public/web/images/common/scrap-off.png' %}"
+                              src="
+                                  {% if post.post_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                               width="24"
                               height="24"
                               class="scrap-img popularcontent-scrapoff"
@@ -164,14 +165,13 @@
                       >
                       <span
                           class="realmain-lecture-explanationSpan popularcontent-explanationSpan"
-                      >콘텐츠명</span
-                      >
-                        서브타이틀
+                      >{{ post.post_title }}</span>
+                        {{ post.post_content }}
                       </p>
                     </div>
                     <a
                         class="realmain-lecture-explanationA popularcontent-explanationA"
-                        href="#"
+                        href="/post/detail/?id={{ post.id }}"
                     ></a>
                   </div>
                 {% endfor %}
@@ -222,7 +222,8 @@
                                       style="top: 3px; right:8px"
                                   >
                                     <img
-                                        src="{% if trade.tradescrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                                        src="
+                                            {% if trade.trade_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                         class="scrap-img"
                                         width="24"
                                         height="24"
@@ -289,7 +290,8 @@
                         />
                         <button class="scrap-button" style="top:1px">
                           <img
-                              src="{% if lecture.lecturescrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                              src="
+                                  {% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                               class="scrap-img"
                               width="24px"
                               height="24px"
@@ -366,5 +368,6 @@
   <script>
     const csrf_token = '{{ csrf_token }}';
   </script>
+  <script src="{% static 'main/js/scrap-module.js' %}"></script>
   <script src="{% static 'main/js/search.js' %}"></script>
 {% endblock %}

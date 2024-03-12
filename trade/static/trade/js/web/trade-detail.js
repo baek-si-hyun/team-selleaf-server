@@ -11,32 +11,65 @@ const countUpdate = () => {
     scrapCount.innerText = count;
   });
 }
-
 var xdegree = 0;
-nextButton.addEventListener("click", (e) => {
-  xdegree -= 712;
-  with (target.style) {
-    transform = `translateX(${xdegree}px)`;
-    transition = "transform 0.3s ease 0s";
-  }
-  xdegree === -2136
-    ? (nextButton.style.display = "none")
-    : (nextButton.style.display = "block");
-  xdegree === -712 && (prevButton.style.display = "block");
+// nextButton.addEventListener("click", (e) => {
+//   xdegree -= 712;
+//   with (target.style) {
+//     transform = `translateX(${xdegree}px)`;
+//     transition = "transform 0.3s ease 0s";
+//   }
+//   xdegree === -2136
+//     ? (nextButton.style.display = "none")
+//     : (nextButton.style.display = "block");
+//   xdegree === -712 && (prevButton.style.display = "block");
+//
+//   console.log(xdegree);
+// });
+//
+// prevButton.addEventListener("click", (e) => {
+//   xdegree += 712;
+//   with (target.style) {
+//     transform = `translateX(${xdegree}px)`;
+//     transition = "transform 0.3s ease 0s";
+//   }
+//   xdegree === -1424 && (nextButton.style.display = "block");
+//   xdegree === 0 && (prevButton.style.display = "none");
+//   console.log(xdegree);
+// });
+if( user_trade_count / 3 > 1) {
+  nextButton.addEventListener("click", (e) => {
+    xdegree -= 712;
+    with (target.style) {
+      transform = `translateX(${xdegree}px)`;
+      transition = "transform 0.3s ease 0s";
+    }
 
-  console.log(xdegree);
-});
+    if (xdegree <= Math.floor(user_trade_count / 3) * -712) {
+      nextButton.style.display = "none";
+    }
+    prevButton.style.display = "block";
 
-prevButton.addEventListener("click", (e) => {
-  xdegree += 712;
-  with (target.style) {
-    transform = `translateX(${xdegree}px)`;
-    transition = "transform 0.3s ease 0s";
-  }
-  xdegree === -1424 && (nextButton.style.display = "block");
-  xdegree === 0 && (prevButton.style.display = "none");
-  console.log(xdegree);
-});
+    console.log(xdegree);
+  });
+
+  prevButton.addEventListener("click", (e) => {
+    xdegree += 712;
+    with (target.style) {
+      transform = `translateX(${xdegree}px)`;
+      transition = "transform 0.3s ease 0s";
+    }
+
+    if (xdegree >= 0) {
+      prevButton.style.display = "none";
+    }
+    nextButton.style.display = "block";
+
+    console.log(xdegree);
+  });
+}
+else{
+  nextButton.style.display = "none";
+}
 
 //스크랩 버튼
 const scrapPopup = document.querySelector(".scrap-popup-wrap");
@@ -146,9 +179,12 @@ declarationLabels.forEach((item) => {
 // 신고 모달 띄우기
 const declarationModalWrap = document.querySelector(".declaration-modal-wrap");
 const contentDeclarationBtn = document.querySelector(".report-button");
-contentDeclarationBtn.addEventListener("click", () => {
-  declarationModalWrap.classList.add("open");
-});
+
+if (contentDeclarationBtn) {
+    contentDeclarationBtn.addEventListener("click", () => {
+    declarationModalWrap.classList.add("open");
+  });
+}
 
 // 신고 모달 없애기
 const declarationBtns = document.querySelectorAll(".declaration-btn");

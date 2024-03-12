@@ -257,15 +257,14 @@ optionResetBtn.addEventListener("click", () => {
 });
 
 //스크랩 버튼
-const scrapBtn = document.querySelector(".post-wrap");
+
 const scrapPopup = document.querySelector(".scrap-popup-wrap");
 const scrapCancel = document.querySelector(".scrap-popup-cancel-wrap");
 
 let timeoutId;
 let animationTarget;
 
-scrapBtn.addEventListener("click", (e) => {
-  const target = e.target.closest(".scrap-button");
+const transScrapBtnFn = (target) => {
   const img = target.querySelector("img");
   const imgSrc = img.getAttribute("src");
   if (imgSrc === "/static/public/web/images/common/scrap-off.png") {
@@ -284,7 +283,17 @@ scrapBtn.addEventListener("click", (e) => {
     animationTarget.classList.remove("show-animation");
     animationTarget.classList.add("hide-animation");
   }, 3000);
-});
+
+}
+
+const postWrap = document.querySelector('.post-wrap')
+postWrap.addEventListener('click', async (e) => {
+  const scrapBtn = e.target.closest('.scrap-button')
+  transScrapBtnFn(scrapBtn)
+  const lectureContentId = scrapBtn.closest('.post-container').classList[1]
+  await lectureScrapService.update(lectureContentId)
+})
+
 
 const plantSelections = document.querySelectorAll(".plant-selection");
 plantSelections.forEach((plantSelection) => {
@@ -292,4 +301,191 @@ plantSelections.forEach((plantSelection) => {
     plantSelection.classList.toggle("select-on");
     plantSelection.innerHTML = `<img>`;
   });
+});
+
+
+
+
+
+
+// 게시물 목록 보기
+let page = 1;
+
+const lectureSection = document.querySelector(".post-wrap");
+const filterItems = document.querySelectorAll(".filter-item")
+const optionList = document.querySelector('.option-list')
+const sortChoices = document.querySelectorAll(".menu-choice")
+
+let filter = `전체`;
+let sorting = `최신순`
+let type = '전체'
+
+sortChoices.forEach((sort) => {
+    sort.addEventListener("click", () => {
+        console.log(sort)
+        if (sort.innerText === "최신순") {
+            sorting = '최신순'
+        }else if(sort.innerText === "스크랩순"){
+            sorting = '스크랩순'
+        }else if(sort.innerText === "리스/트리") {
+            type = '리스/트리'
+        }else if(sort.innerText === "바구니/센터피스/박스") {
+            type = '바구니/센터피스/박스'
+        }else if(sort.innerText === "가드닝/테라리움") {
+            type = '가드닝/테라리움'
+        }else if(sort.innerText === "기타") {
+            type = '기타'
+        }
+
+        lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            lectureSection.innerHTML = text;
+        });
+
+    })
+})
+
+filterItems.forEach((item) => {
+    item.addEventListener('click', (e) => {
+
+        if(item.children[0].classList[3] === 'choice'){
+            filter += `,${e.target.innerText}`
+
+        }else {
+            if(e.target.innerText === '관엽식물'){
+                filter = filter.replace(',관엽식물', '')
+
+            }else if(e.target.innerText === '침엽식물'){
+                filter = filter.replace(',침엽식물', '')
+
+            }else if(e.target.innerText === '희귀식물'){
+                filter = filter.replace(',희귀식물', '')
+
+            }else if(e.target.innerText === '다육/선인장'){
+                filter = filter.replace(',다육/선인장', '')
+
+            }else if(e.target.innerText === '기타'){
+                filter = filter.replace(',기타', '')
+
+            }
+
+        }
+        lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            lectureSection.innerHTML = text;
+        });
+        console.log(filter)
+
+    })
+})
+
+
+optionList.addEventListener("click", (e) => {
+    console.log(e.target.innerText)
+    if(e.target.innerText.includes('관엽식물')){
+        filter = filter.replace(',관엽식물', '')
+
+    }else if(e.target.innerText.includes('침엽식물')){
+        filter = filter.replace(',침엽식물', '')
+
+    }else if(e.target.innerText.includes('희귀식물')){
+        filter = filter.replace(',희귀식물', '')
+
+    }else if(e.target.innerText.includes('다육/선인장')){
+        filter = filter.replace(',다육/선인장', '')
+
+    }else if(e.target.innerText.includes('기타')){
+        filter = filter.replace(',기타', '')
+
+    }else if(e.target.innerText.includes('최신순')) {
+        sorting = '최신순'
+    }else if(e.target.innerText.includes('스크랩순')) {
+        sorting = '최신순'
+    }else if(e.target.innerText.includes('리스/트리')) {
+        type = '리스/트리'
+    }else if(e.target.innerText.includes('바구니/센터피스/박스')) {
+        type = '바구니/센터피스/박스'
+    }else if(e.target.innerText.includes('가드닝/테라리움')) {
+        type = '가드닝/테라리움'
+    }else if(e.target.innerText.includes('기타')) {
+        type = '기타'
+    }
+
+    // console.log(filter)
+    lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            lectureSection.innerHTML = text;
+        });
+
+})
+
+const showList = (lectures, onlineStatus) => {
+    let text = ``;
+
+    // 강의 목록을 순회하면서 HTML 템플릿 생성
+    lectures.forEach((lecture) => {
+        let tagsHtml = '';
+        lecture.plant_name.forEach((pn) => {
+            tagsHtml += `<span class="post-tag-icon">#${pn}</span>`;
+        });
+
+        // 온라인 상태에 따라 링크 주소 결정
+        const detailLink = onlineStatus ? `/lecture/detail/online?id=${lecture.id}` : `/lecture/detail/offline?id=${lecture.id}`;
+
+        // HTML 템플릿 생성
+        text += `
+            <div class="post-container ${lecture.id}">
+                <div class="post-inner">
+                    <article class="post">
+                        <a href="${detailLink}" class="post-link"></a>
+                        <div class="post-image-wrap_">
+                            <div class="post-image-container">
+                                <div class="post-image-inner">
+                                    <div class="post-image"></div>
+                                    <img src="/upload/${lecture.lecture_file}" alt class="image"/>
+                                    <button class="scrap-button" type="button">
+                                        <img src="${lecture.lecture_scrap ? '/static/public/web/images/common/scrap-on.png' : '/static/public/web/images/common/scrap-off.png'}" alt class="scrap-img"/>
+                                    </button>
+                                    <div class="image__dark-overlay"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-contents-wrap">
+                            <div class="post-contents-container">
+                                <h1 class="post-contents-header">
+                                    <span class="post-contents-user">${lecture.member_name}</span>
+                                    <span class="post-contents-banner">${lecture.lecture_title}</span>
+                                </h1>
+                                <span class="post-price">
+                                    <span class="post-price-letter">${lecture.lecture_price}원</span>
+                                </span>
+                                <span class="post-tag">${tagsHtml}</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        `;
+    });
+
+    return text;
+};
+
+lectureService.getList(page++, showList).then((text) => {
+            lectureSection.innerHTML += text;
+        });
+
+// 스크롤 할때마다 실행
+window.addEventListener("scroll", () => {
+    // 맨위
+    const scrollTop = document.documentElement.scrollTop;
+    // 페이지 높이
+    const windowHeight = window.innerHeight;
+    // 암튼 높이
+    const totalHeight = document.documentElement.scrollHeight;
+    // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
+
+    if (scrollTop + windowHeight >= totalHeight) {
+        lectureService.getList(++page, filter, sorting, type, showList).then((text) => {
+            lectureSection.innerHTML += text;
+
+        });
+    }
 });
