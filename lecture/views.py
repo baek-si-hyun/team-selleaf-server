@@ -314,6 +314,8 @@ class LectureDetailOnlineView(View):
             .values('id', 'review_title', 'review_content', 'review_rating', 'member__member_name')
         kits = Kit.objects.filter(lecture_id=lecture['id']).values('id', 'kit_name', 'kit_content')
         print(kits)
+
+        lecture_count = lectures.count()
         context = {
             'lecture': lecture,
             'lecture_files': list(LectureProductFile.objects.filter(lecture_id=lecture_id).values('file_url')),
@@ -325,7 +327,9 @@ class LectureDetailOnlineView(View):
             'review_count': review_count,
             'rating_counts': rating_dict,
             'average_rating': average_rating,
+            'lecture_count': lecture_count,
             'lecture_order_time': times.order_by('time'),
+
         }
 
         return render(request, 'lecture/web/lecture-detail-online.html', context)

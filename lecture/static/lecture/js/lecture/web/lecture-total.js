@@ -308,113 +308,113 @@ plantSelections.forEach((plantSelection) => {
 
 
 
-// 게시물 목록 보기
-let page = 1;
-
-const lectureSection = document.querySelector(".post-wrap");
-const filterItems = document.querySelectorAll(".filter-item")
-const optionList = document.querySelector('.option-list')
-const sortChoices = document.querySelectorAll(".menu-choice")
-
-let filter = `전체`;
-let sorting = `최신순`
-let type = '전체'
-
-sortChoices.forEach((sort) => {
-    sort.addEventListener("click", () => {
-        console.log(sort)
-        if (sort.innerText === "최신순") {
-            sorting = '최신순'
-        }else if(sort.innerText === "스크랩순"){
-            sorting = '스크랩순'
-        }else if(sort.innerText === "리스/트리") {
-            type = '리스/트리'
-        }else if(sort.innerText === "바구니/센터피스/박스") {
-            type = '바구니/센터피스/박스'
-        }else if(sort.innerText === "가드닝/테라리움") {
-            type = '가드닝/테라리움'
-        }else if(sort.innerText === "기타") {
-            type = '기타'
-        }
-
-        lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
-            lectureSection.innerHTML = text;
-        });
-
-    })
-})
-
-filterItems.forEach((item) => {
-    item.addEventListener('click', (e) => {
-
-        if(item.children[0].classList[3] === 'choice'){
-            filter += `,${e.target.innerText}`
-
-        }else {
-            if(e.target.innerText === '관엽식물'){
-                filter = filter.replace(',관엽식물', '')
-
-            }else if(e.target.innerText === '침엽식물'){
-                filter = filter.replace(',침엽식물', '')
-
-            }else if(e.target.innerText === '희귀식물'){
-                filter = filter.replace(',희귀식물', '')
-
-            }else if(e.target.innerText === '다육/선인장'){
-                filter = filter.replace(',다육/선인장', '')
-
-            }else if(e.target.innerText === '기타'){
-                filter = filter.replace(',기타', '')
-
-            }
-
-        }
-        lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
-            lectureSection.innerHTML = text;
-        });
-        console.log(filter)
-
-    })
-})
-
-
-optionList.addEventListener("click", (e) => {
-    console.log(e.target.innerText)
-    if(e.target.innerText.includes('관엽식물')){
-        filter = filter.replace(',관엽식물', '')
-
-    }else if(e.target.innerText.includes('침엽식물')){
-        filter = filter.replace(',침엽식물', '')
-
-    }else if(e.target.innerText.includes('희귀식물')){
-        filter = filter.replace(',희귀식물', '')
-
-    }else if(e.target.innerText.includes('다육/선인장')){
-        filter = filter.replace(',다육/선인장', '')
-
-    }else if(e.target.innerText.includes('기타')){
-        filter = filter.replace(',기타', '')
-
-    }else if(e.target.innerText.includes('최신순')) {
-        sorting = '최신순'
-    }else if(e.target.innerText.includes('스크랩순')) {
-        sorting = '최신순'
-    }else if(e.target.innerText.includes('리스/트리')) {
-        type = '리스/트리'
-    }else if(e.target.innerText.includes('바구니/센터피스/박스')) {
-        type = '바구니/센터피스/박스'
-    }else if(e.target.innerText.includes('가드닝/테라리움')) {
-        type = '가드닝/테라리움'
-    }else if(e.target.innerText.includes('기타')) {
-        type = '기타'
-    }
-
-    // console.log(filter)
-    lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
-            lectureSection.innerHTML = text;
-        });
-
-})
+// // 게시물 목록 보기
+// let page = 1;
+//
+// const lectureSection = document.querySelector(".post-wrap");
+// const filterItems = document.querySelectorAll(".filter-item")
+// const optionList = document.querySelector('.option-list')
+// const sortChoices = document.querySelectorAll(".menu-choice")
+//
+// let filter = `전체`;
+// let sorting = `최신순`
+// let type = '전체'
+//
+// sortChoices.forEach((sort) => {
+//     sort.addEventListener("click", () => {
+//         console.log(sort)
+//         if (sort.innerText === "최신순") {
+//             sorting = '최신순'
+//         }else if(sort.innerText === "스크랩순"){
+//             sorting = '스크랩순'
+//         }else if(sort.innerText === "리스/트리") {
+//             type = '리스/트리'
+//         }else if(sort.innerText === "바구니/센터피스/박스") {
+//             type = '바구니/센터피스/박스'
+//         }else if(sort.innerText === "가드닝/테라리움") {
+//             type = '가드닝/테라리움'
+//         }else if(sort.innerText === "기타") {
+//             type = '기타'
+//         }
+//
+//         lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
+//             lectureSection.innerHTML = text;
+//         });
+//
+//     })
+// })
+//
+// filterItems.forEach((item) => {
+//     item.addEventListener('click', (e) => {
+//
+//         if(item.children[0].classList[3] === 'choice'){
+//             filter += `,${e.target.innerText}`
+//
+//         }else {
+//             if(e.target.innerText === '관엽식물'){
+//                 filter = filter.replace(',관엽식물', '')
+//
+//             }else if(e.target.innerText === '침엽식물'){
+//                 filter = filter.replace(',침엽식물', '')
+//
+//             }else if(e.target.innerText === '희귀식물'){
+//                 filter = filter.replace(',희귀식물', '')
+//
+//             }else if(e.target.innerText === '다육/선인장'){
+//                 filter = filter.replace(',다육/선인장', '')
+//
+//             }else if(e.target.innerText === '기타'){
+//                 filter = filter.replace(',기타', '')
+//
+//             }
+//
+//         }
+//         lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
+//             lectureSection.innerHTML = text;
+//         });
+//         console.log(filter)
+//
+//     })
+// })
+//
+//
+// optionList.addEventListener("click", (e) => {
+//     console.log(e.target.innerText)
+//     if(e.target.innerText.includes('관엽식물')){
+//         filter = filter.replace(',관엽식물', '')
+//
+//     }else if(e.target.innerText.includes('침엽식물')){
+//         filter = filter.replace(',침엽식물', '')
+//
+//     }else if(e.target.innerText.includes('희귀식물')){
+//         filter = filter.replace(',희귀식물', '')
+//
+//     }else if(e.target.innerText.includes('다육/선인장')){
+//         filter = filter.replace(',다육/선인장', '')
+//
+//     }else if(e.target.innerText.includes('기타')){
+//         filter = filter.replace(',기타', '')
+//
+//     }else if(e.target.innerText.includes('최신순')) {
+//         sorting = '최신순'
+//     }else if(e.target.innerText.includes('스크랩순')) {
+//         sorting = '최신순'
+//     }else if(e.target.innerText.includes('리스/트리')) {
+//         type = '리스/트리'
+//     }else if(e.target.innerText.includes('바구니/센터피스/박스')) {
+//         type = '바구니/센터피스/박스'
+//     }else if(e.target.innerText.includes('가드닝/테라리움')) {
+//         type = '가드닝/테라리움'
+//     }else if(e.target.innerText.includes('기타')) {
+//         type = '기타'
+//     }
+//
+//     // console.log(filter)
+//     lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
+//             lectureSection.innerHTML = text;
+//         });
+//
+// })
 
 const showList = (lectures, onlineStatus) => {
     let text = ``;
