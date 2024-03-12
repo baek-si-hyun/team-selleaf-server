@@ -286,7 +286,7 @@ div.category-container{
 
 
 /* 거래홈 메인바디 */
-#transaction-main-page {
+.transaction-main-page {
     max-width: 1256px;
     display: -webkit-box;
     display: -webkit-flex;

@@ -510,6 +510,20 @@
                     <span class="user-link-name">{{ lecture.teacher.member.member_name }}님의 판매상품</span>
                   </div>
                 </div>
+                <div class="user-link-icon-wrap">
+                  <span>{{ lecture.lecture_category.lecture_category_name }}</span>
+{#                  <svg#}
+{#                    width="14"#}
+{#                    height="14"#}
+{#                    fill="none"#}
+{#                    preserveAspectRatio="xMidYMid meet"#}
+{#                  >#}
+{#                    <path#}
+{#                      d="M4.083 11.375L8.312 7 4.083 2.625l.803-.875L9.916 7l-5.03 5.25-.803-.875z"#}
+{#                      fill="#828C94"#}
+{#                    ></path>#}
+{#                  </svg>#}
+                </div>
               </a>
             </div>
             <div class="product-option-wrap">
@@ -953,11 +967,11 @@
 {#                                        "#}
                                       />
                                       <button
-                                        class="img-scrap-button"
+                                        class="scrap-button"
                                         type="button"
                                       >
                                         <img
-                                          src="{% static 'public/web/images/common/scrap-off.png' %}"
+                                          src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                           alt=""
                                         />
                                       </button>

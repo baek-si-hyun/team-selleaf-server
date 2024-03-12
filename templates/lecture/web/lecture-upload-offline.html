@@ -32,14 +32,6 @@
 
                 <div class="save-button-wrap">
                   <div class="save-button-container">
-{#                    <div class="temporary-save-wrap">#}
-{#                      <div class="temporary-save-container">#}
-{#                        <button type="button" disabled class="temporary-save">#}
-{#                          <span class="temporary-save-letter">임시저장</span>#}
-{#                          <span class="save-letter">저장</span>#}
-{#                        </button>#}
-{#                      </div>#}
-{#                    </div>#}
                     <button class="establish">
                       <span class="establish-ask-letter">등록하기</span>
                       <span class="establish-letter">등록</span>
@@ -329,7 +321,7 @@
                                   <div class="info-list-wrap">
                                     <select
                                       name="product-index-control"
-                                      class="product-index-control"
+                                      class="product-index-control required"
                                     >
                                       <option
                                         value="unselected"
@@ -760,6 +752,6 @@
 </form>
 {% endblock %}
 {% block js %}
-  <script src="{% static 'lecture/js/lecture/web/lecture-upload.js' %}"></script>
-  <script src="{% static 'lecture/js/lecture/web/lecture-upload-offline.js' %}"></script>
+<script src="{% static 'lecture/js/lecture/web/lecture-upload.js' %}"></script>
+<script src="{% static 'lecture/js/lecture/web/lecture-upload-offline.js' %}"></script>
 {% endblock %}
