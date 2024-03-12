@@ -1,5 +1,6 @@
 from operator import itemgetter
 
+from django.db import transaction
 # noinspection PyInterpreter
 from django.db.models import F, Count
 from django.utils import timezone
@@ -9,8 +10,9 @@ from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apply.models import Apply
 from knowhow.models import KnowhowFile, KnowhowReply, Knowhow, KnowhowPlant, KnowhowReplyLike, KnowhowLike
-from lecture.models import LectureReview, LectureProductFile, LecturePlant
+from lecture.models import LectureReview, LectureProductFile, LecturePlant, Lecture
 from member.models import Member, MemberAddress, MemberProfile
 from member.serializers import MemberSerializer
 from post.models import Post, PostFile, PostPlant, PostReply, PostReplyLike, PostLike
@@ -113,93 +115,139 @@ class MypageUpdateView(View):
                 member_profile.updated_date = timezone.now()
                 member_profile.save()
         request.session['member_files'] = list(member.memberprofile_set.values('file_url'))
+
         return redirect("member:update")
 
 
-class MypagePostView(View):
-    def get(self,request):
-        member = request.session['member']
-        teacher = Teacher.objects.filter(member_id=member['id'])
-        member_file = request.session['member_files']
-        post = Post.objects.filter(member_id=member['id'])
-        like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = list(KnowhowLike.objects.filter(member_id=member['id']))
-        like.extend(knowhowlike)
-        like_count = len(like)
-        context = {
-            'member':member,
-            'memberProfile': member_file[0]['file_url'],
-            'post': post,
-            'teacher': teacher,
-            'like_count':like_count
-        }
-
-        print(teacher)
-        return render(request,'member/mypage/my_profile/my-posts.html',context)
-
+# =====================================================================================================================
+# 내 활동 모두보기 view
 class MypageShowView(View):
     def get(self,request):
         member = request.session['member']
         member_file = request.session['member_files']
         teacher = Teacher.objects.filter(member_id=member['id'])
-        post = Post.objects.filter(member_id = member['id'])
-        like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = list(KnowhowLike.objects.filter(member_id=member['id']))
-        like.extend(knowhowlike)
-        like_count = len(like)
-        review = LectureReview.objects.filter(member_id=member['id'])
+        post = list(Post.objects.filter(member_id=member['id']))
+        knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
+        post_count = len(post) + len(knowhow)
+        lecture_review = LectureReview.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id']))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhowlike)
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
-            'post':post,
-            'review':review,
-            'teacher':teacher,
+            'post': post,
+            'teacher': teacher,
+            'post_count': post_count,
+            'lecture_review':lecture_review,
             'like_count':like_count
         }
         return render(request,'member/mypage/my_profile/see-all.html',context)
 
-
-class MypageReplyView(View):
+# 내 활동 내 게시글 view
+class MypagePostView(View):
     def get(self,request):
         member = request.session['member']
         member_file = request.session['member_files']
         teacher = Teacher.objects.filter(member_id=member['id'])
-        post = Post.objects.filter(member_id = member['id'])
-        like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = list(KnowhowLike.objects.filter(member_id=member['id']))
-        like.extend(knowhowlike)
-        like_count = len(like)
-        reply = PostReply.objects.filter(member_id=member['id'])
+        post = list(Post.objects.filter(member_id=member['id']))
+        knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
+        post_count = len(post) + len(knowhow)
+        post_like = list(PostLike.objects.filter(member_id=member['id']))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhowlike)
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
-            'post':post,
-            'reply':reply,
-            'teacher':teacher,
+            'post': post,
+            'teacher': teacher,
+            'post_count': post_count,
             'like_count':like_count
+        }
+        return render(request,'member/mypage/my_profile/my-posts.html',context)
+
+
+# 내 활동 내 댓글 view
+class MypageReplyView(View):
+    def get(self,request):
+
+        member = request.session['member']
+        member_file = request.session['member_files']
+        teacher = Teacher.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id']))
+        knowhowlike =KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like)+len(knowhowlike)
+        post_reply = list(PostReply.objects.filter(member_id=member['id']))
+        knowhow_reply = list(KnowhowReply.objects.filter(member_id=member['id']))
+        reply_count = len(post_reply)+len(knowhow_reply)
+
+
+        context = {
+            'member': member,
+            'memberProfile': member_file[0]['file_url'],
+            'teacher':teacher,
+            'like_count':like_count,
+            'reply_count':reply_count
         }
         return render(request,'member/mypage/my_profile/my-comments.html',context)
 
+# 내 활동 내 리뷰 view
 class MypageReviewView(View):
     def get(self,request):
         member = request.session['member']
         member_file = request.session['member_files']
         teacher = Teacher.objects.filter(member_id=member['id'])
-        review = LectureReview.objects.filter(member_id=member['id'])
-        like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = list(KnowhowLike.objects.filter(member_id=member['id']))
-        like.extend(knowhowlike)
-        like_count = len(like)
+        post = list(Post.objects.filter(member_id=member['id']))
+        knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
+        post_count = len(post) + len(knowhow)
+        post_like = list(PostLike.objects.filter(member_id=member['id']))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhowlike)
+        lecture_reply = LectureReview.objects.filter(member_id=member['id'])
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
-            'review':review,
-            'teacher':teacher,
-            'like_count': like_count
+            'post': post,
+            'teacher': teacher,
+            'like_count': like_count,
+            'post_count': post_count,
+            'lecture_reply':lecture_reply
         }
         return render(request,'member/mypage/my_profile/my-reviews.html',context)
 
+# 내 활동 좋아요 view
 class MypageLikesView(View):
+
+    def get(self,request):
+        member = request.session['member']
+        member_file = request.session['member_files']
+        teacher = Teacher.objects.filter(member_id=member['id'])
+        post = list(Post.objects.filter(member_id=member['id']))
+        knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
+        post_count = len(post) + len(knowhow)
+        post_like = list(PostLike.objects.filter(member_id=member['id']))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhowlike)
+        post_reply = list(PostReply.objects.filter(member_id=member['id']))
+        knowhow_reply = list(KnowhowReply.objects.filter(member_id=member['id']))
+        reply_count = len(post_reply) + len(knowhow_reply)
+
+        context = {
+            'member': member,
+            'memberProfile': member_file[0]['file_url'],
+            'post': post,
+            'teacher': teacher,
+            'like_count': like_count,
+            'post_count': post_count,
+            'reply_count': reply_count
+        }
+
+        return render(request,'member/mypage/my_profile/likes.html',context)
+
+# 내 활동 스크랩북 강의 스크랩// 작업중
+class MypageLectureScrapsView(View):
 
     def get(self,request):
         member = request.session['member']
@@ -216,9 +264,66 @@ class MypageLikesView(View):
             'teacher': teacher,
             'like_count' : like_count
         }
-        return render(request,'member/mypage/my_profile/likes.html',context)
+        return render(request,'member/mypage/my_profile/scrapbook/lecture-scrapbook.html',context)
 
 
+# 내가 신청한 view // 작업중
+class MypageLecturesView(View):
+    def get(self, request):
+
+        member = request.session['member']
+        member_file = request.session['member_files']
+        teacher = Teacher.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id']))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhowlike)
+        lecture = Apply.objects.filter(member_id = member['id'])
+        context = {
+            'member': member,
+            'memberProfile': member_file[0]['file_url'],
+            'teacher': teacher,
+            'like_count': like_count,
+            'lecture':lecture
+        }
+        return render(request,'member/mypage/my_lecture/my-lectures.html',context)
+
+
+class LectureReviewView(View):
+    def get(self, request, lecture_id):
+        member = request.session['member']
+        member_file = request.session['member_files']
+        context = {
+            'member': member,
+            'memberProfile': member_file[0]['file_url'],
+            'lecture_id':lecture_id
+        }
+
+        return render(request, 'member/mypage/my_lecture/write-lecture-review.html',context)
+
+    @transaction.atomic
+    def post(self, request, lecture_id):
+        data = request.POST
+        # 현재 로그인한 사용자
+        member = request.session['member']
+
+        print(data.values())
+        data = {
+            'review_content': data['content-input'],
+            'member': Member.objects.get(id=member['id']),
+            'lecture_id': lecture_id,
+            'review_title': data['title-input'],
+            'review_rating': data.get('rate')
+        }
+
+        LectureReview.objects.create(**data)
+
+        return redirect('/member/mypage/lectures/')
+# =====================================================================================================================
+# API
+
+# 포스트, 노하우 리스트 합본
+# updated_date 기준 최신순 정렬
+# 12개 한페이지
 class MypagePostListAPI(APIView):
     def get(self, request, page):
 
@@ -283,7 +388,8 @@ class MypagePostListAPI(APIView):
 
 
 
-
+# 노하우 리스트
+# 12개 한페이지
 class MypageKnowhowListAPI(APIView):
     def get(self, request, page):
 
@@ -318,6 +424,9 @@ class MypageKnowhowListAPI(APIView):
 
         return Response(knowhows[offset:limit])
 
+# 노하우, 포스트 댓글 리스트 합본
+# updated_date 기준 최신순 정렬
+# 4개 한페이지
 class MypageShowReplyAPI(APIView):
     def get(self, request, page):
 
@@ -396,6 +505,9 @@ class MypageShowReplyAPI(APIView):
 
         return Response(sorted_posts_replies[offset:limit])
 
+
+# 강의 리뷰 리스트
+# 5개 한페이지
 class MypageShowReviewAPI(APIView):
     def get(self, request, page):
 
@@ -434,7 +546,8 @@ class MypageShowReviewAPI(APIView):
         return Response(reviews[offset:limit])
 
 
-
+# 포스트, 노하우 좋아요 리스트 합본
+# 12개 한페이지
 class MypageShowLikesAPI(APIView):
     def get(self, request,page):
 
@@ -504,3 +617,48 @@ class MypageShowLikesAPI(APIView):
         sorted_likes = sorted(likes, key=itemgetter('updated_date'), reverse=True)
 
         return Response(sorted_likes[offset:limit])
+
+# 강의 수강 리스트 // 작업중
+class MypageShowLecturesAPI(APIView):
+    def get(self, request,page):
+        row_count = 6
+        offset = (page - 1) * row_count
+        limit = row_count * page
+
+        applies = Apply.objects.filter(member_id=request.session['member']['id']) \
+            .annotate(
+            member_name=F('member__member_name'),
+            lecture_title=F('lecture__lecture_title'),
+            teacher_name=F('lecture__teacher__member__member_name'),
+            lecture_content=F('lecture__lecture_content'),
+            lecture_category=F('lecture__lecture_category__lecture_category_name'),
+            )\
+            .values(
+            'apply_status',
+            'id',
+            'lecture_id',
+            'member_name',
+            'updated_date',
+            'lecture_title',
+            'teacher_name',
+            'lecture_content',
+            'time',
+            'date',
+            'kit',
+            'lecture_category'
+        )
+
+        for apply in applies:
+            review = LectureReview.objects.filter(member_id=request.session['member']['id'], lecture_id=apply['lecture_id'])
+            apply['lecture_review'] = review.values('id')
+
+            lecture_file = LectureProductFile.objects.filter(lecture_id=apply['lecture_id']).values('file_url').first()
+            if lecture_file is not None:
+                apply['lecture_file'] = lecture_file['file_url']
+            else:
+                apply['lecture_file'] = 'file/2024/03/05/blank-image.png'
+
+            tags = LecturePlant.objects.filter(lecture_id=apply['lecture_id']).values('plant_name')
+            apply['lecture_plant'] = [tag['plant_name'] for tag in tags]
+        sorted_applies = sorted(applies, key=itemgetter('date'), reverse=True)
+        return Response(sorted_applies[offset:limit])

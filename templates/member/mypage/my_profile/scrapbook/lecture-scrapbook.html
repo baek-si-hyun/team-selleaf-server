@@ -8,7 +8,6 @@
     <div class="whole-page-wrap">
       <div class="whole-page-container">
         <!-- 나중에 메인 페이지 담당자에게서 받아옴 -->
-        <header style="height: 80.75px"></header>
         <div class="whole-content-wrap">
           <!-- 메인 최상단 유저 프로필 및 공유 버튼 등이 위치한 곳 -->
           <div class="content-title-wrap">
@@ -755,11 +754,9 @@
           </div>
         </div>
         <!-- 나중에 메인 페이지 담당자에게서 받아옴 -->
-        <footer style="height: 320px"></footer>
       </div>
     </div>
-    
 {% endblock %}
 {% block js %}
-  <script src="\{% static 'member/js/mypage/my_profile/scrapbook/lecture-scrapbook.js' %}"></script>
+  <script src="{% static 'member/js/mypage/my_profile/scrapbook/lecture-scrapbook.js' %}"></script>
 {% endblock %}

@@ -491,6 +491,7 @@ a * {
 /* 사진 등의 내용물이 표시되는 공간 */
 .main-content-wrap {
   box-sizing: border-box;
+  margin-top: 50px;
   padding-left: 10px;
   padding-right: 10px;
   width: 71%;
@@ -935,4 +936,22 @@ a * {
 }
 .comment-declaration-btn:hover {
   text-decoration: underline;
+}
+
+
+
+.content-title-wrap {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin: 0 0 20px;
+}
+
+.content-title {
+  color: #000000;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 1;
 }

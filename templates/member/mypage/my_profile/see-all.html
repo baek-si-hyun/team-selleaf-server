@@ -18,20 +18,26 @@
                     style="transform: translateX(0px)"
                   >
                     <li class="main-category-item">
-                      <a href="#" class="active">내 활동</a>
+                      <a href="/member/mypage/show/" class="active">내 활동</a>
                     </li>
                     <li class="main-category-item">
-                      <a href="#">거래 내역</a>
+                      <a href="/member/mypage/trades/">거래 내역</a>
                     </li>
                     <li class="main-category-item">
-                      <a href="#">수강 내역</a>
+                      <a href="/member/mypage/lectures/" >수강 내역</a>
                     </li>
-                    <li class="main-category-item teacher">
-                      <a href="#">강의 현황</a>
-                    </li>
-                    <li class="main-category-item">
-                      <a href="#">설정</a>
-                    </li>
+                    {% if teacher.count == 0 %}
+                        <li class="main-category-item">
+                          <a href="/member/mypage/settings/">설정</a>
+                        </li>
+                    {% else %}
+                        <li class="main-category-item ">
+                          <a href="/member/mypage/teacher/">강의 현황</a>
+                        </li>
+                        <li class="main-category-item">
+                          <a href="/member/mypage/settings/">설정</a>
+                        </li>
+                    {% endif %}
                   </ul>
                 </div>
                 <div class="sub-category-wrap">
@@ -55,7 +61,7 @@
                       <a href="/member/mypage/likes">좋아요</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="/member/mypage/scraps">스크랩북</a>
+                      <a href="/member/mypage/lecturescraps">스크랩북</a>
                     </li>
                   </ul>
                 </div>
@@ -210,25 +216,6 @@
                                       <div class="scraps-likes-text">마일리지</div>
                                       <div class="scraps-likes-count">0</div>
                                     </a>
-                                    <!-- 쿠폰 -->
-                                    <!-- <a class="scraps-likes-content-wrap" href="#">
-                                      <div class="scraps-likes-icon">
-                                        <svg
-                                          width="24"
-                                          height="24"
-                                          viewBox="0 0 24 24"
-                                          preserveAspectRatio="xMidYMid meet"
-                                        >
-                                          <path
-                                            fill="#424242"
-                                            fill-rule="nonzero"
-                                            d="M22.588 3H1.413C.633 3 0 3.638 0 4.426L0 9.53l.605-.088c.12-.017.243-.026.367-.026 1.413 0 2.558 1.157 2.558 2.584S2.385 14.584.972 14.584c-.124 0-.247-.009-.367-.026L0 14.47l.001 5.104C.001 20.362.633 21 1.413 21h21.175c.78 0 1.412-.638 1.412-1.426V4.426C24 3.638 23.368 3 22.588 3zM1.413 4.07h21.175c.195 0 .353.159.353.356v15.148c0 .197-.158.357-.353.357H1.413l-.071-.008c-.161-.033-.282-.176-.282-.349l-.002-3.923-.086.002c1.997 0 3.617-1.635 3.617-3.653l-.004-.182C4.493 9.945 3.006 8.443 1.152 8.35l-.094-.003.002-3.922c0-.197.158-.357.353-.357zm14.646 2.138c.293 0 .53.237.53.53v1.614c0 .292-.237.53-.53.53-.292 0-.53-.238-.53-.53V6.737c0-.292.238-.53.53-.53zm0 4.455c.293 0 .53.237.53.53v1.614c0 .293-.237.53-.53.53-.292 0-.53-.237-.53-.53v-1.614c0-.293.238-.53.53-.53zm0 4.456c.293 0 .53.237.53.53v1.614c0 .292-.237.53-.53.53-.292 0-.53-.238-.53-.53v-1.615c0-.292.238-.53.53-.53z"
-                                          ></path>
-                                        </svg>
-                                      </div>
-                                      <div class="scraps-likes-text">쿠폰</div>
-                                      <div class="scraps-likes-count">0</div>
-                                    </a> -->
                                   </div>
                                 </div>
                               </div>
@@ -248,7 +235,7 @@
                           <div class="content-title-wrap">
                             <h1 class="content-title">
                               게시글
-                              <span class="content-count post-count">{{ post.count }}</span>
+                              <span class="content-count post-count">{{ post_count }}</span>
                             </h1>
                             <div class="title-empty-area"></div>
                           </div>
@@ -256,7 +243,7 @@
                               <a class="photo-upload-wrap no-posts" href="#">
                                 <img alt=""
                                     class="add-icon"
-                                    src="../../../images/mypage/add-icon.svg"
+                                    src="{% static 'member/images/mypage/add-icon.svg' %}"
                                 />
                                 첫 번째 게시글을 올려보세요
                               </a>
@@ -266,9 +253,11 @@
                               <div class="post-wrap">
                               </div>
                           {% endif %}
-                            <div class="more">
-                                <a href="/member/mypage/posts/">더보기</a>
-                            </div>
+                          <a href="/member/mypage/posts/">
+                             <div class="more">
+                                더보기
+                             </div>
+                          </a>
                         </div>
 
                         <!-- 리뷰 -->
@@ -276,7 +265,7 @@
                           <div class="content-title-wrap">
                             <h1 class="content-title">
                               리뷰
-                              <span class="content-count review-count">{{ review.count }}</span>
+                              <span class="content-count review-count">{{ lecture_review.count }}</span>
                             </h1>
                             <div class="title-empty-area"></div>
                           </div>
@@ -285,7 +274,7 @@
                               <a class="photo-upload-wrap no-reviews" href="#">
                                   <img alt=""
                                     class="add-icon"
-                                    src="../../../images/mypage/add-icon.svg"
+                                    src="{% static 'member/images/mypage/add-icon.svg' %}"
                                   />
                                   첫 번째 리뷰를 올려보세요
                               </a>
@@ -297,9 +286,11 @@
                           {% endif %}  
                           <!-- 리뷰 있을 때 표시 -->
                         </div>
+                          <a href="/member/mypage/reviews/">
                              <div class="more">
-                                <a href="/member/mypage/reviews/">더보기</a>
+                                더보기
                              </div>
+                          </a>
                       </div>
                     </div>
                   </div>
