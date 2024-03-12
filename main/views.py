@@ -19,6 +19,12 @@ class SearchHistoryAPI(APIView):
 
         return Response(search)
 
+    def patch(self, request):
+        search_data = request.POST['data']
+        print(search_data)
+
+        return Response('success')
+
 
 class SearchAPI(APIView):
     def get(self, request):
@@ -46,11 +52,14 @@ class SearchView(View):
         member = request.session['member']
         profile = request.session['member_files'][0]
         search_data = request.GET['query']
-        if 'search' not in request.session:
-            request.session['search'] = [search_data]
-        else:
-            request.session['search'].append(search_data)
-        request.session.save()
+        try:
+            if 'search' not in request.session:
+                request.session['search'] = [search_data]
+            else:
+                request.session['search'].append(search_data)
+            request.session.save()
+        except KeyError:
+            return
 
         if member is not None:
             profile = request.session['member_files'][0]
@@ -158,10 +167,15 @@ class MainView(View):
             'post_count').values()[:3]
 
         lectures = Lecture.enabled_objects.filter().order_by('-id') \
-                       .values('id', 'lecture_title', 'lecture_content', 'lecturescrap__status')[:4]
+                       .values('id', 'lecture_title', 'lecture_content')[:4]
+
         for lecture in lectures:
             lecture_file = LecturePlaceFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
-            lecture['lecture_file_url'] = lecture_file['file_url']
+            if lecture_file:
+                lecture['lecture_file_url'] = lecture_file['file_url']
+            else:
+                lecture['lecture_file_url'] = None
+
             lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values(
                 'status').first()
             lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
@@ -188,13 +202,14 @@ class MainView(View):
 
 class BestLectureCategoryAPI(APIView):
     def post(self, request):
-        member = request.session['member']
+        member = request.session.get('member')
         data = request.data
-        catagory = data['category']
+        catagory = data.get('category')
         if not catagory == '전체':
             condition = Q(lectureplant__plant_name=catagory)
         else:
             condition = Q()
+
         best_lectures = Lecture.enabled_objects.filter(condition) \
                             .annotate(review_count=Count('lecturereview'),
                                       lecture_rating=Round(Sum('lecturereview__review_rating') / Count('lecturereview'),
@@ -205,7 +220,7 @@ class BestLectureCategoryAPI(APIView):
 
         for best_lecture in best_lectures:
             lecture_file = LecturePlaceFile.objects.filter(lecture_id=best_lecture['id']).values('file_url').first()
-            best_lecture['lecture_file_url'] = lecture_file['file_url']
+            best_lecture['lecture_file_url'] = lecture_file['file_url'] if lecture_file else None
             tags = LecturePlant.objects.filter(lecture_id=best_lecture['id']).values('plant_name')
             best_lecture['lecture_tags'] = [tag['plant_name'] for tag in tags]
             lecture_scrap = LectureScrap.objects.filter(lecture_id=best_lecture['id'], member_id=member['id']).values(
