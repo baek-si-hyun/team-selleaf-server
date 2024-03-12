@@ -182,7 +182,7 @@ class MainView(View):
                        .values('member_profile', 'member_name', 'id').first()
 
 
-        knowhows = Knowhow.objects.filter().order_by('knowhow_count') \
+        knowhows = Knowhow.objects.filter().order_by('knowhow_count')\
                        .annotate(member_profile=F('member__memberprofile__file_url'),
                                  member_name=F('member__member_name')) \
                        .values('member_profile', 'member_name', 'id', 'knowhow_title')[:10]
