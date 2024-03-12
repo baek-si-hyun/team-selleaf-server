@@ -373,9 +373,10 @@ class LectureDetailOfflineView(View):
         else:
             average_rating = 0
 
+        member_serarch_lecture = Lecture.objects.filter(id=teacher_id).values('teacher__member_id').first()
         # 방금 강의를 올린 사용자가 작성한 다른 강의
-        lectures = Lecture.objects.filter(teacher_id=teacher_id, lecture_status=False).values()
-        # print(lectures)
+        lectures = Lecture.objects.filter(member=member_serarch_lecture['teacher__member_id'], lecture_status=True) \
+            .values('id', 'lecture_title', 'lecture_price', 'lecture_content', 'teacher__member__member_name', 'teacher__member_id')
 
         for lte in lectures:
             lecture_scrap = LectureScrap.objects.filter(lecture_id=lte['id'],
