@@ -541,6 +541,26 @@ class DeleteQnAView(View):
         return redirect('manager-qna')
 
 
+class DeleteManyQnAView(APIView):
+    # 한 번에 여러 개의 QnA을 삭제(소프트 딜리트)하는 뷰
+    def patch(self, request, qna_ids):
+        # 요청 경로에 담긴 qna_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        qna_ids = qna_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for qna_id in qna_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_qna에서 해당 id를 가진 객체를 가져옴
+            if qna_id != '':
+                qna = QnA.objects.get(id=qna_id)
+
+                # 해당 객체의 status를 0으로 만들고, 변경 시간과 같이 저장
+                qna.qna_status = 0
+                qna.updated_date = timezone.now()
+                qna.save(update_fields=["qna_status", "updated_date"])
+
+        return Response('성공')
+
+
 # 신고 내역 관리
 class ReportManagementView(View):
     # 신고 내역 페이지 이동 뷰

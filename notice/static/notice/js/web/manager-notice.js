@@ -109,8 +109,8 @@ const showNotice = (notice_info) => {
 }
 
 // 위 함수들을 사용해서 페이지가 열렸을 때 화면에 공지사항 표시
-noticeService.getList(page, showNotice).then((notice) => {
-  noticeList.innerHTML = notice;
+noticeService.getList(page, showNotice).then((notices) => {
+  noticeList.innerHTML = notices;
 
   // 체크박스 클릭 이벤트 추가
   addCheckboxEvent();
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 삭제할 공지사항들의 id를 삭제 API에 보냄
     await noticeService.deleteNotices(deleteIds);
 
-    // 다시 현재 페이지 불러오기 - 이벤트 리스너를 astnc로 비동기화 한 다음, 아래에서 따로 넣어줘야 정상 작동함
+    // 다시 현재 페이지 불러오기
     location.reload();
   });
 });

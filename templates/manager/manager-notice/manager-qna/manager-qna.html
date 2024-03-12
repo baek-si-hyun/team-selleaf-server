@@ -287,5 +287,9 @@
   </body>
 {% endblock %}
 {% block js %}
+  <script>
+    const csrf_token = '{{ csrf_token }}';
+  </script>
+  <script src="{% static 'qna/js/qna-module.js' %}"></script>
   <script src="{% static 'qna/js/manager-qna.js' %}"></script>
 {% endblock %}
