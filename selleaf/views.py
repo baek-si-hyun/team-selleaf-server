@@ -132,10 +132,10 @@ class TeacherManagementView(View):
     # 강사 관리 페이지 이동 뷰
     def get(self, request):
         # 현재 강사 수
-        teachers = Teacher.objects.count()
+        teachers = Teacher.enabled_objects.count()
 
         # 블랙 리스트 수 - 임시로 회원 테이블의 휴면 중인 회원 가져옴, 나중에 별도의 status 필요
-        black_lists = Teacher.objects.filter(member__member_status=1).count()
+        black_lists = Teacher.objects.filter(teacher_status=0).count()
 
         # 강사 수를 화면에서 쓸 수 있게 dict 형태로 만들어줌
         context = {
