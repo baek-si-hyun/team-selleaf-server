@@ -125,7 +125,7 @@ class KnowhowListApi(APIView):
         elif type == '제품 추천':
             condition |= Q(knowhowcategory__category_name__contains='제품 추천')
         elif type == '스타일링':
-            condition |= Q(knowhowcategory__category_name__contains='스타일링')
+            condition |= Q(knowhowcategory__category_name__contains='스10')
         elif type == '전체':
             condition |= Q()
 

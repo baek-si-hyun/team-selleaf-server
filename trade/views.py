@@ -1,5 +1,5 @@
 from django.db import transaction
-from django.db.models import F
+from django.db.models import F, Count, Q, Prefetch
 from django.shortcuts import render, redirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views import View
@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 
 from member.models import Member, MemberProfile, MemberAddress
 from plant.models import Plant
+from report.models import ReportCategory
 from trade.models import TradeCategory, Trade, TradeFile, TradePlant, TradeScrap
 
 
@@ -39,22 +40,32 @@ class TradeDetailView(View):
             product_list = [item['plant_name'] for item in product_plants_list]
             td['plant_name'] = product_list
 
-        # 거래 게시물의 스크랩을 누른 사람 구하기
-        # 스크랩이 눌린것 중 해당 게시글의 개수를 구해주면 됨
-        trade_count = TradeScrap.objects.filter(status=True, trade_id=trade['id']).count()
-
+        # 방금 거래 게시물을 올린 사용자가 작성한 다른 거래 게시물들의 개수를 구함
+        user_trade_count = trades.count()
         context = {
             'trade': trade,
             'trade_files': list(TradeFile.objects.filter(trade_id=trade_id).values('file_url')),
             'trade_file': list(TradeFile.objects.filter(trade_id=trade_id).values('file_url'))[0],
             'trades': trades,
-            'trade_count': trade_count,
+            'user_trade_count': user_trade_count,
         }
 
         return render(request, "trade/web/trade-detail.html", context)
+
 class TradeReportView(View):
     def post(self, request):
-        pass
+        # 현재 로그인한 사용자 가져오기 --> 현재 로그인한 사용자가 그 게시물을 보고 있을 것이고 신고를 한다면 그 사용자가 할 것이기 때문
+        member = request.session['member']
+
+        # 화면에서 사용자가 클릭한 신고 사유 가져오기
+        report = request.POST['declaration']
+
+        # 신고사유 생성
+        ReportCategory.objects.create(report_category_name=report)
+
+        # 신고 생성
+
+        return redirect('/trade/main')
 
 class TradeDetailApi(APIView):
     def get(self, request, trade_id):
@@ -173,14 +184,78 @@ class TradeTotalView(View):
 
 
 class TradeTotalApi(APIView):
-    def get(self, request, page):
+    def get(self, request, page, sorting, filters, type):
+
         member = request.session['member']
         row_count = 8
         offset = (page - 1) * row_count
         limit = row_count * page
 
-        trades = Trade.objects.filter(status=True).annotate(member_name=F('member__member_name')) \
-            .values('trade_title', 'trade_price', 'member_name', 'id', 'member_id')
+        condition = Q()
+        sort1 = '-id'
+        sort2 = '-id'
+
+        if type == '상품':
+            condition |= Q(tradecategory__category_name__contains='상품')
+        elif type == '식물':
+            condition |= Q(tradecategory__category_name__contains='식물')
+        elif type == '수공예품':
+            condition |= Q(tradecategory__category_name__contains='수공예품')
+        elif type == '테라리움':
+            condition |= Q(tradecategory__category_name__contains='테라리움')
+        elif type == '기타':
+            condition |= Q(tradecategory__category_name__contains='기타')
+        elif type == '전체':
+            condition |= Q()
+
+        filters = filters.split(',')
+
+        for filter in filters:
+            if filter.replace(',', '') == '관엽식물':
+                condition |= Q(tradeplant__plant_name__contains='관엽식물')
+
+            elif filter.replace(',', '') == '침엽식물':
+                condition |= Q(tradeplant__plant_name__contains='침엽식물')
+
+            elif filter.replace(',', '') == '희귀식물':
+                condition |= Q(tradeplant__plant_name__contains='희귀식물')
+
+            elif filter.replace(',', '') == '다육':
+                condition |= Q(tradeplant__plant_name__contains='다육')
+
+            elif filter.replace(',', '') == '선인장':
+                condition |= Q(tradeplant__plant_name__contains='선인장')
+
+            elif filter.replace(',', '') == '기타':
+                condition |= Q(tradeplant__plant_name__contains='기타')
+
+            elif filter.replace(',', '') == '전체':
+                condition = Q()
+
+        if sorting == '최신순':
+            sort1 = '-id'
+            sort2 = '-created_date'
+
+        elif sorting == "스크랩순":
+            sort1 = '-scrap_count'
+            sort2 = '-id'
+
+        columns = [
+            'trade_title',
+            'member_name',
+            'id',
+            'member_id'
+        ]
+
+        # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
+        # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
+        trades = Trade.objects.select_related('tradescrap').filter(condition, status=True) \
+            .annotate(member_name=F('member__member_name')) \
+            .values(*columns) \
+            .annotate(scrap_count=Count('tradescrap')) \
+            .values('trade_title', 'member_name', 'id', 'member_id', 'scrap_count', 'trade_price') \
+            .order_by(sort1, sort2).distinct()
+
 
         for trade in trades:
             trade_file = TradeFile.objects.filter(trade_id=trade['id']).values('file_url').first()

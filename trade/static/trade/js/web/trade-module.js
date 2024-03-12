@@ -1,7 +1,7 @@
 const tradeService = (() => {
 
-    const getList = async (page, callback) => {
-        const response = await fetch(`/trade/total/${page}`);
+    const getList = async (page, filters, sorting, type, callback) => {
+        const response = await fetch(`/trade/total/${page}/${filters}/${sorting}/${type}`);
         const trades = await response.json();
         if(callback){
             return callback(trades);
