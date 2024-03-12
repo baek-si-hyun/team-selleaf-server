@@ -41,3 +41,17 @@ const lectureScrapService = (() => {
 
   return {update: update}
 })()
+const postScrapService = (() => {
+  const update = async (postId) => {
+    await fetch(`/post-scrap/api/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        'X-CSRFToken': csrf_token
+      },
+      body: JSON.stringify({'post_id': postId})
+    });
+  }
+
+  return {update: update}
+})()
