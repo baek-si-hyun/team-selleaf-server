@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from django.db import transaction
 from django.db.models import F, CharField, Value
 from django.db.models.functions import Concat
@@ -150,6 +148,7 @@ class TeacherManagementView(View):
 
 
 class TeacherInfoAPI(APIView):
+    # 강사 정보를 가져오는 API 뷰
     def get(self, request, page):
         # 한 페이지에 띄울 강사 수
         row_count = 10
@@ -172,12 +171,11 @@ class TeacherInfoAPI(APIView):
             .values(*columns).order_by('-id')[offset:limit]
 
         # 다음 페이지에 띄울 정보가 있는지 검사
-        has_next_page = Member.objects.filter()[limit:limit + 1].exists()
+        has_next_page = Teacher.objects.filter()[limit:limit + 1].exists()
 
-        # 강사 승인 날짜(created_date)를 YYYY-MM-DD 형식으로 변환
-        date_str = teachers.get('created_date')
-
-        teachers['created_date'] = datetime.strptime(date_str).strftime("%Y-%m-%d")
+        # 각각의 강사 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for teacher in teachers:
+            teacher['created_date'] = teacher['created_date'].strftime('%Y.%m.%d')
 
         # 완성된 강사정보 목록
         member_info = {
