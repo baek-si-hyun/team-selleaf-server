@@ -113,18 +113,18 @@ const recommendScrapButton = document.querySelectorAll(
 const transSrcapBtnFn = (scrap) => {
   const img = scrap.querySelector(".scrap-img");
   const imgSrc = img.getAttribute("src");
-  if (imgSrc === "/static/public/web/images/common/scrap-off.png") {
-    img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
-    if (animationTarget) {
-      animationTarget.classList.remove("show-animation");
-    }
-    animationTarget = scrapPopup;
-  } else {
+  if (imgSrc === "/static/public/web/images/common/scrap-on.png") {
     img.setAttribute("src", "/static/public/web/images/common/scrap-off.png");
     if (animationTarget) {
       animationTarget.classList.remove("show-animation");
     }
     animationTarget = scrapCancel;
+  } else {
+    img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
+    if (animationTarget) {
+      animationTarget.classList.remove("show-animation");
+    }
+    animationTarget = scrapPopup;
   }
   if (animationTarget) {
     animationTarget.classList.remove("hide-animation");
@@ -136,7 +136,6 @@ const transSrcapBtnFn = (scrap) => {
     }, 3000);
   }
 }
-
 
 const realmainPlantRecommendPhotoul = document.querySelector('.realmain-plantRecommend-photoul')
 realmainPlantRecommendPhotoul.addEventListener('click', async (e) => {

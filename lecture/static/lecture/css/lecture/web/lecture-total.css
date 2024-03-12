@@ -687,17 +687,9 @@ min-height: 1px;
     right: 12px;
 }
 
-.scrap-button >.scrap-off{
+.scrap-button >.scrap-img{
     position: relative;
     width: 24px;
-    top: 0;
-    left: 0;
-    transition: opacity .1s; 
-}
-
-.scrap-button > .scrap-on{
-    width: 24px;
-    position: relative;
     top: 0;
     left: 0;
     transition: opacity .1s;

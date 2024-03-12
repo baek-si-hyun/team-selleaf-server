@@ -5,7 +5,7 @@
 {% endblock %}
 {% block title %}수강포스팅-오프라인{% endblock %}
 {% block content %}
-<form action="{% url 'lecture:upload-offline' %}" method="post" name="lecture-offline-upload" enctype="multipart/form-data">
+<form action="{% url 'lecture:update-offline' %}" method="post" name="lecture-offline-update" enctype="multipart/form-data">
 {% csrf_token %}
   <body>
   <input type="hidden" name="id" value="{{ lecture.id }}">
@@ -294,7 +294,7 @@
                                         disabled
                                         selected
                                       >
-                                        {{ lecture.lectureaddress_set.address_city }}
+                                        {{ address.address_city }}
                                       </option>
                                       <option value="서울특별시">서울특별시</option>
                                       <option value="인천광역시">인천광역시</option>
@@ -337,7 +337,7 @@
                                         disabled
                                         selected
                                       >
-                                        선택해주세요.
+                                        {{ address.address_district }}
                                       </option>
                                       <option value="종로구">종로구</option>
                                       <option value="중구">중구</option>

@@ -52,7 +52,9 @@ class SearchAPI(APIView):
 
         trades = Trade.objects.filter(trade_title__contains=search_data).values('trade_title')
         knowhow_tags = KnowhowTag.objects.filter(tag_name__contains=search_data).values('tag_name')
+        knowhow_title = Knowhow.objects.filter(knowhow_title__contains=search_data).values('knowhow_title')
         post_tags = PostTag.objects.filter(tag_name__contains=search_data).values('tag_name')
+        post_title = Post.objects.filter(post_title__contains=search_data).values('post_title')
 
         combined_data = []
 
@@ -62,7 +64,10 @@ class SearchAPI(APIView):
             combined_data.append({'prev_search': tag['tag_name']})
         for tag in post_tags:
             combined_data.append({'prev_search': tag['tag_name']})
-
+        for title in knowhow_title:
+            combined_data.append({'prev_search': title['knowhow_title']})
+        for title in post_title:
+            combined_data.append({'prev_search': title['post_title']})
         return Response(combined_data)
 
 
@@ -90,8 +95,6 @@ class SearchView(View):
                                  member_name=F('member__member_name')) \
                        .values('member_profile', 'member_name', 'id', 'knowhow_title')[:8]
         knowhow_count = knowhows_queryset.count()
-
-
 
         for knowhow in knowhows:
             knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
@@ -133,8 +136,7 @@ class SearchView(View):
         lectures_queryset = Lecture.enabled_objects.filter(lecture_condition)
         lectures = lectures_queryset.annotate(review_count=Count('lecturereview'), lecture_rating=Round(
             Sum('lecturereview__review_rating') / Count('lecturereview'), 1)) \
-                       .order_by('-id').values('id', 'lecture_title', 'lecture_content',
-                                               'lecture_rating', 'review_count')[:8]
+                       .order_by('-id').values('id', 'lecture_title', 'lecture_content', 'lecture_rating', 'review_count')[:8]
         lecture_count = lectures_queryset.count()
 
         for lecture in lectures:
@@ -157,7 +159,7 @@ class SearchView(View):
             'knowhows': knowhows,
             'lectures': lectures,
             'trades': trades,
-            'posts': posts,
+            'posts': posts
         }
         return render(request, 'main/search.html', context)
 
@@ -173,6 +175,13 @@ class MainView(View):
         start_of_week = today - timedelta(days=today.weekday())
         end_of_week = start_of_week + timedelta(days=6)
         # created_date__range = (start_of_week, end_of_week)
+
+        best_knowhow = Knowhow.objects.filter().order_by('knowhow_count') \
+                       .annotate(member_profile=F('member__memberprofile__file_url'),
+                                 member_name=F('member__member_name')) \
+                       .values('member_profile', 'member_name', 'id').first()
+
+
         knowhows = Knowhow.objects.filter().order_by('knowhow_count') \
                        .annotate(member_profile=F('member__memberprofile__file_url'),
                                  member_name=F('member__member_name')) \
@@ -232,6 +241,7 @@ class MainView(View):
 
         context = {
             'memberProfile': profile['file_url'],
+            'best_knowhow':best_knowhow,
             'knowhows': knowhows,
             'lectures': lectures,
             'trades': trades,
