@@ -7,11 +7,7 @@ const relatedSearchBox = document.querySelector('.related-search-box')
 const relatedSearchLists = document.querySelector('.related-search-list')
 
 
-document.addEventListener('click', async (e) => {
-  // if (!e.target.closest('.recent-searches-box')) {
-  //   recentSearchesBox.classList.remove('show-modal')
-  // }
-})
+
 recentSearchesBox.addEventListener('click', (e) => {
   const items = recentSearchesBox.querySelectorAll('.recent-searches')
   if (e.target.closest('.recent-searches') && !e.target.closest('.recent-searches-delete-button')) {
@@ -25,6 +21,7 @@ recentSearchesBox.addEventListener('click', (e) => {
     searchHistoryService.del(delValue.trim())
   }
   if (e.target.closest('.recent-searches-all-delete')) {
+    searchHistoryService.allDel()
     items.forEach((item) => {
       item.remove()
     })
@@ -35,8 +32,13 @@ recentSearchesBox.addEventListener('click', (e) => {
 })
 
 const recentSearchList = (listValues) => {
-  if (!listValues) return;
-  recentSearchesBox.classList.add('show-modal')
+  if (listValues === 'empty') {
+    recentSearchesBox.classList.remove('show-modal')
+    return
+  }
+  if (listValues.length !== 0) {
+    recentSearchesBox.classList.add('show-modal')
+  }
   let modalInnerHTML = ''
   listValues.forEach((item) => {
     modalInnerHTML += `
@@ -123,11 +125,14 @@ searchInput.addEventListener("keyup", (e) => {
   } else {
     xbutton.style.display = "none";
     relatedSearchBox.classList.remove('show-modal')
-    recentSearchesBox.classList.add('show-modal')
+    if (recentSearchesBox.querySelectorAll('.recent-searches').length !== 0) {
+      recentSearchesBox.classList.add('show-modal')
+    } else {
+      recentSearchesBox.classList.remove('show-modal')
+    }
   }
   relatedSearchHandler(searchInput.value)
 });
-
 
 // 강사 로그인 시 글쓰기 버튼 눌렀을 때 강의 시작하기가 생겨야함 원래는 없어야하고
 const WriteLetterBtnModal = document.querySelectorAll(".header-content-photo");

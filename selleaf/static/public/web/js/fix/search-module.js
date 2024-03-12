@@ -34,7 +34,7 @@ const searchHistoryService = (() => {
   const allDel = async () => {
     const url = `/search-history/api/`;
     await fetch(url, {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
         'X-CSRFToken': csrf_token
