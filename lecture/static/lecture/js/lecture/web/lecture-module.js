@@ -1,7 +1,7 @@
 const lectureService = (() => {
 
-    const getList = async (page, callback) => {
-        const response = await fetch(`/lecture/total/${page}`);
+    const getList = async (page, filters, sorting, type, callback) => {
+        const response = await fetch(`/lecture/total/${page}/${filters}/${sorting}/${type}`);
         const lectures = await response.json();
         if(callback){
             return callback(lectures);
@@ -9,8 +9,10 @@ const lectureService = (() => {
         return lectures;
     }
 
+
     return {getList: getList}
 })();
+
 
 const lectureScrapService = (() => {
   const update = async (lectureId) => {

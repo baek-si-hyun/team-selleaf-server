@@ -967,11 +967,11 @@
 {#                                        "#}
                                       />
                                       <button
-                                        class="img-scrap-button"
+                                        class="scrap-button"
                                         type="button"
                                       >
                                         <img
-                                          src="{% static 'public/web/images/common/scrap-off.png' %}"
+                                          src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                           alt=""
                                         />
                                       </button>

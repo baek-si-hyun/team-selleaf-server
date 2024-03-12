@@ -72,7 +72,7 @@
         </div>
       </div>
       <!-- 거래 메인 탭 -->
-      <div id="transaction-main-page">
+      <div class="transaction-main-page">
         <section class="popular-wrap wrap-media">
           <header class="popular-header">
             <h1 class="popular-title">{{ member_address.address_city }} {{ member_address.address_district }} 에서 강의 중인 강의</h1>
@@ -80,7 +80,7 @@
           <div class="post-wrap row-media">
             {% if lectures %}
               {% for lecture in lectures %}
-                <div class="post-container" {{ lecture.id }}>
+                <div class="post-container {{ lecture.id }}">
                   <div class="post-inner">
                     <article class="post">
                       <a href="/lecture/detail/offline/?id={{ lecture.id }}" class="post-link"></a>
@@ -95,7 +95,7 @@
                             />
                             <button class="scrap-button" type="button">
                               <img
-                                src="{% if lecture.lecture_scrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                                src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                 alt
                                 class="scrap-off"
                               />
@@ -143,7 +143,7 @@
               transform: translateY(0px);
             "
           >
-            <div class="update-post-contents-wrap">
+            <div class="post-container">
               <article class="update-post-contents">
                 <a href="#" class="update-post__overlay"></a>
                 <div class="update-post-image">
@@ -180,7 +180,7 @@
                 </div>
               </article>
             </div>
-            <div class="update-post-contents-wrap">
+            <div class="post-container">
               <article class="update-post-contents">
                 <a href="#" class="update-post__overlay"></a>
                 <div class="update-post-image">
@@ -218,7 +218,7 @@
                 </div>
               </article>
             </div>
-            <div class="update-post-contents-wrap">
+            <div class="post-container">
               <article class="update-post-contents">
                 <a href="#" class="update-post__overlay"></a>
                 <div class="update-post-image">
@@ -253,7 +253,7 @@
                 </span>
               </article>
             </div>
-            <div class="update-post-contents-wrap">
+            <div class="post-container">
               <article class="update-post-contents">
                 <a href="#" class="update-post__overlay"></a>
                 <div class="update-post-image">
@@ -290,7 +290,7 @@
                 </div>
               </article>
             </div>
-            <div class="update-post-contents-wrap">
+            <div class="post-container">
               <article class="update-post-contents">
                 <a href="#" class="update-post__overlay"></a>
                 <div class="update-post-image">
@@ -327,7 +327,7 @@
                 </div>
               </article>
             </div>
-            <div class="update-post-contents-wrap">
+            <div class="post-container">
               <article class="update-post-contents">
                 <a href="#" class="update-post__overlay"></a>
                 <div class="update-post-image">
@@ -364,7 +364,7 @@
                 </div>
               </article>
             </div>
-            <div class="update-post-contents-wrap">
+            <div class="post-container">
                   <article class="update-post-contents">
                     <a href="#" class="update-post__overlay"></a>
                     <div class="update-post-image">
@@ -401,7 +401,7 @@
                     </div>
                   </article>
                 </div>
-            <div class="update-post-contents-wrap">
+            <div class="post-container">
               <article class="update-post-contents">
                 <a href="#" class="update-post__overlay"></a>
                 <div class="update-post-image">
@@ -446,6 +446,10 @@
   </body>
 {% endblock %}
 {% block js %}
+<script>
+    const csrf_token = '{{ csrf_token }}'
+</script>
+  <script src="{% static 'lecture/js/lecture/web/lecture-module.js' %}"></script>  
   <script src="{% static 'lecture/js/lecture/web/lecture-main.js' %}"></script>
 {% endblock %}
 
