@@ -263,7 +263,7 @@ class LectureDetailOnlineView(View):
         # 올린 강의 게시물을 작성한 사용자 찾기
         teacher_id = lecture['teacher_id']
 
-        lectures = Lecture.objects.filter(teacher=teacher_id, lecture_status=False) \
+        lectures = Lecture.objects.filter(teacher=teacher_id, lecture_status=False, online_status=True) \
             .values('id', 'lecture_title', 'lecture_price', 'lecture_content', 'teacher__member__member_name',
                     'teacher__member_id')
 
@@ -313,9 +313,9 @@ class LectureDetailOnlineView(View):
         reviews = LectureReview.objects.filter(lecture_id=lecture['id']) \
             .values('id', 'review_title', 'review_content', 'review_rating', 'member__member_name')
         kits = Kit.objects.filter(lecture_id=lecture['id']).values('id', 'kit_name', 'kit_content')
-        print(kits)
 
         lecture_count = lectures.count()
+
         context = {
             'lecture': lecture,
             'lecture_files': list(LectureProductFile.objects.filter(lecture_id=lecture_id).values('file_url')),
@@ -341,10 +341,10 @@ class LectureDetailOfflineView(View):
         lecture_id = request.GET.get('id')
         # print(member, lecture_id)
         lecture = Lecture.objects.filter(id=request.GET['id'], online_status=False) \
-            .values('id', 'lecture_title', 'lecture_content', 'lecture_price', 'lecture_headcount', 'lecture_status',
+            .values('id', 'lecture_title', 'lecture_content', 'lecture_price', 'lecture_headcount', 'online_status',
                     'teacher_id', 'teacher__member__member_name', 'lecture_category__lecture_category_name',
                     'teacher__member__member_email').first()
-
+        print(lecture)
         lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'],
                                                     member_id=member['id']).values('status').first()
         lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
@@ -352,7 +352,7 @@ class LectureDetailOfflineView(View):
         # 올린 강의 게시물을 작성한 사용자 찾기
         teacher_id = lecture['teacher_id']
 
-        lectures = Lecture.objects.filter(teacher=teacher_id, lecture_status=False) \
+        lectures = Lecture.objects.filter(teacher=teacher_id, lecture_status=False, online_status=False) \
             .values('id', 'lecture_title', 'lecture_price', 'lecture_content', 'teacher__member__member_name',
                     'teacher__member_id')
 
@@ -404,6 +404,7 @@ class LectureDetailOfflineView(View):
         address = LectureAddress.objects.filter(lecture_id=lecture['id']) \
             .values('id', 'address_city', 'address_district').first()
 
+        lecture_count = lectures.count()
 
         context = {
             'lecture': lecture,
@@ -416,6 +417,7 @@ class LectureDetailOfflineView(View):
             'review_count': review_count,
             'rating_counts': rating_dict,
             'average_rating': average_rating,
+            'lecture_count': lecture_count,
             'lecture_order_time': times.order_by('time'),
         }
 

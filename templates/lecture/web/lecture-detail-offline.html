@@ -272,7 +272,7 @@
                 <div class="product-overview-title">
                   <span class="product-title">{{ lecture.lecture_title }}</span>
                   <div class="product-title-icon-wrap {{ lecture.id }}">
-                    {% if request.session.member.id == teacher__member__id %}
+                    {% if request.session.member.id == lecture.teacher__member__member_id %}
                         <a href="/lecture/update/offline/?id={{ lecture.id }}">
                             <button class="update-button" type="button">
                               <img
@@ -979,10 +979,11 @@
                             {% for lecture in lectures %}
                                 <div class="product-suggestion-each-contents {{ lecture.id }}">
                                   <article class="product-suggestion-contents-wrap">
-                                    <a
-                                      class="product-suggestion-contents-overlay"
-                                      href="/lecture/detail/offline?id={{ lecture.id }}"
-                                    ></a>
+                                    {% if lecture.online_status %}
+                                        <a class="product-suggestion-contents-overlay" href="/lecture/detail/online?id={{ lecture.id }}"></a>
+                                    {% else %}
+                                        <a class="product-suggestion-contents-overlay" href="/lecture/detail/offline?id={{ lecture.id }}"></a>
+                                    {% endif %}
                                     <div class="product-suggestion-contents-image">
                                       <img
                                         class="image"
@@ -1343,6 +1344,7 @@
 <script>
     const csrf_token = '{{ csrf_token }}'
     const lecture_id = '{{ lecture.id }}'
+    const lecture_count = '{{ lecture_count }}'
 </script>
 <script src="{% static 'lecture/js/lecture/web/lecture-module.js' %}"></script>    
 <script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>

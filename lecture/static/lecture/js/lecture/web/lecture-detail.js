@@ -1,3 +1,4 @@
+console.log('asdasdasd1')
 // 이미지 버튼 슬라이싱
 const nextButton = document.querySelector(".scroller-ui-next");
 const prevButton = document.querySelector(".scroller-ui-prev");
@@ -11,30 +12,42 @@ const countUpdate = () => {
 }
 
 var xdegree = 0;
-nextButton.addEventListener("click", (e) => {
-  xdegree -= 712;
-  with (target.style) {
-    transform = `translateX(${xdegree}px)`;
-    transition = "transform 0.3s ease 0s";
-  }
-  xdegree === -2136
-    ? (nextButton.style.display = "none")
-    : (nextButton.style.display = "block");
-  xdegree === -712 && (prevButton.style.display = "block");
 
-  console.log(xdegree);
-});
+console.log(lecture_count)
+if( lecture_count / 3 > 1) {
+  nextButton.addEventListener("click", (e) => {
+    xdegree -= 712;
+    with (target.style) {
+      transform = `translateX(${xdegree}px)`;
+      transition = "transform 0.3s ease 0s";
+    }
 
-prevButton.addEventListener("click", (e) => {
-  xdegree += 712;
-  with (target.style) {
-    transform = `translateX(${xdegree}px)`;
-    transition = "transform 0.3s ease 0s";
-  }
-  xdegree === -1424 && (nextButton.style.display = "block");
-  xdegree === 0 && (prevButton.style.display = "none");
-  console.log(xdegree);
-});
+    if (xdegree <= Math.floor(lecture_count / 3) * -712) {
+      nextButton.style.display = "none";
+    }
+    prevButton.style.display = "block";
+
+    console.log(xdegree);
+  });
+
+  prevButton.addEventListener("click", (e) => {
+    xdegree += 712;
+    with (target.style) {
+      transform = `translateX(${xdegree}px)`;
+      transition = "transform 0.3s ease 0s";
+    }
+
+    if (xdegree >= 0) {
+      prevButton.style.display = "none";
+    }
+    nextButton.style.display = "block";
+
+    console.log(xdegree);
+  });
+}
+else{
+  nextButton.style.display = "none";
+}
 
 
 //스크랩 버튼
