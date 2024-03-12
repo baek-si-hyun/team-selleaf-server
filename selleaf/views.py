@@ -135,12 +135,12 @@ class TeacherManagementView(View):
         teachers = Teacher.enabled_objects.count()
 
         # 블랙 리스트 수 - 임시로 회원 테이블의 휴면 중인 회원 가져옴, 나중에 별도의 status 필요
-        black_lists = Teacher.objects.filter(teacher_status=0).count()
+        teacher_entries = Teacher.objects.filter(teacher_status=0).count()
 
         # 강사 수를 화면에서 쓸 수 있게 dict 형태로 만들어줌
         context = {
             "teachers": teachers,
-            "black_lists": black_lists
+            "teacher_entries": teacher_entries
         }
 
         # 위의 dict 데이터를 teacher.html에 실어서 보냄
@@ -167,7 +167,7 @@ class TeacherInfoAPI(APIView):
         ]
 
         # 최근에 승인된 순으로 강사 10명의 정보를 가져옴
-        teachers = Teacher.objects.annotate(teacher_name=F('member__member_name'))\
+        teachers = Teacher.enabled_objects.annotate(teacher_name=F('member__member_name'))\
             .values(*columns).order_by('-id')[offset:limit]
 
         # 다음 페이지에 띄울 정보가 있는지 검사
