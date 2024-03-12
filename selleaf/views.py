@@ -171,7 +171,7 @@ class TeacherInfoAPI(APIView):
             .values(*columns).order_by('-id')[offset:limit]
 
         # 다음 페이지에 띄울 정보가 있는지 검사
-        has_next_page = Teacher.objects.filter()[limit:limit + 1].exists()
+        has_next_page = Teacher.enabled_objects.filter()[limit:limit + 1].exists()
 
         # 각각의 강사 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for teacher in teachers:
