@@ -25,9 +25,9 @@ let page = 1;
 // 리스트를 표시할 ul 태그
 const ul = document.querySelector("ul.list-content");
 
-// 강사 정보의 첫 페이지를 화면에 띄워주는 함수
-const callFirstTeacherList = () => {
-  teacherService.getList(page, showTeachers).then((teachers) => {
+// 신청자 정보의 첫 페이지를 화면에 띄워주는 함수
+const callFirstEntryList = () => {
+  teacherService.getEntryList(page, showTeachers).then((teachers) => {
     ul.innerHTML = teachers;
 
     // 체크박스 클릭 이벤트 추가
@@ -36,7 +36,7 @@ const callFirstTeacherList = () => {
 }
 
 // 페이지가 열렸을 때 위 함수 사용
-callFirstTeacherList();
+callFirstEntryList();
 
 // 페이지네이션 이벤트 추가하기
 
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-//아래 게시물 창 버튼
+// 아래 게시물 창 버튼
 const paginationBtn = document.querySelectorAll(".page-count-num");
 const paginationBox = document.querySelector(".page");
 

@@ -7,7 +7,8 @@ from main.views import MainView, KnowhowScrapAPI, TradeScrapAPI, LectureScrapAPI
     SearchView, SearchAPI, SearchHistoryAPI
 from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView, WriteNoticeView, \
     NoticeManagementView, UpdateNoticeView, DeleteNoticeView, WriteQnAView, QnAManagementView, \
-    UpdateQnAView, DeleteQnAView, MemberInfoAPI, TeacherManagementView, TeacherInfoAPI
+    UpdateQnAView, DeleteQnAView, MemberInfoAPI, TeacherManagementView, TeacherInfoAPI, TeacherEntryManagementView, \
+    TeacherEntriesInfoAPI
 
 urlpatterns = [
     path('', MainView.as_view()),
@@ -22,18 +23,25 @@ urlpatterns = [
     # 관리자 페이지 뷰
     path('admin/login/', ManagerLoginView.as_view(), name='manager-login'),
     path('admin/logout/', ManagerLogoutView.as_view(), name='manager-logout'),
+    # 회원 관리
     path('admin/member/', MemberManagementView.as_view(), name='manager-member'),
     path('admin/member/<int:page>', MemberInfoAPI.as_view(), name='member-info'),
+    # 강사 및 강사 신청자 관리
     path('admin/teacher/', TeacherManagementView.as_view(), name='manager-teacher'),
     path('admin/teacher/<int:page>', TeacherInfoAPI.as_view(), name='teacher-info'),
+    path('admin/teacher-entry/', TeacherEntryManagementView.as_view(), name='manager-teacher-entry'),
+    path('admin/teacher-entry/<int:page>', TeacherEntriesInfoAPI.as_view(), name='teacher-entry-info'),
+    # 공지사항 관리
     path('admin/notice/', NoticeManagementView.as_view(), name='manager-notice'),
     path('admin/notice/write/', WriteNoticeView.as_view(), name='notice-write'),
     path('admin/notice/update/', UpdateNoticeView.as_view(), name='notice-update'),
     path('admin/notice/delete/', DeleteNoticeView.as_view(), name='notice-delete'),
+    # QnA 관리
     path('admin/qna/', QnAManagementView.as_view(), name='manager-qna'),
     path('admin/qna/write/', WriteQnAView.as_view(), name='qna-write'),
     path('admin/qna/update/', UpdateQnAView.as_view(), name='qna-update'),
     path('admin/qna/delete/', DeleteQnAView.as_view(), name='qna-delete'),
+    # 기타 서비스 url
     path('member/', include('member.urls-web')),
     path('lecture/', include('lecture.urls-web')),
     path('order/', include('order.urls-web')),

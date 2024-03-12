@@ -1,4 +1,4 @@
-// 강사 목록을 화면에 띄워주는 함수
+// 강사 or 신청자 목록을 화면에 띄워주는 함수
 const showTeachers = (teacher_info) => {
     // 아래의 로직으로 완성된 HTMl 코드를 담기 위한 빈 문자열
     let text = ``;
@@ -6,7 +6,7 @@ const showTeachers = (teacher_info) => {
     // API 요청으로 받아온 데이터 중 'teachers' 만 가져와서 변수에 할당
     const teachers = teacher_info.teachers;
 
-    // 강사 각각의 정보를 HTML 코드에 담음
+    // 강사 or 신청자 각각의 정보를 HTML 코드에 담음
     teachers.forEach((teacher) => {
         text += `
                   <li class="list-content">

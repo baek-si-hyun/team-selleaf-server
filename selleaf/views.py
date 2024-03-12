@@ -134,7 +134,7 @@ class TeacherManagementView(View):
         # 현재 강사 수
         teachers = Teacher.enabled_objects.count()
 
-        # 블랙 리스트 수 - 임시로 회원 테이블의 휴면 중인 회원 가져옴, 나중에 별도의 status 필요
+        # 강사 신청자 수
         teacher_entries = Teacher.objects.filter(teacher_status=0).count()
 
         # 강사 수를 화면에서 쓸 수 있게 dict 형태로 만들어줌
@@ -145,6 +145,25 @@ class TeacherManagementView(View):
 
         # 위의 dict 데이터를 teacher.html에 실어서 보냄
         return render(request, 'manager/teacher/teacher.html', context)
+
+
+class TeacherEntryManagementView(View):
+    # 강사 신청자 관리 페이지 이동 뷰
+    def get(self, request):
+        # 현재 강사 수
+        teachers = Teacher.enabled_objects.count()
+
+        # 강사 신청자 수
+        teacher_entries = Teacher.objects.filter(teacher_status=0).count()
+
+        # 강사 수를 화면에서 쓸 수 있게 dict 형태로 만들어줌
+        context = {
+            "teachers": teachers,
+            "teacher_entries": teacher_entries
+        }
+
+        # 위의 dict 데이터를 teacher-entries.html에 실어서 보냄
+        return render(request, 'manager/teacher/teacher-entries.html', context)
 
 
 class TeacherInfoAPI(APIView):
@@ -177,14 +196,55 @@ class TeacherInfoAPI(APIView):
         for teacher in teachers:
             teacher['created_date'] = teacher['created_date'].strftime('%Y.%m.%d')
 
-        # 완성된 강사정보 목록
-        member_info = {
+        # 완성된 강사 정보 목록
+        teacher_info = {
             'teachers': teachers,
             'hasNext': has_next_page,
         }
 
         # 요청한 데이터 반환
-        return Response(member_info)
+        return Response(teacher_info)
+
+
+class TeacherEntriesInfoAPI(APIView):
+    # 강사 신청자 정보를 가져오는 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 신청자 수
+        row_count = 10
+
+        # 한 페이지에 표시할 신청자 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 신청자 정보 표시에 필요한 tbl_member와 tbl_teacher의 컬럼들
+        columns = [
+            'id',
+            'teacher_name',
+            'teacher_info',
+            'lecture_plan',
+            'created_date',
+        ]
+
+        # 최근에 승인된 순으로 신청자 10명의 정보를 가져옴
+        teacher_entries = Teacher.objects.filter(teacher_status=0).annotate(teacher_name=F('member__member_name'))\
+            .values(*columns).order_by('-id')[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Teacher.objects.filter(teacher_status=0)[limit:limit + 1].exists()
+
+        # 각각의 신청자 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for teacher_entry in teacher_entries:
+            teacher_entry['created_date'] = teacher_entry['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 신청자 정보 목록
+        # 위의 강사 목록과 showTeachers 모듈을 공유하기 위해 키를 'teachers' 로 설정함
+        teacher_info = {
+            'teachers': teacher_entries,
+            'hasNext': has_next_page,
+        }
+
+        # 요청한 데이터 반환
+        return Response(teacher_info)
 
 
 # 게시물 관리

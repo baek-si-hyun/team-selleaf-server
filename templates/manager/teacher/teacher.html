@@ -47,11 +47,11 @@
                   <div class="header-function-container">
                     <ul class="header-function-inner">
                       <li class="header-relative-1">
-                        <button
+                        <a
                           class="lecture-info my_lecture-checked"
                           aria-label="tab button"
-                          type="button"
                           id="btn"
+                          href="{% url "manager-teacher" %}"
                         >
                           <div>
                             <div class="flex">
@@ -61,15 +61,15 @@
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar underbar-checked" id="under"></div>
                       </li>
                       <li class="header-relative-2">
-                        <button
+                        <a
                           class="lecture-info"
                           aria-label="tab button"
-                          type="button"
                           id="btn"
+                          href="{% url 'manager-teacher-entry' %}"
                         >
                           <div>
                             <div class="flex">
@@ -79,7 +79,7 @@
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar" id="under"></div>
                       </li>
                     </ul>
