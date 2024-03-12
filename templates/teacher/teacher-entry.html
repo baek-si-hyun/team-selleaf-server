@@ -78,66 +78,67 @@
           <div class="main-secondcontanier-wrap">
             <div class="main-secondcontanier-imgwrap">
               <div class="main-secondcontanier-imgwraplist">
-                <div class="main-secondcontanier-imgWrapDiv">
-                  <picture>
-                    <img
-                      src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="main-secondcontanier-img"
-                    />
-                  </picture>
-                  <div class="main-secondcontanier-contentWrap">
-                    <span>강의 사진</span>
-                    예시
-                  </div>
-                </div>
-                <div class="main-secondcontanier-imgWrapDiv">
-                  <picture>
-                    <img
-                      src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="main-secondcontanier-img"
-                    />
-                  </picture>
-                  <div class="main-secondcontanier-contentWrap">
-                    <span>강의 사진</span>
-                    예시
-                  </div>
-                </div>
-                <div class="main-secondcontanier-imgWrapDiv">
-                  <picture>
-                    <img
-                      src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="main-secondcontanier-img"
-                    />
-                  </picture>
-                  <div class="main-secondcontanier-contentWrap">
-                    <span>강의 사진</span>
-                    예시
-                  </div>
-                </div>
-                <div class="main-secondcontanier-imgWrapDiv">
-                  <picture>
-                    <img
-                      src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="main-secondcontanier-img"
-                    />
-                  </picture>
-                  <div class="main-secondcontanier-contentWrap">
-                    <span>강의 사진</span>
-                    예시
-                  </div>
-                </div>
-                <div class="main-secondcontanier-imgWrapDiv">
-                  <picture>
-                    <img
-                      src="{% static 'public/web/images/common/blank-image.png' %}"
-                      class="main-secondcontanier-img"
-                    />
-                  </picture>
-                  <div class="main-secondcontanier-contentWrap">
-                    <span>강의 사진</span>
-                    예시
-                  </div>
-                </div>
+                {% for lp in lectures %}
+                    <div class="main-secondcontanier-imgWrapDiv">
+                      <picture>
+                        <img
+                          src="/upload/{{ lp.lecture_photo }}"
+                          class="main-secondcontanier-img"
+                        />
+                      </picture>
+                      <div class="main-secondcontanier-contentWrap">
+                        <span>{{ lp.teacher__member__member_name }}님의 {{ lp.lecture_title }}강의</span>
+                      </div>
+                    </div>
+                {% endfor %}
+{#                <div class="main-secondcontanier-imgWrapDiv">#}
+{#                  <picture>#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                      class="main-secondcontanier-img"#}
+{#                    />#}
+{#                  </picture>#}
+{#                  <div class="main-secondcontanier-contentWrap">#}
+{#                    <span>강의 사진</span>#}
+{#                    예시#}
+{#                  </div>#}
+{#                </div>#}
+{#                <div class="main-secondcontanier-imgWrapDiv">#}
+{#                  <picture>#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                      class="main-secondcontanier-img"#}
+{#                    />#}
+{#                  </picture>#}
+{#                  <div class="main-secondcontanier-contentWrap">#}
+{#                    <span>강의 사진</span>#}
+{#                    예시#}
+{#                  </div>#}
+{#                </div>#}
+{#                <div class="main-secondcontanier-imgWrapDiv">#}
+{#                  <picture>#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                      class="main-secondcontanier-img"#}
+{#                    />#}
+{#                  </picture>#}
+{#                  <div class="main-secondcontanier-contentWrap">#}
+{#                    <span>강의 사진</span>#}
+{#                    예시#}
+{#                  </div>#}
+{#                </div>#}
+{#                <div class="main-secondcontanier-imgWrapDiv">#}
+{#                  <picture>#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                      class="main-secondcontanier-img"#}
+{#                    />#}
+{#                  </picture>#}
+{#                  <div class="main-secondcontanier-contentWrap">#}
+{#                    <span>강의 사진</span>#}
+{#                    예시#}
+{#                  </div>#}
+{#                </div>#}
               </div>
             </div>
           </div>
@@ -182,95 +183,96 @@
         <div class="faq-section-wrap">
           <div class="faq-section-container">
             <h2 class="faq-section-title">자주 묻는 질문</h2>
+            <div class="list-section"></div>
             <!-- 각 질문 사항들 -->
-            <div class="each-questions-wrap">
-              <div class="question-title-wrap">
-                Q. 질문 예시 1
-                <span class="expansion-button-wrap">
-                  <!-- JS - 클릭하면 답변 펼쳐짐 + 버튼 180도 회전 -->
-                  <img
-                    class="expansion-button"
-                    src="{% static 'public/web/images/common/button-down.png' %}"
-                  />
-                </span>
-              </div>
-              <!-- 답변 - 평소에는 height 0 -->
-              <div class="answer-wrap">
-                <div class="answer-container">
-                  답변 예시입니다.<br />
-                  자세한 내용은 추후에 수정 바랍니다.
-                </div>
-              </div>
-            </div>
-            <div class="each-questions-wrap">
-              <div class="question-title-wrap">
-                Q. 질문 예시 2
-                <span class="expansion-button-wrap">
-                  <img
-                    class="expansion-button"
-                    src="{% static 'public/web/images/common/button-down.png' %}"
-                  />
-                </span>
-              </div>
-              <div class="answer-wrap">
-                <div class="answer-container">
-                  답변 예시입니다.<br />
-                  자세한 내용은 추후에 수정 바랍니다.
-                </div>
-              </div>
-            </div>
-            <div class="each-questions-wrap">
-              <div class="question-title-wrap">
-                Q. 질문 예시 3
-                <span class="expansion-button-wrap">
-                  <img
-                    class="expansion-button"
-                    src="{% static 'public/web/images/common/button-down.png' %}"
-                  />
-                </span>
-              </div>
-              <div class="answer-wrap">
-                <div class="answer-container">
-                  답변 예시입니다.<br />
-                  자세한 내용은 추후에 수정 바랍니다.
-                </div>
-              </div>
-            </div>
-            <div class="each-questions-wrap">
-              <div class="question-title-wrap">
-                Q. 질문 예시 4
-                <span class="expansion-button-wrap">
-                  <img
-                    class="expansion-button"
-                    src="{% static 'public/web/images/common/button-down.png' %}"
-                  />
-                </span>
-              </div>
-              <div class="answer-wrap">
-                <div class="answer-container">
-                  답변 예시입니다.<br />
-                  자세한 내용은 추후에 수정 바랍니다.
-                </div>
-              </div>
-            </div>
-            <div class="each-questions-wrap">
-              <div class="question-title-wrap">
-                Q. 질문 예시 5
-                <span class="expansion-button-wrap">
-                  <img
-                    class="expansion-button"
-                    src="{% static 'public/web/images/common/button-down.png' %}"
-                  />
-                </span>
-              </div>
-              <div class="answer-wrap">
-                <div class="answer-container">
-                  답변 예시입니다.<br />
-                  자세한 내용은 추후에 수정 바랍니다.
-                </div>
-              </div>
-              <div id="terms"></div>
-            </div>
+{#            <div class="each-questions-wrap">#}
+{#              <div class="question-title-wrap">#}
+{#                Q. 질문 예시 1#}
+{#                <span class="expansion-button-wrap">#}
+{#                  <!-- JS - 클릭하면 답변 펼쳐짐 + 버튼 180도 회전 -->#}
+{#                  <img#}
+{#                    class="expansion-button"#}
+{#                    src="{% static 'public/web/images/common/button-down.png' %}"#}
+{#                  />#}
+{#                </span>#}
+{#              </div>#}
+{#              <!-- 답변 - 평소에는 height 0 -->#}
+{#              <div class="answer-wrap">#}
+{#                <div class="answer-container">#}
+{#                  답변 예시입니다.<br />#}
+{#                  자세한 내용은 추후에 수정 바랍니다.#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="each-questions-wrap">#}
+{#              <div class="question-title-wrap">#}
+{#                Q. 질문 예시 2#}
+{#                <span class="expansion-button-wrap">#}
+{#                  <img#}
+{#                    class="expansion-button"#}
+{#                    src="{% static 'public/web/images/common/button-down.png' %}"#}
+{#                  />#}
+{#                </span>#}
+{#              </div>#}
+{#              <div class="answer-wrap">#}
+{#                <div class="answer-container">#}
+{#                  답변 예시입니다.<br />#}
+{#                  자세한 내용은 추후에 수정 바랍니다.#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="each-questions-wrap">#}
+{#              <div class="question-title-wrap">#}
+{#                Q. 질문 예시 3#}
+{#                <span class="expansion-button-wrap">#}
+{#                  <img#}
+{#                    class="expansion-button"#}
+{#                    src="{% static 'public/web/images/common/button-down.png' %}"#}
+{#                  />#}
+{#                </span>#}
+{#              </div>#}
+{#              <div class="answer-wrap">#}
+{#                <div class="answer-container">#}
+{#                  답변 예시입니다.<br />#}
+{#                  자세한 내용은 추후에 수정 바랍니다.#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="each-questions-wrap">#}
+{#              <div class="question-title-wrap">#}
+{#                Q. 질문 예시 4#}
+{#                <span class="expansion-button-wrap">#}
+{#                  <img#}
+{#                    class="expansion-button"#}
+{#                    src="{% static 'public/web/images/common/button-down.png' %}"#}
+{#                  />#}
+{#                </span>#}
+{#              </div>#}
+{#              <div class="answer-wrap">#}
+{#                <div class="answer-container">#}
+{#                  답변 예시입니다.<br />#}
+{#                  자세한 내용은 추후에 수정 바랍니다.#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="each-questions-wrap">#}
+{#              <div class="question-title-wrap">#}
+{#                Q. 질문 예시 5#}
+{#                <span class="expansion-button-wrap">#}
+{#                  <img#}
+{#                    class="expansion-button"#}
+{#                    src="{% static 'public/web/images/common/button-down.png' %}"#}
+{#                  />#}
+{#                </span>#}
+{#              </div>#}
+{#              <div class="answer-wrap">#}
+{#                <div class="answer-container">#}
+{#                  답변 예시입니다.<br />#}
+{#                  자세한 내용은 추후에 수정 바랍니다.#}
+{#                </div>#}
+{#              </div>#}
+{#              <div id="terms"></div>#}
+{#            </div>#}
           </div>
         </div>
         <!-- 신청약관 -->
@@ -385,5 +387,6 @@
   </body>
 {% endblock %}
 {% block js %}
+  <script src="{% static 'qna/js/qna-module.js' %}"></script>
   <script src="{% static 'teacher/js/teacher-entry/teacher-entry.js' %}"></script>
 {% endblock %}

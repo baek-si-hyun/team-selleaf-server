@@ -219,6 +219,119 @@ optionResetBtn.addEventListener("click", () => {
 let page = 1;
 
 const tradeSection = document.querySelector(".post-wrap");
+// 정렬 분야 관엽식물 등등
+const filterItems = document.querySelectorAll(".filter-item");
+// 초기화
+const optionList = document.querySelector('.option-list');
+// 정렬 분야 관엽식물을 누르면 나오는 모달창 정확히는 최신순 인기순
+const sortChoices = document.querySelectorAll(".menu-choice");
+
+let filter = `전체`;
+let sorting = `최신순`
+let type = '전체'
+
+sortChoices.forEach((sort) => {
+    sort.addEventListener("click", () => {
+
+        if (sort.innerText === "최신순") {
+            sorting = '최신순'
+        }else if(sort.innerText === "스크랩순"){
+            sorting = '스크랩순'
+        }else if(sort.innerText === "상품") {
+            type = '상품'
+        }else if(sort.innerText === "식물") {
+            type = '식물'
+        }else if(sort.innerText === "수공예품") {
+            type = '수공예품'
+        }else if(sort.innerText === "테라리움") {
+            type = '테라리움'
+        }else if(sort.innerText === "기타") {
+            type = '기타'
+        }
+
+        tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            tradeSection.innerHTML = text;
+        });
+    })
+})
+
+filterItems.forEach((item) => {
+    item.addEventListener('click', (e) => {
+
+        if(item.children[0].classList[3] === 'choice'){
+            filter += `,${e.target.innerText}`
+
+        }else {
+            if(e.target.innerText === '관엽식물'){
+                filter = filter.replace(',관엽식물', '')
+
+            }else if(e.target.innerText === '침엽식물'){
+                filter = filter.replace(',침엽식물', '')
+
+            }else if(e.target.innerText === '희귀식물'){
+                filter = filter.replace(',희귀식물', '')
+
+            }else if(e.target.innerText === '다육'){
+                filter = filter.replace(',다육', '')
+
+            }else if(e.target.innerText === '선인장'){
+                filter = filter.replace(',선인장', '')
+
+            }else if(e.target.innerText === '기타'){
+                filter = filter.replace(',기타', '')
+
+            }
+
+        }
+
+        tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            tradeSection.innerHTML = text;
+        });
+    })
+})
+
+optionList.addEventListener("click", (e) => {
+    console.log(e.target.innerText)
+    if(e.target.innerText.includes('관엽식물')){
+        filter = filter.replace(',관엽식물', '')
+
+    }else if(e.target.innerText.includes('침엽식물')){
+        filter = filter.replace(',침엽식물', '')
+
+    }else if(e.target.innerText.includes('희귀식물')){
+        filter = filter.replace(',희귀식물', '')
+
+    }else if(e.target.innerText.includes('다육')){
+        filter = filter.replace(',다육', '')
+
+    }else if(e.target.innerText.includes('선인장')){
+        filter = filter.replace(',선인장', '')
+
+    }else if(e.target.innerText.includes('기타')){
+        filter = filter.replace(',기타', '')
+
+    }else if(e.target.innerText.includes('최신순')) {
+        sorting = '최신순'
+    }else if(e.target.innerText.includes('인기순')) {
+        sorting = '최신순'
+    }else if(e.target.innerText.includes('스크랩순')) {
+        sorting = '최신순'
+    }else if(e.target.innerText.includes('상품')) {
+        type = '상품'
+    }else if(e.target.innerText.includes('식물')) {
+        type = '식물'
+    }else if(e.target.innerText.includes('수공예품')) {
+        type = '수공예품'
+    }else if(e.target.innerText.includes('테라리움')) {
+        type = '테라리움'
+    }else if(e.target.innerText.includes('기타')) {
+        type = '기타'
+    }
+
+    tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            tradeSection.innerHTML = text;
+    });
+})
 
 const showList = (trades) => {
     let text = ``;
@@ -264,7 +377,6 @@ const showList = (trades) => {
                       </span>
                       <span class="post-tag">
                         ${tagsHtml}
-<!--                        <span class="post-tag-icon">태그1</span>-->
                       </span>
                     </div>
                   </div>
@@ -277,7 +389,8 @@ const showList = (trades) => {
     return text;
 }
 
-tradeService.getList(page++, showList).then((text) => {
+// 처음 토탈 페이지 들어갔을 때 뿌려줄 목록
+tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
             tradeSection.innerHTML += text;
 });
 
@@ -292,7 +405,7 @@ window.addEventListener("scroll", () => {
     // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
 
     if (scrollTop + windowHeight >= totalHeight) {
-        tradeService.getList(page++, showList).then((text) => {
+        tradeService.getList(++page, filter, sorting, type, showList).then((text) => {
             tradeSection.innerHTML += text;
 
         });
