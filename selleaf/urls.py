@@ -4,14 +4,16 @@ from django.contrib import admin
 from django.urls import path, include
 
 from main.views import MainView, KnowhowScrapAPI, TradeScrapAPI, LectureScrapAPI, PostScrapAPI, BestLectureCategoryAPI, \
-    SearchView
+    SearchView, SearchAPI, SearchHistoryAPI
 from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementView, WriteNoticeView, \
     NoticeManagementView, UpdateNoticeView, DeleteNoticeView, WriteQnAView, QnAManagementView, \
-    UpdateQnAView, DeleteQnAView
+    UpdateQnAView, DeleteQnAView, MemberInfoAPI, TeacherManagementView, TeacherInfoAPI
 
 urlpatterns = [
     path('', MainView.as_view()),
     path('search/', SearchView.as_view(), name='search'),
+    path('search/api/', SearchAPI.as_view(), name='search-api'),
+    path('search-history/api/', SearchHistoryAPI.as_view(), name='search-history-api'),
     path('knowhow-scrap/api/', KnowhowScrapAPI.as_view(), name='knowhow-scrap-api'),
     path('trade-scrap/api/', TradeScrapAPI.as_view(), name='trade-scrap-api'),
     path('lecture-scrap/api/', LectureScrapAPI.as_view(), name='lecture-scrap-api'),
@@ -21,6 +23,9 @@ urlpatterns = [
     path('admin/login/', ManagerLoginView.as_view(), name='manager-login'),
     path('admin/logout/', ManagerLogoutView.as_view(), name='manager-logout'),
     path('admin/member/', MemberManagementView.as_view(), name='manager-member'),
+    path('admin/member/<int:page>', MemberInfoAPI.as_view(), name='member-info'),
+    path('admin/teacher/', TeacherManagementView.as_view(), name='manager-teacher'),
+    path('admin/teacher/<int:page>', TeacherInfoAPI.as_view(), name='teacher-info'),
     path('admin/notice/', NoticeManagementView.as_view(), name='manager-notice'),
     path('admin/notice/write/', WriteNoticeView.as_view(), name='notice-write'),
     path('admin/notice/update/', UpdateNoticeView.as_view(), name='notice-update'),

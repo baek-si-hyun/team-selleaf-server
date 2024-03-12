@@ -152,14 +152,13 @@ realmainTodayHotdealPhotoWrapUl.addEventListener('click', async (e) => {
   await tradeScrapService.update(tradeContentId)
 })
 
-//post
-// const realmainPlantRecommendPhotoul = document.querySelector('.realmain-plantRecommend-photoul')
-// realmainPlantRecommendPhotoul.addEventListener('click', async (e)=>{
-//     scrapBtn = e.target.closest('.scrap-button')
-//     const knowhowContentId = scrapBtn.closest('.realmain-plantRecommend-photoli').classList[1]
-//     await knowhowService.update(knowhowContentId)
-//
-// })
+const realmainLecturePhotoDiv = document.querySelector('.realmain-lecture-photoDiv')
+realmainLecturePhotoDiv.addEventListener('click', async (e)=>{
+    scrapBtn = e.target.closest('.scrap-button')
+    const postContentId = scrapBtn.closest('.realmain-lecture-photoEachdiv').classList[1]
+    await postService.update(postContentId)
+
+})
 
 const realmainBestproductPhotoCategoryUl = document.querySelector('.realmain-bestproduct-photoCategoryUl')
 
@@ -187,7 +186,7 @@ const createBestLecture = (bestLectures) => {
         />
         <button class="scrap-button" style="top:1px">
           <img
-              src="${bestLecture.lecturescrap__status ? '/static/public/web/images/common/scrap-on.png' : '/static/public/web/images/common/scrap-off.png'}"
+              src="${bestLecture.lecture_scrap ? '/static/public/web/images/common/scrap-on.png' : '/static/public/web/images/common/scrap-off.png'}"
               class="scrap-img"
               width="24px"
               height="24px"
@@ -259,5 +258,4 @@ const bestLecturecategoryHandler = async (e) => {
 }
 bestLecturecategoryHandler()
 realmainBestproductPhotoCategoryUl.addEventListener("click", bestLecturecategoryHandler);
-
 

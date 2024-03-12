@@ -1,8 +1,118 @@
 // 통합검색 인풋에 뭔가를 치면 x버튼이 생기게
 const searchInput = document.querySelector(".hearder-inner-thirddiv-input");
 const xbutton = document.querySelector(".hearder-inner-thirddiv-div");
+const recentSearchesBox = document.querySelector('.recent-searches-box')
+const recentSearchesList = document.querySelector('.recent-searches-list')
+const relatedSearchBox = document.querySelector('.related-search-box')
+const relatedSearchLists = document.querySelector('.related-search-list')
 
-searchInput.addEventListener("keydown", (e) => {
+
+
+recentSearchesBox.addEventListener('click', (e) => {
+  const items = recentSearchesBox.querySelectorAll('.recent-searches')
+  if (e.target.closest('.recent-searches') && !e.target.closest('.recent-searches-delete-button')) {
+    const query = e.target.closest('.recent-searches').innerText
+    searchInput.value = query
+    window.location.href = `/search/?query=${query}`;
+  }
+  if (e.target.closest('.recent-searches-delete-button')) {
+    e.target.closest('.recent-searches').remove()
+    const delValue = e.target.closest('.recent-searches').innerText
+    searchHistoryService.del(delValue.trim())
+  }
+  if (e.target.closest('.recent-searches-all-delete')) {
+    searchHistoryService.allDel()
+    items.forEach((item) => {
+      item.remove()
+    })
+  }
+  if (recentSearchesBox.querySelectorAll('.recent-searches').length < 1) {
+    recentSearchesBox.classList.remove('show-modal')
+  }
+})
+
+const recentSearchList = (listValues) => {
+  if (listValues === 'empty') {
+    recentSearchesBox.classList.remove('show-modal')
+    return
+  }
+  if (listValues.length !== 0) {
+    recentSearchesBox.classList.add('show-modal')
+  }
+  let modalInnerHTML = ''
+  listValues.forEach((item) => {
+    modalInnerHTML += `
+      <li role="option" tabindex="0" class="recent-searches">
+        <div class="recent-searches-inner">
+          <span class="recent-searches-text">${item}</span>
+          <button type="button" class="recent-searches-delete-button">
+            <span class="recent-searches-delete-button-icon"></span>
+          </button>
+        </div>
+      </li>
+    `
+  })
+  recentSearchesList.innerHTML = modalInnerHTML
+}
+const searchHandler = async () => {
+  const listValues = await searchHistoryService.list()
+  recentSearchList(listValues)
+}
+
+const borderinput = document.querySelector(".header-fourth-inner-thirddiv");
+searchInput.addEventListener("focus", () => {
+  borderinput.style.border = "1px solid #134F2C";
+});
+searchInput.addEventListener("click", () => {
+  searchHandler()
+});
+searchInput.addEventListener("blur", () => {
+  borderinput.style.border = "1px solid #DADDE0";
+});
+
+
+const relatedSearchList = (listValues) => {
+  if (!listValues) return;
+  if (listValues.length === 0) {
+    return;
+  }
+  relatedSearchBox.classList.add('show-modal')
+  const itemList = [...new Set(listValues.map(JSON.stringify))].map(JSON.parse);
+  let modalInnerHTML = ''
+  itemList.forEach((item) => {
+    modalInnerHTML += `
+      <li role="option" tabindex="0" class="related-search-item">
+        <div class="related-search-item-inner">
+          <span class="related-search-icon"></span>
+          <div class="related-search-text">
+            ${item.prev_search}
+          </div>
+        </div>
+      </li>
+    `
+  })
+  relatedSearchLists.innerHTML = modalInnerHTML
+}
+
+
+relatedSearchBox.addEventListener('click', (e) => {
+  const query = e.target.closest('.related-search-item').innerText
+  window.location.href = `/search/?query=${query}`;
+})
+
+
+const relatedSearchHandler = async (searchValue) => {
+  if (searchValue) {
+    const listValues = await searchService.getList(searchValue)
+    relatedSearchList(listValues)
+  }
+}
+searchInput.addEventListener('paste', function (event) {
+  let pastedText = (event.clipboardData || window.clipboardData).getData('text');
+  recentSearchesBox.classList.remove('show-modal')
+  relatedSearchHandler(pastedText)
+});
+searchInput.addEventListener("keyup", (e) => {
   xbutton.style.display = "flex";
   // 입력한 값 가져오기
   const realInput = searchInput.value.trim();
@@ -11,16 +121,17 @@ searchInput.addEventListener("keydown", (e) => {
       searchInput.value = "";
       xbutton.style.display = "none";
     });
+    recentSearchesBox.classList.remove('show-modal')
   } else {
     xbutton.style.display = "none";
+    relatedSearchBox.classList.remove('show-modal')
+    if (recentSearchesBox.querySelectorAll('.recent-searches').length !== 0) {
+      recentSearchesBox.classList.add('show-modal')
+    } else {
+      recentSearchesBox.classList.remove('show-modal')
+    }
   }
-});
-const borderinput = document.querySelector(".header-fourth-inner-thirddiv");
-searchInput.addEventListener("focus", () => {
-  borderinput.style.border = "1px solid #134F2C";
-});
-searchInput.addEventListener("blur", () => {
-  borderinput.style.border = "1px solid #DADDE0";
+  relatedSearchHandler(searchInput.value)
 });
 
 // 강사 로그인 시 글쓰기 버튼 눌렀을 때 강의 시작하기가 생겨야함 원래는 없어야하고
@@ -84,3 +195,5 @@ document.addEventListener("click", (e) => {
     modal.classList.remove("modalOpen");
   }
 });
+
+

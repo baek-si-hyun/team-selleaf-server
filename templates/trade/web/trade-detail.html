@@ -5,6 +5,7 @@
 {% endblock %}
 {% block title %}거래상세보기{% endblock %}
 {% block content %}
+<form action="{% url 'trade:report' %}" method="post" name="trade-report" enctype="multipart/form-data">
   <body>
     {% include 'fix/header.html' %}
     <div class="declaration-modal-wrap">
@@ -130,7 +131,8 @@
         </div>
         <div class="declaration-btn-wrap">
           <div class="declaration-btn-container">
-            <button class="declaration-btn">신고하기</button>
+            <button class="declaration-btn" type="submit">신고하기</button>
+            <button class="declaration-btn" type="button">취소하기</button>
           </div>
         </div>
       </div>
@@ -198,7 +200,7 @@
     <div class="product-selling-wrap">
       <div class="product-overview-wrap">
         <nav class="product-category-wrap">
-            <span>{{ trade.member.member_name }}님의 {{ trade.trade_title }} 상품을 보고있어요🤗</span>
+            <span>{{ trade.member__member_name }}님의 {{ trade.trade_title }} 상품을 보고있어요🤗</span>
 {#          <ol class="product-category-container">#}
 {#            <li class="product-category-inner">#}
 {#              <a href="#" class="link">대구분</a>#}
@@ -347,12 +349,12 @@
             <div class="product-overview-contents-header">
               <h1 class="product-overview-contents-title">
                 <p class="product-overview-user-wrap">
-                  <a href="#" class="product-overview-user">{{ trade.member.member_name }}</a>
+                  <a href="#" class="product-overview-user">{{ trade.member__member_name }}</a>
                 </p>
                 <div class="product-overview-title">
                   <span class="product-title">{{trade.trade_title }}</span>
                   <div class="product-title-icon-wrap {{ trade.id }}">
-                    {% if request.session.member.id == trade.member.id %}
+                    {% if request.session.member.id == trade.member_id %}
                         <a href="/trade/update/?id={{ trade.id }}">
                             <button class="update-button" type="button">
                               <img
@@ -391,10 +393,10 @@
                     {% endif %}
                     <button class="scrap-button" type="button">
                       <img
-                        src="{% if trade.tradescrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
+                        src="{% if trade.trade_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
                         class="scrap-img"
                       />
-                      <span class="scrap-count">0</span>
+                      <span class="scrap-count"></span>
                     </button>
 {#                    <div class="share-button-wrap">#}
 {#                      <button class="share-button" type="button">#}
@@ -440,8 +442,12 @@
                       <b>키워드</b>
                     </span>
                     <span class="info-type">
-                      {% for tradePlant in trade.tradeplant_set.all %}
-                        <span class="info-tag">#{{ tradePlant.plant_name }}</span>
+                      {% for td in trades %}
+                          {% if td.id == trade.id %}
+                              {% for pN in td.plant_name %}
+                                <span class="info-tag">#{{ pN }}</span>
+                              {% endfor %}
+                          {% endif %}
                       {% endfor %}
                     </span>
 {#                    <span class="info-particulars-wrap">#}
@@ -476,11 +482,11 @@
                     ></path>
                   </svg>
                   <div class="user-link-name-container">
-                    <span class="user-link-name">{{ trade.member.member_name }}님의 판매상품</span>
+                    <span class="user-link-name">{{ trade.member__member_name }}님의 판매상품</span>
                   </div>
                 </div>
                 <div class="user-link-icon-wrap">
-                  <span>{{ trade.trade_category.category_name }}</span>
+                  <span>{{ trade.trade_category__category_name }}</span>
 {#                  <svg#}
 {#                    width="14"#}
 {#                    height="14"#}
@@ -611,7 +617,7 @@
                 <section class="product-suggestion-wrap">
                   <header class="product-suggestion-header">
                     <h1 class="product-suggestion-title">
-                        {{ trade.member.member_name }}님이 판매중인 상품
+                        {{ trade.member__member_name }}님이 판매중인 상품
                     </h1>
                   </header>
                   <div class="product-suggestion-scroller-wrap">
@@ -623,7 +629,7 @@
                         >
                           <ul class="scroller-list-contents-inner">
                             {% for trade in trades %}
-                                <div class="product-suggestion-each-contents">
+                                <div class="product-suggestion-each-contents {{ trade.id }}">
                                   <article class="product-suggestion-contents-wrap">
                                     <a
                                       class="product-suggestion-contents-overlay"
@@ -645,7 +651,7 @@
                                         type="button"
                                       >
                                         <img
-                                         src="{% if trade.tradescrap__status %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                                         src="{% if trade.trade_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                          class="scrap-img"
                                         />
                                       </button>
@@ -2140,8 +2146,8 @@
                   <table class="product-info-table">
                     <tbody>
                       <tr>
-                        <th>판매자소개</th>
-                        <td>{{ trade.member.member_name }}</td>
+                        <th>판매자이름</th>
+                        <td>{{ trade.member__member_name }}</td>
                       </tr>
                       <tr>
                         <th>오픈채팅방</th>
@@ -2167,9 +2173,13 @@
     </div>
     {% include 'fix/footer.html' %}
   </body>
+</form>
 {% endblock %}
 {% block js %}
-  <script>  const csrf_token = '{{ csrf_token }}';</script>
+  <script>  
+      const csrf_token = '{{ csrf_token }}'
+      const trade_id = '{{ trade.id }}'
+  </script>
   <script src="{% static 'trade/js/web/trade-module.js' %}"></script>
   <script src="{% static 'trade/js/web/trade-detail.js' %}"></script>
 {% endblock %}

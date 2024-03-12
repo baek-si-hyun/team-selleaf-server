@@ -170,17 +170,15 @@ realmainTodayHotdealPhotoWrapUl.addEventListener('click', async (e) => {
   await tradeScrapService.update(tradeContentId)
 })
 
-//post
-// const realmainPlantRecommendPhotoul = document.querySelector('.realmain-plantRecommend-photoul')
-// realmainPlantRecommendPhotoul.addEventListener('click', async (e)=>{
-//     scrapBtn = e.target.closest('.scrap-button')
-//     const knowhowContentId = scrapBtn.closest('.realmain-plantRecommend-photoli').classList[1]
-//     await knowhowService.update(knowhowContentId)
-//
-// })
+const popularcontentPhotoDiv = document.querySelector('.popularcontent-photoDiv')
+popularcontentPhotoDiv.addEventListener('click', async (e) => {
+  scrapBtn = e.target.closest('.scrap-button')
+  transSrcapBtnFn(scrapBtn)
+  const postContentId = scrapBtn.closest('.popularcontent-photoEachdiv').classList[2]
+  await postService.update(postContentId)
+})
 
 const realmainBestproductPhotoCategoryUl = document.querySelector('.realmain-bestproduct-photoCategoryUl')
-
 const createTag = (tags) => {
   let tagsHTML = ``
   tags.forEach((tag) => {
@@ -206,7 +204,7 @@ const createBestLecture = (bestLectures) => {
         />
         <button class="scrap-button" style="top:1px">
           <img
-              src="${bestLecture.lecturescrap__status ? '/static/public/web/images/common/scrap-on.png' : '/static/public/web/images/common/scrap-off.png'}"
+              src="${bestLecture.lecture_scrap ? '/static/public/web/images/common/scrap-on.png' : '/static/public/web/images/common/scrap-off.png'}"
               class="scrap-img"
               width="24px"
               height="24px"
@@ -265,7 +263,7 @@ const bestLecturecategoryHandler = async (e) => {
   let bestLectures;
   if (!category) {
     bestLectures = await lectureCategoryService.list('전체')
-  } else if(e.target.closest('.realmain-bestproduct-photoCategoryNlC')) {
+  } else if (e.target.closest('.realmain-bestproduct-photoCategoryNlC')) {
     if (category.innerText === '전체' || category.innerText === '관엽식물' || category.innerText === '침엽식물' || category.innerText === '희귀식물' || category.innerText === '다육/선인장' || category.innerText === '테라리움' || category.innerText === '기타') {
       bestLectures = await lectureCategoryService.list(category.innerText)
       checkboxLabels.forEach((checkbox) => {
