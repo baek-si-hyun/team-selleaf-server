@@ -272,7 +272,7 @@
                 <div class="product-overview-title">
                   <span class="product-title">{{ lecture.lecture_title }}</span>
                   <div class="product-title-icon-wrap {{ lecture.id }}">
-                    {% if request.session.member.id == lecture.teacher.member.id %}
+                    {% if request.session.member.id == lecture.teacher__member__member_id %}
                         <a href="/lecture/update/offline/?id={{ lecture.id }}">
                             <button class="update-button" type="button">
                               <img
@@ -480,8 +480,8 @@
                       <b>키워드</b>
                     </span>
                     <span class="info-type">
-                        {% for lecturePlant in lecture.lecture %}
-                          <span class="info-tag">#{{ lecturePlant.plant_name }}</span>
+                        {% for plant_name in lecture.plant_name %}
+                           <span class="info-tag">#{{ plant_name }}</span>
                         {% endfor %}
                     </span>
                   </div>
@@ -1342,6 +1342,7 @@
 {% block js %}
 <script>
     const csrf_token = '{{ csrf_token }}'
+    const lecture_id = '{{ lecture.id }}'
 </script>
 <script src="{% static 'lecture/js/lecture/web/lecture-module.js' %}"></script>    
 <script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>

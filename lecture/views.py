@@ -332,34 +332,54 @@ class LectureDetailOnlineView(View):
 
 class LectureDetailOfflineView(View):
     def get(self, request):
-        lecture = Lecture.objects.filter(id=request.GET['id'], online_status=False)\
-            .values('id', 'lecture_title', 'lecture_content', 'lecture_price', 'lecture_headcount', 'lecture_status', \
-                  'teacher__member_id', 'teacher__member__member_name', 'lecture_category__lecture_category_name', 'teacher__member__member_email').first()
+        member = request.session['member']
+        lecture_id = request.GET.get('id')
+        # print(member, lecture_id)
+        lecture = Lecture.objects.filter(id=request.GET['id'], online_status=False) \
+            .values('id', 'lecture_title', 'lecture_content', 'lecture_price', 'lecture_headcount', 'lecture_status',
+                    'teacher_id', 'teacher__member__member_name', 'lecture_category__lecture_category_name',
+                    'teacher__member__member_email').first()
 
         lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'],
-                                                    member_id=request.session['member']['id']).values('status').first()
+                                                    member_id=member['id']).values('status').first()
         lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
 
-        date = Date.objects.filter(lecture_id=request.GET['id']).first()
-        # print(lecture)
+        # 올린 강의 게시물을 작성한 사용자 찾기
+        teacher_id = lecture['teacher_id']
+        print(teacher_id)
 
+        lectures = Lecture.objects.filter(teacher=teacher_id, lecture_status=False) \
+            .values('id', 'lecture_title', 'lecture_price', 'lecture_content', 'teacher__member__member_name',
+                    'teacher__member_id')
+        print(lectures)
+        for lte in lectures:
+            lecture_scrap = LectureScrap.objects.filter(lecture_id=lte['id'],
+                                                        member_id=member['id']).values(
+                'status').first()
+            lte['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
+            product_img = LectureProductFile.objects.filter(lecture_id=lte['id']).values('file_url').first()
+            print(product_img)
+            if product_img:
+                lte['product_img'] = product_img['file_url']
+            else:
+                # 기본값이나 스킵 처리 등을 추가할 수 있음
+                lte['product_img'] = None  # 혹은 기본 이미지 URL 설정
+            product_plants = LecturePlant.objects.filter(lecture_id=lte['id']).values('plant_name')
+            product_plants_list = list(product_plants)
+            product_list = [item['plant_name'] for item in product_plants_list]
+            lte['plant_name'] = product_list
+
+        # review 계산 연산식
         review_count = LectureReview.objects.filter(lecture_id=request.GET['id']).count()
-        # print(review_count)
-
-        # 방금 올린 강의를 작성한 사용자 찾기
-        teacher_id = lecture['teacher__member_id']
-
         # 해당 강의에 대한 별점에 따른 리뷰 개수
         rating_counts = LectureReview.objects.filter(lecture_id=request.GET['id']).values('review_rating') \
             .annotate(count=Count('id'))
 
         # 별점 범위와 개수
         rating_dict = {str(i): 0 for i in range(1, 6)}
-
         # 각 별점에 따른 개수 저장
         for item in rating_counts:
             rating_dict[str(item['review_rating'])] = item['count']
-        # print(rating_dict)
 
         # 리뷰 평균 구하기
         # 해당 강의에 대한 리뷰들의 총합과 개수를 구함
@@ -373,31 +393,6 @@ class LectureDetailOfflineView(View):
         else:
             average_rating = 0
 
-        member_serarch_lecture = Lecture.objects.filter(id=teacher_id).values('teacher__member_id').first()
-        # 방금 강의를 올린 사용자가 작성한 다른 강의
-        lectures = Lecture.objects.filter(member=member_serarch_lecture['teacher__member_id'], lecture_status=True) \
-            .values('id', 'lecture_title', 'lecture_price', 'lecture_content', 'teacher__member__member_name', 'teacher__member_id')
-
-        for lte in lectures:
-            lecture_scrap = LectureScrap.objects.filter(lecture_id=lte['id'],
-                                                        member_id=request.session['member']['id']).values(
-                'status').first()
-            lte['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
-            lecture_img = LectureProductFile.objects.filter(lecture_id=lte['id']).values('file_url').first()
-
-            lte['plant_name'] = product_list
-            if lecture_img:
-                lte['product_img'] = lecture_img['file_url']
-            else:
-                # 기본값이나 스킵 처리 등을 추가할 수 있음
-                lte['product_img'] = None  # 혹은 기본 이미지 URL 설정
-
-            lecture_plants = LecturePlant.objects.filter(lecture_id=lte['id']).values('plant_name')
-            lecture_plants_list = list(lecture_plants)
-            product_list = [item['plant_name'] for item in lecture_plants_list]
-
-
-
         dates = Date.objects.filter(lecture_id=lecture['id']).values('id', 'date')
         for date in dates:
             times = Time.objects.filter(date_id=date['id']).values('id', 'time')
@@ -409,8 +404,8 @@ class LectureDetailOfflineView(View):
 
         context = {
             'lecture': lecture,
-            'lecture_files': list(LectureProductFile.objects.filter(lecture_id=lecture['id']).values('file_url')),
-            'lecture_file': list(LectureProductFile.objects.filter(lecture_id=lecture['id']).values('file_url'))[0],
+            'lecture_files': list(LectureProductFile.objects.filter(lecture_id=lecture_id).values('file_url')),
+            'lecture_file': list(LectureProductFile.objects.filter(lecture_id=lecture_id).values('file_url'))[0],
             'lecture_order_date': dates.order_by('date'),
             'reviews': reviews,
             'address': address,
