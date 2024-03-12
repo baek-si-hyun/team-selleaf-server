@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from django.db import transaction
-from django.db.models import Count, Avg, Sum, F
+from django.db.models import Count, Avg, Sum, F, Q
 from django.shortcuts import render, redirect
 from django.views import View
 from rest_framework.response import Response
@@ -65,7 +65,6 @@ def divide_time_intervals(start_time, end_time, interval):
 
 class LectureMainView(View):
     def get(self, request):
-        member = request.session['member']
         # 현재 로그인한 사용자의 주소 정보 가져오기
         member_address = MemberAddress.objects.get(member_id=request.session['member']['id'])
         address_city = member_address.address_city
@@ -128,13 +127,56 @@ class LectureTotalView(View):
 
 
 class LectureTotalApi(APIView):
-    def get(self, request, page):
+    def get(self, request, page, sorting, filters, type):
         # 현재 로그인한 사용자 정보 가져오기
         member = request.session['member']
         # 페이지당 행 수와 오프셋 설정
         row_count = 8
         offset = (page - 1) * row_count
         limit = row_count * page
+
+        # 필터 넣기
+        condition = Q()
+        sort1 = '-id'
+        sort2 = '-id'
+
+        if type == '식물 키우기':
+            condition |= Q(knowhowcategory__category_name__contains='식물 키우기')
+        elif type == '제품 추천':
+            condition |= Q(knowhowcategory__category_name__contains='제품 추천')
+        elif type == '스타일링':
+            condition |= Q(knowhowcategory__category_name__contains='스타일링')
+        elif type == '전체':
+            condition |= Q()
+
+        filters = filters.split(',')
+        for filter in filters:
+            # print(filter.replace(',', ''))
+            if filter.replace(',', '') == '관엽식물':
+                condition |= Q(knowhowplant__plant_name__contains='관엽식물')
+
+            elif filter.replace(',', '') == '침엽식물':
+                condition |= Q(knowhowplant__plant_name__contains='침엽식물')
+
+            elif filter.replace(',', '') == '희귀식물':
+                condition |= Q(knowhowplant__plant_name__contains='희귀식물')
+
+            elif filter.replace(',', '') == '다육':
+                condition |= Q(knowhowplant__plant_name__contains='다육')
+
+            elif filter.replace(',', '') == '선인장':
+                condition |= Q(knowhowplant__plant_name__contains='선인장')
+
+            elif filter.replace(',', '') == '기타':
+                condition |= Q(knowhowplant__plant_name__contains='기타')
+
+            elif filter.replace(',', '') == '전체':
+                condition = Q()
+
+
+
+
+
 
         # 강의 목록 가져오기 (마감되지 않은 강의)
         lectures = Lecture.objects.filter(lecture_status=False).annotate(
