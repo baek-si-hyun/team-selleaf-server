@@ -176,7 +176,7 @@
     <div class="product-selling-wrap">
       <div class="product-overview-wrap">
         <nav class="product-category-wrap">
-          <span>{{ lecture.teacher.member.member_name }}님의 {{ lecture.lecture_title }} 상품을 보고있어요🤗</span>
+          <span>{{ lecture.teacher__member__member_name }}님의 {{ lecture.lecture_title }} 상품을 보고있어요🤗</span>
         </nav>
         <div class="product-overview-container">
           <div class="product-overview-image-wrap">
@@ -266,13 +266,13 @@
               <h1 class="product-overview-contents-title">
                 <p class="product-overview-user-wrap">
                   <a href="해당유저페이지" class="product-overview-user"
-                    >{{ lecture.teacher.member.member_name }}</a
+                    >{{ lecture.teacher__member__member_name }}</a
                   >
                 </p>
                 <div class="product-overview-title">
                   <span class="product-title">{{ lecture.lecture_title }}</span>
-                  <div class="product-title-icon-wrap">
-                    {% if request.session.member.id == lecture.teacher.member.id %}
+                  <div class="product-title-icon-wrap {{ lecture.id }}">
+                    {% if request.session.member.id == lecture.teacher__member__member_id %}
                         <a href="/lecture/update/offline/?id={{ lecture.id }}">
                             <button class="update-button" type="button">
                               <img
@@ -295,7 +295,7 @@
                     <button class="scrap-button" type="button">
                       <img
                         class="scrap-off"
-                        src="{% static 'public/web/images/common/scrap-off-blk.png' %}"
+                        src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
                       />
                       <span class="scrap-count">0</span>
                     </button>
@@ -480,8 +480,8 @@
                       <b>키워드</b>
                     </span>
                     <span class="info-type">
-                        {% for lecturePlant in lecture.lectureplant_set.all %}
-                          <span class="info-tag">#{{ lecturePlant.plant_name }}</span>
+                        {% for plant_name in lecture.plant_name %}
+                           <span class="info-tag">#{{ plant_name }}</span>
                         {% endfor %}
                     </span>
                   </div>
@@ -507,8 +507,22 @@
                     ></path>
                   </svg>
                   <div class="user-link-name-container">
-                    <span class="user-link-name">{{ lecture.teacher.member.member_name }}님의 판매상품</span>
+                    <span class="user-link-name">{{ lecture.teacher__member__member_name }}님의 판매상품</span>
                   </div>
+                </div>
+                <div class="user-link-icon-wrap">
+                  <span>{{ lecture.lecture_category__lecture_category_name }}</span>
+{#                  <svg#}
+{#                    width="14"#}
+{#                    height="14"#}
+{#                    fill="none"#}
+{#                    preserveAspectRatio="xMidYMid meet"#}
+{#                  >#}
+{#                    <path#}
+{#                      d="M4.083 11.375L8.312 7 4.083 2.625l.803-.875L9.916 7l-5.03 5.25-.803-.875z"#}
+{#                      fill="#828C94"#}
+{#                    ></path>#}
+{#                  </svg>#}
                 </div>
               </a>
             </div>
@@ -941,7 +955,7 @@
                 <header class="product-ask-container">
                   <h1 class="product-ask-title">문의</h1>
                   <div class="product-ask-link">
-                    <h3 style="color: #134F2C">{{ lecture.teacher.member.member_email }}</h3>
+                    <h3 style="color: #134F2C">{{ lecture.teacher__member__member_email }}</h3>
 {#                    <button type="button" class="product-ask-button">#}
 {#                      판매자 문의#}
 {#                    </button>#}
@@ -963,7 +977,7 @@
                         >
                           <ul class="scroller-list-contents-inner">
                             {% for lecture in lectures %}
-                                <div class="product-suggestion-each-contents">
+                                <div class="product-suggestion-each-contents {{ lecture.id }}">
                                   <article class="product-suggestion-contents-wrap">
                                     <a
                                       class="product-suggestion-contents-overlay"
@@ -985,7 +999,7 @@
                                         type="button"
                                       >
                                         <img
-                                          src="{% static 'public/web/images/common/scrap-off.png' %}"
+                                          src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                           alt=""
                                         />
                                       </button>
@@ -1326,6 +1340,11 @@
   </body>
 {% endblock %}
 {% block js %}
+<script>
+    const csrf_token = '{{ csrf_token }}'
+    const lecture_id = '{{ lecture.id }}'
+</script>
+<script src="{% static 'lecture/js/lecture/web/lecture-module.js' %}"></script>    
 <script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>
 <script src="{% static 'lecture/js/lecture/web/lecture-detail-offline.js' %}"></script>
 <script>
