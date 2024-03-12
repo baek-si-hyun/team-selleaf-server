@@ -15,20 +15,20 @@
         <div class="realmain-wrap-container">
           <div class="realmain-image-wrap">
             <section class="realmain-image-section">
-              <a class="realmain-image-firsta" href="#">
+              <a class="realmain-image-firsta"         href="/knowhow/detail/?id={{ knowhow.id }}">
                 <img
                     class="realmain-image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
+                          src="/upload/{{ best_knowhow.knowhow_file_url }}"
                 />
                 <div class="realmain-image-content">
                   <p class="realmain-image-contentp">최고의 작품😊</p>
                   <span class="realmain-image-contentspan">
                       <img
                           class="realmain-image-contentspan-image"
-                          src="{% static 'public/web/images/common/blank-image.png' %}"
+                                 src="/upload/{{ best_knowhow.member_profile }}"
                       />
                       <span class="realmain-image-contentspan-span"
-                      >soo982181</span
+                      >{{ best_knowhow.member_name }}</span
                       >
                     </span>
                 </div>

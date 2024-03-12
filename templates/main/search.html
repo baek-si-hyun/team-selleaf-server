@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
-
+{% load socialaccount %}
 {% block static %}
   <link rel="stylesheet" href="{% static 'main/css/search.css' %}"/>
 {% endblock %}
@@ -47,8 +47,7 @@
                               >
                               <span class="realmain-plantRecommend-scrapspan">
                                 <img
-                                    src="
-                                        {% if knowhow.knowhow_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                                    src="{% if knowhow.knowhow_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                                     width="24"
                                     height="24"
                                     class="scrap-img"
@@ -110,7 +109,7 @@
               >
                 <strong
                     class="realmain-stronglatter popularcontent-stronglatter"
-                >게시물 <span class="search-count">1533</span></strong>
+                >게시물 <span class="search-count">{{ count.post_count }}</span></strong>
               </div>
             </div>
             <div class="realmain-lecture-seeMore-wrap">
@@ -369,5 +368,6 @@
   <script>
     const csrf_token = '{{ csrf_token }}';
   </script>
+  <script src="{% static 'main/js/scrap-module.js' %}"></script>
   <script src="{% static 'main/js/search.js' %}"></script>
 {% endblock %}
