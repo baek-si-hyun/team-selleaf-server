@@ -18,7 +18,7 @@ const countCheckBoxes = () => {
 // 페이지가 열렸을 때 체크된 박스 개수를 셈
 countCheckBoxes();
 
-// 화면에 회원의 대략적인 정보를 뿌리기 위한 로직
+// 화면에 회원의 정보를 뿌리기 위한 로직
 // 페이지가 열렸을 때 회원 정보의 첫 페이지 표시
 let page = 1;
 
@@ -64,40 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// // 마일리지 버튼 눌러서 해당 마일리지 수정해주는 js코드
-// document.addEventListener("DOMContentLoaded", function () {
-//   const editButtons = document.querySelectorAll("button.edit-button");
-//
-//   editButtons.forEach((btn) => {
-//     btn.addEventListener("click", (e) => {
-//       const btnAttribute = e.target
-//         .closest("button")
-//         .getAttribute("aria-label");
-//       if (btnAttribute == "mileage button") {
-//         const parentLi = e.target.closest("li");
-//         const mileageInput = parentLi.querySelector("input.content-detail-num");
-//         mileageInput.disabled = false;
-//         mileageInput.style.outline = "1px solid #c06888";
-//       }
-//     });
-//   });
-//
-//   const mileageInputs = document.querySelectorAll("input.content-detail-num");
-//   mileageInputs.forEach((input) => {
-//     input.addEventListener("blur", () => {
-//       input.disabled = true;
-//       input.style.outline = "none";
-//     });
-//
-//     input.addEventListener("keyup", (e) => {
-//       if (e.keyCode == 13) {
-//         input.disabled = true;
-//         input.style.outline = "none";
-//       }
-//     });
-//   });
-// });
-
 //아래 게시물 창 버튼
 const paginationBtn = document.querySelectorAll(".page-count-num");
 const paginationBox = document.querySelector(".page");
@@ -115,7 +81,6 @@ paginationBox.addEventListener("click", (e) => {
 
 // 검색창 눌렀을때 검색바에 아웃라인주기
 const searchBar = document.querySelector("label.search-bar");
-// const mileageInput = document.querySelector("input.content-detail-num");
 
 document.addEventListener("click", (e) => {
   if (e.target.closest("label.search-bar")) {
