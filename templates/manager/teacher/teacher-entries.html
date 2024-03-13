@@ -1,9 +1,9 @@
 {% extends 'manager/base.html' %}
 {% load static %}
 {% block static %}
-    <link rel="stylesheet" href="{% static 'public/web/css/manager/teacher/teacher.css' %}">
+    <link rel="stylesheet" href="{% static 'public/web/css/manager/teacher/teacher-entries.css' %}">
 {% endblock %}
-{% block title %}강사 관리{% endblock %}
+{% block title %}강사 신청자 관리{% endblock %}
 {% block content %}
   <body class="overflow-hidden">
     <div class="next">
@@ -16,9 +16,28 @@
               <div class="content-inner">
                 <div class="content-box">
                   <div class="header">
-                    <h1 class="header-name">강사 관리</h1>
+                    <h1 class="header-name">강사 신청자 관리</h1>
                     <div>
                       <div class="compose-button">
+{#                          승인 버튼 #}
+                        <button
+                          class="edit-button"
+                          aria-label="edit button"
+                          type="button"
+                        >
+                          <svg
+                            class="edit-button"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="m15.687 8.163.545-.506c1.024-.951 1.024-2.493 0-3.444-1.024-.95-2.684-.95-3.709 0l-8.362 7.765-1.127 3.547c-.183.577.395 1.113 1.016.943l3.82-1.046 6.661-6.186.005.004 1.155-1.073-.004-.004Zm-2.312 0-6.367 5.912-1.981.543.584-1.84 6.367-5.912 1.397 1.297Zm1.156-1.073-1.397-1.298.545-.506a1.042 1.042 0 0 1 1.397 0 .872.872 0 0 1 0 1.298l-.545.506Z"
+                            ></path>
+                          </svg>
+                        </button>
+{#                          삭제(반려) 버튼 #}
                         <button
                           class="delete-button"
                           aria-label="delete button"
@@ -48,7 +67,7 @@
                     <ul class="header-function-inner">
                       <li class="header-relative-1">
                         <a
-                          class="lecture-info my_lecture-checked"
+                          class="lecture-info"
                           aria-label="tab button"
                           id="btn"
                           href="{% url "manager-teacher" %}"
@@ -62,11 +81,11 @@
                             </div>
                           </div>
                         </a>
-                        <div class="lecture-underbar underbar-checked" id="under"></div>
+                        <div class="lecture-underbar" id="under"></div>
                       </li>
                       <li class="header-relative-2">
                         <a
-                          class="lecture-info"
+                          class="lecture-info my_lecture-checked"
                           aria-label="tab button"
                           id="btn"
                           href="{% url 'manager-teacher-entry' %}"
@@ -80,21 +99,21 @@
                             </div>
                           </div>
                         </a>
-                        <div class="lecture-underbar" id="under"></div>
+                        <div class="lecture-underbar underbar-checked" id="under"></div>
                       </li>
                     </ul>
                   </div>
                   <div class="all-list">
                     <div>
                       <span class="all-name">전체</span>
-                      <span class="all-num">{{ teachers }}</span>
+                      <span class="all-num">{{ teacher_entries }}</span>
                     </div>
                     <div class="list-order">
                       <div class="search-bar">
                         <label class="search-bar">
                           <input
                             class="search-bar"
-                            placeholder="강사 검색"
+                            placeholder="신청자 검색"
                             type="text"
                             value
                           />
@@ -123,7 +142,7 @@
                     <div class="category-inner">이름</div>
                     <div class="category-inner">주요 강의</div>
                     <div class="category-inner">강사 약력</div>
-                    <div class="category-inner">승인 일자</div>
+                    <div class="category-inner">신청 일자</div>
                   </div>
                 </div>
                 <ul class="list-content">
@@ -197,10 +216,11 @@
           </div>
         </div>
       </div>
+{#        삭제 모달 #}
       <div class="delete-modal-wrap">
         <div class="delete-modal-container">
-          <h4 class="delete-modal">강사 삭제</h4>
-          <div class="delete-modal-inner">해당 강사를 삭제하시겠습니까?</div>
+          <h4 class="delete-modal">신청자 삭제</h4>
+          <div class="delete-modal-inner">해당 신청을 거절하시겠습니까?</div>
           <div class="delete-modal-box">
             <div class="modal-cancel">
               <button class="modal-cancel" aria-label="button" type="button">
@@ -216,6 +236,26 @@
         </div>
         <div class="delete-modal-bgcolor"></div>
       </div>
+{#        승인 모달 #}
+      <div class="approve-modal-wrap">
+        <div class="approve-modal-container">
+          <h4 class="approve-modal">강사 신청 승인</h4>
+          <div class="approve-modal-inner">해당 신청을 모두 승인하시겠습니까?</div>
+          <div class="approve-modal-box">
+            <div class="approve-modal-cancel">
+              <button class="approve-modal-cancel" aria-label="button" type="button">
+                취소
+              </button>
+            </div>
+            <div class="approve-modal-confirm">
+              <button class="approve-modal-confirm" aria-label="button" type="button">
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="approve-modal-bgcolor"></div>
+      </div>
     </div>
   </body>
 {% endblock %}
@@ -225,5 +265,5 @@
   </script>
   <script src="{% static 'public/web/js/manager/teacher/teacher-module.js' %}"></script>
   <script src="{% static 'public/web/js/manager/teacher/show-teachers.js' %}"></script>
-  <script src="{% static 'public/web/js/manager/teacher/teacher.js' %}"></script>
+  <script src="{% static 'public/web/js/manager/teacher/teacher-entries.js' %}"></script>
 {% endblock %}

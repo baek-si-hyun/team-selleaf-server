@@ -282,5 +282,9 @@
   </body>
 {% endblock %}
 {% block js %}
+  <script>
+    const csrf_token = '{{ csrf_token }}';
+  </script>
+  <script src="{% static 'notice/js/web/notice-module.js' %}"></script>
   <script src="{% static 'notice/js/web/manager-notice.js' %}"></script>
 {% endblock %}

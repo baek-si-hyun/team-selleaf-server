@@ -189,8 +189,8 @@
       </div>
       <div class="delete-modal-wrap">
         <div class="delete-modal-container">
-          <h4 class="delete-modal">사용자 삭제</h4>
-          <div class="delete-modal-inner">해당 사용자를 삭제하시겠습니까?</div>
+          <h4 class="delete-modal">휴면 상태로 변경</h4>
+          <div class="delete-modal-inner">해당 사용자를 휴면 상태로 변경하시겠습니까?</div>
           <div class="delete-modal-box">
             <div class="modal-cancel">
               <button class="modal-cancel" aria-label="button" type="button">
@@ -210,6 +210,9 @@
   </body>
 {% endblock %}
 {% block js %}
+  <script>
+    const csrf_token = '{{ csrf_token }}';
+  </script>
   <script src="{% static 'public/web/js/manager/member/member/member-module.js' %}"></script>
   <script src="{% static 'public/web/js/manager/member/member/show-members.js' %}"></script>
   <script src="{% static 'public/web/js/manager/member/member/member.js' %}"></script>

@@ -1,6 +1,12 @@
 // 페이지가 열릴 때 체크된 박스가 없다면 삭제 버튼 disabled
 const deleteBtn = document.querySelector(".delete-button");
 
+// QnA 리스트를 뿌릴 위치(객체)를 querySelector로 가져옴
+  const qnaList = document.querySelector("ul.qna-list");
+
+// 가장 최근에 작성된 순으로 10개의 QnA를 부리기 위해 초기값을 1로 설정
+let page = 1
+
 // 현재 체크된 박스의 개수를 세는 함수
 const countCheckBoxes = () => {
   // 각 체크박스의 상태가 변할 때마다 체크된 박스의 개수를 셈
@@ -15,58 +21,8 @@ const countCheckBoxes = () => {
   }
 }
 
-// 페이지가 열렸을 때 체크된 박스 개수를 셈
-countCheckBoxes();
-
-// 가장 최근에 작성된 순으로 10개의 QnA를 부리기 위해 초기값을 1로 설정
-let page = 1
-
-// API 뷰로부터 데이터를 가져오기위한 비동기 통신 함수
-const getQnA = async (callback) => {
-  // API에 QnA 목록을 요청해서 가져옴 - Promise
-  const response = await fetch(`/qna/list/${page}`);
-  const qnas = await response.json()
-
-  // 콜백함수를 전달받았다면, 조회한 목록의 처리를 콜백함수에 맡김
-  if(callback) {
-    callback(qnas)
-  }
-}
-
-// 가져온 목록을 화면에 뿌리기 위한 함수
-const showQnA = (qna_info) => {
-  // 나중에 페이지네이션을 위한 로직 작성
-
-
-  // QnA 리스트를 뿌릴 위치(객체)를 querySelector로 가져옴
-  const qnaList = document.querySelector("ul.qna-list")
-
-  // fetch 요청으로 받아온 데이터 할당
-  let qnas = qna_info.qnas
-
-  // QnA의 제목과 내용을 아래의 HTML 태그로 묶어서 QnA 목록 생성
-  qnas.forEach((qna) => {
-    qnaList.innerHTML += `
-                  <li class="list-content ${qna.id}">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">${qna.qna_title}</p>
-                            </div>
-                            <p class="content-name-detail">${qna.qna_content}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <a class="update-qna" href="/admin/qna/update/?id=${qna.id}">수정</a>
-                  </li>
-    `
-  });
-
+// 체크박스 클릭 이벤트 추가 기능 함수화
+const addCheckboxEvent = () => {
   // 체크박스 관련 js
   const allCheck = document.querySelector(".all-check");
   const checkboxes = document.querySelectorAll(".checkbox-input");
@@ -113,8 +69,50 @@ const showQnA = (qna_info) => {
   });
 }
 
+// 페이지가 열렸을 때 체크된 박스 개수를 셈
+countCheckBoxes();
+
+// 가져온 목록을 화면에 뿌리기 위한 함수
+const showQnA = (qna_info) => {
+  // 화면에 뿌릴 HTML 태그를 담을 빈 문자열
+  let text = ``;
+
+  // 나중에 페이지네이션을 위한 로직 작성
+
+  // fetch 요청으로 받아온 데이터 할당
+  let qnas = qna_info.qnas
+
+  // QnA의 제목과 내용을 아래의 HTML 태그로 묶어서 QnA 목록 생성
+  qnas.forEach((qna) => {
+    text += `
+                  <li class="list-content ${qna.id}">
+                    <input type="checkbox" class="checkbox-input" />
+                    <button class="text-left">
+                      <div class="list-content-wrap">
+                        <div class="list-content-container">
+                          <div class="list-content-inner">
+                            <div class="content-name">
+                              <p class="content-name">${qna.qna_title}</p>
+                            </div>
+                            <p class="content-name-detail">${qna.qna_content}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                    <div class="content-open-wrap"></div>
+                    <a class="update-qna" href="/admin/qna/update/?id=${qna.id}">수정</a>
+                  </li>
+    `
+  });
+
+  return text;
+}
+
 // 위 함수들을 사용해서 페이지가 열렸을 때 화면에 QnA 표시
-getQnA(showQnA)
+qnaService.getList(page, showQnA).then((qnas) => {
+  qnaList.innerHTML = qnas;
+  addCheckboxEvent();
+});
 
 // 삭제 버튼 누르면 뜨는 모달창
 document.addEventListener("DOMContentLoaded", function () {
@@ -122,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalWrap = document.querySelector(".delete-modal-wrap");
 
   deleteButtons.forEach(function (deleteButton) {
-    deleteButton.addEventListener("click", (e) => {
+    deleteButton.addEventListener("click", () => {
       modalWrap.style.display = "flex";
     });
   });
@@ -131,28 +129,30 @@ document.addEventListener("DOMContentLoaded", function () {
   const confirmButton = document.querySelector(".modal-confirm button");
 
   // 취소 버튼 누르면 모달창 닫힘
-  cancelButton.addEventListener("click", (e) => {
+  cancelButton.addEventListener("click", () => {
     modalWrap.style.display = "none";
   });
 
   // 삭제 버튼 이벤트 - 체크된 QnA만 삭제
-  confirmButton.addEventListener("click", (e) => {
+  confirmButton.addEventListener("click", async () => {
     modalWrap.style.display = "none";
 
-    // 삭제할 QnA의 id를 담을 빈 배열
-    let deleteIds = [];
+    // 삭제할 QnA의 id를 담을 빈 문자열
+    let deleteIds = ``;
 
     // 이 시점에서 체크된 박스 개수를 세고
     const checkedBoxes = document.querySelectorAll(".checkbox-input:checked");
 
     // 각 체크박스를 감싸는 li 태그의 id를 deleteIds에 추가
     checkedBoxes.forEach((checkbox) => {
-      deleteIds.push(checkbox.parentElement.classList[1]);
-    })
+      deleteIds += `,${checkbox.parentElement.classList[1]}`;
+    });
 
-    // 삭제할 QnA들 id 추출 완료
-    // 이걸 어떻게 뷰에 보내야 되나...
-    console.log(deleteIds)
+    // 삭제할 QnA들의 id를 삭제 API에 보냄
+    await qnaService.deleteQnAs(deleteIds);
+
+    // 다시 현재 페이지 불러오기
+    location.reload();
   });
 });
 
