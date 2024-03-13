@@ -322,8 +322,9 @@ class LectureManagementView(View):
         # 강의 게시물 전체 개수
         lecture_count = Lecture.enabled_objects.count()
 
+        context = {'lecture_count': lecture_count}
 
-        return render(request, 'manager/lecture/lecture/lecture.html')
+        return render(request, 'manager/lecture/lecture/lecture.html', context)
 
 
 # 강의 리뷰 관리

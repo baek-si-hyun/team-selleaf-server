@@ -50,6 +50,7 @@ urlpatterns = [
     path('admin/qna/delete/', DeleteQnAView.as_view(), name='qna-delete'),
     path('admin/qna/delete/<str:qna_ids>', DeleteManyQnAView.as_view(), name='many-qna-delete'),
     # 기타 서비스 url
+    path('alarm/', include('alarm.urls-web')),
     path('member/', include('member.urls-web')),
     path('lecture/', include('lecture.urls-web')),
     path('order/', include('order.urls-web')),
