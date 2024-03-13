@@ -9,9 +9,6 @@ a * {
   border: none;
 }
 
-.whole-page-wrap {
-  height: 100%;
-}
 
 .whole-page-container {
   height: 100%;
@@ -493,6 +490,7 @@ a * {
 .main-content-wrap {
   box-sizing: border-box;
   padding-left: 10px;
+  margin-top: 50px;
   padding-right: 10px;
   width: 66.6667%;
 }
@@ -554,6 +552,7 @@ a * {
 
 .reviews-item-image {
   width: 100%;
+  height: 100%;
   border-radius: 8px;
   transition: 0.1s opacity;
 }
@@ -771,4 +770,22 @@ a * {
   .content-seperator {
     display: none;
   }
+}
+
+
+
+.content-title-wrap {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin: 0 0 20px;
+}
+
+.content-title {
+  color: #000000;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 1;
 }
