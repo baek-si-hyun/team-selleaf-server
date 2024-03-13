@@ -301,5 +301,10 @@
   </body>
 {% endblock %}
 {% block js %}
+  <script>
+    const csrf_token = '{{ csrf_token }}';
+  </script>
+  <script src="{% static 'public/web/js/manager/lecture/lecture/lecture-module.js' %}"></script>
+  <script src="{% static 'public/web/js/manager/lecture/lecture/show-lectures.js' %}"></script>
   <script src="{% static 'public/web/js/manager/lecture/lecture/lecture.js' %}"></script>
 {% endblock %}

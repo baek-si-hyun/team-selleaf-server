@@ -320,7 +320,7 @@ class LectureManagementView(View):
     # 강의 관리 페이지 이동 뷰
     def get(self, request):
         # 강의 게시물 전체 개수
-        lecture_count = Lecture.enabled_objects.count()
+        lecture_count = Lecture.objects.filter(lecture_status=0).count()
         
         # 강의 게시물 수를 context에 담음
         context = {'lecture_count': lecture_count}
@@ -352,18 +352,18 @@ class LectureInfoAPI(APIView):
         ]
 
         # 강의 게시글 10개의 정보를 최신순으로 가져옴
-        lectures = Lecture.enabled_objects\
+        lectures = Lecture.objects.filter(lecture_status=0)\
                        .annotate(teacher_name=F('teacher__member__member_name'),
                                  lecture_place=Concat(F('lectureaddress__address_city'),
                                                       Value(" "),
                                                       F('lectureaddress__address_district'),
                                                       output_field=CharField()
-                                                      )
+                                                      ),
                                 )\
                        .values(*columns)[offset:limit]
 
         # 다음 페이지에 띄울 정보가 있는지 검사
-        has_next_page = Teacher.enabled_objects.filter()[limit:limit + 1].exists()
+        has_next_page = Lecture.objects.filter(lecture_status=0)[limit:limit + 1].exists()
 
         # 각각의 강의 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for lecture in lectures:
