@@ -164,9 +164,7 @@ class LectureMainApi(APIView):
 
             # 강의 스크랩 정보 가져오기
             lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'],
-                                                        member_id=request.session['member']['id']).values(
-                'status'
-            ).first()
+                                                        member_id=request.session['member']['id']).values('status').first()
             lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
 
             # 강의 관련 식물 정보 가져오기
@@ -180,14 +178,18 @@ class LectureMainApi(APIView):
 
 class LectureTotalView(View):
     def get(self, request):
-        return render(request, 'lecture/web/lecture-total.html')
+
+        lecture_count = Lecture.objects.count()
+
+        context = {'lecture_count': lecture_count}
+
+        return render(request, 'lecture/web/lecture-total.html', context)
 
 
 class LectureTotalApi(APIView):
     def get(self, request, page, sorting, filters, type):
         # 현재 로그인한 사용자 정보 가져오기
         member = request.session['member']
-
         # 페이지당 행 수와 오프셋 설정
         row_count = 8
         offset = (page - 1) * row_count
@@ -197,19 +199,20 @@ class LectureTotalApi(APIView):
 
         # 필터 넣기
         condition = Q()
+        condition2 = Q()
         sort1 = '-id'
         sort2 = '-id'
 
         if type == '리스/트리':
-            condition |= Q(lecturecategory__category_name__contains='리스/트리')
+            condition2 |= Q(lecturecategory__category_name__contains='리스/트리')
         elif type == '바구니/센터피스/박스':
-            condition |= Q(lecturecategory__category_name__contains='바구니/센터피스/박스')
+            condition2 |= Q(lecturecategory__category_name__contains='바구니/센터피스/박스')
         elif type == '가드닝/테라리움':
-            condition |= Q(lecturecategory__category_name__contains='가드닝/테라리움')
+            condition2 |= Q(lecturecategory__category_name__contains='가드닝/테라리움')
         elif type == '기타':
-            condition |= Q(lecturecategory__category_name__contains='기타')
+            condition2 |= Q(lecturecategory__category_name__contains='기타')
         elif type == '전체':
-            condition |= Q()
+            condition2 |= Q()
 
 
         filters = filters.split(',')
@@ -233,7 +236,7 @@ class LectureTotalApi(APIView):
             elif filter.replace(',', '') == '전체':
                 condition = Q()
 
-        print(condition)
+        # print(condition)
 
         if sorting == '최신순':
             sort1 = '-id'
@@ -245,69 +248,90 @@ class LectureTotalApi(APIView):
 
         columns = [
             'lecture_title',
-            'teacher__member_name',
+            'member_name',
             'id',
             'teacher__member_id'
         ]
 
-
         # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
         # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
-        lectures = Lecture.objects.select_related('lecturescrap').filter(condition, lecture_status=True) \
+        lectures = Lecture.objects.select_related('lecturescrap').filter(condition, condition2, lecture_status=False) \
             .annotate(member_name=F('teacher__member__member_name')) \
             .values(*columns) \
             .annotate(scrap_count=Count(Q(lecturescrap__status=1))) \
-            .values('id', 'lecture_title', 'lecture_price', 'teacher__member__member_name', 'teacher__member_id', 'scrap_count', 'lecture_status')\
+            .values('id', 'lecture_title', 'lecture_price', 'teacher__member__member_name', 'teacher__member_id', 'scrap_count', 'online_status')\
             .order_by(sort1, sort2).distinct()
-        print(lectures)
 
+        lectures_count = Lecture.objects.select_related('lecturescrap').filter(condition, condition2, lecture_status=False)  \
+            .annotate(member_name=F('teacher__member__member_name')) \
+            .values(*columns)  \
+            .annotate(scrap_count=Count(Q(lecturescrap__status=1)))  \
+            .values('id', 'lecture_title', 'lecture_price', 'teacher__member__member_name', 'teacher__member_id', 'scrap_count', 'online_status') \
+            .order_by(sort1, sort2).distinct().count()
+
+        print(lectures_count)
+
+        # print(lectures)
+        # print('=' * 20)
         # lecture에 lectures를 가상 컬럼을 만들어서 하나씩 추가해줌
         for lecture in lectures:
             lecture_file = LectureProductFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
             profile = MemberProfile.objects.filter(member_id=lecture['teacher__member_id']).values('file_url').first()
+
             lecture['lecture_file'] = lecture_file['file_url'] if lecture_file else None
             lecture['profile'] = profile['file_url'] if profile else None
-            product_plants = LecturePlant.objects.filter(lecture_id=lecture['id']).values('plant_name')
-            product_list = [item['plant_name'] for item in product_plants]
-            lecture['plant_name'] = product_list
 
-        print(lecture)
-
-        # 강의 목록 가져오기 (마감되지 않은 강의)
-        lectures = Lecture.objects.filter(lecture_status=False).annotate(
-            member_name=F('teacher__member__member_name')
-        ).values(
-            'lecture_title',
-            'lecture_price',
-            'member_name',
-            'id',
-            'teacher__member_id',  # 강사의 멤버 ID 가져오도록 수정
-            'lecture_status'
-        )
-
-        # 각 강의에 대한 추가 정보 가져오기
-        for lecture in lectures:
-            # 강의 파일 정보 가져오기
-            lecture_file = LectureProductFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
-            lecture['lecture_file'] = lecture_file['file_url'] if lecture_file else None
-            print(lecture_file)
-
-            # 강사 프로필 정보 가져오기
-            profile = MemberProfile.objects.filter(member_id=lecture['teacher__member_id']).values('file_url').first()
-            lecture['profile'] = profile['file_url'] if profile else None
-
-            # 강의 스크랩 정보 가져오기
-            lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values(
-                'status').first()
+            lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values('status').first()
             lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
 
-            # 강의 관련 식물 정보 가져오기
             product_plants = LecturePlant.objects.filter(lecture_id=lecture['id']).values('plant_name')
             product_list = [item['plant_name'] for item in product_plants]
             lecture['plant_name'] = product_list
+            # print(lecture)
+
+
+        # # 강의 목록 가져오기 (마감되지 않은 강의)
+        # lectures = Lecture.objects.filter(lecture_status=False).annotate(
+        #     member_name=F('teacher__member__member_name')
+        # ).values(
+        #     'lecture_title',
+        #     'lecture_price',
+        #     'member_name',
+        #     'id',
+        #     'teacher__member_id',  # 강사의 멤버 ID 가져오도록 수정
+        #     'lecture_status',
+        #     'online_status'
+        # )
+        #
+        # # 각 강의에 대한 추가 정보 가져오기
+        # for lecture in lectures:
+        #     # 강의 파일 정보 가져오기
+        #     lecture_file = LectureProductFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
+        #     lecture['lecture_file'] = lecture_file['file_url'] if lecture_file else None
+        #     # print(lecture_file)
+        #
+        #     # 강사 프로필 정보 가져오기
+        #     profile = MemberProfile.objects.filter(member_id=lecture['teacher__member_id']).values('file_url').first()
+        #     lecture['profile'] = profile['file_url'] if profile else None
+        #
+        #     # 강의 스크랩 정보 가져오기
+        #     lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values('status').first()
+        #     lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
+        #
+        #     # 강의 관련 식물 정보 가져오기
+        #     product_plants = LecturePlant.objects.filter(lecture_id=lecture['id']).values('plant_name')
+        #     product_list = [item['plant_name'] for item in product_plants]
+        #     lecture['plant_name'] = product_list
+
+        lectures = lectures[offset:limit]
+
+        datas = {
+            'lectures': lectures,
+            'lectures_count': lectures_count
+        }
 
         # 페이징된 결과 반환
-        return Response(lectures[offset:limit])
+        return Response(datas)
 
 
 class LectureDetailOnlineView(View):
