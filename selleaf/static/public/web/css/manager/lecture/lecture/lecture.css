@@ -502,7 +502,7 @@ div.category-benner{
 div.category-wrap {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
     width: 880px;
 }
 
@@ -581,7 +581,7 @@ a.class-info-wrap{
     fill: #333334;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
     width: 880px;
     cursor: pointer;
 }

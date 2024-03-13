@@ -25,12 +25,13 @@ const showLectures = (lectures_info) => {
         text += `
                   <li class="list-content ${lecture.id}">
                     <input type="checkbox" class="checkbox-input" />
-                    <a class="class-info-wrap">
+                    <a class="class-info-wrap" href="/admin/lecture/review/?id=${lecture.id}" target="_blank">
                       <div class="class-info title">
                           <p class="content-name">${lecture.lecture_title}</p>
                           <p class="content-name-detail">${lecture.lecture_title}</p>
                       </div>
                       <div class="class-info">${lecture.teacher_name}</div>
+                      <div class="class-info">${lecture.total_trainees}명</div>
                       <div class="class-info">${lecture.lecture_headcount}명</div>
                       <div class="class-info">${formattedPrice}원</div>
                       <div class="class-info">${lecturePlace}</div>

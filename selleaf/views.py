@@ -367,9 +367,30 @@ class LectureInfoAPI(APIView):
         # 다음 페이지에 띄울 정보가 있는지 검사
         has_next_page = Lecture.objects.filter(lecture_status=0)[limit:limit + 1].exists()
 
+        # 아래의 for문에서 각 강의 별 수강생 수를 담을 변수
+        total_trainees = 0
+
         # 각각의 강의 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for lecture in lectures:
             lecture['created_date'] = lecture['created_date'].strftime('%Y.%m.%d')
+
+            # 각 강의 별 수강생 수 추가하기
+            # 해당 강의 신청 내역들 -> 각 신청 내역들의 인원 수의 총 합계
+            # 강의 신청 내역 조건
+            apply_condition_vaild = Q(apply_status=0) | Q(apply_status=1)
+            apply_condition_lecture = Q(lecture_id=lecture['id'])
+            apply_condition = apply_condition_lecture & apply_condition_vaild
+
+            # 위 조건식으로 해당 강의를 신청한 내역 전체를 조회
+            applies = Apply.objects.filter(apply_condition)
+
+            # 각 신청 내역 별 인원 수를 총합에 더함
+            for apply in applies:
+                trainee_count = Trainee.objects.filter(apply=apply.id).count()
+                total_trainees += trainee_count
+
+            # 각 강의(dict)에 신청자 수를 담을 키 생성
+            lecture['total_trainees'] = total_trainees
 
         # 완성된 강의 정보 목록
         lecture_info = {
