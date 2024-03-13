@@ -321,10 +321,53 @@ class LectureManagementView(View):
     def get(self, request):
         # 강의 게시물 전체 개수
         lecture_count = Lecture.enabled_objects.count()
-
+        
+        # 강의 게시물 수를 context에 담음
         context = {'lecture_count': lecture_count}
-
+        
+        # lecture.html 페이지로 이동
         return render(request, 'manager/lecture/lecture/lecture.html', context)
+
+
+class LectureInfoAPI(APIView):
+    # 개설된 강의 정보를 가져오는 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 강의 수
+        row_count = 10
+
+        # 한 페이지에 표시할 강의 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 강의 정보 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'teacher_name',
+            'teacher_info',
+            'lecture_plan',
+            'created_date',
+        ]
+
+        # 최근에 승인된 순으로 강사 10명의 정보를 가져옴
+        teachers = Teacher.enabled_objects.annotate(teacher_name=F('member__member_name')) \
+                       .values(*columns).order_by('-id')[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Teacher.enabled_objects.filter()[limit:limit + 1].exists()
+
+        # 각각의 강사 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for teacher in teachers:
+            teacher['created_date'] = teacher['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 강사 정보 목록
+        teacher_info = {
+            'teachers': teachers,
+            'hasNext': has_next_page,
+        }
+
+        # 요청한 데이터 반환
+        return Response(teacher_info)
+
 
 
 # 강의 리뷰 관리
