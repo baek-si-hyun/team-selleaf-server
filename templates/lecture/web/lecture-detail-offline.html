@@ -272,7 +272,7 @@
                 <div class="product-overview-title">
                   <span class="product-title">{{ lecture.lecture_title }}</span>
                   <div class="product-title-icon-wrap {{ lecture.id }}">
-                    {% if request.session.member.id == lecture.teacher__member__member_id %}
+                    {% if request.session.member.id == lecture.teacher__member_id %}
                         <a href="/lecture/update/offline/?id={{ lecture.id }}">
                             <button class="update-button" type="button">
                               <img
@@ -297,7 +297,7 @@
                         class="scrap-off"
                         src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
                       />
-                      <span class="scrap-count">0</span>
+                      <span class="scrap-count"></span>
                     </button>
                   </div>
                 </div>

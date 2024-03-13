@@ -272,7 +272,7 @@
                 <div class="product-overview-title">
                   <span class="product-title">{{ lecture.lecture_title }}</span>
                   <div class="product-title-icon-wrap {{ lecture.id }}">
-                    {% if request.session.member.id == teacher__member__id %}
+                    {% if request.session.member.id == lecture.teacher__member_id %}
                         <a href="/lecture/update/online/?id={{ lecture.id }}">
                             <button class="update-button" type="button">
                               <img

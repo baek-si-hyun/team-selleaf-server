@@ -1,9 +1,10 @@
-console.log('asdasdasd1')
 // 이미지 버튼 슬라이싱
 const nextButton = document.querySelector(".scroller-ui-next");
 const prevButton = document.querySelector(".scroller-ui-prev");
 const target = document.querySelector(".scroller-contents-container");
 const prevSvg = document.querySelector(".prev-icon");
+
+const scrapCount = document.querySelector(".scrap-count");
 
 const countUpdate = () => {
     scrapCountService.scrapCount(lecture_id).then((count) => {
@@ -13,7 +14,7 @@ const countUpdate = () => {
 
 var xdegree = 0;
 
-console.log(lecture_count)
+
 if( lecture_count / 3 > 1) {
   nextButton.addEventListener("click", (e) => {
     xdegree -= 712;
@@ -27,7 +28,6 @@ if( lecture_count / 3 > 1) {
     }
     prevButton.style.display = "block";
 
-    console.log(xdegree);
   });
 
   prevButton.addEventListener("click", (e) => {
@@ -42,7 +42,6 @@ if( lecture_count / 3 > 1) {
     }
     nextButton.style.display = "block";
 
-    console.log(xdegree);
   });
 }
 else{
@@ -83,7 +82,7 @@ const lectureSrcapBtnFn = (scrap) => {
   }
 }
 
-const lectureSrcapBtnBlkFn = (scrap) => {
+const lectureScrapBtnBlkFn = (scrap) => {
   const img = scrap.querySelector("img");
   const imgSrc = img.getAttribute("src");
   if (imgSrc === "/static/public/web/images/common/scrap-off.png") {
@@ -109,7 +108,6 @@ const lectureSrcapBtnBlkFn = (scrap) => {
     }, 3000);
   }
 }
-
 countUpdate();
 const productTitleIconWrap = document.querySelector('.product-title-icon-wrap')
 productTitleIconWrap.addEventListener('click', async (e) => {
@@ -123,7 +121,7 @@ productTitleIconWrap.addEventListener('click', async (e) => {
 const scrollerListContentsInner = document.querySelector('.scroller-list-contents-inner')
 scrollerListContentsInner.addEventListener('click', async (e) => {
   const scrapBtn = e.target.closest('.img-scrap-button')
-  lectureSrcapBtnBlkFn(scrapBtn)
+  lectureScrapBtnBlkFn(scrapBtn)
   const lectureContentId = scrapBtn.closest('.product-suggestion-each-contents').classList[1]
   await lectureScrapService.update(lectureContentId)
 })
