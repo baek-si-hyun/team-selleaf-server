@@ -18,7 +18,7 @@ const countCheckBoxes = () => {
 // 페이지가 열렸을 때 체크된 박스 개수를 셈
 countCheckBoxes();
 
-// 화면에 회원의 정보를 뿌리기 위한 로직
+// 화면에 강의의 정보를 뿌리기 위한 로직
 // 페이지가 열렸을 때 회원 정보의 첫 페이지 표시
 let page = 1;
 
@@ -27,7 +27,7 @@ const ul = document.querySelector("ul.list-content");
 
 // 개설된 강의 정보의 첫 페이지를 화면에 띄워주는 함수
 const callFirstLectureList = () => {
-  // 만들어둔 모듈을 사용해서 회원 정보를 불러옴
+  // 만들어둔 모듈을 사용해서 강의 정보를 불러옴
   lectureService.getList(page, showLectures).then((lectures) => {
     ul.innerHTML = lectures;
 
@@ -45,8 +45,6 @@ callFirstLectureList();
 document.addEventListener("DOMContentLoaded", function () {
   const deleteButtons = document.querySelectorAll(".delete-button");
   const modalWrap = document.querySelector(".delete-modal-wrap");
-
-  console.log(deleteButtons);
 
   deleteButtons.forEach(function (deleteButton) {
     deleteButton.addEventListener("click", (e) => {

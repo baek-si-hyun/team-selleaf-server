@@ -87,7 +87,7 @@
                   <div class="all-list">
                     <div>
                       <span class="all-name">전체</span>
-                      <span class="all-num">3</span>
+                      <span class="all-num">{{ review_count }}</span>
                     </div>
                     <div class="list-order">
                       <div class="search-bar">
@@ -119,83 +119,27 @@
                 </div>
                 <div class="category-benner">
                   <input type="checkbox" class="all-check" />
-                  <div class="category-inner" style="width: 750px">제목</div>
-                  <div class="category-inner" style="width: 60px">도움</div>
-                  <div class="category-inner">작성일</div>
+                  <div class="category-wrap">
+                    <div class="category-inner">리뷰 정보</div>
+                    <div class="category-inner">작성자</div>
+                    <div class="category-inner">별점</div>
+                    <div class="category-inner">작성일</div>
+                  </div>
                 </div>
                 <ul class="list-content">
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">리뷰 제목 1</p>
-                            </div>
-                            <p class="content-name-detail">리뷰 내용 1</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">0</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">리뷰 제목 2</p>
-                            </div>
-                            <p class="content-name-detail">리뷰 내용 2</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">0</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">리뷰 제목 3</p>
-                            </div>
-                            <p class="content-name-detail">리뷰 내용 3</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">0</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
-                    </div>
-                  </li>
+{#                    리스트 예시 #}
+{#                  <li class="list-content">#}
+{#                    <input type="checkbox" class="checkbox-input" />#}
+{#                    <a class="review-info-wrap">#}
+{#                      <div class="review-info title">#}
+{#                          <p class="review-title">리뷰 제목 예시</p>#}
+{#                          <p class="review-content">리뷰 내용 예시</p>#}
+{#                      </div>#}
+{#                      <div class="review-info">KGH</div>#}
+{#                      <div class="review-info">5</div>#}
+{#                      <div class="review-info">2024.03.14</div>#}
+{#                    </a>#}
+{#                  </li>#}
                 </ul>
                 <div class="page-count-wrap">
                   <ul class="page flex">
@@ -287,5 +231,11 @@
   </body>
 {% endblock %}
 {% block js %}
+  <script>
+    const csrf_token = '{{ csrf_token }}';
+    const lectureId = '{{ lecture.id }}';
+  </script>
+  <script src="{% static 'public/web/js/manager/lecture/lecture/lecture-module.js' %}"></script>
+  <script src="{% static 'public/web/js/manager/lecture/lecture-detail/show-reviews.js' %}"></script>
   <script src="{% static 'public/web/js/manager/lecture/lecture-detail/lecture-detail-review.js' %}"></script>
 {% endblock %}

@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apply.models import Apply, Trainee
-from lecture.models import Lecture
+from lecture.models import Lecture, LectureReview
 from member.models import Member
 from notice.models import Notice
 from qna.models import QnA
@@ -367,12 +367,12 @@ class LectureInfoAPI(APIView):
         # 다음 페이지에 띄울 정보가 있는지 검사
         has_next_page = Lecture.objects.filter(lecture_status=0)[limit:limit + 1].exists()
 
-        # 아래의 for문에서 각 강의 별 수강생 수를 담을 변수
-        total_trainees = 0
-
         # 각각의 강의 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for lecture in lectures:
             lecture['created_date'] = lecture['created_date'].strftime('%Y.%m.%d')
+
+            # 아래의 for문에서 각 강의 별 수강생 수를 담을 변수
+            total_trainees = 0
 
             # 각 강의 별 수강생 수 추가하기
             # 해당 강의 신청 내역들 -> 각 신청 내역들의 인원 수의 총 합계
@@ -446,6 +446,48 @@ class LectureReviewManagementView(View):
 
         # 아래의 html 페이지로 이동
         return render(request, 'manager/lecture/lecture-detail/lecture-detail-review.html', context)
+
+
+class LectureReviewInfoAPI(APIView):
+    # 특정 강의에 달린 리뷰 목록을 가져오는 뷰
+    def get(self, request, lecture_id, page):
+        # 한 페이지에 띄울 리뷰 개수
+        row_count = 10
+
+        # 한 페이지에 표시할 리뷰 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 리뷰 정보 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'review_title',
+            'review_content',
+            'member_name',
+            'review_rating',
+            'created_date',
+        ]
+
+        # 특정 강의의 리뷰 10개를 최신순으로 가져옴
+        reviews = LectureReview.objects.filter(lecture=lecture_id)\
+            .annotate(member_name=F('member__member_name'))\
+            .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = LectureReview.objects.filter(lecture=lecture_id)[limit:limit + 1].exists()
+
+        # 각각의 강의 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for review in reviews:
+            review['created_date'] = review['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 리뷰 목록
+        lecture_review_info = {
+            'reviews': reviews,
+            'hasNext': has_next_page
+        }
+
+        # 요청한 데이터 반환
+        return Response(lecture_review_info)
 
 
 # 댓글 관리

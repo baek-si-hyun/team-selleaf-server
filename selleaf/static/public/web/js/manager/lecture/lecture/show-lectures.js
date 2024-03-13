@@ -12,7 +12,7 @@ const showLectures = (lectures_info) => {
         return new Intl.NumberFormat().format(price);
     }
 
-    // 받아온 회원 정보로 화면에 뿌릴 HTML 태그 생성
+    // 받아온 강의 정보로 화면에 뿌릴 HTML 태그 생성
     lectures.forEach((lecture) => {
         // 위 함수로 price에 3자리마다 콤마 붙임
         let formattedPrice = priceFormat(lecture.lecture_price);
@@ -28,7 +28,7 @@ const showLectures = (lectures_info) => {
                     <a class="class-info-wrap" href="/admin/lecture/review/?id=${lecture.id}" target="_blank">
                       <div class="class-info title">
                           <p class="content-name">${lecture.lecture_title}</p>
-                          <p class="content-name-detail">${lecture.lecture_title}</p>
+                          <p class="content-name-detail">${lecture.lecture_content}</p>
                       </div>
                       <div class="class-info">${lecture.teacher_name}</div>
                       <div class="class-info">${lecture.total_trainees}명</div>
