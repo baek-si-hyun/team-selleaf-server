@@ -134,7 +134,7 @@ const showList = (knowhows) => {
                         >
                           <span class="scrap-icon-box">
                             <img
-                              src="../../../staticfiles/images/scrap-off.png"
+                              src=""
                               alt=""
                             />
                           </span>
@@ -147,10 +147,29 @@ const showList = (knowhows) => {
                     <div class="content-bottom-box">
                       <div class="content-uploader">
                         <div class="uploader-img-box">
+            `;
+            if(knowhow.profile.includes('http://') || knowhow.profile.includes('https://')) {
+                text += `
                           <img
                             src="${knowhow.profile}"
                             class="uploader-img"
                           />
+                         `;
+            }else if (knowhow.profile.includes('file/20')) {
+                text += `
+                            <img src="/upload/${knowhow.profile}"
+                                 class="uploader-img"
+                              />
+                        `;
+            }else {
+                        `
+                            <img src="/selleaf/static/public/web/images/common/selleaf.png"
+                                 class="uploader-img"
+                              />
+                        `;
+            }
+
+            text += `
                         </div>
                         <span class="uploader-name">${knowhow.member_name}</span>
                       </div>
@@ -169,7 +188,7 @@ const showList = (knowhows) => {
                   </div>
                 </div>
             </a>
-          `;
+            `;
     });
 
     return text;
@@ -186,8 +205,11 @@ knowhowService.getList(page++, filter, sorting, type, showList).then((text) => {
             knowhowSection.innerHTML += text;
         });
 
-// 스크롤 할대마다 실행
+
+
 window.addEventListener("scroll", () => {
+    const optionBtn = document.querySelector('.option-reset-btn')
+
     // 맨위
     const scrollTop = document.documentElement.scrollTop;
     // 페이지 높이
@@ -196,13 +218,25 @@ window.addEventListener("scroll", () => {
     const totalHeight = document.documentElement.scrollHeight;
     // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
 
-    if (scrollTop + windowHeight >= totalHeight) {
-        knowhowService.getList(++page, filter, sorting, type, showList).then((text) => {
-            knowhowSection.innerHTML += text;
+    // console.log(optionBtn.previousElementSibling)
 
-        });
+
+    if (scrollTop + windowHeight >= totalHeight) {
+        if(optionBtn.previousElementSibling) {
+            knowhowService.getList(++page, filter, sorting, type, showList).then((text) => {
+                knowhowSection.innerHTML += text;
+
+            });
+        }else{
+            knowhowService.getList(page++, filter, sorting, type, showList).then((text) => {
+                knowhowSection.innerHTML += text;
+
+            });
+        }
     }
 });
+
+
 
 
 

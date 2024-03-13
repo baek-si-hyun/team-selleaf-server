@@ -807,3 +807,7 @@ input::placeholder {
   background-color: #c06888;
   color: #fff;
 }
+
+input[name='deleted'] {
+    display: none;
+}
