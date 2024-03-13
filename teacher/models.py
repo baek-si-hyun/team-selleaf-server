@@ -13,6 +13,8 @@ class Teacher(Period):
     lecture_plan = models.CharField(max_length=100, blank=False, null=False)
     teacher_status = models.BooleanField(default=False, blank=False, null=False)
     member = models.OneToOneField(Member, on_delete=models.PROTECT, null=False)
+    teacher_address = models.CharField(max_length=100, blank=False, null=False)
+
 
     objects = models.Manager()
     enabled_objects = TeacherManager()
