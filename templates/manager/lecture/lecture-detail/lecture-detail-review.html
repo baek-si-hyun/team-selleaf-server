@@ -47,11 +47,11 @@
                   <div class="header-function-container">
                     <ul class="header-function-inner">
                       <li class="header-relative-1">
-                        <button
+                        <a
                           class="lecture-info"
                           aria-label="tab button"
-                          type="button"
                           id="btn"
+                          href="/admin/lecture/review/?id={{ lecture.id }}"
                         >
                           <div>
                             <div class="flex">
@@ -61,15 +61,15 @@
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar" id="under"></div>
                       </li>
                       <li class="header-relative-2">
-                        <button
+                        <a
                           class="lecture-info"
                           aria-label="tab button"
-                          type="button"
                           id="btn"
+                          href="/admin/lecture/trainees/?id={{ lecture.id }}"
                         >
                           <div>
                             <div class="flex">
@@ -79,7 +79,7 @@
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar" id="under"></div>
                       </li>
                     </ul>
@@ -128,18 +128,18 @@
                 </div>
                 <ul class="list-content">
 {#                    리스트 예시 #}
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <a class="review-info-wrap">
-                      <div class="review-info title">
-                          <p class="review-title">리뷰 제목 예시</p>
-                          <p class="review-content">리뷰 내용 예시</p>
-                      </div>
-                      <div class="review-info">KGH</div>
-                      <div class="review-info">5</div>
-                      <div class="review-info">2024.03.14</div>
-                    </a>
-                  </li>
+{#                  <li class="list-content">#}
+{#                    <input type="checkbox" class="checkbox-input" />#}
+{#                    <a class="review-info-wrap">#}
+{#                      <div class="review-info title">#}
+{#                          <p class="review-title">리뷰 제목 예시</p>#}
+{#                          <p class="review-content">리뷰 내용 예시</p>#}
+{#                      </div>#}
+{#                      <div class="review-info">KGH</div>#}
+{#                      <div class="review-info">5</div>#}
+{#                      <div class="review-info">2024.03.14</div>#}
+{#                    </a>#}
+{#                  </li>#}
                 </ul>
                 <div class="page-count-wrap">
                   <ul class="page flex">

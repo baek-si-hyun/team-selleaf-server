@@ -18,16 +18,16 @@ const countCheckBoxes = () => {
 // 페이지가 열렸을 때 체크된 박스 개수를 셈
 countCheckBoxes();
 
-// 화면에 리뷰를 뿌리기 위한 로직
-// 페이지가 열렸을 때 회원 정보의 첫 페이지 표시
+// 화면에 수강생 리스트를 뿌리기 위한 로직
+// 페이지가 열렸을 때 수강생 리스트의 첫 페이지 표시
 let page = 1;
 
 // 리스트를 표시할 ul 태그
 const ul = document.querySelector("ul.list-content");
 
-// 개설된 강의 정보의 첫 페이지를 화면에 띄워주는 함수
+// 수강생 리스트의 첫 페이지를 화면에 띄워주는 함수
 const callFirstReviewList = () => {
-  // 만들어둔 모듈을 사용해서 리뷰 정보를 불러옴
+  // 만들어둔 모듈을 사용해서 수강생 정보를 불러옴
   lectureService.getReviews(lectureId, page, showReviews).then((reviews) => {
     ul.innerHTML = reviews;
 

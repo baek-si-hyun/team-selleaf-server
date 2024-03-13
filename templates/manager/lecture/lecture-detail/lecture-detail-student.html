@@ -48,11 +48,11 @@
                   <div class="header-function-container">
                     <ul class="header-function-inner">
                       <li class="header-relative-1">
-                        <button
+                        <a
                           class="lecture-info"
                           aria-label="tab button"
-                          type="button"
                           id="btn"
+                          href="/admin/lecture/review/?id={{ lecture.id }}"
                         >
                           <div>
                             <div class="flex">
@@ -62,15 +62,15 @@
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar" id="under"></div>
                       </li>
                       <li class="header-relative-2">
-                        <button
+                        <a
                           class="lecture-info"
                           aria-label="tab button"
-                          type="button"
                           id="btn"
+                          href="/admin/lecture/trainees/?id={{ lecture.id }}"
                         >
                           <div>
                             <div class="flex">
@@ -80,7 +80,7 @@
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar" id="under"></div>
                       </li>
                     </ul>
@@ -130,17 +130,18 @@
                   </div>
                 </div>
                 <ul class="list-content">
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <div class="trainee-info-wrap">
-                      <div class="trainee-info">김광협</div>
-                      <div class="trainee-info">GH Kim</div>
-                      <div class="trainee-info">2024.03.14</div>
-                      <div class="trainee-info">12:00</div>
-                      <div class="trainee-info">신청 완료</div>
-                      <div class="trainee-info">2024.02.14</div>
-                    </div>
-                  </li>
+{#                    리스트 예시 #}
+{#                  <li class="list-content">#}
+{#                    <input type="checkbox" class="checkbox-input" />#}
+{#                    <div class="trainee-info-wrap">#}
+{#                      <div class="trainee-info">김광협</div>#}
+{#                      <div class="trainee-info">GH Kim</div>#}
+{#                      <div class="trainee-info">2024.03.14</div>#}
+{#                      <div class="trainee-info">12:00</div>#}
+{#                      <div class="trainee-info">신청 완료</div>#}
+{#                      <div class="trainee-info">2024.02.14</div>#}
+{#                    </div>#}
+{#                  </li>#}
                 </ul>
                 <div class="page-count-wrap">
                   <ul class="page flex">
@@ -237,6 +238,6 @@
     const lectureId = '{{ lecture.id }}';
   </script>
   <script src="{% static 'public/web/js/manager/lecture/lecture/lecture-module.js' %}"></script>
-  <script src="{% static 'public/web/js/manager/lecture/lecture-detail/show-reviews.js' %}"></script>
+  <script src="{% static 'public/web/js/manager/lecture/lecture-detail/show-trainees.js' %}"></script>
   <script src="{% static 'public/web/js/manager/lecture/lecture-detail/lecture-detail-student.js' %}"></script>
 {% endblock %}
