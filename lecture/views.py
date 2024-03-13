@@ -193,6 +193,8 @@ class LectureTotalApi(APIView):
         offset = (page - 1) * row_count
         limit = row_count * page
 
+        print(type)
+
         # 필터 넣기
         condition = Q()
         sort1 = '-id'
@@ -248,12 +250,13 @@ class LectureTotalApi(APIView):
             'teacher__member_id'
         ]
 
+
         # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
         # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
         lectures = Lecture.objects.select_related('lecturescrap').filter(condition, lecture_status=True) \
             .annotate(member_name=F('teacher__member__member_name')) \
             .values(*columns) \
-            .annotate(scrap_count=Count('lecturescrap')) \
+            .annotate(scrap_count=Count(Q(lecturescrap__status=1))) \
             .values('id', 'lecture_title', 'lecture_price', 'teacher__member__member_name', 'teacher__member_id', 'scrap_count', 'lecture_status')\
             .order_by(sort1, sort2).distinct()
         print(lectures)
@@ -267,6 +270,8 @@ class LectureTotalApi(APIView):
             product_plants = LecturePlant.objects.filter(lecture_id=lecture['id']).values('plant_name')
             product_list = [item['plant_name'] for item in product_plants]
             lecture['plant_name'] = product_list
+
+        print(lecture)
 
         # 강의 목록 가져오기 (마감되지 않은 강의)
         lectures = Lecture.objects.filter(lecture_status=False).annotate(
