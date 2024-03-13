@@ -203,11 +203,15 @@ ul.header-function-inner{
     border-color: rgba(0,0,0,.1);
 }
 
-li.header-relative{
+li.header-relative-1{
     position: relative;
 }
 
-button.lecture-info{
+li.header-relative-2{
+    position: relative;
+}
+
+a.lecture-info{
     text-align: left;
     padding-bottom: 16px;
     height: 100%;
@@ -322,21 +326,27 @@ span.all-num{
     fill: #c06888;
 }
 
+div.list-order{
+    column-gap: 12px;
+    display: flex;
+}
+
+
 div.search-bar{
     width: 240px;
 }
 
 label.search-bar{
-    padding-top: 8px;
-    padding-bottom: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     border-width: 1px;
-    border-radius: 16px;
+    border-radius: 20px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 32px;
+    height: 40px;
     display: flex;
     border-color: rgba(0,0,0,.1);
 }
@@ -384,10 +394,6 @@ svg.search-bar{
     fill: #1d1d1e;
 }
 
-div.list-order{
-    column-gap: 12px;
-    display: flex;
-}
 
 div.list-relative{
     position: relative;
@@ -502,7 +508,7 @@ div.category-benner{
 div.category-wrap {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
     width: 880px;
 }
 
@@ -517,7 +523,6 @@ div.category-inner{
     fill: #1d1d1e;
 }
 
-
 div.compose-button{
     gap: 16px;
     display: flex;
@@ -526,25 +531,25 @@ div.compose-button{
 
 /* 체크박스 css */
 input.checkbox-input{
-    margin-right: -10px;
+    margin-right: -250px;
 }
 
 /* 체크박스 스타일링 */
 input[type="checkbox"] {
--webkit-appearance: none;
--moz-appearance: none;
-appearance: none;
-min-width: 15px;
-min-height: 15px;
-border: 2px solid #C06888; /* 테두리 색상 */
-border-radius: 3px;
-outline: none;
-cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    min-width: 15px;
+    min-height: 15px;
+    border: 2px solid #C06888; /* 테두리 색상 */
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
 }
 
 /* 체크됐을 때 스타일링 */
 input[type="checkbox"]:checked {
-    background-image: url(../../../../images/common/checker.png);
+    background-image: url(../../../images/common/checker.png);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -553,8 +558,8 @@ input[type="checkbox"]:checked {
 
 /* 체크박스 라벨 스타일링 */
 label {
-margin-left: 5px;
-cursor: pointer;
+    margin-left: 5px;
+    cursor: pointer;
 }
 
 ul.list-content{
@@ -576,20 +581,20 @@ li.list-content{
     border-color: #f3f3f4;
 }
 
-a.class-info-wrap{
+a.teacher-info-wrap{
     color: #333334;
     fill: #333334;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
     width: 880px;
 }
 
-a.class-info-wrap:hover {
+a.teacher-info-wrap:hover {
     opacity: 0.7;
 }
 
-div.class-info {
+div.teacher-info{
     overflow: hidden;
     display: -webkit-box;
     word-break: break-word;
@@ -599,41 +604,10 @@ div.class-info {
     font-weight: 400;
     font-size: 15px;
     line-height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-div.content-name{
-    gap: 2px;
-    display: flex;
-}
-
-p.content-name{
-    overflow: hidden;
-    display: -webkit-box;
-    word-break: break-word;
-    word-wrap: break-word;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 20px;
-}
-
-p.content-name-detail{
-    overflow: hidden;
-    margin-top: 2px;
-    display: -webkit-box;
-    word-break: break-word;
-    word-wrap: break-word;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    color: #8a8a8b;
-    fill: #8a8a8b;
+    display: block;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 div.content-open-wrap{
@@ -641,6 +615,32 @@ div.content-open-wrap{
     min-height: 40px;
     display: flex;
     margin-left: 32px;
+}
+
+div.content-open-container{
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: #f3f3f4;
+}
+
+svg.content-open{
+    width: 12px;
+    height: 12px;
+    margin-right: 4px;
+    color: #333334;
+    fill: #333334;
+}
+
+span.content-open{
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
 }
 
 div.content-detail{
@@ -692,7 +692,6 @@ div.modify-remove{
     column-gap: 12px;
     align-items: center;
     display: flex;
-    margin-left: auto;
 }
 
 button.edit-button{
@@ -706,7 +705,8 @@ button.edit-button{
     border-color: #e6e6e7;
 }
 
-button.delete-button{
+button.delete-button,
+button.edit-button {
     border-width: 1px;
     border-radius: 9999px;
     justify-content: center;
@@ -715,6 +715,25 @@ button.delete-button{
     height: 40px;
     display: flex;
     border-color: #e6e6e7;
+    color: #fff;
+    fill: #fff;
+    background-color: #c06888;
+}
+
+button.delete-button:not(:disabled):hover,
+button.edit-button:not(:disabled):hover {
+    opacity: 0.7;
+}
+
+button.delete-button:not(:disabled) path,
+button.edit-button:not(:disabled) path {
+    fill: #fff;
+}
+
+button.delete-button:disabled,
+button.edit-button:disabled {
+    cursor: default;
+    background-color: #f5f5f5;
 }
 
 svg.edit-button{
@@ -787,10 +806,10 @@ span.page-count-num{
     fill: #1d1d1e;
 }
 
+/* 삭제 모달 */
 div.delete-modal-wrap{
     z-index: 10;
     display: none;
-
 }
 
 div.delete-modal-container{
@@ -888,7 +907,128 @@ button.modal-confirm{
     background-color: #c06888;
 }
 
+button.modal-cancel:hover,
+button.modal-confirm:hover {
+    opacity: 0.7;
+}
+
 div.delete-modal-bgcolor{
+    width: 100%;
+    height: 100%;
+    z-index: 40;
+    left: 0;
+    top: 0;
+    position: fixed;
+    background-color: rgba(0,0,0,.4);
+}
+
+/* 승인 모달 */
+div.approve-modal-wrap{
+    z-index: 10;
+    display: none;
+}
+
+div.approve-modal-container{
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000),var(--tw-shadow);
+    --tw-shadow: 0px 2px 8px rgba(0,0,0,.08);
+    --tw-shadow-colored: 0px 2px 8px var(--tw-shadow-color);
+    padding: 32px;
+    border-width: 1px;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    --tw-translate-x: -50%;
+    min-width: 360px;
+    display: flex;
+    box-sizing: border-box;
+    z-index: 50;
+    top: 30px;
+    left: 50%;
+    position: fixed;
+    border-color: #e6e6e7;
+    background-color: #fff;
+}
+
+h4.approve-modal{
+    margin-bottom: 12px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 28px;
+    color: #1d1d1e;
+    fill: #1d1d1e;
+}
+
+div.approve-modal-inner{
+    text-align: center;
+    max-width: 300px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #333334;
+    fill: #333334;
+}
+
+div.approve-modal-box{
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    margin-top: 24px;
+}
+
+div.approve-modal-cancel{
+    flex: 1 1 0%;
+}
+
+button.approve-modal-cancel{
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    position: relative;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #333334;
+    fill: #333334;
+    background-color: #f3f3f4;
+}
+
+div.approve-modal-confirm{
+    flex: 1 1 0%;
+    margin-left: 16px;
+}
+
+button.approve-modal-confirm{
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    position: relative;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #fff;
+    fill: #fff;
+    background-color: #c06888;
+}
+
+button.approve-modal-cancel:hover,
+button.approve-modal-confirm:hover {
+    opacity: 0.7;
+}
+
+div.approve-modal-bgcolor{
     width: 100%;
     height: 100%;
     z-index: 40;

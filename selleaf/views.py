@@ -7,6 +7,7 @@ from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from lecture.models import Lecture
 from member.models import Member
 from notice.models import Notice
 from qna.models import QnA
@@ -118,13 +119,25 @@ class MemberInfoAPI(APIView):
         return Response(member_info)
 
 
-# 회원 상세 정보 관리(특정 회원 한 명)
-# class MemberDetailManagementView(View):
-#     # 특정 회원의 강의 구매 내역 페이지로 이동하기 위한 뷰
-#     # 결제 내역 관리 페이지가 따로 있기 때문에 상의 후 삭제할지 말지 결정
-#     def get(self, request):
-#         # 특정 회원의 정보와 강의 구매 내역을 join 해서 가지고 가야됨
-#         return render(request, 'manager/member/member-detail/member-detail.html')
+class DeleteManyMembersAPI(APIView):
+    # 한 번에 여러 명의 회원을 휴면상태로 변경하는 뷰
+    def patch(self, request, member_ids):
+        # 요청 경로에 담긴 member_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        member_ids = member_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for member_id in member_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_member에서 해당 id를 가진 객체를 가져옴
+            if member_id != '':
+                member = Member.objects.get(id=member_id)
+
+                # 해당 객체의 status를 1(휴면)으로 만들고, 변경 시간과 같이 저장
+                member.member_status = 1
+                member.updated_date = timezone.now()
+                member.save(update_fields=["member_status", "updated_date"])
+
+        return Response('성공')
+
 
 
 # 강사 관리
@@ -134,17 +147,38 @@ class TeacherManagementView(View):
         # 현재 강사 수
         teachers = Teacher.enabled_objects.count()
 
-        # 블랙 리스트 수 - 임시로 회원 테이블의 휴면 중인 회원 가져옴, 나중에 별도의 status 필요
-        black_lists = Teacher.objects.filter(teacher_status=0).count()
+        # 강사 신청자 수
+        teacher_entries = Teacher.objects.filter(teacher_status=0).count()
 
         # 강사 수를 화면에서 쓸 수 있게 dict 형태로 만들어줌
         context = {
             "teachers": teachers,
-            "black_lists": black_lists
+            "teacher_entries": teacher_entries
         }
 
         # 위의 dict 데이터를 teacher.html에 실어서 보냄
         return render(request, 'manager/teacher/teacher.html', context)
+
+
+class TeacherEntryManagementView(View):
+    # 강사 신청자 관리 페이지 이동 뷰
+    def get(self, request):
+        # 현재 강사 수
+        teachers = Teacher.enabled_objects.count()
+
+        # 강사 신청자 수
+        teacher_entries = Teacher.objects.filter(teacher_status=0).count()
+
+        print(teachers, teacher_entries)
+
+        # 강사 수를 화면에서 쓸 수 있게 dict 형태로 만들어줌
+        context = {
+            "teachers": teachers,
+            "teacher_entries": teacher_entries
+        }
+
+        # 위의 dict 데이터를 teacher-entries.html에 실어서 보냄
+        return render(request, 'manager/teacher/teacher-entries.html', context)
 
 
 class TeacherInfoAPI(APIView):
@@ -167,24 +201,105 @@ class TeacherInfoAPI(APIView):
         ]
 
         # 최근에 승인된 순으로 강사 10명의 정보를 가져옴
-        teachers = Teacher.objects.annotate(teacher_name=F('member__member_name'))\
+        teachers = Teacher.enabled_objects.annotate(teacher_name=F('member__member_name'))\
             .values(*columns).order_by('-id')[offset:limit]
 
         # 다음 페이지에 띄울 정보가 있는지 검사
-        has_next_page = Teacher.objects.filter()[limit:limit + 1].exists()
+        has_next_page = Teacher.enabled_objects.filter()[limit:limit + 1].exists()
 
         # 각각의 강사 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for teacher in teachers:
             teacher['created_date'] = teacher['created_date'].strftime('%Y.%m.%d')
 
-        # 완성된 강사정보 목록
-        member_info = {
+        # 완성된 강사 정보 목록
+        teacher_info = {
             'teachers': teachers,
             'hasNext': has_next_page,
         }
 
         # 요청한 데이터 반환
-        return Response(member_info)
+        return Response(teacher_info)
+
+
+class TeacherEntriesInfoAPI(APIView):
+    # 강사 신청자 정보를 가져오는 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 신청자 수
+        row_count = 10
+
+        # 한 페이지에 표시할 신청자 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 신청자 정보 표시에 필요한 tbl_member와 tbl_teacher의 컬럼들
+        columns = [
+            'id',
+            'teacher_name',
+            'teacher_info',
+            'lecture_plan',
+            'created_date',
+        ]
+
+        # 최근에 승인된 순으로 신청자 10명의 정보를 가져옴
+        teacher_entries = Teacher.objects.filter(teacher_status=0).annotate(teacher_name=F('member__member_name'))\
+            .values(*columns).order_by('-id')[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Teacher.objects.filter(teacher_status=0)[limit:limit + 1].exists()
+
+        # 각각의 신청자 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for teacher_entry in teacher_entries:
+            teacher_entry['created_date'] = teacher_entry['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 신청자 정보 목록
+        # 위의 강사 목록과 showTeachers 모듈을 공유하기 위해 키를 'teachers' 로 설정함
+        teacher_info = {
+            'teachers': teacher_entries,
+            'hasNext': has_next_page,
+        }
+
+        # 요청한 데이터 반환
+        return Response(teacher_info)
+
+
+class TeacherApprovalAPI(APIView):
+    # 강사 여러 명 승인 API 뷰
+    def patch(self, request, teacher_ids):
+        # 요청 경로에 담긴 teacher_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        teacher_ids = teacher_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for teacher_id in teacher_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_teacher에서 해당 id를 가진 객체를 가져옴
+            if teacher_id != '':
+                teacher = Teacher.objects.get(id=teacher_id)
+
+                # 해당 객체의 status를 1(승인)으로 만들고, 변경 시간과 같이 저장
+                teacher.teacher_status = 1
+                teacher.updated_date = timezone.now()
+                teacher.save(update_fields=["teacher_status", "updated_date"])
+
+        return Response('성공')
+
+
+class TeacherDeleteAPI(APIView):
+    # 강사 여러 명 차단 API 뷰
+    def patch(self, request, teacher_ids):
+        # 요청 경로에 담긴 teacher_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        teacher_ids = teacher_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for teacher_id in teacher_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_teacher에서 해당 id를 가진 객체를 가져옴
+            if teacher_id != '':
+                teacher = Teacher.objects.get(id=teacher_id)
+
+                # 해당 객체의 status를 1(승인)으로 만들고, 변경 시간과 같이 저장
+                teacher.teacher_status = 1
+                teacher.updated_date = timezone.now()
+                teacher.save(update_fields=["teacher_status", "updated_date"])
+
+        return Response('성공')
 
 
 # 게시물 관리
@@ -204,12 +319,12 @@ class PostManagementView(View):
 class LectureManagementView(View):
     # 강의 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 강의에 대한 정보 필요
-        return render(request, 'manager/lecture/lecture/lecture.html')
+        # 강의 게시물 전체 개수
+        lecture_count = Lecture.enabled_objects.count()
 
-    # 특정 강의 삭제를 위한 뷰
-    def post(self, request):
-        return render(request, 'manager/lecture/lecture/lecture.html')
+        context = {'lecture_count': lecture_count}
+
+        return render(request, 'manager/lecture/lecture/lecture.html', context)
 
 
 # 강의 리뷰 관리
@@ -360,6 +475,26 @@ class DeleteNoticeView(View):
         return redirect('manager-notice')
 
 
+class DeleteManyNoticeView(APIView):
+    # 한 번에 여러 개의 공지사항을 삭제(소프트 딜리트)하는 뷰
+    def patch(self, request, notice_ids):
+        # 요청 경로에 담긴 notice_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        notice_ids = notice_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for notice_id in notice_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_notice에서 해당 id를 가진 객체를 가져옴
+            if notice_id != '':
+                notice = Notice.objects.get(id=notice_id)
+
+                # 해당 객체의 status를 0으로 만들고, 변경 시간과 같이 저장
+                notice.notice_status = 0
+                notice.updated_date = timezone.now()
+                notice.save(update_fields=["notice_status", "updated_date"])
+
+        return Response('성공')
+
+
 # QnA 관리
 class QnAManagementView(View):
     # QnA 내역 페이지 이동 뷰
@@ -459,6 +594,26 @@ class DeleteQnAView(View):
 
         # 상태 업데이트 후 QnA 리스트 페이지로 redirect
         return redirect('manager-qna')
+
+
+class DeleteManyQnAView(APIView):
+    # 한 번에 여러 개의 QnA을 삭제(소프트 딜리트)하는 뷰
+    def patch(self, request, qna_ids):
+        # 요청 경로에 담긴 qna_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        qna_ids = qna_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for qna_id in qna_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_qna에서 해당 id를 가진 객체를 가져옴
+            if qna_id != '':
+                qna = QnA.objects.get(id=qna_id)
+
+                # 해당 객체의 status를 0으로 만들고, 변경 시간과 같이 저장
+                qna.qna_status = 0
+                qna.updated_date = timezone.now()
+                qna.save(update_fields=["qna_status", "updated_date"])
+
+        return Response('성공')
 
 
 # 신고 내역 관리

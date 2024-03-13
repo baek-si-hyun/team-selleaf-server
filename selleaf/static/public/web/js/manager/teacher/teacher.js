@@ -78,23 +78,6 @@ paginationBox.addEventListener("click", (e) => {
   }
 });
 
-// 강의 정보, 리뷰 정보, 수강생 목록 선택하기
-const catebtns = document.querySelectorAll("#btn");
-const cateUnder = document.querySelectorAll("#under");
-cateUnder[0].classList.add("underbar-checked");
-catebtns[0].classList.add("my_lecture-checked");
-
-catebtns.forEach((btn, i) => {
-  btn.addEventListener("click", () => {
-    catebtns.forEach((btn, i) => {
-      btn.classList.remove("my_lecture-checked");
-      cateUnder[i].classList.remove("underbar-checked");
-    });
-    btn.classList.add("my_lecture-checked");
-    cateUnder[i].classList.add("underbar-checked");
-  });
-});
-
 // 검색창 눌렀을때 검색바에 아웃라인주기
 const searchBar = document.querySelector("label.search-bar");
 
