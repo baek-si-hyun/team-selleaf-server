@@ -13,35 +13,21 @@
           <h1 class="notice-title">수강생 목록</h1>
           <!-- 검색창 -->
           <div class="header-fourth-inner-firstdiv">
-            <div
-              id="global-search-combobox"
-              role="combobox"
-              aria-expanded="false"
-              aria-haspopup="listbox"
-              class="header-fourth-inner-seconddiv"
-            >
-              <div class="header-fourth-inner-thirddiv">
-                <span class="hearder-inner-thirddiv-span"> </span>
-                <input
-                  type="text"
-                  placeholder="이름 검색"
-                  autocomplete="off"
-                  aria-autocomplete="list"
-                  class="hearder-inner-thirddiv-input"
-                  value=""
-                />
-                <div class="hearder-inner-thirddiv-div">
-                  <button
-                    type="button"
-                    tabindex="0"
-                    class="header-input-xbutton"
-                  >
-                    <span class="header-input-xbutton-span"></span>
-                  </button>
+              <div id="global-search-combobox" role="combobox" aria-expanded="false" aria-haspopup="listbox" class="header-fourth-inner-seconddiv">
+                <div class="header-fourth-inner-thirddiv" style="border: 1px solid rgb(218, 221, 224);">
+                  <span class="hearder-inner-thirddiv-span"> </span>
+                  <form action="/search/" name="search-form" style="flex:1; position: relative">
+                    <input type="text" placeholder="수강생 검색" autocomplete="off" aria-autocomplete="list" class="hearder-inner-thirddiv-input" name="query">
+
+                  </form>
+                  <div class="hearder-inner-thirddiv-div" style="display: none;">
+                    <button type="button" tabindex="0" class="header-input-xbutton">
+                      <span class="header-input-xbutton-span"></span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
         </div>
         <div class="notice-wrap">
           <!--  -->
@@ -50,7 +36,7 @@
             <div>
               <div class="student-list-title-wrap">
                 <div class="list-titles">대표 예약자명</div>
-                <div class="list-titles">수강 인원</div>
+                <div class="list-titles">동반 수강 인원</div>
                 <div class="list-titles">수강 날짜</div>
                 <div class="list-titles offline-title">수강 시간</div>
                 <div class="list-titles online-title" style="display: none">
@@ -165,11 +151,15 @@
               </div>
             </div>
           </section>
-          <!--  -->
+
         </div>
       </div>
     </div>
 {% endblock %}
 {% block js %}
-  <script src="\{% static 'member/js/mypage/my-classes/student-list.js' %}"></script>
+  <script>
+    applyID = '{{apply_id}}'
+    csrf_token = '{{ csrf_token }}'
+  </script>
+  <script src="{% static 'member/js/mypage/my-classes/student-list.js' %}"></script>
 {% endblock %}

@@ -4,7 +4,8 @@ from member.views import MemberJoinView, MemberLoginView, MemberLogoutView, Mypa
     MypagePostView, MypageShowView, MypageKnowhowListAPI, MypageShowReplyAPI, MypageReplyView, MypageShowReviewAPI, \
     MypageReviewView, MypageShowLikesAPI, MypageLikesView, MypageLecturesView, \
     MypageShowLecturesAPI, LectureReviewView, MypageScrapLecturesView, MypageScrapLectureAPI, MypageScrapTradeView, \
-    MypageScrapTradeAPI, MypageTradesView, MypageTradesAPI, MypageTeacherView, MypageTeacherPlanView
+    MypageScrapTradeAPI, MypageTradesView, MypageTradesAPI, MypageTeacherView, MypageTeacherPlanView, MypageTeacherAPI, \
+    MypageTraineeView
 
 app_name = 'member'
 
@@ -12,7 +13,7 @@ urlpatterns = [
     path('join/', MemberJoinView.as_view(), name='join'),
     path('login/', MemberLoginView.as_view(), name='login'),
     path('logout/', MemberLogoutView.as_view(), name='logout'),
-    path('mypage/update/',MypageUpdateView.as_view(), name='update'),
+    path('mypage/settings/',MypageUpdateView.as_view(), name='update'),
     path('mypage/show/', MypageShowView.as_view(),name='show'),
     path('mypage/posts/', MypagePostView.as_view(), name='mypost'),
     path('mypage/show/posts/<int:page>/', MypagePostListAPI.as_view()),
@@ -34,7 +35,9 @@ urlpatterns = [
     path('mypage/trades/',MypageTradesView.as_view()),
     path('mypage/show/trades/<int:page>',MypageTradesAPI.as_view()),
     path('mypage/teachers/', MypageTeacherView.as_view()),
-    path('mypage/teachers/plan/',MypageTeacherPlanView.as_view())
+    path('mypage/teachers/plan/',MypageTeacherPlanView.as_view()),
+    path('mypage/show/teachers/<int:page>', MypageTeacherAPI.as_view()),
+    path('mypage/teachers/apply/<int:apply_id>',MypageTraineeView.as_view())
 
 
 ]

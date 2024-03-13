@@ -194,7 +194,7 @@ a * {
 .sidebar-wrap {
   box-sizing: border-box;
   position: relative;
-  padding-top: 30px;
+  padding-top: 50px;
   padding-left: 10px;
   padding-right: 10px;
   width: 25%;
@@ -547,6 +547,20 @@ a * {
   clear: both;
 }
 
+.classes-history-item-container {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  padding: 30px 16px;
+  border-bottom: 1px solid rgb(234, 237, 239);
+}
+
+.classes-history-item-container::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
 .classes-history-link {
   position: absolute;
   z-index: 1;
@@ -570,6 +584,7 @@ a * {
 
 .classes-item-image {
   width: 100%;
+  height: 100%;
   border-radius: 8px;
   transition: 0.1s opacity;
 }
