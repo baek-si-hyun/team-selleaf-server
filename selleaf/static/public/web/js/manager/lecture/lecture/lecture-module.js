@@ -32,9 +32,26 @@ const lectureService = (() => {
             return callback(reviews);
         }
 
-        return reviews
+        return reviews;
+    }
+
+    // 강의 수강생 리스트 조회 - 한 번에 10명씩
+    const getTrainees = async (lectureId, page, callback) => {
+        const response = await fetch(`/admin/lecture/trainees/${lectureId}/${page}`);
+        const trainees = await response.json();
+
+        if (callback) {
+            return callback(trainees);
+        }
+
+        return trainees;
     }
 
     // 객체형태로 반환 - lectureService.getList() 형태로 사용 가능
-    return {getList: getList, deleteLectures: deleteLectures, getReviews: getReviews}
+    return {
+        getList: getList,
+        deleteLectures: deleteLectures,
+        getReviews: getReviews,
+        getTrainees: getTrainees
+    }
 })();

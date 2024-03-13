@@ -505,11 +505,16 @@ div.category-benner{
     border-color: #e6e6e7;
 }
 
+div.category-wrap {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(6, 1fr);
+    width: 880px;
+}
+
 div.category-inner{
-    width: 100px;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    flex-shrink: 0;
     display: flex;
     font-weight: 500;
     font-size: 13px;
@@ -523,6 +528,47 @@ ul.list-content{
     display: flex;
     margin-top: 8px;
     grid-column: 1/-1;
+}
+
+li.list-content{
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-bottom-width: 1px;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    border-color: #f3f3f4;
+}
+
+div.trainee-info-wrap{
+    color: #333334;
+    fill: #333334;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(6, 1fr);
+    width: 880px;
+}
+
+div.trainee-info-wrap:hover {
+    opacity: 0.7;
+}
+
+div.trainee-info {
+    overflow: hidden;
+    display: -webkit-box;
+    word-break: break-word;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 div.compose-button{

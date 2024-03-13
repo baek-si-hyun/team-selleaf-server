@@ -490,6 +490,102 @@ class LectureReviewInfoAPI(APIView):
         return Response(lecture_review_info)
 
 
+# 강의 수강생 리스트 관리
+class LectureTraineesManagementView(View):
+    # 숭강생 리스트 페이지 이동 뷰
+    def get(self, request):
+        # 특정 강의에 대한 수강생 정보 필요 - 쿼리 스트링에 요청
+        lecture = Lecture.objects.get(id=request.GET['id'])
+
+        # 강의 게시글 리뷰 개수
+        review_count = lecture.lecturereview_set.count()
+
+        # 강의 수강생 수 구하기 - 해당 강의 신청 내역들 -> 각 신청 내역들의 동행자 수의 총 합계
+        # 강의 신청 내역 조건
+        apply_condition_vaild = Q(apply_status=0) | Q(apply_status=1)
+        apply_condition_lecture = Q(lecture_id=lecture.id)
+        apply_condition = apply_condition_lecture & apply_condition_vaild
+
+        # 위 조건식으로 해당 강의를 신청한 내역 전체를 조회
+        applies = Apply.objects.filter(apply_condition)
+
+        # 아래의 for문으로 구한 총 신청자 수를 담을 변수
+        total_trainees_count = 0
+
+        # 각 신청 내역의 신청자 수 구하기
+        for apply in applies:
+            trainees_count = Trainee.objects.filter(apply=apply.id).count()
+
+            # 총 신청자 수 합계에 더하기
+            total_trainees_count += trainees_count
+
+        # 강의 정보와 리뷰 개수, 신청자 수를 dict에 담음
+        context = {
+            'lecture': lecture,
+            'review_count': review_count,
+            'trainees_count': total_trainees_count
+        }
+
+        # 아래의 html 페이지로 이동
+        return render(request, 'manager/lecture/lecture-detail/lecture-detail-student.html', context)
+
+
+class TraineesInfoAPI(APIView):
+    # 특정 강의의 수강생 목록 조회 API 뷰
+    def get(self, request, lecture_id, page):
+        # 한 페이지에 띄울 수강생 수
+        row_count = 10
+
+        # 한 페이지에 표시할 수강생 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 수강생 정보 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'trainee_name',
+            'main_applicant',   # 대표 신청자 = 회원
+            'apply_date',
+            'apply_time',
+            'apply_status', # 0(신청 완료), 1(수강 완료), -1(수강 취소)
+            'purchase_date',
+        ]
+
+        # 특정 강의를 신청한 수강 신청 내역을 가져옴
+        applies = Apply.objects.filter(lecture=lecture_id)
+
+        # 수강 신청 내역을 받아올 dict를 미리 만들어줌
+        trainees = {}
+
+        has_next_page = True
+
+        for apply in applies:
+            # 특정 강의의 수강생 10명을 최신순으로 가져옴
+            trainees = Trainee.objects.filter(apply=apply.id)\
+                .annotate(main_applicant=F('apply__member__member_name'),
+                          apply_date=F('apply__date'),
+                          apply_time=F('apply__time'),
+                          apply_status=F('apply__apply_status'),
+                          purchase_date=F('apply__created_date')).values(*columns)[offset:limit]
+
+            # 다음 페이지에 띄울 정보가 있는지 검사
+            has_next_page = Trainee.objects.filter(apply=apply.id)[limit:limit + 1].exists()
+
+            # 각각의 강의 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+            for trainee in trainees:
+                trainee['purchase_date'] = trainee['purchase_date'].strftime('%Y.%m.%d')
+
+        # 완성된 리뷰 목록
+        trainee_info = {
+            'trainees': trainees,
+            'hasNext': has_next_page
+        }
+
+        # 요청한 데이터 반환
+        return Response(trainee_info)
+
+
+
 # 댓글 관리
 class ReplyManagementView(View):
     # 댓글 관리 페이지 이동 뷰
