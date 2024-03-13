@@ -309,14 +309,23 @@ plantSelections.forEach((plantSelection) => {
 let page = 1;
 
 const lectureSection = document.querySelector(".post-wrap");
-
 const filterItems = document.querySelectorAll(".filter-item")
 const optionList = document.querySelector('.option-list')
 const sortChoices = document.querySelectorAll(".menu-choice")
+const optionReset = document.querySelector(".option-reset-btn")
 
 let filter = `전체`;
 let sorting = `최신순`
 let type = '전체'
+
+optionReset.addEventListener("click", () => {
+    filter = '전체'
+    sorting = '최신순'
+    type = '전체'
+    lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            lectureSection.innerHTML = text;
+        });
+})
 
 sortChoices.forEach((sort) => {
     sort.addEventListener("click", () => {
@@ -423,14 +432,14 @@ optionList.addEventListener("click", (e) => {
 
 const showList = (lectures, onlineStatus = false) => {
     let text = ``;
-
+console.log(lectures)
     // 강의 목록을 순회하면서 HTML 템플릿 생성
-    lectures.forEach((lecture) => {
+    lectures['lectures'].forEach((lecture) => {
         let tagsHtml = '';
         lecture.plant_name.forEach((pn) => {
             tagsHtml += `<span class="post-tag-icon">#${pn}</span>`;
         });
-        console.log(onlineStatus)
+        console.log(lecture)
         // 온라인 상태에 따라 링크 주소 결정
         const detailLink = onlineStatus ? `/lecture/detail/online?id=${lecture.id}` : `/lecture/detail/offline?id=${lecture.id}`;
 
@@ -455,7 +464,7 @@ const showList = (lectures, onlineStatus = false) => {
                         <div class="post-contents-wrap">
                             <div class="post-contents-container">
                                 <h1 class="post-contents-header">
-                                    <span class="post-contents-user">${lecture.member_name}</span>
+                                    <span class="post-contents-user">${lecture.teacher__member__member_name}</span>
                                     <span class="post-contents-banner">${lecture.lecture_title}</span>
                                 </h1>
                                 <span class="post-price">
@@ -483,10 +492,10 @@ const filterCount = (lectures) => {
 lectureService.getList(page++, filter, sorting, type, showList).then((text) => {
             lectureSection.innerHTML += text;
         });
-const totalLectures = document.querySelector(".total-data")
-lectureService.getList(page++, filter, sorting, type, filterCount).then((filteringCount) => {
-    totalLectures.innerText = filteringCount;
-});
+// const totalLectures = document.querySelector(".total-data")
+// lectureService.getList(page++, filter, sorting, type, filterCount).then((filteringCount) => {
+//     totalLectures.innerText = filteringCount;
+// });
 
 
 // 스크롤 할때마다 실행

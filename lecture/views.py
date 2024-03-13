@@ -287,7 +287,7 @@ class LectureTotalApi(APIView):
             product_plants = LecturePlant.objects.filter(lecture_id=lecture['id']).values('plant_name')
             product_list = [item['plant_name'] for item in product_plants]
             lecture['plant_name'] = product_list
-            # print(lecture)
+            print(lecture)
 
 
         # # 강의 목록 가져오기 (마감되지 않은 강의)
