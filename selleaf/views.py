@@ -7,6 +7,7 @@ from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from lecture.models import Lecture
 from member.models import Member
 from notice.models import Notice
 from qna.models import QnA
@@ -318,11 +319,10 @@ class PostManagementView(View):
 class LectureManagementView(View):
     # 강의 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 강의에 대한 정보 필요
-        return render(request, 'manager/lecture/lecture/lecture.html')
+        # 강의 게시물 전체 개수
+        lecture_count = Lecture.enabled_objects.count()
 
-    # 특정 강의 삭제를 위한 뷰
-    def post(self, request):
+
         return render(request, 'manager/lecture/lecture/lecture.html')
 
 
