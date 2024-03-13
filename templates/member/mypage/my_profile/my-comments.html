@@ -17,20 +17,26 @@
                     style="transform: translateX(0px)"
                   >
                     <li class="main-category-item">
-                      <a href="#" class="active">내 활동</a>
+                      <a href="/member/mypage/show/">내 활동</a>
                     </li>
                     <li class="main-category-item">
-                      <a href="#">거래 내역</a>
+                      <a href="/member/mypage/trades/">거래 내역</a>
                     </li>
                     <li class="main-category-item">
-                      <a href="#">수강 내역</a>
+                      <a href="/member/mypage/lectures/" class="active">수강 내역</a>
                     </li>
-                    <li class="main-category-item teacher">
-                      <a href="#">강의 현황</a>
-                    </li>
-                    <li class="main-category-item">
-                      <a href="#">설정</a>
-                    </li>
+                    {% if teacher.count == 0 %}
+                        <li class="main-category-item">
+                          <a href="/member/mypage/settings/">설정</a>
+                        </li>
+                    {% else %}
+                        <li class="main-category-item ">
+                          <a href="/member/mypage/teachers/">강의 현황</a>
+                        </li>
+                        <li class="main-category-item">
+                          <a href="/member/mypage/settings/">설정</a>
+                        </li>
+                    {% endif %}
                   </ul>
                 </div>
                 <div class="sub-category-wrap">
@@ -42,19 +48,19 @@
                       <a href="/member/mypage/show">모두보기</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="/member/mypage/myposts" >내 게시글</a>
+                      <a href="/member/mypage/posts" >내 게시글</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="/member/mypage/myreplies" class="active">내 댓글</a>
+                      <a href="/member/mypage/replies" class="active">내 댓글</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#">내 리뷰</a>
+                      <a href="/member/mypage/reviews">내 리뷰</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#">좋아요</a>
+                      <a href="/member/mypage/likes">좋아요</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="#">스크랩북</a>
+                      <a href="/member/mypage/scraplectures">스크랩북</a>
                     </li>
                   </ul>
                 </div>
@@ -170,20 +176,9 @@
                               <div class="personal-info-wrap">
                                 <div class="user-nickname">{{ request.session.member.member_name }}</div>
                                 <div class="follow-settings-wrap">
-                                  <!-- 나중에 팔로우 페이지랑 연결 -->
-                                  <!-- <dl class="follow-wrap">
-                                    <dt class="follow-text">팔로워</dt>
-                                    <dd class="follow-count">
-                                      <a href="#" class="follow-num">123</a>
-                                    </dd>
-                                    <dt class="follow-text">팔로잉</dt>
-                                    <dd class="follow-count">
-                                      <a href="#" class="follow-num">45</a>
-                                    </dd>
-                                  </dl> -->
                                   <!-- 나중에 설정 페이지랑 연결 -->
                                   <div class="settings-button-wrap">
-                                    <a class="settings-button" href="#">설정</a>
+                                    <a class="settings-button" href="/member/mypage/settings">설정</a>
                                   </div>
                                 </div>
                               </div>
@@ -192,33 +187,33 @@
                             <div class="scraps-likes-wrap">
                               <div class="scraps-likes-container">
                                 <!-- 스크랩 -->
-                                <a class="scraps-likes-content-wrap" href="#">
+                                <a class="scraps-likes-content-wrap" href="/member/mypage/scraplectures">
                                   <div class="scraps-likes-icon">
                                     <img alt=""
                                       src="{% static 'public/web/images/common/scrap-off-blk.png' %}"
                                     />
                                   </div>
                                   <div class="scraps-likes-text">스크랩북</div>
-                                  <div class="scraps-likes-count">0</div>
+                                  <div class="scraps-likes-count">{{ scrap_count }}</div>
                                 </a>
                                 <!-- 좋아요 -->
-                                <a class="scraps-likes-content-wrap" href="#">
+                                <a class="scraps-likes-content-wrap" href="/member/mypage/likes">
                                   <div class="scraps-likes-icon">
                                     <img alt="" src="{% static 'public/web/images/common/like-off.png' %}" />
                                   </div>
                                   <div class="scraps-likes-text">좋아요</div>
-                                  <div class="scraps-likes-count">0</div>
+                                  <div class="scraps-likes-count">{{ like_count }}</div>
                                 </a>
                                 <!-- 마일리지 -->
-                                <a class="scraps-likes-content-wrap" href="#">
+                                <div class="scraps-likes-content-wrap">
                                   <div class="scraps-likes-icon">
                                     <img alt=""
                                       src="{% static 'member/images/mypage/mileage.png' %}"
                                     />
                                   </div>
                                   <div class="scraps-likes-text">마일리지</div>
-                                  <div class="scraps-likes-count">0</div>
-                                </a>
+                                  <div class="scraps-likes-count">{{ mileage }}</div>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -231,6 +226,12 @@
               </div>
               <!-- 사진 등의 내용물이 표시되는 공간 -->
               <div class="main-content-wrap">
+                <div class="content-title-wrap">
+                    <h1 class="content-title">댓글
+                        <span class="content-count post-count">{{ reply_count }}</span>
+                    </h1>
+                        <div class="title-empty-area"></div>
+                </div>
                 <!-- 아무것도 없을 때 표시할 태그 -->
                 {% if reply.count == 0 %}
                   <div class="no-content-wrap">

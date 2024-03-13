@@ -33,22 +33,6 @@ document.addEventListener("click", (e) => {
   // 상위 요소가 모달일 경우(모달 클릭한 경우) 아무 것도 실행 안함(상태 유지)
 });
 
-/*
-  강사 여부에 따라 강의 현황 메뉴 표시/숨김
-*/
-
-// 강사 여부
-let isTeacher = false;
-
-// 강의 현황메뉴 객체
-const myClassMenu = document.querySelector(".teacher");
-
-// 강사면 강의 현황 메뉴 표시, 아니면 숨김
-if (isTeacher) {
-  myClassMenu.style.display = "inline-block";
-} else {
-  myClassMenu.style.display = "none";
-}
 
 /* 
   각 댓글에 마우스 올린 경우 제목, 본문, 이미지 투명도 조정
@@ -76,114 +60,99 @@ commentsItems.forEach((item) => {
     itemArticle.style.opacity = 1;
   });
 });
-//
-// /*
-//   리뷰 내역의 유무에 따라 표시할 내용 변경
-// */
-//
-// // 리뷰 내역이 없을 때 보이는 태그
-// const noContents = document.querySelector(".no-content-wrap");
-//
-// // 각 리뷰 내역 사이의 구분선
-// const itemsSeperator = document.querySelectorAll(".items-seperator");
-//
-// // 리뷰 내역 유무
-// let isReviewExists = true;
-//
-// // 리뷰 내역이 있을 경우
-// if (commentsItems.length >= 1) {
-//   // 리뷰 내역 없을 때 뜨는 텍스트들 안 보이게 함
-//   noContents.style.display = "none";
-//
-//   // 각 리뷰내역 표시
-//   commentsItems.forEach((item) => {
-//     item.style.display = "block";
-//   });
-//
-//   // 구분선 표시
-//   itemsSeperator.forEach((item) => {
-//     item.style.display = "block";
-//   });
-// }
-// // 리뷰 내역이 없을 경우
-// else {
-//   // 리뷰 내역 없을 때 뜨는 텍스트들을 보이게 함
-//   noContents.style.display = "block";
-//
-//   // 각 리뷰내역 숨김
-//   commentsItems.forEach((item) => {
-//     item.style.display = "none";
-//   });
-//
-//   // 구분선 숨김
-//   itemsSeperator.forEach((item) => {
-//     item.style.display = "none";
-//   });
-// }
 
+let page = 1;
 
 const showReplyList = (replies) => {
   let text = ``;
-  console.log('모든 리스트 보여주기3');
 
   replies.forEach((reply) => {
     let postPlantTags = ""; // postPlantTags 변수를 미리 정의하고 초기화
-      const postLength = reply.post_plant.length;
-      postPlantTags = reply.post_plant.map(plant => `
-                  <li class="item-tags">
-                    <div>
-                      <button
-                        class="item-tags-button"
-                        type="button"
-                      >
-                        ${plant}
-                      </button>
-                    </div>
-                  </li>`).join('');
+      if('post_id' in reply){
+          const postLength = reply.post_plant.length;
 
-      text += `
-        <div class="comments-history-item-wrap">
-          <a href="#" class="comments-history-link"></a>
-          <div class="comments-history-item-container">
-            <div class="comments-item-image-wrap" style="opacity: 1">
-              <img alt=""
-                class="comments-item-image"
-                src="/upload/${reply.post_file}"
-              />
-            </div>
-            <div class="comments-item-title-wrap" style="opacity: 1">
-              <span>${reply.post_title}</span>
-            </div>
-            <div class="comments-item-article-wrap" style="opacity: 1">
-              <span
-                >${reply.post_reply_content}</span
-              >
-            </div>
-            <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
-            <div class="comments-item-info-wrap">
-              <div class="article-info-wrap">
-                <!-- 작성자 -->
-                <div class="user-info-wrap">
-                  ${reply.post_writer}
+          text += `
+            <div class="comments-history-item-wrap">
+              <a href="#" class="comments-history-link"></a>
+              <div class="comments-history-item-container">
+                <div class="comments-item-image-wrap" style="opacity: 1">
+                  <img alt=""
+                    class="comments-item-image"
+                    src="/upload/${reply.post_file}"
+                  />
                 </div>
-                <!-- 올린 시간, 조회수, 지역 -->
-                <div class="item-info-wrap">
-                  <div class="item-infos">${timeForToday(reply.updated_date)}</div>
-                  <div class="item-infos">조회 ${reply.post_count}</div>
+                <div class="comments-item-title-wrap" style="opacity: 1">
+                  <span>${reply.post_title}</span>
+                </div>
+                <div class="comments-item-article-wrap" style="opacity: 1">
+                  <span
+                    >${reply.post_reply_content}</span
+                  >
+                </div>
+                <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
+                <div class="comments-item-info-wrap">
+                  <div class="article-info-wrap">
+                    <!-- 작성자 -->
+                    <div class="user-info-wrap">
+                      ${reply.post_writer}
+                    </div>
+                    <!-- 올린 시간, 조회수, 지역 -->
+                    <div class="item-info-wrap">
+                      <div class="item-infos">${timeForToday(reply.updated_date)}</div>
+                      <div class="item-infos">조회 ${reply.post_count}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      `;
+          `
+      }else if( 'knowhow_id' in reply){
+          const postLength = reply.knowhow_plant.length;
+
+          text += `
+            <div class="comments-history-item-wrap">
+              <a href="#" class="comments-history-link"></a>
+              <div class="comments-history-item-container">
+                <div class="comments-item-image-wrap" style="opacity: 1">
+                  <img alt=""
+                    class="comments-item-image"
+                    src="/upload/${reply.knowhow_file}"
+                  />
+                </div>
+                <div class="comments-item-title-wrap" style="opacity: 1">
+                  <span>${reply.knowhow_title}</span>
+                </div>
+                <div class="comments-item-article-wrap" style="opacity: 1">
+                  <span
+                    >${reply.knowhow_reply_content}</span
+                  >
+                </div>
+                <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
+                <div class="comments-item-info-wrap">
+                  <div class="article-info-wrap">
+                    <!-- 작성자 -->
+                    <div class="user-info-wrap">
+                      ${reply.knowhow_writer}
+                    </div>
+                    <!-- 올린 시간, 조회수, 지역 -->
+                    <div class="item-info-wrap">
+                      <div class="item-infos">${timeForToday(reply.updated_date)}</div>
+                      <div class="item-infos">조회 ${reply.knowhow_count}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `
+      };
   });
 
   return text;
 };
 
 const target = document.querySelector('.here')
-postService.getReplies(memberId,showReplyList).then((text)=>{
-  target.innerHTML = text
+postService.getReplies(page++,showReplyList).then((text)=>{
+  target.innerHTML += text
 })
 
 
@@ -225,6 +194,21 @@ function timeForToday(datetime) {
 }
 
 
+window.addEventListener("scroll", () => {
+    // 맨위
+    const scrollTop = document.documentElement.scrollTop;
+    // 페이지 높이
+    const windowHeight = window.innerHeight;
+    // 암튼 높이
+    const totalHeight = document.documentElement.scrollHeight;
+    // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
 
+    if (scrollTop + windowHeight >= totalHeight) {
+        postService.getReplies(page++,showReplyList).then((text)=>{
+          target.innerHTML += text
+
+        });
+    }
+});
 
 

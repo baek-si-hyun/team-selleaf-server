@@ -798,7 +798,7 @@
 .total-price {
   display: inline-block;
   margin-left: 108px;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 32px;
   font-weight: 600;
   color: #c06888;
@@ -1584,17 +1584,18 @@
 .selection{
   cursor: pointer;
   color: #fff;
-  padding: 2px 4px 2px 4px;
+  padding: 8px;
   border: 1px solid #C06888;
   font-weight: 800;
-  border-radius: 2px;
+  border-radius: 20px;
   background-color: #FFFFFF;
   margin-right: 8px;
 }
 
 .selection:hover{
-  border: 2px solid #C06888;
-  border-radius: 2px;
+  background-color: #fbccd4;
+  border: 1px solid #C06888;
+  border-radius: 20px;
 }
 
 .price-wrap{

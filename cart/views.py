@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.utils import timezone
 
 from django.db.models import F
@@ -9,14 +10,16 @@ from rest_framework.views import APIView
 
 from cart.models import Cart, CartDetail
 from lecture.models import Lecture
+from member.models import MemberProfile
 
 
 # 장바구니 서비스
 class CartView(View):
     # 카트 생성 확인 완료
     def get(self, request):
-        member_data = request.session.get('member')  # 세션에서 멤버 정보 가져오기
-        member_id = member_data.get('id')  # 멤버id 추출
+        member = request.session['member']
+        member_file = request.session['member_files']
+        member_id = member.get('id')  # 멤버id 추출
         my_cart = Cart.objects.filter(member_id=member_id, cart_status=0)
         if not my_cart:
             # 장바구니가 없는 경우 새로운 장바구니 생성
@@ -25,10 +28,15 @@ class CartView(View):
             my_cart = my_cart.first()
 
         cart_id = my_cart.id
+        context= {
+            'cart_id':cart_id,
+            'memberProfile':member_file[0]['file_url'],
+            'member':member
+        }
 
 
 
-        return render(request, 'cart/cart.html', {'cart_id':cart_id})
+        return render(request, 'cart/cart.html', context)
 
 
 class CartListAPI(APIView):
@@ -67,6 +75,7 @@ class CartAPI(APIView):
         return Response(details)
 
 class CartCheckoutAPI(APIView):
+    @transaction.atomic
     def post(self, request, cart_id):
         member_id = request.session['member']['id']
         cart = Cart.objects.filter(member_id = member_id,cart_status=0).first()
