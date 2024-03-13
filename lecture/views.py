@@ -187,7 +187,7 @@ class LectureTotalApi(APIView):
     def get(self, request, page, sorting, filters, type):
         # 현재 로그인한 사용자 정보 가져오기
         member = request.session['member']
-        lecture_id = request.GET.get('id')
+
         # 페이지당 행 수와 오프셋 설정
         row_count = 8
         offset = (page - 1) * row_count
@@ -243,9 +243,9 @@ class LectureTotalApi(APIView):
 
         columns = [
             'lecture_title',
-            'member_name',
+            'teacher__member_name',
             'id',
-            'member_id'
+            'teacher__member_id'
         ]
 
         # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
@@ -254,7 +254,7 @@ class LectureTotalApi(APIView):
             .annotate(member_name=F('teacher__member__member_name')) \
             .values(*columns) \
             .annotate(scrap_count=Count('lecturescrap')) \
-            .values('lecture_title', 'lecture_price', 'member_name', 'teacher__member_id', 'id', 'member_id', 'scrap_count', 'lecture_status')\
+            .values('id', 'lecture_title', 'lecture_price', 'teacher__member__member_name', 'teacher__member_id', 'scrap_count', 'lecture_status')\
             .order_by(sort1, sort2).distinct()
         print(lectures)
 
