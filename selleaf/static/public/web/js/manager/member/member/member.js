@@ -39,6 +39,8 @@ const callFirstMemberList = () => {
 // 페이지 열렸을 때 사용
 callFirstMemberList();
 
+//
+
 // 페이지네이션 이벤트 추가하기
 
 // 삭제 버튼 누르면 뜨는 모달창
@@ -59,8 +61,26 @@ document.addEventListener("DOMContentLoaded", function () {
     modalWrap.style.display = "none";
   });
 
-  confirmButton.addEventListener("click", () => {
+  // 삭제 버튼 이벤트 - 체크된 회원만 휴면 상태로 변경
+  confirmButton.addEventListener("click", async () => {
     modalWrap.style.display = "none";
+
+    // 휴면 상태로 만들 회원의 id를 담을 빈 문자열
+    let deleteIds = ``;
+
+    // 이 시점에서 체크된 박스 개수를 세고
+    const checkedBoxes = document.querySelectorAll(".checkbox-input:checked");
+
+    // 각 체크박스를 감싸는 li 태그의 id를 deleteIds에 추가
+    checkedBoxes.forEach((checkbox) => {
+      deleteIds += `,${checkbox.parentElement.classList[1]}`;
+    });
+
+    // API를 사용해서 체크한 회원들을 휴면 상태로 변경
+    await memberService.deleteMembers(deleteIds);
+    
+    // 페이지 새로고침
+    location.reload();
   });
 });
 

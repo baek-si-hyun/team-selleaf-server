@@ -118,13 +118,25 @@ class MemberInfoAPI(APIView):
         return Response(member_info)
 
 
-# 회원 상세 정보 관리(특정 회원 한 명)
-# class MemberDetailManagementView(View):
-#     # 특정 회원의 강의 구매 내역 페이지로 이동하기 위한 뷰
-#     # 결제 내역 관리 페이지가 따로 있기 때문에 상의 후 삭제할지 말지 결정
-#     def get(self, request):
-#         # 특정 회원의 정보와 강의 구매 내역을 join 해서 가지고 가야됨
-#         return render(request, 'manager/member/member-detail/member-detail.html')
+class DeleteManyMembersAPI(APIView):
+    # 한 번에 여러 명의 회원을 휴면상태로 변경하는 뷰
+    def patch(self, request, member_ids):
+        # 요청 경로에 담긴 member_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        member_ids = member_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for member_id in member_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_member에서 해당 id를 가진 객체를 가져옴
+            if member_id != '':
+                member = Member.objects.get(id=member_id)
+
+                # 해당 객체의 status를 1(휴면)으로 만들고, 변경 시간과 같이 저장
+                member.member_status = 1
+                member.updated_date = timezone.now()
+                member.save(update_fields=["member_status", "updated_date"])
+
+        return Response('성공')
+
 
 
 # 강사 관리
