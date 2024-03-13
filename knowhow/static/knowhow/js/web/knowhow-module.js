@@ -1,7 +1,7 @@
 const knowhowService = (() => {
 
-    const getList = async (page, filters, sorting, type, callback) => {
-        const response = await fetch(`/knowhow/list/${page}/${filters}/${sorting}/${type}`);
+    const getList = async (page, filters, sorting, types, callback) => {
+        const response = await fetch(`/knowhow/list/${page}/${filters}/${sorting}/${types}`);
         const knowhows = await response.json();
         if(callback){
             return callback(knowhows);
