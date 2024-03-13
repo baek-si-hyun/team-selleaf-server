@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 
 from apply.models import Apply
 from knowhow.models import KnowhowFile, KnowhowReply, Knowhow, KnowhowPlant, KnowhowReplyLike, KnowhowLike
-from lecture.models import LectureReview, LectureProductFile, LecturePlant, Lecture
+from lecture.models import LectureReview, LectureProductFile, LecturePlant, Lecture, LectureScrap
 from member.models import Member, MemberAddress, MemberProfile
 from member.serializers import MemberSerializer
 from post.models import Post, PostFile, PostPlant, PostReply, PostReplyLike, PostLike
@@ -227,19 +227,14 @@ class MypageLikesView(View):
         post = list(Post.objects.filter(member_id=member['id']))
         knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
         post_count = len(post) + len(knowhow)
-        post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
-        like_count = len(post_like) + len(knowhowlike)
         post_reply = list(PostReply.objects.filter(member_id=member['id']))
         knowhow_reply = list(KnowhowReply.objects.filter(member_id=member['id']))
         reply_count = len(post_reply) + len(knowhow_reply)
-
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
             'post': post,
             'teacher': teacher,
-            'like_count': like_count,
             'post_count': post_count,
             'reply_count': reply_count
         }
@@ -247,7 +242,7 @@ class MypageLikesView(View):
         return render(request,'member/mypage/my_profile/likes.html',context)
 
 # 내 활동 스크랩북 강의 스크랩// 작업중
-class MypageLectureScrapsView(View):
+class MypageScrapLecturesView(View):
 
     def get(self,request):
         member = request.session['member']
@@ -257,17 +252,20 @@ class MypageLectureScrapsView(View):
         knowhowlike = list(KnowhowLike.objects.filter(member_id=member['id']))
         like.extend(knowhowlike)
         like_count = len(like)
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
 
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
             'teacher': teacher,
-            'like_count' : like_count
+            'like_count' : like_count,
+            'lecture_scrap':lecture_scrap
+
         }
         return render(request,'member/mypage/my_profile/scrapbook/lecture-scrapbook.html',context)
 
 
-# 내가 신청한 view // 작업중
+# 내가 신청한 view
 class MypageLecturesView(View):
     def get(self, request):
 
@@ -327,7 +325,7 @@ class LectureReviewView(View):
 class MypagePostListAPI(APIView):
     def get(self, request, page):
 
-        row_count = 12
+        row_count = 8
         offset = (page - 1) * row_count
         limit = row_count * page
 
@@ -556,7 +554,7 @@ class MypageShowLikesAPI(APIView):
         limit = row_count * page
 
 
-        likes = list(PostLike.objects.filter(member_id = request.session['member']['id']) \
+        likes = list(PostLike.objects.filter(member_id = request.session['member']['id'],status=1) \
             .annotate(
             member_name=F('member__member_name'),
             post_title=F('post__post_title'),
@@ -585,7 +583,7 @@ class MypageShowLikesAPI(APIView):
             like['post_plant'] = [tag['plant_name'] for tag in tags]
 
 
-        knowhow_likes = list(KnowhowLike.objects.filter(member_id=request.session['member']['id']) \
+        knowhow_likes = list(KnowhowLike.objects.filter(member_id=request.session['member']['id'],status=1) \
             .annotate(
             member_name=F('member__member_name'),
             knowhow_title=F('knowhow__knowhow_title'),
@@ -618,7 +616,16 @@ class MypageShowLikesAPI(APIView):
 
         return Response(sorted_likes[offset:limit])
 
-# 강의 수강 리스트 // 작업중
+    @transaction.atomic()
+    def delete(self, request, id, checker):
+        if checker == 'post':
+            PostLike.objects.get(post_id=id, member_id=request.session['member']['id']).delete()
+        elif checker == 'knowhow':
+            KnowhowLike.objects.get(knowhow_id=id,member_id=request.session['member']['id']).delete()
+
+        return Response('success')
+
+# 강의 수강 리스트
 class MypageShowLecturesAPI(APIView):
     def get(self, request,page):
         row_count = 6
@@ -662,3 +669,49 @@ class MypageShowLecturesAPI(APIView):
             apply['lecture_plant'] = [tag['plant_name'] for tag in tags]
         sorted_applies = sorted(applies, key=itemgetter('date'), reverse=True)
         return Response(sorted_applies[offset:limit])
+
+# 스크랩한 강의 API
+class MypageScrapLectureAPI(APIView):
+    def get(self,request,page):
+        row_count = 8
+        offset = (page - 1) * row_count
+        limit = row_count * page
+
+        scrap_lectures = LectureScrap.objects.filter(member_id=request.session['member']['id'], status=1) \
+            .annotate(
+            member_name=F('member__member_name'),
+            lecture_title=F('lecture__lecture_title'),
+            teacher_name=F('lecture__teacher__member__member_name'),
+            lecture_content=F('lecture__lecture_content'),
+            lecture_category=F('lecture__lecture_category__lecture_category_name'),
+            lecture_price = F('lecture__lecture_price'),
+        ) \
+            .values(
+            'id',
+            'lecture_id',
+            'member_name',
+            'updated_date',
+            'lecture_title',
+            'teacher_name',
+            'lecture_content',
+            'lecture_category',
+            'lecture_price'
+        )
+
+        for scrap_lecture in scrap_lectures:
+
+            lecture_file = LectureProductFile.objects.filter(lecture_id=scrap_lecture['lecture_id']).values('file_url')\
+                            .first()
+            if lecture_file is not None:
+                scrap_lecture['lecture_file'] = lecture_file['file_url']
+            else:
+                scrap_lecture['lecture_file'] = 'file/2024/03/05/blank-image.png'
+
+            review = LectureReview.objects.filter(member_id=request.session['member']['id'],
+                                                  lecture_id=scrap_lecture['lecture_id'])
+            scrap_lecture['lecture_review'] = review.values('id')
+
+            tags = LecturePlant.objects.filter(lecture_id=scrap_lecture['lecture_id']).values('plant_name')
+            scrap_lecture['lecture_plant'] = [tag['plant_name'] for tag in tags]
+
+        return Response(scrap_lectures[offset:limit])

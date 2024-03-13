@@ -80,54 +80,6 @@ cartService.getList(cart_id, showCartItems).then((text) => {
     ul.innerHTML = text;
 });
 
-//
-//
-// ul.addEventListener("click", async (e) => {
-//     if(e.target.classList[0] === 'delete'){
-//         const detailId = e.target.classList[1]
-//         await cartService.remove(detailId)
-//         const text = await cartService.getList(cart_id, showCartItems);
-//         ul.innerHTML = text;
-//         const div = document.querySelector('.product-name-side')
-//             const children = Array.from(div.children)
-//             children.forEach((child)=>{
-//                 targetId = child.classList[1]
-//                 if(targetId === e.target.classList[1]){
-//                     child.remove()
-//                 }
-//             })
-//     }else if(e.target.classList[0]==='selection'){
-//
-//         let target= e.target
-//         e.target.classList.toggle('count')
-//         if(target.classList.contains('count')) {
-//             target.style.backgroundColor = '#C06888'
-//             const div = document.querySelector('.product-name-side')
-//             const detailId = e.target.classList[1]
-//             const textlist = await cartService.select(detailId, showPrice)
-//             div.innerHTML += textlist
-//             prices = div.querySelectorAll('.price-side')
-//             let realTotalPrice = 0
-//             prices.forEach((price)=>{
-//                 realTotalPrice += parseInt(price.innerText.replace('원', '').replace(',', '').replace(',', '').replace(',', '').replace(',', ''))
-//             })
-//             const priceDiv = document.querySelector('.total-price')
-//             priceDiv.innerHTML = realTotalPrice.toLocaleString('ko-KR')+'원'
-//         }else{
-//             target.style.backgroundColor = '#fff'
-//             const div = document.querySelector('.product-name-side')
-//             const children = Array.from(div.children)
-//             children.forEach((child)=>{
-//                 targetId = child.classList[1]
-//                 if(targetId === target.classList[1]){
-//                     child.remove()
-//                 }
-//             })
-//         }
-//     }
-// })
-//
-//
 ul.addEventListener("click", async (e) => {
     if(e.target.classList[0] === 'delete'){
         // 삭제 버튼 클릭 시

@@ -176,43 +176,6 @@ document.addEventListener("click", (e) => {
 });
 
 /*
-  스크랩 한 강의 유무에 따라 표시되는 내용 변경
-
-  강의 있음: post-wrap - flex, no-content-wrap - none
-  강의 없음: post-wrap - none, no-content-wrap - block
-*/
-
-// 조건에 따라 표시할 div 태그들
-const postWrap = document.querySelector(".post-wrap");
-const noContentWrap = document.querySelector(".no-content-wrap");
-
-// 스크랩 한 강의 개수
-let classPosts = document.querySelectorAll(".post-wrap .post-container");
-
-// 강의 없으면 내용 없음 표시
-if (classPosts.length == 0) {
-  postWrap.style.display = "none";
-  noContentWrap.style.display = "block";
-}
-// 강의가 하나라도 있으면 강의 게시물 표시
-else {
-  postWrap.style.display = "flex";
-  noContentWrap.style.display = "none";
-}
-
-// 현재 강의 개수를 페이지 상단 메뉴, 편집 눌렀을 때 나오는 전체 개시물 개수에 표시
-const lectureCount = document.querySelector(".my_lecture");
-
-// 현재 체크된 박스 개수와 전체 게시물 개수를 표시할 태그
-const checkedCount = document.querySelector(".content-count-container");
-
-// 상기한 부분에 현재 게시물 수 표시
-lectureCount.innerText = `강의(${classPosts.length})`;
-
-// 현재 체크된 박스 개수를 실제 화면에 표시 (innerText)
-checkedCount.innerHTML = `<i>0</i> / ${classPosts.length}`;
-
-/*
   2/15 추가 - 삭제 체크박스(delete-box-input) click하면 체크
 
   delete-box-container(부모)와 visual-box-wrap(형제)에
@@ -265,4 +228,86 @@ deleteInputs.forEach((input) => {
     // 현재 체크된 박스 개수를 실제 화면에 표시 (innerHTML)
     checkedCount.innerHTML = `<i>${checkedBoxes.length}</i> / ${classPosts.length}`;
   });
+});
+
+
+let page = 1
+const showList = (scrapLectures) => {
+  let text = ``
+  scrapLectures.forEach((scrapLecture) => {
+      const postPlantTags = scrapLecture.lecture_plant.map(plant => `<span class="post-tag-icon">${plant}</span>`).join('');
+          text += `
+            <div class="post-container">
+              <div class="post-inner">
+                <article class="post">
+                  <a href="#" class="post-link"></a>
+                  <div class="post-image-wrap_">
+                    <div class="post-image-container">
+                      <div class="post-image-inner">
+                        <div class="post-image"></div>
+                        <img
+                          src="/upload/${scrapLecture.lecture_file}"
+                          alt=""
+                          class="image"
+                        />
+                        <div class="image__dark-overlay"></div>
+                      </div>
+                    </div>
+                    <div class="delete-box-wrap" style="display: none">
+                      <div class="delete-box-container">
+                        <div class="visual-box-wrap">
+                          <span class="visual-box"></span>
+                        </div>
+                        <input type="checkbox" class="delete-box-input" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="post-contents-wrap">
+                    <div class="post-contents-container">
+                      <h1 class="post-contents-header">
+                        <span class="post-contents-user">${scrapLecture.teacher_name}</span>
+                        <span class="post-contents-banner">${scrapLecture.lecture_title}</span>
+                      </h1>
+                      <span class="post-price">
+                        <span class="post-price-letter">${scrapLecture.lecture_price.toLocaleString('ko-KR')}원</span>
+                      </span>
+                      <div class="post-content-pc-reply">
+                        <p class="post-content-reply">리뷰 ${scrapLecture.lecture_review.length}</p>
+                      </div>
+                      <span class="post-tag">
+                        ${postPlantTags}
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          `;
+  });
+
+  return text;
+};
+
+
+const wrap = document.querySelector('.post-wrap')
+
+postService.getScrapLectures(page++,showList).then((text)=>{
+  wrap.innerHTML += text
+})
+
+window.addEventListener("scroll", () => {
+    // 맨위
+    const scrollTop = document.documentElement.scrollTop;
+    // 페이지 높이
+    const windowHeight = window.innerHeight;
+    // 암튼 높이
+    const totalHeight = document.documentElement.scrollHeight;
+    // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
+
+    if (scrollTop + windowHeight >= totalHeight) {
+        postService.getScrapLectures(page++,showList).then((text)=>{
+          wrap.innerHTML += text
+        })
+
+    }
 });

@@ -64,7 +64,7 @@ const showList = (posts) => {
                   <div class="post-contents-wrap">
                     <div class="post-contents-container">
                       <h1 class="post-contents-header">
-                        <span class="post-contents-user">${post.writer}</span>
+                        <span class="post-contents-user">${post.member_name}</span>
                         <span class="post-contents-banner">${post.post_title}</span>
                       </h1>
                       <span class="post-price">

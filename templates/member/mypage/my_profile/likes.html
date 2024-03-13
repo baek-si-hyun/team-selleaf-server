@@ -5,6 +5,7 @@
 {% endblock %}
 {% block title %}Selleaf | 내가 좋아한 것들{% endblock %}
 {% block content %}
+    {% csrf_token %}
     <div class="whole-page-wrap">
       <div class="whole-page-container">
         <!-- 나중에 메인 페이지에서 작업하면 추가 -->
@@ -189,8 +190,7 @@
                                 <a class="scraps-likes-content-wrap" href="#">
                                   <div class="scraps-likes-icon">
                                     <img alt=""
-                                      src="{% static 'public/web/images/common/scrap-off-blk.png' %}
-    "
+                                      src="{% static 'public/web/images/common/scrap-off-blk.png' %}"
                                     />
                                   </div>
                                   <div class="scraps-likes-text">스크랩북</div>
@@ -202,7 +202,7 @@
                                     <img alt="" src="{% static 'public/web/images/common/like-off.png' %}" />
                                   </div>
                                   <div class="scraps-likes-text">좋아요</div>
-                                  <div class="scraps-likes-count">{{ like_count }}</div>
+                                  <div class="scraps-likes-count like-count"></div>
                                 </a>
                                 <!-- 마일리지 -->
                                 <a class="scraps-likes-content-wrap" href="#">
@@ -229,7 +229,7 @@
               <div class="main-content-wrap">
                 <div class="content-title-wrap">
                     <h1 class="content-title">좋아요
-                        <span class="content-count post-count">{{ like_count }}</span>
+                        <span class="like-count"></span>
                     </h1>
                         <div class="title-empty-area"></div>
                 </div>
@@ -264,6 +264,9 @@
     </div>
 {% endblock %}
 {% block js %}
+    <script>
+    const csrf_token = "{{ csrf_token }}";
+    </script>
     <script src="{% static 'member/js/mypage/my_profile/myprofile-module.js' %}"></script>
     <script src="{% static 'member/js/mypage/my_profile/likes.js' %}"></script>
 {% endblock %}

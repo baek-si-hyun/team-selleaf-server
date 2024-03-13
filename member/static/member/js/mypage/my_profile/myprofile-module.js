@@ -43,9 +43,17 @@ const postService = (()=>{
         return reviews
 
     };
+       const getScrapLectures = async (page, callback)=>{
+        const response = await fetch(`/member/mypage/show/scraplectures/${page}`);
+        const scrap_lectures = await response.json();
+        if (callback){
+            return callback(scrap_lectures)
+        }
+        return scrap_lectures
 
+    };
 
-    const getLikes = async (page, callback)=>{
+      const getLikes = async (page, callback)=>{
         const response = await fetch(`/member/mypage/show/likes/${page}`);
         const likes = await response.json();
         if (callback){
@@ -55,5 +63,20 @@ const postService = (()=>{
 
     };
 
-    return {getList:getList, allPostList:allPostList, getReplies:getReplies, getReviews:getReviews,getLikes:getLikes }
+    const removeLike = async (id, checker) => {
+        await fetch(`/member/mypage/delete-likes/${checker}/${id}`, {
+            method: 'delete',
+            headers: {'X-CSRFToken': csrf_token}
+        });
+    }
+
+    return {
+        getList:getList,
+        allPostList:allPostList,
+        getReplies:getReplies,
+        getReviews:getReviews,
+        getLikes:getLikes,
+        removeLike:removeLike,
+        getScrapLectures:getScrapLectures
+    }
 })()

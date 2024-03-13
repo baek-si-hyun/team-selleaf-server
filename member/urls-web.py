@@ -2,8 +2,8 @@ from django.urls import path
 
 from member.views import MemberJoinView, MemberLoginView, MemberLogoutView, MypageUpdateView, MypagePostListAPI, \
     MypagePostView, MypageShowView, MypageKnowhowListAPI, MypageShowReplyAPI, MypageReplyView, MypageShowReviewAPI, \
-    MypageReviewView, MypageShowLikesAPI, MypageLikesView, MypageLectureScrapsView, MypageLecturesView, \
-    MypageShowLecturesAPI, LectureReviewView
+    MypageReviewView, MypageShowLikesAPI, MypageLikesView, MypageLecturesView, \
+    MypageShowLecturesAPI, LectureReviewView, MypageScrapLecturesView, MypageScrapLectureAPI
 
 app_name = 'member'
 
@@ -22,8 +22,11 @@ urlpatterns = [
     path('mypage/reviews/', MypageReviewView.as_view()),
     path('mypage/likes/', MypageLikesView.as_view()),
     path('mypage/show/likes/<int:page>/', MypageShowLikesAPI.as_view()),
-    path('mypage/lecturescraps/',MypageLectureScrapsView.as_view()),
+    path('mypage/delete-likes/<str:checker>/<int:id>/',MypageShowLikesAPI.as_view()),
+    path('mypage/scraplectures/',MypageScrapLecturesView.as_view()),
+    path('mypage/show/scraplectures/<int:page>',MypageScrapLectureAPI.as_view()),
     path('mypage/lectures/',MypageLecturesView.as_view(), name='lectures'),
     path('mypage/show/lectures/<int:page>', MypageShowLecturesAPI.as_view()),
-    path('mypage/writereviews/<int:lecture_id>', LectureReviewView.as_view())
+    path('mypage/writereviews/<int:lecture_id>', LectureReviewView.as_view()),
+
 ]

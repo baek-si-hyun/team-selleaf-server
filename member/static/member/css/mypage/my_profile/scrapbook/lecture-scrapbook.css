@@ -133,17 +133,17 @@ figure {
 
 .profile-image-wrap {
   display: inline-block;
-  background: url("/staticfiles/images/mypage/base-profile-image.avif") 50%
-    center / cover no-repeat;
   border-radius: 50%;
   width: 86px;
 }
 
 .profile-image {
-  height: 0px;
+  width: 100px;
+  height: 100px;
   display: block;
-  visibility: hidden;
-  padding-top: 100%;
+  align-content: center;
+  border-radius: 50px;
+  margin-top: 30px;
 }
 
 .user-nickname {
