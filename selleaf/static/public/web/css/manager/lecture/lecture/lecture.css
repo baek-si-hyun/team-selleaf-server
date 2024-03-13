@@ -598,10 +598,15 @@ div.class-info {
     -webkit-line-clamp: 1;
     font-weight: 400;
     font-size: 15px;
-    line-height: 20px;
+    line-height: 21px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+div.class-info.title {
+    display: block;
+    text-align: center;
 }
 
 div.content-name{
