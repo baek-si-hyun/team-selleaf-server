@@ -9,10 +9,6 @@ a * {
   border: none;
 }
 
-.whole-page-wrap {
-  height: 100%;
-}
-
 .whole-page-container {
   height: 100%;
   display: flex;
@@ -562,6 +558,7 @@ a * {
 }
 
 .trade-history-wrap {
+  padding-top: 30px;
   padding-bottom: 30px;
   text-align: center;
 }

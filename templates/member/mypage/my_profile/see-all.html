@@ -61,7 +61,7 @@
                       <a href="/member/mypage/likes">좋아요</a>
                     </li>
                     <li class="sub-category-item">
-                      <a href="/member/mypage/lecturescraps">스크랩북</a>
+                      <a href="/member/mypage/scraplectures">스크랩북</a>
                     </li>
                   </ul>
                 </div>
@@ -179,7 +179,7 @@
                                     <div class="follow-settings-wrap">
                                       <!-- 나중에 설정 페이지랑 연결 -->
                                       <div class="settings-button-wrap">
-                                        <a class="settings-button" href="#">설정</a>
+                                        <a class="settings-button" href="/member/mypage/settings/">설정</a>
                                       </div>
                                     </div>
                                   </div>
@@ -188,7 +188,7 @@
                                 <div class="scraps-likes-wrap">
                                   <div class="scraps-likes-container">
                                     <!-- 스크랩 -->
-                                    <a class="scraps-likes-content-wrap" href="#">
+                                    <a class="scraps-likes-content-wrap" href="/member/mypage/scraplectures/">
                                       <div class="scraps-likes-icon">
                                         <img alt=""
                                           src="{% static 'public/web/images/common/scrap-off-blk.png' %}
@@ -196,10 +196,10 @@
                                         />
                                       </div>
                                       <div class="scraps-likes-text">스크랩북</div>
-                                      <div class="scraps-likes-count">0</div>
+                                      <div class="scraps-likes-count">{{ scrap_count }}</div>
                                     </a>
                                     <!-- 좋아요 -->
-                                    <a class="scraps-likes-content-wrap" href="#">
+                                    <a class="scraps-likes-content-wrap" href="/member/mypage/likes/">
                                       <div class="scraps-likes-icon">
                                         <img alt="" src="{% static 'public/web/images/common/like-off.png' %}" />
                                       </div>
@@ -207,15 +207,15 @@
                                       <div class="scraps-likes-count">{{ like_count }}</div>
                                     </a>
                                     <!-- 마일리지 -->
-                                    <a class="scraps-likes-content-wrap" href="#">
+                                    <div class="scraps-likes-content-wrap">
                                       <div class="scraps-likes-icon">
                                         <img alt=""
                                           src="{% static 'member/images/mypage/mileage.png' %}"
                                         />
                                       </div>
                                       <div class="scraps-likes-text">마일리지</div>
-                                      <div class="scraps-likes-count">0</div>
-                                    </a>
+                                      <div class="scraps-likes-count">{{ mileage }}</div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>

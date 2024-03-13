@@ -38,7 +38,6 @@ let page = 1;
 
 const showList = (posts) => {
   let text = ``
-  console.log('리스트 보여주기')
   posts.forEach((post) => {
       if('post_title' in post) {
       const postPlantTags = post.post_plant.map(plant => `<span class="post-tag-icon">${plant}</span>`).join('');
