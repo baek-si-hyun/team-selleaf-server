@@ -15,9 +15,11 @@ from member.models import Member, MemberProfile
 
 
 class KnowhowCreateView(View):
+    # 노하우 게시글 작성페이지 이동
     def get(self, request):
         return render(request, 'community/web/knowhow/create-knowhow.html')
 
+    # 노하우 게시글 작성
     @transaction.atomic
     def post(self, request):
         data = request.POST
@@ -73,12 +75,14 @@ class KnowhowCreateView(View):
 
 
 class KnowhowDetailView(View):
+    # 노하우 상세 페이지
     def get(self, request):
         knowhow = Knowhow.objects.get(id=request.GET['id'])
         member_id = knowhow.member_id
         # print(member_id)
 
-        knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')
+        # 태그를 14개만 가져감
+        knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')[:14]
         reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow.id).values('id').count()
         member_profile = MemberProfile.objects.filter(id=member_id).values('file_url')
 
@@ -87,6 +91,7 @@ class KnowhowDetailView(View):
 
         print(knowhow_scrap)
 
+        # 상세보기 들어올때마다 해당 게시물의 조회수 1씩 증가(같은사람이 여러번 가능)
         knowhow.knowhow_count += 1
         knowhow.save(update_fields=['knowhow_count'])
 
@@ -111,6 +116,7 @@ class KnowhowDetailView(View):
         return render(request, 'community/web/knowhow/knowhow-detail.html', context)
 
 class KnowhowUpdateView(DetailView):
+    # 노하우 수정 페이지로 이동, 해당 게시글 id와 업로드된 파일을 가져감
     def get(self, request):
         knowhow_id = request.GET.get('id')
 
@@ -126,6 +132,7 @@ class KnowhowUpdateView(DetailView):
 
         return render(request, 'community/web/knowhow/edit-knowhow.html', context)
 
+    # 노하우 게시글 수정
     @transaction.atomic
     def post(self, request):
         datas = request.POST
@@ -193,10 +200,10 @@ class KnowhowUpdateView(DetailView):
         return redirect(f'/knowhow/detail/?id={knowhow_id}')
 
 class KnowhowDeleteView(View):
+    # 노하우 게시글 삭제
     @transaction.atomic
     def get(self, request):
         knowhow_id = request.GET['id']
-        print(knowhow_id)
         KnowhowTag.objects.filter(knowhow_id=knowhow_id).delete()
         KnowhowFile.objects.filter(knowhow_id=knowhow_id).delete()
         KnowhowRecommend.objects.filter(knowhow_id=knowhow_id).delete()
@@ -222,6 +229,7 @@ class KnowhowListView(View):
         return render(request, 'community/web/knowhow/knowhow.html', context)
 
 class KnowhowListApi(APIView):
+    # 노하우 목록페이지(필터링, 갯수)
     def get(self, request, page, sorting, filters, types):
         row_count = 6
         offset = (page - 1) * row_count
@@ -245,6 +253,9 @@ class KnowhowListApi(APIView):
         elif types == '전체':
             condition2 |= Q()
 
+        # js에서 이어진 문자열로 가져온 필터를 컴마(, ) 단위로 나눈 후 그 값에 따라 condition에 연결
+        # 필터로 선택된 컬럼이 다중선택인데 모든 필터가 해당하는 게시물을 보여주는게 아닌
+        # 필터중 하나라도 포함된다면 게시물을 나타내기 위해 and가 아닌 or 연결
         filters = filters.split(',')
         for filter in filters:
             # print(filter.replace(',', ''))
@@ -293,6 +304,7 @@ class KnowhowListApi(APIView):
 
         # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
         # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
+        # 화면에서 체크된 필터링에따라 condition과 sort가 변함
         knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition, condition2) \
             .annotate(member_name=F('member__member_name')) \
             .values(*columns) \
@@ -301,6 +313,7 @@ class KnowhowListApi(APIView):
                     'scrap_count')\
             .order_by(sort1, sort2).distinct()
 
+        # 필터링된 노하우 게시물의 갯수
         knowhows_count = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition, condition2) \
             .annotate(member_name=F('member__member_name')) \
             .values(*columns) \
@@ -309,11 +322,11 @@ class KnowhowListApi(APIView):
                     'scrap_count') \
             .order_by(sort1, sort2).distinct().count()
 
+        # test = KnowhowScrap.objects.filter(status=1).values('status').order_by('-status')
+        # print(test)
         # print(knowhows_count)
 
-
-
-        # knowhow에 knowhow_file을 가상 컬럼을 만들어서 하나씩 추가해줌
+        # knowhow에 knowhow_file가상 컬럼을 만들어서 하나씩 추가해줌
         for knowhow in knowhows:
             knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
             profile = MemberProfile.objects.filter(member_id=knowhow['member_id']).values('file_url').first()
@@ -332,6 +345,7 @@ class KnowhowListApi(APIView):
 
 
 class KnowhowReplyWriteApi(APIView):
+    # 댓글 작성
     @transaction.atomic
     def post(self, request):
 
@@ -350,6 +364,7 @@ class KnowhowReplyWriteApi(APIView):
         return Response('success')
 
 class KnowhowDetailApi(APIView):
+    # 노하우 상세보기 Api
     def get(self, request, knowhow_id, page):
         member = request.session['member']
 
@@ -383,10 +398,12 @@ class KnowhowDetailApi(APIView):
         return Response(data)
 
 class KnowhowReplyApi(APIView):
+    # 댓글 삭제
     def delete(self, request, reply_id):
         KnowhowReply.objects.filter(id=reply_id).delete()
         return Response('success')
 
+    # 댓글 수정
     def patch(self, request, reply_id):
         # print(request)
         reply_content = request.data['reply_content']
@@ -402,25 +419,26 @@ class KnowhowReplyApi(APIView):
 class KnowhowScrapApi(APIView):
     def get(self, request, knowhow_id, member_id, scrap_status):
 
-        check_scrap_status = True
-
         # print(knowhow_id, member_id, status)
 
         # 만들어지면 True, 이미 있으면 False
         scrap, scrap_created = KnowhowScrap.objects.get_or_create(knowhow_id=knowhow_id, member_id=member_id)
 
+
         if scrap_created:
+            # 스크랩을 처음 누른 사람이라면
             check_scrap_status = True
 
         else:
-
+            # 이미 스크랩을 누른 적 있으면
+            # 스크랩 on
             if scrap_status == 'True':
                 update_scrap = KnowhowScrap.objects.get(knowhow_id=knowhow_id, member_id=member_id)
 
                 update_scrap.status = 1
                 update_scrap.save(update_fields=['status'])
                 check_scrap_status = True
-
+            # 스크랩 off
             else :
                 update_scrap = KnowhowScrap.objects.get(knowhow_id=knowhow_id, member_id=member_id)
 
@@ -428,10 +446,16 @@ class KnowhowScrapApi(APIView):
                 update_scrap.save(update_fields=['status'])
                 check_scrap_status = False
 
+        # 해당 게시물의 스크랩 갯수
         scrap_count = KnowhowScrap.objects.filter(knowhow_id=knowhow_id, status=1).count()
 
+        print(f'{knowhow_id}번 노하우 스크랩 {check_scrap_status}')
+
+
         datas = {
+            # 화면에서 스크랩 on, off 상태에 따라 표시해주기 위해
             'check_scrap_status': check_scrap_status,
+            # 화면에서 스크랩을 누를때마다 실시간으로 갯수가 변하게 하기 위해
             'scrap_count': scrap_count
         }
 
@@ -440,18 +464,18 @@ class KnowhowScrapApi(APIView):
 class KnowhowLikeApi(APIView):
     def get(self, request, knowhow_id, member_id, like_status):
 
-        check_like_status = True
-
         # print(knowhow_id, member_id, status)
 
         # 만들어지면 True, 이미 있으면 False
         like, like_created = KnowhowLike.objects.get_or_create(knowhow_id=knowhow_id, member_id=member_id)
 
         if like_created:
+            # 좋아요를 처음 누른 사람이라면
             check_like_status = True
 
         else:
-
+            # 좋아요를 이미 누른 적 있으면
+            # 좋아요 on
             if like_status == 'True':
                 update_like = KnowhowLike.objects.get(knowhow_id=knowhow_id, member_id=member_id)
 
@@ -459,6 +483,7 @@ class KnowhowLikeApi(APIView):
                 update_like.save(update_fields=['status'])
                 check_like_status = True
 
+            # 좋아요 off
             else :
                 update_like = KnowhowLike.objects.get(knowhow_id=knowhow_id, member_id=member_id)
 
@@ -466,12 +491,15 @@ class KnowhowLikeApi(APIView):
                 update_like.save(update_fields=['status'])
                 check_like_status = False
 
+        # 좋아요 갯수
         like_count = KnowhowLike.objects.filter(knowhow_id=knowhow_id, status=1).count()
 
-        # print(like_count)
+        print(f'{knowhow_id}번 노하우 좋아요 {check_like_status}')
 
         datas = {
+            # 화면에서 좋아요 on, off 체크를 위해 전송
             'check_like_status': check_like_status,
+            # 화면에서 좋아요 누를때마다 비동기로 갯수 변경
             'like_count': like_count
         }
 
