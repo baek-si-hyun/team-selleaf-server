@@ -7,7 +7,7 @@
 {% block content %}
     <div class="create-post-wrap">
       <div class="create-post-container">
-          <form action="{% url 'knowhow:create' %}" method="post" name="knowhow-create-form" enctype="multipart/form-data">
+          <form action="/knowhow/update/?id={{ knowhow.id }}" method="post" name="update" enctype="multipart/form-data">
               {% csrf_token %}
         <div
           class="sticky-container"
@@ -39,7 +39,7 @@
                       </div>
                     </div>
                     <button type="submit" class="publish-btn">
-                      <span class="publish-btn-text">발행신청</span>
+                      <span class="publish-btn-text">수정하기</span>
                     </button>
                   </div>
                 </div>
@@ -74,7 +74,7 @@
                         </g>
                       </svg>
                     </div>
-                    <div class="slide-text-top">게시물 작성 가이드</div>
+                    <div class="slide-text-top">게시물 수정 가이드</div>
                     <div class="slide-text-bottom">
                       원활한 게시물 작성을 위해 꼭 읽어주세요.
                     </div>
@@ -209,7 +209,7 @@
                             <div class="required-info-item-inner">
                               <span class="required-info-item-box">
                                 <div class="input-group select-input">
-                                  <select name="knowhow-categoty" class="form-control" onchange="PlantValue()">
+                                  <select name="knowhow-category" class="form-control">
                                     <option value="" disabled selected
                                       >선택해주세요.</option
                                     >

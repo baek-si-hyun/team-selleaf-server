@@ -8,22 +8,24 @@ from member.models import Member
 
 
 class KnowhowTest(TestCase):
-    columns = [
-        'knowhow_title',
-        'member_name',
-        'knowhow_count',
-        'id',
-        'member_id'
-    ]
-    knowhows = Knowhow.objects.select_related('knowhowlike').filter() \
-          .annotate(member_name=F('member__member_name')) \
-          .values(*columns) \
-          .annotate(like_count=Count('knowhowlike')) \
-          .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count').order_by(
-        '-like_count', '-id').distinct()
+    KnowhowFile.objects.filter(knowhow_id=32).delete()
 
-    for knowhow in knowhows:
-        print(knowhow['id'], knowhow['like_count'], sep=", ")
+    # columns = [
+    #     'knowhow_title',
+    #     'member_name',
+    #     'knowhow_count',
+    #     'id',
+    #     'member_id'
+    # ]
+    # knowhows = Knowhow.objects.select_related('knowhowlike').filter() \
+    #       .annotate(member_name=F('member__member_name')) \
+    #       .values(*columns) \
+    #       .annotate(like_count=Count('knowhowlike')) \
+    #       .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count').order_by(
+    #     '-like_count', '-id').distinct()
+    #
+    # for knowhow in knowhows:
+    #     print(knowhow['id'], knowhow['like_count'], sep=", ")
 
     # member_queryset = Member.objects.all()
     # for i in range(20):
