@@ -60,71 +60,192 @@ lectureItems.forEach((item) => {
   });
 });
 
-/*
+let page = 1
 
-  수강 내역의 유무에 따라 my_lecture-history-wrap 안에서 표시할 내용 변경
-  
-  나중에 서버 들어갔을 때는
-  수강 내역들(lectureItems)의 length가 1 이상이면 표시하게 변경할 계획
+const showApplies = (applies) => {
+    applies.sort((a, b) => b.apply_status - a.apply_status);
 
-  임시로 true/false 변수로 바뀌게 설정함
-*/
+    let text = ``
+    applies.forEach((apply) => {
+        const lecturePlantTags = apply.lecture_plant.map(plant => `
+              <li class="item-tags">
+                <div>   
+                  # ${plant}             
+                </div>
+              </li>`).join('');
+        if(apply.apply_status === 1) {
+            if(apply.lecture_review.length === 0) {
+                text += `
+                <div class="lecture-history-item-wrap">
+                  <a href="#" class="lecture-history-link"></a>
+                    <div class="lecture-history-item-container">
+                      <div class="lecture-item-image-wrap">
+                        <img  alt=""
+                          class="lecture-item-image"
+                          src="/upload/${apply.lecture_file}"
+                        />
+                      </div>
+                      <div class="lecture-item-title-wrap">
+                        <span>${apply.lecture_title}</span>
+                      </div>
+                      <div class="lecture-item-article-wrap">
+                        <span>${apply.lecture_content}</span>
+                      </div>
+                      <div class="write-review-wrap">
+                        <a href="/member/mypage/writereviews/${apply.lecture_id}" class="write-review-button">
+                          강의 리뷰 쓰기
+                        </a>
+                      </div>
+                      <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
+                      <div class="lecture-item-info-wrap">
+                        <div class="article-info-wrap">
+                          <div class="user-info-wrap">
+                            ${apply.teacher_name}
+                          </div>
+                          <!-- 올린 시간, 조회수, 지역 -->
+                          <div class="item-info-wrap">
+                            <div class="item-infos">
+                              ${apply.date} 수강
+                            </div>
+                            <div class="item-infos">${apply.time}</div>
+                            <div class="item-infos">${apply.kit}</div>
+                            <div class="item-infos">${apply.lecture_category}</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="item-tags-wrap">
+                          <ul class="item-tags-container">
+                            ${lecturePlantTags}
+                          </ul>
+                       </div>
+                    </div>
+                  </div>
+                  `;
+            }else{
+                text += `
+                <div class="lecture-history-item-wrap">
+                  <a href="#" class="lecture-history-link"></a>
+                    <div class="lecture-history-item-container">
+                      <div class="lecture-item-image-wrap">
+                        <img  alt=""
+                          class="lecture-item-image"
+                          src="/upload/${apply.lecture_file}"
+                        />
+                      </div>
+                      <div class="lecture-item-title-wrap">
+                        <span>${apply.lecture_title}</span>
+                      </div>
+                      <div class="lecture-item-article-wrap">
+                        <span>${apply.lecture_content}</span>
+                      </div>
+                      <div class="write-review-wrap" style="color: #134F2C; font-size: 13px" >
+                          리뷰 작성 완료
+                      </div>
+                      <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
+                      <div class="lecture-item-info-wrap">
+                        <div class="article-info-wrap">
+                          <div class="user-info-wrap">
+                            ${apply.teacher_name}
+                          </div>
+                          <!-- 올린 시간, 조회수, 지역 -->
+                          <div class="item-info-wrap">
+                            <div class="item-infos">
+                              ${apply.date} 수강
+                            </div>
+                            <div class="item-infos">${apply.time}</div>
+                            <div class="item-infos">${apply.kit}</div>
+                            <div class="item-infos">${apply.lecture_category}</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="item-tags-wrap">
+                          <ul class="item-tags-container">
+                            ${lecturePlantTags}
+                          </ul>
+                       </div>
+                    </div>
+                  </div>
+                  `;
+            }
 
-let isLectureExists = true; // 수강 내역 유무
+        }else if(apply.apply_status === 0) {
+            text += `
+            <div class="lecture-history-item-wrap">
+              <a href="#" class="lecture-history-link"></a>
+                <div class="lecture-history-item-container">
+                  <div class="lecture-item-image-wrap">
+                    <img  alt=""
+                      class="lecture-item-image"
+                      src="/upload/${apply.lecture_file}"
+                    />
+                  </div>
+                  <div class="lecture-item-title-wrap">
+                    <span>${apply.lecture_title}</span>
+                  </div>
+                  <div class="lecture-item-article-wrap">
+                    <span>${apply.lecture_content}</span>
+                  </div>
+                  <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
+                  <div class="lecture-item-info-wrap">
+                    <div class="article-info-wrap">
+                      <!-- 작성자 -->
+                      <div class="user-info-wrap">
+                        ${apply.teacher_name}
+                      </div>
+                      <!-- 올린 시간, 조회수, 지역 -->
+                      <div class="item-info-wrap">
+                        <div class="item-infos">
+                          ${apply.date} 수강 예정
+                        </div>
+                        <div class="item-infos">${apply.time}</div>
+                        <div class="item-infos">${apply.kit}</div>
+                        <div class="item-infos">${apply.lecture_category}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-tags-wrap">
+                      <ul class="item-tags-container">
+                        ${lecturePlantTags}
+                      </ul>
+                   </div>
+                </div>
+              </div>
+              `;
+        }
+    });
+        return text;
+  };
 
-// 수강 내역이 없을 때 보이는 텍스트들
-const nothingTextBold = document.querySelector(".my_lecture-history-wrap > h1");
-const nothingText = document.querySelector(".my_lecture-history-wrap > p");
+const wrap = document.querySelector('.post-wrap')
 
-// 각 수강 내역 사이의 구분선
-const itemsSeperator = document.querySelectorAll(".items-seperator");
+lectureService.lectureList(page++,showApplies).then((text)=>{
+  wrap.innerHTML += text
+})
 
-// 수강 내역이 있을 경우
-if (isLectureExists) {
-  // 수강 내역 없을 때 뜨는 텍스트들 안 보이게 함
-  nothingTextBold.style.display = "none";
-  nothingText.style.display = "none";
 
-  // 각 수강내역 표시
-  lectureItems.forEach((item) => {
-    item.style.display = "block";
-  });
+window.addEventListener("scroll", () => {
+    // 맨위
+    const scrollTop = document.documentElement.scrollTop;
+    // 페이지 높이
+    const windowHeight = window.innerHeight;
+    // 암튼 높이
+    const totalHeight = document.documentElement.scrollHeight;
+    // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
 
-  // 구분선 표시
-  itemsSeperator.forEach((item) => {
-    item.style.display = "block";
-  });
-}
-// 수강 내역이 없을 경우
-else {
-  // 수강 내역 없을 때 뜨는 텍스트들을 보이게 함
-  nothingTextBold.style.display = "block";
-  nothingText.style.display = "block";
+    if (scrollTop + windowHeight >= totalHeight) {
+      lectureService.lectureList(page++,showApplies).then((text)=>{
+        wrap.innerHTML += text
+      })
+    }
+});
 
-  // 각 수강내역 숨김
-  lecturedItems.forEach((item) => {
-    item.style.display = "none";
-  });
 
-  // 구분선 숨김
-  itemsSeperator.forEach((item) => {
-    item.style.display = "none";
-  });
-}
+wrap.addEventListener('click',(e)=>{
+    console.log(e.target)
+})
 
-/*
-  강사 여부에 따라 강의 현황 메뉴 표시/숨김
-*/
 
-// 강사 여부
-let isTeacher = false;
 
-// 강의 현황메뉴 객체
-const myClassMenu = document.querySelector(".teacher");
 
-// 강사면 강의 현황 메뉴 표시, 아니면 숨김
-if (isTeacher) {
-  myClassMenu.style.display = "inline-block";
-} else {
-  myClassMenu.style.display = "none";
-}
+
+

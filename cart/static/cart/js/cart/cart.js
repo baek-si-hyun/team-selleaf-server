@@ -33,7 +33,7 @@ const showCartItems = (details)=>{
       <li class="product-preview-wrap ${detail['id']}">
         <div class="product-preview-container">
           <div class="product-preview-inner">
-            <div class="selection ${detail['id']}">O</div>
+            <div class="selection ${detail['id']}"></div>
             <h3 class="user-name">${detail['lecture_title']}</h3>
             <div class="delete ${detail['id']}">삭제</div>
           </div>
@@ -80,44 +80,56 @@ cartService.getList(cart_id, showCartItems).then((text) => {
     ul.innerHTML = text;
 });
 
-
-
 ul.addEventListener("click", async (e) => {
     if(e.target.classList[0] === 'delete'){
-        const detailId = e.target.classList[1]
-        await cartService.remove(detailId)
+        // 삭제 버튼 클릭 시
+        const detailId = e.target.classList[1];
+        await cartService.remove(detailId);
         const text = await cartService.getList(cart_id, showCartItems);
         ul.innerHTML = text;
-        const div = document.querySelector('.product-name-side')
-            const children = Array.from(div.children)
-            children.forEach((child)=>{
-                targetId = child.classList[1]
-                if(targetId === e.target.classList[1]){
-                    child.remove()
+        const div = document.querySelector('.product-name-side');
+        const children = Array.from(div.children);
+        children.forEach((child) => {
+            targetId = child.classList[1];
+            if(targetId === e.target.classList[1]){
+                child.remove();
+            }
+        });
+    } else if(e.target.classList[0] === 'selection') {
+        // 선택 버튼 클릭 시
+        let target = e.target;
+        e.target.classList.toggle('count');
+        if(target.classList.contains('count')) {
+            // 선택된 경우
+            target.style.backgroundColor = '#C06888';
+            const div = document.querySelector('.product-name-side');
+            const detailId = e.target.classList[1];
+            const textlist = await cartService.select(detailId, showPrice);
+            div.innerHTML += textlist;
+            const prices = div.querySelectorAll('.price-side');
+            let realTotalPrice = 0;
+            prices.forEach((price) => {
+                realTotalPrice += parseInt(price.innerText.replace(/[^\d]/g, ''));
+            });
+            const priceDiv = document.querySelector('.total-price');
+            priceDiv.innerHTML = realTotalPrice.toLocaleString('ko-KR') + '원';
+        } else {
+            // 선택 해제된 경우
+            target.style.backgroundColor = '#fff';
+            const div = document.querySelector('.product-name-side');
+            const children = Array.from(div.children);
+            children.forEach((child) => {
+                targetId = child.classList[1];
+                if (targetId === target.classList[1]) {
+                    child.remove();
+                    // 선택 해제된 상품의 가격을 총 가격에서 제거
+                    const removedPrice = parseInt(child.querySelector('.price-side').innerText.replace(/[^\d]/g, ''));
+                    const priceDiv = document.querySelector('.total-price');
+                    const totalPrice = parseInt(priceDiv.innerText.replace(/[^\d]/g, ''));
+                    const newTotalPrice = totalPrice - removedPrice;
+                    priceDiv.innerHTML = newTotalPrice.toLocaleString('ko-KR') + '원';
                 }
-            })
-    }else if(e.target.classList[0]==='selection'){
-        let target= e.target
-        if(target.textContent === 'O') {
-            target.innerText = 'V'
-            target.style.color = '#C06888'
-            const div = document.querySelector('.product-name-side')
-            const detailId = e.target.classList[1]
-            const textlist = await cartService.select(detailId, showPrice)
-            div.innerHTML += textlist
-        }else if(target.textContent === 'V'){
-            target.innerText = 'O'
-            target.style.color = '#fff'
-            const div = document.querySelector('.product-name-side')
-            const children = Array.from(div.children)
-            children.forEach((child)=>{
-                targetId = child.classList[1]
-                if(targetId === target.classList[1]){
-                    child.remove()
-                }
-            })
+            });
         }
-    }
-})
-
-
+        }
+});
