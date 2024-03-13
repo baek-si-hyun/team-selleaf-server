@@ -30,8 +30,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'main',
-    'alarm',
     'apply',
+    'alarm',
     'cart',
     'knowhow',
     'lecture',
