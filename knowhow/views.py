@@ -222,25 +222,28 @@ class KnowhowListView(View):
         return render(request, 'community/web/knowhow/knowhow.html', context)
 
 class KnowhowListApi(APIView):
-    def get(self, request, page, sorting, filters, type):
+    def get(self, request, page, sorting, filters, types):
         row_count = 6
         offset = (page - 1) * row_count
         limit = row_count * page
 
-        print(type)
+        print(types)
 
         condition = Q()
+        condition2 = Q()
         sort1 = '-id'
         sort2 = '-id'
 
-        if type == '식물 키우기':
-            condition |= Q(knowhowcategory__category_name__contains='식물 키우기')
-        elif type == '제품 추천':
-            condition |= Q(knowhowcategory__category_name__contains='제품 추천')
-        elif type == '스타일링':
-            condition |= Q(knowhowcategory__category_name__contains='스타일링')
-        elif type == '전체':
-            condition |= Q()
+        if types == '식물 키우기':
+            condition2 |= Q(knowhowcategory__category_name__contains='식물 키우기')
+        elif types == '관련 제품':
+            condition2 |= Q(knowhowcategory__category_name__contains='관련 제품')
+        elif types == '테라리움':
+            condition2 |= Q(knowhowcategory__category_name__contains='테라리움')
+        elif types == '스타일링':
+            condition2 |= Q(knowhowcategory__category_name__contains='스타일링')
+        elif types == '전체':
+            condition2 |= Q()
 
         filters = filters.split(',')
         for filter in filters:
@@ -266,7 +269,7 @@ class KnowhowListApi(APIView):
             elif filter.replace(',', '') == '전체':
                 condition = Q()
 
-        print(condition)
+        # print(condition2)
 
         if sorting == '최신순':
             sort1 = '-id'
@@ -290,13 +293,25 @@ class KnowhowListApi(APIView):
 
         # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
         # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
-        knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition) \
+        knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition, condition2) \
             .annotate(member_name=F('member__member_name')) \
             .values(*columns) \
             .annotate(like_count=Count(Q(knowhowlike__status=1)), scrap_count=Count(Q(knowhowscrap__status=1))) \
             .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count',
                     'scrap_count')\
             .order_by(sort1, sort2).distinct()
+
+        knowhows_count = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition, condition2) \
+            .annotate(member_name=F('member__member_name')) \
+            .values(*columns) \
+            .annotate(like_count=Count(Q(knowhowlike__status=1)), scrap_count=Count(Q(knowhowscrap__status=1))) \
+            .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count',
+                    'scrap_count') \
+            .order_by(sort1, sort2).distinct().count()
+
+        # print(knowhows_count)
+
+
 
         # knowhow에 knowhow_file을 가상 컬럼을 만들어서 하나씩 추가해줌
         for knowhow in knowhows:
@@ -306,8 +321,14 @@ class KnowhowListApi(APIView):
             knowhow['profile'] = profile['file_url']
 
         # print(knowhows)
+        knowhows = knowhows[offset:limit]
 
-        return Response(knowhows[offset:limit])
+        datas = {
+            'knowhows': knowhows,
+            'knowhows_count': knowhows_count
+        }
+
+        return Response(datas)
 
 
 class KnowhowReplyWriteApi(APIView):
