@@ -3,7 +3,7 @@
 {% block static %}
     <link rel="stylesheet" href="{% static 'public/web/css/manager/lecture/lecture-detail/lecture-detail-review.css' %}">
 {% endblock %}
-{% block title %}강의 세부사항 관리{% endblock %}
+{% block title %}강의 리뷰 관리{% endblock %}
 {% block content %}
   <body class="overflow-hidden">
     <div class="next">
@@ -16,7 +16,7 @@
               <div class="content-inner">
                 <div class="content-box">
                   <div class="header">
-                    <h1 class="header-name">강의 세부사항 관리</h1>
+                    <h1 class="header-name">강의 리뷰 관리</h1>
                     <div>
                       <div class="compose-button">
                         <button
@@ -55,9 +55,9 @@
                         >
                           <div>
                             <div class="flex">
-                              <p class="review-info">리뷰정보</p>
+                              <p class="review-info">리뷰 정보</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">3</p>
+                                <p class="review-info-num">{{ review_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -73,9 +73,9 @@
                         >
                           <div>
                             <div class="flex">
-                              <p class="review-info">수강생목록</p>
+                              <p class="review-info">수강생 목록</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">3</p>
+                                <p class="review-info-num">{{ trainees_count }}</p>
                               </div>
                             </div>
                           </div>

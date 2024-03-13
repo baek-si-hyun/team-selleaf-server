@@ -1,5 +1,5 @@
 from django.db import transaction
-from django.db.models import F, CharField, Value
+from django.db.models import F, CharField, Value, Q
 from django.db.models.functions import Concat
 from django.shortcuts import render, redirect
 from django.utils import timezone
@@ -7,6 +7,7 @@ from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apply.models import Apply, Trainee
 from lecture.models import Lecture
 from member.models import Member
 from notice.models import Notice
@@ -348,6 +349,7 @@ class LectureInfoAPI(APIView):
             'lecture_headcount',
             'lecture_price',
             'lecture_place',
+            'online_status',
             'created_date',
         ]
 
@@ -379,17 +381,50 @@ class LectureInfoAPI(APIView):
         return Response(lecture_info)
 
 
-
 # 강의 리뷰 관리
 class LectureReviewManagementView(View):
     # 강의 리뷰 관리 페이지 이동 뷰
     def get(self, request):
-        # 특정 강의에 대한 모든 리뷰 정보 필요
-        return render(request, 'manager/lecture/lecture/lecture.html')
+        # 특정 강의에 대한 리뷰 정보 필요 - 쿼리 스트링에 요청
+        lecture = Lecture.objects.get(id=request.GET['id'])
 
-    # 특정 리뷰 삭제를 위한 뷰
-    def post(self, request):
-        return render(request, 'manager/lecture/lecture/lecture.html')
+        # 강의 게시글 리뷰 개수
+        review_count = lecture.lecturereview_set.count()
+
+        # 강의 수강생 수 구하기 - 해당 강의 신청 내역들 -> 각 신청 내역들의 동행자 수의 총 합계
+        # 강의 신청 내역 조건
+        apply_condition_vaild = Q(apply_status=0) | Q(apply_status=1)
+        apply_condition_lecture = Q(lecture_id=lecture.id)
+        apply_condition = apply_condition_lecture & apply_condition_vaild
+
+        # 위 조건식으로 해당 강의를 신청한 내역 전체를 조회
+        applies = Apply.objects.filter(apply_condition)
+
+        # 아래의 for문으로 구한 총 신청자 수를 담을 변수
+        total_trainees_count = 0
+
+        # 각 신청 내역의 신청자 수 구하기
+        for apply in applies:
+            trainees_count = Trainee.objects.filter(apply=apply.id).count()
+
+            # 수강생 이름 확인
+            # trainees = Trainee.objects.filter(apply=apply.id).order_by('id')
+            #
+            # for trainee in trainees:
+            #     print(trainee.trainee_name)
+
+            # 총 신청자 수 합계에 더하기
+            total_trainees_count += trainees_count
+
+        # 강의 정보와 리뷰 개수, 신청자 수를 dict에 담음
+        context = {
+            'lecture': lecture,
+            'review_count': review_count,
+            'trainees_count': total_trainees_count
+        }
+
+        # 아래의 html 페이지로 이동
+        return render(request, 'manager/lecture/lecture-detail/lecture-detail-review.html', context)
 
 
 # 댓글 관리

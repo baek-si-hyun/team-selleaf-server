@@ -9,7 +9,7 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     NoticeManagementView, UpdateNoticeView, DeleteNoticeView, WriteQnAView, QnAManagementView, \
     UpdateQnAView, DeleteQnAView, MemberInfoAPI, TeacherManagementView, TeacherInfoAPI, TeacherEntryManagementView, \
     TeacherEntriesInfoAPI, DeleteManyNoticeView, DeleteManyQnAView, DeleteManyMembersAPI, TeacherApprovalAPI, \
-    TeacherDeleteAPI, LectureManagementView, LectureInfoAPI
+    TeacherDeleteAPI, LectureManagementView, LectureInfoAPI, LectureReviewManagementView
 
 urlpatterns = [
     path('', MainView.as_view()),
@@ -38,6 +38,7 @@ urlpatterns = [
     # 강의 관리
     path('admin/lecture/', LectureManagementView.as_view(), name='manager-lecture'),
     path('admin/lecture/<int:page>', LectureInfoAPI.as_view(), name='lecture-info'),
+    path('admin/lecture/review/', LectureReviewManagementView.as_view(), name='manager-lecture-review'),
     # 공지사항 관리
     path('admin/notice/', NoticeManagementView.as_view(), name='manager-notice'),
     path('admin/notice/write/', WriteNoticeView.as_view(), name='notice-write'),

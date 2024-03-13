@@ -6,6 +6,7 @@ const showLectures = (lectures_info) => {
     // 받아온 데이터들 중 'lectures' 만 따로 가져옴
     const lectures = lectures_info.lectures;
 
+
     // 수강료를 3자리 단위로 콤마(,)로 구분해주는 함수
     const priceFormat = (price) => {
         return new Intl.NumberFormat().format(price);
@@ -15,6 +16,11 @@ const showLectures = (lectures_info) => {
     lectures.forEach((lecture) => {
         // 위 함수로 price에 3자리마다 콤마 붙임
         let formattedPrice = priceFormat(lecture.lecture_price);
+
+        // 온라인 강의는 '온라인', 오프라인 강의는 주소 출력
+        const lecturePlace = lecture.online_status
+                                                  ? '온라인'
+                                                  : lecture.lecture_place;
 
         text += `
                   <li class="list-content ${lecture.id}">
@@ -27,7 +33,7 @@ const showLectures = (lectures_info) => {
                       <div class="class-info">${lecture.teacher_name}</div>
                       <div class="class-info">${lecture.lecture_headcount}명</div>
                       <div class="class-info">${formattedPrice}원</div>
-                      <div class="class-info">${lecture.lecture_place}</div>
+                      <div class="class-info">${lecturePlace}</div>
                       <div class="class-info">${lecture.created_date}</div>
                     </a>
                   </li>
