@@ -5,10 +5,18 @@ from selleaf.period import Period
 
 
 class Alarm(Period):
-    sender = models.ForeignKey(Member, on_delete=models.PROTECT, null=True, related_name='sender')
-    receiver = models.ForeignKey(Member, on_delete=models.PROTECT, null=True, related_name='receiver', blank=True)
+    sender = models.ForeignKey(Member, on_delete=models.PROTECT, null=False, related_name='sender')
+    receiver = models.ForeignKey(Member, on_delete=models.PROTECT, null=False, related_name='receiver', blank=False)
     # 확인 True 미확인 False
-    alarm_status = models.BooleanField(null=True, default=False)
+    alarm_status = models.BooleanField(null=False, default=False)
+    # 1. ApplyAlarm
+    # 2. KnowhowLikeAlarm
+    # 3. KnowhowReplyAlarm
+    # 4. KnowhowReplyLikeAlarm
+    # 5. PostLikeAlarm
+    # 6. PostReplyAlarm
+    # 7. PostReplyLikeAlarm
+    # 8. ReviewAlarm
     alarm_category = models.IntegerField(null=False, blank=False)
 
     class Meta:
