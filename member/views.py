@@ -10,6 +10,7 @@ from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from alarm.models import Alarm
 from apply.models import Apply
 from knowhow.models import KnowhowFile, KnowhowReply, Knowhow, KnowhowPlant, KnowhowReplyLike, KnowhowLike
 from lecture.models import LectureReview, LectureProductFile, LecturePlant, Lecture, LectureScrap
@@ -358,6 +359,19 @@ class LectureReviewView(View):
         }
 
         LectureReview.objects.create(**data)
+        sender = Member.objects.get(id=member['id'])
+        lecture = Lecture.objects.filter(id=lecture_id)\
+            .annotate(member_id=F('teacher__member_id'))\
+            .values('member_id').first()
+        receiver = Member.objects.filter(id=lecture['member_id']).first()
+        alarm_data= {
+            'sender' : sender,
+            'receiver' : receiver,
+            'alarm_category': 8
+
+        }
+
+        Alarm.objects.create(**alarm_data)
 
         return redirect('/member/mypage/lectures/')
 
@@ -380,6 +394,18 @@ class MypageTradesView(View):
             'scrap_count':scrap_count
         }
         return render(request, 'member/mypage/trade/my-sales.html', context)
+
+
+# 강사 진행한 강의 // 작업중
+class MypageTeacherView(View):
+    def get(self, request):
+        return render(request, 'member/mypage/my_classes/past-classes.html')
+
+# 강사 진행 예정 강의 // 작업중
+class MypageTeacherPlanView(View):
+    def get(self, request):
+        return render(request, 'member/mypage/my_classes/planned-classes.html')
+
 
 # =====================================================================================================================
 # API

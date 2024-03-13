@@ -4,7 +4,7 @@ from member.views import MemberJoinView, MemberLoginView, MemberLogoutView, Mypa
     MypagePostView, MypageShowView, MypageKnowhowListAPI, MypageShowReplyAPI, MypageReplyView, MypageShowReviewAPI, \
     MypageReviewView, MypageShowLikesAPI, MypageLikesView, MypageLecturesView, \
     MypageShowLecturesAPI, LectureReviewView, MypageScrapLecturesView, MypageScrapLectureAPI, MypageScrapTradeView, \
-    MypageScrapTradeAPI, MypageTradesView, MypageTradesAPI
+    MypageScrapTradeAPI, MypageTradesView, MypageTradesAPI, MypageTeacherView, MypageTeacherPlanView
 
 app_name = 'member'
 
@@ -33,6 +33,8 @@ urlpatterns = [
     path('mypage/show/scraptrades/<int:page>',MypageScrapTradeAPI.as_view()),
     path('mypage/trades/',MypageTradesView.as_view()),
     path('mypage/show/trades/<int:page>',MypageTradesAPI.as_view()),
+    path('mypage/teachers/', MypageTeacherView.as_view()),
+    path('mypage/teachers/plan/',MypageTeacherPlanView.as_view())
 
 
 ]

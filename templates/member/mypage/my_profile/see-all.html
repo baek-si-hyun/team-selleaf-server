@@ -239,7 +239,7 @@
                             </h1>
                             <div class="title-empty-area"></div>
                           </div>
-                          {% if post.count == 0 %}
+                          {% if post_count == 0 %}
                               <a class="photo-upload-wrap no-posts" href="#">
                                 <img alt=""
                                     class="add-icon"
@@ -252,12 +252,13 @@
                           {% else %}  
                               <div class="post-wrap">
                               </div>
+                              <a href="/member/mypage/posts/">
+                                 <div class="more">
+                                    더보기
+                                 </div>
+                              </a>
                           {% endif %}
-                          <a href="/member/mypage/posts/">
-                             <div class="more">
-                                더보기
-                             </div>
-                          </a>
+
                         </div>
 
                         <!-- 리뷰 -->
@@ -270,7 +271,7 @@
                             <div class="title-empty-area"></div>
                           </div>
                           <!-- 리뷰 없을 때 표시 -->
-                          {% if post.count == 0 %}
+                          {% if lecture_review.count == 0 %}
                               <a class="photo-upload-wrap no-reviews" href="#">
                                   <img alt=""
                                     class="add-icon"
@@ -283,14 +284,15 @@
                           {% else %}  
                               <div class="here">
                               </div>
+                              <a href="/member/mypage/reviews/">
+                                 <div class="more">
+                                    더보기
+                                 </div>
+                              </a>
                           {% endif %}  
                           <!-- 리뷰 있을 때 표시 -->
                         </div>
-                          <a href="/member/mypage/reviews/">
-                             <div class="more">
-                                더보기
-                             </div>
-                          </a>
+
                       </div>
                     </div>
                   </div>
