@@ -26,6 +26,7 @@
   margin: 20px 0 40px;
 }
 .filter-container {
+  width: fit-content;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,7 +37,7 @@
   align-items: center;
   gap: 4px;
   padding: 5px 0;
-  width: 100%;
+  /*width: 100%;*/
   overflow-x: auto;
 }
 .filter-item {
@@ -102,6 +103,7 @@
   top: -10px;
 }
 .option-list {
+  width: fit-content;
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
