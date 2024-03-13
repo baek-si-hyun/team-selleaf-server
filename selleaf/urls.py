@@ -45,7 +45,6 @@ urlpatterns = [
     path('knowhow/', include('knowhow.urls-web')),
     path('post/', include('post.urls-web')),
     path('cart/', include('cart.urls-web')),
-    path('alarm/', include('alarm.urls-web')),
     path('oauth/', include('oauth.urls')),
     path('accounts/', include('allauth.urls')),
 ]
