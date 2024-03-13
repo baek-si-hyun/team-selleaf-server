@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // 승인할 신청자의 id를 API에 보내서 승인 처리
-    teacherService.approveTeachers(approveIds);
+    await teacherService.approveTeachers(approveIds);
 
     // 페이지 새로고침
     location.reload();
