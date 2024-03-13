@@ -1,8 +1,8 @@
 from django.urls import path
 
 from knowhow.views import KnowhowCreateView, KnowhowDetailView, KnowhowReplyWriteApi, \
-    KnowhowDetailApi, KnowhowReplyApi, KnowhowListApi, KnowhowListView, KnowhowUpdateView, KnowhowLikeScrapApi, \
-    KnowhowDeleteView
+    KnowhowDetailApi, KnowhowReplyApi, KnowhowListApi, KnowhowListView, KnowhowUpdateView, \
+    KnowhowDeleteView, KnowhowScrapApi, KnowhowLikeApi
 
 app_name = 'knowhow'
 
@@ -18,7 +18,8 @@ urlpatterns = [
     # 노하우 목록
     path('list/', KnowhowListView.as_view(), name='list'),
     path('list/<int:page>/<str:filters>/<str:sorting>/<str:type>', KnowhowListApi.as_view(), name='list'),
-    path('like/scrap/<int:knowhow_id>/<str:filters>/<str:sorting>/<str:type>', KnowhowListApi.as_view(), name='list'),
+    path('like/scrap/<int:knowhow_id>/<int:member_id>/<str:scrap_status>/', KnowhowScrapApi.as_view(), name='list'),
+    path('like/scrap/<int:knowhow_id>/<int:member_id>/<str:like_status>', KnowhowLikeApi.as_view(), name='list'),
 
     # 댓글
     path('replies/write/', KnowhowReplyWriteApi.as_view(), name='reply_write'),
@@ -26,6 +27,6 @@ urlpatterns = [
     path('replies/<int:reply_id>/', KnowhowReplyApi.as_view()),
 
     #좋아요 스크랩
-    path('like/scrap/<int:status>/', KnowhowLikeScrapApi.as_view(), name='like_scrap'),
+    # path('like/scrap/<int:status>/', KnowhowLikeScrapApi.as_view(), name='like_scrap'),
 
 ]

@@ -205,8 +205,11 @@ knowhowService.getList(page++, filter, sorting, type, showList).then((text) => {
             knowhowSection.innerHTML += text;
         });
 
-// 스크롤 할대마다 실행
+
+
 window.addEventListener("scroll", () => {
+    const optionBtn = document.querySelector('.option-reset-btn')
+
     // 맨위
     const scrollTop = document.documentElement.scrollTop;
     // 페이지 높이
@@ -215,13 +218,25 @@ window.addEventListener("scroll", () => {
     const totalHeight = document.documentElement.scrollHeight;
     // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
 
-    if (scrollTop + windowHeight >= totalHeight) {
-        knowhowService.getList(++page, filter, sorting, type, showList).then((text) => {
-            knowhowSection.innerHTML += text;
+    // console.log(optionBtn.previousElementSibling)
 
-        });
+
+    if (scrollTop + windowHeight >= totalHeight) {
+        if(optionBtn.previousElementSibling) {
+            knowhowService.getList(++page, filter, sorting, type, showList).then((text) => {
+                knowhowSection.innerHTML += text;
+
+            });
+        }else{
+            knowhowService.getList(page++, filter, sorting, type, showList).then((text) => {
+                knowhowSection.innerHTML += text;
+
+            });
+        }
     }
 });
+
+
 
 
 

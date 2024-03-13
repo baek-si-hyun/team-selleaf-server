@@ -9,16 +9,26 @@ const knowhowService = (() => {
         return knowhows;
     }
 
-    const getLikeScrap = async (knowhow_id, member_id, status, callback) => {
-        const response = await fetch(`/knowhow/like/scrap/${knowhow_id}/${member_id}/${status}`);
-        const ls = await response.json();
+    const getScrap = async (knowhow_id, member_id, scrap_status, callback) => {
+        const response = await fetch(`/knowhow/like/scrap/${knowhow_id}/${member_id}/${scrap_status}/`);
+        const scraps = await response.json();
         if (callback){
-            return callback(ls);
+            return callback(scraps);
         }
-        return ls;
+        return scraps;
+
+    }
+
+    const getLike = async (knowhow_id, member_id, like_status, callback) => {
+    const response = await fetch(`/knowhow/like/scrap/${knowhow_id}/${member_id}/${like_status}`);
+    const likes = await response.json();
+    if (callback){
+        return callback(likes);
+    }
+    return likes;
 
     }
 
 
-    return {getList: getList, getLikeScrap: getLikeScrap}
+    return {getList: getList, getScrap: getScrap, getLike:getLike}
 })();

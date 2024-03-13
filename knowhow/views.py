@@ -75,14 +75,17 @@ class KnowhowCreateView(View):
 class KnowhowDetailView(View):
     def get(self, request):
         knowhow = Knowhow.objects.get(id=request.GET['id'])
-        print(knowhow.__dict__)
+        member_id = knowhow.member_id
+        # print(member_id)
 
         knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')
         reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow.id).values('id').count()
-        member_profile = MemberProfile.objects.filter(id=knowhow.member_id).values('file_url')
+        member_profile = MemberProfile.objects.filter(id=member_id).values('file_url')
 
+        knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow, member_id=member_id, status=1).exists()
+        knowhow_like = KnowhowLike.objects.filter(knowhow_id=knowhow, member_id=member_id, status=1).exists()
 
-
+        print(knowhow_scrap)
 
         knowhow.knowhow_count += 1
         knowhow.save(update_fields=['knowhow_count'])
@@ -91,7 +94,7 @@ class KnowhowDetailView(View):
         knowhow_file = list(knowhow.knowhowfile_set.all())[0]
 
 
-        print(knowhow)
+        # print(knowhow)
 
 
         context = {
@@ -100,7 +103,9 @@ class KnowhowDetailView(View):
             'knowhow_file': knowhow_file,
             'knowhow_tags': knowhow_tags,
             'reply_count': reply_count,
-            'member_profile': member_profile
+            'member_profile': member_profile,
+            'knowhow_scrap': knowhow_scrap,
+            'knowhow_like': knowhow_like
         }
 
         return render(request, 'community/web/knowhow/knowhow-detail.html', context)
@@ -233,7 +238,7 @@ class KnowhowListApi(APIView):
         elif type == '제품 추천':
             condition |= Q(knowhowcategory__category_name__contains='제품 추천')
         elif type == '스타일링':
-            condition |= Q(knowhowcategory__category_name__contains='스10')
+            condition |= Q(knowhowcategory__category_name__contains='스타일링')
         elif type == '전체':
             condition |= Q()
 
@@ -288,7 +293,7 @@ class KnowhowListApi(APIView):
         knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition) \
             .annotate(member_name=F('member__member_name')) \
             .values(*columns) \
-            .annotate(like_count=Count('knowhowlike'), scrap_count=Count('knowhowscrap')) \
+            .annotate(like_count=Count(Q(knowhowlike__status=1)), scrap_count=Count(Q(knowhowscrap__status=1))) \
             .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count',
                     'scrap_count')\
             .order_by(sort1, sort2).distinct()
@@ -334,9 +339,9 @@ class KnowhowDetailApi(APIView):
         # 댓글 갯수
         reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow_id).count()
         # 좋아요 갯수
-        like_count = KnowhowLike.objects.filter(knowhow_id=knowhow_id).count()
+        like_count = KnowhowLike.objects.filter(knowhow_id=knowhow_id, status=1).count()
         # 스크랩 갯수
-        scrap_count = KnowhowScrap.objects.filter(knowhow_id=knowhow_id).count()
+        scrap_count = KnowhowScrap.objects.filter(knowhow_id=knowhow_id, status=1).count()
         # 게시글 작성 날짜
         knowhow_date = Knowhow.objects.filter(id=knowhow_id).values('created_date')
 
@@ -373,6 +378,80 @@ class KnowhowReplyApi(APIView):
 
         return Response('success')
 
-class KnowhowLikeScrapApi(APIView):
-    def get(self, request, knowhow_id, member_id, status):
-        pass
+class KnowhowScrapApi(APIView):
+    def get(self, request, knowhow_id, member_id, scrap_status):
+
+        check_scrap_status = True
+
+        # print(knowhow_id, member_id, status)
+
+        # 만들어지면 True, 이미 있으면 False
+        scrap, scrap_created = KnowhowScrap.objects.get_or_create(knowhow_id=knowhow_id, member_id=member_id)
+
+        if scrap_created:
+            check_scrap_status = True
+
+        else:
+
+            if scrap_status == 'True':
+                update_scrap = KnowhowScrap.objects.get(knowhow_id=knowhow_id, member_id=member_id)
+
+                update_scrap.status = 1
+                update_scrap.save(update_fields=['status'])
+                check_scrap_status = True
+
+            else :
+                update_scrap = KnowhowScrap.objects.get(knowhow_id=knowhow_id, member_id=member_id)
+
+                update_scrap.status = 0
+                update_scrap.save(update_fields=['status'])
+                check_scrap_status = False
+
+        scrap_count = KnowhowScrap.objects.filter(knowhow_id=knowhow_id, status=1).count()
+
+        datas = {
+            'check_scrap_status': check_scrap_status,
+            'scrap_count': scrap_count
+        }
+
+        return Response(datas)
+
+class KnowhowLikeApi(APIView):
+    def get(self, request, knowhow_id, member_id, like_status):
+
+        check_like_status = True
+
+        # print(knowhow_id, member_id, status)
+
+        # 만들어지면 True, 이미 있으면 False
+        like, like_created = KnowhowLike.objects.get_or_create(knowhow_id=knowhow_id, member_id=member_id)
+
+        if like_created:
+            check_like_status = True
+
+        else:
+
+            if like_status == 'True':
+                update_like = KnowhowLike.objects.get(knowhow_id=knowhow_id, member_id=member_id)
+
+                update_like.status = 1
+                update_like.save(update_fields=['status'])
+                check_like_status = True
+
+            else :
+                update_like = KnowhowLike.objects.get(knowhow_id=knowhow_id, member_id=member_id)
+
+                update_like.status = 0
+                update_like.save(update_fields=['status'])
+                check_like_status = False
+
+        like_count = KnowhowLike.objects.filter(knowhow_id=knowhow_id, status=1).count()
+
+        # print(like_count)
+
+        datas = {
+            'check_like_status': check_like_status,
+            'like_count': like_count
+        }
+
+        return Response(datas)
