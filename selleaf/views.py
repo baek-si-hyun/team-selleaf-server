@@ -342,31 +342,41 @@ class LectureInfoAPI(APIView):
         # 강의 정보 표시에 필요한 컬럼들
         columns = [
             'id',
+            'lecture_title',
+            'lecture_content',
             'teacher_name',
-            'teacher_info',
-            'lecture_plan',
+            'lecture_headcount',
+            'lecture_price',
+            'lecture_place',
             'created_date',
         ]
 
-        # 최근에 승인된 순으로 강사 10명의 정보를 가져옴
-        teachers = Teacher.enabled_objects.annotate(teacher_name=F('member__member_name')) \
-                       .values(*columns).order_by('-id')[offset:limit]
+        # 강의 게시글 10개의 정보를 최신순으로 가져옴
+        lectures = Lecture.enabled_objects\
+                       .annotate(teacher_name=F('teacher__member__member_name'),
+                                 lecture_place=Concat(F('lectureaddress__address_city'),
+                                                      Value(" "),
+                                                      F('lectureaddress__address_district'),
+                                                      output_field=CharField()
+                                                      )
+                                )\
+                       .values(*columns)[offset:limit]
 
         # 다음 페이지에 띄울 정보가 있는지 검사
         has_next_page = Teacher.enabled_objects.filter()[limit:limit + 1].exists()
 
-        # 각각의 강사 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
-        for teacher in teachers:
-            teacher['created_date'] = teacher['created_date'].strftime('%Y.%m.%d')
+        # 각각의 강의 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for lecture in lectures:
+            lecture['created_date'] = lecture['created_date'].strftime('%Y.%m.%d')
 
-        # 완성된 강사 정보 목록
-        teacher_info = {
-            'teachers': teachers,
+        # 완성된 강의 정보 목록
+        lecture_info = {
+            'lectures': lectures,
             'hasNext': has_next_page,
         }
 
         # 요청한 데이터 반환
-        return Response(teacher_info)
+        return Response(lecture_info)
 
 
 
