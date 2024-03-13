@@ -56,7 +56,7 @@
                           <div class="flex">
                             <p class="lecture-info">강의정보</p>
                             <div class="lecture-info-num">
-                              <p class="lecture-info-num">2</p>
+                              <p class="lecture-info-num">{{ lecture_count }}</p>
                             </div>
                           </div>
                         </button>
@@ -67,7 +67,7 @@
                   <div class="all-list">
                     <div>
                       <span class="all-name">전체</span>
-                      <span class="all-num">2</span>
+                      <span class="all-num">{{ lecture_count }}</span>
                     </div>
                     <div class="list-order">
                       <!-- 여기에 검색 창 추가 -->
@@ -183,72 +183,29 @@
                 </div>
                 <div class="category-benner">
                   <input type="checkbox" class="all-check" />
-                  <div class="category-inner" style="width: 550px">제목</div>
-                  <div class="category-inner" style="width: 55px">조회</div>
-                  <div class="category-inner" style="width: 80px">좋아요</div>
-                  <div class="category-inner" style="width: 80px">게시일</div>
-                  <div class="category-inner">판매수</div>
+                  <div class="category-wrap">
+                    <div class="category-inner">강의 정보</div>
+                    <div class="category-inner">강사명</div>
+                    <div class="category-inner">정원</div>
+                    <div class="category-inner">수강료</div>
+                    <div class="category-inner">카테고리</div>
+                    <div class="category-inner">강의 장소</div>
+                  </div>
                 </div>
                 <ul class="list-content">
                   <li class="list-content">
                     <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">컨텐츠 제목 1</p>
-                            </div>
-                            <p class="content-name-detail">컨텐츠 내용 1</p>
-                          </div>
-                        </div>
+                    <a class="class-info-wrap">
+                      <div class="class-info">
+                          <p class="content-name">강의 제목 예시</p>
+                          <p class="content-name-detail">강의 내용 예시</p>
                       </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-a">
-                        <p class="content-detail-num">1</p>
-                      </div>
-                      <div class="content-detail-a">
-                        <p class="content-detail-num">0</p>
-                      </div>
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">1</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">컨텐츠 제목 2</p>
-                            </div>
-                            <p class="content-name-detail">컨텐츠 내용 2</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-a">
-                        <p class="content-detail-num">1</p>
-                      </div>
-                      <div class="content-detail-a">
-                        <p class="content-detail-num">0</p>
-                      </div>
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">1</p>
-                      </div>
-                    </div>
+                      <div class="class-info">KGH</div>
+                      <div class="class-info">10명</div>
+                      <div class="class-info">25,000원</div>
+                      <div class="class-info">테라리움</div>
+                      <div class="class-info">경기도 광주시</div>
+                    </a>
                   </li>
                 </ul>
                 <div class="page-count-wrap">

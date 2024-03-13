@@ -1,6 +1,12 @@
 // 페이지가 열릴 때 체크된 박스가 없다면 삭제 버튼 disabled
 const deleteBtn = document.querySelector(".delete-button");
 
+// 공지사항 리스트를 뿌릴 위치(객체)
+const noticeList = document.querySelector("ul.notice-list");
+
+// 가장 최근에 작성된 순으로 10개의 공지사항을 뿌리기 위해 초기값을 1로 설정
+let page = 1
+
 // 현재 체크된 박스의 개수를 세는 함수
 const countCheckBoxes = () => {
   // 각 체크박스의 상태가 변할 때마다 체크된 박스의 개수를 셈
@@ -15,58 +21,8 @@ const countCheckBoxes = () => {
   }
 }
 
-// 페이지가 열렸을 때 체크된 박스 개수를 셈
-countCheckBoxes();
-
-// 가장 최근에 작성된 순으로 10개의 공지사항을 부리기 위해 초기값을 1로 설정
-let page = 1
-
-// API 뷰로부터 데이터를 가져오기위한 비동기 통신 함수
-const getNotice = async (callback) => {
-  // API에 공지사항 목록을 요청해서 가져옴 - Promise
-  const response = await fetch(`/notice/list/${page}`);
-  const notices = await response.json();
-
-  // 콜백함수를 전달받았다면, 조회한 목록의 처리를 콜백함수에 맡김
-  if(callback) {
-    callback(notices);
-  }
-}
-
-// 가져온 목록을 화면에 뿌리기 위한 함수
-const showNotice = (notice_info) => {
-  // 나중에 페이지네이션을 위한 로직 작성
-
-
-  // 공지사항 리스트를 뿌릴 위치(객체)를 querySelector로 가져옴
-  const noticeList = document.querySelector("ul.notice-list");
-
-  // fetch 요청으로 받아온 데이터 할당
-  let notices = notice_info.notices;
-
-  // 공지사항의 제목과 내용을 아래의 HTML 태그로 묶어서 공지사항 목록 생성
-  notices.forEach((notice) => {
-    noticeList.innerHTML += `
-                  <li class="list-content ${notice.id}">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">${notice.notice_title}</p>
-                            </div>
-                            <p class="content-name-detail">${notice.notice_content}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <a class="update-notice" href="/admin/notice/update/?id=${notice.id}">수정</a>
-                  </li>
-    `
-  });
-
+// 체크박스 클릭 이벤트 추가 기능 함수화
+const addCheckboxEvent = () => {
   // 체크박스 관련 js
   const allCheck = document.querySelector(".all-check");
   const checkboxes = document.querySelectorAll(".checkbox-input");
@@ -113,8 +69,52 @@ const showNotice = (notice_info) => {
   });
 }
 
+// 페이지가 열렸을 때 체크된 박스 개수를 셈
+countCheckBoxes();
+
+// 가져온 목록을 화면에 뿌리기 위한 함수
+const showNotice = (notice_info) => {
+  // 화면에 뿌릴 HTML 태그를 담을 빈 문자열
+  let text = ``;
+
+  // 나중에 페이지네이션을 위한 로직 작성
+
+  // fetch 요청으로 받아온 데이터 할당
+  let notices = notice_info.notices;
+
+  // 공지사항의 제목과 내용을 아래의 HTML 태그로 묶어서 공지사항 목록 생성
+  notices.forEach((notice) => {
+    text += `
+                  <li class="list-content ${notice.id}">
+                    <input type="checkbox" class="checkbox-input" />
+                    <button class="text-left">
+                      <div class="list-content-wrap">
+                        <div class="list-content-container">
+                          <div class="list-content-inner">
+                            <div class="content-name">
+                              <p class="content-name">${notice.notice_title}</p>
+                            </div>
+                            <p class="content-name-detail">${notice.notice_content}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                    <div class="content-open-wrap"></div>
+                    <a class="update-notice" href="/admin/notice/update/?id=${notice.id}">수정</a>
+                  </li>
+    `
+  });
+
+  return text;
+}
+
 // 위 함수들을 사용해서 페이지가 열렸을 때 화면에 공지사항 표시
-getNotice(showNotice)
+noticeService.getList(page, showNotice).then((notices) => {
+  noticeList.innerHTML = notices;
+
+  // 체크박스 클릭 이벤트 추가
+  addCheckboxEvent();
+});
 
 // 삭제 버튼 누르면 뜨는 모달창
 document.addEventListener("DOMContentLoaded", function () {
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalWrap = document.querySelector(".delete-modal-wrap");
 
   deleteButtons.forEach(function (deleteButton) {
-    deleteButton.addEventListener("click", (e) => {
+    deleteButton.addEventListener("click", () => {
       modalWrap.style.display = "flex";
     });
   });
@@ -131,28 +131,31 @@ document.addEventListener("DOMContentLoaded", function () {
   const confirmButton = document.querySelector(".modal-confirm button");
 
   // 취소 버튼 누르면 모달창 닫힘
-  cancelButton.addEventListener("click", (e) => {
+  cancelButton.addEventListener("click", () => {
     modalWrap.style.display = "none";
   });
 
   // 삭제 버튼 이벤트 - 체크된 공지사항만 삭제
-  confirmButton.addEventListener("click", (e) => {
+  confirmButton.addEventListener("click", async () => {
     modalWrap.style.display = "none";
 
-    // 삭제할 공지사항의 id를 담을 빈 배열
-    let deleteIds = [];
+    // 삭제할 공지사항의 id를 담을 빈 문자열
+    let deleteIds = ``;
 
     // 이 시점에서 체크된 박스 개수를 세고
     const checkedBoxes = document.querySelectorAll(".checkbox-input:checked");
 
     // 각 체크박스를 감싸는 li 태그의 id를 deleteIds에 추가
+    // 사이사이에 콤마를 붙여서 뷰에서 .split을 쓸 수 있게 만들어줌
     checkedBoxes.forEach((checkbox) => {
-      deleteIds.push(checkbox.parentElement.classList[1]);
+      deleteIds += `,${checkbox.parentElement.classList[1]}`;
     })
 
-    // 삭제할 공지사항들 id 추출 완료
-    // 이걸 어떻게 뷰에 보내야 되나...
-    console.log(deleteIds)
+    // 삭제할 공지사항들의 id를 삭제 API에 보냄
+    await noticeService.deleteNotices(deleteIds);
+
+    // 다시 현재 페이지 불러오기
+    location.reload();
   });
 });
 
