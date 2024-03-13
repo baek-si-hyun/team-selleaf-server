@@ -168,6 +168,8 @@ class TeacherEntryManagementView(View):
         # 강사 신청자 수
         teacher_entries = Teacher.objects.filter(teacher_status=0).count()
 
+        print(teachers, teacher_entries)
+
         # 강사 수를 화면에서 쓸 수 있게 dict 형태로 만들어줌
         context = {
             "teachers": teachers,
@@ -257,6 +259,46 @@ class TeacherEntriesInfoAPI(APIView):
 
         # 요청한 데이터 반환
         return Response(teacher_info)
+
+
+class TeacherApprovalAPI(APIView):
+    # 강사 여러 명 승인 API 뷰
+    def patch(self, request, teacher_ids):
+        # 요청 경로에 담긴 teacher_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        teacher_ids = teacher_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for teacher_id in teacher_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_teacher에서 해당 id를 가진 객체를 가져옴
+            if teacher_id != '':
+                teacher = Teacher.objects.get(id=teacher_id)
+
+                # 해당 객체의 status를 1(승인)으로 만들고, 변경 시간과 같이 저장
+                teacher.teacher_status = 1
+                teacher.updated_date = timezone.now()
+                teacher.save(update_fields=["teacher_status", "updated_date"])
+
+        return Response('성공')
+
+
+class TeacherDeleteAPI(APIView):
+    # 강사 여러 명 차단 API 뷰
+    def patch(self, request, teacher_ids):
+        # 요청 경로에 담긴 teacher_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        teacher_ids = teacher_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for teacher_id in teacher_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_teacher에서 해당 id를 가진 객체를 가져옴
+            if teacher_id != '':
+                teacher = Teacher.objects.get(id=teacher_id)
+
+                # 해당 객체의 status를 1(승인)으로 만들고, 변경 시간과 같이 저장
+                teacher.teacher_status = 1
+                teacher.updated_date = timezone.now()
+                teacher.save(update_fields=["teacher_status", "updated_date"])
+
+        return Response('성공')
 
 
 # 게시물 관리

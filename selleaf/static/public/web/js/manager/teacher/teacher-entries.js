@@ -1,4 +1,5 @@
-// 페이지가 열릴 때 체크된 박스가 없다면 삭제 버튼 disabled
+// 페이지가 열릴 때 체크된 박스가 없다면 승인, 삭제 버튼 disabled
+const editBtn = document.querySelector(".edit-button");
 const deleteBtn = document.querySelector(".delete-button");
 
 // 현재 체크된 박스의 개수를 세는 함수
@@ -6,11 +7,13 @@ const countCheckBoxes = () => {
   // 각 체크박스의 상태가 변할 때마다 체크된 박스의 개수를 셈
   const checkedBoxes = document.querySelectorAll("input[type='checkbox']:checked")
 
-  // 체크된 박스가 하나라도 있다고 가정하고 삭제 버튼의 disabled 해제
+  // 체크된 박스가 하나라도 있다고 가정하고 승인, 삭제 버튼의 disabled 해제
+  editBtn.disabled = false;
   deleteBtn.disabled = false;
 
-  // 체크된 박스가 하나도 없다면 삭제 버튼 disabled
+  // 체크된 박스가 하나도 없다면 승인, 삭제 버튼 disabled
   if (checkedBoxes.length === 0) {
+    editBtn.disabled = true;
     deleteBtn.disabled = true;
   }
 }
@@ -40,26 +43,65 @@ callFirstEntryList();
 
 // 페이지네이션 이벤트 추가하기
 
-// 삭제 버튼 누르면 뜨는 모달창
+// 승인, 삭제 모달창
 document.addEventListener("DOMContentLoaded", function () {
   const deleteButtons = document.querySelectorAll(".delete-button");
-  const modalWrap = document.querySelector(".delete-modal-wrap");
+  const deleteModalWrap = document.querySelector(".delete-modal-wrap");
+  const approveModalWrap = document.querySelector(".approve-modal-wrap");
 
+  // 삭제 모달
   deleteButtons.forEach(function (deleteButton) {
-    deleteButton.addEventListener("click", (e) => {
-      modalWrap.style.display = "flex";
+    deleteButton.addEventListener("click", () => {
+      deleteModalWrap.style.display = "flex";
     });
   });
 
   const cancelButton = document.querySelector(".modal-cancel button");
   const confirmButton = document.querySelector(".modal-confirm button");
 
-  cancelButton.addEventListener("click", (e) => {
-    modalWrap.style.display = "none";
+  // 삭제 모달 취소
+  cancelButton.addEventListener("click", () => {
+    deleteModalWrap.style.display = "none";
   });
 
-  confirmButton.addEventListener("click", (e) => {
-    modalWrap.style.display = "none";
+  // 삭제 실행
+  confirmButton.addEventListener("click", async () => {
+    deleteModalWrap.style.display = "none";
+  });
+
+  // 승인 모달
+  editBtn.addEventListener('click', () => {
+    approveModalWrap.style.display = 'flex';
+  });
+
+  const approveCancelBtn = document.querySelector(".approve-modal-cancel button");
+  const approveConfirmButton = document.querySelector(".approve-modal-confirm button");
+
+  // 승인 모달 취소
+  approveCancelBtn.addEventListener('click', () => {
+    approveModalWrap.style.display = 'none';
+  });
+
+  // 승인 실행
+  approveConfirmButton.addEventListener('click', async () => {
+    approveModalWrap.style.display = 'none';
+
+    // 승인할 강사의 id를 담을 빈 문자열
+    let approveIds = ``;
+
+    // 이 시점에서 체크된 박스 개수를 세고
+    const checkedBoxes = document.querySelectorAll(".checkbox-input:checked");
+
+    // 각 체크박스를 감싸는 li 태그의 id를 approveIds에 추가
+    checkedBoxes.forEach((checkbox) => {
+      approveIds += `,${checkbox.parentElement.classList[1]}`;
+    });
+
+    // 승인할 신청자의 id를 API에 보내서 승인 처리
+    teacherService.approveTeachers(approveIds);
+
+    // 페이지 새로고침
+    location.reload();
   });
 });
 

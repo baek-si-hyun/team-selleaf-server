@@ -9,7 +9,7 @@ const showTeachers = (teacher_info) => {
     // 강사 or 신청자 각각의 정보를 HTML 코드에 담음
     teachers.forEach((teacher) => {
         text += `
-                  <li class="list-content">
+                  <li class="list-content ${teacher.id}">
                     <input type="checkbox" class="checkbox-input" />
                     <a class="teacher-info-wrap">
                       <div class="teacher-info">${teacher.teacher_name}</div>

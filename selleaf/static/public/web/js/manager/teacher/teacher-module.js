@@ -30,6 +30,22 @@ const teacherService = (() => {
         return teacherEntries;
     }
 
+    // 강사 여러 명 승인
+    const approveTeachers = async (teacherIds) => {
+        await fetch(`/admin/teacher-approve/${teacherIds}`, {
+            method: 'PATCH',
+            headers: {'X-CSRFToken': csrf_token}
+        });
+    }
+
+    // 강사 여러 명 차단
+    const deleteTeachers = async (teacherIds) => {
+        await fetch(`/admin/teacher-delete/${teacherIds}`, {
+            method: 'PATCH',
+            headers: {'X-CSRFToken': csrf_token}
+        });
+    }
+
     // 객체 형태로 반환 - teacherService.getList() 형태로 사용 가능
-    return {getList: getList, getEntryList: getEntryList}
+    return {getList: getList, getEntryList: getEntryList, approveTeachers: approveTeachers, deleteTeachers: deleteTeachers}
 })();
