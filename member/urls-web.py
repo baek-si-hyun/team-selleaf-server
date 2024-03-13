@@ -3,7 +3,8 @@ from django.urls import path
 from member.views import MemberJoinView, MemberLoginView, MemberLogoutView, MypageUpdateView, MypagePostListAPI, \
     MypagePostView, MypageShowView, MypageKnowhowListAPI, MypageShowReplyAPI, MypageReplyView, MypageShowReviewAPI, \
     MypageReviewView, MypageShowLikesAPI, MypageLikesView, MypageLecturesView, \
-    MypageShowLecturesAPI, LectureReviewView, MypageScrapLecturesView, MypageScrapLectureAPI
+    MypageShowLecturesAPI, LectureReviewView, MypageScrapLecturesView, MypageScrapLectureAPI, MypageScrapTradeView, \
+    MypageScrapTradeAPI, MypageTradesView
 
 app_name = 'member'
 
@@ -28,5 +29,8 @@ urlpatterns = [
     path('mypage/lectures/',MypageLecturesView.as_view(), name='lectures'),
     path('mypage/show/lectures/<int:page>', MypageShowLecturesAPI.as_view()),
     path('mypage/writereviews/<int:lecture_id>', LectureReviewView.as_view()),
+    path('mypage/scraptrades/',MypageScrapTradeView.as_view()),
+    path('mypage/show/scraptrades/<int:page>',MypageScrapTradeAPI.as_view()),
+    path('mypage/trades/',MypageTradesView.as_view()),
 
 ]

@@ -194,7 +194,7 @@ a * {
 .sidebar-wrap {
   box-sizing: border-box;
   position: relative;
-  padding-top: 30px;
+  padding-top: 50px;
   padding-left: 10px;
   padding-right: 10px;
   width: 25%;
@@ -507,7 +507,7 @@ a * {
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: space-between;
-  margin: 40px 0px;
+  margin: 50px 0px;
   padding: 0px 0px 10px;
   border-bottom: 1px solid rgb(237, 237, 237);
   margin-bottom: 12px;

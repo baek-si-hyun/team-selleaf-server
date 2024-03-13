@@ -17,6 +17,7 @@ from member.models import Member, MemberAddress, MemberProfile
 from member.serializers import MemberSerializer
 from post.models import Post, PostFile, PostPlant, PostReply, PostReplyLike, PostLike
 from teacher.models import Teacher
+from trade.models import TradeScrap, TradeFile, TradePlant, Trade
 
 
 class MemberJoinView(View):
@@ -241,31 +242,44 @@ class MypageLikesView(View):
 
         return render(request,'member/mypage/my_profile/likes.html',context)
 
-# 내 활동 스크랩북 강의 스크랩// 작업중
+# 스크랩북 강의 스크랩
 class MypageScrapLecturesView(View):
 
     def get(self,request):
         member = request.session['member']
         member_file = request.session['member_files']
-        teacher = Teacher.objects.filter(member_id=member['id'])
-        like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = list(KnowhowLike.objects.filter(member_id=member['id']))
-        like.extend(knowhowlike)
-        like_count = len(like)
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
 
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
-            'teacher': teacher,
-            'like_count' : like_count,
-            'lecture_scrap':lecture_scrap
+            'lecture_scrap':lecture_scrap,
+            'trade_scrap':trade_scrap
 
         }
         return render(request,'member/mypage/my_profile/scrapbook/lecture-scrapbook.html',context)
 
 
-# 내가 신청한 view
+# 스크랩북 강의 스크랩
+class MypageScrapTradeView(View):
+    def get(self,request):
+        member = request.session['member']
+        member_file = request.session['member_files']
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+
+        context = {
+            'member': member,
+            'memberProfile': member_file[0]['file_url'],
+            'lecture_scrap': lecture_scrap,
+            'trade_scrap': trade_scrap
+
+        }
+        return render(request,'member/mypage/my_profile/scrapbook/trade-scrapbook.html',context)
+
+
+# 내가 신청한 강의 view
 class MypageLecturesView(View):
     def get(self, request):
 
@@ -316,6 +330,23 @@ class LectureReviewView(View):
         LectureReview.objects.create(**data)
 
         return redirect('/member/mypage/lectures/')
+
+class MypageTradesView(View):
+    def get(self, request):
+        member = request.session['member']
+        member_file = request.session['member_files']
+        trade = Trade.objects.filter(member_id=member['id'])
+        post_like = list(PostLike.objects.filter(member_id=member['id']))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhowlike)
+        context = {
+            'member': member,
+            'memberProfile': member_file[0]['file_url'],
+            'trade':trade,
+            'like_count':like_count
+        }
+        return render(request, 'member/mypage/trade/my-sales.html', context)
+
 # =====================================================================================================================
 # API
 
@@ -715,3 +746,45 @@ class MypageScrapLectureAPI(APIView):
             scrap_lecture['lecture_plant'] = [tag['plant_name'] for tag in tags]
 
         return Response(scrap_lectures[offset:limit])
+
+class MypageScrapTradeAPI(APIView):
+    def get(self, request,page):
+        row_count = 8
+        offset = (page - 1) * row_count
+        limit = row_count * page
+
+        scrap_trades = TradeScrap.objects.filter(member_id=request.session['member']['id'], status=1) \
+            .annotate(
+            member_name=F('trade__member__member_name'),
+            trade_title=F('trade__trade_title'),
+            trade_content=F('trade__trade_content'),
+            trade_category=F('trade__trade_category__category_name'),
+            trade_price=F('trade__trade_price'),
+        ) \
+            .values(
+            'id',
+            'trade_id',
+            'member_name',
+            'updated_date',
+            'trade_title',
+            'trade_content',
+            'trade_category',
+            'trade_price'
+        )
+
+        for scrap_trade in scrap_trades:
+
+            trade_file = TradeFile.objects.filter(trade_id=scrap_trade['trade_id']).values('file_url') \
+                .first()
+            if trade_file is not None:
+                scrap_trade['trade_file'] = trade_file['file_url']
+            else:
+                scrap_trade['trade_file'] = 'file/2024/03/05/blank-image.png'
+
+            tags = TradePlant.objects.filter(trade_id=scrap_trade['trade_id']).values('plant_name')
+            scrap_trade['trade_plant'] = [tag['plant_name'] for tag in tags]
+
+        return Response(scrap_trades[offset:limit])
+
+class MypageTradesAPI(APIView):
+    pass

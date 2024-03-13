@@ -53,6 +53,17 @@ const postService = (()=>{
 
     };
 
+
+       const getScrapTrades = async (page, callback)=>{
+        const response = await fetch(`/member/mypage/show/scraptrades/${page}`);
+        const scrap_trades = await response.json();
+        if (callback){
+            return callback(scrap_trades)
+        }
+        return scrap_trades
+
+    };
+
       const getLikes = async (page, callback)=>{
         const response = await fetch(`/member/mypage/show/likes/${page}`);
         const likes = await response.json();
@@ -77,6 +88,7 @@ const postService = (()=>{
         getReviews:getReviews,
         getLikes:getLikes,
         removeLike:removeLike,
-        getScrapLectures:getScrapLectures
+        getScrapLectures:getScrapLectures,
+        getScrapTrades:getScrapTrades
     }
 })()
