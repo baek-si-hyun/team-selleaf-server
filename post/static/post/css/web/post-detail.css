@@ -50,6 +50,13 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.content-title {
+    color: rgb(47, 52, 56);
+    font-weight: 700;
+    margin-top: 50px;
+    font-size: 32px;
+    line-height: 42px;
+}
 .content-top-btn {
   display: inline-block;
   margin: 0px;
@@ -107,7 +114,7 @@
 }
 .img-inner {
   position: relative;
-  padding-bottom: 133.333%;
+  padding-bottom: 100%;
 }
 .content-img {
   position: absolute;
@@ -253,11 +260,12 @@
   flex-shrink: 0;
   margin: 0px;
 }
+
 .uploader-img {
-  height: 0px;
+  width: 40px;
+  height: 40px;
   display: block;
-  visibility: hidden;
-  padding-top: 100%;
+
 }
 .uploader-data-box {
   margin-left: 8px;
@@ -332,8 +340,8 @@
 }
 .comment-user-icon-box {
   display: inline-block;
-  background: url("/staticfiles/images/blank-image.png") 50% center / cover
-    no-repeat;
+  /*background: url("/staticfiles/images/blank-image.png") 50% center / cover*/
+  /*  no-repeat;*/
   border-radius: 50%;
   width: 30px;
   margin-right: 12px;
@@ -341,10 +349,11 @@
   border: 0.5px solid rgba(0, 0, 0, 0.08);
 }
 .comment-user-icon {
-  height: 0px;
+  border-radius: 50%;
+
+  height: 35px;
   display: block;
-  visibility: hidden;
-  padding-top: 100%;
+
 }
 .input-wrap {
   -webkit-box-flex: 1;
@@ -463,18 +472,18 @@
 }
 .comment-user-img-container {
   display: inline-block;
-  background: url("/staticfiles/images/blank-image.png") 50% center / cover
-    no-repeat;
+  /*background: url("/staticfiles/images/blank-image.png") 50% center / cover*/
+  /*  no-repeat;*/
   border-radius: 50%;
   width: 30px;
   flex-shrink: 0;
   margin-right: 12px;
 }
 .comment-user-img {
-  height: 0px;
+  height: 25px;
   display: block;
-  visibility: hidden;
-  padding-top: 100%;
+  border-radius: 50%;
+
 }
 .comment-content-box {
   flex: 1 1 0%;
@@ -1055,4 +1064,118 @@
 }
 .open {
   display: flex;
+}
+
+section.reply-update-wrap {
+  display: none;
+  height: 44px;
+  width: 90%;
+  padding: 10px 0;
+}
+.update-btn {
+  color: rgb(130, 140, 148);
+  padding: 0px;
+  background-color: transparent;
+  border: none;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+.update-btn:hover {
+  text-decoration: underline;
+}
+
+.remove-btn {
+  color: rgb(130, 140, 148);
+  padding: 0px;
+  background-color: transparent;
+  border: none;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+.remove-btn:hover {
+  text-decoration: underline;
+}
+
+section.reply-update-wrap textarea {
+    width: 100%;
+    padding-bottom: 15px;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    line-height: 20px;
+    color: #202124;
+    margin: 0;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    border: none;
+    border-bottom: 1px solid rgb(235 124 120);
+}
+
+section.reply-update-wrap .button-wrap {
+    width: 125px;
+    display: flex;
+}
+
+section.reply-update-wrap {
+    display: none;
+  height: 44px;
+    width: 90%;
+    padding: 64px 0px;
+}
+
+section.reply-update-wrap {
+    padding: 10px 0;
+}
+
+section.reply-update-wrap .button-wrap {
+      width: 125px;
+    display: flex;
+}
+
+section#reply-write-wrap div.profile {
+    margin-bottom: 15px;
+}
+
+section#reply-write-wrap button,
+section.reply-update-wrap button {
+    cursor: pointer;
+    margin-top: 7px;
+    border-radius: 4px;
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 11px 24px 13px;
+    height: 30px;
+    font-size: 15px;
+    line-height: 24px;
+    letter-spacing: -0.4px;
+    color: rgb(24, 26, 28);
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+section.reply-update-wrap textarea {
+  width: 100%;
+  padding-bottom: 15px;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  line-height: 20px;
+  color: #202124;
+  margin: 0;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  border: none;
+  border-bottom: 1px solid rgb(235 124 120);
+}
+
+#more-replies {
+  display: none;
 }

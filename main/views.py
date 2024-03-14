@@ -16,7 +16,7 @@ from trade.models import Trade, TradeFile, TradeScrap
 class SearchHistoryAPI(APIView):
     def get(self, request):
         try:
-            search = request.session['search']
+            search = request.session.get('search')
             return Response(search)
 
         except KeyError:
@@ -25,10 +25,8 @@ class SearchHistoryAPI(APIView):
 
     def patch(self, request):
         try:
-            search = request.session['search']
-            search_data = request.data['data']
-            print(search_data)
-            print(search)
+            search = request.session.get('search')
+            search_data = request.data.get('data')
             for item in search:
                 if item == search_data:
                     search.remove(item)
@@ -47,8 +45,8 @@ class SearchHistoryAPI(APIView):
 
 class SearchAPI(APIView):
     def get(self, request):
-        member = request.session['member']
-        search_data = request.GET['query']
+        member = request.session.get('member')
+        search_data = request.GET.get('query')
 
         trades = Trade.objects.filter(trade_title__contains=search_data).values('trade_title')
         knowhow_tags = KnowhowTag.objects.filter(tag_name__contains=search_data).values('tag_name')
@@ -73,9 +71,9 @@ class SearchAPI(APIView):
 
 class SearchView(View):
     def get(self, request):
-        member = request.session['member']
-        profile = request.session['member_files'][0]
-        search_data = request.GET['query']
+        member = request.session.get('member')
+        profile = request.session.get('member_files')[0]
+        search_data = request.GET.get('query')
         try:
             if 'search' not in request.session:
                 request.session['search'] = [search_data]

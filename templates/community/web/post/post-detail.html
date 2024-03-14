@@ -3,7 +3,7 @@
 {% block static %}
     <link rel="stylesheet" href="{% static 'post/css/web/post-detail.css' %}">
 {% endblock %}
-{% block title %}노하우{% endblock %}
+{% block title %}게시물 상세보기{% endblock %}
 {% block content %}
   <body>
     <div class="post-detail-wrap">
@@ -11,6 +11,11 @@
         <div class="post-detail-inner">
           <div class="post-detail-box">
             <div class="content-wrap">
+            <div class="content-title-box">
+                  <p class="content-title">
+                      {{ post.post_title }}
+                  </p>
+            </div>
               <div class="content-container">
                 <div class="content-sub-description-box">
                   <div class="content-sub-description">
@@ -35,12 +40,11 @@
                     </div>
                     <div class="content-text-box">
                       <p class="content-text">
-                        너무 귀여운 오늘의가든 몬스테라 ❤️ 열심히 게임으로
-                        물줘서 마지막레벨까지 해서 얻은 몬스테라! 너무 쪼꼼하니
-                        귀엽다 🥹🥹🥹
-                        <a class="hashtag" href="javascript:void(0)">#태그 </a
-                        ><a class="hashtag" href="javascript:void(0)">#태그 </a
-                        ><a class="hashtag" href="javascript:void(0)">#태그</a>
+                          {{ post.post_content }}
+
+{#                          {% for tag in post_tags %}#}
+{#                            <a class="hashtag" href="javascript:void(0)">#{{ tag.tag_name }}</a>#}
+{#                          {% endfor %}#}
                       </p>
                     </div>
                   </div>
@@ -51,11 +55,11 @@
                       <dl class="content-data">
                         <span class="week-data">2주</span>
                         <dt class="like">좋아요</dt>
-                        <dd class="like-data">446</dd>
+                        <dd class="like-data"></dd>
                         <dt class="scrap">스크랩</dt>
-                        <dd class="scrap-data">27</dd>
+                        <dd class="scrap-data"></dd>
                         <dt class="check">조회</dt>
-                        <dd class="check-data">3,624</dd>
+                        <dd class="check-data">{{ post.post_count }}</dd>
                       </dl>
                       <div class="declaration-btn-box">
                         <button type="button" class="content-declaration-btn">
@@ -69,13 +73,13 @@
                   <button class="uploader-data-btn">
                     <figure class="uploader-img-box">
                       <img
-                        src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/170410117290522562.jpeg?w=50"
+                        src="{{ member_profile.file_url }}"
                         height="0"
                         class="uploader-img"
                       />
                     </figure>
                     <div class="uploader-data-box">
-                      <span class="uploader-name">작성자</span
+                      <span class="uploader-name">{{ post_writer }}</span
                       ><span class="uploader-sub-description"
                         >작성자 소개글</span
                       >
@@ -117,13 +121,13 @@
                 <div>
                   <div class="comment-section" id="comment-section">
                     <h1 class="comment-section-title">
-                      댓글<span class="comment-count">164</span>
+                      댓글<span class="comment-count"></span>개
                     </h1>
                     <div class="comment-input-wrap">
                       <div class="comment-input-container">
                         <figure class="comment-user-icon-box">
                           <img
-                            src="../../../staticfiles/images/blank-image.png"
+                            src="{{ session_profile.file_url }}"
                             height="0"
                             class="comment-user-icon"
                           />
@@ -136,12 +140,13 @@
                                 placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다:)"
                                 class="comment-input"
                                 size="44"
+                                id="reply-content"
                               />
                               <div class="comment-submit-btn-box">
                                 <button
-                                  type="submit"
+                                  type="button"
                                   class="comment-submit-btn"
-                                  disabled=""
+                                  
                                 >
                                   입력
                                 </button>
@@ -151,231 +156,10 @@
                         </div>
                       </div>
                     </div>
-                    <div class="comment-item-box">
-                      <div class="comment-item">
-                        <div class="comment-user-img-wrap">
-                          <figure class="comment-user-img-container">
-                            <img
-                              src="../../../staticfiles/images/blank-image.png"
-                              height="0"
-                              class="comment-user-img"
-                            />
-                          </figure>
-                        </div>
-                        <div class="comment-content-box">
-                          <div class="comment-user-name-box">
-                            <div role="link" class="commment-user-name">
-                              댓글 작성자
-                            </div>
-                          </div>
-                          <div class="comment">
-                            댓글 내용
-                          </div>
-                          <div class="comment-data">
-                            <div class="time-before">1시간</div>
-                            <div class="comment-like-btn-box">
-                              <div class="comment-split">・</div>
-                              <button type="button" class="comment-like-btn">
-                                <img
-                                  src="/staticfiles/images/like-off.png"
-                                  class="comment-like-icon"
-                                  alt=""
-                                />
-                                <span class="comment-like-text">좋아요</span>
-                              </button>
-                            </div>
-
-                            <div class="comment-declaration-btn-box">
-                              <div class="comment-split">・</div>
-                              <button class="comment-declaration-btn">
-                                신고
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="comment-item-box">
-                      <div class="comment-item">
-                        <div class="comment-user-img-wrap">
-                          <figure class="comment-user-img-container">
-                            <img
-                              src="../../../staticfiles/images/blank-image.png"
-                              height="0"
-                              class="comment-user-img"
-                            />
-                          </figure>
-                        </div>
-                        <div class="comment-content-box">
-                          <div class="comment-user-name-box">
-                            <div role="link" class="commment-user-name">
-                              댓글 작성자
-                            </div>
-                          </div>
-                          <div class="comment">
-                            댓글 내용
-                          </div>
-                          <div class="comment-data">
-                            <div class="time-before">1시간</div>
-                            <div class="comment-like-btn-box">
-                              <div class="comment-split">・</div>
-                              <button type="button" class="comment-like-btn">
-                                <img
-                                  src="/staticfiles/images/like-off.png"
-                                  class="comment-like-icon"
-                                  alt=""
-                                /><span class="comment-like-text">좋아요</span>
-                              </button>
-                            </div>
-
-                            <div class="comment-declaration-btn-box">
-                              <div class="comment-split">・</div>
-                              <button class="comment-declaration-btn">
-                                신고
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="comment-item-box">
-                      <div class="comment-item">
-                        <div class="comment-user-img-wrap">
-                          <figure class="comment-user-img-container">
-                            <img
-                              src="../../../staticfiles/images/blank-image.png"
-                              height="0"
-                              class="comment-user-img"
-                            />
-                          </figure>
-                        </div>
-                        <div class="comment-content-box">
-                          <div class="comment-user-name-box">
-                            <div role="link" class="commment-user-name">
-                              댓글 작성자
-                            </div>
-                          </div>
-                          <div class="comment">
-                            댓글 내용
-                          </div>
-                          <div class="comment-data">
-                            <div class="time-before">1시간</div>
-                            <div class="comment-like-btn-box">
-                              <div class="comment-split">・</div>
-                              <button type="button" class="comment-like-btn">
-                                <span class="comment-like-icon"></span>
-                                <span class="comment-like-text">좋아요</span>
-                              </button>
-                            </div>
-
-                            <div class="comment-declaration-btn-box">
-                              <div class="comment-split">・</div>
-                              <button class="comment-declaration-btn">
-                                신고
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="comment-item-box">
-                      <div class="comment-item">
-                        <div class="comment-user-img-wrap">
-                          <figure class="comment-user-img-container">
-                            <img
-                              src="../../../staticfiles/images/blank-image.png"
-                              height="0"
-                              class="comment-user-img"
-                            />
-                          </figure>
-                        </div>
-                        <div class="comment-content-box">
-                          <div class="comment-user-name-box">
-                            <div role="link" class="commment-user-name">
-                              댓글 작성자
-                            </div>
-                          </div>
-                          <div class="comment">
-                            댓글 내용
-                          </div>
-                          <div class="comment-data">
-                            <div class="time-before">1시간</div>
-                            <div class="comment-like-btn-box">
-                              <div class="comment-split">・</div>
-                              <button type="button" class="comment-like-btn">
-                                <span class="comment-like-icon"></span>
-                                <span class="comment-like-text">좋아요</span>
-                              </button>
-                            </div>
-
-                            <div class="comment-declaration-btn-box">
-                              <div class="comment-split">・</div>
-                              <button class="comment-declaration-btn">
-                                신고
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="comment-item-box">
-                      <div class="comment-item">
-                        <div class="comment-user-img-wrap">
-                          <figure class="comment-user-img-container">
-                            <img
-                              src="../../../staticfiles/images/blank-image.png"
-                              height="0"
-                              class="comment-user-img"
-                            />
-                          </figure>
-                        </div>
-                        <div class="comment-content-box">
-                          <div class="comment-user-name-box">
-                            <div role="link" class="commment-user-name">
-                              댓글 작성자
-                            </div>
-                          </div>
-                          <div class="comment">
-                            댓글 내용
-                          </div>
-                          <div class="comment-data">
-                            <div class="time-before">1시간</div>
-                            <div class="comment-like-btn-box">
-                              <div class="comment-split">・</div>
-                              <button type="button" class="comment-like-btn">
-                                <span class="comment-like-icon"></span>
-                                <span class="comment-like-text">좋아요</span>
-                              </button>
-                            </div>
-
-                            <div class="comment-declaration-btn-box">
-                              <div class="comment-split">・</div>
-                              <button class="comment-declaration-btn">
-                                신고
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <section class="reply-section"></section>
                     <div class="pagination-box">
-                      <button class="pagination-prev-btn" disabled="">
-                        <span class="pagination-prev-btn-icon"></span>
-                      </button>
-                      <button type="button" class="pagination-btn select">
-                        1
-                      </button>
-                      <button type="button" class="pagination-btn">2</button>
-                      <button type="button" class="pagination-btn">3</button>
-                      <button type="button" class="pagination-btn">4</button>
-                      <button type="button" class="pagination-btn">5</button>
-                      <button type="button" class="pagination-btn">6</button>
-                      <button type="button" class="pagination-btn">7</button>
-                      <button type="button" class="pagination-btn">8</button>
-                      <button type="button" class="pagination-btn">9</button>
-                      <button type="button" class="pagination-btn">10</button>
-                      <button class="pagination-next-btn">
-                        <span class="pagination-next-btn-icon"></span>
+                      <button type="button" id="more-replies">
+                        <div>더보기</div>
                       </button>
                     </div>
                   </div>
@@ -584,26 +368,52 @@
                   <div style="position: relative;">
                     <div class="sticky-inner">
                       <button title="좋아요" class="sticky-btn">
-                        <span class="sticky-icon-box">
+                        {% if post_like %}
+                        <span class="sticky-icon-box like-check-on" id="like-box">
                           <img
                             class="sticky-icon"
-                            src="../../../staticfiles/images/like-off.png"
+                            src= "{%  static 'public/web/images/common/like-on.png' %}"
                             alt=""
+                            id="like-icon"
                           />
                         </span>
-                        <span class="sticky-data">449</span>
+                      {% else %}
+                          <span class="sticky-icon-box like-check-off" id="like-box">
+                          <img
+                            class="sticky-icon"
+                            src= "{%  static 'public/web/images/common/like-off.png' %}"
+                            alt=""
+                            id="like-icon"
+                          />
+                        </span>
+                      {% endif %}
+                        <span class="sticky-data" id="like-count"></span>
                       </button>
                       <button title="저장" class="sticky-btn">
-                        <span class="sticky-icon-box">
+                      
+                      {% if post_scrap %}
+                        <span class="sticky-icon-box scrap-check-on" id="scrap-box">
                           <img
                             class="sticky-icon"
-                            src="../../../staticfiles/images/scrap-off-blk.png"
+                            src="{% static 'public/web/images/common/scrap-on.png' %}"
                             alt=""
+                            id="scrap-icon"
                           />
+                        
                         </span>
-                        <span class="sticky-data">449</span>
+                      {% else %}
+                          <span class="sticky-icon-box scrap-check-off" id="scrap-box">
+                          <img
+                            class="sticky-icon"
+                            src="{% static 'public/web/images/common/scrap-off.png' %}"
+                            alt=""
+                            id="scrap-icon"
+                          />
+                        
+                        </span>
+                      {% endif %}
+                        <span class="sticky-data" id="scrap-count"></span>
                       </button>
-                      <hr class="sticky-btn-split" />
                       <button title="댓글" class="sticky-btn background-color">
                         <a href="#comment-section">
                           <span class="sticky-icon-box background-color">
@@ -611,14 +421,26 @@
                             </span>
                           </span>
                         </a>
-                        <span class="sticky-data">449</span>
+                        <span class="sticky-data" id="reply-count"></span>
                       </button>
-                      <button title="공유" class="sticky-btn background-color">
-                        <span class="sticky-icon-box background-color">
-                          <span class="sticky-icon sticky-icon-share"> </span>
-                        </span>
-                        <span class="sticky-data">449</span>
-                      </button>
+                      {% if request.session.member.id == post.member.id %}
+                      <a href="/post/update/?id={{ post.id }}">
+                          <button type="button" title="공유" class="sticky-btn background-color">
+                            <span class="sticky-icon-box background-color">
+                              <span class="sticky-icon sticky-icon-share"> </span>
+                            </span>
+                            <span class="sticky-data" id="share">수정하기</span>
+                          </button>
+                      </a>
+                      <a href="/post/delete/?id={{ post.id }}">
+                          <button type="button" title="공유" class="sticky-btn background-color">
+                            <span class="sticky-icon-box background-color">
+                              <span class="sticky-icon sticky-icon-share"> </span>
+                            </span>
+                            <span class="sticky-data" id="share">삭제하기</span>
+                          </button>
+                      </a>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
@@ -759,5 +581,14 @@
   </body>
 {% endblock %}
 {% block js %}
+    <script>
+        const csrf_token = '{{ csrf_token }}'
+        const post_id = `{{ post.id }}`
+        const member_id = '{{ request.session.member.id }}'
+        const reply_count = '{{ reply_count }}'
+    </script>
     <script src="{% static 'post/js/web/post-detail.js' %}"></script>
+    <script src="{% static 'post/js/web/post-module.js' %}"></script>
+    <script src="{% static 'post/js/web/post-detail-reply.js' %}"></script>
+    <script src="{% static 'post/js/web/post-like-scrap.js' %}"></script>
 {% endblock %}
