@@ -842,3 +842,8 @@ a * {
     display: none;
   }
 }
+
+.current-profile-image{
+  width: 100%;
+  height: 100%;
+}

@@ -10,5 +10,28 @@ const alarmService = (()=> {
 
     };
 
-    return {alarmList:alarmList}
+    const removeAlarm = async (alarm_id) => {
+        await fetch(`/alarm/update/`, {
+            method: 'patch',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'X-CSRFToken': csrf_token
+            },
+            body: JSON.stringify({alarm_id: alarm_id})
+        });
+    }
+
+    const removeAll = async (page) => {
+        await fetch(`/alarm/remove/`, {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                'X-CSRFToken': csrf_token
+            },
+            body: JSON.stringify({page: page})
+        });
+    }
+
+
+    return {alarmList:alarmList, removeAlarm:removeAlarm, removeAll:removeAll}
 })()

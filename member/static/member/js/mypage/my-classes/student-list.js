@@ -45,3 +45,35 @@ entries.forEach((item) => {
   });
 });
 
+let page = 1
+
+const showTrainee = (trainees) =>{
+  let text = ``
+  trainees.forEach((trainee)=>{
+    text =`
+      <div>
+        <div class="class-histories-wrap">
+          <div class="class-history-items">강희주</div>
+          <div class="class-history-items">3명</div>
+          <div class="class-history-items">2024년 02월 20일</div>
+          <div class="class-history-items offline">10:30</div>
+          <div class="class-history-items online" style="display: none">
+            키트 이름 1
+          </div>
+        </div>
+        <div class="student-list-wrap">
+          <div class="student-list-container">
+            <ul class="student-list">
+              <li class="student-list-items">강희주</li>
+              <li class="student-list-items">백시현</li>
+              <li class="student-list-items">김규일</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+    `
+  })
+}
+
+

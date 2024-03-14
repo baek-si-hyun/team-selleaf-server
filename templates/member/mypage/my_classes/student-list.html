@@ -36,7 +36,7 @@
             <div>
               <div class="student-list-title-wrap">
                 <div class="list-titles">대표 예약자명</div>
-                <div class="list-titles">동반 수강 인원</div>
+                <div class="list-titles">총 수강 인원</div>
                 <div class="list-titles">수강 날짜</div>
                 <div class="list-titles offline-title">수강 시간</div>
                 <div class="list-titles online-title" style="display: none">
@@ -161,5 +161,6 @@
     applyID = '{{apply_id}}'
     csrf_token = '{{ csrf_token }}'
   </script>
+  <script src="{% static 'member/js/mypage/my-classes/myclass-module.js' %}"></script>
   <script src="{% static 'member/js/mypage/my-classes/student-list.js' %}"></script>
 {% endblock %}

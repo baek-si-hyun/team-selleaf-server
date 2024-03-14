@@ -10,5 +10,14 @@ const classService = (()=> {
 
     };
 
-    return {classList:classList}
+    const traineeList = async (applyID,page) =>{
+        const response = await fetch(`member/mypage/teachers/show/apply/${applyID}/${page}`);
+        const trainees = await response.json();
+        if(callback){
+            return callback(trainees)
+        };
+        return trainees
+    }
+
+    return {classList:classList, traineeList:traineeList}
 })()

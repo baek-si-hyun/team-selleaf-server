@@ -9,14 +9,35 @@ function truncateText(text, maxLength) {
 const showAlarm = (alarms) => {
   let text = ``
   alarms.forEach((alarm) => {
-      if( alarm.alarm_category === 4 || alarm.alarm_category === 7){
+      if( alarm.alarm_category === 1){
+          text += `
+            <div>    
+              <div class="notice-contents">
+                <a href="" class="notice-profile-box">
+                  <img src="/upload/${alarm.member_file}" alt="" class="notice-profile" />
+                </a>
+                <a href="${alarm.target_url}" class="notice-content-box">
+                  <div class="inner-txt-wrap">
+                    <span class="inner-txt">
+                      <strong>${alarm.sender}</strong>
+                        ${alarm.message}                  
+                    </span>
+                    <span class="last-time">${timeForToday(alarm.updated_date)}</span>
+                  </div>
+                  <img src="/upload/${alarm.target_file}" alt="" class="notice-img" />
+                </a>
+                <div class="check ${alarm.id}">확인</div>
+              </div>
+            <div>`
+      }
+      else if( alarm.alarm_category === 3 || alarm.alarm_category === 5 || alarm.alarm_category === 6){
         text += `
         <div>    
           <div class="notice-contents">
             <a href="" class="notice-profile-box">
               <img src="/upload/${alarm.member_file}" alt="" class="notice-profile" />
             </a>
-            <a href="" class="notice-content-box">
+            <a href="${alarm.target_url}${alarm.target_id}" class="notice-content-box">
               <div class="inner-txt-wrap">
                 <span class="inner-txt">
                   <strong>${alarm.sender}</strong>
@@ -29,7 +50,9 @@ const showAlarm = (alarms) => {
               </div>
               <img src="/upload/${alarm.target_file}" alt="" class="notice-img" />
             </a>
+            <div class="check ${alarm.id}">확인</div>
           </div>
+         
         <div>`
       }else{
       text += `
@@ -38,7 +61,7 @@ const showAlarm = (alarms) => {
             <a href="" class="notice-profile-box">
               <img src="/upload/${alarm.member_file}" alt="" class="notice-profile" />
             </a>
-            <a href="" class="notice-content-box">
+            <a href="${alarm.target_url}${alarm.target_id}" class="notice-content-box">
               <div class="inner-txt-wrap">
                 <span class="inner-txt">
                   <strong>${alarm.sender}</strong>
@@ -48,6 +71,7 @@ const showAlarm = (alarms) => {
               </div>
               <img src="/upload/${alarm.target_file}" alt="" class="notice-img" />
             </a>
+            <div class="check ${alarm.id}">확인</div>
           </div>
         <div>`
       }
@@ -120,4 +144,20 @@ function timeForToday(datetime) {
 
 }
 
+target.addEventListener('click',async (e)=>{
+    if(e.target.classList[0]==='check'){
+        const alarm_id = e.target.classList[1];
+        await alarmService.removeAlarm(alarm_id);}
+    page = 1
+    const updatedText = await alarmService.alarmList(page, showAlarm);
+    target.innerHTML = updatedText;
+})
 
+const readAll = document.querySelector('.check-all')
+
+readAll.addEventListener('click', async (e)=>{
+    await alarmService.removeAll(page)
+    page = 1
+    const newText = await alarmService.alarmList(page,showAlarm);
+    target.innerHTML = newText;
+})
