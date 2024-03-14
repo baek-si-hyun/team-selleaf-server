@@ -9,6 +9,7 @@
     {% include 'fix/header.html' %}
     <form action="{% url 'trade:report' %}" method="post" name="trade-report" enctype="multipart/form-data">
         {% csrf_token %}
+        <input type="hidden" name="trade-id" value="{{ trade.id }}">
         <div class="declaration-modal-wrap">
           <div class="declaration-modal-container">
             <div class="declaration-modal-title-box">

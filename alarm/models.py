@@ -22,3 +22,4 @@ class Alarm(Period):
 
     class Meta:
         db_table = 'tbl_alarm'
+        ordering = ['-id']
