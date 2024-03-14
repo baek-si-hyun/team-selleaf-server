@@ -1,13 +1,42 @@
 let page = 1
-
+function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...'; // 말줄임표 추가
+    } else {
+        return text;
+    }
+}
 const showAlarm = (alarms) => {
   let text = ``
   alarms.forEach((alarm) => {
+      if( alarm.alarm_category === 4 || alarm.alarm_category === 7){
+        text += `
+        <div>    
+          <div class="notice-contents">
+            <a href="" class="notice-profile-box">
+              <img src="/upload/${alarm.member_file}" alt="" class="notice-profile" />
+            </a>
+            <a href="" class="notice-content-box">
+              <div class="inner-txt-wrap">
+                <span class="inner-txt">
+                  <strong>${alarm.sender}</strong>
+                    ${alarm.message}                  
+                </span>
+                <span class="inner-txt">
+                    ${truncateText(alarm.reply,20)}                  
+                </span>
+                <span class="last-time">${timeForToday(alarm.updated_date)}</span>
+              </div>
+              <img src="/upload/${alarm.target_file}" alt="" class="notice-img" />
+            </a>
+          </div>
+        <div>`
+      }else{
       text += `
         <div>    
           <div class="notice-contents">
             <a href="" class="notice-profile-box">
-              <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-profile" />
+              <img src="/upload/${alarm.member_file}" alt="" class="notice-profile" />
             </a>
             <a href="" class="notice-content-box">
               <div class="inner-txt-wrap">
@@ -17,12 +46,11 @@ const showAlarm = (alarms) => {
                 </span>
                 <span class="last-time">${timeForToday(alarm.updated_date)}</span>
               </div>
-              <img src="{% static 'public/web/images/common/blank-image.png' %}" alt="" class="notice-img" />
+              <img src="/upload/${alarm.target_file}" alt="" class="notice-img" />
             </a>
           </div>
         <div>`
-
-
+      }
   });
   return text;
 }
@@ -91,3 +119,5 @@ function timeForToday(datetime) {
 
 
 }
+
+
