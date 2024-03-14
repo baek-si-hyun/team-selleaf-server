@@ -13,7 +13,8 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     LectureTraineesManagementView, TraineesInfoAPI, PostManagementView, ReplyManagementView, \
     KnowhowPostsAPI, TradePostsAPI, KnowhowDeleteAPI, TradeDeleteAPI, \
     KnowhowCountAPI, TradeCountAPI, PostsListAPI, PostsDeleteAPI, PostsCountAPI, ReportManagementView, \
-    PaymentManagementView, TagManagementView
+    PaymentManagementView, TagManagementView, LectureReportListAPI, TradeReportListAPI, PostReportListAPI, \
+    PostReplyReportListAPI, KnowhowReportListAPI, KnowhowReplyReportListAPI
 
 urlpatterns = [
     path('', MainView.as_view(), name='main'),
@@ -77,6 +78,12 @@ urlpatterns = [
     path('admin/tag/', TagManagementView.as_view(), name='manager-tag'),
     # 신고 내역 관리
     path('admin/report/', ReportManagementView.as_view(), name='manager-report'),
+    path('admin/report/lecture/<int:page>', LectureReportListAPI.as_view(), name='lecture-report-api'),
+    path('admin/report/trade/<int:page>', TradeReportListAPI.as_view(), name='trade-report-api'),
+    path('admin/report/post/<int:page>', PostReportListAPI.as_view(), name='post-report-api'),
+    path('admin/report/post-reply/<int:page>', PostReplyReportListAPI.as_view(), name='post-reply-report-api'),
+    path('admin/report/knowhow/<int:page>', KnowhowReportListAPI.as_view(), name='knowhow-report-api'),
+    path('admin/report/knowhow-reply/<int:page>', KnowhowReplyReportListAPI.as_view(), name='knowhow-reply-report-api'),
     # 기타 서비스 url
     path('alarm/', include('alarm.urls-web')),
     path('member/', include('member.urls-web')),
