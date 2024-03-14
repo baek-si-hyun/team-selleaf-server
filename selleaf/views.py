@@ -474,9 +474,7 @@ class CommunityDeleteAPI(APIView):
             if post_id != '':
                 post = Post.objects.get(id=post_id)
 
-                print(post)
-
-                # 해당 객체 delete
+                # 해당 객체 delete - 연결된 것들까지 전부 삭제하기
                 # post.delete()
 
         return Response('success')
@@ -493,8 +491,6 @@ class KnowhowDeleteAPI(APIView):
             # 요소가 빈 문자열이 아닐 때만 tbl_knowhow에서 해당 id를 가진 객체를 가져옴
             if knowhow_id != '':
                 knowhow = Knowhow.objects.get(id=knowhow_id)
-
-                print(knowhow)
 
                 # 해당 객체 delete
                 # post.delete()
