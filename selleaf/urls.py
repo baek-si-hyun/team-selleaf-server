@@ -12,7 +12,8 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     TeacherDeleteAPI, LectureManagementView, LectureInfoAPI, LectureReviewManagementView, LectureReviewInfoAPI, \
     LectureTraineesManagementView, TraineesInfoAPI, PostManagementView, ReplyManagementView, \
     KnowhowPostsAPI, TradePostsAPI, KnowhowDeleteAPI, TradeDeleteAPI, \
-    KnowhowCountAPI, TradeCountAPI, PostsListAPI, PostsDeleteAPI, PostsCountAPI, ReportManagementView
+    KnowhowCountAPI, TradeCountAPI, PostsListAPI, PostsDeleteAPI, PostsCountAPI, ReportManagementView, \
+    PaymentManagementView, TagManagementView
 
 urlpatterns = [
     path('', MainView.as_view(), name='main'),
@@ -51,6 +52,8 @@ urlpatterns = [
     path('admin/posts/trade-count/', TradeCountAPI.as_view(), name='trade-count-api'),
     # 댓글 관리
     path('admin/reply/', ReplyManagementView.as_view(), name='manager-reply'),
+    # 결제 내역 관리
+    path('admin/payment/', PaymentManagementView.as_view(), name='manager-payment'),
     # 강의 관리
     path('admin/lecture/', LectureManagementView.as_view(), name='manager-lecture'),
     path('admin/lecture/<int:page>', LectureInfoAPI.as_view(), name='lecture-info'),
@@ -70,6 +73,8 @@ urlpatterns = [
     path('admin/qna/update/', UpdateQnAView.as_view(), name='qna-update'),
     path('admin/qna/delete/', DeleteQnAView.as_view(), name='qna-delete'),
     path('admin/qna/delete/<str:qna_ids>', DeleteManyQnAView.as_view(), name='many-qna-delete'),
+    # 태그 관리
+    path('admin/tag/', TagManagementView.as_view(), name='manager-tag'),
     # 신고 내역 관리
     path('admin/report/', ReportManagementView.as_view(), name='manager-report'),
     # 기타 서비스 url
