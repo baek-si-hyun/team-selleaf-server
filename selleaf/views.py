@@ -309,18 +309,15 @@ class TeacherDeleteAPI(APIView):
 class PostManagementView(View):
     # 게시물 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 게시물(커뮤니티, 노하우, 거래) 각각의 개수와 전체 개수
+        # 커뮤니티, 노하우, 거래 각각의 게시물 수
         post_count = Post.objects.count()
         knowhow_count = Knowhow.objects.count()
         trade_count = Trade.enabled_objects.count()
-
-        total_count = post_count + knowhow_count + trade_count
 
         context = {
             'post_count': post_count,
             'knowhow_count': knowhow_count,
             'trade_count': trade_count,
-            'total_count': total_count
         }
 
         return render(request, 'manager/post/post.html', context)
@@ -464,13 +461,6 @@ class TradePostsAPI(APIView):
 
         # 요청한 데이터 반환
         return Response(post_info)
-
-
-class AllPostsAPI(APIView):
-    # 전체 게시물 조회 API 뷰
-    def get(self, request, page):
-        pass
-
 
 
 # 강의 관리

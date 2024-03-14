@@ -502,7 +502,7 @@ div.category-benner{
 div.category-wrap {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
     width: 880px;
 }
 
@@ -581,7 +581,7 @@ div.post-info-wrap{
     fill: #333334;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
     width: 880px;
 }
 
@@ -599,10 +599,10 @@ div.post-info {
     font-weight: 400;
     font-size: 15px;
     line-height: 21px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
     text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 div.content-name{

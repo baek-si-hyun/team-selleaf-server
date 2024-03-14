@@ -44,30 +44,30 @@
                       </div>
                     </div>
                   </div>
-                  <div class="header-function-container">
-                    <ul class="header-function-inner">
-                      <li class="header-relative">
-                        <button
-                          class="lecture-info"
-                          aria-label="tab button"
-                          type="button"
-                          id="btn"
-                        >
-                          <div class="flex">
-                            <p class="lecture-info">게시물 정보</p>
-                            <div class="lecture-info-num">
-                              <p class="lecture-info-num">{{ total_count }}</p>
-                            </div>
-                          </div>
-                        </button>
-                        <div class="lecture-underbar" id="under"></div>
-                      </li>
-                    </ul>
-                  </div>
+{#                  <div class="header-function-container">#}
+{#                    <ul class="header-function-inner">#}
+{#                      <li class="header-relative">#}
+{#                        <button#}
+{#                          class="lecture-info"#}
+{#                          aria-label="tab button"#}
+{#                          type="button"#}
+{#                          id="btn"#}
+{#                        >#}
+{#                          <div class="flex">#}
+{#                            <p class="lecture-info">게시물 정보</p>#}
+{#                            <div class="lecture-info-num">#}
+{#                              <p class="lecture-info-num">{{ post_count }}</p>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                        </button>#}
+{#                        <div class="lecture-underbar" id="under"></div>#}
+{#                      </li>#}
+{#                    </ul>#}
+{#                  </div>#}
                   <div class="all-list">
                     <div>
                       <span class="all-name">전체</span>
-                      <span class="all-num">{{ total_count }}</span>
+                      <span class="all-num">{{ post_count }}</span>
                     </div>
                     <div class="list-order">
                       <!-- 여기에 검색 창 추가 -->
@@ -115,7 +115,7 @@
                           </svg>
                         </button>
 
-                        <!-- 최신순 눌렀을때 나오는 모달 -->
+                        <!-- 게시물 유형 선택 모달창 -->
                         <div class="list-order-function">
                           <ul class="list-order-function">
                             <li
@@ -172,23 +172,22 @@
                     <div class="category-inner">제목</div>
                     <div class="category-inner">내용</div>
                     <div class="category-inner">작성자</div>
-                    <div class="category-inner">유형</div>
                     <div class="category-inner">카테고리</div>
                     <div class="category-inner">작성 일자</div>
                   </div>
                 </div>
                 <ul class="list-content">
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <div class="post-info-wrap">
-                      <div class="post-info">제목 예시</div>
-                      <div class="post-info">내용 예시</div>
-                      <div class="post-info">작성자</div>
-                      <div class="post-info">노하우</div>
-                      <div class="post-info">테라리움</div>
-                      <div class="post-info">2024.03.14</div>
-                    </div>
-                  </li>
+{#                    리스트 예시 #}
+{#                  <li class="list-content">#}
+{#                    <input type="checkbox" class="checkbox-input" />#}
+{#                    <div class="post-info-wrap">#}
+{#                      <div class="post-info">제목 예시</div>#}
+{#                      <div class="post-info">내용 예시</div>#}
+{#                      <div class="post-info">작성자</div>#}
+{#                      <div class="post-info">테라리움</div>#}
+{#                      <div class="post-info">2024.03.14</div>#}
+{#                    </div>#}
+{#                  </li>#}
                 </ul>
                 <div class="page-count-wrap">
                   <ul class="page flex">
@@ -281,7 +280,16 @@
 {% endblock %}
 {% block js %}
   <script>
-    const csrf_token = '{{ csrf_token }}';
+    const csrf_token = `{{ csrf_token }}`;
+    
+    {# 카테고리 버튼을 클릭할 때마다 해당 게시물의 수를 불러오기 위한 변수 #}
+    const postCount = `{{ post_count }}`;
+    const knowhowCount = `{{ knowhow_count }}`;
+    const tradeCount = `{{ trade_count }}`;
   </script>
+  <script src="{% static 'public/web/js/manager/post/post-module.js' %}"></script>
+  <script src="{% static 'public/web/js/manager/post/show-posts.js' %}"></script>
+  <script src="{% static 'public/web/js/manager/post/show-knowhows.js' %}"></script>
+  <script src="{% static 'public/web/js/manager/post/show-trades.js' %}"></script>
   <script src="{% static 'public/web/js/manager/post/post.js' %}"></script>
 {% endblock %}
