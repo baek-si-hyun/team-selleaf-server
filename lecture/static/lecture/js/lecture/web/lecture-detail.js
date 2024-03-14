@@ -179,13 +179,18 @@ const sidebarAlert = document.querySelector(".sidebar-student-count-title");
 const sidebarSelected = document.querySelector(
   ".sidebar-selected-product-container"
 );
+const totalPriceWrap = document.querySelector(".sidebar-total-price-wrap");
+const totalPriceValue = document.querySelector(".total-price-value");
+
 var count = 0;
 var totalPrice = 0; // 추가된 총 가격
 
 // 총 가격을 업데이트하는 함수
 function updateTotalPrice() {
-  totalPrice = count * parseInt(price.textContent);
-  price.textContent = totalPrice; // 총 가격을 화면에 업데이트
+  price.innerText = document.querySelector(".selected-price").innerText;
+  totalPrice = count * parseInt(price.innerText);
+  price.innerText = totalPrice + '원'; // 총 가격을 화면에 업데이트
+
 }
 
 // add 클릭 이벤트 핸들러
@@ -286,8 +291,7 @@ sidebarSub.addEventListener("click", (e) => {
   var studentAlert = studentInfo.querySelector(".student-alert");
   studentAlert && studentAlert.remove();
 });
-console.log(price);
-console.log(totalPrice)
+
 
 // 리뷰 리스트 다음 장
 const lists = document.querySelectorAll(".product-review-page");
