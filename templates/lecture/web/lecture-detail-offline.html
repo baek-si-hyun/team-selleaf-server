@@ -616,7 +616,9 @@
               <p class="product-total-price">
                 <span class="product-order-text">주문금액</span>
                 <span class="product-order-price">
-                  <span class="total-price">{{ lecture.lecture_price }}</span>원
+                    <span class="total-price" data-price="{{ lecture.lecture_price }}">
+                      <span class="total-price-value">0</span>원
+                    </span>
                 </span>
               </p>
               <div class="product-order-button-wrap">
