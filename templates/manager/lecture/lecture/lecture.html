@@ -16,7 +16,7 @@
               <div class="content-inner">
                 <div class="content-box">
                   <div class="header">
-                    <h1 class="header-name">강의 관리</h1>
+                    <h1 class="header-name">개설된 강의 관리</h1>
                     <div>
                       <div class="compose-button">
                         <button
@@ -54,7 +54,7 @@
                           id="btn"
                         >
                           <div class="flex">
-                            <p class="lecture-info">강의정보</p>
+                            <p class="lecture-info">강의 정보</p>
                             <div class="lecture-info-num">
                               <p class="lecture-info-num">{{ lecture_count }}</p>
                             </div>
@@ -186,25 +186,27 @@
                   <div class="category-wrap">
                     <div class="category-inner">강의 정보</div>
                     <div class="category-inner">강사명</div>
-                    <div class="category-inner">정원</div>
+                    <div class="category-inner">수강생 수</div>
+                    <div class="category-inner">모집 정원</div>
                     <div class="category-inner">수강료</div>
-                    <div class="category-inner">카테고리</div>
                     <div class="category-inner">강의 장소</div>
+                    <div class="category-inner">개설 일자</div>
                   </div>
                 </div>
                 <ul class="list-content">
+{#                    리스트 예시 #}
                   <li class="list-content">
                     <input type="checkbox" class="checkbox-input" />
                     <a class="class-info-wrap">
-                      <div class="class-info">
+                      <div class="class-info title">
                           <p class="content-name">강의 제목 예시</p>
                           <p class="content-name-detail">강의 내용 예시</p>
                       </div>
                       <div class="class-info">KGH</div>
                       <div class="class-info">10명</div>
                       <div class="class-info">25,000원</div>
-                      <div class="class-info">테라리움</div>
                       <div class="class-info">경기도 광주시</div>
+                      <div class="class-info">2024.03.13</div>
                     </a>
                   </li>
                 </ul>
@@ -300,5 +302,10 @@
   </body>
 {% endblock %}
 {% block js %}
+  <script>
+    const csrf_token = '{{ csrf_token }}';
+  </script>
+  <script src="{% static 'public/web/js/manager/lecture/lecture/lecture-module.js' %}"></script>
+  <script src="{% static 'public/web/js/manager/lecture/lecture/show-lectures.js' %}"></script>
   <script src="{% static 'public/web/js/manager/lecture/lecture/lecture.js' %}"></script>
 {% endblock %}

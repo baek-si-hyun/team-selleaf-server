@@ -9,7 +9,8 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     NoticeManagementView, UpdateNoticeView, DeleteNoticeView, WriteQnAView, QnAManagementView, \
     UpdateQnAView, DeleteQnAView, MemberInfoAPI, TeacherManagementView, TeacherInfoAPI, TeacherEntryManagementView, \
     TeacherEntriesInfoAPI, DeleteManyNoticeView, DeleteManyQnAView, DeleteManyMembersAPI, TeacherApprovalAPI, \
-    TeacherDeleteAPI, LectureManagementView
+    TeacherDeleteAPI, LectureManagementView, LectureInfoAPI, LectureReviewManagementView, LectureReviewInfoAPI, \
+    LectureTraineesManagementView, TraineesInfoAPI, PostManagementView, ReplyManagementView
 
 urlpatterns = [
     path('', MainView.as_view()),
@@ -35,8 +36,17 @@ urlpatterns = [
     path('admin/teacher-entry/<int:page>', TeacherEntriesInfoAPI.as_view(), name='teacher-entry-info'),
     path('admin/teacher-approve/<str:teacher_ids>', TeacherApprovalAPI.as_view(), name='teacher-entry-approval'),
     path('admin/teacher-delete/<str:teacher_ids>', TeacherDeleteAPI.as_view(), name='teacher-delete'),
+    # 게시물 관리
+    path('admin/posts/', PostManagementView.as_view(), name='manager-post'),
+    # 댓글 관리
+    path('admin/reply/', ReplyManagementView.as_view(), name='manager-reply'),
     # 강의 관리
     path('admin/lecture/', LectureManagementView.as_view(), name='manager-lecture'),
+    path('admin/lecture/<int:page>', LectureInfoAPI.as_view(), name='lecture-info'),
+    path('admin/lecture/review/', LectureReviewManagementView.as_view(), name='manager-lecture-review'),
+    path('admin/lecture/review/<int:lecture_id>/<int:page>', LectureReviewInfoAPI.as_view(), name='lecture-review-info'),
+    path('admin/lecture/trainees/', LectureTraineesManagementView.as_view(), name='manager-lecture-trainees'),
+    path('admin/lecture/trainees/<int:lecture_id>/<int:page>', TraineesInfoAPI.as_view(), name='lecture-review-info'),
     # 공지사항 관리
     path('admin/notice/', NoticeManagementView.as_view(), name='manager-notice'),
     path('admin/notice/write/', WriteNoticeView.as_view(), name='notice-write'),
