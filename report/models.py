@@ -1,6 +1,7 @@
 from django.db import models
 
 from knowhow.models import Knowhow, KnowhowReply
+from lecture.models import Lecture
 from post.models import Post, PostReply
 from selleaf.models import Report
 from trade.models import Trade
@@ -16,6 +17,13 @@ class TradeReport(Report):
 
 
 # 강의 신고
+class LectureReport(Report):
+    lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
+
+    class Meta:
+        db_table = 'tbl_lecture_report'
+        ordering = ['-id']
+
 
 # 노하우 신고
 class KnowhowReport(Report):
