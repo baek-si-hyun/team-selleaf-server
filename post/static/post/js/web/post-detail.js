@@ -1,5 +1,45 @@
-let page = 1;
+// let page = 1;
 let isLoading = false;
+
+const inputContainer = document.querySelector(".input-container");
+const commentInput = document.querySelector(".comment-input");
+const commentSubmitBtn = document.querySelector(".comment-submit-btn");
+
+commentInput.addEventListener("focus", () => {
+  inputContainer.style.border = "1px solid #c06888";
+  console.log(commentInput.value)
+  if (commentInput.value){
+    commentSubmitBtn.disabled = false;
+    commentSubmitBtn.style.cursor = 'pointer';
+    commentSubmitBtn.style.color = "#c06888"
+  }else {
+    commentSubmitBtn.disabled = true;
+    commentSubmitBtn.style.cursor = 'default';
+    commentSubmitBtn.style.color = "rgb(194, 200, 204)";
+
+  }
+
+});
+commentInput.addEventListener("focusout", () => {
+  inputContainer.style.border = "1px solid rgb(218, 221, 224)";
+});
+
+
+commentInput.addEventListener("keyup", () => {
+  console.log(commentInput.value)
+
+  if(commentInput.value){
+    commentSubmitBtn.disabled = false;
+    commentSubmitBtn.style.cursor = 'pointer';
+    commentSubmitBtn.style.color = "#c06888"
+  }else {
+    commentSubmitBtn.disabled = true;
+    commentSubmitBtn.style.cursor = 'default';
+    commentSubmitBtn.style.color = "rgb(194, 200, 204)";
+  }
+
+});
+
 async function getPosts() {
   const response = await fetch("");
   const posts = await response.json();
@@ -23,7 +63,7 @@ function appendItem(post) {
   `;
   similarPosts.appendChild(contentItem);
 }
-function showList() {
+function showLists() {
   const dummyArray = new Array(20).fill(0);
   dummyArray.forEach((post) => {
     appendItem(post);
@@ -34,16 +74,16 @@ function handleScroll() {
   const windowHeight = window.innerHeight;
   const totalHeight = document.documentElement.scrollHeight;
   if (scrollTop + windowHeight >= totalHeight - 300) {
-    showList();
+    showLists();
   }
 }
 
 window.addEventListener("scroll", handleScroll);
-showList();
+showLists();
 
-const inputWrap = document.querySelector(".input-wrap");
-const inputContainer = document.querySelector(".input-container");
-const commentInput = document.querySelector(".comment-input");
+// const inputWrap = document.querySelector(".input-wrap");
+// const inputContainer = document.querySelector(".input-container");
+// const commentInput = document.querySelector(".comment-input");
 
 commentInput.addEventListener("focus", () => {
   inputContainer.style.border = "1px solid #c06888";
@@ -52,7 +92,7 @@ commentInput.addEventListener("focusout", () => {
   inputContainer.style.border = "1px solid rgb(218, 221, 224)";
 });
 
-const commentSubmitBtn = document.querySelector(".comment-submit-btn");
+// const commentSubmitBtn = document.querySelector(".comment-submit-btn");
 commentInput.addEventListener("keyup", () => {
   commentInput.value
     ? (commentSubmitBtn.style.color = "#c06888")
@@ -65,41 +105,41 @@ stickyBtns.forEach((item) => {
     if (item.getAttribute("title") === "좋아요") {
       const img = item.querySelector("img");
       const imgSrc = img.getAttribute("src");
-      imgSrc === "../../../staticfiles/images/like-off.png"
-        ? img.setAttribute("src", "../../../staticfiles/images/like-on.png")
-        : img.setAttribute("src", "../../../staticfiles/images/like-off.png");
+      imgSrc === "/static/public/web/images/common/like-off.png"
+        ? img.setAttribute("src", "/static/public/web/images/common/like-on.png")
+        : img.setAttribute("src", "/static/public/web/images/common/like-off.png");
     }
     if (item.getAttribute("title") === "저장") {
       const img = item.querySelector("img");
       const imgSrc = img.getAttribute("src");
-      imgSrc === "../../../staticfiles/images/scrap-off-blk.png"
+      imgSrc === "/static/public/web/images/common/scrap-off-blk.png"
         ? img.setAttribute(
             "src",
-            "../../../staticfiles/images/scrap-on-pink.png"
+            "/static/public/web/images/common/scrap-on-pink.png"
           )
         : img.setAttribute(
             "src",
-            "../../../staticfiles/images/scrap-off-blk.png"
+            "/static/public/web/images/common/scrap-off-blk.png"
           );
     }
   });
 });
-stickyBtns.forEach((item) => {
-  item.addEventListener("click", () => {});
-});
-
-const paginationBtn = document.querySelectorAll(".pagination-btn");
-const paginationBox = document.querySelector(".pagination-box");
-
-paginationBox.addEventListener("click", (e) => {
-  let pageBtn = e.target.closest(".pagination-btn");
-  if (pageBtn) {
-    paginationBtn.forEach((item) => {
-      item.classList.contains("select") && item.classList.remove("select");
-    });
-    pageBtn.classList.add("select");
-  }
-});
+// stickyBtns.forEach((item) => {
+//   item.addEventListener("click", () => {});
+// });
+//
+// const paginationBtn = document.querySelectorAll(".pagination-btn");
+// const paginationBox = document.querySelector(".pagination-box");
+//
+// paginationBox.addEventListener("click", (e) => {
+//   let pageBtn = e.target.closest(".pagination-btn");
+//   if (pageBtn) {
+//     paginationBtn.forEach((item) => {
+//       item.classList.contains("select") && item.classList.remove("select");
+//     });
+//     pageBtn.classList.add("select");
+//   }
+// });
 
 const commentLikeBtn = document.querySelectorAll(".comment-like-btn");
 commentLikeBtn.forEach((btn) => {
