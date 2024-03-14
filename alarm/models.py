@@ -18,6 +18,7 @@ class Alarm(Period):
     # 7. PostReplyLikeAlarm
     # 8. ReviewAlarm
     alarm_category = models.IntegerField(null=False, blank=False)
+    target_id = models.IntegerField(null=False, blank=False)
 
     class Meta:
         db_table = 'tbl_alarm'
