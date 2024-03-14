@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 
 from member.models import Member, MemberProfile, MemberAddress
 from plant.models import Plant
+from report.models import TradeReport
 from trade.models import TradeCategory, Trade, TradeFile, TradePlant, TradeScrap
 
 
@@ -53,17 +54,19 @@ class TradeDetailView(View):
         return render(request, "trade/web/trade-detail.html", context)
 
 class TradeReportView(View):
+    @transaction.atomic
     def post(self, request):
         # 현재 로그인한 사용자 가져오기 --> 현재 로그인한 사용자가 그 게시물을 보고 있을 것이고 신고를 한다면 그 사용자가 할 것이기 때문
         member = request.session['member']
 
+        # 현재 로그인한 사용자가 보고 있는 게시물 가져오기
+        trade = Trade.objects.get(id=request.POST['trade-id'])
+
         # 화면에서 사용자가 클릭한 신고 사유 가져오기
         report = request.POST['declaration']
 
-        # 신고사유 생성
-        # ReportCategory.objects.create(report_category_name=report)
-
         # 신고 생성
+        TradeReport.object.create(report_content=report, member_id=member['id'], report_status=True, trade=trade)
 
         return redirect('/trade/main')
 
@@ -297,7 +300,6 @@ class TradeTotalApi(APIView):
             'trade_price',
             'scrap_count'
         ]
-        print(sort1)
 
         # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
         # scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
@@ -309,9 +311,7 @@ class TradeTotalApi(APIView):
         #     .order_by(sort1, sort2).distinct()
 
         # print(*list(trades), sep="\n")
-        print(offset)
-        print(limit)
-        print("=" * 50)
+
         trades = Trade.objects.filter(condition, condition2, status=1)\
             .annotate(scrap_count=Count('tradescrap__id', filter=Q(tradescrap__status=1))).values(*columns)\
             .order_by(sort1, sort2)[offset:limit]

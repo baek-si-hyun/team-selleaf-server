@@ -5,6 +5,8 @@
 {% endblock %}
 {% block title %}강사신청| Selleaf{% endblock %}
 {% block content %}
+<form action="{% url 'teacher:sub' %}" method="post" name="teacher-sub" enctype="multipart/form-data">
+  {% csrf_token %}
   <body>
     <div class="sub-wrap">
       <div class="sub-container">
@@ -18,7 +20,7 @@
               <div class="record-info">간단한 이력을 적어주세요!</div>
               <label>
                 <input class="record-input" type="record" name="brief-history" placeholder="이력을 입력해주세요" />
-                <span class="record-hidden">약력 입력하기</span>
+                <span class="record-hidden">약력을 입력해주세요!</span>
               </label>
             </div>
             
@@ -27,8 +29,8 @@
               <label class="explanation-text">강의 설명</label>
               <div class="explanation-info">어떤 강의를 할 지 간단히 설명해주세요!</div>
               <label>
-                <input class="explanation-input" name="닉네임" placeholder="강의 설명을 입력해주세요" />
-                <span class="explanation-hidden">닉네임 입력하기</span>
+                <input class="explanation-input" name="lecture-description" placeholder="강의 설명을 입력해주세요" />
+                <span class="explanation-hidden">강의 설명을 입력해주세요!</span>
               </label>
             </div>
 
@@ -36,13 +38,13 @@
             <div class="address-verify-wrap">
               <label class="address-verify-text">강의 장소(주소)</label>
               <label class="address-verify">
-                <input class="address-verify-input" type="record" name="강의장소" placeholder="상세 주소를 입력해주세요" />
-                <span class="address-verify-hidden">장소 입력하기</span>
+                <input class="address-verify-input" type="record" name="lecture-place" placeholder="상세 주소를 입력해주세요" />
+                <span class="address-verify-hidden">강의 주소를 입력해주세요!</span>
               </label>
             </div>
             
           <!-- 사진추가 -->
-          <div class="upload-wrap">
+{#          <div class="upload-wrap">#}
 {#            <div class="upload-container">#}
 {#              <div class="info-items-title">강의 장소 사진</div>#}
 {#              <div class="picture-explanation1">최대 다섯장까지 추가 가능해요!</div>#}
@@ -344,6 +346,7 @@
       </div>
     </div>
   </body>
+</form>
 {% endblock %}
 {% block js %}
   <script src="{% static 'teacher/js/teacher-sub/teacher-sub.js' %}"></script>

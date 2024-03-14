@@ -394,7 +394,6 @@ const showList = (trades) => {
                       <span class="post-tag">
                         ${tagsHtml}
                       </span>
-                      ${trade.scrap_count}
                     </div>
                   </div>
                 </article>
