@@ -293,14 +293,11 @@ class KnowhowListApi(APIView):
 
         # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
         # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
-        knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition, condition2) \
+        knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter() \
             .annotate(member_name=F('member__member_name')) \
-            .values(*columns) \
-            .annotate(like_count=Count(Q(knowhowlike__status=1)), scrap_count=Count(Q(knowhowscrap__status=1))) \
-            .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count',
-                    'scrap_count')\
-            .order_by(sort1, sort2).distinct()
+            .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id')\
 
+        #
         knowhows_count = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition, condition2) \
             .annotate(member_name=F('member__member_name')) \
             .values(*columns) \
@@ -317,11 +314,18 @@ class KnowhowListApi(APIView):
         for knowhow in knowhows:
             knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
             profile = MemberProfile.objects.filter(member_id=knowhow['member_id']).values('file_url').first()
+            scrap_count = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], status=1).values('status').count()
+            like_count = KnowhowLike.objects.filter(knowhow_id=knowhow['id'], status=1).values('status').count()
+            knowhow['knowhow_scrap'] = scrap_count
+            knowhow['knowhow_like'] = like_count
             knowhow['knowhow_file'] = knowhow_file['file_url']
             knowhow['profile'] = profile['file_url']
 
-        # print(knowhows)
+        knowhows.filter(condition, condition2).order_by(sort1, sort2)
         knowhows = knowhows[offset:limit]
+        # print(knowhows)
+        for knowhow in knowhows:
+            print(knowhow)
 
         datas = {
             'knowhows': knowhows,

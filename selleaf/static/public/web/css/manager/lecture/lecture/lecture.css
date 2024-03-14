@@ -502,7 +502,7 @@ div.category-benner{
 div.category-wrap {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
     width: 880px;
 }
 
@@ -516,7 +516,6 @@ div.category-inner{
     color: #1d1d1e;
     fill: #1d1d1e;
 }
-
 
 div.compose-button{
     gap: 16px;
@@ -581,8 +580,9 @@ a.class-info-wrap{
     fill: #333334;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr;
     width: 880px;
+    cursor: pointer;
 }
 
 a.class-info-wrap:hover {
@@ -598,10 +598,16 @@ div.class-info {
     -webkit-line-clamp: 1;
     font-weight: 400;
     font-size: 15px;
-    line-height: 20px;
+    line-height: 21px;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+}
+
+div.class-info.title {
+    display: block;
+    text-align: center;
 }
 
 div.content-name{
@@ -715,6 +721,22 @@ button.delete-button{
     height: 40px;
     display: flex;
     border-color: #e6e6e7;
+    color: #fff;
+    fill: #fff;
+    background-color: #c06888;
+}
+
+button.delete-button:not(:disabled):hover {
+    opacity: 0.7;
+}
+
+button.delete-button:not(:disabled) path {
+    fill: #fff;
+}
+
+button.delete-button:disabled {
+    cursor: default;
+    background-color: #f5f5f5;
 }
 
 svg.edit-button{
@@ -886,6 +908,11 @@ button.modal-confirm{
     color: #fff;
     fill: #fff;
     background-color: #c06888;
+}
+
+button.modal-cancel:hover,
+button.modal-confirm:hover {
+    opacity: 0.7;
 }
 
 div.delete-modal-bgcolor{
