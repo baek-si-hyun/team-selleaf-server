@@ -529,7 +529,7 @@ html {
 }
 
 .upload-wrap2 {
-  margin-top: -75px;
+  /*margin-top: -75px;*/
   width: 360px;
   height: 200px;
   position: relative;
@@ -626,4 +626,311 @@ html {
 .publish-btn:hover {
   background: #97a38c;
   border: 1px solid #97a38c;
+}
+
+
+/* 강사자격 신청하면 나오는 모달창 */
+.entry-modal-wrap {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  z-index: 1300;
+  background-color: rgba(33, 38, 41, 0.5);
+}
+
+.entry-modal-wrap::before {
+  content: "";
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.entry-modal-container {
+  max-height: 78%;
+  vertical-align: middle;
+  width: 400px;
+  border-radius: 8px;
+  display: inline-flex;
+  flex-direction: column;
+  color: rgb(47, 52, 56);
+  background-color: rgb(255, 255, 255);
+}
+
+.entry-modal-title-wrap {
+  padding: 16px 16px 10px;
+  line-height: 0;
+}
+
+.entry-modal-title {
+  font-size: 20px;
+  line-height: 28px;
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: 700;
+  text-align: center;
+  width: calc(100% - 68px);
+  margin-left: 24px;
+  margin-right: 10px;
+  white-space: pre-line;
+}
+
+.close-button {
+  display: inline-block;
+  margin: 0px;
+  padding: 0px;
+  border: none;
+  background: none;
+  font: inherit;
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+}
+
+.close-button:hover {
+  opacity: 0.7;
+}
+
+.cancel-image-wrap {
+  display: inline-block;
+  font-size: 24px;
+  line-height: 1;
+  color: rgb(47, 52, 56);
+}
+
+.cancel-image-wrap > img {
+  width: 20px;
+}
+
+/* 아이디, 비밀번호 입력창 */
+.entry-modal-main-wrap {
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  word-break: break-all;
+  overflow-y: auto;
+}
+
+.entry-modal-main-container {
+  padding: 20px 14px;
+  background-color: rgb(234, 237, 239);
+  flex: 1 0 0px;
+  position: relative;
+}
+
+.entry-input-wrap {
+  background-color: rgb(255, 255, 255);
+  padding: 22px 20px 16px;
+  border-radius: 8px;
+  border: 1px solid rgb(247, 249, 250);
+  margin-bottom: 12px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.entry-input-title-wrap {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: rgb(47, 52, 56);
+  display: flex;
+  -webkit-box-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.entry-input-title {
+  max-width: calc(100% - 80px);
+  text-align: center;
+  /*overflow: hidden;*/
+}
+
+.email-input-wrap {
+  -webkit-box-flex: 1;
+  display: flex;
+}
+
+.email-input-local {
+  position: relative;
+  -webkit-box-flex: 1;
+  flex: 1 1 0px;
+}
+
+/* 미디어 쿼리 다수 있음 */
+.local-input-form {
+  -webkit-box-flex: 1;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  display: block;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 15px;
+  line-height: 40px;
+  border: 1px solid #dbdbdb;
+  background-color: #fff;
+  color: #424242;
+  width: 100%;
+  font-size: 15px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.local-input-form:hover {
+  background-color: #fafafa;
+  border-color: #bdbdbd;
+}
+
+.local-input-form:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(130, 224, 250, 0.5);
+}
+
+.email-seperator {
+  -webkit-box-flex: 0;
+  flex: 0 0 20px;
+  text-align: center;
+  line-height: 40px;
+  color: #dbdbdb;
+}
+
+.email-input-domain {
+  position: relative;
+  -webkit-box-flex: 1;
+  flex: 1 1 0px;
+}
+
+.domain-input-form {
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  display: block;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 15px;
+  line-height: 40px;
+  border: 1px solid #dbdbdb;
+  background-color: #fff;
+  color: #424242;
+  width: 100%;
+  font-size: 15px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.domain-input-form:hover {
+  background-color: #fafafa;
+  border-color: #bdbdbd;
+}
+
+.domain-input-form:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(130, 224, 250, 0.5);
+}
+
+.domain-input-form option {
+  color: #424242;
+}
+
+.domain-input-form option:disabled {
+  color: #757575;
+  -webkit-text-fill-color: #757575;
+  opacity: 1;
+}
+
+.password-input-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.password-input-form {
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  display: block;
+  box-sizing: border-box;
+  height: 40px;
+  width: 100%;
+  padding: 0 15px;
+  line-height: 40px;
+  border: 1px solid #dbdbdb;
+  background-color: #fff;
+  color: #424242;
+  font-size: 15px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.password-input-form:hover {
+  background-color: #fafafa;
+  border-color: #bdbdbd;
+}
+
+.password-input-form:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(130, 224, 250, 0.5);
+}
+
+/* 입력창 에러 났을 때의 경우의 수 */
+.error-text {
+  margin: 15px 0;
+  color: #f77;
+}
+
+.local-input-form.error,
+.password-input-form.error {
+  border-color: #f77;
+}
+
+.local-input-form.error:focus,
+.password-input-form.error:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 119, 119, 0.5);
+}
+
+/* 강사자격 신청 버튼 */
+.entry-button-wrap {
+  padding: 9px 16px;
+  line-height: 0;
+}
+
+.entry-button-container {
+  padding-top: 1px;
+  padding-bottom: 7px;
+}
+
+.entry-button {
+  margin: 0px;
+  border: none;
+  background: none #134f2c;
+  font-style: inherit;
+  font-variant: inherit;
+  font-stretch: inherit;
+  font-family: inherit;
+  font-optical-sizing: inherit;
+  font-kerning: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 16px;
+  line-height: 20px;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 50px;
+  border-radius: 4px;
+  padding: 0px 16px;
+  font-weight: 700;
+  box-sizing: border-box;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  width: 100%;
+}
+
+.entry-button:hover {
+  background-color: #97a38c;
+  border-color: #97a38c;
 }
