@@ -364,14 +364,16 @@ class LectureReviewView(View):
         sender = Member.objects.get(id=member['id'])
         lecture = Lecture.objects.filter(id=lecture_id)\
             .annotate(member_id=F('teacher__member_id'))\
-            .values('member_id').first()
+            .values('member_id', 'id').first()
         receiver = Member.objects.filter(id=lecture['member_id']).first()
         alarm_data= {
             'sender' : sender,
             'receiver' : receiver,
-            'alarm_category': 8
-
+            'alarm_category': 8,
+            'target_id': lecture['id']
         }
+
+        print(Alarm.objects.all().values())
 
         Alarm.objects.create(**alarm_data)
 
