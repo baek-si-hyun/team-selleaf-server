@@ -327,6 +327,12 @@ class PostManagementView(View):
         return render(request, 'manager/post/post.html', context)
 
 
+class AllPostsAPI(APIView):
+    # 전체 게시물 조회 API 뷰
+    def get(self, request, page):
+        pass
+
+
 # 강의 관리
 class LectureManagementView(View):
     # 강의 관리 페이지 이동 뷰
