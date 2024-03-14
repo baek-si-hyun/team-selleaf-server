@@ -1,7 +1,7 @@
 const tradeService = (() => {
 
-    const getList = async (page, filters, sorting, type, callback) => {
-        const response = await fetch(`/trade/total/${page}/${filters}/${sorting}/${type}`);
+    const getList = async (page, filters, sorting, types, callback) => {
+        const response = await fetch(`/trade/total/${page}/${filters}/${sorting}/${types}`);
         const trades = await response.json();
         if(callback){
             return callback(trades);
@@ -9,7 +9,16 @@ const tradeService = (() => {
         return trades;
     }
 
-    return {getList: getList}
+    const localList = async (page, callback) => {
+        const response = await fetch(`/trade/main/${page}`);
+        const trades = await response.json();
+        if(callback){
+            return callback(trades);
+        }
+        return trades;
+    }
+
+    return {getList: getList, localList: localList}
 })();
 
 const tradeScrapService = (() => {

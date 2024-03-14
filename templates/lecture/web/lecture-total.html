@@ -3,11 +3,11 @@
 {% block static %}
     <link rel="stylesheet" href="{% static 'lecture/css/lecture/web/lecture-total.css' %}">
 {% endblock %}
-{% block title %}진행중인거래{% endblock %}
+{% block title %}진행중인강의{% endblock %}
 {% block content %}
   <body>
+    {% include 'fix/header.html' %}
     <div class="layout">
-      {% include 'fix/header.html' %}
       <!-- 수강 카테고리 탭 -->
       <div class="category-wrap-" style="height: 52px">
         <div
@@ -134,14 +134,8 @@
                     <div>
                       <div class="modal-menu">
                         <div class="modal-menu-inner">
-                          <button
-                            type="button"
-                            class="modal-menu-btn new-option choice"
-                          >
+                          <button type="button" class="modal-menu-btn new-option choice">
                             <div class="menu-choice">최신순</div>
-                          </button>
-                          <button type="button" class="modal-menu-btn option">
-                            <div class="menu-choice">인기순</div>
                           </button>
                           <button type="button" class="modal-menu-btn option">
                             <div class="menu-choice">스크랩순</div>

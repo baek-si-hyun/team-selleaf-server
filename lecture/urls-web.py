@@ -2,18 +2,19 @@ from django.urls import path
 
 from lecture.views import LectureMainView, LectureDetailOnlineView, LectureDetailOfflineView, LectureTotalView, \
     LectureUploadOnlineView, LectureUploadOfflineView, LectureUpdateOnlineView, LectureUpdateOfflineView, \
-    LectureDeleteView, LectureTotalApi
+    LectureDeleteView, LectureTotalApi, LectureMainApi
 
 app_name = 'lecture'
 
 urlpatterns = [
     path('main/', LectureMainView.as_view(), name='main'),
+    path('main/<int:page>', LectureMainApi.as_view(), name='main'),
 
     path('detail/online/', LectureDetailOnlineView.as_view(), name='detail-online'),
     path('detail/offline/', LectureDetailOfflineView.as_view(), name='detail-offline'),
 
     path('total/', LectureTotalView.as_view(), name='total'),
-    path('total/<int:page>', LectureTotalApi.as_view(), name='total'),
+    path('total/<int:page>/<str:filters>/<str:sorting>/<str:type>', LectureTotalApi.as_view(), name='total'),
 
     path('upload/online/', LectureUploadOnlineView.as_view(), name='upload-online'),
     path('upload/offline/', LectureUploadOfflineView.as_view(), name='upload-offline'),

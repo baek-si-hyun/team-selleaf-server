@@ -11,31 +11,9 @@ const countUpdate = () => {
     scrapCount.innerText = count;
   });
 }
+
 var xdegree = 0;
-// nextButton.addEventListener("click", (e) => {
-//   xdegree -= 712;
-//   with (target.style) {
-//     transform = `translateX(${xdegree}px)`;
-//     transition = "transform 0.3s ease 0s";
-//   }
-//   xdegree === -2136
-//     ? (nextButton.style.display = "none")
-//     : (nextButton.style.display = "block");
-//   xdegree === -712 && (prevButton.style.display = "block");
-//
-//   console.log(xdegree);
-// });
-//
-// prevButton.addEventListener("click", (e) => {
-//   xdegree += 712;
-//   with (target.style) {
-//     transform = `translateX(${xdegree}px)`;
-//     transition = "transform 0.3s ease 0s";
-//   }
-//   xdegree === -1424 && (nextButton.style.display = "block");
-//   xdegree === 0 && (prevButton.style.display = "none");
-//   console.log(xdegree);
-// });
+
 if( user_trade_count / 3 > 1) {
   nextButton.addEventListener("click", (e) => {
     xdegree -= 712;
@@ -194,7 +172,6 @@ declarationBtns.forEach((declarationBtn)=>{
 });
 })
 
-
 // 이미지 미리보기
 const contentImg = document.querySelector(".product-cover-image");
 const prevImgs = document.querySelectorAll(".product-small-image");
@@ -205,5 +182,3 @@ prevImgs.forEach((item) => {
     contentImg.setAttribute("height", "558.33");
   });
 });
-
-// 신고 모달창 취소하기 버튼 눌렀을때
