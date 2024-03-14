@@ -53,7 +53,7 @@ const postService = (() => {
         });
     }
 
-    // 노하우 게시물 여러 개 삭제(소프트 딜리트)
+    // 노하우 게시물 여러 개 삭제
     const deleteKnowhows = async (knowhowIds) => {
         await fetch(`/admin/posts/knowhow-delete/${knowhowIds}`, {
             method: 'delete',
@@ -74,6 +74,8 @@ const postService = (() => {
         getCommunityPostsList: getCommunityPostsList,
         getKnowhowList: getKnowhowList,
         getTradeList: getTradeList,
+        deleteCommunityPosts: deleteCommunityPosts,
+        deleteKnowhows: deleteKnowhows,
         deleteTrades: deleteTrades
     }
 })();

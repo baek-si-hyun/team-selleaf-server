@@ -110,12 +110,18 @@ document.addEventListener("DOMContentLoaded", function () {
     // 사이사이에 콤마를 붙여서 뷰에서 .split을 쓸 수 있게 만들어줌
     checkedBoxes.forEach((checkbox) => {
       deleteIds += `,${checkbox.parentElement.classList[1]}`;
-    })
+    });
 
     // 현재 필터 검사하고, 서로 다른 뷰에 요청
-    order1.innerText === "커뮤니티" ? await postService.deleteTrades(deleteIds) : false
-    // console.log(order1.innerText);
+    order1.innerText === "커뮤니티" ?
+        await postService.deleteCommunityPosts(deleteIds) :
+        order1.innerText === "노하우" ?
+        await postService.deleteKnowhows(deleteIds) :
+        order1.innerText === "거래" ?
+        await postService.deleteKnowhows(deleteIds) : false;
 
+    // 페이지 새로고침 - 설정 데이터 유지할 다른 방법 찾아보기
+    location.reload();
   });
 });
 
