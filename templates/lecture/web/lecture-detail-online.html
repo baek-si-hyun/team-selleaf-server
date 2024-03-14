@@ -5,136 +5,137 @@
 {% endblock %}
 {% block title %}온라인 강의 상세보기{% endblock %}
 {% block content %}
+<form action="" method="post" name="">
   <body>
     {% include 'fix/header.html' %}
-    <div class="declaration-modal-wrap">
-      <div class="declaration-modal-container">
-        <div class="declaration-modal-title-box">
-          <span class="declaration-modal-title">신고 사유를 선택해주세요</span>
-          <button type="button" class="declaration-modal-cancel-btn">
-            <span class="cancel-btn-icon"></span>
-          </button>
-        </div>
-        <div class="declaration-modal-content">
-          <ul class="declaration-list">
-            <li class="declaration-item">
-              <label class="declaration-label">
-                <div class="declaration-input-box declaration-choice">
-                  <input
-                    type="radio"
-                    class="declaration-input"
-                    name="declaration"
-                    checked
-                  />
-                </div>
-                <span class="declaration-text">주제와 맞지 않음</span>
-              </label>
-            </li>
-            <li class="declaration-item">
-              <label class="declaration-label">
-                <div class="declaration-input-box">
-                  <input
-                    type="radio"
-                    class="declaration-input"
-                    name="declaration"
-                  />
-                </div>
-                <span class="declaration-text">정보가 부정확함</span>
-              </label>
-            </li>
-            <li class="declaration-item">
-              <label class="declaration-label">
-                <div class="declaration-input-box">
-                  <input
-                    type="radio"
-                    class="declaration-input"
-                    name="declaration"
-                  />
-                </div>
-                <span class="declaration-text">지나친 광고성 게시물</span>
-              </label>
-            </li>
-            <li class="declaration-item">
-              <label class="declaration-label">
-                <div class="declaration-input-box">
-                  <input
-                    type="radio"
-                    class="declaration-input"
-                    name="declaration"
-                  />
-                </div>
-                <span class="declaration-text">도배 및 중복 게시물</span>
-              </label>
-            </li>
-            <li class="declaration-item">
-              <label class="declaration-label">
-                <div class="declaration-input-box">
-                  <input
-                    type="radio"
-                    class="declaration-input"
-                    name="declaration"
-                  />
-                </div>
-                <span class="declaration-text">저작권 침해가 우려됨</span>
-              </label>
-            </li>
-            <li class="declaration-item">
-              <label class="declaration-label">
-                <div class="declaration-input-box">
-                  <input
-                    type="radio"
-                    class="declaration-input"
-                    name="declaration"
-                  />
-                </div>
-                <span class="declaration-text">욕설/비방이 심함</span>
-              </label>
-            </li>
-            <li class="declaration-item">
-              <label class="declaration-label">
-                <div class="declaration-input-box">
-                  <input
-                    type="radio"
-                    class="declaration-input"
-                    name="declaration"
-                  />
-                </div>
-                <span class="declaration-text">외설적인 게시물</span>
-              </label>
-            </li>
-            <li class="declaration-item">
-              <label class="declaration-label">
-                <div class="declaration-input-box">
-                  <input
-                    type="radio"
-                    class="declaration-input"
-                    name="declaration"
-                  />
-                </div>
-                <span class="declaration-text">개인정보노출</span>
-              </label>
-            </li>
-            <li class="declaration-item">
-              <label class="declaration-label">
-                <div class="declaration-input-box">
-                  <input
-                    type="radio"
-                    class="declaration-input"
-                    name="declaration"
-                  />
-                </div>
-                <span class="declaration-text">기타</span>
-              </label>
-            </li>
-          </ul>
-        </div>
-        <div class="declaration-btn-wrap">
-          <div class="declaration-btn-container">
-            <button class="declaration-btn">신고하기</button>
+    <form action="{% url 'lecture:report' %}" method="post" name="lecture-report" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="lecture-id" value="{{ lecture.id }}">
+        <div class="declaration-modal-wrap">
+          <div class="declaration-modal-container">
+            <div class="declaration-modal-title-box">
+              <span class="declaration-modal-title">신고 사유를 선택해주세요</span>
+              <button type="button" class="declaration-modal-cancel-btn">
+                <span class="cancel-btn-icon"></span>
+              </button>
+            </div>
+            <div class="declaration-modal-content">
+              <ul class="declaration-list">
+                <li class="declaration-item">
+                  <label class="declaration-label">
+                    <div class="declaration-input-box declaration-choice">
+                      <input
+                        type="radio"
+                        class="declaration-input"
+                        name="declaration"
+                        value="주제와 맞지 않음"
+                      />
+                    </div>
+                    <span class="declaration-text">주제와 맞지 않음</span>
+                  </label>
+                </li>
+                <li class="declaration-item">
+                  <label class="declaration-label">
+                    <div class="declaration-input-box">
+                      <input
+                        type="radio"
+                        class="declaration-input"
+                        name="declaration"
+                        value="정보가 부정확함"
+                      />
+                    </div>
+                    <span class="declaration-text">정보가 부정확함</span>
+                  </label>
+                </li>
+                <li class="declaration-item">
+                  <label class="declaration-label">
+                    <div class="declaration-input-box">
+                      <input
+                        type="radio"
+                        class="declaration-input"
+                        name="declaration"
+                        value="지나친 광고성 게시물"
+                      />
+                    </div>
+                    <span class="declaration-text">지나친 광고성 게시물</span>
+                  </label>
+                </li>
+                <li class="declaration-item">
+                  <label class="declaration-label">
+                    <div class="declaration-input-box">
+                      <input
+                        type="radio"
+                        class="declaration-input"
+                        name="declaration"
+                        value="도배 및 중복 게시물"
+                      />
+                    </div>
+                    <span class="declaration-text">도배 및 중복 게시물</span>
+                  </label>
+                </li>
+                <li class="declaration-item">
+                  <label class="declaration-label">
+                    <div class="declaration-input-box">
+                      <input
+                        type="radio"
+                        class="declaration-input"
+                        name="declaration"
+                        value="저작권 침해가 우려됨"
+                      />
+                    </div>
+                    <span class="declaration-text">저작권 침해가 우려됨</span>
+                  </label>
+                </li>
+                <li class="declaration-item">
+                  <label class="declaration-label">
+                    <div class="declaration-input-box">
+                      <input
+                        type="radio"
+                        class="declaration-input"
+                        name="declaration"
+                        value="욕설/비방이 심함"
+                      />
+                    </div>
+                    <span class="declaration-text">욕설/비방이 심함</span>
+                  </label>
+                </li>
+                <li class="declaration-item">
+                  <label class="declaration-label">
+                    <div class="declaration-input-box">
+                      <input
+                        type="radio"
+                        class="declaration-input"
+                        name="declaration"
+                        value="외설적인 게시물"
+                      />
+                    </div>
+                    <span class="declaration-text">외설적인 게시물</span>
+                  </label>
+                </li>
+                <li class="declaration-item">
+                  <label class="declaration-label">
+                    <div class="declaration-input-box">
+                      <input
+                        type="radio"
+                        class="declaration-input"
+                        name="declaration"
+                        value="개인정보노출"
+                      />
+                    </div>
+                    <span class="declaration-text">개인정보노출</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+            <div class="declaration-btn-wrap">
+              <div class="declaration-btn-container">
+                <button class="declaration-btn" type="submit">신고하기</button>
+                <button class="declaration-btn" type="button">취소하기</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+    </form>
     <a id="top"></a>
     <div class="category-wrap-" style="height: 52px">
       <div

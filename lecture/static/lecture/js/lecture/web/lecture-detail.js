@@ -305,7 +305,8 @@ lists.forEach((list, index) => {
   });
 });
 
-//신고 모달
+
+// 신고 모달
 const declarationLabels = document.querySelectorAll(".declaration-label");
 const declarationInputs = document.querySelectorAll(".declaration-input");
 declarationLabels.forEach((item) => {
@@ -320,17 +321,23 @@ declarationLabels.forEach((item) => {
   });
 });
 
-//신고모달 띄우기
+// 신고 모달 띄우기
 const declarationModalWrap = document.querySelector(".declaration-modal-wrap");
 const contentDeclarationBtn = document.querySelector(".report-button");
-contentDeclarationBtn.addEventListener("click", () => {
-  declarationModalWrap.classList.add("open");
-});
 
-//신고 모달 없애기
-const declarationBtn = document.querySelector(".declaration-btn");
-declarationBtn.addEventListener("click", () => {
+if (contentDeclarationBtn) {
+    contentDeclarationBtn.addEventListener("click", () => {
+    declarationModalWrap.classList.add("open");
+  });
+}
+
+// 신고 모달 없애기
+const declarationBtns = document.querySelectorAll(".declaration-btn");
+declarationBtns.forEach((declarationBtn)=>{
+  declarationBtn.addEventListener("click", () => {
   declarationModalWrap.classList.remove("open");
 });
+})
+
 
 

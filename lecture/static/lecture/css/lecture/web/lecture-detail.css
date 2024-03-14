@@ -3330,11 +3330,12 @@ li:first-child>.product-detail-nav-item{
     line-height: 0;
   }
   .declaration-btn-container {
+    display: flex;
     padding-top: 1px;
     padding-bottom: 7px;
   }
   .declaration-btn {
-    margin: 0px;
+    margin-right: 10px;
     border: none;
     background: none #c06888;
     font-style: inherit;

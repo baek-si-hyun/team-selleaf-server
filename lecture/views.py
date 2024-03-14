@@ -859,3 +859,20 @@ class LectureDeleteView(View):
         Lecture.objects.filter(id=request.GET['id']).update(lecture_status=True)
 
         return redirect('/lecture/total')
+
+class LectureReportView(View):
+    @transaction.atomic
+    def post(self, request):
+        # 현재 로그인한 사용자 가져오기 --> 현재 로그인한 사용자가 그 게시물을 보고 있을 것이고 신고를 한다면 그 사용자가 할 것이기 때문
+        member = request.session['member']
+
+        # 현재 로그인한 사용자가 보고 있는 게시물 가져오기
+        lecture = Lecture.objects.get(id=request.POST['lecture-id'])
+
+        # 화면에서 사용자가 클릭한 신고 사유 가져오기
+        report = request.POST['declaration']
+
+        # 신고 생성
+        LectureReport.object.create(report_content=report, member_id=member['id'], report_status=True, lecture=lecture)
+
+        return redirect('/lecture/main')
