@@ -440,18 +440,17 @@ class TradePostsAPI(APIView):
         ]
 
         # 최신순으로 10개의 게시물을 가져옴
-        trade_posts = Trade.objects.filter() \
+        trade_posts = Trade.enabled_objects.filter() \
                               .annotate(member_name=F('member__member_name'),
                                         category_name=F('trade_category__category_name')) \
                               .values(*columns)[offset:limit]
 
         # 다음 페이지에 띄울 정보가 있는지 검사
-        has_next_page = Knowhow.objects.filter()[limit:limit + 1].exists()
+        has_next_page = Trade.enabled_objects.filter()[limit:limit + 1].exists()
 
         # 각각의 게시물 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for trade_post in trade_posts:
             trade_post['created_date'] = trade_post['created_date'].strftime('%Y.%m.%d')
-
 
         # 완성된 게시물 정보 목록
         post_info = {
@@ -521,6 +520,31 @@ class TradeDeleteAPI(APIView):
                 trade.save(update_fields=["status", "updated_date"])
 
         return Response('success')
+
+
+class CommunityPostsCountAPI(APIView):
+    # 커뮤니티 게시글 개수를 세는 API
+    def get(self, request):
+        post_count = Post.objects.count()
+
+        return Response(post_count)
+
+
+class KnowhowCountAPI(APIView):
+    # 노하우 게시글 개수를 세는 API
+    def get(self, request):
+        knowhow_count = Knowhow.objects.count()
+
+        return Response(knowhow_count)
+
+
+class TradeCountAPI(APIView):
+    # 거래 게시글 개수를 세는 API
+    def get(self, request):
+        trade_count = Trade.enabled_objects.count()
+
+        return Response(trade_count)
+
 
 
 # 강의 관리

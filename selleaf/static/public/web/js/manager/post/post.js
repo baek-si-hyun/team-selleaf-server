@@ -33,6 +33,24 @@ const postCountTag = document.querySelector(".all-num");
 // 카테고리 선택 버튼
 const order1 = document.querySelector(".order-1");
 
+// 커뮤니티 게시글 세서 화면에 적용하는 기능을 함수화
+const countPosts = async () => {
+  postCount = await postService.countCommunityPosts();
+  postCountTag.innerText = postCount;
+}
+
+// 노하우 게시글 세서 화면에 적용하는 기능을 함수화
+const countKnowhows = async () => {
+  knowhowCount = await postService.countKnowhows();
+  postCountTag.innerText = knowhowCount;
+}
+
+// 거래 게시글 세서 화면에 적용하는 기능을 함수화
+const countTrades = async () => {
+  tradeCount = await postService.countTrades();
+  postCountTag.innerText = tradeCount;
+}
+
 // 커뮤니티 게시물 정보의 첫 페이지를 화면에 띄워주는 함수
 const callFirstPostsList = () => {
   // 만들어둔 모듈을 사용해서 정보를 불러옴
@@ -40,7 +58,7 @@ const callFirstPostsList = () => {
     ul.innerHTML = posts;
 
     // 게시물 숫자 변경
-    postCountTag.innerText = postCount;
+    countPosts();
 
     // 체크박스 클릭 이벤트 추가
     addCheckBoxEvent();
@@ -54,7 +72,7 @@ const callFirstKnowhowsList = () => {
     ul.innerHTML = posts;
 
     // 게시물 숫자 변경
-    postCountTag.innerText = knowhowCount;
+    countKnowhows();
 
     // 체크박스 클릭 이벤트 추가
     addCheckBoxEvent();
@@ -68,7 +86,7 @@ const callFirstTradesList = () => {
     ul.innerHTML = posts;
 
     // 게시물 숫자 변경
-    postCountTag.innerText = tradeCount;
+    countTrades();
 
     // 체크박스 클릭 이벤트 추가
     addCheckBoxEvent();
@@ -120,16 +138,25 @@ document.addEventListener("DOMContentLoaded", function () {
     if (order1.innerText === "커뮤니티") {
       await postService.deleteCommunityPosts(deleteIds);
       callFirstPostsList();
+
+      // 커뮤니티 게시글 수 다시 세서 화면에 적용
+      await countPosts();
     }
     // 노하우 게시물 삭제 시
     else if (order1.innerText === "노하우") {
       await postService.deleteKnowhows(deleteIds);
       callFirstKnowhowsList();
+
+      // 노하우 게시글 수 다시 세서 화면에 적용
+      await countKnowhows();
     }
     // 거래 게시물 삭제 시
     else if (order1.innerText === "거래") {
       await postService.deleteTrades(deleteIds);
       callFirstTradesList();
+
+      // 거래 게시글 수 다시 세서 화면에 적용
+      await countTrades();
     }
 
     // 전체 선택 체크박스와 삭제 버튼 초기화

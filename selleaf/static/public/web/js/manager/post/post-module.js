@@ -69,6 +69,30 @@ const postService = (() => {
         });
     }
 
+    // 커뮤니티 게시물 개수 세기
+    const countCommunityPosts = async () => {
+        const response = await fetch(`/admin/posts/community-count/`);
+        const postCount = await response.json();
+
+        return postCount;
+    }
+
+    // 커뮤니티 게시물 개수 세기
+    const countKnowhows = async () => {
+        const response = await fetch(`/admin/posts/knowhow-count/`);
+        const knowhowCount = await response.json();
+
+        return knowhowCount;
+    }
+
+    // 커뮤니티 게시물 개수 세기
+    const countTrades = async () => {
+        const response = await fetch(`/admin/posts/trade-count/`);
+        const tradeCount = await response.json();
+
+        return tradeCount;
+    }
+
     // 모듈 반환
     return {
         getCommunityPostsList: getCommunityPostsList,
@@ -76,6 +100,9 @@ const postService = (() => {
         getTradeList: getTradeList,
         deleteCommunityPosts: deleteCommunityPosts,
         deleteKnowhows: deleteKnowhows,
-        deleteTrades: deleteTrades
+        deleteTrades: deleteTrades,
+        countCommunityPosts: countCommunityPosts,
+        countKnowhows: countKnowhows,
+        countTrades: countTrades
     }
 })();

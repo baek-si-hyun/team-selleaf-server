@@ -283,9 +283,9 @@
     const csrf_token = `{{ csrf_token }}`;
     
     {# 카테고리 버튼을 클릭할 때마다 해당 게시물의 수를 불러오기 위한 변수 #}
-    const postCount = `{{ post_count }}`;
-    const knowhowCount = `{{ knowhow_count }}`;
-    const tradeCount = `{{ trade_count }}`;
+    let postCount = `{{ post_count }}`;
+    let knowhowCount = `{{ knowhow_count }}`;
+    let tradeCount = `{{ trade_count }}`;
   </script>
   <script src="{% static 'public/web/js/manager/post/post-module.js' %}"></script>
   <script src="{% static 'public/web/js/manager/post/show-posts.js' %}"></script>
