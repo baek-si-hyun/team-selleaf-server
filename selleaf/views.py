@@ -8,11 +8,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apply.models import Apply, Trainee
-from knowhow.models import Knowhow
+from knowhow.models import Knowhow, KnowhowTag, KnowhowFile, KnowhowRecommend, KnowhowReply, KnowhowCategory, \
+    KnowhowPlant, KnowhowScrap, KnowhowLike
 from lecture.models import Lecture, LectureReview
 from member.models import Member
 from notice.models import Notice
-from post.models import Post
+from post.models import Post, PostTag, PostFile, PostReply, PostCategory, PostPlant, PostScrap, PostLike
 from qna.models import QnA
 from teacher.models import Teacher
 from trade.models import Trade, TradeCategory
@@ -464,6 +465,7 @@ class TradePostsAPI(APIView):
 
 class CommunityDeleteAPI(APIView):
     # 커뮤니티 게시물 여러 개 삭제 API 뷰
+    @transaction.atomic
     def delete(self, request, post_ids):
         # 요청 경로에 담긴 post_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
         post_ids = post_ids.split(',')
@@ -472,16 +474,22 @@ class CommunityDeleteAPI(APIView):
         for post_id in post_ids:
             # 요소가 빈 문자열이 아닐 때만 tbl_post에서 해당 id를 가진 객체를 가져옴
             if post_id != '':
-                post = Post.objects.get(id=post_id)
-
-                # 해당 객체 delete - 연결된 것들까지 전부 삭제하기
-                # post.delete()
+                # 해당 커뮤니티 게시글 및 연결된 테이블의 정보까지 전부 delete
+                PostTag.objects.filter(post_id=post_id).delete()
+                PostFile.objects.filter(post_id=post_id).delete()
+                PostReply.objects.filter(post_id=post_id).delete()
+                PostCategory.objects.filter(post_id=post_id).delete()
+                PostPlant.objects.filter(post_id=post_id).delete()
+                PostScrap.objects.filter(post_id=post_id).delete()
+                PostLike.objects.filter(post_id=post_id).delete()
+                Post.objects.filter(id=post_id).delete()
 
         return Response('success')
 
 
 class KnowhowDeleteAPI(APIView):
     # 노하우 게시물 여러 개 삭제 API 뷰
+    @transaction.atomic
     def delete(self, request, knowhow_ids):
         # 요청 경로에 담긴 knowhow_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
         knowhow_ids = knowhow_ids.split(',')
@@ -490,16 +498,23 @@ class KnowhowDeleteAPI(APIView):
         for knowhow_id in knowhow_ids:
             # 요소가 빈 문자열이 아닐 때만 tbl_knowhow에서 해당 id를 가진 객체를 가져옴
             if knowhow_id != '':
-                knowhow = Knowhow.objects.get(id=knowhow_id)
-
-                # 해당 객체 delete
-                # post.delete()
+                # 해당 노하우 게시글 및 연결된 테이블의 정보까지 전부 delete
+                KnowhowTag.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowFile.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowRecommend.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowReply.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowCategory.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowPlant.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowScrap.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowLike.objects.filter(knowhow_id=knowhow_id).delete()
+                Knowhow.objects.filter(id=knowhow_id).delete()
 
         return Response('success')
     
     
 class TradeDeleteAPI(APIView):
     # 거래 게시물 여러 개 삭제(소프트 딜리트) API 뷰
+    @transaction.atomic
     def patch(self, request, trade_ids):
         # 요청 경로에 담긴 trade_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
         trade_ids = trade_ids.split(',')

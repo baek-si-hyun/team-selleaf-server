@@ -138,25 +138,16 @@ document.addEventListener("DOMContentLoaded", function () {
     if (order1.innerText === "커뮤니티") {
       await postService.deleteCommunityPosts(deleteIds);
       callFirstPostsList();
-
-      // 커뮤니티 게시글 수 다시 세서 화면에 적용
-      await countPosts();
     }
     // 노하우 게시물 삭제 시
     else if (order1.innerText === "노하우") {
       await postService.deleteKnowhows(deleteIds);
       callFirstKnowhowsList();
-
-      // 노하우 게시글 수 다시 세서 화면에 적용
-      await countKnowhows();
     }
     // 거래 게시물 삭제 시
     else if (order1.innerText === "거래") {
       await postService.deleteTrades(deleteIds);
       callFirstTradesList();
-
-      // 거래 게시글 수 다시 세서 화면에 적용
-      await countTrades();
     }
 
     // 전체 선택 체크박스와 삭제 버튼 초기화
