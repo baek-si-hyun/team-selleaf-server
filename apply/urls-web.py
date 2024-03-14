@@ -1,9 +1,10 @@
 from django.urls import path
-from cart.views import CartView, CartListAPI, CartAPI, CartCheckoutAPI
+
+from apply.views import ApplyView
 
 app_name = 'apply'
 
 urlpatterns = [
-    path('', CartView.as_view(), name='apply'),
+    path('', ApplyView.as_view(), name='apply'),
 
 ]

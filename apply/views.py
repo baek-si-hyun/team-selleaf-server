@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.views import View
 
 
-class ApplyViews(View):
-    def get(self, request):
-
+class ApplyView(View):
+    def post(self, request):
         return render(request, '')
