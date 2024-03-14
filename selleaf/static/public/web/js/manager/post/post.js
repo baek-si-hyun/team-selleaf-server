@@ -100,6 +100,9 @@ document.addEventListener("DOMContentLoaded", function () {
   confirmButton.addEventListener("click", async () => {
     modalWrap.style.display = "none";
 
+    // 삭제 후 체크 해제할 전체 선택 체크박스
+    const allCheck = document.querySelector(".all-check");
+
     // 삭제할 게시물의 id를 담을 빈 문자열
     let deleteIds = ``;
 
@@ -112,16 +115,26 @@ document.addEventListener("DOMContentLoaded", function () {
       deleteIds += `,${checkbox.parentElement.classList[1]}`;
     });
 
-    // 현재 필터 검사하고, 서로 다른 뷰에 요청
-    order1.innerText === "커뮤니티" ?
-        await postService.deleteCommunityPosts(deleteIds) :
-        order1.innerText === "노하우" ?
-        await postService.deleteKnowhows(deleteIds) :
-        order1.innerText === "거래" ?
-        await postService.deleteKnowhows(deleteIds) : false;
+    // 현재 필터 검사하고, 서로 다른 뷰에 삭제 요청 후 해당 유형의 게시물 목록의 첫 페이지를 다시 불러옴
+    // 커뮤니티 게시물 삭제 시
+    if (order1.innerText === "커뮤니티") {
+      await postService.deleteCommunityPosts(deleteIds);
+      callFirstPostsList();
+    }
+    // 노하우 게시물 삭제 시
+    else if (order1.innerText === "노하우") {
+      await postService.deleteKnowhows(deleteIds);
+      callFirstKnowhowsList();
+    }
+    // 거래 게시물 삭제 시
+    else if (order1.innerText === "거래") {
+      await postService.deleteTrades(deleteIds);
+      callFirstTradesList();
+    }
 
-    // 페이지 새로고침 - 설정 데이터 유지할 다른 방법 찾아보기
-    location.reload();
+    // 전체 선택 체크박스와 삭제 버튼 초기화
+    allCheck.checked = false;
+    deleteBtn.disabled = true;
   });
 });
 
