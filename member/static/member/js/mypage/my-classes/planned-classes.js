@@ -60,54 +60,101 @@ classesItems.forEach((item) => {
   });
 });
 
-/*
 
-  강의 내역의 유무에 따라 my_classes-history-wrap 안에서 표시할 내용 변경
-  
-  나중에 서버 들어갔을 때는
-  강의 내역들(classesItems)의 length가 1 이상이면 표시하게 변경할 계획
 
-  임시로 true/false 변수로 바뀌게 설정함
-*/
 
-let isClassesExists = true; // 강의 내역 유무
+let page = 1
 
-// 강의 내역이 없을 때 보이는 텍스트들
-const nothingTextBold = document.querySelector(".my_classes-history-wrap > h1");
-const nothingText = document.querySelector(".my_classes-history-wrap > p");
+const showApplies = (applies) => {
+  let text = ``
+  applies.forEach((apply) => {
+    const lecturePlantTags = apply.lecture_plant.map(plant => `
+              <li class="item-tags">
+                <div>
+                  <button
+                      class="item-tags-button"
+                      type="button"
+                  >
+                    ${plant}
+                  </button>
+                </div>
+              </li>`).join('');
+    if (apply.apply_status === 0) {
+      text += `
+          <a href="#" class="classes-history-link"></a>
+            <div class="classes-history-item-container">
+              <div class="classes-item-image-wrap">
+                <img alt=""
+                     class="classes-item-image"
+                     src="/upload/${apply.lecture_file}"
+                />
+              </div>
+              <div class="classes-item-title-wrap">
+                <span>${apply.lecture_title}</span>
+              </div>
+              <div class="classes-item-article-wrap">
+                <span>${apply.lecture_content}</span>
+              </div>
+              <!-- 수강생 목록 바로가기 버튼 - 평소에 하던 버튼으로 제작 -->
+              <div class="students-list-wrap">
+                <a href="/member/mypage/teachers/apply/${apply.id}" class="students-list-button">
+                  수강생 목록 보기
+                </a>
+              </div>
+              <!-- 작성자, 조회수, 지역, 태그까지 모두 감싸는 부분 -->
+              <div class="classes-item-info-wrap">
+                <div class="article-info-wrap">
+                  <!-- 작성자 -->
+                  <div class="user-info-wrap">
+                    ${apply.teacher_name}
+                  </div>
+                  <!-- 진행한 시간, 조회수, 지역 -->
+                  <div class="item-info-wrap">
+                    <div class="item-infos">${apply.date} 진행 예정</div>
+                    <div class="item-infos">${apply.member_name}외 ${apply.trainee.length}</div>
+                    <div class="item-infos">${apply.lecture_category}</div>
+                  </div>
+                </div>
+                <!-- 태그 -->
+                <div class="item-tags-wrap">
+                  <ul class="item-tags-container">
+                    ${lecturePlantTags}
+                  </ul>
+                </div>
+              </div>
+            </div>`
+    }
 
-// 각 강의 내역 사이의 구분선
-const itemsSeperator = document.querySelectorAll(".items-seperator");
 
-// 강의 내역이 있을 경우
-if (isClassesExists) {
-  // 강의 내역 없을 때 뜨는 텍스트들 안 보이게 함
-  nothingTextBold.style.display = "none";
-  nothingText.style.display = "none";
-
-  // 각 강의내역 표시
-  classesItems.forEach((item) => {
-    item.style.display = "block";
   });
-
-  // 구분선 표시
-  itemsSeperator.forEach((item) => {
-    item.style.display = "block";
-  });
+  return text;
 }
-// 강의 내역이 없을 경우
-else {
-  // 강의 내역 없을 때 뜨는 텍스트들을 보이게 함
-  nothingTextBold.style.display = "block";
-  nothingText.style.display = "block";
 
-  // 각 강의내역 숨김
-  classesItems.forEach((item) => {
-    item.style.display = "none";
-  });
 
-  // 구분선 숨김
-  itemsSeperator.forEach((item) => {
-    item.style.display = "none";
-  });
-}
+const wrap = document.querySelector('.classes-history-item-wrap')
+
+classService.classList(page++,showApplies).then((text)=>{
+  wrap.innerHTML += text
+})
+
+
+window.addEventListener("scroll", () => {
+    // 맨위
+    const scrollTop = document.documentElement.scrollTop;
+    // 페이지 높이
+    const windowHeight = window.innerHeight;
+    // 암튼 높이
+    const totalHeight = document.documentElement.scrollHeight;
+    // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
+
+    if (scrollTop + windowHeight >= totalHeight) {
+      classService.classList(page++,showApplies).then((text)=>{
+        wrap.innerHTML += text
+      })
+    }
+});
+
+
+
+
+

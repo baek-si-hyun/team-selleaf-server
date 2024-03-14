@@ -12,11 +12,9 @@ class Alarm(Period):
     # 1. ApplyAlarm
     # 2. KnowhowLikeAlarm
     # 3. KnowhowReplyAlarm
-    # 4. KnowhowReplyLikeAlarm
-    # 5. PostLikeAlarm
-    # 6. PostReplyAlarm
-    # 7. PostReplyLikeAlarm
-    # 8. ReviewAlarm
+    # 4. PostLikeAlarm
+    # 5. PostReplyAlarm
+    # 6. ReviewAlarm
     alarm_category = models.IntegerField(null=False, blank=False)
     target_id = models.IntegerField(null=False, blank=False)
 
