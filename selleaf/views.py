@@ -324,12 +324,7 @@ class PostManagementView(View):
             'total_count': total_count
         }
 
-        return render(request, 'manager/comment/comment.html', context)
-
-    # 게시물 삭제를 위한 뷰
-    def post(self, request):
-        # status를 변경할 게시물들의 정보를 가져와야 됨
-        return render(request, 'manager/post/post.html')
+        return render(request, 'manager/post/post.html', context)
 
 
 # 강의 관리

@@ -54,9 +54,9 @@
                           id="btn"
                         >
                           <div class="flex">
-                            <p class="lecture-info">게시물정보</p>
+                            <p class="lecture-info">게시물 정보</p>
                             <div class="lecture-info-num">
-                              <p class="lecture-info-num">3</p>
+                              <p class="lecture-info-num">{{ total_count }}</p>
                             </div>
                           </div>
                         </button>
@@ -67,7 +67,7 @@
                   <div class="all-list">
                     <div>
                       <span class="all-name">전체</span>
-                      <span class="all-num">3</span>
+                      <span class="all-num">{{ total_count }}</span>
                     </div>
                     <div class="list-order">
                       <!-- 여기에 검색 창 추가 -->
@@ -101,7 +101,7 @@
                           aria-label="filter"
                           type="button"
                         >
-                          <span class="list-order order-1">최신순</span>
+                          <span class="list-order order-1">커뮤니티</span>
                           <svg
                             class="list-order"
                             viewBox="0 0 24 24"
@@ -129,7 +129,7 @@
                                 data-option-value="publishedAt"
                                 type="button"
                               >
-                                <span class="function-btn-text">최신순</span>
+                                <span class="function-btn-text">커뮤니티</span>
                               </button>
                             </li>
                             <li
@@ -143,7 +143,7 @@
                                 data-option-value="views"
                                 type="button"
                               >
-                                <span class="function-btn-text">조회순</span>
+                                <span class="function-btn-text">노하우</span>
                               </button>
                             </li>
                             <li
@@ -157,7 +157,7 @@
                                 data-option-value="likes"
                                 type="button"
                               >
-                                <span class="function-btn-text">좋아요순</span>
+                                <span class="function-btn-text">거래</span>
                               </button>
                             </li>
                           </ul>
@@ -168,91 +168,25 @@
                 </div>
                 <div class="category-benner">
                   <input type="checkbox" class="all-check" />
-                  <div class="category-inner" style="width: 640px">제목</div>
-                  <div class="category-inner" style="width: 75px">조회</div>
-                  <div class="category-inner" style="width: 75px">좋아요</div>
-                  <div class="category-inner">게시일</div>
+                  <div class="category-wrap">
+                    <div class="category-inner">제목</div>
+                    <div class="category-inner">내용</div>
+                    <div class="category-inner">작성자</div>
+                    <div class="category-inner">유형</div>
+                    <div class="category-inner">카테고리</div>
+                    <div class="category-inner">작성 일자</div>
+                  </div>
                 </div>
                 <ul class="list-content">
                   <li class="list-content">
                     <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">컨텐츠 제목 1</p>
-                            </div>
-                            <p class="content-name-detail">컨텐츠 내용 1</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-a">
-                        <p class="content-detail-num">1</p>
-                      </div>
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">0</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">컨텐츠 제목 2</p>
-                            </div>
-                            <p class="content-name-detail">컨텐츠 내용 2</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-a">
-                        <p class="content-detail-num">1</p>
-                      </div>
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">0</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">컨텐츠 제목 3</p>
-                            </div>
-                            <p class="content-name-detail">컨텐츠 내용 3</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-a">
-                        <p class="content-detail-num">1</p>
-                      </div>
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">0</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
+                    <div class="post-info-wrap">
+                      <div class="post-info">제목 예시</div>
+                      <div class="post-info">내용 예시</div>
+                      <div class="post-info">작성자</div>
+                      <div class="post-info">노하우</div>
+                      <div class="post-info">테라리움</div>
+                      <div class="post-info">2024.03.14</div>
                     </div>
                   </li>
                 </ul>
@@ -346,5 +280,8 @@
   </body>
 {% endblock %}
 {% block js %}
+  <script>
+    const csrf_token = '{{ csrf_token }}';
+  </script>
   <script src="{% static 'public/web/js/manager/post/post.js' %}"></script>
 {% endblock %}
