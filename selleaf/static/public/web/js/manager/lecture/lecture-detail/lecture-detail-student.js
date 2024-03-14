@@ -1,3 +1,46 @@
+// 페이지가 열릴 때 체크된 박스가 없다면 삭제 버튼 disabled
+const deleteBtn = document.querySelector(".delete-button");
+
+// 현재 체크된 박스의 개수를 세는 함수
+const countCheckBoxes = () => {
+  // 각 체크박스의 상태가 변할 때마다 체크된 박스의 개수를 셈
+  const checkedBoxes = document.querySelectorAll("input[type='checkbox']:checked")
+
+  // 체크된 박스가 하나라도 있다고 가정하고 삭제 버튼의 disabled 해제
+  deleteBtn.disabled = false;
+
+  // 체크된 박스가 하나도 없다면 삭제 버튼 disabled
+  if (checkedBoxes.length === 0) {
+    deleteBtn.disabled = true;
+  }
+}
+
+// 페이지가 열렸을 때 체크된 박스 개수를 셈
+countCheckBoxes();
+
+// 화면에 리뷰를 뿌리기 위한 로직
+// 페이지가 열렸을 때 회원 정보의 첫 페이지 표시
+let page = 1;
+
+// 리스트를 표시할 ul 태그
+const ul = document.querySelector("ul.list-content");
+
+// 개설된 강의 정보의 첫 페이지를 화면에 띄워주는 함수
+const callFirstTraineesList = () => {
+  // 만들어둔 모듈을 사용해서 리뷰 정보를 불러옴
+  lectureService.getTrainees(lectureId, page, showTrainees).then((reviews) => {
+    ul.innerHTML = reviews;
+
+    // 체크박스 클릭 이벤트 추가
+    addCheckBoxEvent();
+  });
+}
+
+// 페이지 열렸을 때 사용
+callFirstTraineesList();
+
+
+
 // 삭제 버튼 누르면 뜨는 모달창
 document.addEventListener("DOMContentLoaded", function () {
   const deleteButtons = document.querySelectorAll(".delete-button");
@@ -96,39 +139,49 @@ inputField.addEventListener("input", handleInputChange);
 // cancel-logo에 클릭 이벤트 리스너를 추가합니다.
 cancelButton.addEventListener("click", handleCancelClick);
 
-// 체크박스 js
-const allCheck = document.querySelector(".all-check");
-const checkboxes = document.querySelectorAll(".checkbox-input");
+const addCheckBoxEvent = () => {
+  // 체크박스 관련 js
+  const allCheck = document.querySelector(".all-check");
+  const checkboxes = document.querySelectorAll(".checkbox-input");
 
-// all-check 체크 여부에 따라 checkbox-input 체크 여부 조절
-allCheck.addEventListener("change", function () {
+  // all-check 체크 여부에 따라 checkbox-input 체크 여부 조절
+  allCheck.addEventListener("change", function () {
+    checkboxes.forEach(function (checkbox) {
+      checkbox.checked = allCheck.checked;
+
+      // 현재 체크된 박스 개수를 세서 삭제 버튼의 활성화 여부 조정
+      countCheckBoxes();
+    });
+  });
+
+  // checkbox-input 중 하나라도 체크가 해제되면 all-check 체크 해제
   checkboxes.forEach(function (checkbox) {
-    checkbox.checked = allCheck.checked;
-  });
-});
-
-// checkbox-input 중 하나라도 체크가 해제되면 all-check 체크 해제
-checkboxes.forEach(function (checkbox) {
-  checkbox.addEventListener("change", function () {
-    let allChecked = true;
-    checkboxes.forEach(function (checkbox) {
-      if (!checkbox.checked) {
-        allChecked = false;
-      }
+    checkbox.addEventListener("change", function () {
+      let allChecked = true;
+      checkboxes.forEach(function (checkbox) {
+        if (!checkbox.checked) {
+          allChecked = false;
+        }
+      });
+      allCheck.checked = allChecked;
     });
-    allCheck.checked = allChecked;
   });
-});
 
-// checkbox-input 모두 체크되면 all-check 체크
-checkboxes.forEach(function (checkbox) {
-  checkbox.addEventListener("change", function () {
-    let allChecked = true;
-    checkboxes.forEach(function (checkbox) {
-      if (!checkbox.checked) {
-        allChecked = false;
-      }
+  // checkbox-input 모두 체크되면 all-check 체크
+  checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", function () {
+      let allChecked = true;
+      checkboxes.forEach(function (checkbox) {
+        if (!checkbox.checked) {
+          allChecked = false;
+        }
+      });
+      allCheck.checked = allChecked;
     });
-    allCheck.checked = allChecked;
   });
-});
+
+  // 체크박스의 체크 상태가 변할 때마다 체크된 박스 개수를 셈
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", countCheckBoxes);
+  });
+}
