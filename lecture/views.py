@@ -195,7 +195,7 @@ class LectureTotalApi(APIView):
         offset = (page - 1) * row_count
         limit = row_count * page
 
-        print(type)
+        # print(type)
 
         # 필터 넣기
         condition = Q()
@@ -269,7 +269,7 @@ class LectureTotalApi(APIView):
             .values('id', 'lecture_title', 'lecture_price', 'teacher__member__member_name', 'teacher__member_id', 'scrap_count', 'online_status') \
             .order_by(sort1, sort2).distinct().count()
 
-        print(lectures_count)
+        # print(lectures_count)
 
         # print(lectures)
         # print('=' * 20)
@@ -287,7 +287,7 @@ class LectureTotalApi(APIView):
             product_plants = LecturePlant.objects.filter(lecture_id=lecture['id']).values('plant_name')
             product_list = [item['plant_name'] for item in product_plants]
             lecture['plant_name'] = product_list
-            print(lecture)
+            # print(lecture)
 
 
         # # 강의 목록 가져오기 (마감되지 않은 강의)
