@@ -19,20 +19,26 @@
                     style="transform: translateX(0px)"
                   >
                     <li class="main-category-item">
-                      <a href="#">내 활동</a>
+                      <a href="/member/mypage/show/" >내 활동</a>
                     </li>
                     <li class="main-category-item">
-                      <a href="#">거래 내역</a>
+                      <a href="/member/mypage/trades/">거래 내역</a>
                     </li>
                     <li class="main-category-item">
-                      <a href="#">수강 내역</a>
+                      <a href="/member/mypage/lectures/" >수강 내역</a>
                     </li>
-                    <li class="main-category-item teacher">
-                      <a href="#">강의 현황</a>
-                    </li>
-                    <li class="main-category-item">
-                      <a href="#" class="active">설정</a>
-                    </li>
+                    {% if teacher.count == 0 %}
+                        <li class="main-category-item">
+                          <a href="/member/mypage/settings/" class="active">설정</a>
+                        </li>
+                    {% else %}
+                        <li class="main-category-item ">
+                          <a href="/member/mypage/teachers/">강의 현황</a>
+                        </li>
+                        <li class="main-category-item">
+                          <a href="/member/mypage/settings/" class="active">설정</a>
+                        </li>
+                    {% endif %}
                   </ul>
                 </div>
                 <div class="sub-category-wrap">
@@ -42,12 +48,6 @@
                   >
                     <li class="sub-category-item">
                       <a href="#" class="active">회원정보수정</a>
-                    </li>
-                    <li class="sub-category-item">
-                      <a href="#">알림 설정</a>
-                    </li>
-                    <li class="sub-category-item">
-                      <a href="/member/password-update/">비밀번호 변경</a>
                     </li>
                   </ul>
                 </div>

@@ -8,14 +8,16 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apply.models import Apply, Trainee
-from knowhow.models import Knowhow
+from knowhow.models import Knowhow, KnowhowTag, KnowhowFile, KnowhowRecommend, KnowhowReply, KnowhowCategory, \
+    KnowhowPlant, KnowhowScrap, KnowhowLike, KnowhowReplyLike
 from lecture.models import Lecture, LectureReview
 from member.models import Member
 from notice.models import Notice
-from post.models import Post
+from post.models import Post, PostTag, PostFile, PostReply, PostCategory, PostPlant, PostScrap, PostLike, PostReplyLike
 from qna.models import QnA
+from report.models import KnowhowReplyReport, PostReplyReport
 from teacher.models import Teacher
-from trade.models import Trade
+from trade.models import Trade, TradeCategory
 
 
 # 관리자 로그인
@@ -140,8 +142,7 @@ class DeleteManyMembersAPI(APIView):
                 member.updated_date = timezone.now()
                 member.save(update_fields=["member_status", "updated_date"])
 
-        return Response('성공')
-
+        return Response('success')
 
 
 # 강사 관리
@@ -283,7 +284,7 @@ class TeacherApprovalAPI(APIView):
                 teacher.updated_date = timezone.now()
                 teacher.save(update_fields=["teacher_status", "updated_date"])
 
-        return Response('성공')
+        return Response('success')
 
 
 class TeacherDeleteAPI(APIView):
@@ -303,33 +304,263 @@ class TeacherDeleteAPI(APIView):
                 teacher.updated_date = timezone.now()
                 teacher.save(update_fields=["teacher_status", "updated_date"])
 
-        return Response('성공')
+        return Response('success')
 
 
 # 게시물 관리
 class PostManagementView(View):
     # 게시물 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 게시물(커뮤니티, 노하우, 거래) 각각의 개수와 전체 개수
+        # 커뮤니티, 노하우, 거래 각각의 게시물 수
         post_count = Post.objects.count()
         knowhow_count = Knowhow.objects.count()
         trade_count = Trade.enabled_objects.count()
-
-        total_count = post_count + knowhow_count + trade_count
 
         context = {
             'post_count': post_count,
             'knowhow_count': knowhow_count,
             'trade_count': trade_count,
-            'total_count': total_count
         }
 
-        return render(request, 'manager/comment/comment.html', context)
+        return render(request, 'manager/post/post.html', context)
 
-    # 게시물 삭제를 위한 뷰
-    def post(self, request):
-        # status를 변경할 게시물들의 정보를 가져와야 됨
-        return render(request, 'manager/post/post.html')
+
+class PostsListAPI(APIView):
+    # 커뮤니티 게시물 조회 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 게시물 수
+        row_count = 10
+
+        # 한 페이지에 표시할 게시물 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 게시물 정보 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'post_title',
+            'post_content',
+            'member_name',
+            'category_name',
+            'created_date',
+        ]
+
+        # 최신순으로 10개의 게시물을 가져옴
+        posts = Post.objects.filter()\
+            .annotate(member_name=F('member__member_name'),
+                      category_name=F('postcategory__category_name')
+                      )\
+            .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Post.objects.filter()[limit:limit + 1].exists()
+
+        # 각각의 게시물 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for post in posts:
+            post['created_date'] = post['created_date'].strftime('%Y.%m.%d')
+
+            # 카테고리 없으면 '없음' 표시
+            if post['category_name'] is None:
+                post['category_name'] = '없음'
+
+        # 완성된 게시물 정보 목록
+        post_info = {
+            'posts': posts,
+            'hasNext': has_next_page,
+        }
+
+        # 요청한 데이터 반환
+        return Response(post_info)
+
+
+class KnowhowPostsAPI(APIView):
+    # 노하우 게시물 조회 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 게시물 수
+        row_count = 10
+
+        # 한 페이지에 표시할 게시물 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 게시물 정보 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'knowhow_title',
+            'knowhow_content',
+            'member_name',
+            'category_name',
+            'created_date',
+        ]
+
+        # 최신순으로 10개의 게시물을 가져옴
+        knowhow_posts = Knowhow.objects.filter() \
+                              .annotate(member_name=F('member__member_name'),
+                                        category_name=F('knowhowcategory__category_name')
+                                        ) \
+                              .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Knowhow.objects.filter()[limit:limit + 1].exists()
+
+        # 각각의 게시물 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for knowhow_post in knowhow_posts:
+            knowhow_post['created_date'] = knowhow_post['created_date'].strftime('%Y.%m.%d')
+
+            # 카테고리 없으면 '없음' 표시
+            if knowhow_post['category_name'] is None:
+                knowhow_post['category_name'] = '없음'
+
+        # 완성된 게시물 정보 목록
+        post_info = {
+            'posts': knowhow_posts,
+            'hasNext': has_next_page,
+        }
+
+        # 요청한 데이터 반환
+        return Response(post_info)
+
+
+class TradePostsAPI(APIView):
+    # 거래 게시물 조회 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 게시물 수
+        row_count = 10
+
+        # 한 페이지에 표시할 게시물 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 게시물 정보 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'trade_title',
+            'trade_content',
+            'member_name',
+            'category_name',
+            'created_date',
+        ]
+
+        # 최신순으로 10개의 게시물을 가져옴
+        trade_posts = Trade.enabled_objects.filter() \
+                              .annotate(member_name=F('member__member_name'),
+                                        category_name=F('trade_category__category_name')) \
+                              .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Trade.enabled_objects.filter()[limit:limit + 1].exists()
+
+        # 각각의 게시물 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for trade_post in trade_posts:
+            trade_post['created_date'] = trade_post['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 게시물 정보 목록
+        post_info = {
+            'posts': trade_posts,
+            'hasNext': has_next_page,
+        }
+
+        # 요청한 데이터 반환
+        return Response(post_info)
+
+
+class PostsDeleteAPI(APIView):
+    # 커뮤니티 게시물 여러 개 삭제 API 뷰
+    @transaction.atomic
+    def delete(self, request, post_ids):
+        # 요청 경로에 담긴 post_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        post_ids = post_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for post_id in post_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_post에서 해당 id를 가진 객체를 가져옴
+            if post_id != '':
+                # 해당 커뮤니티 게시글 및 연결된 테이블의 정보까지 전부 delete
+                PostTag.objects.filter(post_id=post_id).delete()
+                PostFile.objects.filter(post_id=post_id).delete()
+                PostReplyLike.objects.filter(post_reply__post_id=post_id).delete()
+                PostReplyReport.object.filter(post_reply__post_id=post_id).delete()
+                PostReply.objects.filter(post_id=post_id).delete()
+                PostCategory.objects.filter(post_id=post_id).delete()
+                PostPlant.objects.filter(post_id=post_id).delete()
+                PostScrap.objects.filter(post_id=post_id).delete()
+                PostLike.objects.filter(post_id=post_id).delete()
+                Post.objects.filter(id=post_id).delete()
+
+        return Response('success')
+
+
+class KnowhowDeleteAPI(APIView):
+    # 노하우 게시물 여러 개 삭제 API 뷰
+    @transaction.atomic
+    def delete(self, request, knowhow_ids):
+        # 요청 경로에 담긴 knowhow_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        knowhow_ids = knowhow_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for knowhow_id in knowhow_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_knowhow에서 해당 id를 가진 객체를 가져옴
+            if knowhow_id != '':
+                # 해당 노하우 게시글 및 연결된 테이블의 정보까지 전부 delete
+                KnowhowTag.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowFile.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowRecommend.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowReplyLike.objects.filter(knowhow_reply__knowhow_id=knowhow_id).delete()
+                KnowhowReplyReport.object.filter(knowhow_reply__knowhow_id=knowhow_id).delete()
+                KnowhowReply.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowCategory.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowPlant.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowScrap.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowLike.objects.filter(knowhow_id=knowhow_id).delete()
+                Knowhow.objects.filter(id=knowhow_id).delete()
+
+        return Response('success')
+    
+    
+class TradeDeleteAPI(APIView):
+    # 거래 게시물 여러 개 삭제(소프트 딜리트) API 뷰
+    @transaction.atomic
+    def patch(self, request, trade_ids):
+        # 요청 경로에 담긴 trade_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        trade_ids = trade_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for trade_id in trade_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_trade에서 해당 id를 가진 객체를 가져옴
+            if trade_id != '':
+                trade = Trade.objects.get(id=trade_id)
+
+                # 해당 객체의 status를 0(삭제)으로 만들고, 변경 시간과 같이 저장
+                trade.status = 0
+                trade.updated_date = timezone.now()
+                trade.save(update_fields=["status", "updated_date"])
+
+        return Response('success')
+
+
+class PostsCountAPI(APIView):
+    # 커뮤니티 게시글 개수를 세는 API
+    def get(self, request):
+        post_count = Post.objects.count()
+
+        return Response(post_count)
+
+
+class KnowhowCountAPI(APIView):
+    # 노하우 게시글 개수를 세는 API
+    def get(self, request):
+        knowhow_count = Knowhow.objects.count()
+
+        return Response(knowhow_count)
+
+
+class TradeCountAPI(APIView):
+    # 거래 게시글 개수를 세는 API
+    def get(self, request):
+        trade_count = Trade.enabled_objects.count()
+
+        return Response(trade_count)
+
 
 
 # 강의 관리
@@ -744,7 +975,7 @@ class DeleteManyNoticeView(APIView):
                 notice.updated_date = timezone.now()
                 notice.save(update_fields=["notice_status", "updated_date"])
 
-        return Response('성공')
+        return Response('success')
 
 
 # QnA 관리
@@ -865,7 +1096,7 @@ class DeleteManyQnAView(APIView):
                 qna.updated_date = timezone.now()
                 qna.save(update_fields=["qna_status", "updated_date"])
 
-        return Response('성공')
+        return Response('success')
 
 
 # 신고 내역 관리

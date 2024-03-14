@@ -144,3 +144,47 @@ html {
   line-height: 20px;
   background-color: #f6faf1;
 }
+
+.check{
+  margin-left: 50px;
+  border-radius: 4px;
+  border: solid 1px #134F2C;
+  padding: 3px 6px 3px 6px;
+}
+
+.check:hover{
+  cursor: pointer;
+  color: #fff;
+  background-color: #134F2C;
+}
+
+.check-wrap{
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 50px;
+}
+
+
+.check-all{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 21px;
+  border-radius: 4px;
+  border: solid 1px #134F2C;
+  padding: 6px 12px 6px 12px;
+}
+
+.check-all:hover{
+  cursor: pointer;
+  color: #fff;
+  background-color: #134F2C;
+}
+
+.no-alarm{
+    margin-top: 148px;
+    display: flex;
+    font-size: 18px;
+    justify-content: center;
+    font-weight: 400;
+    color: gray;
+}

@@ -42,7 +42,7 @@ html {
   margin-bottom: 30px;
   font-weight: 700;
   color: #2f3438;
-  padding: 0 16px;
+  padding: 5px 500px 0 20px;
 }
 
 .notice-wrap {
@@ -116,14 +116,14 @@ html {
 
 /* 각 내역을 누르면 펼쳐지는 동반 수강생 전체 목록 */
 .student-list-wrap {
-  height: 0;
+  height: 0px;
   width: inherit;
   overflow: hidden;
   transition: height 0.35s ease;
   background-color: rgba(234, 237, 239, 0.3);
 }
 
-.student-list-wrap.open {
+.open {
   height: 80px;
 }
 
