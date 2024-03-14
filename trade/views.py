@@ -8,7 +8,6 @@ from rest_framework.views import APIView
 
 from member.models import Member, MemberProfile, MemberAddress
 from plant.models import Plant
-from report.models import ReportCategory
 from trade.models import TradeCategory, Trade, TradeFile, TradePlant, TradeScrap
 
 
@@ -61,7 +60,7 @@ class TradeReportView(View):
         report = request.POST['declaration']
 
         # 신고사유 생성
-        ReportCategory.objects.create(report_category_name=report)
+        # ReportCategory.objects.create(report_category_name=report)
 
         # 신고 생성
 
