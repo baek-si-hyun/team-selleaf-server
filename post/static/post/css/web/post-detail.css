@@ -50,6 +50,13 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.content-title {
+    color: rgb(47, 52, 56);
+    font-weight: 700;
+    margin-top: 50px;
+    font-size: 32px;
+    line-height: 42px;
+}
 .content-top-btn {
   display: inline-block;
   margin: 0px;
@@ -107,7 +114,7 @@
 }
 .img-inner {
   position: relative;
-  padding-bottom: 133.333%;
+  padding-bottom: 100%;
 }
 .content-img {
   position: absolute;
@@ -255,10 +262,10 @@
 }
 
 .uploader-img {
-  height: 0px;
+  width: 40px;
+  height: 40px;
   display: block;
-  visibility: hidden;
-  padding-top: 100%;
+
 }
 .uploader-data-box {
   margin-left: 8px;
@@ -333,8 +340,8 @@
 }
 .comment-user-icon-box {
   display: inline-block;
-  background: url("/staticfiles/images/blank-image.png") 50% center / cover
-    no-repeat;
+  /*background: url("/staticfiles/images/blank-image.png") 50% center / cover*/
+  /*  no-repeat;*/
   border-radius: 50%;
   width: 30px;
   margin-right: 12px;
@@ -342,10 +349,11 @@
   border: 0.5px solid rgba(0, 0, 0, 0.08);
 }
 .comment-user-icon {
-  height: 0px;
+  border-radius: 50%;
+
+  height: 35px;
   display: block;
-  visibility: hidden;
-  padding-top: 100%;
+
 }
 .input-wrap {
   -webkit-box-flex: 1;
@@ -464,18 +472,18 @@
 }
 .comment-user-img-container {
   display: inline-block;
-  background: url("/staticfiles/images/blank-image.png") 50% center / cover
-    no-repeat;
+  /*background: url("/staticfiles/images/blank-image.png") 50% center / cover*/
+  /*  no-repeat;*/
   border-radius: 50%;
   width: 30px;
   flex-shrink: 0;
   margin-right: 12px;
 }
 .comment-user-img {
-  height: 0px;
+  height: 25px;
   display: block;
-  visibility: hidden;
-  padding-top: 100%;
+  border-radius: 50%;
+
 }
 .comment-content-box {
   flex: 1 1 0%;
