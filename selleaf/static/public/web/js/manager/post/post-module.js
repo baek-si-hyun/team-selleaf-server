@@ -1,7 +1,7 @@
 // 다른 파일에서 postService.메소드명 형식으로 사용할 수 있도록 모듈화
 const postService = (() => {
     // 커뮤니티 게시물 목록 조회 - 한 번에 10개씩
-    const getCommunityList = async (page, callback) => {
+    const getCommunityPostsList = async (page, callback) => {
         // API에 데이터 요청
         const response = await fetch (`/admin/posts/community/${page}`);
         const posts = await response.json();
@@ -45,10 +45,35 @@ const postService = (() => {
         return posts;
     }
 
+    // 커뮤니티 게시물 여러 개 삭제
+    const deleteCommunityPosts = async (postIds) => {
+        await fetch(`/admin/posts/community-delete/${postIds}`, {
+            method: 'delete',
+            headers: {'X-CSRFToken': csrf_token}
+        });
+    }
+
+    // 노하우 게시물 여러 개 삭제(소프트 딜리트)
+    const deleteKnowhows = async (knowhowIds) => {
+        await fetch(`/admin/posts/knowhow-delete/${knowhowIds}`, {
+            method: 'delete',
+            headers: {'X-CSRFToken': csrf_token}
+        });
+    }
+
+    // 거래 게시물 여러 개 삭제(소프트 딜리트)
+    const deleteTrades = async (tradeIds) => {
+        await fetch(`/admin/posts/trade-delete/${tradeIds}`, {
+            method: 'PATCH',
+            headers: {'X-CSRFToken': csrf_token}
+        });
+    }
+
     // 모듈 반환
     return {
-        getCommunityList: getCommunityList,
+        getCommunityPostsList: getCommunityPostsList,
         getKnowhowList: getKnowhowList,
-        getTradeList: getTradeList
+        getTradeList: getTradeList,
+        deleteTrades: deleteTrades
     }
 })();

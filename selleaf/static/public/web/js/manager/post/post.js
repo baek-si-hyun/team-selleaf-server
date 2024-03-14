@@ -36,7 +36,7 @@ const order1 = document.querySelector(".order-1");
 // 커뮤니티 게시물 정보의 첫 페이지를 화면에 띄워주는 함수
 const callFirstPostsList = () => {
   // 만들어둔 모듈을 사용해서 정보를 불러옴
-  postService.getCommunityList(communityPage, showPosts).then((posts) => {
+  postService.getCommunityPostsList(communityPage, showPosts).then((posts) => {
     ul.innerHTML = posts;
 
     // 게시물 숫자 변경
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalWrap = document.querySelector(".delete-modal-wrap");
 
   deleteButtons.forEach(function (deleteButton) {
-    deleteButton.addEventListener("click", (e) => {
+    deleteButton.addEventListener("click", () => {
       modalWrap.style.display = "flex";
     });
   });
@@ -92,14 +92,30 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelButton = document.querySelector(".modal-cancel button");
   const confirmButton = document.querySelector(".modal-confirm button");
 
-  cancelButton.addEventListener("click", (e) => {
+  cancelButton.addEventListener("click", () => {
     modalWrap.style.display = "none";
   });
 
-  confirmButton.addEventListener("click", (e) => {
+  // 삭제 버튼 클릭 시, 체크된 게시물만 삭제
+  confirmButton.addEventListener("click", async () => {
     modalWrap.style.display = "none";
 
-    // 여기서 필터 내용물 검사하고, 서로 다른 뷰에 요청하기
+    // 삭제할 게시물의 id를 담을 빈 문자열
+    let deleteIds = ``;
+
+    // 이 시점에서 체크된 박스 개수를 세고
+    const checkedBoxes = document.querySelectorAll(".checkbox-input:checked");
+
+    // 각 체크박스를 감싸는 li 태그의 id를 deleteIds에 추가
+    // 사이사이에 콤마를 붙여서 뷰에서 .split을 쓸 수 있게 만들어줌
+    checkedBoxes.forEach((checkbox) => {
+      deleteIds += `,${checkbox.parentElement.classList[1]}`;
+    })
+
+    // 현재 필터 검사하고, 서로 다른 뷰에 요청
+    order1.innerText === "커뮤니티" ? await postService.deleteTrades(deleteIds) : false
+    // console.log(order1.innerText);
+
   });
 });
 

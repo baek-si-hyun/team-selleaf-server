@@ -11,7 +11,7 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     TeacherEntriesInfoAPI, DeleteManyNoticeView, DeleteManyQnAView, DeleteManyMembersAPI, TeacherApprovalAPI, \
     TeacherDeleteAPI, LectureManagementView, LectureInfoAPI, LectureReviewManagementView, LectureReviewInfoAPI, \
     LectureTraineesManagementView, TraineesInfoAPI, PostManagementView, ReplyManagementView, CommunityPostsAPI, \
-    KnowhowPostsAPI, TradePostsAPI
+    KnowhowPostsAPI, TradePostsAPI, TradeDeleteAPI
 
 urlpatterns = [
     path('', MainView.as_view()),
@@ -40,8 +40,9 @@ urlpatterns = [
     # 게시물 관리
     path('admin/posts/', PostManagementView.as_view(), name='manager-post'),
     path('admin/posts/community/<int:page>', CommunityPostsAPI.as_view(), name='community-post-api'),
-    path('admin/posts/knowhow/<int:page>', KnowhowPostsAPI.as_view(), name='community-post-api'),
-    path('admin/posts/trade/<int:page>', TradePostsAPI.as_view(), name='community-post-api'),
+    path('admin/posts/knowhow/<int:page>', KnowhowPostsAPI.as_view(), name='knowhow-post-api'),
+    path('admin/posts/trade/<int:page>', TradePostsAPI.as_view(), name='trade-post-api'),
+    path('admin/posts/trade-delete/<str:trade_ids>', TradeDeleteAPI.as_view(), name='trade-delete-api'),
     # 댓글 관리
     path('admin/reply/', ReplyManagementView.as_view(), name='manager-reply'),
     # 강의 관리

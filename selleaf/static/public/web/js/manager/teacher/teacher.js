@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalWrap = document.querySelector(".delete-modal-wrap");
 
   deleteButtons.forEach(function (deleteButton) {
-    deleteButton.addEventListener("click", (e) => {
+    deleteButton.addEventListener("click", () => {
       modalWrap.style.display = "flex";
     });
   });
@@ -54,11 +54,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelButton = document.querySelector(".modal-cancel button");
   const confirmButton = document.querySelector(".modal-confirm button");
 
-  cancelButton.addEventListener("click", (e) => {
+  cancelButton.addEventListener("click", () => {
     modalWrap.style.display = "none";
   });
 
-  confirmButton.addEventListener("click", (e) => {
+  confirmButton.addEventListener("click", () => {
     modalWrap.style.display = "none";
   });
 });

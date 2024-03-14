@@ -140,7 +140,7 @@ class DeleteManyMembersAPI(APIView):
                 member.updated_date = timezone.now()
                 member.save(update_fields=["member_status", "updated_date"])
 
-        return Response('성공')
+        return Response('success')
 
 
 # 강사 관리
@@ -282,7 +282,7 @@ class TeacherApprovalAPI(APIView):
                 teacher.updated_date = timezone.now()
                 teacher.save(update_fields=["teacher_status", "updated_date"])
 
-        return Response('성공')
+        return Response('success')
 
 
 class TeacherDeleteAPI(APIView):
@@ -302,7 +302,7 @@ class TeacherDeleteAPI(APIView):
                 teacher.updated_date = timezone.now()
                 teacher.save(update_fields=["teacher_status", "updated_date"])
 
-        return Response('성공')
+        return Response('success')
 
 
 # 게시물 관리
@@ -461,6 +461,66 @@ class TradePostsAPI(APIView):
 
         # 요청한 데이터 반환
         return Response(post_info)
+
+
+class CommunityDeleteAPI(APIView):
+    # 커뮤니티 게시물 여러 개 삭제 API 뷰
+    def delete(self, request, post_ids):
+        # 요청 경로에 담긴 post_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        post_ids = post_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for post_id in post_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_post에서 해당 id를 가진 객체를 가져옴
+            if post_id != '':
+                post = Post.objects.get(id=post_id)
+
+                print(post)
+
+                # 해당 객체 delete
+                # post.delete()
+
+        return Response('success')
+
+
+class KnowhowDeleteAPI(APIView):
+    # 노하우 게시물 여러 개 삭제 API 뷰
+    def delete(self, request, knowhow_ids):
+        # 요청 경로에 담긴 knowhow_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        knowhow_ids = knowhow_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for knowhow_id in knowhow_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_knowhow에서 해당 id를 가진 객체를 가져옴
+            if knowhow_id != '':
+                knowhow = Knowhow.objects.get(id=knowhow_id)
+
+                print(knowhow)
+
+                # 해당 객체 delete
+                # post.delete()
+
+        return Response('success')
+    
+    
+class TradeDeleteAPI(APIView):
+    # 거래 게시물 여러 개 삭제(소프트 딜리트) API 뷰
+    def patch(self, request, trade_ids):
+        # 요청 경로에 담긴 trade_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        trade_ids = trade_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for trade_id in trade_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_trade에서 해당 id를 가진 객체를 가져옴
+            if trade_id != '':
+                trade = Trade.objects.get(id=trade_id)
+
+                # 해당 객체의 status를 0(삭제)으로 만들고, 변경 시간과 같이 저장
+                trade.status = 0
+                trade.updated_date = timezone.now()
+                trade.save(update_fields=["status", "updated_date"])
+
+        return Response('success')
 
 
 # 강의 관리
@@ -875,7 +935,7 @@ class DeleteManyNoticeView(APIView):
                 notice.updated_date = timezone.now()
                 notice.save(update_fields=["notice_status", "updated_date"])
 
-        return Response('성공')
+        return Response('success')
 
 
 # QnA 관리
@@ -996,7 +1056,7 @@ class DeleteManyQnAView(APIView):
                 qna.updated_date = timezone.now()
                 qna.save(update_fields=["qna_status", "updated_date"])
 
-        return Response('성공')
+        return Response('success')
 
 
 # 신고 내역 관리
