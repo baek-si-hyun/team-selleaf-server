@@ -125,3 +125,22 @@ cancelBtns2.forEach((btn) => {
     }
   });
 });
+
+// const entryModal = document.querySelector(".entry-modal-wrap");
+// const modalBtn = document.querySelectorAll(".header-entry-button, .entry-link");
+//
+// // 강사신청 모달창 표시
+const entryModal = document.querySelector(".entry-modal-wrap");
+const entryApplicationBtn = document.querySelector(".publish-btn");
+
+entryApplicationBtn.addEventListener('click', ()=> {
+    entryModal.style.display = "block";
+});
+
+// 강사신청 모달창 내 닫기 버튼
+const closeBtn = document.querySelector(".close-button");
+
+// 클릭하면 강사신청 모달창 닫힘
+closeBtn.addEventListener("click", () => {
+    entryModal.style.display = "none";
+});

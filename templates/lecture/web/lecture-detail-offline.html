@@ -272,7 +272,7 @@
                 <div class="product-overview-title">
                   <span class="product-title">{{ lecture.lecture_title }}</span>
                   <div class="product-title-icon-wrap {{ lecture.id }}">
-                    {% if request.session.member.id == lecture.teacher__member__member_id %}
+                    {% if request.session.member.id == lecture.teacher__member_id %}
                         <a href="/lecture/update/offline/?id={{ lecture.id }}">
                             <button class="update-button" type="button">
                               <img
@@ -297,7 +297,7 @@
                         class="scrap-off"
                         src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
                       />
-                      <span class="scrap-count">0</span>
+                      <span class="scrap-count"></span>
                     </button>
                   </div>
                 </div>
@@ -480,8 +480,12 @@
                       <b>키워드</b>
                     </span>
                     <span class="info-type">
-                        {% for plant_name in lecture.plant_name %}
-                           <span class="info-tag">#{{ plant_name }}</span>
+                        {% for lte in lectures %}
+                          {% if lte.id == lecture.id %}
+                              {% for pN in lte.plant_name %}
+                                <span class="info-tag">#{{ pN }}</span>
+                              {% endfor %}
+                          {% endif %}
                         {% endfor %}
                     </span>
                   </div>
@@ -673,11 +677,7 @@
                   <div class="detail-info-contents-thumbnail">
                   </div>
                   {% for lecture_file in lecture_files %}
-                    <img
-                      class="detail-info-image"
-                      src="/upload/{{ lecture_file.file_url }}"
-                      alt="판매자 등록이미지"
-                    />
+                    <img class="detail-info-image" src="/upload/{{ lecture_file.file_url }}" alt="판매자 등록이미지"/>
                   {% endfor %}
                 </div>
                 <p class="product-review-description">{{ lecture.lecture_content }}</p>
@@ -966,7 +966,7 @@
               <div>
                 <section class="product-suggestion-wrap">
                   <header class="product-suggestion-header">
-                    <h1 class="product-suggestion-title">강사의 강의추천</h1>
+                    <h1 class="product-suggestion-title">강사의 다른 강의추천</h1>
                   </header>
                   <div class="product-suggestion-scroller-wrap">
                     <div class="product-suggestion-scroller-container">
@@ -979,10 +979,11 @@
                             {% for lecture in lectures %}
                                 <div class="product-suggestion-each-contents {{ lecture.id }}">
                                   <article class="product-suggestion-contents-wrap">
-                                    <a
-                                      class="product-suggestion-contents-overlay"
-                                      href="/lecture/detail/offline?id={{ lecture.id }}"
-                                    ></a>
+                                    {% if lecture.online_status %}
+                                        <a class="product-suggestion-contents-overlay" href="/lecture/detail/online?id={{ lecture.id }}"></a>
+                                    {% else %}
+                                        <a class="product-suggestion-contents-overlay" href="/lecture/detail/offline?id={{ lecture.id }}"></a>
+                                    {% endif %}
                                     <div class="product-suggestion-contents-image">
                                       <img
                                         class="image"
@@ -1343,6 +1344,7 @@
 <script>
     const csrf_token = '{{ csrf_token }}'
     const lecture_id = '{{ lecture.id }}'
+    const lecture_count = '{{ lecture_count }}'
 </script>
 <script src="{% static 'lecture/js/lecture/web/lecture-module.js' %}"></script>    
 <script src="{% static 'lecture/js/lecture/web/lecture-detail.js' %}"></script>

@@ -66,11 +66,16 @@ class PostCreateView(View):
 class PostDetailView(View):
     def get(self, request):
         post = Post.objects.get(id=request.GET['id'])
+        session_member_id = request.session['member']['id']
+        session_profile = MemberProfile.objects.get(id=session_member_id)
         post_tags = PostTag.objects.filter(post_id__gte=1).values('tag_name')
         reply_count = PostReply.objects.filter(post_id=post.id).values('id').count()
-        member_profile = MemberProfile.objects.filter(id=post.member_id).values('file_url')
+        member_profile = MemberProfile.objects.get(id=post.member_id)
         post_category = PostCategory.objects.filter(post_id=post).values('category_name').first()
         post_plant = PostPlant.objects.filter(post_id=post.id).values('plant_name')
+
+        post_scrap = PostScrap.objects.filter(post_id=post, member_id=post.member_id, status=1).exists()
+        post_like = PostLike.objects.filter(post_id=post, member_id=post.member_id, status=1).exists()
 
         post.post_count += 1
         post.save(update_fields=['post_count'])
@@ -78,7 +83,6 @@ class PostDetailView(View):
         post_files = list(post.postfile_set.all())
         post_file = list(post.postfile_set.all())[0]
         post_writer = Post.objects.filter(member_id=post.member_id).values('member__member_name').first()
-        # print(post_writer['member__member_name'])
         post_writer = post_writer['member__member_name']
         context = {
             'post': post,
@@ -89,7 +93,10 @@ class PostDetailView(View):
             'member_profile': member_profile,
             'post_category': post_category,
             'post_plant': post_plant,
-            'post_writer': post_writer
+            'post_writer': post_writer,
+            'post_scrap': post_scrap,
+            'post_like': post_like,
+            'session_profile': session_profile
         }
 
         return render(request, 'community/web/post/post-detail.html', context)
@@ -112,10 +119,13 @@ class PostDetailApi(APIView):
         # 게시글 작성 날짜
         post_date = Post.objects.filter(id=post_id).values('created_date')
 
+        # 댓글
         replies = PostReply.objects \
                       .filter(post_id=post_id).annotate(member_name=F('member__member_name')) \
                       .values('member_name', 'post__post_content', 'member_id', 'created_date', 'id',
-                              'post_reply_content')[offset:limit]
+                              'post_reply_content', 'member__memberprofile__file_url')[offset:limit]
+
+
 
         data = {
             'replies': replies,
@@ -149,8 +159,8 @@ class PostUpdateView(View):
 
         post_id = request.GET['id']
 
-        print(post_id)
-        print(datas)
+        # print(post_id)
+        # print(datas)
 
         # test = KnowhowFile.objects.filter(knowhow_id=knowhow_id).delete()
         # print(test)
@@ -201,7 +211,7 @@ class PostDeleteView(View):
     @transaction.atomic
     def get(self, request):
         post_id = request.GET['id']
-        print(post_id)
+        # print(post_id)
         PostTag.objects.filter(post_id=post_id).delete()
         PostFile.objects.filter(post_id=post_id).delete()
         PostReply.objects.filter(post_id=post_id).delete()
@@ -316,8 +326,8 @@ class PostLikeApi(APIView):
                 check_like_status = False
 
         like_count = PostLike.objects.filter(post_id=post_id, status=1).count()
+        # print(like_count)
 
-        print(like_count)
 
         datas = {
             'check_like_status': check_like_status,
@@ -329,10 +339,19 @@ class PostLikeApi(APIView):
 class PostLikeCountApi(APIView):
     def get(self, request, post_id):
 
-
         like_count = PostLike.objects.filter(post_id=post_id, status=1).count()
 
-        print(like_count)
+        # print(like_count)
 
 
         return Response(like_count)
+
+class PostScrapCountApi(APIView):
+    def get(self, request, post_id):
+
+        scrap_count = PostScrap.objects.filter(post_id=post_id, status=1).count()
+
+        # print(scrap_count)
+
+
+        return Response(scrap_count)
