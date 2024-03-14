@@ -211,7 +211,7 @@ li.header-relative-2{
     position: relative;
 }
 
-button.lecture-info{
+a.lecture-info{
     text-align: left;
     padding-bottom: 16px;
     height: 100%;
@@ -505,11 +505,16 @@ div.category-benner{
     border-color: #e6e6e7;
 }
 
+div.category-wrap {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    width: 880px;
+}
+
 div.category-inner{
-    width: 100px;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    flex-shrink: 0;
     display: flex;
     font-weight: 500;
     font-size: 13px;
@@ -570,34 +575,44 @@ li.list-content{
     padding-left: 8px;
     padding-right: 8px;
     border-bottom-width: 1px;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     display: flex;
     border-color: #f3f3f4;
 }
 
-button.text-left{
-    text-align: left;
-    width: 280px;
-    display: block;
-}
-
-div.list-content-wrap{
-    row-gap: 2px;
-    flex-direction: column;
-    display: flex;
+div.review-info-wrap{
     color: #333334;
     fill: #333334;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    width: 880px;
 }
 
-div.list-content-container{
-    gap: 12px;
-    display: flex;
+div.review-info-wrap:hover {
+    opacity: 0.7;
 }
 
-div.list-content-inner{
-    flex-direction: column;
+div.review-info {
+    overflow: hidden;
+    display: -webkit-box;
+    word-break: break-word;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+div.review-info.title {
+    display: block;
+    text-align: center;
 }
 
 div.content-name{
@@ -605,7 +620,7 @@ div.content-name{
     display: flex;
 }
 
-p.content-name{
+p.review-title{
     overflow: hidden;
     display: -webkit-box;
     word-break: break-word;
@@ -617,7 +632,7 @@ p.content-name{
     line-height: 20px;
 }
 
-p.content-name-detail{
+p.review-content{
     overflow: hidden;
     margin-top: 2px;
     display: -webkit-box;
@@ -736,6 +751,22 @@ button.delete-button{
     height: 40px;
     display: flex;
     border-color: #e6e6e7;
+    color: #fff;
+    fill: #fff;
+    background-color: #c06888;
+}
+
+button.delete-button:not(:disabled):hover {
+    opacity: 0.7;
+}
+
+button.delete-button:not(:disabled) path {
+    fill: #fff;
+}
+
+button.delete-button:disabled {
+    cursor: default;
+    background-color: #f5f5f5;
 }
 
 svg.edit-button{
@@ -907,6 +938,11 @@ button.modal-confirm{
     color: #fff;
     fill: #fff;
     background-color: #c06888;
+}
+
+button.modal-cancel:hover,
+button.modal-confirm:hover {
+    opacity: 0.7;
 }
 
 div.delete-modal-bgcolor{

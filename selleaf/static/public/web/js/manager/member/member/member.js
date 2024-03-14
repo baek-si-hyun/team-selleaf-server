@@ -39,8 +39,6 @@ const callFirstMemberList = () => {
 // 페이지 열렸을 때 사용
 callFirstMemberList();
 
-//
-
 // 페이지네이션 이벤트 추가하기
 
 // 삭제 버튼 누르면 뜨는 모달창
