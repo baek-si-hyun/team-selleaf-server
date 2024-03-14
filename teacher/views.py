@@ -7,6 +7,7 @@ from lecture.models import LectureProductFile, Lecture
 
 class TeacherEntryView(View):
     def get(self, request):
+
         # 최근 생성된 강의 10개 가지고 오기
         lectures = Lecture.enabled_objects.all().values('lecture_title', 'id', 'teacher__member__member_name')[:10]
         #
@@ -17,8 +18,15 @@ class TeacherEntryView(View):
         context = {
             'lectures': lectures,
         }
+
         return render(request, 'teacher/teacher-entry.html', context)
 
 class TeacherSubView(View):
     def get(self, request):
         return render(request, 'teacher/teacher-sub.html')
+
+    def post(self, request):
+        teacher_info_data = request.POST
+        # 강사 약력
+        print(teacher_info_data['brief-history'])
+        return

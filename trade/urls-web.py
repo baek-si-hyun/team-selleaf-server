@@ -1,7 +1,7 @@
 from django.urls import path
 
 from trade.views import TradeMainView, TradeDetailView, TradeTotalView, TradeUploadView, TradeUpdateView, \
-    TradeDeleteView, TradeTotalApi, TradeDetailApi, TradeReportView
+    TradeDeleteView, TradeTotalApi, TradeDetailApi, TradeReportView, TradeMainApi
 
 app_name = 'trade'
 
@@ -21,6 +21,7 @@ urlpatterns = [
 
     # 거래 게시물 메인 페이지
     path('main/', TradeMainView.as_view(), name='main'),
+    path('main/<int:page>', TradeMainApi.as_view(), name='total'),
 
     # 전체 거래 게시물 보기 페이지
     path('total/', TradeTotalView.as_view(), name='total'),
