@@ -49,3 +49,16 @@ class Tag(Period):
 
     class Meta:
         abstract = True
+
+
+class Report(Period):
+    # 신고사유
+    report_content = models.CharField(max_length=50, null=False, blank=False)
+    # 신고한 사람
+    member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
+    # 신고사항 처리 상태 - 게시중(1), 삭제됨(0)
+    report_status = models.BooleanField(null=False, blank=False, default=True)
+    object = models.Manager()
+
+    class Meta:
+        abstract = True
