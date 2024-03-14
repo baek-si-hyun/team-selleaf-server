@@ -15,6 +15,8 @@ class Member(Period):
     marketing_agree = models.BooleanField(default=False)
     # True: 강사, False: 일반 회원
     sms_agree = models.BooleanField(default=False)
+    # True: 관리자, False: 일반 회원
+    admin_type = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'tbl_member'
