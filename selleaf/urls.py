@@ -12,10 +12,10 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     TeacherDeleteAPI, LectureManagementView, LectureInfoAPI, LectureReviewManagementView, LectureReviewInfoAPI, \
     LectureTraineesManagementView, TraineesInfoAPI, PostManagementView, ReplyManagementView, \
     KnowhowPostsAPI, TradePostsAPI, KnowhowDeleteAPI, TradeDeleteAPI, \
-    KnowhowCountAPI, TradeCountAPI, PostsListAPI, PostsDeleteAPI, PostsCountAPI
+    KnowhowCountAPI, TradeCountAPI, PostsListAPI, PostsDeleteAPI, PostsCountAPI, ReportManagementView
 
 urlpatterns = [
-    path('', MainView.as_view()),
+    path('', MainView.as_view(), name='main'),
     path('search/', SearchView.as_view(), name='search'),
     path('search/api/', SearchAPI.as_view(), name='search-api'),
     path('search-history/api/', SearchHistoryAPI.as_view(), name='search-history-api'),
@@ -70,6 +70,8 @@ urlpatterns = [
     path('admin/qna/update/', UpdateQnAView.as_view(), name='qna-update'),
     path('admin/qna/delete/', DeleteQnAView.as_view(), name='qna-delete'),
     path('admin/qna/delete/<str:qna_ids>', DeleteManyQnAView.as_view(), name='many-qna-delete'),
+    # 신고 내역 관리
+    path('admin/report/', ReportManagementView.as_view(), name='manager-report'),
     # 기타 서비스 url
     path('alarm/', include('alarm.urls-web')),
     path('member/', include('member.urls-web')),

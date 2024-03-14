@@ -15,7 +15,7 @@ from member.models import Member
 from notice.models import Notice
 from post.models import Post, PostTag, PostFile, PostReply, PostCategory, PostPlant, PostScrap, PostLike, PostReplyLike
 from qna.models import QnA
-from report.models import KnowhowReplyReport, PostReplyReport
+from report.models import KnowhowReplyReport, PostReplyReport, LectureReport, TradeReport, PostReport, KnowhowReport
 from teacher.models import Teacher
 from trade.models import Trade, TradeCategory
 
@@ -1103,15 +1103,22 @@ class DeleteManyQnAView(APIView):
 class ReportManagementView(View):
     # 신고 내역 페이지 이동 뷰
     def get(self, request):
-        # 신고 내역 전부 가져오기
-        return render(request, 'manager/report/report.html')
+        # 강의, 거래, 일반 게시글(+댓글), 노하우 게시글(+댓글) 각각의 개수
+        lecture_report_count = LectureReport.object.count()     # 강의
+        trade_report_count = TradeReport.object.count()     # 거래
+        post_report_count = PostReport.object.count()   # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.count()    # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.count()     # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.count()  # 노하우 게시글 댓글
 
-    # 신고 내역 처리 or 삭제(반려) 후의 뷰
-    # 이 페이지는 별도의 신고 상세 모달 또는 페이지를 제작하는 등의 개선이 필요해 보임
-    def post(self, request):
-        # update 완료 후, 다시 신고 내역 페이지로 이동
-        return render(request, 'manager/report/report.html')
+        # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
+        context = {
+            'lecture_report_count': lecture_report_count,
+            'trade_report_count': trade_report_count,
+            'post_report_count': post_report_count,
+            'post_reply_report_count': post_reply_report_count,
+            'knowhow_report_count': knowhow_report_count,
+            'knowhow_reply_report_count': knowhow_reply_report_count
+        }
 
-# 남은 것들
-# 필요한 곳에 API 사용
-# 내역 삭제 뷰 post 쓰지 말고 따로 분리할 지 회의
+        return render(request, 'manager/report/report.html', context)
