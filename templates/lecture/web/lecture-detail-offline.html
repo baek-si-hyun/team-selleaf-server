@@ -616,7 +616,9 @@
               <p class="product-total-price">
                 <span class="product-order-text">주문금액</span>
                 <span class="product-order-price">
-                  <span class="total-price">{{ lecture.lecture_price }}</span>원
+                    <span class="total-price" data-price="{{ lecture.lecture_price }}">
+                      <span class="total-price-value">0</span>원
+                    </span>
                 </span>
               </p>
               <div class="product-order-button-wrap">
@@ -1306,10 +1308,9 @@
                     </section>
                     <p class="sidebar-total-price-wrap">
                       <span class="sidebar-total-text">주문금액</span>
-                      <span class="sidebar-total-price">
-                        <span>{{ lecture.lecture_price }}</span>
-                        원
-                      </span>
+                        <span class="sidebar-total-price" data-price="{{ lecture.lecture_price }}">
+                          <span class="total-price-value">0</span>원
+                        </span>
                     </p>
                     <div class="sidebar-button-wrap">
                       <button class="sidebar-addcart-button" type="button">
