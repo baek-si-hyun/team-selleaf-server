@@ -53,7 +53,7 @@ const showCartItems = (details)=>{
             </p>
             <p class="product-option">
             <div class="selected-product-count">
-            수량
+            인원
                 <div class="counted-number">
                   ${detail['quantity']}
                 </div>
