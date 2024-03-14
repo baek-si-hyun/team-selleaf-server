@@ -80,7 +80,16 @@ const postService = (() => {
         return likeCounting;
     }
 
-    return {getList: getList, getScrap: getScrap, getLike:getLike, likeCount:likeCount}
+    const scrapCount = async (post_id, callback) => {
+        const response = await fetch(`/post/scrap/count/${post_id}/`)
+        const scrapCounting = await response.json();
+        if (callback){
+            return callback(scrapCounting);
+        }
+        return scrapCounting;
+    }
+
+    return {getList: getList, getScrap: getScrap, getLike: getLike, likeCount: likeCount, scrapCount: scrapCount}
 })();
 
 
