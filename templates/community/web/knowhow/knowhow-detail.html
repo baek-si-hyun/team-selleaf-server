@@ -173,23 +173,52 @@
                   <div style="position: relative;">
                     <div class="sticky-inner">
                       <button title="좋아요" class="sticky-btn">
-                        <span class="sticky-icon-box">
+                          {% if knowhow_like %}
+                        <span class="sticky-icon-box like-check-on" id="like-box">
+                          <img
+                            class="sticky-icon"
+                            src= "{%  static 'public/web/images/common/like-on.png' %}"
+                            alt=""
+                            id="like-icon"
+                          />
+                        </span>
+                      {% else %}
+                          <span class="sticky-icon-box like-check-off" id="like-box">
                           <img
                             class="sticky-icon"
                             src= "{%  static 'public/web/images/common/like-off.png' %}"
                             alt=""
+                            id="like-icon"
                           />
                         </span>
+                      {% endif %}
+                        
                         <span class="sticky-data" id="like-count"></span>
                       </button>
+                    
                       <button title="저장" class="sticky-btn">
-                        <span class="sticky-icon-box">
+                      
+                      {% if knowhow_scrap %}
+                        <span class="sticky-icon-box scrap-check-on" id="scrap-box">
                           <img
                             class="sticky-icon"
-                            src= "{%  static 'public/web/images/common/scrap-off-blk.png' %}"
+                            src="{% static 'public/web/images/common/scrap-on.png' %}"
                             alt=""
+                            id="scrap-icon"
                           />
+                        
                         </span>
+                      {% else %}
+                          <span class="sticky-icon-box scrap-check-off" id="scrap-box">
+                          <img
+                            class="sticky-icon"
+                            src="{% static 'public/web/images/common/scrap-off.png' %}"
+                            alt=""
+                            id="scrap-icon"
+                          />
+                        
+                        </span>
+                      {% endif %}
                         <span class="sticky-data" id="scrap-count"></span>
                       </button>
                       <hr class="sticky-btn-split" />
@@ -204,22 +233,22 @@
                         <span class="sticky-data" id="reply-count"></span>
                       </button>
                       {% if request.session.member.id == knowhow.member.id %}
-                          <a href="/knowhow/detail/update/?id={{knowhow.id}}">
-                      <button type="button" title="공유" class="sticky-btn background-color">
-                        <span class="sticky-icon-box background-color">
-                          <span class="sticky-icon sticky-icon-share"> </span>
-                        </span>
-                        <span class="sticky-data" id="share">수정하기</span>
-                      </button>
-                          </a>
-                          <a href=""></a>
-                      <button type="button" title="공유" class="sticky-btn background-color">
-                        <span class="sticky-icon-box background-color">
-                          <span class="sticky-icon sticky-icon-share"> </span>
-                        </span>
-                        <span class="sticky-data" id="share">삭제하기</span>
-                      </button>
-                          </a>
+                      <a href="/knowhow/update/?id={{ knowhow.id }}">
+                          <button type="button" title="공유" class="sticky-btn background-color">
+                            <span class="sticky-icon-box background-color">
+                              <span class="sticky-icon sticky-icon-share"> </span>
+                            </span>
+                            <span class="sticky-data" id="share">수정하기</span>
+                          </button>
+                      </a>
+                      <a href="/knowhow/delete/?id={{ knowhow.id }}">
+                          <button type="button" title="공유" class="sticky-btn background-color">
+                            <span class="sticky-icon-box background-color">
+                              <span class="sticky-icon sticky-icon-share"> </span>
+                            </span>
+                            <span class="sticky-data" id="share">삭제하기</span>
+                          </button>
+                      </a>
                       {% endif %}
                         
                     </div>
@@ -371,5 +400,7 @@
 
     <script src="{% static 'knowhow/js/web/knowhow-detail.js' %}"></script>
     <script src="{% static 'knowhow/js/web/reply-module.js' %}"></script>
+    <script src="{% static 'knowhow/js/web/knowhow-module.js' %}"></script>
     <script src="{% static 'knowhow/js/web/knowhow-detail-reply.js' %}"></script>
+    <script src="{% static 'knowhow/js/web/knowhow-like.js' %}"></script>
 {% endblock %}

@@ -15,6 +15,14 @@ const memberService = (() => {
         return members;
     }
 
+    // 회원 여러 명을 휴면 상태로 변경
+    const deleteMembers = async (memberIds) => {
+        await fetch(`/admin/member/delete/${memberIds}`, {
+            method: 'PATCH',
+            headers: {'X-CSRFToken': csrf_token}
+        });
+    }
+
     // 객체형태로 반환 - memberService.getList() 형태로 사용 가능
-    return {getList: getList}
+    return {getList: getList, deleteMembers: deleteMembers}
 })();

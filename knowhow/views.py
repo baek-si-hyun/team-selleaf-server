@@ -52,8 +52,8 @@ class KnowhowCreateView(View):
         KnowhowTag.objects.create(**knowhowtag)
 
         plant_types = data.getlist('plant-type')
-        recommend_urls = data.getlist('knowhow-recommend-url')
         recommend_contents = data.getlist('knowhow-recommend-content')
+        recommend_urls = data.getlist('knowhow-recommend-url')
 
         # 노하우 추천
         for i in range(len(recommend_urls)):
@@ -68,19 +68,34 @@ class KnowhowCreateView(View):
         for key in files:
             # print(key)
             KnowhowFile.objects.create(knowhow=knowhowdata, file_url=files[key])
+
         return redirect(f'/knowhow/detail/?id={knowhowdata.id}')
+
 
 class KnowhowDetailView(View):
     def get(self, request):
         knowhow = Knowhow.objects.get(id=request.GET['id'])
+        member_id = knowhow.member_id
+        # print(member_id)
+
         knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')
         reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow.id).values('id').count()
-        member_profile = MemberProfile.objects.filter(id=knowhow.member_id).values('file_url')
+        member_profile = MemberProfile.objects.filter(id=member_id).values('file_url')
+
+        knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow, member_id=member_id, status=1).exists()
+        knowhow_like = KnowhowLike.objects.filter(knowhow_id=knowhow, member_id=member_id, status=1).exists()
+
+        print(knowhow_scrap)
+
         knowhow.knowhow_count += 1
         knowhow.save(update_fields=['knowhow_count'])
 
         knowhow_files = list(knowhow.knowhowfile_set.all())
         knowhow_file = list(knowhow.knowhowfile_set.all())[0]
+
+
+        # print(knowhow)
+
 
         context = {
             'knowhow': knowhow,
@@ -88,14 +103,112 @@ class KnowhowDetailView(View):
             'knowhow_file': knowhow_file,
             'knowhow_tags': knowhow_tags,
             'reply_count': reply_count,
-            'member_profile': member_profile
+            'member_profile': member_profile,
+            'knowhow_scrap': knowhow_scrap,
+            'knowhow_like': knowhow_like
         }
 
         return render(request, 'community/web/knowhow/knowhow-detail.html', context)
 
-class KnowhowDetailUpdateView(DetailView):
-    def get(self):
-        pass
+class KnowhowUpdateView(DetailView):
+    def get(self, request):
+        knowhow_id = request.GET.get('id')
+
+        knowhow = Knowhow.objects.get(id=knowhow_id)
+        knowhow_file = list(knowhow.knowhowfile_set.values('file_url'))
+        # test = KnowhowFile.objects.filter(knowhow_id=knowhow_id).delete()
+        # print(test)
+
+        context = {
+            'knowhow': knowhow,
+            'knowhow_files': knowhow_file
+        }
+
+        return render(request, 'community/web/knowhow/edit-knowhow.html', context)
+
+    @transaction.atomic
+    def post(self, request):
+        datas = request.POST
+        files = request.FILES
+
+        knowhow_id = request.GET['id']
+
+        print(knowhow_id)
+        print(datas)
+
+        # test = KnowhowFile.objects.filter(knowhow_id=knowhow_id).delete()
+        # print(test)
+
+        # 지금 시간
+        time_now = timezone.now()
+
+        # 수정할 노하우 게시글 아이디
+        knowhow = Knowhow.objects.get(id=knowhow_id)
+
+        # 노하우 게시글 수정
+        knowhow.knowhow_title = datas['knowhow-title']
+        knowhow.knowhow_content = datas['knowhow-content']
+        knowhow.updated_date = time_now
+        knowhow.save(update_fields=['knowhow_title', 'knowhow_content', 'updated_date'])
+
+        # 노하우 카테고리 수정
+        knowhow_category = KnowhowCategory.objects.get(knowhow_id=knowhow_id)
+
+        knowhow_category.category_name = datas['knowhow-category']
+        knowhow_category.updated_date = time_now
+        knowhow_category.save(update_fields=['category_name', 'updated_date'])
+
+        # 노하우 식물종류 수정
+        plant_types = datas.getlist('plant-type')
+
+        KnowhowPlant.objects.filter(knowhow_id=knowhow_id).delete()
+
+        for plant_type in plant_types:
+            # print(plant_type)
+            KnowhowPlant.objects.create(knowhow_id=knowhow_id, plant_name=plant_type, updated_date=time_now)
+
+        # 노하우 태그 수정
+        knowhow_tag = KnowhowTag.objects.get(knowhow_id=knowhow_id)
+
+        knowhow_tag.tag_name = datas['knowhow-tag']
+        knowhow_tag.updated_date = timezone.now()
+        knowhow_tag.save(update_fields=['tag_name', 'updated_date'])
+
+        # 노하우 추천 내용 수정
+        recommend_contents = datas.getlist('knowhow-recommend-content')
+        recommend_urls = datas.getlist('knowhow-recommend-url')
+
+        KnowhowRecommend.objects.filter(knowhow_id=knowhow_id).delete()
+
+        # 노하우 추천
+        for i in range(len(recommend_urls)):
+            KnowhowRecommend.objects.create(knowhow_id=knowhow_id, recommend_url=recommend_urls[i],
+                                            recommend_content=recommend_contents[i])
+
+        KnowhowFile.objects.filter(knowhow_id=knowhow_id).delete()
+
+        for key in files:
+            KnowhowFile.objects.create(knowhow_id=knowhow_id, file_url=files[key])
+
+        return redirect(f'/knowhow/detail/?id={knowhow_id}')
+
+class KnowhowDeleteView(View):
+    @transaction.atomic
+    def get(self, request):
+        knowhow_id = request.GET['id']
+        print(knowhow_id)
+        KnowhowTag.objects.filter(knowhow_id=knowhow_id).delete()
+        KnowhowFile.objects.filter(knowhow_id=knowhow_id).delete()
+        KnowhowRecommend.objects.filter(knowhow_id=knowhow_id).delete()
+        KnowhowReply.objects.filter(knowhow_id=knowhow_id).delete()
+        KnowhowCategory.objects.filter(knowhow_id=knowhow_id).delete()
+        KnowhowPlant.objects.filter(knowhow_id=knowhow_id).delete()
+        KnowhowScrap.objects.filter(knowhow_id=knowhow_id).delete()
+        KnowhowLike.objects.filter(knowhow_id=knowhow_id).delete()
+        Knowhow.objects.filter(id=knowhow_id).delete()
+
+        return redirect(f'/knowhow/list/')
+
 
 class KnowhowListView(View):
     def get(self, request):
@@ -109,25 +222,28 @@ class KnowhowListView(View):
         return render(request, 'community/web/knowhow/knowhow.html', context)
 
 class KnowhowListApi(APIView):
-    def get(self, request, page, sorting, filters, type):
+    def get(self, request, page, sorting, filters, types):
         row_count = 6
         offset = (page - 1) * row_count
         limit = row_count * page
 
-        print(type)
+        print(types)
 
         condition = Q()
+        condition2 = Q()
         sort1 = '-id'
         sort2 = '-id'
 
-        if type == '식물 키우기':
-            condition |= Q(knowhowcategory__category_name__contains='식물 키우기')
-        elif type == '제품 추천':
-            condition |= Q(knowhowcategory__category_name__contains='제품 추천')
-        elif type == '스타일링':
-            condition |= Q(knowhowcategory__category_name__contains='스10')
-        elif type == '전체':
-            condition |= Q()
+        if types == '식물 키우기':
+            condition2 |= Q(knowhowcategory__category_name__contains='식물 키우기')
+        elif types == '관련 제품':
+            condition2 |= Q(knowhowcategory__category_name__contains='관련 제품')
+        elif types == '테라리움':
+            condition2 |= Q(knowhowcategory__category_name__contains='테라리움')
+        elif types == '스타일링':
+            condition2 |= Q(knowhowcategory__category_name__contains='스타일링')
+        elif types == '전체':
+            condition2 |= Q()
 
         filters = filters.split(',')
         for filter in filters:
@@ -153,62 +269,7 @@ class KnowhowListApi(APIView):
             elif filter.replace(',', '') == '전체':
                 condition = Q()
 
-        print(condition)
-
-        # if sorting == '최신순':
-        #     columns = [
-        #         'knowhow_title',
-        #         'member_name',
-        #         'knowhow_count',
-        #         'id',
-        #         'member_id'
-        #     ]
-        #     knowhows = Knowhow.objects.select_related('knowhowscrap').filter(condition) \
-        #         .annotate(member_name=F('member__member_name')) \
-        #         .values(*columns) \
-        #         .annotate(scrap_count=Count('knowhowscrap')) \
-        #         .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'scrap_count')\
-        #         .order_by('-id').distinct()
-        #
-        # elif sorting == '인기순':
-        #     columns = [
-        #         'knowhow_title',
-        #         'member_name',
-        #         'knowhow_count',
-        #         'id',
-        #         'member_id'
-        #     ]
-        #     # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
-        #     # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
-        #     knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition) \
-        #         .annotate(member_name=F('member__member_name')) \
-        #         .values(*columns) \
-        #         .annotate(like_count=Count('knowhowlike'), scrap_count=Count('knowhowscrap')) \
-        #         .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count', 'scrap_count').order_by(
-        #         '-like_count', '-knowhow_count').distinct()
-        #
-        #     # for knowhow in knowhows:
-        #     #     print(knowhow['id'], knowhow['like_count'], sep=", ")
-        #
-        # elif sorting == "스크랩순":
-        #     columns = [
-        #         'knowhow_title',
-        #         'member_name',
-        #         'knowhow_count',
-        #         'id',
-        #         'member_id'
-        #     ]
-        #     knowhows = Knowhow.objects.select_related('knowhowscrap').filter(condition) \
-        #         .annotate(member_name=F('member__member_name')) \
-        #         .values(*columns) \
-        #         .annotate(scrap_count=Count('knowhowscrap')) \
-        #         .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'scrap_count').order_by(
-        #         '-scrap_count', '-id').distinct()
-
-            # for knowhow in knowhows:
-            #     print(knowhow['id'], knowhow['scrap_count'], sep=", ")
-
-        # print(knowhows)
+        # print(condition2)
 
         if sorting == '최신순':
             sort1 = '-id'
@@ -232,24 +293,46 @@ class KnowhowListApi(APIView):
 
         # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
         # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
-        knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition) \
+        knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter() \
+            .annotate(member_name=F('member__member_name')) \
+            .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id')\
+
+        #
+        knowhows_count = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition, condition2) \
             .annotate(member_name=F('member__member_name')) \
             .values(*columns) \
-            .annotate(like_count=Count('knowhowlike'), scrap_count=Count('knowhowscrap')) \
+            .annotate(like_count=Count(Q(knowhowlike__status=1)), scrap_count=Count(Q(knowhowscrap__status=1))) \
             .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count',
-                    'scrap_count')\
-            .order_by(sort1, sort2).distinct()
+                    'scrap_count') \
+            .order_by(sort1, sort2).distinct().count()
+
+        # print(knowhows_count)
+
+
 
         # knowhow에 knowhow_file을 가상 컬럼을 만들어서 하나씩 추가해줌
         for knowhow in knowhows:
             knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
             profile = MemberProfile.objects.filter(member_id=knowhow['member_id']).values('file_url').first()
+            scrap_count = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], status=1).values('status').count()
+            like_count = KnowhowLike.objects.filter(knowhow_id=knowhow['id'], status=1).values('status').count()
+            knowhow['knowhow_scrap'] = scrap_count
+            knowhow['knowhow_like'] = like_count
             knowhow['knowhow_file'] = knowhow_file['file_url']
             knowhow['profile'] = profile['file_url']
 
+        knowhows.filter(condition, condition2).order_by(sort1, sort2)
+        knowhows = knowhows[offset:limit]
         # print(knowhows)
+        for knowhow in knowhows:
+            print(knowhow)
 
-        return Response(knowhows[offset:limit])
+        datas = {
+            'knowhows': knowhows,
+            'knowhows_count': knowhows_count
+        }
+
+        return Response(datas)
 
 
 class KnowhowReplyWriteApi(APIView):
@@ -270,17 +353,24 @@ class KnowhowReplyWriteApi(APIView):
 
         return Response('success')
 
-class KnowhowReplyListApi(APIView):
+class KnowhowDetailApi(APIView):
     def get(self, request, knowhow_id, page):
+        member = request.session['member']
+
         row_count = 5
         offset = (page - 1) * row_count
         limit = row_count * page
 
+        # 댓글 갯수
         reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow_id).count()
-        like_count = KnowhowLike.objects.filter(knowhow_id=knowhow_id).count()
-        scrap_count = KnowhowScrap.objects.filter(knowhow_id=knowhow_id).count()
+        # 좋아요 갯수
+        like_count = KnowhowLike.objects.filter(knowhow_id=knowhow_id, status=1).count()
+        # 스크랩 갯수
+        scrap_count = KnowhowScrap.objects.filter(knowhow_id=knowhow_id, status=1).count()
+        # 게시글 작성 날짜
         knowhow_date = Knowhow.objects.filter(id=knowhow_id).values('created_date')
-        # print(reply_count)
+
+
 
         replies = KnowhowReply.objects\
             .filter(knowhow_id=knowhow_id).annotate(member_name=F('member__member_name'))\
@@ -312,3 +402,81 @@ class KnowhowReplyApi(APIView):
         reply.save(update_fields=['knowhow_reply_content', 'updated_date'])
 
         return Response('success')
+
+class KnowhowScrapApi(APIView):
+    def get(self, request, knowhow_id, member_id, scrap_status):
+
+        check_scrap_status = True
+
+        # print(knowhow_id, member_id, status)
+
+        # 만들어지면 True, 이미 있으면 False
+        scrap, scrap_created = KnowhowScrap.objects.get_or_create(knowhow_id=knowhow_id, member_id=member_id)
+
+        if scrap_created:
+            check_scrap_status = True
+
+        else:
+
+            if scrap_status == 'True':
+                update_scrap = KnowhowScrap.objects.get(knowhow_id=knowhow_id, member_id=member_id)
+
+                update_scrap.status = 1
+                update_scrap.save(update_fields=['status'])
+                check_scrap_status = True
+
+            else :
+                update_scrap = KnowhowScrap.objects.get(knowhow_id=knowhow_id, member_id=member_id)
+
+                update_scrap.status = 0
+                update_scrap.save(update_fields=['status'])
+                check_scrap_status = False
+
+        scrap_count = KnowhowScrap.objects.filter(knowhow_id=knowhow_id, status=1).count()
+
+        datas = {
+            'check_scrap_status': check_scrap_status,
+            'scrap_count': scrap_count
+        }
+
+        return Response(datas)
+
+class KnowhowLikeApi(APIView):
+    def get(self, request, knowhow_id, member_id, like_status):
+
+        check_like_status = True
+
+        # print(knowhow_id, member_id, status)
+
+        # 만들어지면 True, 이미 있으면 False
+        like, like_created = KnowhowLike.objects.get_or_create(knowhow_id=knowhow_id, member_id=member_id)
+
+        if like_created:
+            check_like_status = True
+
+        else:
+
+            if like_status == 'True':
+                update_like = KnowhowLike.objects.get(knowhow_id=knowhow_id, member_id=member_id)
+
+                update_like.status = 1
+                update_like.save(update_fields=['status'])
+                check_like_status = True
+
+            else :
+                update_like = KnowhowLike.objects.get(knowhow_id=knowhow_id, member_id=member_id)
+
+                update_like.status = 0
+                update_like.save(update_fields=['status'])
+                check_like_status = False
+
+        like_count = KnowhowLike.objects.filter(knowhow_id=knowhow_id, status=1).count()
+
+        # print(like_count)
+
+        datas = {
+            'check_like_status': check_like_status,
+            'like_count': like_count
+        }
+
+        return Response(datas)

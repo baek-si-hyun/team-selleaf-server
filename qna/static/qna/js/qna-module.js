@@ -16,6 +16,14 @@ const qnaService = (() => {
         return qnas;
     }
 
+    // QnA 여러 개 삭제(소프트 딜리트)
+    const deleteQnAs = async (qnaIds) => {
+        await fetch(`/admin/qna/delete/${qnaIds}`, {
+            method: 'PATCH',
+            headers: {'X-CSRFToken': csrf_token}
+        });
+    }
+
     // 객체 형태로 반환함으로서, qnaService.getList() 형식으로 getList 함수 사용 가능
-    return {getList: getList}
+    return {getList: getList, deleteQnAs: deleteQnAs}
 })();
