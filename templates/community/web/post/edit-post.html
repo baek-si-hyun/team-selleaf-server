@@ -7,8 +7,8 @@
 {% block content %}
     <div class="create-post-wrap">
       <div class="create-post-container">
-          <form action="{% url 'post:create' %}" method="post" name="post-create-form" enctype="multipart/form-data">
-                            {% csrf_token %}
+          <form action="/post/update/?id={{ post.id }}" method="post" name="update" enctype="multipart/form-data">
+              {% csrf_token %}
 
         <div
           class="sticky-container"
