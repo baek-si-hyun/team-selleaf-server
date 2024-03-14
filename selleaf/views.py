@@ -8,11 +8,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apply.models import Apply, Trainee
+from knowhow.models import Knowhow
 from lecture.models import Lecture, LectureReview
 from member.models import Member
 from notice.models import Notice
+from post.models import Post
 from qna.models import QnA
 from teacher.models import Teacher
+from trade.models import Trade
 
 
 # 관리자 로그인
@@ -307,8 +310,21 @@ class TeacherDeleteAPI(APIView):
 class PostManagementView(View):
     # 게시물 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 게시물(커뮤니티, 노하우, 거래) 정보 다 들고 가기
-        return render(request, 'manager/post/post.html')
+        # 모든 게시물(커뮤니티, 노하우, 거래) 각각의 개수와 전체 개수
+        post_count = Post.objects.count()
+        knowhow_count = Knowhow.objects.count()
+        trade_count = Trade.enabled_objects.count()
+
+        total_count = post_count + knowhow_count + trade_count
+
+        context = {
+            'post_count': post_count,
+            'knowhow_count': knowhow_count,
+            'trade_count': trade_count,
+            'total_count': total_count
+        }
+
+        return render(request, 'manager/comment/comment.html', context)
 
     # 게시물 삭제를 위한 뷰
     def post(self, request):
@@ -585,17 +601,11 @@ class TraineesInfoAPI(APIView):
         return Response(trainee_info)
 
 
-
 # 댓글 관리
 class ReplyManagementView(View):
     # 댓글 관리 페이지 이동 뷰
     def get(self, request):
         # 모든 게시물에 대한 댓글을 전부 가져와야 됨
-        return render(request, 'manager/comment/comment.html')
-
-    # 특정 댓글 삭제를 위한 뷰
-    def post(self, request):
-        # 특정 댓글들 status 변경
         return render(request, 'manager/comment/comment.html')
 
 
@@ -604,11 +614,6 @@ class TagManagementView(View):
     # 태그 관리 페이지 이동 뷰
     def get(self, request):
         # 모든 게시물에 대한 댓글을 전부 가져와야 됨
-        return render(request, 'manager/tag/tag.html')
-
-    # 특정 태그 삭제를 위한 뷰
-    def post(self, request):
-        # 태그들 status 변경
         return render(request, 'manager/tag/tag.html')
 
 
