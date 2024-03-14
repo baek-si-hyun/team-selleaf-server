@@ -11,6 +11,11 @@
         <div class="post-detail-inner">
           <div class="post-detail-box">
             <div class="content-wrap">
+            <div class="content-title-box">
+                  <p class="content-title">
+                      {{ post.post_title }}
+                  </p>
+            </div>
               <div class="content-container">
                 <div class="content-sub-description-box">
                   <div class="content-sub-description">
@@ -68,7 +73,7 @@
                   <button class="uploader-data-btn">
                     <figure class="uploader-img-box">
                       <img
-                        src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/170410117290522562.jpeg?w=50"
+                        src="{{ member_profile.file_url }}"
                         height="0"
                         class="uploader-img"
                       />
@@ -122,7 +127,7 @@
                       <div class="comment-input-container">
                         <figure class="comment-user-icon-box">
                           <img
-                            src="../../../staticfiles/images/blank-image.png"
+                            src="{{ session_profile.file_url }}"
                             height="0"
                             class="comment-user-icon"
                           />
@@ -386,7 +391,7 @@
                       </button>
                       <button title="저장" class="sticky-btn">
                       
-                      {% if knowhow_scrap %}
+                      {% if post_scrap %}
                         <span class="sticky-icon-box scrap-check-on" id="scrap-box">
                           <img
                             class="sticky-icon"

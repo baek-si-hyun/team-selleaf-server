@@ -25,7 +25,7 @@ const getPostDate = (replies) => {
 
 const showList = (replies) => {
     let text = ``;
-    console.log(replies['replies'])
+    console.log(replies)
     replies['replies'].forEach((reply) => {
         // console.log(reply.created_date)
         text += `
@@ -34,7 +34,7 @@ const showList = (replies) => {
                         <div class="comment-user-img-wrap">
                           <figure class="comment-user-img-container">
                             <img
-                              src="/static/public/web/images/common/blank-image.png"
+                              src="${reply.member__memberprofile__file_url}"
                               height="0"
                               class="comment-user-img"
                             />

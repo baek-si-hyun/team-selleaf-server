@@ -9,8 +9,17 @@ const lectureService = (() => {
         return lectures;
     }
 
+    const localList = async (page, callback) => {
+        const response = await fetch(`/lecture/main/${page}`);
+        const lectures = await response.json();
+        if(callback){
+            return callback(lectures);
+        }
+        return lectures;
+    }
 
-    return {getList: getList}
+    return {getList: getList, localList:localList}
+
 })();
 
 
@@ -28,3 +37,23 @@ const lectureScrapService = (() => {
 
   return {update: update}
 })()
+
+const scrapCountService = (() => {
+    const scrapCount = async (lecture_id, callback) => {
+        // let endpoint = "";
+        // if (onlineStatus) {
+        //     endpoint = `/lecture/detail/online?id=${lecture_id}`;
+        // } else {
+        //     endpoint = `/lecture/detail/offline?id=${lecture_id}`;
+        // }
+
+        const response = await fetch(`/lecture/detail/offline/${lecture_id}`);
+        const lectures = await response.json();
+        if(callback){
+            return callback(lectures);
+        }
+        return lectures;
+    }
+
+    return {scrapCount: scrapCount}
+})();

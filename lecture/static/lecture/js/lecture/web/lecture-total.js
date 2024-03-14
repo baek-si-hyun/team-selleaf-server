@@ -303,10 +303,7 @@ plantSelections.forEach((plantSelection) => {
   });
 });
 
-
-
-
-
+// ============================================================================================================
 
 // 게시물 목록 보기
 let page = 1;
@@ -315,10 +312,20 @@ const lectureSection = document.querySelector(".post-wrap");
 const filterItems = document.querySelectorAll(".filter-item")
 const optionList = document.querySelector('.option-list')
 const sortChoices = document.querySelectorAll(".menu-choice")
+const optionReset = document.querySelector(".option-reset-btn")
 
 let filter = `전체`;
 let sorting = `최신순`
 let type = '전체'
+
+optionReset.addEventListener("click", () => {
+    filter = '전체'
+    sorting = '최신순'
+    type = '전체'
+    lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            lectureSection.innerHTML = text;
+        });
+})
 
 sortChoices.forEach((sort) => {
     sort.addEventListener("click", () => {
@@ -372,7 +379,10 @@ filterItems.forEach((item) => {
         lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
             lectureSection.innerHTML = text;
         });
-        console.log(filter)
+        lectureService.getList(page++, filter, sorting, type, showList).then((filteringCount) => {
+            lectureSection.innerHTML = filteringCount;
+        });
+        console.log(filter, sorting, type )
 
     })
 })
@@ -400,32 +410,36 @@ optionList.addEventListener("click", (e) => {
     }else if(e.target.innerText.includes('스크랩순')) {
         sorting = '최신순'
     }else if(e.target.innerText.includes('리스/트리')) {
-        type = '리스/트리'
+        type = '전체'
     }else if(e.target.innerText.includes('바구니/센터피스/박스')) {
-        type = '바구니/센터피스/박스'
+        type = '전체'
     }else if(e.target.innerText.includes('가드닝/테라리움')) {
-        type = '가드닝/테라리움'
+        type = '전체'
     }else if(e.target.innerText.includes('기타')) {
-        type = '기타'
+        type = '전체'
     }
 
     // console.log(filter)
     lectureService.getList(page=1, filter, sorting, type, showList).then((text) => {
             lectureSection.innerHTML = text;
         });
+    lectureService.getList(page++, filter, sorting, type, showList).then((filteringCount) => {
+        lectureSection.innerHTML = filteringCount;
+    });
 
 })
 
-const showList = (lectures, onlineStatus) => {
-    let text = ``;
 
+const showList = (lectures, onlineStatus = false) => {
+    let text = ``;
+console.log(lectures)
     // 강의 목록을 순회하면서 HTML 템플릿 생성
-    lectures.forEach((lecture) => {
+    lectures['lectures'].forEach((lecture) => {
         let tagsHtml = '';
         lecture.plant_name.forEach((pn) => {
             tagsHtml += `<span class="post-tag-icon">#${pn}</span>`;
         });
-
+        console.log(lecture)
         // 온라인 상태에 따라 링크 주소 결정
         const detailLink = onlineStatus ? `/lecture/detail/online?id=${lecture.id}` : `/lecture/detail/offline?id=${lecture.id}`;
 
@@ -450,7 +464,7 @@ const showList = (lectures, onlineStatus) => {
                         <div class="post-contents-wrap">
                             <div class="post-contents-container">
                                 <h1 class="post-contents-header">
-                                    <span class="post-contents-user">${lecture.member_name}</span>
+                                    <span class="post-contents-user">${lecture.teacher__member__member_name}</span>
                                     <span class="post-contents-banner">${lecture.lecture_title}</span>
                                 </h1>
                                 <span class="post-price">
@@ -468,9 +482,21 @@ const showList = (lectures, onlineStatus) => {
     return text;
 };
 
-lectureService.getList(page++, showList).then((text) => {
+const filterCount = (lectures) => {
+    filteringCount = `${lectures['lectures_count']}개의 강의가 있어요!`
+    return filteringCount
+}
+
+
+// 처음 화면에 나오는거
+lectureService.getList(page++, filter, sorting, type, showList).then((text) => {
             lectureSection.innerHTML += text;
         });
+// const totalLectures = document.querySelector(".total-data")
+// lectureService.getList(page++, filter, sorting, type, filterCount).then((filteringCount) => {
+//     totalLectures.innerText = filteringCount;
+// });
+
 
 // 스크롤 할때마다 실행
 window.addEventListener("scroll", () => {
@@ -485,7 +511,6 @@ window.addEventListener("scroll", () => {
     if (scrollTop + windowHeight >= totalHeight) {
         lectureService.getList(++page, filter, sorting, type, showList).then((text) => {
             lectureSection.innerHTML += text;
-
         });
     }
 });

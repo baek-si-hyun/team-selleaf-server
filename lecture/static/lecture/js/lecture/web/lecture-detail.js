@@ -1,35 +1,52 @@
 // 이미지 버튼 슬라이싱
-
 const nextButton = document.querySelector(".scroller-ui-next");
 const prevButton = document.querySelector(".scroller-ui-prev");
 const target = document.querySelector(".scroller-contents-container");
 const prevSvg = document.querySelector(".prev-icon");
 
+const scrapCount = document.querySelector(".scrap-count");
+
+const countUpdate = () => {
+    scrapCountService.scrapCount(lecture_id).then((count) => {
+    scrapCount.innerText = count;
+  });
+}
+
 var xdegree = 0;
-nextButton.addEventListener("click", (e) => {
-  xdegree -= 712;
-  with (target.style) {
-    transform = `translateX(${xdegree}px)`;
-    transition = "transform 0.3s ease 0s";
-  }
-  xdegree === -2848
-    ? (nextButton.style.display = "none")
-    : (nextButton.style.display = "block");
-  xdegree === -712 && (prevButton.style.display = "block");
 
-  console.log(xdegree);
-});
 
-prevButton.addEventListener("click", (e) => {
-  xdegree += 712;
-  with (target.style) {
-    transform = `translateX(${xdegree}px)`;
-    transition = "transform 0.3s ease 0s";
-  }
-  xdegree === -2136 && (nextButton.style.display = "block");
-  xdegree === 0 && (prevButton.style.display = "none");
-  console.log(xdegree);
-});
+if( lecture_count / 3 > 1) {
+  nextButton.addEventListener("click", (e) => {
+    xdegree -= 712;
+    with (target.style) {
+      transform = `translateX(${xdegree}px)`;
+      transition = "transform 0.3s ease 0s";
+    }
+
+    if (xdegree <= Math.floor(lecture_count / 3) * -712) {
+      nextButton.style.display = "none";
+    }
+    prevButton.style.display = "block";
+
+  });
+
+  prevButton.addEventListener("click", (e) => {
+    xdegree += 712;
+    with (target.style) {
+      transform = `translateX(${xdegree}px)`;
+      transition = "transform 0.3s ease 0s";
+    }
+
+    if (xdegree >= 0) {
+      prevButton.style.display = "none";
+    }
+    nextButton.style.display = "block";
+
+  });
+}
+else{
+  nextButton.style.display = "none";
+}
 
 
 //스크랩 버튼
@@ -38,7 +55,7 @@ const scrapCancel = document.querySelector(".scrap-popup-cancel-wrap");
 let timeoutId;
 let animationTarget;
 
-const tradeSrcapBtnFn = (scrap) => {
+const lectureSrcapBtnFn = (scrap) => {
   const img = scrap.querySelector("img");
   const imgSrc = img.getAttribute("src");
   if (imgSrc === "/static/public/web/images/common/scrap-off-blk.png") {
@@ -65,7 +82,7 @@ const tradeSrcapBtnFn = (scrap) => {
   }
 }
 
-const tradeSrcapBtnBlkFn = (scrap) => {
+const lectureScrapBtnBlkFn = (scrap) => {
   const img = scrap.querySelector("img");
   const imgSrc = img.getAttribute("src");
   if (imgSrc === "/static/public/web/images/common/scrap-off.png") {
@@ -91,20 +108,20 @@ const tradeSrcapBtnBlkFn = (scrap) => {
     }, 3000);
   }
 }
-// countUpdate();
+countUpdate();
 const productTitleIconWrap = document.querySelector('.product-title-icon-wrap')
 productTitleIconWrap.addEventListener('click', async (e) => {
   const scrapBtn = e.target.closest('.scrap-button')
-  tradeSrcapBtnFn(scrapBtn)
+  lectureSrcapBtnFn(scrapBtn)
   const lectureContentId = scrapBtn.closest('.product-title-icon-wrap').classList[1]
   await lectureScrapService.update(lectureContentId)
-  // countUpdate();//
+  countUpdate();
 })
 
 const scrollerListContentsInner = document.querySelector('.scroller-list-contents-inner')
 scrollerListContentsInner.addEventListener('click', async (e) => {
   const scrapBtn = e.target.closest('.img-scrap-button')
-  tradeSrcapBtnBlkFn(scrapBtn)
+  lectureScrapBtnBlkFn(scrapBtn)
   const lectureContentId = scrapBtn.closest('.product-suggestion-each-contents').classList[1]
   await lectureScrapService.update(lectureContentId)
 })
