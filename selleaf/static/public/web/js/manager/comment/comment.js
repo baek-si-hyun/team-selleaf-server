@@ -150,7 +150,15 @@ manageReply.getReply(keyword, page, createHTML.showList)
 // // 삭제 버튼 누르면 뜨는 모달창
 const deleteButton = document.querySelector(".delete-button");
 const deleteModalWrap = document.querySelector(".delete-modal-wrap")
+const deleteModalInner = document.querySelector(".delete-modal-inner")
 deleteButton.addEventListener("click", () => {
+    const checkedTargets = document.querySelectorAll("input[name=target]:checked")
+    if (checkedTargets.length === 0) {
+        // 원하시는 문구로 수정하시면 됩니다.
+        deleteModalInner.innerText = "선택하신 댓글이 없습니다.\n다시 한번 확인해주세요."
+    } else{
+        deleteModalInner.innerText = "해당 댓글을 삭제하시겠습니까?"
+    }
     deleteModalWrap.style.display = "flex";
 })
 
@@ -170,28 +178,124 @@ modalConfirm.addEventListener("click", async () => {
     let replyInfo = {}
     let replyList = []
 
-    checkedTargets.forEach((checkedTarget, i) => {
-        const targetWrap = checkedTarget.closest(".list-content")
-        const replyMemberId =  targetWrap.querySelector("input[name=reply-member-id]")
-        const replyCreated = targetWrap.querySelector("input[name=reply-created]")
-        const typeName = targetWrap.querySelector(".type-name")
-
-        replyInfo = {
-            reply_member_id: replyMemberId.value,
-            reply_created: replyCreated.value,
-            target_type: typeName.innerText
-        };
-        console.log(replyInfo)
-        replyList.push(replyInfo);
-    })
-
     if (Object.keys(replyList).length !== 0){
+        checkedTargets.forEach((checkedTarget, i) => {
+            const targetWrap = checkedTarget.closest(".list-content")
+            const replyMemberId =  targetWrap.querySelector("input[name=reply-member-id]")
+            const replyCreated = targetWrap.querySelector("input[name=reply-created]")
+            const typeName = targetWrap.querySelector(".type-name")
+
+            replyInfo = {
+                reply_member_id: replyMemberId.value,
+                reply_created: replyCreated.value,
+                target_type: typeName.innerText
+            };
+            console.log(replyInfo)
+            replyList.push(replyInfo);
+        })
+
         await manageReply.remove(replyList);
+        await manageReply.getReply(keyword, page, createHTML.showList)
     }
 
-    await manageReply.getReply(keyword, page, createHTML.showList)
     deleteModalWrap.style.display = "none";
 })
+
+// 검색창 눌렀을때 검색바에 아웃라인주기
+const searchBar = document.querySelector("label.search-bar");
+
+document.addEventListener("click", (e) => {
+    if (e.target.closest("label.search-bar")) {
+        searchBar.classList.add("search-bar-checked");
+        return;
+    }
+    searchBar.classList.remove("search-bar-checked");
+});
+
+// 입력 필드에 입력 내용이 변경될 때마다 실행될 함수를 정의합니다.
+const inputField = document.querySelector(".search-bar input");
+const cancelButton = document.querySelector(".search-bar .cancel-logo");
+const searchButton = document.querySelector(".search-bar .search-logo");
+
+// 검색창에 엔터 입력 시 키워드로 검색하여 페이지를 뿌려주는 이벤트
+inputField.addEventListener("keyup", async (e) => {
+    if (e.keyCode === 13) {
+        keyword = inputField.value
+        console.log(keyword)
+        page = 1
+        await manageReply.getReply(keyword, page, createHTML.showList)
+    }
+})
+
+function handleInputChange() {
+    const inputValue = inputField.value.trim(); // 입력 내용을 가져옵니다.
+
+  // 입력 내용이 있을 때
+    if (inputValue !== "") {
+        cancelButton.style.display = "flex"; // cancel-logo를 보여줍니다.
+        searchButton.style.display = "none"; // search-logo를 숨깁니다.
+    } else {
+        // 입력 내용이 없을 때
+        cancelButton.style.display = "none"; // cancel-logo를 숨깁니다.
+        searchButton.style.display = "flex"; // search-logo를 보여줍니다.
+    }
+}
+
+// cancel-logo를 클릭했을 때 실행될 함수를 정의합니다.
+const handleCancelClick = async () => {
+    inputField.value = ""; // 입력 필드 내용을 지웁니다.
+    cancelButton.style.display = "none"; // cancel-logo를 숨깁니다.
+    searchButton.style.display = "flex"; // search-logo를 보여줍니다.
+    keyword = inputField.value
+    page = 1
+    await manageReply.getReply(keyword, page, createHTML.showList)
+}
+
+// 입력 필드에 이벤트 리스너를 추가합니다.
+inputField.addEventListener("input", handleInputChange);
+
+// cancel-logo에 클릭 이벤트 리스너를 추가합니다.
+cancelButton.addEventListener("click", handleCancelClick);
+
+const checkboxEvent = () => {
+    // 체크박스 js
+    const allCheck = document.querySelector(".all-check");
+    const checkboxes = document.querySelectorAll(".checkbox-input");
+
+    // all-check 체크 여부에 따라 checkbox-input 체크 여부 조절
+    allCheck.addEventListener("change", function () {
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = allCheck.checked;
+        });
+    });
+
+    // checkbox-input 중 하나라도 체크가 해제되면 all-check 체크 해제
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener("change", function () {
+            let allChecked = true;
+            checkboxes.forEach(function (checkbox) {
+                if (!checkbox.checked) {
+                    allChecked = false;
+                }
+            });
+            allCheck.checked = allChecked;
+        });
+    });
+
+    // checkbox-input 모두 체크되면 all-check 체크
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener("change", function () {
+            let allChecked = true;
+            checkboxes.forEach(function (checkbox) {
+                if (!checkbox.checked) {
+                    allChecked = false;
+                }
+            });
+            allCheck.checked = allChecked;
+        });
+    });
+}
+
 // document.addEventListener("DOMContentLoaded", function () {
 //   const deleteButtons = document.querySelectorAll(".delete-button");
 //   const modalWrap = document.querySelector(".delete-modal-wrap");
@@ -281,97 +385,3 @@ modalConfirm.addEventListener("click", async () => {
 //   });
 // });
 //
-// 검색창 눌렀을때 검색바에 아웃라인주기
-const searchBar = document.querySelector("label.search-bar");
-
-document.addEventListener("click", (e) => {
-  if (e.target.closest("label.search-bar")) {
-    searchBar.classList.add("search-bar-checked");
-    return;
-  }
-  searchBar.classList.remove("search-bar-checked");
-});
-
-// 입력 필드에 입력 내용이 변경될 때마다 실행될 함수를 정의합니다.
-const inputField = document.querySelector(".search-bar input");
-const cancelButton = document.querySelector(".search-bar .cancel-logo");
-const searchButton = document.querySelector(".search-bar .search-logo");
-
-// 검색창에 엔터 입력 시 키워드로 검색하여 페이지를 뿌려주는 이벤트
-inputField.addEventListener("keyup", async (e) => {
-    if (e.keyCode === 13) {
-        keyword = inputField.value
-        console.log(keyword)
-        page = 1
-        await manageReply.getReply(keyword, page, createHTML.showList)
-    }
-})
-
-function handleInputChange() {
-  const inputValue = inputField.value.trim(); // 입력 내용을 가져옵니다.
-
-  // 입력 내용이 있을 때
-  if (inputValue !== "") {
-    cancelButton.style.display = "flex"; // cancel-logo를 보여줍니다.
-    searchButton.style.display = "none"; // search-logo를 숨깁니다.
-  } else {
-    // 입력 내용이 없을 때
-    cancelButton.style.display = "none"; // cancel-logo를 숨깁니다.
-    searchButton.style.display = "flex"; // search-logo를 보여줍니다.
-  }
-}
-
-// cancel-logo를 클릭했을 때 실행될 함수를 정의합니다.
-const handleCancelClick = async () => {
-    inputField.value = ""; // 입력 필드 내용을 지웁니다.
-    cancelButton.style.display = "none"; // cancel-logo를 숨깁니다.
-    searchButton.style.display = "flex"; // search-logo를 보여줍니다.
-    keyword = inputField.value
-    page = 1
-    await manageReply.getReply(keyword, page, createHTML.showList)
-}
-
-// 입력 필드에 이벤트 리스너를 추가합니다.
-inputField.addEventListener("input", handleInputChange);
-
-// cancel-logo에 클릭 이벤트 리스너를 추가합니다.
-cancelButton.addEventListener("click", handleCancelClick);
-
-const checkboxEvent = () => {
-    // 체크박스 js
-    const allCheck = document.querySelector(".all-check");
-    const checkboxes = document.querySelectorAll(".checkbox-input");
-
-    // all-check 체크 여부에 따라 checkbox-input 체크 여부 조절
-    allCheck.addEventListener("change", function () {
-      checkboxes.forEach(function (checkbox) {
-        checkbox.checked = allCheck.checked;
-      });
-    });
-
-    // checkbox-input 중 하나라도 체크가 해제되면 all-check 체크 해제
-    checkboxes.forEach(function (checkbox) {
-      checkbox.addEventListener("change", function () {
-        let allChecked = true;
-        checkboxes.forEach(function (checkbox) {
-          if (!checkbox.checked) {
-            allChecked = false;
-          }
-        });
-        allCheck.checked = allChecked;
-      });
-    });
-
-    // checkbox-input 모두 체크되면 all-check 체크
-    checkboxes.forEach(function (checkbox) {
-      checkbox.addEventListener("change", function () {
-        let allChecked = true;
-        checkboxes.forEach(function (checkbox) {
-          if (!checkbox.checked) {
-            allChecked = false;
-          }
-        });
-        allCheck.checked = allChecked;
-      });
-    });
-}
