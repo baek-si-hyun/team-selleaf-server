@@ -77,15 +77,16 @@ const showList = (replies) => {
                                         삭제
                                       </button>
                                     </div>
-                                `}else {
+                                    `
+                            }else {
                                 text += `
                                     <div class="comment-declaration-btn-box">
                                       <div class="comment-split">・</div>
-                                      <button type="button" class="comment-declaration-btn">
+                                      <button type="button" class="reply-report-btn ${reply.id} comment-declaration-btn">
                                         신고
                                       </button>
                                     </div>
-                                `
+                                    `
                             }
 
                             text += `
@@ -156,6 +157,8 @@ replyService.getList(post_id, page, countReply).then((replyCount) => {
     replyCountMain.innerText = replyCount
 });
 
+
+const replyModal = document.querySelector(".reply-declaration-modal-wrap")
 replySection.addEventListener("click", async (e) => {
     console.log(e.target)
     if(e.target.classList[0] === 'update-btn'){
@@ -202,10 +205,41 @@ replySection.addEventListener("click", async (e) => {
         if (replies['replies'].length !== 0){
             moreButton.style.display = "flex";
         }
-    }else if(e.target.classList[0] === 'like-btn') {
-        console.log('좋아요')
+    }else if(e.target.classList[0] === 'reply-report-btn') {
+        console.log('report')
+        replyModal.classList.add("open")
+        replyReportReplyId.value = e.target.classList[1]
     }
 
+});
+
+//신고 모달 없애기
+// 취소하기 버튼
+const cancelReplyDeclarationBtn = document.querySelector(".cancel-reply-declaration-btn");
+// 신고하기 버튼
+const reportReplyDeclarationBtn = document.querySelector(".report-reply-declaration-btn");
+// 신고된 내용 들어갈 input
+const replyReportInput = document.querySelector(".reply-report-content")
+// 신고된 댓글번호 들어갈 input
+const replyReportReplyId = document.querySelector(".reply-report-reply-id")
+
+// 취소하기 버튼 클릭 시
+cancelReplyDeclarationBtn.addEventListener("click", () => {
+  replyModal.classList.remove("open");
+  replyReportReplyId.value = ''
+});
+
+// 신고하기 버튼 클릭 시
+reportReplyDeclarationBtn.addEventListener("click", (e) => {
+  let reportContent = ''
+  declarationItems.forEach((item) => {
+    if(item.classList[1] === "report-choice"){
+      // console.log(item.innerText)
+      reportContent = item.innerText
+
+      }
+    })
+  replyReportInput.value = reportContent
 });
 
 

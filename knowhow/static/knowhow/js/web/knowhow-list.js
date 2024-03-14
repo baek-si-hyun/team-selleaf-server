@@ -20,7 +20,7 @@ optionReset.addEventListener("click", () => {
 })
 
 sortChoices.forEach((sort) => {
-    sort.addEventListener("click", () => {
+    sort.addEventListener("click", async () => {
         // console.log(sort)
         if (sort.innerText === "최신순") {
             sorting = '최신순'
@@ -135,7 +135,7 @@ optionList.addEventListener("click", (e) => {
 const showList = (knowhows) => {
     let text = ``;
 
-    // console.log(knowhows['knowhows'])
+    console.log(knowhows['knowhows'])
 
     knowhows['knowhows'].forEach((knowhow) => {
         text += `
@@ -228,17 +228,19 @@ const filterCount = (knowhows) => {
 
 // 처음 화면에 나오는거
 knowhowService.getList(page++, filter, sorting, type, showList).then((text) => {
-            knowhowSection.innerHTML += text;
-        });
+    knowhowSection.innerHTML += text;
+});
+
 const totalKnowhows = document.querySelector(".total-data")
-knowhowService.getList(page++, filter, sorting, type, filterCount).then((filteringCount) => {
-            totalKnowhows.innerText = filteringCount;
-        });
+knowhowService.getList(page, filter, sorting, type, filterCount).then((filteringCount) => {
+    totalKnowhows.innerText = filteringCount;
+});
 
 
 
 window.addEventListener("scroll", () => {
     const optionBtn = document.querySelector('.option-reset-btn')
+    console.log(optionBtn.previousElementSibling)
 
     // 맨위
     const scrollTop = document.documentElement.scrollTop;
@@ -253,11 +255,13 @@ window.addEventListener("scroll", () => {
 
     if (scrollTop + windowHeight >= totalHeight) {
         if(optionBtn.previousElementSibling) {
+            console.log(111)
             knowhowService.getList(++page, filter, sorting, type, showList).then((text) => {
                 knowhowSection.innerHTML += text;
 
             });
         }else{
+            console.log(222)
             knowhowService.getList(page++, filter, sorting, type, showList).then((text) => {
                 knowhowSection.innerHTML += text;
 

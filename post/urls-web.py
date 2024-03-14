@@ -1,7 +1,8 @@
 from django.urls import path
 
 from post.views import PostCreateView, PostDetailView, PostReplyWriteApi, PostDetailApi, PostReplyApi, PostScrapApi, \
-    PostLikeApi, PostUpdateView, PostDeleteView, PostLikeCountApi, PostScrapCountApi, PostReplyLikeApi, PostReportView
+    PostLikeApi, PostUpdateView, PostDeleteView, PostLikeCountApi, PostScrapCountApi, PostReplyLikeApi, PostReportView, \
+    PostReplyReportView
 
 app_name = 'post'
 
@@ -16,6 +17,7 @@ urlpatterns = [
     path('delete/', PostDeleteView.as_view(), name='delete'),
     # 포스트 신고
     path('report/', PostReportView.as_view(), name='report'),
+    path('reply/report/', PostReplyReportView.as_view(), name='report'),
 
     path('replies/write/', PostReplyWriteApi.as_view(), name='reply_write'),
     path('replies/list/<int:post_id>/<int:page>/', PostDetailApi.as_view(), name='reply_list'),

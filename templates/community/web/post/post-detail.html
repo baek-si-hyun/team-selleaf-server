@@ -16,10 +16,27 @@
                       {{ post.post_title }}
                   </p>
             </div>
+            <div class="uploader-data-wrap">
+                  <button class="uploader-data-btn">
+                    <figure class="uploader-img-box">
+                      <img
+                        src="{{ member_profile.file_url }}"
+                        height="0"
+                        class="uploader-img"
+                      />
+                    </figure>
+                    <div class="uploader-data-box">
+                      <span class="uploader-name">{{ post_writer }}</span
+                      ><span class="uploader-sub-description"
+                        >작성자 소개글</span
+                      >
+                    </div>
+                  </button>
+                </div>
               <div class="content-container">
                 <div class="content-sub-description-box">
                   <div class="content-sub-description">
-                    <button class="content-top-btn">{{ post_category.category_name }}</button>
+                    <button class="content-title-btn">{{ post_category.category_name }} |</button>
                       {% for plant in post_plant %}
                           <button class="content-top-btn">{{ plant.plant_name }}</button>
                       {% endfor %}
@@ -61,70 +78,27 @@
                         <dt class="check">조회</dt>
                         <dd class="check-data">{{ post.post_count }}</dd>
                       </dl>
+                      {% if request.session.member.id != post.member.id %}
                       <div class="declaration-btn-box">
                         <button type="button" class="content-declaration-btn">
                           신고하기
                         </button>
                       </div>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
-                <div class="uploader-data-wrap">
-                  <button class="uploader-data-btn">
-                    <figure class="uploader-img-box">
-                      <img
-                        src="{{ member_profile.file_url }}"
-                        height="0"
-                        class="uploader-img"
-                      />
-                    </figure>
-                    <div class="uploader-data-box">
-                      <span class="uploader-name">{{ post_writer }}</span
-                      ><span class="uploader-sub-description"
-                        >작성자 소개글</span
-                      >
-                    </div>
-                  </button>
-                </div>
+                  <hr class="content-split-top">
+                
                 <div class="uploader-another-post-wrap">
                     <div class="another-tag-box">
                         <div class="another-tag-box-title">다른 포스트 둘러보기</div>
-                            {% for tag in post_tags %}
-                                <div class="tag">
-                                    <span class="tag-text"># {{ tag.tag_name }}</span>
-                                </div>
-                            {% endfor %}
-                        </div>
-{#                  <ul class="uploader-another-post-container">#}
-{#                    <li class="uploader-another-post">#}
-{#                      <a href="javascript:void(0)">#}
-{#                        <img#}
-{#                          src="../../../staticfiles/images/blank-image.png"#}
-{#                          class="uploader-another-post-img"#}
-{#                      /></a>#}
-{#                    </li>#}
-{#                    <li class="uploader-another-post">#}
-{#                      <a href="javascript:void(0)">#}
-{#                        <img#}
-{#                          src="../../../staticfiles/images/blank-image.png"#}
-{#                          class="uploader-another-post-img"#}
-{#                      /></a>#}
-{#                    </li>#}
-{#                    <li class="uploader-another-post">#}
-{#                      <a href="javascript:void(0)">#}
-{#                        <img#}
-{#                          src="../../../staticfiles/images/blank-image.png"#}
-{#                          class="uploader-another-post-img"#}
-{#                      /></a>#}
-{#                    </li>#}
-{#                    <li class="uploader-another-post">#}
-{#                      <a href="javascript:void(0)">#}
-{#                        <img#}
-{#                          src="../../../staticfiles/images/blank-image.png"#}
-{#                          class="uploader-another-post-img"#}
-{#                      /></a>#}
-{#                    </li>#}
-{#                  </ul>#}
+                        {% for tag in post_tags %}
+                            <div class="tag">
+                                <span class="tag-text"># {{ tag.tag_name }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
                 <div>
                   <div class="comment-section" id="comment-section">
@@ -462,7 +436,7 @@
         </div>
       </div>
     </div>
-    <form action="/post/report/?id={{ post.id }}" method="get" name="report">
+    <form action="/post/report/?id={{ post.id }}" method="post" name="report">
         {% csrf_token %}
     <div class="declaration-modal-wrap">
       <div class="declaration-modal-container">
@@ -596,7 +570,145 @@
         </div>
       </div>
     </div>
+  </form>
+    
+  <form action="/post/reply/report/?id={{ post.id }}" method="post" name="report">
+        {% csrf_token %}
+    <div class="reply-declaration-modal-wrap">
+      <div class="declaration-modal-container">
+        <div class="declaration-modal-title-box">
+          <span class="declaration-modal-title">신고 사유를 선택해주세요</span>
+          <button type="button" class="declaration-modal-cancel-btn">
+            <span class="cancel-btn-icon"></span>
+          </button>
+        </div>
+        <div class="declaration-modal-content">
+          <ul class="declaration-list">
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box declaration-choice">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                    checked
+                  />
+                </div>
+                <span class="declaration-text">주제와 맞지 않음</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">정보가 부정확함</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">지나친 광고성 게시물</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">도배 및 중복 게시물</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">저작권 침해가 우려됨</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">욕설/비방이 심함</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">외설적인 게시물</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">개인정보노출</span>
+              </label>
+            </li>
+            <li class="declaration-item">
+              <label class="declaration-label">
+                <div class="declaration-input-box">
+                  <input
+                    type="radio"
+                    class="declaration-input"
+                    name="declaration"
+                  />
+                </div>
+                <span class="declaration-text">기타</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+        <input type="hidden" class="reply-report-content" name="reply-report-content" value=""/>
+        <input type="hidden" class="reply-report-reply-id" name="reply-report-reply-id" value=""/>
+        <div class="report-declaration-btn-wrap">
+          <div class="report-declaration-btn-container">
+            <button type="submit" class="report-reply-declaration-btn" id="report">신고하기</button>
+          </div>
+          <div class="cancel-declaration-btn-container">
+            <button type="button" class="cancel-reply-declaration-btn" id="cancel">취소하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
     </form>
+  
   </body>
 {% endblock %}
 {% block js %}

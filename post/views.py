@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 
 from member.models import Member, MemberProfile
 from post.models import Post, PostCategory, PostTag, PostPlant, PostFile, PostReply, PostLike, PostScrap, PostReplyLike
+from report.models import PostReport, PostReplyReport
 
 
 # Create your views here.
@@ -80,6 +81,8 @@ class PostDetailView(View):
         post.post_count += 1
         post.save(update_fields=['post_count'])
 
+        print(post.id)
+
         post_files = list(post.postfile_set.all())
         post_file = list(post.postfile_set.all())[0]
         post_writer = Post.objects.filter(member_id=post.member_id).values('member__member_name').first()
@@ -101,22 +104,42 @@ class PostDetailView(View):
 
         return render(request, 'community/web/post/post-detail.html', context)
 
+# post 게시글 신고
 class PostReportView(View):
-    def get(self, request):
+    def post(self, request):
         member_id = request.session['member']['id']
-        data = request.GET
-        post_id = data.get('id')
-        print(post_id)
-        print(member_id)
-        print(data)
+        data = request.POST
+        post_id = request.GET['id']
 
+        datas = {
+            'member_id': member_id,
+            'post_id': post_id,
+            'report_content': data['report-content']
+        }
 
+        PostReport.object.create(**datas)
 
-        return redirect(f'/post/detail/?id={29}')
+        return redirect(f'/post/detail/?id={post_id}')
+
+class PostReplyReportView(View):
+    def post(self, request):
+        data = request.POST
+        member_id = request.session['member']['id']
+        post_id = request.GET['id']
+        reply_id = data['reply-report-reply-id']
+
+        datas = {
+            'member_id': member_id,
+            'post_reply_id': reply_id,
+            'report_content': data['reply-report-content']
+        }
+
+        PostReplyReport.object.create(**datas)
+
+        return redirect(f'/post/detail/?id={post_id}')
 
 class PostDetailApi(APIView):
     def get(self, request, post_id, page):
-        member = request.session['member']
 
         row_count = 5
         offset = (page - 1) * row_count
@@ -136,8 +159,6 @@ class PostDetailApi(APIView):
                       .filter(post_id=post_id).annotate(member_name=F('member__member_name')) \
                       .values('member_name', 'post__post_content', 'member_id', 'created_date', 'id',
                               'post_reply_content', 'member__memberprofile__file_url')[offset:limit]
-
-
 
         data = {
             'replies': replies,
