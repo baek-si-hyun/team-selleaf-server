@@ -283,9 +283,9 @@
                             </button>
                         </a>
                         <a href="/lecture/delete/?id={{ lecture.id }}">
-                          <button class="remove-button" type="button">
+                          <button class="update-button" type="button">
                             <img
-                            class="remove-icon"
+                            class="update-icon"
                             src="{% static 'public/web/images/common/remove-icon.png' %}"
                           />
                           <span class="update-label">삭제</span>
@@ -297,7 +297,7 @@
                         class="scrap-off"
                         src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
                       />
-                      <span class="scrap-count">0</span>
+                      <span class="scrap-count"></span>
                     </button>
                   </div>
                 </div>
@@ -588,7 +588,7 @@
                         <img src="{% static 'public/web/images/common/cancel.png' %}" alt="" />
                       </span>
                     </button>
-                    <div class="student-count-title">갯수</div>
+                    <div class="student-count-title">수량</div>
                     <div class="selected-product-botton-wrap">
                       <div class="selected-product-count">
                         <span class="sub-count">
@@ -610,7 +610,7 @@
               <p class="product-total-price">
                 <span class="product-order-text">주문금액</span>
                 <span class="product-order-price">
-                  <span class="total-price"></span>
+                  <span class="total-price">{{ lecture.lecture_price }}원</span>
                 </span>
               </p>
               <div class="product-order-button-wrap">
@@ -956,9 +956,9 @@
                                 <div class="product-suggestion-each-contents {{ lecture.id }}">
                                   <article class="product-suggestion-contents-wrap">
                                     {% if lecture.online_status %}
-                                        <a class="product-suggestion-contents-overlay" href="/lecture/detail/online?id={{ lecture.id }}"></a>
-                                    {% else %}
                                         <a class="product-suggestion-contents-overlay" href="/lecture/detail/offline?id={{ lecture.id }}"></a>
+                                    {% else %}
+                                        <a class="product-suggestion-contents-overlay" href="/lecture/detail/online?id={{ lecture.id }}"></a>
                                     {% endif %}
                                     <div class="product-suggestion-contents-image">
                                       <img
@@ -1257,7 +1257,8 @@
                                 />
                               </span>
                             </button>
-                            <div class="sidebar-selected-botton-wrap" style="display: none">
+                            <div class="sidebar-student-count-title">수량</div>
+                            <div class="sidebar-selected-botton-wrap">
                               <div class="sidebar-selected-count-wrap">
                                 <span class="sidebar-sub-count">
                                   <img src="{% static 'public/web/images/common/sub.png' %}" />
@@ -1272,7 +1273,7 @@
                               </div>
                               <div class="sidebar-selected-price-wrap">
                                 <span class="sidebar-selected-price"
-                                  >{{ lecture.lecture_price }}</span
+                                  >{{ lecture.lecture_price }}원</span
                                 >
                               </div>
                             </div>

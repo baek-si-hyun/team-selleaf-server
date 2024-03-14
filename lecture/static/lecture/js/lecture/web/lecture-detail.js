@@ -160,137 +160,136 @@ deleteBtns.forEach((deleteBtn) => {
     });
   });
 });
-// =================================================================================================
-// 날짜 선택 시 색 변하게
 
 // =====================================================================================================================
-// 인원 가감
-const number = document.querySelector(".counted-number");
-const add = document.querySelector(".add-count");
-const sub = document.querySelector(".sub-count");
-const studentInfo = document.querySelector(".student-info-inner");
-const sidebarNumber = document.querySelector(".sidebar-count-number");
-const sidebarAdd = document.querySelector(".sidebar-add-count");
-const sidebarSub = document.querySelector(".sidebar-sub-count");
-const studentName = document.querySelector(".selected-student-list-wrap");
-const price = document.querySelector(".total-price");
-const studentAlert = document.querySelector(".student-count-title");
-const sidebarAlert = document.querySelector(".sidebar-student-count-title");
-const sidebarSelected = document.querySelector(
-  ".sidebar-selected-product-container"
-);
-const totalPriceWrap = document.querySelector(".sidebar-total-price-wrap");
-const totalPriceValue = document.querySelector(".total-price-value");
-
-var count = 0;
-var totalPrice = 0; // 추가된 총 가격
-
-// 총 가격을 업데이트하는 함수
-function updateTotalPrice() {
-  price.innerText = document.querySelector(".selected-price").innerText;
-  totalPrice = count * parseInt(price.innerText);
-  price.innerText = totalPrice + '원'; // 총 가격을 화면에 업데이트
-
-}
-
-// add 클릭 이벤트 핸들러
-add.addEventListener("click", (e) => {
-  if (count < 5) {
-    count++;
-    updateTotalPrice(); // 수정된 부분: 총 가격 업데이트
-    count === 0
-      ? (studentName.style.display = "none")
-      : (studentName.style.display = "block");
-
-    // 예약자 정보 및 입력 칸 추가
-    const infoListWrap = document.createElement('div');
-    infoListWrap.classList.add('info-list-wrap');
-
-    const studentLabel = document.createElement('div');
-    studentLabel.classList.add('student-label');
-    studentLabel.innerHTML = `
-      <div>예약자</div> <div>${count}</div>
-    `;
-
-    const input = document.createElement('input');
-    input.classList.add('student-name-input');
-    input.placeholder = "예약자 이름을 입력하세요";
-    input.name = "price-input";
-
-    infoListWrap.appendChild(studentLabel);
-    infoListWrap.appendChild(input);
-    studentInfo.appendChild(infoListWrap);
-
-    number.innerHTML = `${count}`;
-    sidebarNumber.innerHTML = `${count}`;
-
-    if (count >= 5) {
-      studentAlert.innerHTML += `
-        <div class="student-alert">
-          <div>최대 예약인원은 ${count}명입니다.</div>
-        </div>`;
-      sidebarAlert.innerHTML += `
-        <div class="student-alert">
-          <div>최대 예약인원은 ${count}명입니다.</div>
-        </div>`;
-    }
-  }
-});
-
-sub.addEventListener("click", (e) => {
-  count == 0 ? (count = 0) : count--;
-  updateTotalPrice(); // 총 가격 업데이트
-  number.innerHTML = `${count}`;
-  sidebarNumber.innerHTML = `${count}`;
-  var target = studentInfo.querySelectorAll(".info-list-wrap");
-  target[count].remove();
-  var removeTarget = studentAlert.querySelector(".student-alert");
-  var sidebarTarget = sidebarAlert.querySelector(".student-alert");
-  removeTarget && removeTarget.remove();
-  sidebarTarget && sidebarTarget.remove();
-});
-
-sidebarAdd.addEventListener("click", (e) => {
-  if (count < 5) {
-    count++;
-    updateTotalPrice(); // 총 가격 업데이트
-    count === 0
-      ? (studentName.style.display = "none")
-      : (studentName.style.display = "block");
-    studentInfo.innerHTML += `
-    <div class="info-list-wrap">
-      <div class="student-label">
-        <div>예약자</div> <div>${count}</div>
-      </div>
-        <input
-          class="student-name-input"
-          placeholder="예약자 이름을 입력하세요"
-          name="price-input"
-        />
-    </div>`;
-    number.innerHTML = `${count}`;
-    sidebarNumber.innerHTML = `${count}`;
-    if (count >= 5) {
-      studentInfo.innerHTML += `
-      <div class="info-list-wrap">
-      <div class="student-alert">
-        <div>최대 예약인원은 ${count}명입니다.</div>
-      </div>
-    </div>`;
-    }
-  }
-});
-
-sidebarSub.addEventListener("click", (e) => {
-  count == 0 ? (count = 0) : count--;
-  updateTotalPrice(); // 총 가격 업데이트
-  number.innerHTML = `${count}`;
-  sidebarNumber.innerHTML = `${count}`;
-  var target = studentInfo.querySelectorAll(".info-list-wrap");
-  target[count].remove();
-  var studentAlert = studentInfo.querySelector(".student-alert");
-  studentAlert && studentAlert.remove();
-});
+// // 인원 가감
+// const number = document.querySelector(".counted-number");
+// const add = document.querySelector(".add-count");
+// const sub = document.querySelector(".sub-count");
+// const studentInfo = document.querySelector(".student-info-inner");
+// const sidebarNumber = document.querySelector(".sidebar-count-number");
+// const sidebarAdd = document.querySelector(".sidebar-add-count");
+// const sidebarSub = document.querySelector(".sidebar-sub-count");
+// const studentName = document.querySelector(".selected-student-list-wrap");
+// const price = document.querySelector(".total-price");
+// const sidebarPrice = document.querySelector(".sidebar-total-price");
+// const studentAlert = document.querySelector(".student-count-title");
+// const sidebarAlert = document.querySelector(".sidebar-student-count-title");
+// const sidebarSelected = document.querySelector(
+//   ".sidebar-selected-product-container"
+// );
+//
+//
+// var count = 0;
+// var totalPrice = 0; // 추가된 총 가격
+//
+// // 총 가격을 업데이트하는 함수
+// function updateTotalPrice() {
+//   price.innerText = document.querySelector(".selected-price").innerText;
+//   sidebarPrice.innerText = document.querySelector(".selected-price").innerText;
+//   totalPrice = count * parseInt(price.innerText);
+//   price.innerText = totalPrice + '원'; // 총 가격을 화면에 업데이트
+//   sidebarPrice.innerText = totalPrice + '원'; // 총 가격을 화면에 업데이트
+// }
+//
+// // add 클릭 이벤트 핸들러
+// add.addEventListener("click", (e) => {
+//   if (count < 5) {
+//     count++;
+//     updateTotalPrice(); // 수정된 부분: 총 가격 업데이트
+//     count === 0
+//       ? (studentName.style.display = "none")
+//       : (studentName.style.display = "block");
+//
+//     // 예약자 정보 및 입력 칸 추가
+//     const infoListWrap = document.createElement('div');
+//     infoListWrap.classList.add('info-list-wrap');
+//
+//     const studentLabel = document.createElement('div');
+//     studentLabel.classList.add('student-label');
+//     studentLabel.innerHTML = `
+//       <div>예약자</div> <div>${count}</div>
+//     `;
+//
+//     const input = document.createElement('input');
+//     input.classList.add('student-name-input');
+//     input.placeholder = "예약자 이름을 입력하세요";
+//     input.name = "price-input";
+//
+//     infoListWrap.appendChild(studentLabel);
+//     infoListWrap.appendChild(input);
+//     studentInfo.appendChild(infoListWrap);
+//
+//     number.innerHTML = `${count}`;
+//     sidebarNumber.innerHTML = `${count}`;
+//
+//     if (count >= 5) {
+//       studentAlert.innerHTML += `
+//         <div class="student-alert">
+//           <div>최대 예약인원은 ${count}명입니다.</div>
+//         </div>`;
+//       sidebarAlert.innerHTML += `
+//         <div class="student-alert">
+//           <div>최대 예약인원은 ${count}명입니다.</div>
+//         </div>`;
+//     }
+//   }
+// });
+//
+// sub.addEventListener("click", (e) => {
+//   count == 0 ? (count = 0) : count--;
+//   updateTotalPrice(); // 총 가격 업데이트
+//   number.innerHTML = `${count}`;
+//   sidebarNumber.innerHTML = `${count}`;
+//   var target = studentInfo.querySelectorAll(".info-list-wrap");
+//   target[count].remove();
+//   var removeTarget = studentAlert.querySelector(".student-alert");
+//   var sidebarTarget = sidebarAlert.querySelector(".student-alert");
+//   removeTarget && removeTarget.remove();
+//   sidebarTarget && sidebarTarget.remove();
+// });
+//
+// sidebarAdd.addEventListener("click", (e) => {
+//   if (count < 5) {
+//     count++;
+//     updateTotalPrice(); // 총 가격 업데이트
+//     count === 0
+//       ? (studentName.style.display = "none")
+//       : (studentName.style.display = "block");
+//     studentInfo.innerHTML += `
+//     <div class="info-list-wrap">
+//       <div class="student-label">
+//         <div>예약자</div> <div>${count}</div>
+//       </div>
+//         <input
+//           class="student-name-input"
+//           placeholder="예약자 이름을 입력하세요"
+//           name="price-input"
+//         />
+//     </div>`;
+//     number.innerHTML = `${count}`;
+//     sidebarNumber.innerHTML = `${count}`;
+//     if (count >= 5) {
+//       studentInfo.innerHTML += `
+//       <div class="info-list-wrap">
+//       <div class="student-alert">
+//         <div>최대 예약인원은 ${count}명입니다.</div>
+//       </div>
+//     </div>`;
+//     }
+//   }
+// });
+//
+// sidebarSub.addEventListener("click", (e) => {
+//   count == 0 ? (count = 0) : count--;
+//   updateTotalPrice(); // 총 가격 업데이트
+//   number.innerHTML = `${count}`;
+//   sidebarNumber.innerHTML = `${count}`;
+//   var target = studentInfo.querySelectorAll(".info-list-wrap");
+//   target[count].remove();
+//   var studentAlert = studentInfo.querySelector(".student-alert");
+//   studentAlert && studentAlert.remove();
+// });
 
 
 // 리뷰 리스트 다음 장
@@ -306,28 +305,6 @@ lists.forEach((list, index) => {
   });
 });
 
-// 도움이 되요 버튼
-// const help = document.querySelector(".product-review-help-button");
-// help.addEventListener("click", (e) => {
-//   help.classList.toggle("help-clicked");
-// });
-
-
-// // 별점순 정렬버튼
-// const arrange = document.querySelector(".review-rating-button");
-//
-// arrange.addEventListener("click", (e) => {
-//   var icon = arrange.querySelector(".icon");
-//   // 현재 회전된 각도를 가져오기
-//   var currentRotation = icon.style.transform.replace(/[^0-9]/g, "");
-//   // 현재 각도가 없는 경우 0으로 설정
-//   var currentAngle = parseInt(currentRotation) || 0;
-//   // 현재 각도에서 180도씩 더하기
-//   var newAngle = currentAngle + 180;
-//   // 회전 애니메이션 적용
-//   icon.style.transform = `rotate(${newAngle}deg)`;
-// });
-
 //신고 모달
 const declarationLabels = document.querySelectorAll(".declaration-label");
 const declarationInputs = document.querySelectorAll(".declaration-input");
@@ -342,6 +319,7 @@ declarationLabels.forEach((item) => {
     });
   });
 });
+
 //신고모달 띄우기
 const declarationModalWrap = document.querySelector(".declaration-modal-wrap");
 const contentDeclarationBtn = document.querySelector(".report-button");
@@ -355,18 +333,4 @@ declarationBtn.addEventListener("click", () => {
   declarationModalWrap.classList.remove("open");
 });
 
-//이미지 미리보기
-// document.addEventListener("DOMContentLoaded", function() {
-//     // JavaScript 코드 작성
-//     const contentImg = document.querySelector(".product-cover-image");
-//     const prevImgs = document.querySelectorAll(".product-small-image");
-//     prevImgs.forEach((item) => {
-//         item.addEventListener("click", (e) => {
-//             console.log("들어옴")
-//             const imgSrc = e.target.getAttribute("src");
-//             contentImg.setAttribute("src", imgSrc);
-//             // contentImg.setAttribute("height", "558.33");
-//         });
-//     });
-// });
 

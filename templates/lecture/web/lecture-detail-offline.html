@@ -283,9 +283,9 @@
                             </button>
                         </a>
                         <a href="/lecture/delete/?id={{ lecture.id }}">
-                          <button class="remove-button" type="button">
+                          <button class="update-button" type="button">
                             <img
-                            class="remove-icon"
+                            class="update-icon"
                             src="{% static 'public/web/images/common/remove-icon.png' %}"
                           />
                           <span class="update-label">삭제</span>
@@ -617,7 +617,7 @@
                 <span class="product-order-text">주문금액</span>
                 <span class="product-order-price">
                     <span class="total-price" data-price="{{ lecture.lecture_price }}">
-                      <span class="total-price-value">0</span>원
+                      <span class="total-price-value">{{ lecture.lecture_price }}</span>원
                     </span>
                 </span>
               </p>
@@ -1298,7 +1298,7 @@
                               </div>
                               <div class="sidebar-selected-price-wrap">
                                 <span class="sidebar-selected-price"
-                                  >{{ lecture.lecture_price }}</span
+                                  >{{ lecture.lecture_price }}원</span
                                 >
                               </div>
                             </div>
@@ -1309,7 +1309,7 @@
                     <p class="sidebar-total-price-wrap">
                       <span class="sidebar-total-text">주문금액</span>
                         <span class="sidebar-total-price" data-price="{{ lecture.lecture_price }}">
-                          <span class="total-price-value">0</span>원
+                          <span class="total-price-value">{{ lecture.lecture_price }}</span>원
                         </span>
                     </p>
                     <div class="sidebar-button-wrap">
