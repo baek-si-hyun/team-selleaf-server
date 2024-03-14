@@ -10,9 +10,9 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     UpdateQnAView, DeleteQnAView, MemberInfoAPI, TeacherManagementView, TeacherInfoAPI, TeacherEntryManagementView, \
     TeacherEntriesInfoAPI, DeleteManyNoticeView, DeleteManyQnAView, DeleteManyMembersAPI, TeacherApprovalAPI, \
     TeacherDeleteAPI, LectureManagementView, LectureInfoAPI, LectureReviewManagementView, LectureReviewInfoAPI, \
-    LectureTraineesManagementView, TraineesInfoAPI, PostManagementView, ReplyManagementView, CommunityPostsAPI, \
-    KnowhowPostsAPI, TradePostsAPI, CommunityDeleteAPI, KnowhowDeleteAPI, TradeDeleteAPI, CommunityPostsCountAPI, \
-    KnowhowCountAPI, TradeCountAPI
+    LectureTraineesManagementView, TraineesInfoAPI, PostManagementView, ReplyManagementView, \
+    KnowhowPostsAPI, TradePostsAPI, KnowhowDeleteAPI, TradeDeleteAPI, \
+    KnowhowCountAPI, TradeCountAPI, PostsListAPI, PostsDeleteAPI, PostsCountAPI
 
 urlpatterns = [
     path('', MainView.as_view()),
@@ -40,13 +40,13 @@ urlpatterns = [
     path('admin/teacher-delete/<str:teacher_ids>', TeacherDeleteAPI.as_view(), name='teacher-delete'),
     # 게시물 관리
     path('admin/posts/', PostManagementView.as_view(), name='manager-post'),
-    path('admin/posts/community/<int:page>', CommunityPostsAPI.as_view(), name='community-post-api'),
+    path('admin/posts/posts/<int:page>', PostsListAPI.as_view(), name='community-post-api'),
     path('admin/posts/knowhow/<int:page>', KnowhowPostsAPI.as_view(), name='knowhow-post-api'),
     path('admin/posts/trade/<int:page>', TradePostsAPI.as_view(), name='trade-post-api'),
-    path('admin/posts/community-delete/<str:post_ids>', CommunityDeleteAPI.as_view(), name='community-delete-api'),
+    path('admin/posts/posts-delete/<str:post_ids>', PostsDeleteAPI.as_view(), name='community-delete-api'),
     path('admin/posts/knowhow-delete/<str:knowhow_ids>', KnowhowDeleteAPI.as_view(), name='knowhow-delete-api'),
     path('admin/posts/trade-delete/<str:trade_ids>', TradeDeleteAPI.as_view(), name='trade-delete-api'),
-    path('admin/posts/community-count/', CommunityPostsCountAPI.as_view(), name='community-count-api'),
+    path('admin/posts/posts-count/', PostsCountAPI.as_view(), name='community-count-api'),
     path('admin/posts/knowhow-count/', KnowhowCountAPI.as_view(), name='knowhow-count-api'),
     path('admin/posts/trade-count/', TradeCountAPI.as_view(), name='trade-count-api'),
     # 댓글 관리

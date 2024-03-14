@@ -20,7 +20,7 @@ countCheckBoxes();
 
 // 화면에 게시물 목록을 뿌리기 위한 로직
 // 커뮤니티, 노하우, 거래는 각기 다른 페이지 사용
-let communityPage = 1;
+let postPage = 1;
 let knowhowPage = 1;
 let tradePage = 1;
 
@@ -35,7 +35,7 @@ const order1 = document.querySelector(".order-1");
 
 // 커뮤니티 게시글 세서 화면에 적용하는 기능을 함수화
 const countPosts = async () => {
-  postCount = await postService.countCommunityPosts();
+  postCount = await postService.countPosts();
   postCountTag.innerText = postCount;
 }
 
@@ -54,7 +54,7 @@ const countTrades = async () => {
 // 커뮤니티 게시물 정보의 첫 페이지를 화면에 띄워주는 함수
 const callFirstPostsList = () => {
   // 만들어둔 모듈을 사용해서 정보를 불러옴
-  postService.getCommunityPostsList(communityPage, showPosts).then((posts) => {
+  postService.getPostsList(postPage, showPosts).then((posts) => {
     ul.innerHTML = posts;
 
     // 게시물 숫자 변경
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 현재 필터 검사하고, 서로 다른 뷰에 삭제 요청 후 해당 유형의 게시물 목록의 첫 페이지를 다시 불러옴
     // 커뮤니티 게시물 삭제 시
     if (order1.innerText === "커뮤니티") {
-      await postService.deleteCommunityPosts(deleteIds);
+      await postService.deletePosts(deleteIds);
       callFirstPostsList();
     }
     // 노하우 게시물 삭제 시

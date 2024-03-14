@@ -1,9 +1,9 @@
 // 다른 파일에서 postService.메소드명 형식으로 사용할 수 있도록 모듈화
 const postService = (() => {
     // 커뮤니티 게시물 목록 조회 - 한 번에 10개씩
-    const getCommunityPostsList = async (page, callback) => {
+    const getPostsList = async (page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/posts/community/${page}`);
+        const response = await fetch (`/admin/posts/posts/${page}`);
         const posts = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -46,8 +46,8 @@ const postService = (() => {
     }
 
     // 커뮤니티 게시물 여러 개 삭제
-    const deleteCommunityPosts = async (postIds) => {
-        await fetch(`/admin/posts/community-delete/${postIds}`, {
+    const deletePosts = async (postIds) => {
+        await fetch(`/admin/posts/posts-delete/${postIds}`, {
             method: 'delete',
             headers: {'X-CSRFToken': csrf_token}
         });
@@ -70,8 +70,8 @@ const postService = (() => {
     }
 
     // 커뮤니티 게시물 개수 세기
-    const countCommunityPosts = async () => {
-        const response = await fetch(`/admin/posts/community-count/`);
+    const countPosts = async () => {
+        const response = await fetch(`/admin/posts/posts-count/`);
         const postCount = await response.json();
 
         return postCount;
@@ -95,13 +95,13 @@ const postService = (() => {
 
     // 모듈 반환
     return {
-        getCommunityPostsList: getCommunityPostsList,
+        getPostsList: getPostsList,
         getKnowhowList: getKnowhowList,
         getTradeList: getTradeList,
-        deleteCommunityPosts: deleteCommunityPosts,
+        deletePosts: deletePosts,
         deleteKnowhows: deleteKnowhows,
         deleteTrades: deleteTrades,
-        countCommunityPosts: countCommunityPosts,
+        countPosts: countPosts,
         countKnowhows: countKnowhows,
         countTrades: countTrades
     }

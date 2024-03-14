@@ -9,12 +9,13 @@ from rest_framework.views import APIView
 
 from apply.models import Apply, Trainee
 from knowhow.models import Knowhow, KnowhowTag, KnowhowFile, KnowhowRecommend, KnowhowReply, KnowhowCategory, \
-    KnowhowPlant, KnowhowScrap, KnowhowLike
+    KnowhowPlant, KnowhowScrap, KnowhowLike, KnowhowReplyLike
 from lecture.models import Lecture, LectureReview
 from member.models import Member
 from notice.models import Notice
-from post.models import Post, PostTag, PostFile, PostReply, PostCategory, PostPlant, PostScrap, PostLike
+from post.models import Post, PostTag, PostFile, PostReply, PostCategory, PostPlant, PostScrap, PostLike, PostReplyLike
 from qna.models import QnA
+from report.models import KnowhowReplyReport, PostReplyReport
 from teacher.models import Teacher
 from trade.models import Trade, TradeCategory
 
@@ -324,7 +325,7 @@ class PostManagementView(View):
         return render(request, 'manager/post/post.html', context)
 
 
-class CommunityPostsAPI(APIView):
+class PostsListAPI(APIView):
     # 커뮤니티 게시물 조회 API 뷰
     def get(self, request, page):
         # 한 페이지에 띄울 게시물 수
@@ -345,7 +346,7 @@ class CommunityPostsAPI(APIView):
         ]
 
         # 최신순으로 10개의 게시물을 가져옴
-        community_posts = Post.objects.filter()\
+        posts = Post.objects.filter()\
             .annotate(member_name=F('member__member_name'),
                       category_name=F('postcategory__category_name')
                       )\
@@ -355,16 +356,16 @@ class CommunityPostsAPI(APIView):
         has_next_page = Post.objects.filter()[limit:limit + 1].exists()
 
         # 각각의 게시물 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
-        for community_post in community_posts:
-            community_post['created_date'] = community_post['created_date'].strftime('%Y.%m.%d')
+        for post in posts:
+            post['created_date'] = post['created_date'].strftime('%Y.%m.%d')
 
             # 카테고리 없으면 '없음' 표시
-            if community_post['category_name'] is None:
-                community_post['category_name'] = '없음'
+            if post['category_name'] is None:
+                post['category_name'] = '없음'
 
         # 완성된 게시물 정보 목록
         post_info = {
-            'posts': community_posts,
+            'posts': posts,
             'hasNext': has_next_page,
         }
 
@@ -463,7 +464,7 @@ class TradePostsAPI(APIView):
         return Response(post_info)
 
 
-class CommunityDeleteAPI(APIView):
+class PostsDeleteAPI(APIView):
     # 커뮤니티 게시물 여러 개 삭제 API 뷰
     @transaction.atomic
     def delete(self, request, post_ids):
@@ -477,6 +478,8 @@ class CommunityDeleteAPI(APIView):
                 # 해당 커뮤니티 게시글 및 연결된 테이블의 정보까지 전부 delete
                 PostTag.objects.filter(post_id=post_id).delete()
                 PostFile.objects.filter(post_id=post_id).delete()
+                PostReplyLike.objects.filter(post_reply__post_id=post_id).delete()
+                PostReplyReport.object.filter(post_reply__post_id=post_id).delete()
                 PostReply.objects.filter(post_id=post_id).delete()
                 PostCategory.objects.filter(post_id=post_id).delete()
                 PostPlant.objects.filter(post_id=post_id).delete()
@@ -502,6 +505,8 @@ class KnowhowDeleteAPI(APIView):
                 KnowhowTag.objects.filter(knowhow_id=knowhow_id).delete()
                 KnowhowFile.objects.filter(knowhow_id=knowhow_id).delete()
                 KnowhowRecommend.objects.filter(knowhow_id=knowhow_id).delete()
+                KnowhowReplyLike.objects.filter(knowhow_reply__knowhow_id=knowhow_id).delete()
+                KnowhowReplyReport.object.filter(knowhow_reply__knowhow_id=knowhow_id).delete()
                 KnowhowReply.objects.filter(knowhow_id=knowhow_id).delete()
                 KnowhowCategory.objects.filter(knowhow_id=knowhow_id).delete()
                 KnowhowPlant.objects.filter(knowhow_id=knowhow_id).delete()
@@ -533,7 +538,7 @@ class TradeDeleteAPI(APIView):
         return Response('success')
 
 
-class CommunityPostsCountAPI(APIView):
+class PostsCountAPI(APIView):
     # 커뮤니티 게시글 개수를 세는 API
     def get(self, request):
         post_count = Post.objects.count()
