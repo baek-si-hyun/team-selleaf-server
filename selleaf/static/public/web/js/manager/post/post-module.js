@@ -18,7 +18,7 @@ const postService = (() => {
     // 커뮤니티 게시물 목록 조회 - 한 번에 10개씩
     const getCommunityList = async (page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/posts/${page}`);
+        const response = await fetch (`/admin/posts/community/${page}`);
         const posts = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -33,7 +33,7 @@ const postService = (() => {
     // 노하우 게시물 목록 조회 - 한 번에 10개씩
     const getKnowhowList = async (page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/posts/${page}`);
+        const response = await fetch (`/admin/posts/knowhow/${page}`);
         const posts = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -48,7 +48,7 @@ const postService = (() => {
     // 거래 게시물 목록 조회 - 한 번에 10개씩
     const getTradeList = async (page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/posts/${page}`);
+        const response = await fetch (`/admin/posts/trade/${page}`);
         const posts = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김

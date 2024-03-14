@@ -15,7 +15,7 @@ from notice.models import Notice
 from post.models import Post
 from qna.models import QnA
 from teacher.models import Teacher
-from trade.models import Trade
+from trade.models import Trade, TradeCategory
 
 
 # 관리자 로그인
@@ -141,7 +141,6 @@ class DeleteManyMembersAPI(APIView):
                 member.save(update_fields=["member_status", "updated_date"])
 
         return Response('성공')
-
 
 
 # 강사 관리
@@ -327,10 +326,151 @@ class PostManagementView(View):
         return render(request, 'manager/post/post.html', context)
 
 
+class CommunityPostsAPI(APIView):
+    # 커뮤니티 게시물 조회 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 게시물 수
+        row_count = 10
+
+        # 한 페이지에 표시할 게시물 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 게시물 정보 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'post_title',
+            'post_content',
+            'member_name',
+            'category_name',
+            'created_date',
+        ]
+
+        # 최신순으로 10개의 게시물을 가져옴
+        community_posts = Post.objects.filter()\
+            .annotate(member_name=F('member__member_name'),
+                      category_name=F('postcategory__category_name')
+                      )\
+            .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Post.objects.filter()[limit:limit + 1].exists()
+
+        # 각각의 게시물 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for community_post in community_posts:
+            community_post['created_date'] = community_post['created_date'].strftime('%Y.%m.%d')
+
+            # 카테고리 없으면 '없음' 표시
+            if community_post['category_name'] is None:
+                community_post['category_name'] = '없음'
+
+        # 완성된 게시물 정보 목록
+        post_info = {
+            'posts': community_posts,
+            'hasNext': has_next_page,
+        }
+
+        # 요청한 데이터 반환
+        return Response(post_info)
+
+
+class KnowhowPostsAPI(APIView):
+    # 노하우 게시물 조회 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 게시물 수
+        row_count = 10
+
+        # 한 페이지에 표시할 게시물 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 게시물 정보 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'knowhow_title',
+            'knowhow_content',
+            'member_name',
+            'category_name',
+            'created_date',
+        ]
+
+        # 최신순으로 10개의 게시물을 가져옴
+        knowhow_posts = Knowhow.objects.filter() \
+                              .annotate(member_name=F('member__member_name'),
+                                        category_name=F('knowhowcategory__category_name')
+                                        ) \
+                              .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Knowhow.objects.filter()[limit:limit + 1].exists()
+
+        # 각각의 게시물 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for knowhow_post in knowhow_posts:
+            knowhow_post['created_date'] = knowhow_post['created_date'].strftime('%Y.%m.%d')
+
+            # 카테고리 없으면 '없음' 표시
+            if knowhow_post['category_name'] is None:
+                knowhow_post['category_name'] = '없음'
+
+        # 완성된 게시물 정보 목록
+        post_info = {
+            'posts': knowhow_posts,
+            'hasNext': has_next_page,
+        }
+
+        # 요청한 데이터 반환
+        return Response(post_info)
+
+
+class TradePostsAPI(APIView):
+    # 거래 게시물 조회 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 게시물 수
+        row_count = 10
+
+        # 한 페이지에 표시할 게시물 정보들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 게시물 정보 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'trade_title',
+            'trade_content',
+            'member_name',
+            'category_name',
+            'created_date',
+        ]
+
+        # 최신순으로 10개의 게시물을 가져옴
+        trade_posts = Trade.objects.filter() \
+                              .annotate(member_name=F('member__member_name'),
+                                        category_name=F('trade_category__category_name')) \
+                              .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = Knowhow.objects.filter()[limit:limit + 1].exists()
+
+        # 각각의 게시물 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for trade_post in trade_posts:
+            trade_post['created_date'] = trade_post['created_date'].strftime('%Y.%m.%d')
+
+
+        # 완성된 게시물 정보 목록
+        post_info = {
+            'posts': trade_posts,
+            'hasNext': has_next_page,
+        }
+
+        # 요청한 데이터 반환
+        return Response(post_info)
+
+
 class AllPostsAPI(APIView):
     # 전체 게시물 조회 API 뷰
     def get(self, request, page):
         pass
+
 
 
 # 강의 관리
