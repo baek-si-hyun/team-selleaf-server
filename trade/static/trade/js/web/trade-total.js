@@ -32,6 +32,7 @@ const tradeSrcapBtnFn = (scrap) => {
     }, 3000);
   }
 }
+
 const postWrap = document.querySelector('.post-wrap')
 postWrap.addEventListener('click', async (e) => {
   const scrapBtn = e.target.closest('.scrap-button')
@@ -42,7 +43,6 @@ postWrap.addEventListener('click', async (e) => {
 })
 
 // 필터
-
 const filterSelecters = document.querySelectorAll(".filter-selecter");
 const optionCancelIcon = `<svg class="option-cancel-btn-icon" width="12" height="12" fill="currentColor" size="16" name="dismiss_thick">
 <path d="M6 4.94 3.879 2.817l-1.061 1.06L4.939 6 2.818 8.121l1.06 1.061L6 7.061l2.121 2.121 1.061-1.06L7.061 6l2.121-2.121-1.06-1.061L6 4.939zM6 12A6 6 0 1 1 6 0a6 6 0 0 1 0 12z"></path>
@@ -97,6 +97,7 @@ sortSelecter.addEventListener("click", (e) => {
   }
   childObserver();
 });
+
 const areaSelecter = document.querySelector(".area-selecter");
 areaSelecter.addEventListener("click", (e) => {
   const modalMenuBtns = areaSelecter.querySelectorAll(".modal-menu-btn");
@@ -130,6 +131,7 @@ areaSelecter.addEventListener("click", (e) => {
   }
   childObserver();
 });
+
 const individuals = document.querySelectorAll(".individual");
 individuals.forEach((individual) => {
   individual.addEventListener("click", (e) => {
@@ -202,6 +204,7 @@ function childObserver() {
     });
   });
 }
+
 const options = document.querySelectorAll(".option");
 optionResetBtn.addEventListener("click", () => {
   const optionItems = document.querySelectorAll(".option-item");
@@ -221,22 +224,33 @@ let page = 1;
 const tradeSection = document.querySelector(".post-wrap");
 // 정렬 분야 관엽식물 등등
 const filterItems = document.querySelectorAll(".filter-item");
-// 초기화
 const optionList = document.querySelector('.option-list');
 // 정렬 분야 관엽식물을 누르면 나오는 모달창 정확히는 최신순 인기순
 const sortChoices = document.querySelectorAll(".menu-choice");
-
+// 초기화 버튼
+const optionReset = document.querySelector(".option-reset-btn")
 let filter = `전체`;
 let sorting = `최신순`
 let type = '전체'
 
+optionReset.addEventListener("click", async () => {
+    filter = '전체'
+    sorting = '최신순'
+    type = '전체'
+    await tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            tradeSection.innerHTML = text;
+        });
+})
+
 sortChoices.forEach((sort) => {
-    sort.addEventListener("click", () => {
+    sort.addEventListener("click", async () => {
 
         if (sort.innerText === "최신순") {
-            sorting = '최신순'
+            sorting = '최신순';
+            page = 1;
         }else if(sort.innerText === "스크랩순"){
             sorting = '스크랩순'
+            page = 1;
         }else if(sort.innerText === "상품") {
             type = '상품'
         }else if(sort.innerText === "식물") {
@@ -249,14 +263,14 @@ sortChoices.forEach((sort) => {
             type = '기타'
         }
 
-        tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
+        await tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
             tradeSection.innerHTML = text;
         });
     })
 })
 
 filterItems.forEach((item) => {
-    item.addEventListener('click', (e) => {
+    item.addEventListener('click', async (e) => {
 
         if(item.children[0].classList[3] === 'choice'){
             filter += `,${e.target.innerText}`
@@ -284,13 +298,13 @@ filterItems.forEach((item) => {
 
         }
 
-        tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
+        await tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
             tradeSection.innerHTML = text;
         });
     })
 })
 
-optionList.addEventListener("click", (e) => {
+optionList.addEventListener("click", async (e) => {
     console.log(e.target.innerText)
     if(e.target.innerText.includes('관엽식물')){
         filter = filter.replace(',관엽식물', '')
@@ -328,7 +342,7 @@ optionList.addEventListener("click", (e) => {
         type = '기타'
     }
 
-    tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
+    await tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
             tradeSection.innerHTML = text;
     });
 })
@@ -338,9 +352,11 @@ const showList = (trades) => {
 
     trades.forEach((trade) => {
         let tagsHtml = '';
+
         trade.plant_name.forEach((pn) => {
             tagsHtml += `<span class="post-tag-icon">#${pn}</span>`;
         });
+
         text += `
             <div class="post-container ${trade.id}">
               <div class="post-inner">
@@ -390,12 +406,59 @@ const showList = (trades) => {
 }
 
 // 처음 토탈 페이지 들어갔을 때 뿌려줄 목록
-tradeService.getList(page=1, filter, sorting, type, showList).then((text) => {
+tradeService.getList(page++, filter, sorting, type, showList).then((text) => {
             tradeSection.innerHTML += text;
 });
 
 // 스크롤 할때마다 실행
+// let check = false;
+// window.addEventListener("scroll", async () => {
+//     if (check) return;
+//     check = true;
+//     const optionBtn = document.querySelector('.option-reset-btn')
+//
+//     // 맨위
+//     const scrollTop = document.documentElement.scrollTop;
+//     // const scrollTop = window.scrollY;
+//     // 페이지 높이
+//     const windowHeight = window.innerHeight;
+//     // const windowHeight = window.innerHeight;
+//     // 암튼 높이
+//     const totalHeight = document.documentElement.scrollHeight;
+//     // const totalHeight = document.body.scrollHeight;
+//     // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
+//
+//     if (scrollTop + windowHeight >= totalHeight) {
+//         let previousPage = page;
+//         if(optionBtn.previousElementSibling) {
+//             await tradeService.getList(++page, filter, sorting, type, showList).then((text) => {
+//                 tradeSection.innerHTML += text;
+//             });
+//             const trades = await tradeService.getList(page, filter, sorting, type);
+//             if (trades.length === 0) {
+//                 page = previousPage;
+//                 return;
+//             }
+//         }else {
+//             // console.log('들어옴')
+//
+//             await tradeService.getList(page++, filter, sorting, type, showList).then((text) => {
+//                 tradeSection.innerHTML += text;
+//             });
+//             const trades = await tradeService.getList(page, filter, sorting, type);
+//             if (trades.length === 0) {
+//                 page = previousPage;
+//                 return;
+//             }
+//         }
+//     }
+//     check = false;
+// });
+
+
 window.addEventListener("scroll", () => {
+    const optionBtn = document.querySelector('.option-reset-btn')
+
     // 맨위
     const scrollTop = document.documentElement.scrollTop;
     // 페이지 높이
@@ -404,10 +467,20 @@ window.addEventListener("scroll", () => {
     const totalHeight = document.documentElement.scrollHeight;
     // 전체 높이에서 내가 보는 스크롤이 total보다 크면 추가
 
-    if (scrollTop + windowHeight >= totalHeight) {
-        tradeService.getList(++page, filter, sorting, type, showList).then((text) => {
-            tradeSection.innerHTML += text;
+    // console.log(optionBtn.previousElementSibling)
 
-        });
+
+    if (scrollTop + windowHeight >= totalHeight) {
+        if(optionBtn.previousElementSibling) {
+            tradeService.getList(++page, filter, sorting, type, showList).then((text) => {
+                tradeSection.innerHTML += text;
+
+            });
+        }else{
+            tradeService.getList(page++, filter, sorting, type, showList).then((text) => {
+                tradeSection.innerHTML += text;
+
+            });
+        }
     }
 });
