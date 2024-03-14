@@ -153,46 +153,66 @@ commentLikeBtn.forEach((btn) => {
 //신고 모달
 const declarationLabels = document.querySelectorAll(".declaration-label");
 const declarationInputs = document.querySelectorAll(".declaration-input");
-declarationLabels.forEach((item) => {
+const declarationItems = document.querySelectorAll(".declaration-item")
+declarationLabels.forEach((item, i) => {
   item.addEventListener("click", () => {
-    declarationInputs.forEach((radio, i) => {
+    declarationInputs.forEach((radio, j) => {
+
+      declarationItems[j].classList.remove("report-choice")
       if (radio.checked) {
-        radio.parentNode.classList.add("declaration-choice");
+          radio.parentNode.classList.add("declaration-choice");
+          declarationItems[j].classList.add("report-choice")
+
       } else {
         radio.parentNode.classList.remove("declaration-choice");
       }
     });
   });
 });
+
 //신고모달 띄우기
 const declarationModalWrap = document.querySelector(".declaration-modal-wrap");
 const contentDeclarationBtn = document.querySelector(
   ".content-declaration-btn"
 );
+
+// 상단 신고하기 버튼 클릭 시
 contentDeclarationBtn.addEventListener("click", () => {
   declarationModalWrap.classList.add("open");
 });
+
+// 댓글 신고버튼
 const commentDeclarationBtns = document.querySelectorAll(
   ".comment-declaration-btn"
 );
+
+// 댓글 신고버튼 클릭 시
 commentDeclarationBtns.forEach((item) => {
   item.addEventListener("click", () => {
     declarationModalWrap.classList.add("open");
   });
 });
+
 //신고 모달 없애기
-const declarationBtn = document.querySelector(".declaration-btn");
-declarationBtn.addEventListener("click", () => {
+const cancelDeclarationBtn = document.querySelector(".cancel-declaration-btn");
+const reportDeclarationBtn = document.querySelector(".report-declaration-btn");
+const reportInput = document.querySelector(".report-content")
+// 취소하기 버튼 클릭 시
+cancelDeclarationBtn.addEventListener("click", () => {
   declarationModalWrap.classList.remove("open");
 });
 
-const commentLikeBtns = document.querySelectorAll(".comment-like-btn");
-commentLikeBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const img = btn.querySelector("img");
-    const imgSrc = img.getAttribute("src");
-    imgSrc === "/staticfiles/images/like-off.png"
-      ? img.setAttribute("src", "/staticfiles/images/like-on.png")
-      : img.setAttribute("src", "/staticfiles/images/like-off.png");
-  });
+// 신고하기 버튼 클릭 시
+reportDeclarationBtn.addEventListener("click", (e) => {
+  let reportContent = ''
+  declarationItems.forEach((item) => {
+    if(item.classList[1] === "report-choice"){
+      // console.log(item.innerText)
+      reportContent = item.innerText
+
+      }
+    })
+  reportInput.value = reportContent
+  declarationModalWrap.classList.remove("open");
 });
+

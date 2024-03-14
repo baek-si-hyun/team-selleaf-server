@@ -75,17 +75,7 @@ const showList = (replies) => {
                         
                           <div class="comment-data">
                             <div class="time-before">${timeForToday(reply.created_date)}</div>
-                            <div class="comment-like-btn-box">
-                              <div class="comment-split">・</div>
-                              <button type="button" class="comment-like-btn">
-                                <img
-                                  src="/staticfiles/images/like-off.png"
-                                  class="comment-like-icon"
-                                  alt=""
-                                />
-                                <span class="comment-like-text ">좋아요</span>
-                              </button>
-                            </div>
+                            
                             `;
                             
                             if(reply.member_id === Number(member_Id)) {

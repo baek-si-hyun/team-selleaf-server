@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from member.models import Member, MemberProfile
-from post.models import Post, PostCategory, PostTag, PostPlant, PostFile, PostReply, PostLike, PostScrap
+from post.models import Post, PostCategory, PostTag, PostPlant, PostFile, PostReply, PostLike, PostScrap, PostReplyLike
 
 
 # Create your views here.
@@ -74,8 +74,8 @@ class PostDetailView(View):
         post_category = PostCategory.objects.filter(post_id=post).values('category_name').first()
         post_plant = PostPlant.objects.filter(post_id=post.id).values('plant_name')
 
-        post_scrap = PostScrap.objects.filter(post_id=post, member_id=post.member_id, status=1).exists()
-        post_like = PostLike.objects.filter(post_id=post, member_id=post.member_id, status=1).exists()
+        post_scrap = PostScrap.objects.filter(post_id=post, member_id=session_member_id, status=1).exists()
+        post_like = PostLike.objects.filter(post_id=post, member_id=session_member_id, status=1).exists()
 
         post.post_count += 1
         post.save(update_fields=['post_count'])
@@ -101,6 +101,18 @@ class PostDetailView(View):
 
         return render(request, 'community/web/post/post-detail.html', context)
 
+class PostReportView(View):
+    def get(self, request):
+        member_id = request.session['member']['id']
+        data = request.GET
+        post_id = data.get('id')
+        print(post_id)
+        print(member_id)
+        print(data)
+
+
+
+        return redirect(f'/post/detail/?id={29}')
 
 class PostDetailApi(APIView):
     def get(self, request, post_id, page):
@@ -259,6 +271,44 @@ class PostReplyApi(APIView):
         reply.save(update_fields=['post_reply_content', 'updated_date'])
 
         return Response('success')
+
+class PostReplyLikeApi(APIView):
+    def get(self, request, post_id, reply_id, member_id, like_status):
+
+        check_like_status = True
+
+        # 만들어지면 True, 이미 있으면 False
+        reply_like, reply_like_created = PostReplyLike.objects\
+            .get_or_create(post_id=post_id, post_reply_id=reply_id, member_id=member_id)
+
+        if reply_like_created:
+            check_like_status = True
+
+        else:
+
+            if like_status == 'True':
+                update_like = PostReplyLike.objects.get(post_id=post_id, post_reply_id=reply_id, member_id=member_id)
+
+                update_like.status = 1
+                update_like.save(update_fields=['status'])
+                check_like_status = True
+
+            else:
+                update_like = PostReplyLike.objects.get(post_id=post_id, post_reply_id=reply_id, member_id=member_id)
+
+                update_like.status = 0
+                update_like.save(update_fields=['status'])
+                check_like_status = False
+
+        like_count = PostReplyLike.objects.filter(post_id=post_id, post_reply_id=reply_id, status=1).count()
+        # print(like_count)
+
+        datas = {
+            'check_like_status': check_like_status,
+            'like_count': like_count
+        }
+
+        return Response(datas)
 
 class PostScrapApi(APIView):
     def get(self, request, post_id, member_id, scrap_status):

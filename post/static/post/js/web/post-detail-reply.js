@@ -60,17 +60,7 @@ const showList = (replies) => {
                         
                           <div class="comment-data">
                             <div class="time-before">${timeForToday(reply.created_date)}</div>
-                            <div class="comment-like-btn-box">
-                              <div class="comment-split">・</div>
-                              <button type="button" class="comment-like-btn">
-                                <img
-                                  src="/staticfiles/images/like-off.png"
-                                  class="comment-like-icon"
-                                  alt=""
-                                />
-                                <span class="comment-like-text ">좋아요</span>
-                              </button>
-                            </div>
+                            
                             `;
 
                             if(reply.member_id === Number(member_id)) {
@@ -90,11 +80,11 @@ const showList = (replies) => {
                                 `}else {
                                 text += `
                                     <div class="comment-declaration-btn-box">
-                                                  <div class="comment-split">・</div>
-                                                  <button type="button" class="comment-declaration-btn">
-                                                    신고
-                                                  </button>
-                                                </div>
+                                      <div class="comment-split">・</div>
+                                      <button type="button" class="comment-declaration-btn">
+                                        신고
+                                      </button>
+                                    </div>
                                 `
                             }
 
@@ -167,6 +157,7 @@ replyService.getList(post_id, page, countReply).then((replyCount) => {
 });
 
 replySection.addEventListener("click", async (e) => {
+    console.log(e.target)
     if(e.target.classList[0] === 'update-btn'){
         const replyId = e.target.classList[1]
         const updateForm = document.getElementById(`update-form${replyId}`)
@@ -211,7 +202,10 @@ replySection.addEventListener("click", async (e) => {
         if (replies['replies'].length !== 0){
             moreButton.style.display = "flex";
         }
+    }else if(e.target.classList[0] === 'like-btn') {
+        console.log('좋아요')
     }
+
 });
 
 

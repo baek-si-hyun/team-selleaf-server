@@ -350,7 +350,7 @@
 }
 .comment-user-icon {
   border-radius: 50%;
-
+  width: 35px;
   height: 35px;
   display: block;
 
@@ -480,7 +480,8 @@
   margin-right: 12px;
 }
 .comment-user-img {
-  height: 25px;
+  width: 30px;
+  height: 30px;
   display: block;
   border-radius: 50%;
 
@@ -543,6 +544,9 @@
   font-size: 12px;
   line-height: 16px;
   font-weight: 500;
+}
+.like-btn {
+  background-color: #fff;
 }
 .comment-like-icon {
   display: inline-block;
@@ -815,6 +819,7 @@
   border-radius: 50%;
 }
 .sticky-icon-box {
+  box-shadow: rgb(63 71 77 / 42%) 0px 2px 6px;
   position: relative;
   display: flex;
   -webkit-box-align: center;
@@ -883,7 +888,7 @@
 .background-color {
   background: rgb(247, 249, 250);
   border: none;
-  box-shadow: none;
+  /*box-shadow: none;*/
 }
 .background-color:hover {
   background: rgb(234, 237, 239);
@@ -1024,7 +1029,7 @@
   color: rgb(47, 52, 56);
 }
 .declaration-btn-wrap {
-  padding: 9px 16px;
+  padding: 0px 16px;
   line-height: 0;
 }
 .declaration-btn-container {
@@ -1034,7 +1039,7 @@
 .declaration-btn {
   margin: 0px;
   border: none;
-  background: none #c06888;
+  background: none #134F2C;
   font-style: inherit;
   font-variant: inherit;
   font-stretch: inherit;
@@ -1050,7 +1055,7 @@
   justify-content: center;
   -webkit-box-align: center;
   align-items: center;
-  height: 50px;
+  height: 40px;
   border-radius: 4px;
   padding: 0px 16px;
   font-weight: 700;
@@ -1060,10 +1065,133 @@
   width: 100%;
 }
 .declaration-btn:hover {
-  background: none #fbccd4;
+  background: none #97A38C;
 }
+
+.report-declaration-btn-wrap {
+  padding: 0px 16px;
+  line-height: 0;
+}
+.report-declaration-btn-container {
+  padding-top: 1px;
+  padding-bottom: 7px;
+  display: inline-flex;
+  justify-content: space-around;
+  width: 45%;
+}
+.report-declaration-btn {
+  margin: 0px;
+  border: none;
+  background: none #C06888;
+  font-style: inherit;
+  font-variant: inherit;
+  font-stretch: inherit;
+  font-family: inherit;
+  font-optical-sizing: inherit;
+  font-kerning: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 16px;
+  line-height: 20px;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 40px;
+  border-radius: 4px;
+  padding: 0px 16px;
+  font-weight: 700;
+  box-sizing: border-box;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  width: 100%;
+}
+.report-declaration-btn:hover {
+  background: none #FBCCD4;
+}
+
+.cancel-declaration-btn-container {
+  padding-top: 1px;
+  padding-bottom: 7px;
+  display: inline-flex;
+  justify-content: space-around;
+  width: 45%;
+}
+.cancel-declaration-btn {
+  margin: 0px;
+  border: none;
+  background: none #C06888;
+  font-style: inherit;
+  font-variant: inherit;
+  font-stretch: inherit;
+  font-family: inherit;
+  font-optical-sizing: inherit;
+  font-kerning: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 16px;
+  line-height: 20px;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 40px;
+  border-radius: 4px;
+  padding: 0px 16px;
+  font-weight: 700;
+  box-sizing: border-box;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  width: 100%;
+}
+.cancel-declaration-btn:hover {
+  background: none #FBCCD4;
+}
+
 .open {
   display: flex;
+}
+
+.another-tag-box {
+  padding: 40px 0px;
+}
+.another-tag-box-title {
+  font-size: 20px;
+  line-height: 28px;
+  color: rgb(47, 52, 56);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.tag {
+  display: inline-block;
+  position: relative;
+  height: 38px;
+  border-radius: 19px;
+  padding-left: 14px;
+  padding-right: 14px;
+  line-height: 0;
+  color: rgb(47, 52, 56);
+  border: 1px solid rgb(218, 221, 224);
+  cursor: pointer;
+  margin: 0px 8px 8px 0px;
+}
+.tag:hover {
+  background-color: rgb(247, 249, 250);
+}
+.tag::before {
+  content: "";
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.tag-text {
+  font-size: 14px;
+  line-height: 18px;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: inherit;
 }
 
 section.reply-update-wrap {

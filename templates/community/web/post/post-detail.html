@@ -87,36 +87,44 @@
                   </button>
                 </div>
                 <div class="uploader-another-post-wrap">
-                  <ul class="uploader-another-post-container">
-                    <li class="uploader-another-post">
-                      <a href="javascript:void(0)">
-                        <img
-                          src="../../../staticfiles/images/blank-image.png"
-                          class="uploader-another-post-img"
-                      /></a>
-                    </li>
-                    <li class="uploader-another-post">
-                      <a href="javascript:void(0)">
-                        <img
-                          src="../../../staticfiles/images/blank-image.png"
-                          class="uploader-another-post-img"
-                      /></a>
-                    </li>
-                    <li class="uploader-another-post">
-                      <a href="javascript:void(0)">
-                        <img
-                          src="../../../staticfiles/images/blank-image.png"
-                          class="uploader-another-post-img"
-                      /></a>
-                    </li>
-                    <li class="uploader-another-post">
-                      <a href="javascript:void(0)">
-                        <img
-                          src="../../../staticfiles/images/blank-image.png"
-                          class="uploader-another-post-img"
-                      /></a>
-                    </li>
-                  </ul>
+                    <div class="another-tag-box">
+                        <div class="another-tag-box-title">다른 포스트 둘러보기</div>
+                            {% for tag in post_tags %}
+                                <div class="tag">
+                                    <span class="tag-text"># {{ tag.tag_name }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+{#                  <ul class="uploader-another-post-container">#}
+{#                    <li class="uploader-another-post">#}
+{#                      <a href="javascript:void(0)">#}
+{#                        <img#}
+{#                          src="../../../staticfiles/images/blank-image.png"#}
+{#                          class="uploader-another-post-img"#}
+{#                      /></a>#}
+{#                    </li>#}
+{#                    <li class="uploader-another-post">#}
+{#                      <a href="javascript:void(0)">#}
+{#                        <img#}
+{#                          src="../../../staticfiles/images/blank-image.png"#}
+{#                          class="uploader-another-post-img"#}
+{#                      /></a>#}
+{#                    </li>#}
+{#                    <li class="uploader-another-post">#}
+{#                      <a href="javascript:void(0)">#}
+{#                        <img#}
+{#                          src="../../../staticfiles/images/blank-image.png"#}
+{#                          class="uploader-another-post-img"#}
+{#                      /></a>#}
+{#                    </li>#}
+{#                    <li class="uploader-another-post">#}
+{#                      <a href="javascript:void(0)">#}
+{#                        <img#}
+{#                          src="../../../staticfiles/images/blank-image.png"#}
+{#                          class="uploader-another-post-img"#}
+{#                      /></a>#}
+{#                    </li>#}
+{#                  </ul>#}
                 </div>
                 <div>
                   <div class="comment-section" id="comment-section">
@@ -158,9 +166,13 @@
                     </div>
                     <section class="reply-section"></section>
                     <div class="pagination-box">
-                      <button type="button" id="more-replies">
-                        <div>더보기</div>
-                      </button>
+{#                      <button type="button" >#}
+                        <div class="declaration-btn-wrap">
+                          <div class="declaration-btn-container">
+                            <button class="declaration-btn" id="more-replies">더보기</button>
+                          </div>
+                        </div>
+{#                      </button>#}
                     </div>
                   </div>
                 </div>
@@ -450,6 +462,8 @@
         </div>
       </div>
     </div>
+    <form action="/post/report/?id={{ post.id }}" method="get" name="report">
+        {% csrf_token %}
     <div class="declaration-modal-wrap">
       <div class="declaration-modal-container">
         <div class="declaration-modal-title-box">
@@ -571,13 +585,18 @@
             </li>
           </ul>
         </div>
-        <div class="declaration-btn-wrap">
-          <div class="declaration-btn-container">
-            <button class="declaration-btn">신고하기</button>
+        <input type="hidden" class="report-content" name="report-content" value=""/>
+        <div class="report-declaration-btn-wrap">
+          <div class="report-declaration-btn-container">
+            <button type="submit" class="report-declaration-btn" id="report">신고하기</button>
+          </div>
+          <div class="cancel-declaration-btn-container">
+            <button type="button" class="cancel-declaration-btn" id="cancel">취소하기</button>
           </div>
         </div>
       </div>
     </div>
+    </form>
   </body>
 {% endblock %}
 {% block js %}

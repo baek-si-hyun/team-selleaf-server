@@ -37,7 +37,17 @@ const replyService = (() => {
         });
     }
 
-    return {write: write, getList: getList, remove: remove, update: update}
+    const like = async (post_id, reply_id, member_id, like_status, callback) => {
+        const response = await fetch(`/post/like/${post_id}/${reply_id}/${member_id}/${like_status}/`);
+        const likes = await response.json();
+        if (callback){
+            return callback(likes);
+        }
+        return likes;
+
+        }
+
+    return {write: write, getList: getList, remove: remove, update: update, like:like}
 })();
 
 const postService = (() => {
