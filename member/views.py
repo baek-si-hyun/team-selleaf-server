@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from alarm.models import Alarm
-from apply.models import Apply
+from apply.models import Apply, Trainee
 from knowhow.models import KnowhowFile, KnowhowReply, Knowhow, KnowhowPlant, KnowhowReplyLike, KnowhowLike
 from lecture.models import LectureReview, LectureProductFile, LecturePlant, Lecture, LectureScrap
 from member.models import Member, MemberAddress, MemberProfile
@@ -90,13 +90,15 @@ class MypageUpdateView(View):
         member_id = request.session['member']['id']
         request.session['member'] = MemberSerializer(Member.objects.get(id=member_id)).data
         check = request.GET.get('check')
+        teacher = Teacher.objects.filter(member_id=member_id)
         member_files = MemberProfile.objects.filter(id = member_id).first()
         session_file = request.session['member_files'][0]['file_url']
         member_file = member_files.file_url
         context = {
             'check': check,
             'member_file': member_file,
-            'memberProfile': session_file
+            'memberProfile': session_file,
+            'teacher':teacher
         }
         return render(request, 'member/mypage/my_settings/user-info-update.html', context)
 
@@ -129,16 +131,21 @@ class MypageShowView(View):
         member = request.session['member']
         member_file = request.session['member_files']
         teacher = Teacher.objects.filter(member_id=member['id'])
+
         post = list(Post.objects.filter(member_id=member['id']))
         knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
         post_count = len(post) + len(knowhow)
+
         lecture_review = LectureReview.objects.filter(member_id=member['id'])
+
         post_like = list(PostLike.objects.filter(member_id=member['id']))
         knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
         like_count = len(post_like) + len(knowhowlike)
+
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -149,20 +156,26 @@ class MypageShowView(View):
             'like_count':like_count,
             'scrap_count':scrap_count
         }
+
         return render(request,'member/mypage/my_profile/see-all.html',context)
 
 # 내 활동 내 게시글 view
 class MypagePostView(View):
     def get(self,request):
+
         member = request.session['member']
         member_file = request.session['member_files']
+
         teacher = Teacher.objects.filter(member_id=member['id'])
+
         post = list(Post.objects.filter(member_id=member['id']))
         knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
         post_count = len(post) + len(knowhow)
+
         post_like = list(PostLike.objects.filter(member_id=member['id']))
         knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
         like_count = len(post_like) + len(knowhowlike)
+
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
@@ -185,16 +198,17 @@ class MypageReplyView(View):
 
         member = request.session['member']
         member_file = request.session['member_files']
+
         teacher = Teacher.objects.filter(member_id=member['id'])
-        post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike =KnowhowLike.objects.filter(member_id=member['id'])
-        like_count = len(post_like)+len(knowhowlike)
+
         post_reply = list(PostReply.objects.filter(member_id=member['id']))
         knowhow_reply = list(KnowhowReply.objects.filter(member_id=member['id']))
         reply_count = len(post_reply)+len(knowhow_reply)
+
         post_like = list(PostLike.objects.filter(member_id=member['id']))
         knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
         like_count = len(post_like) + len(knowhowlike)
+
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
@@ -215,14 +229,19 @@ class MypageReviewView(View):
     def get(self,request):
         member = request.session['member']
         member_file = request.session['member_files']
+
         teacher = Teacher.objects.filter(member_id=member['id'])
+
         post = list(Post.objects.filter(member_id=member['id']))
         knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
         post_count = len(post) + len(knowhow)
+
         post_like = list(PostLike.objects.filter(member_id=member['id']))
         knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
         like_count = len(post_like) + len(knowhowlike)
+
         lecture_reply = LectureReview.objects.filter(member_id=member['id'])
+
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
@@ -245,13 +264,17 @@ class MypageLikesView(View):
     def get(self,request):
         member = request.session['member']
         member_file = request.session['member_files']
+
         teacher = Teacher.objects.filter(member_id=member['id'])
+
         post = list(Post.objects.filter(member_id=member['id']))
         knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
         post_count = len(post) + len(knowhow)
+
         post_reply = list(PostReply.objects.filter(member_id=member['id']))
         knowhow_reply = list(KnowhowReply.objects.filter(member_id=member['id']))
         reply_count = len(post_reply) + len(knowhow_reply)
+
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
@@ -274,9 +297,9 @@ class MypageScrapLecturesView(View):
     def get(self,request):
         member = request.session['member']
         member_file = request.session['member_files']
+
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
-        scrap_count = len(lecture_scrap) + len(trade_scrap)
 
         context = {
             'member': member,
@@ -293,6 +316,7 @@ class MypageScrapTradeView(View):
     def get(self,request):
         member = request.session['member']
         member_file = request.session['member_files']
+
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
 
@@ -303,6 +327,7 @@ class MypageScrapTradeView(View):
             'trade_scrap': trade_scrap
 
         }
+
         return render(request,'member/mypage/my_profile/scrapbook/trade-scrapbook.html',context)
 
 
@@ -312,14 +337,19 @@ class MypageLecturesView(View):
 
         member = request.session['member']
         member_file = request.session['member_files']
+
         teacher = Teacher.objects.filter(member_id=member['id'])
+
         post_like = list(PostLike.objects.filter(member_id=member['id']))
         knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
         like_count = len(post_like) + len(knowhowlike)
+
         lecture = Apply.objects.filter(member_id = member['id'])
+
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -330,11 +360,13 @@ class MypageLecturesView(View):
         }
         return render(request,'member/mypage/my_lecture/my-lectures.html',context)
 
-
+# 강의 리뷰 작성 View
 class LectureReviewView(View):
+
     def get(self, request, lecture_id):
         member = request.session['member']
         member_file = request.session['member_files']
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -358,34 +390,39 @@ class LectureReviewView(View):
             'review_rating': data.get('rate')
         }
 
+        # 알람 테이블 용
         LectureReview.objects.create(**data)
         sender = Member.objects.get(id=member['id'])
         lecture = Lecture.objects.filter(id=lecture_id)\
             .annotate(member_id=F('teacher__member_id'))\
-            .values('member_id').first()
+            .values('member_id', 'id').first()
         receiver = Member.objects.filter(id=lecture['member_id']).first()
         alarm_data= {
             'sender' : sender,
             'receiver' : receiver,
-            'alarm_category': 8
-
+            'alarm_category': 8,
+            'target_id': lecture['id']
         }
-
         Alarm.objects.create(**alarm_data)
 
         return redirect('/member/mypage/lectures/')
 
+# 내 거래 view
 class MypageTradesView(View):
     def get(self, request):
         member = request.session['member']
         member_file = request.session['member_files']
+
         trade = Trade.objects.filter(member_id=member['id'])
+
         post_like = list(PostLike.objects.filter(member_id=member['id']))
         knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
         like_count = len(post_like) + len(knowhowlike)
+
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -396,17 +433,74 @@ class MypageTradesView(View):
         return render(request, 'member/mypage/trade/my-sales.html', context)
 
 
-# 강사 진행한 강의 // 작업중
+# 강사 진행한 강의
 class MypageTeacherView(View):
     def get(self, request):
-        return render(request, 'member/mypage/my_classes/past-classes.html')
+        member = request.session['member']
+        member_file = request.session['member_files']
 
-# 강사 진행 예정 강의 // 작업중
+        lecture = Apply.objects.filter(lecture__teacher_id=member['id'])
+
+        post_like = list(PostLike.objects.filter(member_id=member['id']))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhowlike)
+
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        scrap_count = len(lecture_scrap) + len(trade_scrap)
+
+        context = {
+            'member': member,
+            'memberProfile': member_file[0]['file_url'],
+            'lecture': lecture,
+            'like_count':like_count,
+            'scrap_count':scrap_count
+        }
+
+        return render(request, 'member/mypage/my_classes/past-classes.html',context)
+
+# 강사 진행 예정 강의
 class MypageTeacherPlanView(View):
     def get(self, request):
-        return render(request, 'member/mypage/my_classes/planned-classes.html')
+        member = request.session['member']
+        member_file = request.session['member_files']
 
+        lecture = Apply.objects.filter(lecture__teacher_id=member['id'])
 
+        post_like = list(PostLike.objects.filter(member_id=member['id']))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhowlike)
+
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        scrap_count = len(lecture_scrap) + len(trade_scrap)
+
+        context = {
+            'member': member,
+            'memberProfile': member_file[0]['file_url'],
+            'lecture': lecture,
+            'like_count': like_count,
+            'scrap_count': scrap_count
+        }
+        return render(request, 'member/mypage/my_classes/planned-classes.html',context)
+
+# 수강생 목록
+class MypageTraineeView(View):
+    def get(self,request,apply_id):
+
+        member = request.session['member']
+        member_file = request.session['member_files']
+
+        lecture = Apply.objects.filter(lecture__teacher_id=member['id'])
+
+        context = {
+            'apply_id':apply_id,
+            'member': member,
+            'memberProfile': member_file[0]['file_url'],
+            'lecture': lecture,
+        }
+
+        return render(request, 'member/mypage/my_classes/student-list.html',context)
 # =====================================================================================================================
 # API
 
@@ -707,7 +801,7 @@ class MypageShowLikesAPI(APIView):
 
         return Response(sorted_likes[offset:limit])
 
-    @transaction.atomic()
+    @transaction.atomic
     def delete(self, request, id, checker):
         if checker == 'post':
             PostLike.objects.get(post_id=id, member_id=request.session['member']['id']).delete()
@@ -715,6 +809,7 @@ class MypageShowLikesAPI(APIView):
             KnowhowLike.objects.get(knowhow_id=id,member_id=request.session['member']['id']).delete()
 
         return Response('success')
+
 
 # 강의 수강 리스트
 class MypageShowLecturesAPI(APIView):
@@ -758,7 +853,9 @@ class MypageShowLecturesAPI(APIView):
 
             tags = LecturePlant.objects.filter(lecture_id=apply['lecture_id']).values('plant_name')
             apply['lecture_plant'] = [tag['plant_name'] for tag in tags]
+
         sorted_applies = sorted(applies, key=itemgetter('date'), reverse=True)
+
         return Response(sorted_applies[offset:limit])
 
 # 스크랩한 강의 API
@@ -879,3 +976,66 @@ class MypageTradesAPI(APIView):
             trade['trade_plant'] = [tag['plant_name'] for tag in tags]
 
         return Response(trades[offset:limit])
+
+class MypageTeacherAPI(APIView):
+    def get(self, request, page):
+        row_count = 5
+        offset = (page-1) * row_count
+        limit = row_count * page
+
+
+        # 강사의 ID 가져오기
+        teacher_id = request.session['member']['id']
+
+        # 해당 강사가 소속된 강의에 대한 신청 필터링
+        applies = Apply.objects.filter(lecture_id__teacher_id=teacher_id)\
+            .annotate(
+            teacher_name=F('lecture__teacher__member__member_name'),
+            lecture_title=F('lecture__lecture_title'),
+            lecture_content=F('lecture__lecture_content'),
+            lecture_category=F('lecture__lecture_category'),
+            member_name=F('member__member_name')
+            ).values(
+            'teacher_name',
+            'id',
+            'lecture_id',
+            'updated_date',
+            'lecture_title',
+            'lecture_content',
+            'lecture_category',
+            'date',
+            'time',
+            'kit',
+            'apply_status',
+            'member_name'
+            )
+
+        for apply in applies:
+            lecture_file = LectureProductFile.objects.filter(lecture_id=apply['lecture_id']).values('file_url').first()
+            if lecture_file is not None:
+                apply['lecture_file'] = lecture_file['file_url']
+            else:
+                apply['lecture_file'] = 'file/2024/03/05/blank-image.png'
+
+            tags = LecturePlant.objects.filter(lecture_id=apply['lecture_id']).values('plant_name')
+            apply['lecture_plant'] = [tag['plant_name'] for tag in tags]
+
+            trainees = Trainee.objects.filter(apply_id=apply['id']).values('trainee_name')
+            apply['trainee'] = [trainee['trainee_name'] for trainee in trainees]
+
+        return Response(applies[offset:limit])
+
+# 수강생 목록보기// 작업중
+class MypageTraineeAPI(APIView):
+    def get(self, request,apply_id,page):
+        row_count = 5
+        offset = (page - 1) * row_count
+        limit = row_count * page
+
+        teacher_id = request.session['member']['id']
+
+        apply = Apply.objects.filter(lecture_id__teacher_id=teacher_id, id=apply_id).first()
+
+        trainees = Trainee.objects.filter(apply_id=apply.id).values()
+
+        return Response(trainees[offset:limit])
