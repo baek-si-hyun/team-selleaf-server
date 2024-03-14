@@ -1,7 +1,7 @@
 from django.urls import path
 
 from post.views import PostCreateView, PostDetailView, PostReplyWriteApi, PostDetailApi, PostReplyApi, PostScrapApi, \
-    PostLikeApi, PostUpdateView, PostDeleteView, PostLikeCountApi
+    PostLikeApi, PostUpdateView, PostDeleteView, PostLikeCountApi, PostScrapCountApi
 
 app_name = 'post'
 
@@ -22,4 +22,5 @@ urlpatterns = [
     path('scrap/<int:post_id>/<int:member_id>/<str:scrap_status>/', PostScrapApi.as_view()),
     path('like/<int:post_id>/<int:member_id>/<str:like_status>/', PostLikeApi.as_view()),
     path('like/count/<int:post_id>/', PostLikeCountApi.as_view()),
+    path('scrap/count/<int:post_id>/', PostScrapCountApi.as_view()),
 ]

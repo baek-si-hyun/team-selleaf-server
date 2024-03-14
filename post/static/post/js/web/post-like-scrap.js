@@ -7,8 +7,9 @@ const scrapCountddBox = document.querySelector(".scrap-data")
 
 const ScrapCheck = (scraps) => {
     let scrap = ``;
-
-    // console.log(ls.check_status)
+    console.log(scraps)
+    scrapCountBox.innerText = scraps['scrap_count']
+    scrapCountddBox.innerText = scraps['scrap_count']
     if (scraps.check_scrap_status){
         scrap = `
             <img
@@ -34,7 +35,9 @@ const ScrapCheck = (scraps) => {
 const LikeCheck = (likes) => {
     let like = ``;
 
-    // console.log(ls.check_status)
+    console.log(likes)
+    likeCountBox.innerText = likes['like_count']
+    likeCountddBox.innerText = likes['like_count']
     if (likes.check_like_status){
         like = `
             <img
@@ -57,15 +60,14 @@ const LikeCheck = (likes) => {
     return like
 }
 
-const scrapCount = (scraps) => {
-    let countScrap = `${scraps['scrap_count']}`
-    return countScrap
-}
 
 const likeCounted = (likeCounting) => {
-    console.log(likeCounting)
-    let countLike = `${likeCounting['like_count']}`
+    let countLike = `${likeCounting}`
     return countLike
+}
+const scrapCounted = (scrapCounting) => {
+    let countScrap = `${scrapCounting}`
+    return countScrap
 }
 
 postService.likeCount(post_id, likeCounted).then((countLike) => {
@@ -73,6 +75,10 @@ postService.likeCount(post_id, likeCounted).then((countLike) => {
         likeCountddBox.innerText = countLike
     })
 
+postService.scrapCount(post_id, scrapCounted).then((countScrap) => {
+        scrapCountBox.innerText = countScrap
+        scrapCountddBox.innerText = countScrap
+    })
 
 
 
@@ -99,10 +105,6 @@ scrapBox.addEventListener("click", (e) => {
     postService.getScrap(post_id, member_id, scrap_status, ScrapCheck).then((scrap) => {
         scrapBox.innerHTML = scrap
     })
-    postService.getScrap(post_id, member_id, scrap_status, scrapCount).then((countScrap) => {
-        scrapCountBox.innerText = countScrap
-        scrapCountddBox.innerText = countScrap
-    })
 })
 
 likeBox.addEventListener("click", (e) => {
@@ -128,10 +130,4 @@ likeBox.addEventListener("click", (e) => {
     postService.getLike(post_id, member_id, like_status, LikeCheck).then((like) => {
         likeBox.innerHTML = like
     })
-
-    postService.likeCount(post_id, likeCounted).then((countLike) => {
-        likeCountBox.innerText = countLike
-        likeCountddBox.innerText = countLike
-    })
-
 })
