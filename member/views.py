@@ -279,6 +279,10 @@ class MypageLikesView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        post_like = list(PostLike.objects.filter(member_id=member['id']))
+        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhowlike)
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -286,7 +290,8 @@ class MypageLikesView(View):
             'teacher': teacher,
             'post_count': post_count,
             'reply_count': reply_count,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'like_count':like_count
         }
 
         return render(request,'member/mypage/my_profile/likes.html',context)
@@ -413,6 +418,8 @@ class MypageTradesView(View):
         member = request.session['member']
         member_file = request.session['member_files']
 
+        teacher = Teacher.objects.filter(member_id=member['id'])
+
         trade = Trade.objects.filter(member_id=member['id'])
 
         post_like = list(PostLike.objects.filter(member_id=member['id']))
@@ -426,6 +433,7 @@ class MypageTradesView(View):
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
+            'teacher':teacher,
             'trade':trade,
             'like_count':like_count,
             'scrap_count':scrap_count
