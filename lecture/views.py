@@ -513,8 +513,8 @@ class LectureDetailOfflineView(View):
         return render(request, 'lecture/web/lecture-detail-offline.html', context)
 
     def post(self, request):
-        # apply create
-
+        # order create
+        print(request.POST['name-input'])
         pass
 
 class LectureUploadOnlineView(View):

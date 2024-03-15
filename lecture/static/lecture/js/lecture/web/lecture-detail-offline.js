@@ -110,7 +110,7 @@ add.addEventListener("click", (e) => {
     const input = document.createElement('input');
     input.classList.add('student-name-input');
     input.placeholder = "예약자 이름을 입력하세요";
-    input.name = "price-input";
+    input.name = "name-input";
 
     infoListWrap.appendChild(studentLabel);
     infoListWrap.appendChild(input);

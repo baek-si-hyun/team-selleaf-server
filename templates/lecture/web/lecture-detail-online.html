@@ -566,7 +566,8 @@
                           <div class="info-dropdown-wrap">
                               {% for kit in kits %}
                                 <label class="kit-selection">
-                                  <div class="kit-title"><input type="radio" style="display: none" name="kit-input" value="{{ kit.kit_name }}">{{ kit.kit_name }}</div>
+                                  <input type="radio" style="display: none" name="kit-input" value="{{ kit.kit_name }}">
+                                  <div class="kit-title">{{ kit.kit_name }}</div>
                                   <div>{{ kit.kit_content }}</div>
                                 </label>
                               {% endfor %}
@@ -596,7 +597,7 @@
                         <span class="sub-count">
                           <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
                         </span>
-                        <button class="counted-number">0</button>
+                        <div class="counted-number">0</div>
                         <span class="add-count">
                           <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
                         </span>
