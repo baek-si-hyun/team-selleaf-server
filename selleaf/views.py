@@ -1,3 +1,6 @@
+import math
+from datetime import datetime
+
 from django.db import transaction
 from django.db.models import F, CharField, Value, Q
 from django.db.models.functions import Concat
@@ -836,8 +839,110 @@ class TraineesInfoAPI(APIView):
 class ReplyManagementView(View):
     # 댓글 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 게시물에 대한 댓글을 전부 가져와야 됨
         return render(request, 'manager/comment/comment.html')
+
+
+class ReplyManagementAPI(APIView):
+    # 모든 댓글을 필요한 컬럼만 가져와 조합 후 전달하는 메소드
+    def get(self, request):
+        keyword = request.GET.get('keyword', '')
+        page = int(request.GET.get('page', 1))
+        row_count = 10
+
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        condition = Q()
+
+        if keyword:
+            condition |= Q(reply_member_name__icontains=keyword)
+            condition |= Q(reply_content__icontains=keyword)
+
+        columns = [
+            'reply_member_id',
+            'reply_member_name',
+            'target_title',
+            'reply_id',
+            'reply_content',
+            'reply_created',
+        ]
+
+        post_replies = Post.objects.annotate(
+            reply_member_id=F('postreply__member_id'),
+            reply_member_name=F('postreply__member__member_name'),
+            target_title=F('post_title'),
+            reply_id=F('postreply__id'),
+            reply_content=F('postreply__post_reply_content'),
+            reply_created=F('postreply__created_date')
+        ).values(*columns).filter(condition, reply_member_id__isnull=False)
+
+        for post_reply in post_replies:
+            post_reply['target_type'] = '일반 게시물'
+
+
+        knowhow_replies = Knowhow.objects.annotate(
+            reply_member_id=F('knowhowreply__member_id'),
+            reply_member_name=F('knowhowreply__member__member_name'),
+            target_title=F('knowhow_title'),
+            reply_id=F('knowhowreply__id'),
+            reply_content=F('knowhowreply__knowhow_reply_content'),
+            reply_created=F('knowhowreply__created_date')
+        ).values(*columns).filter(condition, reply_member_id__isnull=False)
+
+        for knowhow_reply in knowhow_replies:
+            knowhow_reply['target_type'] = '노하우'
+
+        total = post_replies.union(knowhow_replies).count()
+
+        page_count = 5
+
+        end_page = math.ceil(page / page_count) * page_count
+        start_page = end_page - page_count + 1
+        real_end = math.ceil(total / row_count)
+        end_page = real_end if end_page > real_end else end_page
+
+        if end_page == 0:
+            end_page = 1
+
+        page_info = {
+            'totalCount': total,
+            'startPage': start_page,
+            'endPage': end_page,
+            'page': page,
+            'realEnd': real_end,
+            'pageCount': page_count,
+        }
+
+        replies = list(post_replies.union(knowhow_replies).order_by('-reply_created')[offset:limit])
+
+        for reply in replies:
+            for post_reply in post_replies:
+                if reply['reply_created'] == post_reply['reply_created']:
+                    reply['target_type'] = '일반 게시물'
+
+        for reply in replies:
+            for knowhow_reply in knowhow_replies:
+                if reply['reply_created'] == knowhow_reply['reply_created']:
+                    reply['target_type'] = '노하우'
+
+        replies.append(page_info)
+
+        return Response(replies)
+
+    @transaction.atomic
+    def delete(self, request):
+        datas = request.data
+        for data in datas:
+            reply_member_id = data.get('reply_member_id')
+            reply_created = datetime.strptime(data.get('reply_created'), "%Y-%m-%dT%H:%M:%S.%f")
+            target_type = data.get('target_type')
+
+            if target_type == '일반 게시물':
+                PostReply.objects.filter(member_id=reply_member_id, created_date=reply_created).delete()
+            else:
+                KnowhowReply.objects.filter(member_id=reply_member_id, created_date=reply_created).delete()
+
+        return Response('success')
 
 
 # 태그 관리
