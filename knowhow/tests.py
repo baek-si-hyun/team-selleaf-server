@@ -71,5 +71,5 @@ class KnowhowTest(TestCase):
     if keyword:
         condition |= Q(tag_name__icontains=keyword)
 
-    post_tags = PostTag.objects.filter(condition)
-    print(post_tags.query)
+    post_tags = PostTag.objects.filter(condition).values('tag_name').distinct().order_by('tag_name')
+    print(post_tags)
