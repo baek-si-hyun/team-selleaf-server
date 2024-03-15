@@ -268,6 +268,7 @@ inputField.addEventListener("input", handleInputChange);
 // cancel-logo에 클릭 이벤트 리스너를 추가합니다.
 cancelButton.addEventListener("click", handleCancelClick);
 
+// 체크박스 이벤트 추가 기능 함수화
 const addCheckBoxEvent = () => {
   // 체크박스 관련 js
   const allCheck = document.querySelector(".all-check");

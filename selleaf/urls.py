@@ -12,10 +12,12 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     TeacherDeleteAPI, LectureManagementView, LectureInfoAPI, LectureReviewManagementView, LectureReviewInfoAPI, \
     LectureTraineesManagementView, TraineesInfoAPI, PostManagementView, ReplyManagementView, \
     KnowhowPostsAPI, TradePostsAPI, KnowhowDeleteAPI, TradeDeleteAPI, \
-    KnowhowCountAPI, TradeCountAPI, PostsListAPI, PostsDeleteAPI, PostsCountAPI, ReplyManagementAPI
+    KnowhowCountAPI, TradeCountAPI, PostsListAPI, PostsDeleteAPI, PostsCountAPI, ReportManagementView, \
+    PaymentManagementView, TagManagementView, LectureReportListAPI, TradeReportListAPI, PostReportListAPI, \
+    PostReplyReportListAPI, KnowhowReportListAPI, KnowhowReplyReportListAPI, ReplyManagementAPI
 
 urlpatterns = [
-    path('', MainView.as_view()),
+    path('', MainView.as_view(), name='main'),
     path('search/', SearchView.as_view(), name='search'),
     path('search/api/', SearchAPI.as_view(), name='search-api'),
     path('search-history/api/', SearchHistoryAPI.as_view(), name='search-history-api'),
@@ -52,6 +54,10 @@ urlpatterns = [
     # 댓글 관리
     path('admin/reply/', ReplyManagementView.as_view(), name='manager-reply'),
     path('admin/replies/api/', ReplyManagementAPI.as_view(), name='manager-reply-api'),
+
+    # 결제 내역 관리
+    path('admin/payment/', PaymentManagementView.as_view(), name='manager-payment'),
+
     # 강의 관리
     path('admin/lecture/', LectureManagementView.as_view(), name='manager-lecture'),
     path('admin/lecture/<int:page>', LectureInfoAPI.as_view(), name='lecture-info'),
@@ -71,6 +77,16 @@ urlpatterns = [
     path('admin/qna/update/', UpdateQnAView.as_view(), name='qna-update'),
     path('admin/qna/delete/', DeleteQnAView.as_view(), name='qna-delete'),
     path('admin/qna/delete/<str:qna_ids>', DeleteManyQnAView.as_view(), name='many-qna-delete'),
+    # 태그 관리
+    path('admin/tag/', TagManagementView.as_view(), name='manager-tag'),
+    # 신고 내역 관리
+    path('admin/report/', ReportManagementView.as_view(), name='manager-report'),
+    path('admin/report/lecture/<int:page>', LectureReportListAPI.as_view(), name='lecture-report-api'),
+    path('admin/report/trade/<int:page>', TradeReportListAPI.as_view(), name='trade-report-api'),
+    path('admin/report/post/<int:page>', PostReportListAPI.as_view(), name='post-report-api'),
+    path('admin/report/post-reply/<int:page>', PostReplyReportListAPI.as_view(), name='post-reply-report-api'),
+    path('admin/report/knowhow/<int:page>', KnowhowReportListAPI.as_view(), name='knowhow-report-api'),
+    path('admin/report/knowhow-reply/<int:page>', KnowhowReplyReportListAPI.as_view(), name='knowhow-reply-report-api'),
     # 기타 서비스 url
     path('alarm/', include('alarm.urls-web')),
     path('member/', include('member.urls-web')),
