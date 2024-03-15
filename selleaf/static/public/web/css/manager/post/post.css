@@ -499,11 +499,16 @@ div.category-benner{
     border-color: #e6e6e7;
 }
 
+div.category-wrap {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
+    width: 880px;
+}
+
 div.category-inner{
-    width: 100px;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    flex-shrink: 0;
     display: flex;
     font-weight: 500;
     font-size: 13px;
@@ -534,22 +539,22 @@ input[type="checkbox"] {
     border-radius: 3px;
     outline: none;
     cursor: pointer;
-    }
+}
     
-    /* 체크됐을 때 스타일링 */
-    input[type="checkbox"]:checked {
-        background-image: url(../../../images/common/checker.png);
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: #C06888; /* 체크된 상태의 배경 색상 */
-    }
-    
-    /* 체크박스 라벨 스타일링 */
-    label {
+/* 체크됐을 때 스타일링 */
+input[type="checkbox"]:checked {
+    background-image: url(../../../images/common/checker.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #C06888; /* 체크된 상태의 배경 색상 */
+}
+
+/* 체크박스 라벨 스타일링 */
+label {
     margin-left: 5px;
     cursor: pointer;
-    }
+}
     
 
 ul.list-content{
@@ -571,28 +576,33 @@ li.list-content{
     border-color: #f3f3f4;
 }
 
-button.text-left{
-    text-align: left;
-    width: 280px;
-    display: block;
-}
-
-div.list-content-wrap{
-    row-gap: 2px;
-    flex-direction: column;
-    display: flex;
+div.post-info-wrap{
     color: #333334;
     fill: #333334;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
+    width: 880px;
 }
 
-div.list-content-container{
-    gap: 12px;
-    display: flex;
+div.post-info-wrap:hover {
+    opacity: 0.7;
 }
 
-div.list-content-inner{
-    flex-direction: column;
-    display: flex;
+div.post-info {
+    overflow: hidden;
+    display: -webkit-box;
+    word-break: break-word;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    display: block;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 div.content-name{
@@ -706,6 +716,22 @@ button.delete-button{
     height: 40px;
     display: flex;
     border-color: #e6e6e7;
+    color: #fff;
+    fill: #fff;
+    background-color: #c06888;
+}
+
+button.delete-button:not(:disabled):hover {
+    opacity: 0.7;
+}
+
+button.delete-button:not(:disabled) path {
+    fill: #fff;
+}
+
+button.delete-button:disabled {
+    cursor: default;
+    background-color: #f5f5f5;
 }
 
 svg.edit-button{
@@ -877,6 +903,11 @@ button.modal-confirm{
     color: #fff;
     fill: #fff;
     background-color: #c06888;
+}
+
+button.modal-cancel:hover,
+button.modal-confirm:hover {
+    opacity: 0.7;
 }
 
 div.delete-modal-bgcolor{

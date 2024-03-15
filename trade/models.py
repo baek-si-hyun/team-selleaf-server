@@ -51,6 +51,7 @@ class TradePlant(Plant):
 class TradeScrap(Scrap):
     trade = models.ForeignKey(Trade, on_delete=models.PROTECT, null=False)
 
+
     class Meta:
         db_table = 'tbl_trade_scrap'
         ordering = ['-id']

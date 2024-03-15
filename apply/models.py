@@ -13,18 +13,16 @@ class Apply(Period):
         (-1, '신청 취소'),
         (1, '수업 완료')
     ]
-
     apply_status = models.IntegerField(choices=APPLY_STATUS, default=0)
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
     date = models.CharField(null=False, blank=False, max_length=100)
     time = models.CharField(null=False, blank=False, max_length=100)
     kit = models.CharField(null=False, blank=False, max_length=100, default='offline')
-
+    quantity = models.IntegerField(null=False, blank=False, default=1)
     class Meta:
         db_table = 'tbl_apply'
         ordering = ['-id']
-
 
 class Trainee(Period):
     trainee_name = models.CharField(null=False, blank=False, max_length=100)

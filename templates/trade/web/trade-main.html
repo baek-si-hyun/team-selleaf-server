@@ -78,387 +78,346 @@
             <h1 class="popular-title">{{ member_home.address_city }} {{ member_home.address_district }}에서 판매중인 상품🌐</h1>
           </header>
           <div class="post-wrap row-media">
-              {% if trades %}
-                {% for trade in trades %}
-                    <div class="post-container {{ trade.id }}">
-                      <div class="post-inner">
-                        <article class="post">
-                          <a href="/trade/detail/?id={{ trade.id }}" class="post-link"></a>
-                          <div class="post-image-wrap_">
-                            <div class="post-image-container">
-                              <div class="post-image-inner">
-                                <div class="post-image"></div>
-                                <img
-                                  src="/upload/{{ trade.trade_file }}"
-                                  alt
-                                  class="image"
-                                />
-                                <button class="scrap-button" type="button">
-                                  <img
-                                    src="{% if trade.trade_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
-                                    alt
-                                    class="scrap-img"
-                                  />
-                                </button>
-                                <div class="image__dark-overlay"></div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="post-contents-wrap">
-                            <div class="post-contents-container">
-                              <h1 class="post-contents-header">
-                                <span class="post-contents-user">{{ trade.member_name }}</span>
-                                <span class="post-contents-banner">{{ trade.trade_title }}</span>
-                              </h1>
-                              <span class="post-price">
-                                <span class="post-price-letter">{{ trade.trade_price }}원</span>
-                              </span>
-                              <span class="post-tag">
-                                {% for plant_name in trade.plant_name %}
-                                    <span class="post-tag-icon">#{{ plant_name }}</span>
-                                {% endfor %}
-                              </span>
-                            </div>
-                          </div>
-                        </article>
-                      </div>
-                    </div>
-                {% endfor %}
-              {% else %}
-                  <div class="no-result-message-box"><span>검색 결과가 없습니다.</span></div>
-              {% endif %}
+{#              {% if trades %}#}
+                
+
+                
+{#              {% else %}#}
+{#                  <div class="no-result-message-box"><span>검색 결과가 없습니다. 첫 게시물을 작성해보세요</span></div>#}
+{#              {% endif %}#}
           </div>
         </section>
-        <section class="update-post-wrap wrap-media">
-          <!-- 제목 -->
-          <header class="popular-header">
-            <h1 class="popular-title">최신 등록 상품</h1>
-            <a class="popular-detail-link" id="new-detail-link" href="#"
-              >더보기</a
-            >
-          </header>
-          <!-- 거래 게시글 목록 -->
-          <div
-            class="update-post-list row-media"
-            style="
-              padding-top: 0px;
-              transform: translateY(0px);
-            "
-          >
-            <div class="update-post-contents-wrap">
-              <article class="update-post-contents">
-                <a href="#" class="update-post__overlay"></a>
-                <div class="update-post-image">
-                  <div class="update-post"></div>
-                  <img
-                    class="image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt=""
-                  />
-                  <button class="scrap-button" type="button">
-                    <img
-                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                      alt
-                      class="scrap-img"
-                    />
-                  </button>
-                  <div class="update-post__dark-overlay"></div>
-                </div>
-                <div class="post-contents-container">
-                  <h1 class="post-contents-header">
-                    <span class="post-contents-user">작성자입력</span>
-                    <span class="post-contents-banner">거래제품명</span>
-                  </h1>
-                  <span class="post-price">
-                    <span class="post-price-letter">35,000</span>
-                  </span>
-                  <div class="post-content-pc-reply">
-                    <p class="post-content-reply">리뷰 갯수</p>
-                    <p class="post-content-scrap">스크랩 갯수</p>
-                  </div>
-                  <span class="post-tag">
-                    <span class="post-tag-icon">식물종류</span>
-                  </span>
-                </div>
-              </article>
-            </div>
-            <div class="update-post-contents-wrap">
-              <article class="update-post-contents">
-                <a href="#" class="update-post__overlay"></a>
-                <div class="update-post-image">
-                  <div class="update-post"></div>
-                  <img
-                    class="image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt=""
-                  />
-                  <button class="scrap-button" type="button">
-                    <img
-                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                      alt
-                      class="scrap-off"
-                    />
-                  </button>
-                  <div class="update-post__dark-overlay"></div>
-                </div>
-                <div class="post-contents-container">
-                  <h1 class="post-contents-header">
-                    <span class="post-contents-user">작성자입력</span>
-                    <span class="post-contents-banner">거래제품명</span>
-                  </h1>
-                  <span class="post-price">
-                    <span class="post-price-letter">35,000</span>
-                  </span>
-                  <div class="post-content-pc-reply">
-                    <p class="post-content-reply">리뷰 갯수</p>
-                    <p class="post-content-scrap">스크랩 갯수</p>
-                  </div>
-                  <span class="post-tag">
-                    <span class="post-tag-icon">식물종류</span>
-                  </span>
-                </div>
-              </article>
-            </div>
-            <div class="update-post-contents-wrap">
-              <article class="update-post-contents">
-                <a href="#" class="update-post__overlay"></a>
-                <div class="update-post-image">
-                  <div class="update-post"></div>
-                  <img
-                    class="image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt=""
-                  />
-                  <button class="scrap-button" type="button">
-                    <img
-                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                      alt
-                      class="scrap-off"
-                    />
-                  </button>
-                  <div class="update-post__dark-overlay"></div>
-                </div>
-                <div class="post-contents-container">
-                  <h1 class="post-contents-header">
-                    <span class="post-contents-user">작성자입력</span>
-                    <span class="post-contents-banner">거래제품명</span>
-                  </h1>
-                  <span class="post-price">
-                    <span class="post-price-letter">35,000</span>
-                  </span>
-                  <div class="post-content-pc-reply">
-                    <p class="post-content-reply">리뷰 갯수</p>
-                    <p class="post-content-scrap">스크랩 갯수</p>
-                  </div>
-                  <span class="post-tag">
-                    <span class="post-tag-icon">식물종류</span>
-                  </span>
-                </div>
-              </article>
-            </div>
-            <div class="update-post-contents-wrap">
-              <article class="update-post-contents">
-                <a href="#" class="update-post__overlay"></a>
-                <div class="update-post-image">
-                  <div class="update-post"></div>
-                  <img
-                    class="image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt=""
-                  />
-                  <button class="scrap-button" type="button">
-                    <img
-                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                      alt
-                      class="scrap-off"
-                    />
-                  </button>
-                  <div class="update-post__dark-overlay"></div>
-                </div>
-                <div class="post-contents-container">
-                  <h1 class="post-contents-header">
-                    <span class="post-contents-user">작성자입력</span>
-                    <span class="post-contents-banner">거래제품명</span>
-                  </h1>
-                  <span class="post-price">
-                    <span class="post-price-letter">35,000</span>
-                  </span>
-                  <div class="post-content-pc-reply">
-                    <div class="post-content-pc-reply">
-                      <p class="post-content-reply">리뷰 갯수</p>
-                      <p class="post-content-scrap">스크랩 갯수</p>
-                    </div>
-                    <span class="post-tag">
-                      <span class="post-tag-icon">식물종류</span>
-                    </span>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="update-post-contents-wrap">
-              <article class="update-post-contents">
-                <a href="#" class="update-post__overlay"></a>
-                <div class="update-post-image">
-                  <div class="update-post"></div>
-                  <img
-                    class="image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt=""
-                  />
-                  <button class="scrap-button" type="button">
-                    <img
-                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                      alt
-                      class="scrap-off"
-                    />
-                  </button>
-                  <div class="update-post__dark-overlay"></div>
-                </div>
-                <div class="post-contents-container">
-                  <h1 class="post-contents-header">
-                    <span class="post-contents-user">작성자입력</span>
-                    <span class="post-contents-banner">거래제품명</span>
-                  </h1>
-                  <span class="post-price">
-                    <span class="post-price-letter">35,000</span>
-                  </span>
-                  <div class="post-content-pc-reply">
-                    <div class="post-content-pc-reply">
-                      <p class="post-content-reply">리뷰 갯수</p>
-                      <p class="post-content-scrap">스크랩 갯수</p>
-                    </div>
-                    <span class="post-tag">
-                      <span class="post-tag-icon">식물종류</span>
-                    </span>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="update-post-contents-wrap">
-              <article class="update-post-contents">
-                <a href="#" class="update-post__overlay"></a>
-                <div class="update-post-image">
-                  <div class="update-post"></div>
-                  <img
-                    class="image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt=""
-                  />
-                  <button class="scrap-button" type="button">
-                    <img
-                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                      alt
-                      class="scrap-off"
-                    />
-                  </button>
-                  <div class="update-post__dark-overlay"></div>
-                </div>
-                <div class="post-contents-container">
-                  <h1 class="post-contents-header">
-                    <span class="post-contents-user">작성자입력</span>
-                    <span class="post-contents-banner">거래제품명</span>
-                  </h1>
-                  <span class="post-price">
-                    <span class="post-price-letter">35,000</span>
-                  </span>
-                  <div class="post-content-pc-reply">
-                    <div class="post-content-pc-reply">
-                      <p class="post-content-reply">리뷰 갯수</p>
-                      <p class="post-content-scrap">스크랩 갯수</p>
-                    </div>
-                    <span class="post-tag">
-                      <span class="post-tag-icon">식물종류</span>
-                    </span>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="update-post-contents-wrap">
-              <article class="update-post-contents">
-                <a href="#" class="update-post__overlay"></a>
-                <div class="update-post-image">
-                  <div class="update-post"></div>
-                  <img
-                    class="image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt=""
-                  />
-                  <button class="scrap-button" type="button">
-                    <img
-                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                      alt
-                      class="scrap-off"
-                    />
-                  </button>
-                  <div class="update-post__dark-overlay"></div>
-                </div>
-                <div class="post-contents-container">
-                  <h1 class="post-contents-header">
-                    <span class="post-contents-user">작성자입력</span>
-                    <span class="post-contents-banner">거래제품명</span>
-                  </h1>
-                  <span class="post-price">
-                    <span class="post-price-letter">35,000</span>
-                  </span>
-                  <div class="post-content-pc-reply">
-                    <div class="post-content-pc-reply">
-                      <p class="post-content-reply">리뷰 갯수</p>
-                      <p class="post-content-scrap">스크랩 갯수</p>
-                    </div>
-                    <span class="post-tag">
-                      <span class="post-tag-icon">식물종류</span>
-                    </span>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="update-post-contents-wrap">
-              <article class="update-post-contents">
-                <a href="#" class="update-post__overlay"></a>
-                <div class="update-post-image">
-                  <div class="update-post"></div>
-                  <img
-                    class="image"
-                    src="{% static 'public/web/images/common/blank-image.png' %}"
-                    alt=""
-                  />
-                  <button class="scrap-button" type="button">
-                    <img
-                      src="{% static 'public/web/images/common/scrap-off.png' %}"
-                      alt
-                      class="scrap-off"
-                    />
-                  </button>
-                  <div class="update-post__dark-overlay"></div>
-                </div>
-                <div class="post-contents-container">
-                  <h1 class="post-contents-header">
-                    <span class="post-contents-user">작성자입력</span>
-                    <span class="post-contents-banner">거래제품명</span>
-                  </h1>
-                  <span class="post-price">
-                    <span class="post-price-letter">35,000</span>
-                  </span>
-                  <div class="post-content-pc-reply">
-                    <div class="post-content-pc-reply">
-                      <p class="post-content-reply">리뷰 갯수</p>
-                      <p class="post-content-scrap">스크랩 갯수</p>
-                    </div>
-                    <span class="post-tag">
-                      <span class="post-tag-icon">식물종류</span>
-                    </span>
-                  </div>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
+{#        <section class="update-post-wrap wrap-media">#}
+{#          <!-- 제목 -->#}
+{#          <header class="popular-header">#}
+{#            <h1 class="popular-title">최신 등록 상품</h1>#}
+{#            <a class="popular-detail-link" id="new-detail-link" href="#"#}
+{#              >더보기</a#}
+{#            >#}
+{#          </header>#}
+{#          <!-- 거래 게시글 목록 -->#}
+{#          <div#}
+{#            class="update-post-list row-media"#}
+{#            style="#}
+{#              padding-top: 0px;#}
+{#              transform: translateY(0px);#}
+{#            "#}
+{#          >#}
+{#            <div class="update-post-contents-wrap">#}
+{#              <article class="update-post-contents">#}
+{#                <a href="#" class="update-post__overlay"></a>#}
+{#                <div class="update-post-image">#}
+{#                  <div class="update-post"></div>#}
+{#                  <img#}
+{#                    class="image"#}
+{#                    src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                    alt=""#}
+{#                  />#}
+{#                  <button class="scrap-button" type="button">#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/scrap-off.png' %}"#}
+{#                      alt#}
+{#                      class="scrap-img"#}
+{#                    />#}
+{#                  </button>#}
+{#                  <div class="update-post__dark-overlay"></div>#}
+{#                </div>#}
+{#                <div class="post-contents-container">#}
+{#                  <h1 class="post-contents-header">#}
+{#                    <span class="post-contents-user">작성자입력</span>#}
+{#                    <span class="post-contents-banner">거래제품명</span>#}
+{#                  </h1>#}
+{#                  <span class="post-price">#}
+{#                    <span class="post-price-letter">35,000</span>#}
+{#                  </span>#}
+{#                  <div class="post-content-pc-reply">#}
+{#                    <p class="post-content-reply">리뷰 갯수</p>#}
+{#                    <p class="post-content-scrap">스크랩 갯수</p>#}
+{#                  </div>#}
+{#                  <span class="post-tag">#}
+{#                    <span class="post-tag-icon">식물종류</span>#}
+{#                  </span>#}
+{#                </div>#}
+{#              </article>#}
+{#            </div>#}
+{#            <div class="update-post-contents-wrap">#}
+{#              <article class="update-post-contents">#}
+{#                <a href="#" class="update-post__overlay"></a>#}
+{#                <div class="update-post-image">#}
+{#                  <div class="update-post"></div>#}
+{#                  <img#}
+{#                    class="image"#}
+{#                    src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                    alt=""#}
+{#                  />#}
+{#                  <button class="scrap-button" type="button">#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/scrap-off.png' %}"#}
+{#                      alt#}
+{#                      class="scrap-off"#}
+{#                    />#}
+{#                  </button>#}
+{#                  <div class="update-post__dark-overlay"></div>#}
+{#                </div>#}
+{#                <div class="post-contents-container">#}
+{#                  <h1 class="post-contents-header">#}
+{#                    <span class="post-contents-user">작성자입력</span>#}
+{#                    <span class="post-contents-banner">거래제품명</span>#}
+{#                  </h1>#}
+{#                  <span class="post-price">#}
+{#                    <span class="post-price-letter">35,000</span>#}
+{#                  </span>#}
+{#                  <div class="post-content-pc-reply">#}
+{#                    <p class="post-content-reply">리뷰 갯수</p>#}
+{#                    <p class="post-content-scrap">스크랩 갯수</p>#}
+{#                  </div>#}
+{#                  <span class="post-tag">#}
+{#                    <span class="post-tag-icon">식물종류</span>#}
+{#                  </span>#}
+{#                </div>#}
+{#              </article>#}
+{#            </div>#}
+{#            <div class="update-post-contents-wrap">#}
+{#              <article class="update-post-contents">#}
+{#                <a href="#" class="update-post__overlay"></a>#}
+{#                <div class="update-post-image">#}
+{#                  <div class="update-post"></div>#}
+{#                  <img#}
+{#                    class="image"#}
+{#                    src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                    alt=""#}
+{#                  />#}
+{#                  <button class="scrap-button" type="button">#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/scrap-off.png' %}"#}
+{#                      alt#}
+{#                      class="scrap-off"#}
+{#                    />#}
+{#                  </button>#}
+{#                  <div class="update-post__dark-overlay"></div>#}
+{#                </div>#}
+{#                <div class="post-contents-container">#}
+{#                  <h1 class="post-contents-header">#}
+{#                    <span class="post-contents-user">작성자입력</span>#}
+{#                    <span class="post-contents-banner">거래제품명</span>#}
+{#                  </h1>#}
+{#                  <span class="post-price">#}
+{#                    <span class="post-price-letter">35,000</span>#}
+{#                  </span>#}
+{#                  <div class="post-content-pc-reply">#}
+{#                    <p class="post-content-reply">리뷰 갯수</p>#}
+{#                    <p class="post-content-scrap">스크랩 갯수</p>#}
+{#                  </div>#}
+{#                  <span class="post-tag">#}
+{#                    <span class="post-tag-icon">식물종류</span>#}
+{#                  </span>#}
+{#                </div>#}
+{#              </article>#}
+{#            </div>#}
+{#            <div class="update-post-contents-wrap">#}
+{#              <article class="update-post-contents">#}
+{#                <a href="#" class="update-post__overlay"></a>#}
+{#                <div class="update-post-image">#}
+{#                  <div class="update-post"></div>#}
+{#                  <img#}
+{#                    class="image"#}
+{#                    src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                    alt=""#}
+{#                  />#}
+{#                  <button class="scrap-button" type="button">#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/scrap-off.png' %}"#}
+{#                      alt#}
+{#                      class="scrap-off"#}
+{#                    />#}
+{#                  </button>#}
+{#                  <div class="update-post__dark-overlay"></div>#}
+{#                </div>#}
+{#                <div class="post-contents-container">#}
+{#                  <h1 class="post-contents-header">#}
+{#                    <span class="post-contents-user">작성자입력</span>#}
+{#                    <span class="post-contents-banner">거래제품명</span>#}
+{#                  </h1>#}
+{#                  <span class="post-price">#}
+{#                    <span class="post-price-letter">35,000</span>#}
+{#                  </span>#}
+{#                  <div class="post-content-pc-reply">#}
+{#                    <div class="post-content-pc-reply">#}
+{#                      <p class="post-content-reply">리뷰 갯수</p>#}
+{#                      <p class="post-content-scrap">스크랩 갯수</p>#}
+{#                    </div>#}
+{#                    <span class="post-tag">#}
+{#                      <span class="post-tag-icon">식물종류</span>#}
+{#                    </span>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </article>#}
+{#            </div>#}
+{#            <div class="update-post-contents-wrap">#}
+{#              <article class="update-post-contents">#}
+{#                <a href="#" class="update-post__overlay"></a>#}
+{#                <div class="update-post-image">#}
+{#                  <div class="update-post"></div>#}
+{#                  <img#}
+{#                    class="image"#}
+{#                    src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                    alt=""#}
+{#                  />#}
+{#                  <button class="scrap-button" type="button">#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/scrap-off.png' %}"#}
+{#                      alt#}
+{#                      class="scrap-off"#}
+{#                    />#}
+{#                  </button>#}
+{#                  <div class="update-post__dark-overlay"></div>#}
+{#                </div>#}
+{#                <div class="post-contents-container">#}
+{#                  <h1 class="post-contents-header">#}
+{#                    <span class="post-contents-user">작성자입력</span>#}
+{#                    <span class="post-contents-banner">거래제품명</span>#}
+{#                  </h1>#}
+{#                  <span class="post-price">#}
+{#                    <span class="post-price-letter">35,000</span>#}
+{#                  </span>#}
+{#                  <div class="post-content-pc-reply">#}
+{#                    <div class="post-content-pc-reply">#}
+{#                      <p class="post-content-reply">리뷰 갯수</p>#}
+{#                      <p class="post-content-scrap">스크랩 갯수</p>#}
+{#                    </div>#}
+{#                    <span class="post-tag">#}
+{#                      <span class="post-tag-icon">식물종류</span>#}
+{#                    </span>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </article>#}
+{#            </div>#}
+{#            <div class="update-post-contents-wrap">#}
+{#              <article class="update-post-contents">#}
+{#                <a href="#" class="update-post__overlay"></a>#}
+{#                <div class="update-post-image">#}
+{#                  <div class="update-post"></div>#}
+{#                  <img#}
+{#                    class="image"#}
+{#                    src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                    alt=""#}
+{#                  />#}
+{#                  <button class="scrap-button" type="button">#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/scrap-off.png' %}"#}
+{#                      alt#}
+{#                      class="scrap-off"#}
+{#                    />#}
+{#                  </button>#}
+{#                  <div class="update-post__dark-overlay"></div>#}
+{#                </div>#}
+{#                <div class="post-contents-container">#}
+{#                  <h1 class="post-contents-header">#}
+{#                    <span class="post-contents-user">작성자입력</span>#}
+{#                    <span class="post-contents-banner">거래제품명</span>#}
+{#                  </h1>#}
+{#                  <span class="post-price">#}
+{#                    <span class="post-price-letter">35,000</span>#}
+{#                  </span>#}
+{#                  <div class="post-content-pc-reply">#}
+{#                    <div class="post-content-pc-reply">#}
+{#                      <p class="post-content-reply">리뷰 갯수</p>#}
+{#                      <p class="post-content-scrap">스크랩 갯수</p>#}
+{#                    </div>#}
+{#                    <span class="post-tag">#}
+{#                      <span class="post-tag-icon">식물종류</span>#}
+{#                    </span>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </article>#}
+{#            </div>#}
+{#            <div class="update-post-contents-wrap">#}
+{#              <article class="update-post-contents">#}
+{#                <a href="#" class="update-post__overlay"></a>#}
+{#                <div class="update-post-image">#}
+{#                  <div class="update-post"></div>#}
+{#                  <img#}
+{#                    class="image"#}
+{#                    src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                    alt=""#}
+{#                  />#}
+{#                  <button class="scrap-button" type="button">#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/scrap-off.png' %}"#}
+{#                      alt#}
+{#                      class="scrap-off"#}
+{#                    />#}
+{#                  </button>#}
+{#                  <div class="update-post__dark-overlay"></div>#}
+{#                </div>#}
+{#                <div class="post-contents-container">#}
+{#                  <h1 class="post-contents-header">#}
+{#                    <span class="post-contents-user">작성자입력</span>#}
+{#                    <span class="post-contents-banner">거래제품명</span>#}
+{#                  </h1>#}
+{#                  <span class="post-price">#}
+{#                    <span class="post-price-letter">35,000</span>#}
+{#                  </span>#}
+{#                  <div class="post-content-pc-reply">#}
+{#                    <div class="post-content-pc-reply">#}
+{#                      <p class="post-content-reply">리뷰 갯수</p>#}
+{#                      <p class="post-content-scrap">스크랩 갯수</p>#}
+{#                    </div>#}
+{#                    <span class="post-tag">#}
+{#                      <span class="post-tag-icon">식물종류</span>#}
+{#                    </span>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </article>#}
+{#            </div>#}
+{#            <div class="update-post-contents-wrap">#}
+{#              <article class="update-post-contents">#}
+{#                <a href="#" class="update-post__overlay"></a>#}
+{#                <div class="update-post-image">#}
+{#                  <div class="update-post"></div>#}
+{#                  <img#}
+{#                    class="image"#}
+{#                    src="{% static 'public/web/images/common/blank-image.png' %}"#}
+{#                    alt=""#}
+{#                  />#}
+{#                  <button class="scrap-button" type="button">#}
+{#                    <img#}
+{#                      src="{% static 'public/web/images/common/scrap-off.png' %}"#}
+{#                      alt#}
+{#                      class="scrap-off"#}
+{#                    />#}
+{#                  </button>#}
+{#                  <div class="update-post__dark-overlay"></div>#}
+{#                </div>#}
+{#                <div class="post-contents-container">#}
+{#                  <h1 class="post-contents-header">#}
+{#                    <span class="post-contents-user">작성자입력</span>#}
+{#                    <span class="post-contents-banner">거래제품명</span>#}
+{#                  </h1>#}
+{#                  <span class="post-price">#}
+{#                    <span class="post-price-letter">35,000</span>#}
+{#                  </span>#}
+{#                  <div class="post-content-pc-reply">#}
+{#                    <div class="post-content-pc-reply">#}
+{#                      <p class="post-content-reply">리뷰 갯수</p>#}
+{#                      <p class="post-content-scrap">스크랩 갯수</p>#}
+{#                    </div>#}
+{#                    <span class="post-tag">#}
+{#                      <span class="post-tag-icon">식물종류</span>#}
+{#                    </span>#}
+{#                  </div>#}
+{#                </div>#}
+{#              </article>#}
+{#            </div>#}
+{#          </div>#}
+{#        </section>#}
       </div>
     </div>
     {% include 'fix/footer.html' %}
   </body>
 {% endblock %}
-{% block js %}<script>  const csrf_token = '{{ csrf_token }}';</script>
+{% block js %}
+  <script>  const csrf_token = '{{ csrf_token }}' </script>
   <script src="{% static 'trade/js/web/trade-module.js' %}"></script>
   <script src="{% static 'trade/js/web/trade.js' %}"></script>
 {% endblock %}
