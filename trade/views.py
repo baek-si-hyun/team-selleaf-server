@@ -66,7 +66,7 @@ class TradeReportView(View):
         report = request.POST['declaration']
 
         # 신고 생성
-        TradeReport.object.create(report_content=report, member_id=member['id'], report_status=True, trade=trade)
+        TradeReport.object1.create(report_content=report, member_id=member['id'], report_status=True, trade=trade)
 
         return redirect('/trade/main')
 
@@ -82,11 +82,18 @@ class TradeDetailApi(APIView):
 class TradeUpdateView(View):
     def get(self, request):
         trade = Trade.objects.get(id=request.GET['id'])
-        return render(request, "trade/web/trade-update.html", {'trade': trade})
+        trade_files = TradeFile.objects.filter(trade=trade)
+        context = {
+            'trade': trade,
+            'trade_files': list(trade_files)
+        }
+        return render(request, "trade/web/trade-update.html", context=context)
 
     @transaction.atomic
     def post(self, request):
         data = request.POST
+        files = request.FILES
+
         trade_id = data['id']
 
         # 지금 시간
@@ -126,7 +133,12 @@ class TradeUpdateView(View):
 
         # 게시물의 업데이트 날짜를 현재로 변경
         trade.updated_date = timezone.now()
-        
+
+        # 사진 파일 업데이트
+        TradeFile.objects.filter(trade_id=trade_id).delete()
+        for key in files:
+            TradeFile.objects.create(trade=trade, file_url=files[key])
+
         # 게시물 update
         trade.save(update_fields=['trade_price', 'kakao_talk_url', 'trade_title', 'trade_content'])
 

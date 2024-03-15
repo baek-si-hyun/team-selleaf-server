@@ -9,6 +9,9 @@ from teacher.models import Teacher, TeacherInfoFile
 
 class TeacherEntryView(View):
     def get(self, request):
+        # 현재 로그인한 회원이 강사인지 아닌지 확인하기
+        member = request.session['member']
+        teacher_check = Teacher.objects.filter(member_id=member['id']).values('teacher_status').first()
 
         # 최근 생성된 강의 10개 가지고 오기
         lectures = Lecture.enabled_objects.all().values('lecture_title', 'id', 'teacher__member__member_name')[:10]
@@ -19,6 +22,7 @@ class TeacherEntryView(View):
 
         context = {
             'lectures': lectures,
+            'teacher_check': teacher_check['teacher_status']
         }
 
         return render(request, 'teacher/teacher-entry.html', context)
@@ -45,10 +49,10 @@ class TeacherSubView(View):
         lecture_place = teacher_info_data['lecture-place']
 
         # 강사 신청 create
-        Teacher.objects.create(member_id=member['id'], teacher_info=teacher_brief_history, lecture_plan=lecture_description, teacher_address=lecture_place, teacher_status=False)
+        teacher = Teacher.objects.create(member_id=member['id'], teacher_info=teacher_brief_history, lecture_plan=lecture_description, teacher_address=lecture_place, teacher_status=False)
 
         # 강의 품목 예시(사진 파일)
         for key in files:
-            TeacherInfoFile.objects.create(trade=trade, file_url=files[key])
+            TeacherInfoFile.objects.create(teacher=teacher, file_url=files[key])
 
         return redirect('/teacher/entry')
