@@ -33,7 +33,7 @@
           {% with request.path as current_path %}
             {# 커뮤니티(일반 게시물, 노하우) 서비스 페이지면 메뉴 텍스트 색 변경 #}
             {# href로 보낼 페이지랑 if 조건식 정할 것 #}
-            <a class="header-third-inner-seconda" href="#">
+            <a class="header-third-inner-seconda" href="/community/main/">
               <span class="header-third-inner-firstsp">커뮤니티</span>
             </a>
               {# 강의 서비스 페이지면 메뉴 텍스트 색 변경 #}
@@ -163,11 +163,11 @@
                         aria-label="프로필 메뉴"
                         class="header-kakao-button"
                     >
-                        {% if memberProfile %}
-                          {% if 'http' in memberProfile %}
-                            <img src="{{ memberProfile }}" alt="" class="current-profile-image">
+                        {% if request.session.member_files.0 %}
+                          {% if 'http' in request.session.member_files.0 %}
+                            <img src="{{ request.session.member_files.0 }}" alt="" class="current-profile-image">
                           {% else %}
-                            <img src="/upload/{{ memberProfile }}" alt="" class="current-profile-image">
+                            <img src="/upload/{{ request.session.member_files.0 }}" alt="" class="current-profile-image">
                           {% endif %}
                         {% else %}
                           <img src="{% static 'member/images/mypage/base-profile-image.avif' %}" alt=""
@@ -245,8 +245,8 @@
                     </div>
                   </div>
                 {% else %}
-                  <a class="header-info-each" href="#">로그인</a>
-                  <a class="header-info-each" href="#">회원가입</a>
+                  <a class="header-info-each" href="/member/login">로그인</a>
+                  <a class="header-info-each" href="/member/join">회원가입</a>
                   <a class="header-info-each" href="#">고객센터</a>
                 {% endif %}
               </div>
