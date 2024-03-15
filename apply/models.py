@@ -9,10 +9,13 @@ from selleaf.time import Time
 
 class Apply(Period):
     APPLY_STATUS = [
+        (-2, '바로 구매'),
+        (-3, '장바구니'),
         (0, '신청 완료'),
         (-1, '신청 취소'),
         (1, '수업 완료')
     ]
+
     apply_status = models.IntegerField(choices=APPLY_STATUS, default=0)
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False)
