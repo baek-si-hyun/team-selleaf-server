@@ -1,3 +1,6 @@
+import math
+from datetime import datetime
+
 from django.db import transaction
 from django.db.models import F, CharField, Value, Q
 from django.db.models.functions import Concat
@@ -15,7 +18,7 @@ from member.models import Member
 from notice.models import Notice
 from post.models import Post, PostTag, PostFile, PostReply, PostCategory, PostPlant, PostScrap, PostLike, PostReplyLike
 from qna.models import QnA
-from report.models import KnowhowReplyReport, PostReplyReport
+from report.models import KnowhowReplyReport, PostReplyReport, LectureReport, TradeReport, PostReport, KnowhowReport
 from teacher.models import Teacher
 from trade.models import Trade, TradeCategory
 
@@ -836,8 +839,110 @@ class TraineesInfoAPI(APIView):
 class ReplyManagementView(View):
     # 댓글 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 게시물에 대한 댓글을 전부 가져와야 됨
         return render(request, 'manager/comment/comment.html')
+
+
+class ReplyManagementAPI(APIView):
+    # 모든 댓글을 필요한 컬럼만 가져와 조합 후 전달하는 메소드
+    def get(self, request):
+        keyword = request.GET.get('keyword', '')
+        page = int(request.GET.get('page', 1))
+        row_count = 10
+
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        condition = Q()
+
+        if keyword:
+            condition |= Q(reply_member_name__icontains=keyword)
+            condition |= Q(reply_content__icontains=keyword)
+
+        columns = [
+            'reply_member_id',
+            'reply_member_name',
+            'target_title',
+            'reply_id',
+            'reply_content',
+            'reply_created',
+        ]
+
+        post_replies = Post.objects.annotate(
+            reply_member_id=F('postreply__member_id'),
+            reply_member_name=F('postreply__member__member_name'),
+            target_title=F('post_title'),
+            reply_id=F('postreply__id'),
+            reply_content=F('postreply__post_reply_content'),
+            reply_created=F('postreply__created_date')
+        ).values(*columns).filter(condition, reply_member_id__isnull=False)
+
+        for post_reply in post_replies:
+            post_reply['target_type'] = '일반 게시물'
+
+
+        knowhow_replies = Knowhow.objects.annotate(
+            reply_member_id=F('knowhowreply__member_id'),
+            reply_member_name=F('knowhowreply__member__member_name'),
+            target_title=F('knowhow_title'),
+            reply_id=F('knowhowreply__id'),
+            reply_content=F('knowhowreply__knowhow_reply_content'),
+            reply_created=F('knowhowreply__created_date')
+        ).values(*columns).filter(condition, reply_member_id__isnull=False)
+
+        for knowhow_reply in knowhow_replies:
+            knowhow_reply['target_type'] = '노하우'
+
+        total = post_replies.union(knowhow_replies).count()
+
+        page_count = 5
+
+        end_page = math.ceil(page / page_count) * page_count
+        start_page = end_page - page_count + 1
+        real_end = math.ceil(total / row_count)
+        end_page = real_end if end_page > real_end else end_page
+
+        if end_page == 0:
+            end_page = 1
+
+        page_info = {
+            'totalCount': total,
+            'startPage': start_page,
+            'endPage': end_page,
+            'page': page,
+            'realEnd': real_end,
+            'pageCount': page_count,
+        }
+
+        replies = list(post_replies.union(knowhow_replies).order_by('-reply_created')[offset:limit])
+
+        for reply in replies:
+            for post_reply in post_replies:
+                if reply['reply_created'] == post_reply['reply_created']:
+                    reply['target_type'] = '일반 게시물'
+
+        for reply in replies:
+            for knowhow_reply in knowhow_replies:
+                if reply['reply_created'] == knowhow_reply['reply_created']:
+                    reply['target_type'] = '노하우'
+
+        replies.append(page_info)
+
+        return Response(replies)
+
+    @transaction.atomic
+    def delete(self, request):
+        datas = request.data
+        for data in datas:
+            reply_member_id = data.get('reply_member_id')
+            reply_created = datetime.strptime(data.get('reply_created'), "%Y-%m-%dT%H:%M:%S.%f")
+            target_type = data.get('target_type')
+
+            if target_type == '일반 게시물':
+                PostReply.objects.filter(member_id=reply_member_id, created_date=reply_created).delete()
+            else:
+                KnowhowReply.objects.filter(member_id=reply_member_id, created_date=reply_created).delete()
+
+        return Response('success')
 
 
 # 태그 관리
@@ -1103,15 +1208,280 @@ class DeleteManyQnAView(APIView):
 class ReportManagementView(View):
     # 신고 내역 페이지 이동 뷰
     def get(self, request):
-        # 신고 내역 전부 가져오기
-        return render(request, 'manager/report/report.html')
+        # 강의, 거래, 일반 게시글(+댓글), 노하우 게시글(+댓글) 각각의 개수
+        lecture_report_count = LectureReport.object.count()     # 강의
+        trade_report_count = TradeReport.object.count()     # 거래
+        post_report_count = PostReport.object.count()   # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.count()    # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.count()     # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.count()  # 노하우 게시글 댓글
 
-    # 신고 내역 처리 or 삭제(반려) 후의 뷰
-    # 이 페이지는 별도의 신고 상세 모달 또는 페이지를 제작하는 등의 개선이 필요해 보임
-    def post(self, request):
-        # update 완료 후, 다시 신고 내역 페이지로 이동
-        return render(request, 'manager/report/report.html')
+        # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
+        context = {
+            'lecture_report_count': lecture_report_count,
+            'trade_report_count': trade_report_count,
+            'post_report_count': post_report_count,
+            'post_reply_report_count': post_reply_report_count,
+            'knowhow_report_count': knowhow_report_count,
+            'knowhow_reply_report_count': knowhow_reply_report_count
+        }
 
-# 남은 것들
-# 필요한 곳에 API 사용
-# 내역 삭제 뷰 post 쓰지 말고 따로 분리할 지 회의
+        return render(request, 'manager/report/report.html', context)
+
+
+class LectureReportListAPI(APIView):
+    # 강의 신고 리스트 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 신고 내역 수
+        row_count = 10
+
+        # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 신고 내역 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'report_content',   # 신고 내용
+            'report_member',    # 신고자
+            'report_status',    # 1 - 접수됨, 0 - 삭제됨
+            'report_target',    # 신고 대상 - 강의
+            'created_date',
+        ]
+
+        # 신고 내역 조회
+        lecture_reports = LectureReport.object.filter()\
+            .annotate(report_member=F('member__member_name'),
+                      report_target=F('lecture__lecture_title'))\
+            .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = LectureReport.object.filter()[limit:limit + 1].exists()
+
+        # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for lecture_report in lecture_reports:
+            lecture_report['created_date'] = lecture_report['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 신고 내역 목록
+        lecture_report_info = {
+            'reports': lecture_reports,
+            'hasNext': has_next_page
+        }
+
+        # 요청한 데이터 반환
+        return Response(lecture_report_info)
+
+
+class TradeReportListAPI(APIView):
+    # 거래 신고 리스트 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 신고 내역 수
+        row_count = 10
+
+        # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 신고 내역 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'report_content',   # 신고 내용
+            'report_member',    # 신고자
+            'report_status',    # 1 - 접수됨, 0 - 삭제됨
+            'report_target',    # 신고 대상 - 거래
+            'created_date',
+        ]
+
+        # 신고 내역 조회
+        trade_reports = TradeReport.object.filter()\
+            .annotate(report_member=F('member__member_name'),
+                      report_target=F('trade__trade_title'))\
+            .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = TradeReport.object.filter()[limit:limit + 1].exists()
+
+        # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for trade_report in trade_reports:
+            trade_report['created_date'] = trade_report['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 신고 내역 목록
+        trade_report_info = {
+            'reports': trade_reports,
+            'hasNext': has_next_page
+        }
+
+        # 요청한 데이터 반환
+        return Response(trade_report_info)
+
+
+class PostReportListAPI(APIView):
+    # 일반 게시물 신고 리스트 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 신고 내역 수
+        row_count = 10
+
+        # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 신고 내역 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'report_content',   # 신고 내용
+            'report_member',    # 신고자
+            'report_status',    # 1 - 접수됨, 0 - 삭제됨
+            'report_target',    # 신고 대상 - 일반 게시물
+            'created_date',
+        ]
+
+        # 신고 내역 조회
+        post_reports = PostReport.object.filter()\
+            .annotate(report_member=F('member__member_name'),
+                      report_target=F('post__post_title'))\
+            .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = PostReport.object.filter()[limit:limit + 1].exists()
+
+        # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for post_report in post_reports:
+            post_report['created_date'] = post_report['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 신고 내역 목록
+        post_report_info = {
+            'reports': post_reports,
+            'hasNext': has_next_page
+        }
+
+        # 요청한 데이터 반환
+        return Response(post_report_info)
+
+
+class PostReplyReportListAPI(APIView):
+    # 일반 게시물 댓글 신고 리스트 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 신고 내역 수
+        row_count = 10
+
+        # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 신고 내역 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'report_content',   # 신고 내용
+            'report_member',    # 신고자
+            'report_status',    # 1 - 접수됨, 0 - 삭제됨
+            'report_target',    # 신고 대상 - 일반 게시물 댓글
+            'created_date',
+        ]
+
+        # 신고 내역 조회
+        post_reply_reports = PostReplyReport.object.filter()\
+            .annotate(report_member=F('member__member_name'),
+                      report_target=F('post_reply__post_reply_content'))\
+            .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = PostReplyReport.object.filter()[limit:limit + 1].exists()
+
+        # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for post_reply_report in post_reply_reports:
+            post_reply_report['created_date'] = post_reply_report['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 신고 내역 목록
+        post_reply_report_info = {
+            'reports': post_reply_reports,
+            'hasNext': has_next_page
+        }
+
+        # 요청한 데이터 반환
+        return Response(post_reply_report_info)
+
+
+class KnowhowReportListAPI(APIView):
+    # 노하우 게시물 신고 리스트 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 신고 내역 수
+        row_count = 10
+
+        # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 신고 내역 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'report_content',   # 신고 내용
+            'report_member',    # 신고자
+            'report_status',    # 1 - 접수됨, 0 - 삭제됨
+            'report_target',    # 신고 대상 - 일반 게시물
+            'created_date',
+        ]
+
+        # 신고 내역 조회
+        knowhow_reports = KnowhowReport.object.filter()\
+            .annotate(report_member=F('member__member_name'),
+                      report_target=F('knowhow__knowhow_title'))\
+            .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = KnowhowReport.object.filter()[limit:limit + 1].exists()
+
+        # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for knowhow_report in knowhow_reports:
+            knowhow_report['created_date'] = knowhow_report['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 신고 내역 목록
+        knowhow_report_info = {
+            'reports': knowhow_reports,
+            'hasNext': has_next_page
+        }
+
+        # 요청한 데이터 반환
+        return Response(knowhow_report_info)
+
+
+class KnowhowReplyReportListAPI(APIView):
+    # 노하우 게시물 댓글 신고 리스트 API 뷰
+    def get(self, request, page):
+        # 한 페이지에 띄울 신고 내역 수
+        row_count = 10
+
+        # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 신고 내역 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'report_content',   # 신고 내용
+            'report_member',    # 신고자
+            'report_status',    # 1 - 접수됨, 0 - 삭제됨
+            'report_target',    # 신고 대상 - 일반 게시물
+            'created_date',
+        ]
+
+        # 신고 내역 조회
+        knowhow_reply_reports = KnowhowReplyReport.object.filter()\
+            .annotate(report_member=F('member__member_name'),
+                      report_target=F('knowhow_reply__knowhow_reply_content'))\
+            .values(*columns)[offset:limit]
+
+        # 다음 페이지에 띄울 정보가 있는지 검사
+        has_next_page = KnowhowReplyReport.object.filter()[limit:limit + 1].exists()
+
+        # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for knowhow_reply_report in knowhow_reply_reports:
+            knowhow_reply_report['created_date'] = knowhow_reply_report['created_date'].strftime('%Y.%m.%d')
+
+        # 완성된 신고 내역 목록
+        knowhow_reply_report_info = {
+            'reports': knowhow_reply_reports,
+            'hasNext': has_next_page
+        }
+
+        # 요청한 데이터 반환
+        return Response(knowhow_reply_report_info)

@@ -539,22 +539,22 @@ input[type="checkbox"] {
     border-radius: 3px;
     outline: none;
     cursor: pointer;
-    }
+}
     
-    /* 체크됐을 때 스타일링 */
-    input[type="checkbox"]:checked {
-        background-image: url(../../../images/common/checker.png);
-        background-size: contain;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: #C06888; /* 체크된 상태의 배경 색상 */
-    }
-    
-    /* 체크박스 라벨 스타일링 */
-    label {
+/* 체크됐을 때 스타일링 */
+input[type="checkbox"]:checked {
+    background-image: url(../../../images/common/checker.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #C06888; /* 체크된 상태의 배경 색상 */
+}
+
+/* 체크박스 라벨 스타일링 */
+label {
     margin-left: 5px;
     cursor: pointer;
-    }
+}
     
 
 ul.list-content{
