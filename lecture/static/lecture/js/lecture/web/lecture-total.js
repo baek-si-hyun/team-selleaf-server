@@ -88,71 +88,71 @@ fieldSelecter.addEventListener("click", (e) => {
   childObserver();
 });
 const onOffSelecter = document.querySelector(".onoff-selecter");
-onOffSelecter.addEventListener("click", (e) => {
-  const modalMenuBtns = onOffSelecter.querySelectorAll(".modal-menu-btn");
-  if (e.target.closest(".modal-menu-btn")) {
-    modalMenuBtns.forEach((btn) => {
-      btn.classList.remove("choice");
-    });
-    e.target.closest(".modal-menu-btn").classList.add("choice");
-    onOffSelecter.querySelector(".filter-btn").classList.add("choice");
-    const onOffItem = document.querySelector(".onoff-item");
-    if (!onOffItem) {
-      const optionItem = document.createElement("span");
-      optionItem.classList.add("option-item");
-      optionItem.classList.add("onoff-item");
-      optionItem.innerHTML = `
-        <button class="option-cancel-btn">
-          ${e.target.innerText}
-          ${optionCancelIcon}
-        </button>
-      `;
-      const parentElement = optionResetBtn.parentNode;
-      parentElement.insertBefore(optionItem, optionResetBtn);
-    } else {
-      onOffItem.innerHTML = `
-      <button class="option-cancel-btn">
-        ${e.target.innerText}
-        ${optionCancelIcon}
-      </button>
-    `;
-    }
-  }
-  childObserver();
-});
-const areaSelecter = document.querySelector(".area-selecter");
-areaSelecter.addEventListener("click", (e) => {
-  const modalMenuBtns = areaSelecter.querySelectorAll(".modal-menu-btn");
-  if (e.target.closest(".modal-menu-btn")) {
-    modalMenuBtns.forEach((btn) => {
-      btn.classList.remove("choice");
-    });
-    e.target.closest(".modal-menu-btn").classList.add("choice");
-    areaSelecter.querySelector(".filter-btn").classList.add("choice");
-    const areaItem = document.querySelector(".area-item");
-    if (!areaItem) {
-      const optionItem = document.createElement("span");
-      optionItem.classList.add("option-item");
-      optionItem.classList.add("area-item");
-      optionItem.innerHTML = `
-        <button class="option-cancel-btn">
-          ${e.target.innerText}
-          ${optionCancelIcon}
-        </button>
-      `;
-      const parentElement = optionResetBtn.parentNode;
-      parentElement.insertBefore(optionItem, optionResetBtn);
-    } else {
-      areaItem.innerHTML = `
-      <button class="option-cancel-btn">
-        ${e.target.innerText}
-        ${optionCancelIcon}
-      </button>
-    `;
-    }
-  }
-  childObserver();
-});
+// onOffSelecter.addEventListener("click", (e) => {
+//   const modalMenuBtns = onOffSelecter.querySelectorAll(".modal-menu-btn");
+//   if (e.target.closest(".modal-menu-btn")) {
+//     modalMenuBtns.forEach((btn) => {
+//       btn.classList.remove("choice");
+//     });
+//     e.target.closest(".modal-menu-btn").classList.add("choice");
+//     onOffSelecter.querySelector(".filter-btn").classList.add("choice");
+//     const onOffItem = document.querySelector(".onoff-item");
+//     if (!onOffItem) {
+//       const optionItem = document.createElement("span");
+//       optionItem.classList.add("option-item");
+//       optionItem.classList.add("onoff-item");
+//       optionItem.innerHTML = `
+//         <button class="option-cancel-btn">
+//           ${e.target.innerText}
+//           ${optionCancelIcon}
+//         </button>
+//       `;
+//       const parentElement = optionResetBtn.parentNode;
+//       parentElement.insertBefore(optionItem, optionResetBtn);
+//     } else {
+//       onOffItem.innerHTML = `
+//       <button class="option-cancel-btn">
+//         ${e.target.innerText}
+//         ${optionCancelIcon}
+//       </button>
+//     `;
+//     }
+//   }
+//   childObserver();
+// });
+// const areaSelecter = document.querySelector(".area-selecter");
+// areaSelecter.addEventListener("click", (e) => {
+//   const modalMenuBtns = areaSelecter.querySelectorAll(".modal-menu-btn");
+//   if (e.target.closest(".modal-menu-btn")) {
+//     modalMenuBtns.forEach((btn) => {
+//       btn.classList.remove("choice");
+//     });
+//     e.target.closest(".modal-menu-btn").classList.add("choice");
+//     areaSelecter.querySelector(".filter-btn").classList.add("choice");
+//     const areaItem = document.querySelector(".area-item");
+//     if (!areaItem) {
+//       const optionItem = document.createElement("span");
+//       optionItem.classList.add("option-item");
+//       optionItem.classList.add("area-item");
+//       optionItem.innerHTML = `
+//         <button class="option-cancel-btn">
+//           ${e.target.innerText}
+//           ${optionCancelIcon}
+//         </button>
+//       `;
+//       const parentElement = optionResetBtn.parentNode;
+//       parentElement.insertBefore(optionItem, optionResetBtn);
+//     } else {
+//       areaItem.innerHTML = `
+//       <button class="option-cancel-btn">
+//         ${e.target.innerText}
+//         ${optionCancelIcon}
+//       </button>
+//     `;
+//     }
+//   }
+//   childObserver();
+// });
 const individuals = document.querySelectorAll(".individual");
 individuals.forEach((individual) => {
   individual.addEventListener("click", (e) => {

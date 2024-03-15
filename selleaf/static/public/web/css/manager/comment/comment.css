@@ -404,16 +404,16 @@ button.list-order{
     outline-offset: 2px;
     padding-top: 8px;
     padding-bottom: 8px;
-    padding-left: 16px;
     padding-right: 16px;
     border-width: 1px;
     border-radius: 16px;
     align-items: center;
-    max-width: 164px;
+    width: 83px;
     height: 32px;
     display: flex;
     border-color: rgba(0,0,0,.1);
     background-color: #fff;
+    justify-content: flex-end;
 }
 
 button.list-order-open{
@@ -503,6 +503,7 @@ div.category-benner{
     display: flex;
     margin-top: 20px;
     border-color: #e6e6e7;
+    justify-content: space-around;
 }
 
 div.category-inner{
@@ -525,9 +526,9 @@ div.compose-button{
 
 
 /* 체크박스 css */
-input.checkbox-input{
-    margin-right: -100px;
-}
+/*input.checkbox-input{*/
+/*    margin-right: -100px;*/
+/*}*/
 
 /* 체크박스 스타일링 */
 input[type="checkbox"] {
@@ -572,18 +573,25 @@ li.list-content{
     padding-right: 8px;
     border-bottom-width: 1px;
     align-items: center;
-    justify-content: space-between;
     display: flex;
     border-color: #f3f3f4;
+    column-gap: 24px;
+    justify-content: space-around;
 }
 
-button.text-left{
+.target-title {
     text-align: left;
-    width: 400px;
+    width: 150px;
     display: block;
 }
 
-div.list-content-wrap{
+.reply-content {
+    text-align: left;
+    width: 250px;
+    display: block;
+}
+
+.list-title-wrap, div.list-content-wrap{
     row-gap: 2px;
     flex-direction: column;
     display: flex;
@@ -591,22 +599,22 @@ div.list-content-wrap{
     fill: #333334;
 }
 
-div.list-content-container{
+.list-title-container, div.list-content-container{
     gap: 12px;
     display: flex;
 }
 
-div.list-content-inner{
+.list-title-inner, div.list-content-inner{
     flex-direction: column;
     display: flex;
 }
 
-div.content-name{
+.title-name, div.content-name{
     gap: 2px;
     display: flex;
 }
 
-p.content-name{
+p.title-name, p.content-name, .writer-name, .type-name{
     overflow: hidden;
     display: -webkit-box;
     word-break: break-word;
@@ -633,11 +641,11 @@ p.content-name-detail{
     fill: #8a8a8b;
 }
 
-div.content-open-wrap{
-    align-items: flex-start;
+.reply-writer, .target-type{
+    align-items: center;
     min-height: 40px;
     display: flex;
-    margin-left: 32px;
+    width: 80px;
 }
 
 div.content-detail{
@@ -649,17 +657,17 @@ div.content-detail{
 
 div.content-detail-a{
     row-gap: 4px;
-    align-items: flex-end;
+    align-items: flex-start;
     flex-direction: column;
-    width: 56px;
+    width: 80px;
     display: flex;
 }
 
-div.content-detail-b{
+div.created-date{
     row-gap: 4px;
-    align-items: flex-end;
+    align-items: flex-start;
     flex-direction: column;
-    width: 76px;
+    width: 100px;
     display: flex;
 }
 
@@ -671,7 +679,7 @@ div.content-detail-c{
     display: flex;
 }
 
-p.content-detail-num{
+p.created-date-num{
     font-weight: 500;
     font-size: 14px;
     line-height: 18px; 
@@ -728,14 +736,14 @@ div.page-count-wrap{
     margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
-    grid-column: 1/-1;
+    gap: 16px;
 }
 
 ul.flex{
     display: flex;
 }
 
-button.page-count{
+button.page-count-prev, button.page-count-next{
     opacity: .3;
     border-width: 1px;
     border-radius: 9999px;
@@ -747,7 +755,6 @@ button.page-count{
     border-color: #e6e6e7;
     color: #1d1d1e;
     fill: #1d1d1e;
-    cursor: default;
 }
 
 svg.page-count{
@@ -806,7 +813,7 @@ div.delete-modal-container{
     display: flex;
     box-sizing: border-box;
     z-index: 50;
-    top: 30px;
+    top: 340px;
     left: 50%;
     position: fixed;
     border-color: #e6e6e7;
@@ -893,4 +900,26 @@ div.delete-modal-bgcolor{
     top: 0;
     position: fixed;
     background-color: rgba(0,0,0,.4);
+}
+
+div.nothing{
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    margin-top: 100px;
+}
+
+img.nothing{
+    width: 52px;
+    height: 57px;
+}
+
+p.nothing{
+    margin-top: 23px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #8a8a8b;
+    fill: #8a8a8b;
 }
