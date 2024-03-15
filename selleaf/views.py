@@ -1284,15 +1284,28 @@ class ReportManagementView(View):
         return render(request, 'manager/report/report.html', context)
 
 
-class LectureReportListAPI(APIView):
-    # 강의 신고 리스트 API 뷰
-    def get(self, request, page):
+class LectureReportAPI(APIView):
+    # 강의 신고 API 뷰
+    def get(self, request):
+        # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        keyword = request.GET.get('keyword', '')
+        page = int(request.GET.get('page', 1))
+
         # 한 페이지에 띄울 신고 내역 수
         row_count = 10
 
         # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
         offset = (page - 1) * row_count
         limit = page * row_count
+
+        # 검색 조건식 선언
+        condition = Q()
+
+        # keyword로 뭐라도 받았다면, keyword가 포함된 신고 사유 or 신고자 닉네임 or 신고 대상의 제목을 검색
+        if keyword:
+            condition |= Q(report_content__icontains=keyword)
+            condition |= Q(report_member__icontains=keyword)
+            condition |= Q(report_target__icontains=keyword)
 
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
@@ -1327,9 +1340,12 @@ class LectureReportListAPI(APIView):
         return Response(lecture_report_info)
 
 
-class TradeReportListAPI(APIView):
-    # 거래 신고 리스트 API 뷰
-    def get(self, request, page):
+class TradeReportAPI(APIView):
+    # 거래 신고 API 뷰
+    def get(self, request):
+        # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        page = int(request.GET.get('page', 1))
+
         # 한 페이지에 띄울 신고 내역 수
         row_count = 10
 
@@ -1370,9 +1386,12 @@ class TradeReportListAPI(APIView):
         return Response(trade_report_info)
 
 
-class PostReportListAPI(APIView):
-    # 일반 게시물 신고 리스트 API 뷰
-    def get(self, request, page):
+class PostReportAPI(APIView):
+    # 일반 게시물 신고 API 뷰
+    def get(self, request):
+        # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        page = int(request.GET.get('page', 1))
+
         # 한 페이지에 띄울 신고 내역 수
         row_count = 10
 
@@ -1413,9 +1432,12 @@ class PostReportListAPI(APIView):
         return Response(post_report_info)
 
 
-class PostReplyReportListAPI(APIView):
-    # 일반 게시물 댓글 신고 리스트 API 뷰
-    def get(self, request, page):
+class PostReplyReportAPI(APIView):
+    # 일반 게시물 댓글 신고 API 뷰
+    def get(self, request):
+        # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        page = int(request.GET.get('page', 1))
+
         # 한 페이지에 띄울 신고 내역 수
         row_count = 10
 
@@ -1456,9 +1478,12 @@ class PostReplyReportListAPI(APIView):
         return Response(post_reply_report_info)
 
 
-class KnowhowReportListAPI(APIView):
-    # 노하우 게시물 신고 리스트 API 뷰
-    def get(self, request, page):
+class KnowhowReportAPI(APIView):
+    # 노하우 게시물 신고 API 뷰
+    def get(self, request):
+        # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        page = int(request.GET.get('page', 1))
+
         # 한 페이지에 띄울 신고 내역 수
         row_count = 10
 
@@ -1499,9 +1524,12 @@ class KnowhowReportListAPI(APIView):
         return Response(knowhow_report_info)
 
 
-class KnowhowReplyReportListAPI(APIView):
-    # 노하우 게시물 댓글 신고 리스트 API 뷰
-    def get(self, request, page):
+class KnowhowReplyReportAPI(APIView):
+    # 노하우 게시물 댓글 신고 API 뷰
+    def get(self, request):
+        # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        page = int(request.GET.get('page', 1))
+
         # 한 페이지에 띄울 신고 내역 수
         row_count = 10
 
