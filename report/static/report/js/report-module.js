@@ -1,8 +1,8 @@
 const reportService = (() => {
     // 강의 신고 내역 조회
-    const getLectureReports = async (page, callback) => {
+    const getLectureReports = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/report/lecture/?page=${page}`);
+        const response = await fetch (`/admin/report/lecture/?keyword=${keyword}&page=${page}`);
         const lectureReports = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -15,9 +15,9 @@ const reportService = (() => {
     }
 
     // 거래 신고 내역 조회
-    const getTradeReports = async (page, callback) => {
+    const getTradeReports = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/report/trade/?page=${page}`);
+        const response = await fetch (`/admin/report/trade/?keyword=${keyword}&page=${page}`);
         const tradeReports = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -30,9 +30,9 @@ const reportService = (() => {
     }
 
     // 일반 게시물 신고 내역 조회
-    const getPostReports = async (page, callback) => {
+    const getPostReports = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/report/post/?page=${page}`);
+        const response = await fetch (`/admin/report/post/?keyword=${keyword}&page=${page}`);
         const postReports = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -45,9 +45,9 @@ const reportService = (() => {
     }
 
     // 일반 게시물 댓글 신고 내역 조회
-    const getPostReplyReports = async (page, callback) => {
+    const getPostReplyReports = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/report/post-reply/?page=${page}`);
+        const response = await fetch (`/admin/report/post-reply/?keyword=${keyword}&page=${page}`);
         const postReplyReports = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -60,9 +60,9 @@ const reportService = (() => {
     }
 
     // 노하우 게시물 신고 내역 조회
-    const getKnowhowReports = async (page, callback) => {
+    const getKnowhowReports = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/report/knowhow/?page=${page}`);
+        const response = await fetch (`/admin/report/knowhow/?keyword=${keyword}&page=${page}`);
         const knowhowReports = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -75,9 +75,9 @@ const reportService = (() => {
     }
 
     // 노하우 게시물 댓글 신고 내역 조회
-    const getKnowhowReplyReports = async (page, callback) => {
+    const getKnowhowReplyReports = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/report/knowhow-reply/?page=${page}`);
+        const response = await fetch (`/admin/report/knowhow-reply/?keyword=${keyword}&page=${page}`);
         const knowhowReplyReports = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김

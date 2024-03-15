@@ -18,10 +18,6 @@ const countCheckBoxes = () => {
 // 페이지가 열렸을 때 체크된 박스 개수를 셈
 countCheckBoxes();
 
-// 화면에 게시물 목록을 뿌리기 위한 로직
-// 각 신고 내역은 각기 다른 페이지 사용
-let page = 1;
-
 // 리스트를 표시할 ul 태그
 const ul = document.querySelector("ul.list-content");
 
@@ -31,7 +27,7 @@ const postCountTag = document.querySelector(".all-num");
 // 강의 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
 const callFirstLectureReportsList = () => {
   // 만들어둔 모듈을 사용해서 정보를 불러옴
-  reportService.getLectureReports(page, showReports).then((reports) => {
+  reportService.getLectureReports(keyword, lecturePage, showReports).then((reports) => {
     ul.innerHTML = reports;
 
     // 체크박스 클릭 이벤트 추가
@@ -42,7 +38,7 @@ const callFirstLectureReportsList = () => {
 // 거래 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
 const callFirstTradeReportsList = () => {
   // 만들어둔 모듈을 사용해서 정보를 불러옴
-  reportService.getTradeReports(page, showReports).then((reports) => {
+  reportService.getTradeReports(keyword, tradePage, showReports).then((reports) => {
     ul.innerHTML = reports;
 
     // 체크박스 클릭 이벤트 추가
@@ -53,7 +49,7 @@ const callFirstTradeReportsList = () => {
 // 일반 게시물 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
 const callFirstPostReportsList = () => {
   // 만들어둔 모듈을 사용해서 정보를 불러옴
-  reportService.getPostReports(page, showReports).then((reports) => {
+  reportService.getPostReports(keyword, postPage, showReports).then((reports) => {
     ul.innerHTML = reports;
 
     // 체크박스 클릭 이벤트 추가
@@ -64,7 +60,7 @@ const callFirstPostReportsList = () => {
 // 일반 게시물 댓글 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
 const callFirstPostReplyReportsList = () => {
   // 만들어둔 모듈을 사용해서 정보를 불러옴
-  reportService.getPostReplyReports(page, showReports).then((reports) => {
+  reportService.getPostReplyReports(keyword, postReplyPage, showReports).then((reports) => {
     ul.innerHTML = reports;
 
     // 체크박스 클릭 이벤트 추가
@@ -75,7 +71,7 @@ const callFirstPostReplyReportsList = () => {
 // 노하우 게시물 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
 const callFirstKnowhowReportsList = () => {
   // 만들어둔 모듈을 사용해서 정보를 불러옴
-  reportService.getKnowhowReports(page, showReports).then((reports) => {
+  reportService.getKnowhowReports(keyword, knowhowPage, showReports).then((reports) => {
     ul.innerHTML = reports;
 
     // 체크박스 클릭 이벤트 추가
@@ -86,7 +82,7 @@ const callFirstKnowhowReportsList = () => {
 // 노하우 게시물 댓글 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
 const callFirstKnowhowReplyReportsList = () => {
   // 만들어둔 모듈을 사용해서 정보를 불러옴
-  reportService.getKnowhowReplyReports(page, showReports).then((reports) => {
+  reportService.getKnowhowReplyReports(keyword, knowhowReplyPage, showReports).then((reports) => {
     ul.innerHTML = reports;
 
     // 체크박스 클릭 이벤트 추가
