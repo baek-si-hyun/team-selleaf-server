@@ -45,35 +45,38 @@ entries.forEach((item) => {
   });
 });
 
-let page = 1
-
-const showTrainee = (trainees) =>{
+const showTrainee = (apply) =>{
   let text = ``
-  trainees.forEach((trainee)=>{
-    text =`
+  const trainee_list = apply.trainees.map(trainee => `<li class="student-list-items">${trainee}</li>`).join('')
+  console.log('들어옴')
+  text =`
       <div>
         <div class="class-histories-wrap">
-          <div class="class-history-items">강희주</div>
-          <div class="class-history-items">3명</div>
-          <div class="class-history-items">2024년 02월 20일</div>
-          <div class="class-history-items offline">10:30</div>
-          <div class="class-history-items online" style="display: none">
-            키트 이름 1
+          <div class="class-history-items">${apply.member_name}</div>
+          <div class="class-history-items">${trainee_list}명</div>
+          <div class="class-history-items">${apply.date}</div>
+          <div class="class-history-items offline">${apply.time}</div>
+          <div class="class-history-items online" style="display: block">
+            ${apply.kit}
           </div>
         </div>
         <div class="student-list-wrap">
           <div class="student-list-container">
-            <ul class="student-list">
-              <li class="student-list-items">강희주</li>
-              <li class="student-list-items">백시현</li>
-              <li class="student-list-items">김규일</li>
-            </ul>
+            // <ul class="student-list">
+            //     ${trainee_list}
+            // </ul>
           </div>
         </div>
       </div>
-    
     `
-  })
-}
+    return text
+  }
 
+
+
+const target = document.querySelector('.here')
+
+classService.traineeList(applyID, showTrainee).then((text)=>{
+  target.innerHTML += text
+})
 

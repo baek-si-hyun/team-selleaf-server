@@ -1027,15 +1027,23 @@ class MypageTeacherAPI(APIView):
 
 # 수강생 목록보기// 작업중
 class MypageTraineeAPI(APIView):
-    def get(self, request,apply_id,page):
-        row_count = 5
-        offset = (page - 1) * row_count
-        limit = row_count * page
+    def get(self, request, apply_id):
+
 
         teacher_id = request.session['member']['id']
 
-        apply = Apply.objects.filter(lecture_id__teacher_id=teacher_id, id=apply_id).first()
+        apply = Apply.objects.filter(lecture_id__teacher_id=teacher_id, id=apply_id)\
+            .annotate(member_name=F('member__member_name'))\
+            .values(
+            'id',
+            'member_name',
+            'time',
+            'date',
+            'kit'
+        )
+        apply = apply.first()
+        trainees = Trainee.objects.filter(apply_id=apply_id).values('trainee_name')
+        trainee_names = [trainee['trainee_name'] for trainee in trainees]
+        apply['trainees'] = trainee_names
 
-        trainees = Trainee.objects.filter(apply_id=apply.id).values()
-
-        return Response(trainees[offset:limit])
+        return Response(apply)

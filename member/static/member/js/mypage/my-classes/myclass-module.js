@@ -10,13 +10,13 @@ const classService = (()=> {
 
     };
 
-    const traineeList = async (applyID,page) =>{
-        const response = await fetch(`member/mypage/teachers/show/apply/${applyID}/${page}`);
-        const trainees = await response.json();
+    const traineeList = async (applyID, callback) =>{
+        const response = await fetch(`/member/mypage/teachers/show/apply/${applyID}`);
+        const apply = await response.json();
         if(callback){
-            return callback(trainees)
+            return callback(apply)
         };
-        return trainees
+        return apply
     }
 
     return {classList:classList, traineeList:traineeList}
