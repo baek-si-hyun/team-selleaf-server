@@ -1,11 +1,12 @@
 from django.db import transaction
-from django.db.models import F
+from django.db.models import F, Q, Count, Value
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from knowhow.models import KnowhowTag, KnowhowFile
 from member.models import Member, MemberProfile
 from post.models import Post, PostCategory, PostTag, PostPlant, PostFile, PostReply, PostLike, PostScrap, PostReplyLike
 from report.models import PostReport, PostReplyReport
@@ -426,3 +427,255 @@ class PostScrapCountApi(APIView):
 
 
         return Response(scrap_count)
+
+class PostListView(View):
+    def get(self, request):
+
+        post_count = Post.objects.count()
+
+        context = {
+            'post_count': post_count
+        }
+
+        return render(request, 'community/web/post/post.html', context)
+
+class PostListApi(APIView):
+    def get(self, request, page, sorting, filters, types):
+        row_count = 6
+        offset = (page - 1) * row_count
+        limit = row_count * page
+
+        member = request.session['member']
+
+        print(types)
+
+        condition = Q()
+        condition2 = Q()
+        sort1 = '-id'
+        sort2 = '-id'
+
+        if types == '식물 키우기':
+            condition2 |= Q(postcategory__category_name__contains='식물 키우기')
+        elif types == '관련 제품':
+            condition2 |= Q(postcategory__category_name__contains='관련 제품')
+        elif types == '테라리움':
+            condition2 |= Q(postcategory__category_name__contains='테라리움')
+        elif types == '스타일링':
+            condition2 |= Q(postcategory__category_name__contains='스타일링')
+        elif types == '전체':
+            condition2 |= Q()
+
+        filters = filters.split(',')
+        for filter in filters:
+            # print(filter.replace(',', ''))
+            if filter.replace(',', '') == '관엽식물':
+                condition |= Q(postplant__plant_name__contains='관엽식물')
+
+            elif filter.replace(',', '') == '침엽식물':
+                condition |= Q(postplant__plant_name__contains='침엽식물')
+
+            elif filter.replace(',', '') == '희귀식물':
+                condition |= Q(postplant__plant_name__contains='희귀식물')
+
+            elif filter.replace(',', '') == '다육':
+                condition |= Q(postplant__plant_name__contains='다육')
+
+            elif filter.replace(',', '') == '선인장':
+                condition |= Q(postplant__plant_name__contains='선인장')
+
+            elif filter.replace(',', '') == '기타':
+                condition |= Q(postplant__plant_name__contains='기타')
+
+            elif filter.replace(',', '') == '전체':
+                condition = Q()
+
+        # print(condition2)
+
+        columns1 = [
+            'post_title',
+            'member_id',
+            'post_count',
+            'id',
+            'like_count'
+        ]
+
+        columns2 = [
+            'post_title',
+            'member_id',
+            'post_count',
+            'id',
+            'scrap_count',
+        ]
+
+        columns3 = [
+            'post_title',
+            'member_id',
+            'post_count',
+            'id'
+        ]
+
+        if sorting == '최신순':
+            sort1 = '-id'
+            sort2 = '-created_date'
+
+            posts = Post.objects.filter(condition, condition2).values(*columns3).order_by(sort1, sort2)[
+                       offset:limit]
+
+            for post in posts:
+                member_name = Member.objects.filter(id=post['member_id']).values('member_name').first().get(
+                    'member_name')
+                post['member_name'] = member_name
+
+                like_count = PostLike.objects.filter(status=1, post=post['id']).count()
+                post['like_count'] = like_count
+
+                scrap_count = PostScrap.objects.filter(status=1, post=post['id']).count()
+                post['scrap_count'] = scrap_count
+
+        elif sorting == '인기순':
+            sort1 = '-like_count'
+            sort2 = '-post_count'
+
+            posts = Post.objects.filter(condition, condition2) \
+                           .annotate(like_count=Count('postlike__id', filter=Q(postlike__status=1))) \
+                           .values(*columns1) \
+                           .order_by(sort1, sort2)[offset:limit]
+
+            for post in posts:
+                member_name = Member.objects.filter(id=post['member_id']).values('member_name').first().get(
+                    'member_name')
+                post['member_name'] = member_name
+
+                scrap_count = PostScrap.objects.filter(status=1, post=post['id']).count()
+                post['scrap_count'] = scrap_count
+
+        elif sorting == "스크랩순":
+            sort1 = '-scrap_count'
+            sort2 = '-id'
+
+            posts = Post.objects.filter(condition, condition2) \
+                           .annotate(scrap_count=Count('postscrap__id', filter=Q(postscrap__status=1))) \
+                           .values(*columns2) \
+                           .order_by(sort1, sort2)[offset:limit]
+
+            for post in posts:
+                member_name = Member.objects.filter(id=post['member_id']).values('member_name').first().get(
+                    'member_name')
+                post['member_name'] = member_name
+
+                like_count = PostLike.objects.filter(status=1, post=post['id']).count()
+                post['like_count'] = like_count
+
+
+
+
+
+
+
+        print(condition, condition2)
+        print(sort1, sort2)
+
+        # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
+        # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
+        # knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition, condition2) \
+        #     .annotate(member_name=F('member__member_name')) \
+        #     .values(*columns) \
+        #     .annotate(like_count=Count(Q(knowhowlike__status=1)), scrap_count=Count(Q(knowhowscrap__status=1))) \
+        #     .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count',
+        #             'scrap_count') \
+        #     .order_by(sort1, sort2).distinct()
+
+        # knowhows = Knowhow.objects.filter(condition, condition2)\
+        #     .annotate(scrap_count=Count('knowhowscrap__id', filter=Q(knowhowscrap__status=1))\
+        #               , like_count=Count('knowhowlike__id', filter=Q(knowhowlike__status=1))).values(*columns1)\
+        #     .order_by(sort1, sort2)[offset:limit]
+
+        # knowhows = Knowhow.objects.filter(condition, condition2) \
+        #                .annotate(like_count=Count('knowhowlike__id', filter=Q(knowhowlike__status=1)))\
+        #                .values(*columns1) \
+        #                .order_by(sort1, sort2)[offset:limit]
+
+        # knowhows = Knowhow.objects.filter().values('member_id', 'id')
+        columns4 = [
+            'post_title',
+            'member_id',
+            'post_count',
+            'id',
+            'member_name'
+        ]
+
+
+        # for post in posts:
+        #     print(post)
+
+        posts_count = Post.objects.select_related('postlike', 'postscrap').filter(condition, condition2) \
+            .annotate(member_name=F('member__member_name')) \
+            .values(*columns3) \
+            .annotate(like_count=Count(Q(postlike__status=1)), scrap_count=Count(Q(postscrap__status=1))) \
+            .values('post_title', 'member__member_name', 'post_count', 'id', 'member_id', 'like_count',
+                    'scrap_count') \
+            .order_by(sort1, sort2).distinct().count()
+
+        # print(knowhows_count)
+
+
+
+        # knowhow에 가상 컬럼을 만들어서 하나씩 추가해줌
+        for post in posts:
+            post_file = PostFile.objects.filter(post_id=post['id']).values('file_url').first()
+            profile = MemberProfile.objects.filter(member_id=post['member_id']).values('file_url').first()
+            post['post_file'] = post_file['file_url']
+            post['profile'] = profile['file_url']
+            # knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values('status').first()
+            # knowhow['knowhow_scrap'] = knowhow_scrap['status'] if knowhow_scrap and 'status' in knowhow_scrap else False
+            # knowhow_like = KnowhowLike.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values(
+            #     'status').first()
+            # knowhow['knowhow_like'] = knowhow_like['status'] if knowhow_like and 'status' in knowhow_like else False
+            # print(knowhow)
+
+
+        datas = {
+            'posts': posts,
+            'posts_count': posts_count
+        }
+
+        return Response(datas)
+
+
+# channel
+class ChannelView(View):
+    def get(self, request):
+        # 노하우태그와 포스트 태그를 중복제거한 후 union
+        post_tags = PostTag.objects.annotate(posts=F('post_id'), knowhows=Value(0)).values('tag_name', 'posts', 'knowhows').distinct()
+        knowhow_tags = KnowhowTag.objects.annotate(posts=Value(0), knowhows=F('knowhow_id')).values('tag_name', 'posts', 'knowhows').distinct()
+        tags = post_tags.union(knowhow_tags)
+
+
+        tags = list(tags)
+
+        filtering_tags = list(map(dict, set(tuple(sorted(name.items())) for name in tags)))
+
+        for tag in filtering_tags:
+            print(tag['tag_name'])
+        files = []
+        # 해당 태그가 들어있는 게시물의 파일(사진)을 가져와야함.
+        # 노하우와 포스트게시물을 합쳐서 사용 해야함
+
+        for tag in tags:
+            if tag['posts'] != 0:
+                post_file = PostFile.objects.filter(post_id=tag['posts']).values('file_url').first()
+                tag['post_file'] = post_file['file_url']
+
+            else:
+                knowhow_file = KnowhowFile.objects.filter(knowhow_id=tag['knowhows']).values('file_url').first()
+                tag['knowhow_file'] = knowhow_file['file_url']
+
+            # print(tag)
+
+        # print(type(tags))
+
+        context = {
+            'tags': tags,
+        }
+
+        return render(request, 'community/web/channel.html', context)

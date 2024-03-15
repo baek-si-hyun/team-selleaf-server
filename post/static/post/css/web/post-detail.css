@@ -479,7 +479,8 @@
   margin-left: 0px;
 }
 .comment-item-box {
-  margin: 30px 0px;
+  padding-top: 15px;
+  margin: 15px 0px;
 }
 .comment-item {
   display: flex;
