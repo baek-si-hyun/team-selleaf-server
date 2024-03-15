@@ -1,5 +1,6 @@
 from django.db import models
 
+from apply.models import Apply
 from lecture.models import Kit, Lecture
 from member.models import Member, MemberAddress
 from selleaf.models import Mileage
@@ -22,14 +23,12 @@ class OrderDetail(Period):
     ORDER_STATUS = [
         (0, '진행중'),
         (-1, '삭제'),
-        (1, '결제완료')
+        (1, '결제완료'),
     ]
+
+    apply = models.ForeignKey(Apply, on_delete=models.PROTECT, null=False, blank=False)
+    order = models.ForeignKey(Order, on_delete=models.PROTECT, null=False, blank=False)
     order_status = models.IntegerField(choices=ORDER_STATUS, default=0)
-    date = models.CharField(null=False, blank=False, max_length=100)
-    time = models.CharField(null=False, blank=False, max_length=100)
-    kit = models.CharField(null=False, blank=False, max_length=100, default='offline')
-    lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False, blank=False)
-    quantity = models.IntegerField(blank=False, null=False, default=1)
 
     class Meta:
         db_table = 'tbl_order_detail'
