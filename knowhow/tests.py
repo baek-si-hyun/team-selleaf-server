@@ -1,10 +1,11 @@
 import random
 
-from django.db.models import F, Count
+from django.db.models import F, Count, Q
 from django.test import TestCase
 
 from knowhow.models import Knowhow, KnowhowFile, KnowhowRecommend, KnowhowTag
 from member.models import Member
+from post.models import PostTag
 
 
 class KnowhowTest(TestCase):
@@ -57,3 +58,18 @@ class KnowhowTest(TestCase):
     #             'knowhow': knowhow,
     #         }
     #         KnowhowTag.objects.create(**knowhow_tag)
+
+    keyword = ''
+    page = 1
+    row_count = 10
+
+    offset = (page - 1) * row_count
+    limit = page * row_count
+
+    condition = Q()
+
+    if keyword:
+        condition |= Q(tag_name__icontains=keyword)
+
+    post_tags = PostTag.objects.filter(condition)
+    print(post_tags.query)

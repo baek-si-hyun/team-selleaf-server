@@ -949,8 +949,66 @@ class ReplyManagementAPI(APIView):
 class TagManagementView(View):
     # 태그 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 게시물에 대한 댓글을 전부 가져와야 됨
         return render(request, 'manager/tag/tag.html')
+
+
+class TagManagementAPI(APIView):
+    def get(self, request):
+        keyword = request.GET.get('keyword', '')
+        page = int(request.GET.get('page', 1))
+        row_count = 10
+
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        condition = Q()
+
+        if keyword:
+            condition |= Q(tag_name__icontains=keyword)
+
+        post_tags = PostTag.objects.filter(condition)
+        print(post_tags.query)
+        knowhow_tags = KnowhowTag.objects.filter(condition).values('tag_name')
+        # print(knowhow_tags)
+        # total = post_replies.union(knowhow_replies).count()
+
+        # page_count = 5
+        #
+        # end_page = math.ceil(page / page_count) * page_count
+        # start_page = end_page - page_count + 1
+        # real_end = math.ceil(total / row_count)
+        # end_page = real_end if end_page > real_end else end_page
+        #
+        # if end_page == 0:
+        #     end_page = 1
+        #
+        # page_info = {
+        #     'totalCount': total,
+        #     'startPage': start_page,
+        #     'endPage': end_page,
+        #     'page': page,
+        #     'realEnd': real_end,
+        #     'pageCount': page_count,
+        # }
+        #
+        # replies = list(post_replies.union(knowhow_replies).order_by('-reply_created')[offset:limit])
+        #
+        # for reply in replies:
+        #     for post_reply in post_replies:
+        #         if reply['reply_created'] == post_reply['reply_created']:
+        #             reply['target_type'] = '일반 게시물'
+        #
+        # for reply in replies:
+        #     for knowhow_reply in knowhow_replies:
+        #         if reply['reply_created'] == knowhow_reply['reply_created']:
+        #             reply['target_type'] = '노하우'
+        #
+        # replies.append(page_info)
+
+        # return Response(replies)
+        return Response('success')
+    def delete(self, request):
+        pass
 
 
 # 결제 내역 관리
