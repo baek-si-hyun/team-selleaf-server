@@ -377,9 +377,9 @@ div.compose-button{
 
 
 /* 체크박스 css */
-input.checkbox-input{
-    margin-right: -220px;
-}
+/*input.checkbox-input{*/
+/*    margin-right: -220px;*/
+/*}*/
 
 /* 체크박스 스타일링 */
 input[type="checkbox"] {
@@ -423,9 +423,9 @@ li.list-content{
     padding-right: 8px;
     border-bottom-width: 1px;
     align-items: center;
-    justify-content: space-between;
     display: flex;
     border-color: #f3f3f4;
+    column-gap: 24px;
 }
 
 button.text-left{
@@ -564,14 +564,14 @@ div.page-count-wrap{
     margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
-    grid-column: 1/-1;
+    gap: 16px;
 }
 
 ul.flex{
     display: flex;
 }
 
-button.page-count{
+button.page-count-prev, button.page-count-next{
     opacity: .3;
     border-width: 1px;
     border-radius: 9999px;
@@ -583,7 +583,6 @@ button.page-count{
     border-color: #e6e6e7;
     color: #1d1d1e;
     fill: #1d1d1e;
-    cursor: default;
 }
 
 svg.page-count{
@@ -642,7 +641,7 @@ div.delete-modal-container{
     display: flex;
     box-sizing: border-box;
     z-index: 50;
-    top: 30px;
+    top: 340px;
     left: 50%;
     position: fixed;
     border-color: #e6e6e7;
