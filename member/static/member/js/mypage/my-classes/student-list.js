@@ -53,18 +53,20 @@ const showTrainee = (apply) =>{
       <div>
         <div class="class-histories-wrap">
           <div class="class-history-items">${apply.member_name}</div>
-          <div class="class-history-items">${trainee_list}명</div>
+          <div class="class-history-items">${apply.phone}</div>
+          <div class="class-history-items">${apply.trainees.length + 1}명</div>
           <div class="class-history-items">${apply.date}</div>
-          <div class="class-history-items offline">${apply.time}</div>
-          <div class="class-history-items online" style="display: block">
+          <div class="class-history-items">${apply.time}</div>
+          <div class="class-history-items">
             ${apply.kit}
           </div>
         </div>
         <div class="student-list-wrap">
           <div class="student-list-container">
-            // <ul class="student-list">
-            //     ${trainee_list}
-            // </ul>
+            <ul class="student-list">
+                <li class="student-list-items">동반 수강자</li>
+                ${trainee_list}
+            </ul>
           </div>
         </div>
       </div>

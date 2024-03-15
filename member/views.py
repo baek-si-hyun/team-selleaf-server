@@ -298,8 +298,8 @@ class MypageScrapLecturesView(View):
         member = request.session['member']
         member_file = request.session['member_files']
 
-        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
-        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'], status=1)
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'], status=1)
 
         context = {
             'member': member,
@@ -317,8 +317,8 @@ class MypageScrapTradeView(View):
         member = request.session['member']
         member_file = request.session['member_files']
 
-        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
-        trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
+        lecture_scrap = LectureScrap.objects.filter(member_id=member['id'], status=1)
+        trade_scrap = TradeScrap.objects.filter(member_id=member['id'], status=1)
 
         context = {
             'member': member,
@@ -458,6 +458,7 @@ class MypageTeacherView(View):
         }
 
         return render(request, 'member/mypage/my_classes/past-classes.html',context)
+
 
 # 강사 진행 예정 강의
 class MypageTeacherPlanView(View):
@@ -904,6 +905,7 @@ class MypageScrapLectureAPI(APIView):
 
         return Response(scrap_lectures[offset:limit])
 
+# 스크랩한 거래 API
 class MypageScrapTradeAPI(APIView):
     def get(self, request,page):
         row_count = 8
@@ -943,6 +945,8 @@ class MypageScrapTradeAPI(APIView):
 
         return Response(scrap_trades[offset:limit])
 
+
+# 내 거래 내역 API
 class MypageTradesAPI(APIView):
     def get(self,request,page):
         row_count = 12
@@ -977,6 +981,7 @@ class MypageTradesAPI(APIView):
 
         return Response(trades[offset:limit])
 
+# 강사별 강의 내역 API
 class MypageTeacherAPI(APIView):
     def get(self, request, page):
         row_count = 5
@@ -1024,6 +1029,7 @@ class MypageTeacherAPI(APIView):
             apply['trainee'] = [trainee['trainee_name'] for trainee in trainees]
 
         return Response(applies[offset:limit])
+
 
 # 수강생 목록보기// 작업중
 class MypageTraineeAPI(APIView):
