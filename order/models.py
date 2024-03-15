@@ -30,6 +30,7 @@ class OrderDetail(Period):
     kit = models.CharField(null=False, blank=False, max_length=100, default='offline')
     lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False, blank=False)
     quantity = models.IntegerField(blank=False, null=False, default=1)
+    order = models.ForeignKey(Order, on_delete=models.PROTECT, null=False, blank=False)
 
     class Meta:
         db_table = 'tbl_order_detail'

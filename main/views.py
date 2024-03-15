@@ -22,7 +22,6 @@ class SearchHistoryAPI(APIView):
         except KeyError:
             return Response('empty')
 
-
     def patch(self, request):
         try:
             search = request.session.get('search')
@@ -45,7 +44,6 @@ class SearchHistoryAPI(APIView):
 
 class SearchAPI(APIView):
     def get(self, request):
-        member = request.session.get('member')
         search_data = request.GET.get('query')
 
         trades = Trade.objects.filter(trade_title__contains=search_data).values('trade_title')
@@ -72,7 +70,6 @@ class SearchAPI(APIView):
 class SearchView(View):
     def get(self, request):
         member = request.session.get('member')
-        profile = request.session.get('member_files')[0]
         search_data = request.GET.get('query')
         try:
             if 'search' not in request.session:
@@ -118,9 +115,9 @@ class SearchView(View):
         post_condition = Q(post_title__contains=search_data) | Q(posttag__tag_name__contains=search_data)
         posts_queryset = Post.objects.filter(post_condition)
         posts = posts_queryset.order_by('post_count') \
-                       .annotate(member_profile=F('member__memberprofile__file_url'),
-                                 member_name=F('member__member_name')) \
-                       .values('member_profile', 'member_name', 'id', 'post_title' ,'post_content')[:8]
+                    .annotate(member_profile=F('member__memberprofile__file_url'),
+                              member_name=F('member__member_name')) \
+                    .values('member_profile', 'member_name', 'id', 'post_title', 'post_content')[:8]
         post_count = posts_queryset.count()
 
         for post in posts:
@@ -134,7 +131,8 @@ class SearchView(View):
         lectures_queryset = Lecture.enabled_objects.filter(lecture_condition)
         lectures = lectures_queryset.annotate(review_count=Count('lecturereview'), lecture_rating=Round(
             Sum('lecturereview__review_rating') / Count('lecturereview'), 1)) \
-                       .order_by('-id').values('id', 'lecture_title', 'lecture_content', 'lecture_rating', 'review_count')[:8]
+                       .order_by('-id').values('id', 'lecture_title', 'lecture_content', 'lecture_rating',
+                                               'review_count')[:8]
         lecture_count = lectures_queryset.count()
 
         for lecture in lectures:
@@ -148,11 +146,10 @@ class SearchView(View):
             'knowhow_count': knowhow_count,
             'trade_count': trade_count,
             'lecture_count': lecture_count,
-            'post_count':post_count
+            'post_count': post_count
         }
 
         context = {
-            'memberProfile': profile['file_url'],
             'count': count,
             'knowhows': knowhows,
             'lectures': lectures,
@@ -164,10 +161,7 @@ class SearchView(View):
 
 class MainView(View):
     def get(self, request):
-        member = request.session['member']
-        profile = request.session['member_files'][0]
-        if member is not None:
-            profile = request.session['member_files'][0]
+        member = request.session.get('member')
 
         today = timezone.now().date()
         start_of_week = today - timedelta(days=today.weekday())
@@ -175,12 +169,11 @@ class MainView(View):
         # created_date__range = (start_of_week, end_of_week)
 
         best_knowhow = Knowhow.objects.filter().order_by('knowhow_count') \
-                       .annotate(member_profile=F('member__memberprofile__file_url'),
-                                 member_name=F('member__member_name')) \
-                       .values('member_profile', 'member_name', 'id').first()
+            .annotate(member_profile=F('member__memberprofile__file_url'),
+                      member_name=F('member__member_name')) \
+            .values('member_profile', 'member_name', 'id').first()
 
-
-        knowhows = Knowhow.objects.filter().order_by('knowhow_count')\
+        knowhows = Knowhow.objects.filter().order_by('knowhow_count') \
                        .annotate(member_profile=F('member__memberprofile__file_url'),
                                  member_name=F('member__member_name')) \
                        .values('member_profile', 'member_name', 'id', 'knowhow_title')[:10]
@@ -188,9 +181,14 @@ class MainView(View):
         for knowhow in knowhows:
             knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
             knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
-            knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values(
-                'status').first()
-            knowhow['knowhow_scrap'] = knowhow_scrap['status'] if knowhow_scrap and 'status' in knowhow_scrap else False
+            if member is None:
+                knowhow['knowhow_scrap'] = False
+            else:
+                knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values(
+                    'status').first()
+                knowhow['knowhow_scrap'] = knowhow_scrap['status'] if knowhow_scrap and 'status' in knowhow_scrap else False
+
+
         # 데이터가 너무 적어 하루단위를 일단 일주일 단위로 바꿈
         # start_of_day = datetime(today.year, today.month, today.day, 0, 0, 0)
         # end_of_day = datetime(today.year, today.month, today.day, 23, 59, 59)
@@ -202,21 +200,28 @@ class MainView(View):
         for trade in trades:
             trade_file = TradeFile.objects.filter(trade_id=trade['id']).values('file_url').first()
             trade['trade_file_url'] = trade_file['file_url'] if trade_file else None
-            trade_scrap = TradeScrap.objects.filter(trade_id=trade['id'], member_id=member['id']).values(
-                'status').first()
-            trade['trade_scrap'] = trade_scrap['status'] if trade_scrap and 'status' in trade_scrap else False
+            if member is None:
+                trade['trade_scrap'] = False
+            else:
+                trade_scrap = TradeScrap.objects.filter(trade_id=trade['id'], member_id=member['id']).values(
+                    'status').first()
+                trade['trade_scrap'] = trade_scrap['status'] if trade_scrap and 'status' in trade_scrap else False
+
 
         posts = Post.objects.filter().order_by('post_count') \
-                       .annotate(member_profile=F('member__memberprofile__file_url'),
-                                 member_name=F('member__member_name')) \
-                       .values('member_profile', 'member_name', 'id', 'post_title')[:4]
+                    .annotate(member_profile=F('member__memberprofile__file_url'),
+                              member_name=F('member__member_name')) \
+                    .values('member_profile', 'member_name', 'id', 'post_title')[:4]
 
         for post in posts:
             post_file = PostFile.objects.filter(post_id=post['id']).values('file_url').first()
             post['post_file_url'] = post_file['file_url'] if post_file else None
-            post_scrap = PostScrap.objects.filter(post_id=post['id'], member_id=member['id']).values(
-                'status').first()
-            post['post_scrap'] = post_scrap['status'] if post_scrap and 'status' in post_scrap else False
+            if member is None:
+                post['post_scrap'] = False
+            else:
+                post_scrap = PostScrap.objects.filter(post_id=post['id'], member_id=member['id']).values(
+                    'status').first()
+                post['post_scrap'] = post_scrap['status'] if post_scrap and 'status' in post_scrap else False
 
 
         lectures = Lecture.enabled_objects.filter().order_by('-id') \
@@ -224,11 +229,15 @@ class MainView(View):
         for lecture in lectures:
             lecture_file = LecturePlaceFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
             lecture['lecture_file_url'] = lecture_file['file_url'] if lecture_file else None
-            lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values(
-                'status').first()
-            lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
+            if member is None:
+                lecture['lecture_scrap'] = False
+            else:
+                lecture_scrap = LectureScrap.objects.filter(lecture_id=lecture['id'], member_id=member['id']).values(
+                    'status').first()
+                lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
 
-        # 데이터가 너무 적어 하루단위를 일단 일주일 단위로 바꿈
+
+                # 데이터가 너무 적어 하루단위를 일단 일주일 단위로 바꿈
         lecture_reviews = LectureReview.objects.filter().order_by('-id') \
                               .annotate(lecture_title=F('lecture__lecture_title')) \
                               .values('id', 'lecture_title', 'review_content', 'lecture_id')[:3]
@@ -238,8 +247,7 @@ class MainView(View):
             lecture_review['lecture_file_url'] = lecture_review_file['lectureplacefile__file_url']
 
         context = {
-            'memberProfile': profile['file_url'],
-            'best_knowhow':best_knowhow,
+            'best_knowhow': best_knowhow,
             'knowhows': knowhows,
             'lectures': lectures,
             'trades': trades,
@@ -272,10 +280,12 @@ class BestLectureCategoryAPI(APIView):
             best_lecture['lecture_file_url'] = lecture_file['file_url'] if lecture_file else None
             tags = LecturePlant.objects.filter(lecture_id=best_lecture['id']).values('plant_name')
             best_lecture['lecture_tags'] = [tag['plant_name'] for tag in tags]
-            lecture_scrap = LectureScrap.objects.filter(lecture_id=best_lecture['id'], member_id=member['id']).values(
-                'status').first()
-            best_lecture['lecture_scrap'] = lecture_scrap[
-                'status'] if lecture_scrap and 'status' in lecture_scrap else False
+            if member is None:
+                best_lecture['lecture_scrap'] = False
+            else:
+                lecture_scrap = LectureScrap.objects.filter(lecture_id=best_lecture['id'], member_id=member['id']).values(
+                    'status').first()
+                best_lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
             if best_lecture['lecture_rating'] is None:
                 best_lecture['lecture_rating'] = 0
 
@@ -311,7 +321,6 @@ class TradeScrapAPI(APIView):
         trade_scrap, created = TradeScrap.objects.get_or_create(trade_id=data['trade_id'], member_id=data['member_id'])
         if not created:
             is_scrap = False if trade_scrap.status else True
-            print(is_scrap)
             trade_scrap.status = is_scrap
             trade_scrap.save()
 
