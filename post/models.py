@@ -54,7 +54,6 @@ class PostTag(Tag):
 
     class Meta:
         db_table = 'tbl_post_tag'
-        ordering = ['-id']
 
 
 class PostCategory(Period):
