@@ -47,11 +47,24 @@ entries.forEach((item) => {
 
 const showTrainee = (apply) =>{
   let text = ``
-  const trainee_list = apply.trainees.map(trainee => `<li class="student-list-items">${trainee}</li>`).join('')
+  const trainee_list = apply.trainees.map(trainee => `
+            <div class="student-list-wrap">
+              <div class="student-list-container">
+                <ul class="student-list">
+                   <li class="student-list-items">${trainee}</li>
+                   <li class="student-list-items"></li>
+                   <li class="student-list-items"></li>
+                   <li class="student-list-items">${apply.date}</li>
+                   <li class="student-list-items">${apply.time}</li>
+                   <li class="student-list-items">${apply.kit}</li>
+                </ul>
+              </div>
+            </div>
+            `).join('')
   console.log('들어옴')
   text =`
       <div>
-        <div class="class-histories-wrap">
+        <div class="class-histories-wrap click ${apply.id}">
           <div class="class-history-items">${apply.member_name}</div>
           <div class="class-history-items">${apply.phone}</div>
           <div class="class-history-items">${apply.trainees.length + 1}명</div>
@@ -61,13 +74,8 @@ const showTrainee = (apply) =>{
             ${apply.kit}
           </div>
         </div>
-        <div class="student-list-wrap">
-          <div class="student-list-container">
-            <ul class="student-list">
-                <li class="student-list-items">동반 수강자</li>
-                ${trainee_list}
-            </ul>
-          </div>
+        <div class="list">
+            ${trainee_list}
         </div>
       </div>
     `
@@ -82,3 +90,9 @@ classService.traineeList(applyID, showTrainee).then((text)=>{
   target.innerHTML += text
 })
 
+
+target.addEventListener('click',(e)=> {
+  if (e.target.classList[1] === 'click') {
+    e.target.nextElementSibling.classList.toggle('clicked')
+  }
+})

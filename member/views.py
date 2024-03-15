@@ -133,7 +133,7 @@ class MypageShowView(View):
         teacher = Teacher.objects.filter(member_id=member['id'])
 
         post = list(Post.objects.filter(member_id=member['id']))
-        knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
+        knowhow = list(Knowhow.objects.filter(member_id=member['id']))
         post_count = len(post) + len(knowhow)
 
         lecture_review = LectureReview.objects.filter(member_id=member['id'])
@@ -169,9 +169,9 @@ class MypagePostView(View):
         teacher = Teacher.objects.filter(member_id=member['id'])
 
         post = list(Post.objects.filter(member_id=member['id']))
-        knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
+        knowhow = list(Knowhow.objects.filter(member_id=member['id']))
         post_count = len(post) + len(knowhow)
-
+        print(knowhow)
         post_like = list(PostLike.objects.filter(member_id=member['id']))
         knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
         like_count = len(post_like) + len(knowhowlike)
@@ -233,7 +233,7 @@ class MypageReviewView(View):
         teacher = Teacher.objects.filter(member_id=member['id'])
 
         post = list(Post.objects.filter(member_id=member['id']))
-        knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
+        knowhow = list(Knowhow.objects.filter(member_id=member['id']))
         post_count = len(post) + len(knowhow)
 
         post_like = list(PostLike.objects.filter(member_id=member['id']))
@@ -268,7 +268,7 @@ class MypageLikesView(View):
         teacher = Teacher.objects.filter(member_id=member['id'])
 
         post = list(Post.objects.filter(member_id=member['id']))
-        knowhow = list(KnowhowLike.objects.filter(member_id=member['id']))
+        knowhow = list(Knowhow.objects.filter(member_id=member['id']))
         post_count = len(post) + len(knowhow)
 
         post_reply = list(PostReply.objects.filter(member_id=member['id']))
@@ -346,8 +346,8 @@ class MypageLecturesView(View):
         teacher = Teacher.objects.filter(member_id=member['id'])
 
         post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
-        like_count = len(post_like) + len(knowhowlike)
+        knowhow_like = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhow_like)
 
         lecture = Apply.objects.filter(member_id = member['id'])
 
@@ -423,8 +423,8 @@ class MypageTradesView(View):
         trade = Trade.objects.filter(member_id=member['id'])
 
         post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
-        like_count = len(post_like) + len(knowhowlike)
+        knowhow_like = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhow_like)
 
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
@@ -450,8 +450,8 @@ class MypageTeacherView(View):
         lecture = Apply.objects.filter(lecture__teacher_id=member['id'])
 
         post_like = list(PostLike.objects.filter(member_id=member['id']))
-        knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
-        like_count = len(post_like) + len(knowhowlike)
+        knowhow_like = KnowhowLike.objects.filter(member_id=member['id'])
+        like_count = len(post_like) + len(knowhow_like)
 
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
@@ -474,7 +474,7 @@ class MypageTeacherPlanView(View):
         member = request.session['member']
         member_file = request.session['member_files']
 
-        lecture = Apply.objects.filter(lecture__teacher_id=member['id'])
+        lecture = Apply.objects.filter(lecture__teacher_id=member['id'], apply_status = 0)
 
         post_like = list(PostLike.objects.filter(member_id=member['id']))
         knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
@@ -1046,14 +1046,15 @@ class MypageTraineeAPI(APIView):
 
         teacher_id = request.session['member']['id']
 
-        apply = Apply.objects.filter(lecture_id__teacher_id=teacher_id, id=apply_id)\
-            .annotate(member_name=F('member__member_name'))\
+        apply = Apply.objects.filter(lecture_id__teacher_id=teacher_id, id=apply_id, apply_status=0)\
+            .annotate(member_name=F('member__member_name'), phone = F('orderdetail__order__phone'))\
             .values(
             'id',
             'member_name',
             'time',
             'date',
-            'kit'
+            'kit',
+            'phone'
         )
         apply = apply.first()
         trainees = Trainee.objects.filter(apply_id=apply_id).values('trainee_name')
