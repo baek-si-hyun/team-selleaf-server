@@ -23,7 +23,7 @@ class OrderDetail(Period):
     ORDER_STATUS = [
         (0, '진행중'),
         (-1, '삭제'),
-        (1, '결제완료')
+        (1, '결제완료'),
     ]
 
     apply = models.ForeignKey(Apply, on_delete=models.PROTECT, null=False, blank=False)
