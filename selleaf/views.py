@@ -177,8 +177,6 @@ class TeacherEntryManagementView(View):
         # 강사 신청자 수
         teacher_entries = Teacher.objects.filter(teacher_status=0).count()
 
-        print(teachers, teacher_entries)
-
         # 강사 수를 화면에서 쓸 수 있게 dict 형태로 만들어줌
         context = {
             "teachers": teachers,
@@ -1318,32 +1316,57 @@ class LectureReportAPI(APIView):
         ]
 
         # 신고 내역 조회
-        lecture_reports = LectureReport.object.filter()\
+        lecture_reports = LectureReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('lecture__lecture_title'))\
-            .values(*columns)[offset:limit]
-
-        # 다음 페이지에 띄울 정보가 있는지 검사
-        has_next_page = LectureReport.object.filter()[limit:limit + 1].exists()
+            .values(*columns).filter(id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for lecture_report in lecture_reports:
             lecture_report['created_date'] = lecture_report['created_date'].strftime('%Y.%m.%d')
 
-        # 완성된 신고 내역 목록
-        lecture_report_info = {
-            'reports': lecture_reports,
-            'hasNext': has_next_page
+        # 신고 내역 수
+        total = lecture_reports.count()
+
+        # 페이지네이션에 필요한 정보들
+        page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
+
+        end_page = math.ceil(page / page_count) * page_count    # 화면에 표시할 페이지 숫자 버튼 중 마지막 페이지
+        start_page = end_page - page_count + 1  # 화면에 표시할 페이지 숫자 버튼 중 첫 페이지
+        real_end = math.ceil(total / row_count) # 전체 리스트의 마지막 페이지
+
+        # end_page의 값이 real_end 보다 커지지 않게 조정
+        end_page = real_end if end_page > real_end else end_page
+
+        # end_page의 값이 0보다 작아지지 않게 조정
+        if end_page == 0:
+            end_page = 1
+
+        # 페이지네이션에 사용할 정보 완성
+        page_info = {
+            'totalCount': total,
+            'startPage': start_page,
+            'endPage': end_page,
+            'page': page,
+            'realEnd': real_end,
+            'pageCount': page_count,
         }
 
+        # 신고 목록을 QuerySet -> list 타입으로 변경
+        lecture_reports = list(lecture_reports)
+
+        # 신고 목록의 맨 뒤에 페이지네이션 정보 추가
+        lecture_reports.append(page_info)
+
         # 요청한 데이터 반환
-        return Response(lecture_report_info)
+        return Response(lecture_reports)
 
 
 class TradeReportAPI(APIView):
     # 거래 신고 API 뷰
     def get(self, request):
         # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        keyword = request.GET.get('keyword', '')
         page = int(request.GET.get('page', 1))
 
         # 한 페이지에 띄울 신고 내역 수
@@ -1352,6 +1375,15 @@ class TradeReportAPI(APIView):
         # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
         offset = (page - 1) * row_count
         limit = page * row_count
+
+        # 검색 조건식 선언
+        condition = Q()
+
+        # keyword로 뭐라도 받았다면, keyword가 포함된 신고 사유 or 신고자 닉네임 or 신고 대상의 제목을 검색
+        if keyword:
+            condition |= Q(report_content__icontains=keyword)
+            condition |= Q(report_member__icontains=keyword)
+            condition |= Q(report_target__icontains=keyword)
 
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
@@ -1364,32 +1396,57 @@ class TradeReportAPI(APIView):
         ]
 
         # 신고 내역 조회
-        trade_reports = TradeReport.object.filter()\
+        trade_reports = TradeReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('trade__trade_title'))\
-            .values(*columns)[offset:limit]
-
-        # 다음 페이지에 띄울 정보가 있는지 검사
-        has_next_page = TradeReport.object.filter()[limit:limit + 1].exists()
+            .values(*columns).filter(id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for trade_report in trade_reports:
             trade_report['created_date'] = trade_report['created_date'].strftime('%Y.%m.%d')
 
-        # 완성된 신고 내역 목록
-        trade_report_info = {
-            'reports': trade_reports,
-            'hasNext': has_next_page
+        # 신고 내역 수
+        total = trade_reports.count()
+
+        # 페이지네이션에 필요한 정보들
+        page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
+
+        end_page = math.ceil(page / page_count) * page_count  # 화면에 표시할 페이지 숫자 버튼 중 마지막 페이지
+        start_page = end_page - page_count + 1  # 화면에 표시할 페이지 숫자 버튼 중 첫 페이지
+        real_end = math.ceil(total / row_count)  # 전체 리스트의 마지막 페이지
+
+        # end_page의 값이 real_end 보다 커지지 않게 조정
+        end_page = real_end if end_page > real_end else end_page
+
+        # end_page의 값이 0보다 작아지지 않게 조정
+        if end_page == 0:
+            end_page = 1
+
+        # 페이지네이션에 사용할 정보 완성
+        page_info = {
+            'totalCount': total,
+            'startPage': start_page,
+            'endPage': end_page,
+            'page': page,
+            'realEnd': real_end,
+            'pageCount': page_count,
         }
 
+        # 신고 목록을 QuerySet -> list 타입으로 변경
+        trade_reports = list(trade_reports)
+
+        # 신고 목록의 맨 뒤에 페이지네이션 정보 추가
+        trade_reports.append(page_info)
+
         # 요청한 데이터 반환
-        return Response(trade_report_info)
+        return Response(trade_reports)
 
 
 class PostReportAPI(APIView):
     # 일반 게시물 신고 API 뷰
     def get(self, request):
         # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        keyword = request.GET.get('keyword', '')
         page = int(request.GET.get('page', 1))
 
         # 한 페이지에 띄울 신고 내역 수
@@ -1398,6 +1455,15 @@ class PostReportAPI(APIView):
         # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
         offset = (page - 1) * row_count
         limit = page * row_count
+
+        # 검색 조건식 선언
+        condition = Q()
+
+        # keyword로 뭐라도 받았다면, keyword가 포함된 신고 사유 or 신고자 닉네임 or 신고 대상의 제목을 검색
+        if keyword:
+            condition |= Q(report_content__icontains=keyword)
+            condition |= Q(report_member__icontains=keyword)
+            condition |= Q(report_target__icontains=keyword)
 
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
@@ -1410,32 +1476,57 @@ class PostReportAPI(APIView):
         ]
 
         # 신고 내역 조회
-        post_reports = PostReport.object.filter()\
+        post_reports = PostReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('post__post_title'))\
-            .values(*columns)[offset:limit]
-
-        # 다음 페이지에 띄울 정보가 있는지 검사
-        has_next_page = PostReport.object.filter()[limit:limit + 1].exists()
+            .values(*columns).filter(id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for post_report in post_reports:
             post_report['created_date'] = post_report['created_date'].strftime('%Y.%m.%d')
 
-        # 완성된 신고 내역 목록
-        post_report_info = {
-            'reports': post_reports,
-            'hasNext': has_next_page
+        # 신고 내역 수
+        total = post_reports.count()
+
+        # 페이지네이션에 필요한 정보들
+        page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
+
+        end_page = math.ceil(page / page_count) * page_count  # 화면에 표시할 페이지 숫자 버튼 중 마지막 페이지
+        start_page = end_page - page_count + 1  # 화면에 표시할 페이지 숫자 버튼 중 첫 페이지
+        real_end = math.ceil(total / row_count)  # 전체 리스트의 마지막 페이지
+
+        # end_page의 값이 real_end 보다 커지지 않게 조정
+        end_page = real_end if end_page > real_end else end_page
+
+        # end_page의 값이 0보다 작아지지 않게 조정
+        if end_page == 0:
+            end_page = 1
+
+        # 페이지네이션에 사용할 정보 완성
+        page_info = {
+            'totalCount': total,
+            'startPage': start_page,
+            'endPage': end_page,
+            'page': page,
+            'realEnd': real_end,
+            'pageCount': page_count,
         }
 
+        # 신고 목록을 QuerySet -> list 타입으로 변경
+        post_reports = list(post_reports)
+
+        # 신고 목록의 맨 뒤에 페이지네이션 정보 추가
+        post_reports.append(page_info)
+
         # 요청한 데이터 반환
-        return Response(post_report_info)
+        return Response(post_reports)
 
 
 class PostReplyReportAPI(APIView):
     # 일반 게시물 댓글 신고 API 뷰
     def get(self, request):
         # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        keyword = request.GET.get('keyword', '')
         page = int(request.GET.get('page', 1))
 
         # 한 페이지에 띄울 신고 내역 수
@@ -1444,6 +1535,15 @@ class PostReplyReportAPI(APIView):
         # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
         offset = (page - 1) * row_count
         limit = page * row_count
+
+        # 검색 조건식 선언
+        condition = Q()
+
+        # keyword로 뭐라도 받았다면, keyword가 포함된 신고 사유 or 신고자 닉네임 or 신고 대상의 제목을 검색
+        if keyword:
+            condition |= Q(report_content__icontains=keyword)
+            condition |= Q(report_member__icontains=keyword)
+            condition |= Q(report_target__icontains=keyword)
 
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
@@ -1456,32 +1556,57 @@ class PostReplyReportAPI(APIView):
         ]
 
         # 신고 내역 조회
-        post_reply_reports = PostReplyReport.object.filter()\
+        post_reply_reports = PostReplyReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('post_reply__post_reply_content'))\
-            .values(*columns)[offset:limit]
-
-        # 다음 페이지에 띄울 정보가 있는지 검사
-        has_next_page = PostReplyReport.object.filter()[limit:limit + 1].exists()
+            .values(*columns).filter(id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for post_reply_report in post_reply_reports:
             post_reply_report['created_date'] = post_reply_report['created_date'].strftime('%Y.%m.%d')
 
-        # 완성된 신고 내역 목록
-        post_reply_report_info = {
-            'reports': post_reply_reports,
-            'hasNext': has_next_page
+        # 신고 내역 수
+        total = post_reply_reports.count()
+
+        # 페이지네이션에 필요한 정보들
+        page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
+
+        end_page = math.ceil(page / page_count) * page_count  # 화면에 표시할 페이지 숫자 버튼 중 마지막 페이지
+        start_page = end_page - page_count + 1  # 화면에 표시할 페이지 숫자 버튼 중 첫 페이지
+        real_end = math.ceil(total / row_count)  # 전체 리스트의 마지막 페이지
+
+        # end_page의 값이 real_end 보다 커지지 않게 조정
+        end_page = real_end if end_page > real_end else end_page
+
+        # end_page의 값이 0보다 작아지지 않게 조정
+        if end_page == 0:
+            end_page = 1
+
+        # 페이지네이션에 사용할 정보 완성
+        page_info = {
+            'totalCount': total,
+            'startPage': start_page,
+            'endPage': end_page,
+            'page': page,
+            'realEnd': real_end,
+            'pageCount': page_count,
         }
 
+        # 신고 목록을 QuerySet -> list 타입으로 변경
+        post_reply_reports = list(post_reply_reports)
+
+        # 신고 목록의 맨 뒤에 페이지네이션 정보 추가
+        post_reply_reports.append(page_info)
+
         # 요청한 데이터 반환
-        return Response(post_reply_report_info)
+        return Response(post_reply_reports)
 
 
 class KnowhowReportAPI(APIView):
     # 노하우 게시물 신고 API 뷰
     def get(self, request):
         # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        keyword = request.GET.get('keyword', '')
         page = int(request.GET.get('page', 1))
 
         # 한 페이지에 띄울 신고 내역 수
@@ -1490,6 +1615,15 @@ class KnowhowReportAPI(APIView):
         # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
         offset = (page - 1) * row_count
         limit = page * row_count
+
+        # 검색 조건식 선언
+        condition = Q()
+
+        # keyword로 뭐라도 받았다면, keyword가 포함된 신고 사유 or 신고자 닉네임 or 신고 대상의 제목을 검색
+        if keyword:
+            condition |= Q(report_content__icontains=keyword)
+            condition |= Q(report_member__icontains=keyword)
+            condition |= Q(report_target__icontains=keyword)
 
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
@@ -1502,32 +1636,57 @@ class KnowhowReportAPI(APIView):
         ]
 
         # 신고 내역 조회
-        knowhow_reports = KnowhowReport.object.filter()\
+        knowhow_reports = KnowhowReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('knowhow__knowhow_title'))\
-            .values(*columns)[offset:limit]
-
-        # 다음 페이지에 띄울 정보가 있는지 검사
-        has_next_page = KnowhowReport.object.filter()[limit:limit + 1].exists()
+            .values(*columns).filter(id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for knowhow_report in knowhow_reports:
             knowhow_report['created_date'] = knowhow_report['created_date'].strftime('%Y.%m.%d')
 
-        # 완성된 신고 내역 목록
-        knowhow_report_info = {
-            'reports': knowhow_reports,
-            'hasNext': has_next_page
+        # 신고 내역 수
+        total = knowhow_reports.count()
+
+        # 페이지네이션에 필요한 정보들
+        page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
+
+        end_page = math.ceil(page / page_count) * page_count  # 화면에 표시할 페이지 숫자 버튼 중 마지막 페이지
+        start_page = end_page - page_count + 1  # 화면에 표시할 페이지 숫자 버튼 중 첫 페이지
+        real_end = math.ceil(total / row_count)  # 전체 리스트의 마지막 페이지
+
+        # end_page의 값이 real_end 보다 커지지 않게 조정
+        end_page = real_end if end_page > real_end else end_page
+
+        # end_page의 값이 0보다 작아지지 않게 조정
+        if end_page == 0:
+            end_page = 1
+
+        # 페이지네이션에 사용할 정보 완성
+        page_info = {
+            'totalCount': total,
+            'startPage': start_page,
+            'endPage': end_page,
+            'page': page,
+            'realEnd': real_end,
+            'pageCount': page_count,
         }
 
+        # 신고 목록을 QuerySet -> list 타입으로 변경
+        knowhow_reports = list(knowhow_reports)
+
+        # 신고 목록의 맨 뒤에 페이지네이션 정보 추가
+        knowhow_reports.append(page_info)
+
         # 요청한 데이터 반환
-        return Response(knowhow_report_info)
+        return Response(knowhow_reports)
 
 
 class KnowhowReplyReportAPI(APIView):
     # 노하우 게시물 댓글 신고 API 뷰
     def get(self, request):
         # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        keyword = request.GET.get('keyword', '')
         page = int(request.GET.get('page', 1))
 
         # 한 페이지에 띄울 신고 내역 수
@@ -1536,6 +1695,15 @@ class KnowhowReplyReportAPI(APIView):
         # 한 페이지에 표시할 신고 내역들을 슬라이싱 하기 위한 변수들
         offset = (page - 1) * row_count
         limit = page * row_count
+
+        # 검색 조건식 선언
+        condition = Q()
+
+        # keyword로 뭐라도 받았다면, keyword가 포함된 신고 사유 or 신고자 닉네임 or 신고 대상의 제목을 검색
+        if keyword:
+            condition |= Q(report_content__icontains=keyword)
+            condition |= Q(report_member__icontains=keyword)
+            condition |= Q(report_target__icontains=keyword)
 
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
@@ -1548,23 +1716,47 @@ class KnowhowReplyReportAPI(APIView):
         ]
 
         # 신고 내역 조회
-        knowhow_reply_reports = KnowhowReplyReport.object.filter()\
+        knowhow_reply_reports = KnowhowReplyReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('knowhow_reply__knowhow_reply_content'))\
-            .values(*columns)[offset:limit]
-
-        # 다음 페이지에 띄울 정보가 있는지 검사
-        has_next_page = KnowhowReplyReport.object.filter()[limit:limit + 1].exists()
+            .values(*columns).filter(id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for knowhow_reply_report in knowhow_reply_reports:
             knowhow_reply_report['created_date'] = knowhow_reply_report['created_date'].strftime('%Y.%m.%d')
 
-        # 완성된 신고 내역 목록
-        knowhow_reply_report_info = {
-            'reports': knowhow_reply_reports,
-            'hasNext': has_next_page
+        # 신고 내역 수
+        total = knowhow_reply_reports.count()
+
+        # 페이지네이션에 필요한 정보들
+        page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
+
+        end_page = math.ceil(page / page_count) * page_count  # 화면에 표시할 페이지 숫자 버튼 중 마지막 페이지
+        start_page = end_page - page_count + 1  # 화면에 표시할 페이지 숫자 버튼 중 첫 페이지
+        real_end = math.ceil(total / row_count)  # 전체 리스트의 마지막 페이지
+
+        # end_page의 값이 real_end 보다 커지지 않게 조정
+        end_page = real_end if end_page > real_end else end_page
+
+        # end_page의 값이 0보다 작아지지 않게 조정
+        if end_page == 0:
+            end_page = 1
+
+        # 페이지네이션에 사용할 정보 완성
+        page_info = {
+            'totalCount': total,
+            'startPage': start_page,
+            'endPage': end_page,
+            'page': page,
+            'realEnd': real_end,
+            'pageCount': page_count,
         }
 
+        # 신고 목록을 QuerySet -> list 타입으로 변경
+        knowhow_reply_reports = list(knowhow_reply_reports)
+
+        # 신고 목록의 맨 뒤에 페이지네이션 정보 추가
+        knowhow_reply_reports.append(page_info)
+
         # 요청한 데이터 반환
-        return Response(knowhow_reply_report_info)
+        return Response(knowhow_reply_reports)

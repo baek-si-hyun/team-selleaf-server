@@ -14,7 +14,7 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     KnowhowPostsAPI, TradePostsAPI, KnowhowDeleteAPI, TradeDeleteAPI, \
     KnowhowCountAPI, TradeCountAPI, PostsListAPI, PostsDeleteAPI, PostsCountAPI, ReportManagementView, \
     PaymentManagementView, TagManagementView, ReplyManagementAPI, LectureReportAPI, \
-    TradeReportAPI, PostReportAPI, PostReplyReportAPI, KnowhowReportAPI, KnowhowReplyReportAPI
+    TradeReportAPI, PostReportAPI, PostReplyReportAPI, KnowhowReportAPI, KnowhowReplyReportAPI, TagManagementAPI
 
 urlpatterns = [
     path('', MainView.as_view(), name='main'),
@@ -79,6 +79,7 @@ urlpatterns = [
     path('admin/qna/delete/<str:qna_ids>', DeleteManyQnAView.as_view(), name='many-qna-delete'),
     # 태그 관리
     path('admin/tag/', TagManagementView.as_view(), name='manager-tag'),
+    path('admin/tags/api/', TagManagementAPI.as_view(), name='manager-tag-api'),
     # 신고 내역 관리
     path('admin/report/', ReportManagementView.as_view(), name='manager-report'),
     path('admin/report/lecture/', LectureReportAPI.as_view(), name='lecture-report-api'),
