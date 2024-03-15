@@ -164,11 +164,11 @@
                             aria-label="프로필 메뉴"
                             class="header-kakao-button"
                     >
-                    {% if request.session.member_files.0 %}
-                        {% if 'http' in request.session.member_files.0 %}
-                            <img src="{{ memberProfile }}" alt="" class="current-profile-image">
+                    {% if request.session.member_files.0.file_url %}
+                        {% if 'http' in request.session.member_files.0.file_url %}
+                            <img src="{{ request.session.member_files.0.file_url }}" alt="" class="current-profile-image">
                         {% else %}
-                            <img src="/upload/{{ memberProfile }}" alt="" class="current-profile-image">
+                            <img src="/upload/{{ request.session.member_files.0.file_url }}" alt="" class="current-profile-image">
                         {% endif %}
                     {% else %}
                         <img src="{% static 'member/images/mypage/base-profile-image.avif' %}" alt=""
