@@ -1,3 +1,7 @@
+const priceFormat = (price) => {
+    return new Intl.NumberFormat().format(price);
+}
+
 //스크랩 버튼
 const scrapBtn = document.querySelector(".post-wrap");
 const scrapPopup = document.querySelector(".scrap-popup-wrap");
@@ -389,7 +393,7 @@ const showList = (trades) => {
                         <span class="post-contents-banner">${trade.trade_title}</span>
                       </h1>
                       <span class="post-price">
-                        <span class="post-price-letter">${trade.trade_price}원</span>
+                        <span class="post-price-letter">${priceFormat(trade.trade_price)}원</span>
                       </span>
                       <span class="post-tag">
                         ${tagsHtml}

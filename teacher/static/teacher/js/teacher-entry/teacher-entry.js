@@ -319,3 +319,19 @@ infiniteDiv.addEventListener("mouseleave", () => {
         "50s linear 0s infinite normal forwards running slide01";
     clone1.style.animation = "50s linear 0s infinite normal none running slide02";
 });
+
+// 강사인지 아닌지에 따라 버튼의 내용과 링크를 바뀌게 함
+const checkBtn = document.querySelector('.entry-link-wrap')
+const teacherLetter = document.querySelector('.entry-title')
+const buttonLetter = document.querySelector('.entry-link')
+
+if(teacher_check==='True'){
+    teacherLetter.innerText = 'Selleaf와 함께 새로운 강의를 시작해보세요!'
+    buttonLetter.href = '/lecture/main'
+    buttonLetter.innerText = '강의 개설하기'
+}
+else if(teacher_check==='False'){
+    teacherLetter.innerText = '지금 신청하고 수강생들과 만나보세요!'
+    buttonLetter.href = '/teacher/sub'
+    buttonLetter.innerText = '강사자격 신청하기'
+}
