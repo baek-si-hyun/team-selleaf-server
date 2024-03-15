@@ -1,4 +1,4 @@
-// 커뮤니티 게시물 목록을 화면에 띄우는 함수
+// 일반 게시물 목록을 화면에 띄우는 함수
 const showPosts = (posts_info) => {
     // HTML 코드를 담기 위한 빈 문자열
     let text = ``;

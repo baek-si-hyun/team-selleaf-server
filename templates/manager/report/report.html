@@ -3,7 +3,7 @@
 {% block static %}
     <link rel="stylesheet" href="{% static 'report/css/report.css' %}">
 {% endblock %}
-{% block title %}신고 관리{% endblock %}
+{% block title %}신고 내역 관리{% endblock %}
 {% block content %}
   <body class="overflow-hidden">
     <div class="next">
@@ -16,9 +16,28 @@
               <div class="content-inner">
                 <div class="content-box">
                   <div class="header">
-                    <h1 class="header-name">신고 관리</h1>
+                    <h1 class="header-name">신고 내역 관리</h1>
                     <div>
                       <div class="compose-button">
+                        <!-- 승인 버튼 -->
+                        <button
+                          class="edit-button"
+                          aria-label="edit button"
+                          type="button"
+                        >
+                          <svg
+                            class="edit-button"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="m15.687 8.163.545-.506c1.024-.951 1.024-2.493 0-3.444-1.024-.95-2.684-.95-3.709 0l-8.362 7.765-1.127 3.547c-.183.577.395 1.113 1.016.943l3.82-1.046 6.661-6.186.005.004 1.155-1.073-.004-.004Zm-2.312 0-6.367 5.912-1.981.543.584-1.84 6.367-5.912 1.397 1.297Zm1.156-1.073-1.397-1.298.545-.506a1.042 1.042 0 0 1 1.397 0 .872.872 0 0 1 0 1.298l-.545.506Z"
+                            ></path>
+                          </svg>
+                        </button>
+                        <!-- 삭제 버튼 -->
                         <button
                           class="delete-button"
                           aria-label="delete button"
@@ -55,9 +74,9 @@
                         >
                           <div>
                             <div class="flex">
-                              <p class="review-info">강의신고</p>
+                              <p class="review-info">강의 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">3</p>
+                                <p class="review-info-num">{{ lecture_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -73,9 +92,9 @@
                         >
                           <div>
                             <div class="flex">
-                              <p class="review-info">강사신고</p>
+                              <p class="review-info">거래 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">1</p>
+                                <p class="review-info-num">{{ trade_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -91,9 +110,9 @@
                         >
                           <div>
                             <div class="flex">
-                              <p class="review-info">판매자신고</p>
+                              <p class="review-info">일반 게시물 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">2</p>
+                                <p class="review-info-num">{{ post_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -109,9 +128,9 @@
                         >
                           <div>
                             <div class="flex">
-                              <p class="review-info">구매자신고</p>
+                              <p class="review-info">일반 게시물 댓글 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">2</p>
+                                <p class="review-info-num">{{ post_reply_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -127,9 +146,9 @@
                         >
                           <div>
                             <div class="flex">
-                              <p class="review-info">게시글신고</p>
+                              <p class="review-info">노하우 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">2</p>
+                                <p class="review-info-num">{{ knowhow_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -145,9 +164,9 @@
                         >
                           <div>
                             <div class="flex">
-                              <p class="review-info">댓글신고</p>
+                              <p class="review-info">노하우 댓글 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">2</p>
+                                <p class="review-info-num">{{ knowhow_reply_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -159,14 +178,14 @@
                   <div class="all-list">
                     <div>
                       <span class="all-name">전체</span>
-                      <span class="all-num">3</span>
+                      <span class="all-num">{{ lecture_report_count }}</span>
                     </div>
                     <div class="list-order">
                       <div class="search-bar">
                         <label class="search-bar">
                           <input
                             class="search-bar"
-                            placeholder="신고 검색"
+                            placeholder="신고 내역 검색"
                             type="text"
                             value
                           />
@@ -191,83 +210,26 @@
                 </div>
                 <div class="category-benner">
                   <input type="checkbox" class="all-check" />
-                  <div class="category-inner" style="width: 735px">제목</div>
-                  <div class="category-inner" style="width: 75px">신고자</div>
-                  <div class="category-inner">신고일</div>
+                  <div class="category-wrap">
+                    <div class="category-inner">신고 대상</div>
+                    <div class="category-inner">신고 사유</div>
+                    <div class="category-inner">신고자</div>
+                    <div class="category-inner">처리 상태</div>
+                    <div class="category-inner">접수 일자</div>
+                  </div>
                 </div>
                 <ul class="list-content">
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">신고 제목 1</p>
-                            </div>
-                            <p class="content-name-detail">신고 내용 1</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">조은종</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">신고 제목 2</p>
-                            </div>
-                            <p class="content-name-detail">신고 내용 2</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">조은종</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-content">
-                    <input type="checkbox" class="checkbox-input" />
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">신고 제목 3</p>
-                            </div>
-                            <p class="content-name-detail">신고 내용 3</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">조은종</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
-                    </div>
-                  </li>
+{#                    리스트 예시 #}
+{#                  <li class="list-content">#}
+{#                    <input type="checkbox" class="checkbox-input" />#}
+{#                    <div class="report-info-wrap">#}
+{#                      <div class="report-info">대상</div>#}
+{#                      <div class="report-info">지나친 홍보성 게시물</div>#}
+{#                      <div class="report-info">KGH</div>#}
+{#                      <div class="report-info">접수됨</div>#}
+{#                      <div class="report-info">2024.03.15</div>#}
+{#                    </div>#}
+{#                  </li>#}
                 </ul>
                 <div class="page-count-wrap">
                   <ul class="page flex">
@@ -336,10 +298,11 @@
           </div>
         </div>
       </div>
+{#        삭제 모달 #}
       <div class="delete-modal-wrap">
         <div class="delete-modal-container">
-          <h4 class="delete-modal">신고 삭제</h4>
-          <div class="delete-modal-inner">해당 신고를 삭제하시겠습니까?</div>
+          <h4 class="delete-modal">신고 내역 삭제</h4>
+          <div class="delete-modal-inner">해당 신고 내역을 삭제하시겠습니까?</div>
           <div class="delete-modal-box">
             <div class="modal-cancel">
               <button class="modal-cancel" aria-label="button" type="button">
@@ -355,9 +318,34 @@
         </div>
         <div class="delete-modal-bgcolor"></div>
       </div>
+{#        승인 모달 #}
+      <div class="approve-modal-wrap">
+        <div class="approve-modal-container">
+          <h4 class="approve-modal">신고 내역 승인</h4>
+          <div class="approve-modal-inner">해당 신고 내역을 모두 승인하시겠습니까?</div>
+          <div class="approve-modal-box">
+            <div class="approve-modal-cancel">
+              <button class="approve-modal-cancel" aria-label="button" type="button">
+                취소
+              </button>
+            </div>
+            <div class="approve-modal-confirm">
+              <button class="approve-modal-confirm" aria-label="button" type="button">
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="approve-modal-bgcolor"></div>
+      </div>
     </div>
   </body>
 {% endblock %}
 {% block js %}
+  <script>
+    const csrf_token = `{{ csrf_token }}`;
+  </script>
+  <script src="{% static 'report/js/report-module.js' %}"></script>
+  <script src="{% static 'report/js/show_reports.js' %}"></script>
   <script src="{% static 'report/js/report.js' %}"></script>
 {% endblock %}
