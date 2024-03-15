@@ -1,5 +1,6 @@
 from django.db import models
 
+from apply.models import Apply
 from lecture.models import Lecture, Kit
 from selleaf.date import Date
 from selleaf.period import Period
@@ -33,11 +34,7 @@ class CartDetail(Period):
         (1, '결제 완료')
     ]
     cart = models.ForeignKey(Cart, on_delete=models.PROTECT, null=False, blank=False)
-    date = models.CharField(null=False, blank=False, max_length=100)
-    time = models.CharField(null=False, blank=False, max_length=100)
-    kit = models.CharField(null=False, blank=False, max_length=100, default='offline')
-    lecture = models.ForeignKey(Lecture, on_delete=models.PROTECT, null=False, blank=False)
-    quantity = models.IntegerField(blank=False, null=False, default=1)
+    apply = models.ForeignKey(Apply, on_delete=models.PROTECT, null=False, blank=False)
     # 게시중 0, 결제 완료 1, 상품 삭제 -1
     cart_detail_status = models.IntegerField(blank=False, null=False, default=0, choices=CART_DETAIL_STATUS)
 
