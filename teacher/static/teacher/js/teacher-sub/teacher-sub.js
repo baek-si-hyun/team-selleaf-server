@@ -144,3 +144,20 @@ const closeBtn = document.querySelector(".close-button");
 closeBtn.addEventListener("click", () => {
     entryModal.style.display = "none";
 });
+
+
+// 강사 신청 입력 안했을 때 신청하기 버튼 못 누르게 막기
+
+// 약력
+const teacherBriefHistory = document.querySelector(".record-input");
+// 강의 설명
+const lecturePlan = document.querySelector(".explanation-input");
+// 강의 주소
+const lecturePlace = document.querySelector(".lecture_place");
+
+if (!teacherBriefHistory.value || !lecturePlan.value || !lecturePlace.value){
+  entryApplicationBtn.disabled = true;
+}
+else{
+  entryApplicationBtn.disabled = false;
+}

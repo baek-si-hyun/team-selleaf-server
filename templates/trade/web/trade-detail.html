@@ -1,5 +1,6 @@
 {% extends 'trade/web/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block static %}
     <link rel="stylesheet" href="{% static 'trade/css/web/trade-detail.css' %}">
 {% endblock %}
@@ -367,7 +368,7 @@
                               <button class="share-button" type="button">
                                   <img
                                     class="update-icon"
-                                    src="{% static 'public/web/images/common/remove-icon.png' %}"
+                                    src="{% static 'public/web/images/common/remove-icon.jpg' %}"
                                     width="25px"
                                     height="27px"
                                   />
@@ -423,7 +424,7 @@
                     <span class="product-price-separator"></span>
                     <div class="product-final-price-wrap">
                       <div class="product-final-price-container">
-                        <span class="final-price-number">{{ trade.trade_price }}</span>
+                        <span class="final-price-number">{{ trade.trade_price|intcomma }}</span>
                         <span class="krw">원</span>
                       </div>
                     </div>
@@ -668,7 +669,7 @@
                                       </h1>
                                       <span class="product-suggestion-price-wrap">
                                         <span class="product-suggestion-price">
-                                          {{ trade.trade_price }}원
+                                          {{ trade.trade_price|intcomma }}원
                                         </span>
                                       </span>
                                       <span class="info-type">
