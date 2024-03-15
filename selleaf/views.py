@@ -949,8 +949,63 @@ class ReplyManagementAPI(APIView):
 class TagManagementView(View):
     # 태그 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 게시물에 대한 댓글을 전부 가져와야 됨
         return render(request, 'manager/tag/tag.html')
+
+
+class TagManagementAPI(APIView):
+    def get(self, request):
+        keyword = request.GET.get('keyword', '')
+        page = int(request.GET.get('page', 1))
+        row_count = 10
+
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        condition = Q()
+
+        if keyword:
+            condition |= Q(tag_name__icontains=keyword)
+
+        post_tags = PostTag.objects.filter(condition).values('tag_name').distinct()
+        # print(post_tags)
+        knowhow_tags = KnowhowTag.objects.filter(condition).values('tag_name').distinct()
+        # print(knowhow_tags)
+        total = post_tags.union(knowhow_tags).count()
+
+        page_count = 5
+
+        end_page = math.ceil(page / page_count) * page_count
+        start_page = end_page - page_count + 1
+        real_end = math.ceil(total / row_count)
+        end_page = real_end if end_page > real_end else end_page
+
+        if end_page == 0:
+            end_page = 1
+
+        page_info = {
+            'totalCount': total,
+            'startPage': start_page,
+            'endPage': end_page,
+            'page': page,
+            'realEnd': real_end,
+            'pageCount': page_count,
+        }
+
+        tags = list(post_tags.union(knowhow_tags).order_by('tag_name')[offset:limit])
+        tags.append(page_info)
+
+        return Response(tags)
+
+    def delete(self, request):
+        datas = request.data
+        print(datas)
+        for data in datas:
+            tag_name = data.get('tag_name')
+
+            PostTag.objects.filter(tag_name=tag_name).delete()
+            KnowhowTag.objects.filter(tag_name=tag_name).delete()
+
+        return Response('success')
 
 
 # 결제 내역 관리

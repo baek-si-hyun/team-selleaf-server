@@ -391,6 +391,7 @@
                       id="img-file1"
                       name="img-file1"
                       style="display: none"
+                      
                     />
                     <img src="" alt="" class="prev-img" />
                     <div class="cancel-div">
@@ -544,8 +545,11 @@
     </div>
   </body>
 </form>
+    {% for image in trade_files %}
+    <input type="hidden" name="image-src" value="{{ image.file_url }}">
+    {% endfor %}
 {% endblock %}
 {% block js %}
-{#  <script src="{% static 'trade/js/web/trade-update.js' %}"></script>#}
+  <script src="{% static 'trade/js/web/trade-update.js' %}"></script>
   <script src="{% static 'trade/js/web/trade-upload.js' %}"></script>
 {% endblock %}
