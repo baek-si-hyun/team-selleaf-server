@@ -173,461 +173,463 @@
         </div>
       </div>
 </div>
+    <form action="{% url 'lecture:detail-offline' %}" method="post" name="apply" enctype="multipart/form-data">
     <div class="product-selling-wrap">
       <div class="product-overview-wrap">
         <nav class="product-category-wrap">
           <span>{{ lecture.teacher__member__member_name }}님의 {{ lecture.lecture_title }} 상품을 보고있어요🤗</span>
         </nav>
-        <div class="product-overview-container">
-          <div class="product-overview-image-wrap">
-            <div class="product-overview-image-container">
-              <div
-                class="product-overview-image-inner"
-                role="region"
-                aria-roledescription="carousel"
-              >
-                <div class="product-overview-main-image">
+        
+        {% csrf_token %}
+            <div class="product-overview-container">
+              <div class="product-overview-image-wrap">
+                <div class="product-overview-image-container">
                   <div
-                    class="carousel-list-wrap"
-                    aria-live="polite"
-                    style="
-                      transform: translateX(-100%);
-                      transition: transform 0s ease 0s;
-                    "
+                    class="product-overview-image-inner"
+                    role="region"
+                    aria-roledescription="carousel"
                   >
-                    <div
-                      class="carousel-list-container"
-                      role="group"
-                      aria-roledescription="slide"
-                      aria-label="1 of 4"
-                      style="width: 100%"
-                    >
-{#                      <img#}
-{#                        class="product-cover-image"#}
-{#                        tabindex="0"#}
-{#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
-{#                        alt="상품서브이미지"#}
-{#                      />#}
-                    </div>
-                    <div
-                      class="carousel-list-container"
-                      role="group"
-                      aria-roledescription="slide"
-                      aria-label="2 of 4"
-                      style="width: 100%"
-                    >
-                      <img
-                        class="product-cover-image"
-                        tabindex="0"
-                        src="/upload/{{ lecture_file.file_url }}"
-                        alt="상품서브이미지"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <ul class="product-small-image-list">
-                    {% for lecture_file in lecture_files %}
-                      <li class="product-small-image-item">
-                        <button
-                          class="product-small-image-button"
-                          type="button"
-                          aria-label="1 of 8"
+                    <div class="product-overview-main-image">
+                      <div
+                        class="carousel-list-wrap"
+                        aria-live="polite"
+                        style="
+                          transform: translateX(-100%);
+                          transition: transform 0s ease 0s;
+                        "
+                      >
+                        <div
+                          class="carousel-list-container"
+                          role="group"
+                          aria-roledescription="slide"
+                          aria-label="1 of 4"
+                          style="width: 100%"
+                        >
+    {#                      <img#}
+    {#                        class="product-cover-image"#}
+    {#                        tabindex="0"#}
+    {#                        src="{% static 'public/web/images/common/blank-image.png' %}"#}
+    {#                        alt="상품서브이미지"#}
+    {#                      />#}
+                        </div>
+                        <div
+                          class="carousel-list-container"
+                          role="group"
+                          aria-roledescription="slide"
+                          aria-label="2 of 4"
+                          style="width: 100%"
                         >
                           <img
-                            class="product-small-image"
+                            class="product-cover-image"
+                            tabindex="0"
                             src="/upload/{{ lecture_file.file_url }}"
-                            alt="상품 이미지"
+                            alt="상품서브이미지"
                           />
-                        </button>
-                      </li>
-                    {% endfor %}
-                </ul>
-                <div class="product-image-paginator">
-                  <ul class="carousel-paginator">
-                    <li>
-                      <span class="carousel-paginator-page" data-key="1"></span>
-                    </li>
-                    <li>
-                      <span class="carousel-paginator-page" data-key="2"></span>
-                    </li>
-                    <li>
-                      <span class="carousel-paginator-page" data-key="3"></span>
-                    </li>
-                    <li>
-                      <span class="carousel-paginator-page" data-key="4"></span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="product-overview-contents-wrap">
-            <div class="product-overview-contents-header">
-              <h1 class="product-overview-contents-title">
-                <p class="product-overview-user-wrap">
-                  <a href="해당유저페이지" class="product-overview-user"
-                    >{{ lecture.teacher__member__member_name }}</a
-                  >
-                </p>
-                <div class="product-overview-title">
-                  <span class="product-title">{{ lecture.lecture_title }}</span>
-                  <div class="product-title-icon-wrap {{ lecture.id }}">
-                    {% if request.session.member.id == lecture.teacher__member_id %}
-                        <a href="/lecture/update/offline/?id={{ lecture.id }}">
-                            <button class="update-button" type="button">
+                        </div>
+                      </div>
+                    </div>
+                    <ul class="product-small-image-list">
+                        {% for lecture_file in lecture_files %}
+                          <li class="product-small-image-item">
+                            <button
+                              class="product-small-image-button"
+                              type="button"
+                              aria-label="1 of 8"
+                            >
                               <img
-                                class="update-icon"
-                                src="{% static 'public/web/images/common/update_icon.png' %}"
+                                class="product-small-image"
+                                src="/upload/{{ lecture_file.file_url }}"
+                                alt="상품 이미지"
                               />
-                              <span class="update-label">수정</span>
                             </button>
-                        </a>
-                        <a href="/lecture/delete/?id={{ lecture.id }}">
-                          <button class="update-button" type="button">
-                            <img
-                            class="update-icon"
-                            src="{% static 'public/web/images/common/remove-icon.png' %}"
-                          />
-                          <span class="update-label">삭제</span>
-                          </button>
-                        </a>
-                    {% endif %}
-                    <button class="scrap-button" type="button">
-                      <img
-                        class="scrap-off"
-                        src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
-                      />
-                      <span class="scrap-count"></span>
-                    </button>
-                  </div>
-                </div>
-              </h1>
-              <div class="product-overview-contents-container">
-                <p class="product-contents-review-wrap">
-                  <a href="#product-review" class="product-review">
-                   <span class="rating" aria-label="별점3.9점">
-                          <svg
-                            fill="{% if average_rating >= 1 %}#135f2c{% else %}#DBDBDB{% endif %}"
-                            width="1em"
-                            height="1em"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 24 24"
-                          >
-                            <defs>
-                              <path
-                                id="star-path-115"
-                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                              ></path>
-                              <clipPath id="star-clip-115">
-                                <rect x="0" y="0" width="24" height="24"></rect>
-                              </clipPath>
-                            </defs>
-                            <use
-                              xlink:href="#star-path-115"
-                              fill="#DBDBDB"
-                            ></use>
-                            <use
-                              clip-path="url(#star-clip-115)"
-                              xlink:href="#star-path-115"
-                            ></use>
-                          </svg>
-                          <svg
-                            fill="{% if average_rating >= 2 %}#135f2c{% else %}#DBDBDB{% endif %}"
-                            width="1em"
-                            height="1em"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 24 24"
-                          >
-                            <defs>
-                              <path
-                                id="star-path-116"
-                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                              ></path>
-                              <clipPath id="star-clip-116">
-                                <rect x="0" y="0" width="24" height="24"></rect>
-                              </clipPath>
-                            </defs>
-                            <use
-                              xlink:href="#star-path-116"
-                              fill="#DBDBDB"
-                            ></use>
-                            <use
-                              clip-path="url(#star-clip-116)"
-                              xlink:href="#star-path-116"
-                            ></use>
-                          </svg>
-                          <svg
-                            fill="{% if average_rating >= 3 %}#135f2c{% else %}#DBDBDB{% endif %}"
-                            width="1em"
-                            height="1em"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 24 24"
-                          >
-                            <defs>
-                              <path
-                                id="star-path-117"
-                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                              ></path>
-                              <clipPath id="star-clip-117">
-                                <rect x="0" y="0" width="24" height="24"></rect>
-                              </clipPath>
-                            </defs>
-                            <use
-                              xlink:href="#star-path-117"
-                              fill="#DBDBDB"
-                            ></use>
-                            <use
-                              clip-path="url(#star-clip-117)"
-                              xlink:href="#star-path-117"
-                            ></use>
-                          </svg>
-                          <svg
-                            fill="{% if average_rating >= 4 %}#135f2c{% else %}#DBDBDB{% endif %}"
-                            width="1em"
-                            height="1em"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 24 24"
-                          >
-                            <defs>
-                              <path
-                                id="star-path-118"
-                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                              ></path>
-                              <clipPath id="star-clip-118">
-                                <rect x="0" y="0" width="24" height="24"></rect>
-                              </clipPath>
-                            </defs>
-                            <use
-                              xlink:href="#star-path-118"
-                              fill="#DBDBDB"
-                            ></use>
-                            <use
-                              clip-path="url(#star-clip-118)"
-                              xlink:href="#star-path-118"
-                            ></use>
-                          </svg>
-                          <svg
-                            fill="{% if average_rating >= 5 %}#135f2c{% else %}#DBDBDB{% endif %}"
-                            width="1em"
-                            height="1em"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 24 24"
-                          >
-                            <defs>
-                              <path
-                                id="star-path-119"
-                                d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
-                              ></path>
-                              <clipPath id="star-clip-119">
-                                <rect
-                                  x="0"
-                                  y="0"
-                                  width="18.548148148148158"
-                                  height="24"
-                                ></rect>
-                              </clipPath>
-                            </defs>
-                            <use
-                              xlink:href="#star-path-119"
-                              fill="#DBDBDB"
-                            ></use>
-                            <use
-                              clip-path="url(#star-clip-119)"
-                              xlink:href="#star-path-119"
-                            ></use>
-                          </svg> </span
-                        >
-                    <span class="review-counting-text">
-                      <span class="review-counting">{{ review_count }}</span>
-                      <span class="review-text">개 리뷰</span>
-                    </span>
-                  </a>
-                </p>
-                <div class="product-contents-price-wrap">
-                  <span class="product-contents-price-container">
-                    <span class="product-price-info">
-                      <button class="product-price-info-button"></button>
-                    </span>
-                    <span class="product-price-separator"></span>
-                    <div class="product-final-price-wrap">
-                      <div class="product-final-price-container">
-                        <span class="final-price-number">{{ lecture.lecture_price }}</span>
-                        <span class="krw">원</span>
-                      </div>
-                    </div>
-                  </span>
-                </div>
-              </div>
-              <div class="product-overview-info-wrap">
-                <div class="product-info-container">
-                  <div class="product-info-title">
-                    <span>위치</span>
-                  </div>
-                  <div class="product-info-contents">
-                    <span class="main-info-keyword">
-                      <b>{{ address.address_city }} {{ address.address_district }}</b>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div class="product-overview-info-wrap">
-                <div class="product-info-container">
-                  <div class="product-info-title">
-                    <span>정보</span>
-                  </div>
-                  <div class="product-info-contents">
-                    <span class="main-info-keyword">
-                      <b>키워드</b>
-                    </span>
-                    <span class="info-type">
-                        {% for lte in lectures %}
-                          {% if lte.id == lecture.id %}
-                              {% for pN in lte.plant_name %}
-                                <span class="info-tag">#{{ pN }}</span>
-                              {% endfor %}
-                          {% endif %}
+                          </li>
                         {% endfor %}
-                    </span>
+                    </ul>
+                    <div class="product-image-paginator">
+                      <ul class="carousel-paginator">
+                        <li>
+                          <span class="carousel-paginator-page" data-key="1"></span>
+                        </li>
+                        <li>
+                          <span class="carousel-paginator-page" data-key="2"></span>
+                        </li>
+                        <li>
+                          <span class="carousel-paginator-page" data-key="3"></span>
+                        </li>
+                        <li>
+                          <span class="carousel-paginator-page" data-key="4"></span>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
-              <a href="#" class="user-info-link">
-                <div class="user-link-name-wrap">
-                  <svg
-                    width="24"
-                    height="24"
-                    fill="none"
-                    preserveAspectRatio="xMidYMid meet"
-                  >
-                    <path
-                      d="M3.972 8.694c0-.26.212-.472.472-.472h12.278a.472.472 0 010 .945H4.444a.472.472 0 01-.472-.473z"
-                      fill="#35C5F0"
-                    ></path>
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M17.51 5.5H6.492a1 1 0 00-.93.632l-.99 2.5A1 1 0 005.498 10h13.004a1 1 0 00.927-1.368l-.99-2.5a1 1 0 00-.93-.632zM3.642 8.263a2.002 2.002 0 001.397 2.684V17.5a2.5 2.5 0 002.5 2.5H16.474a2.5 2.5 0 002.487-2.5v-6.553a2.002 2.002 0 001.398-2.684l-.99-2.5a2 2 0 00-1.86-1.263H6.493a2 2 0 00-1.86 1.263l-.99 2.5zM6.04 17.5V11h11.921v6.5a1.5 1.5 0 01-1.487 1.5v-4a2 2 0 00-2-2h-.97a2 2 0 00-2 2v4H7.54a1.5 1.5 0 01-1.5-1.5zm6.464 1.5h2.97v-4a1 1 0 00-1-1h-.97a1 1 0 00-1 1v1h.847a.5.5 0 110 1h-.847v2zM8 13h1.5v1.5H8V13zm-1 0a1 1 0 011-1h1.5a1 1 0 011 1v1.5a1 1 0 01-1 1H8a1 1 0 01-1-1V13z"
-                      fill="#3F474D"
-                    ></path>
-                  </svg>
-                  <div class="user-link-name-container">
-                    <span class="user-link-name">{{ lecture.teacher__member__member_name }}님의 판매상품</span>
-                  </div>
-                </div>
-                <div class="user-link-icon-wrap">
-                  <span>{{ lecture.lecture_category__lecture_category_name }}</span>
-{#                  <svg#}
-{#                    width="14"#}
-{#                    height="14"#}
-{#                    fill="none"#}
-{#                    preserveAspectRatio="xMidYMid meet"#}
-{#                  >#}
-{#                    <path#}
-{#                      d="M4.083 11.375L8.312 7 4.083 2.625l.803-.875L9.916 7l-5.03 5.25-.803-.875z"#}
-{#                      fill="#828C94"#}
-{#                    ></path>#}
-{#                  </svg>#}
-                </div>
-              </a>
-            </div>
-            <div class="product-option-wrap">
-              <section class="product-option-container">
-                <div class="product-option-inner">
-                  <div class="product-option-input">
-                    <div class="product-option-first-wrap">
-                      <span class="info-dropdown-box">
-                        <span class="info-title">날짜 선택</span>
-                        <div class="info-dropdown-wrap">
-                          {% for date in lecture_order_date %}
-                              <div class="weekday-selection">
-                                <span>{{ date.date|date:"Y-m-d" }}</span>
-                              </div>
-                          {% endfor %}
-                        </div>
-                      </span>
-                    </div>
-                    <div
-                      class="product-option-second-wrap"
-                      style="display: none"
-                    >
-                      <span class="info-dropdown-box">
-                        <span class="info-title">시간 선택</span>
-                        <div class="info-dropdown-wrap">
-                          {% for time in lecture_order_time %}
-                            <div class="time-selection">
-                              <span>{{ time.time }}</span>
-                            </div>
-                          {% endfor %}
-                        </div>
-                      </span>
-                    </div>
-                  </div>
-                  <article
-                    class="selected-product-list-container"
-                    style="display: none"
-                  >
-                    <h2 class="selected-product-name">
-                      <span>날짜:</span>
-                      <span class="selected-date">선택한날짜</span>
-                      /
-                      <span>시간:</span>
-                      <span class="selected-time">선택한 시간</span>
-                    </h2>
-                    <button
-                      class="delete-button-wrap"
-                      aria-label="삭제"
-                      type="button"
-                    >
-                      <span class="delete-button-container">
-                        <img src="{% static 'public/web/images/common/cancel.png' %}" alt="" />
-                      </span>
-                    </button>
-                    <div class="student-count-title">인원</div>
-                    <div class="selected-product-botton-wrap">
-                      <div class="selected-product-count">
-                        <span class="sub-count">
-                          <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
-                        </span>
-                        <button class="counted-number">0</button>
-                        <span class="add-count">
-                          <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
-                        </span>
-                      </div>
-                      <div class="selected-price-wrap">
-                        <span class="selected-price">{{ lecture.lecture_price }}</span>
-                        <span class="won">원</span>
+              <div class="product-overview-contents-wrap">
+                <div class="product-overview-contents-header">
+                  <h1 class="product-overview-contents-title">
+                    <p class="product-overview-user-wrap">
+                      <a href="해당유저페이지" class="product-overview-user"
+                        >{{ lecture.teacher__member__member_name }}</a
+                      >
+                    </p>
+                    <div class="product-overview-title">
+                      <span class="product-title">{{ lecture.lecture_title }}</span>
+                      <div class="product-title-icon-wrap {{ lecture.id }}">
+                        {% if request.session.member.id == lecture.teacher__member_id %}
+                            <a href="/lecture/update/offline/?id={{ lecture.id }}">
+                                <button class="update-button" type="button">
+                                  <img
+                                    class="update-icon"
+                                    src="{% static 'public/web/images/common/update_icon.png' %}"
+                                  />
+                                  <span class="update-label">수정</span>
+                                </button>
+                            </a>
+                            <a href="/lecture/delete/?id={{ lecture.id }}">
+                              <button class="update-button" type="button">
+                                <img
+                                class="update-icon"
+                                src="{% static 'public/web/images/common/remove-icon.png' %}"
+                              />
+                              <span class="update-label">삭제</span>
+                              </button>
+                            </a>
+                        {% endif %}
+                        <button class="scrap-button" type="button">
+                          <img
+                            class="scrap-off"
+                            src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off-blk.png' %}{% endif %}"
+                          />
+                          <span class="scrap-count"></span>
+                        </button>
                       </div>
                     </div>
-                  </article>
-                  <ul class="selected-student-list-wrap" style="display: none">
-                    <li>
-                      <div class="each-info">
-                        <div class="info-title">예약자 이름</div>
-                        <div class="info-dropdown-wrap">
-                          <div class="info-dropdown-container">
-                            <div class="student-info-inner"></div>
+                  </h1>
+                  <div class="product-overview-contents-container">
+                    <p class="product-contents-review-wrap">
+                      <a href="#product-review" class="product-review">
+                       <span class="rating" aria-label="별점3.9점">
+                              <svg
+                                fill="{% if average_rating >= 1 %}#135f2c{% else %}#DBDBDB{% endif %}"
+                                width="1em"
+                                height="1em"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 24 24"
+                              >
+                                <defs>
+                                  <path
+                                    id="star-path-115"
+                                    d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                                  ></path>
+                                  <clipPath id="star-clip-115">
+                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                  </clipPath>
+                                </defs>
+                                <use
+                                  xlink:href="#star-path-115"
+                                  fill="#DBDBDB"
+                                ></use>
+                                <use
+                                  clip-path="url(#star-clip-115)"
+                                  xlink:href="#star-path-115"
+                                ></use>
+                              </svg>
+                              <svg
+                                fill="{% if average_rating >= 2 %}#135f2c{% else %}#DBDBDB{% endif %}"
+                                width="1em"
+                                height="1em"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 24 24"
+                              >
+                                <defs>
+                                  <path
+                                    id="star-path-116"
+                                    d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                                  ></path>
+                                  <clipPath id="star-clip-116">
+                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                  </clipPath>
+                                </defs>
+                                <use
+                                  xlink:href="#star-path-116"
+                                  fill="#DBDBDB"
+                                ></use>
+                                <use
+                                  clip-path="url(#star-clip-116)"
+                                  xlink:href="#star-path-116"
+                                ></use>
+                              </svg>
+                              <svg
+                                fill="{% if average_rating >= 3 %}#135f2c{% else %}#DBDBDB{% endif %}"
+                                width="1em"
+                                height="1em"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 24 24"
+                              >
+                                <defs>
+                                  <path
+                                    id="star-path-117"
+                                    d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                                  ></path>
+                                  <clipPath id="star-clip-117">
+                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                  </clipPath>
+                                </defs>
+                                <use
+                                  xlink:href="#star-path-117"
+                                  fill="#DBDBDB"
+                                ></use>
+                                <use
+                                  clip-path="url(#star-clip-117)"
+                                  xlink:href="#star-path-117"
+                                ></use>
+                              </svg>
+                              <svg
+                                fill="{% if average_rating >= 4 %}#135f2c{% else %}#DBDBDB{% endif %}"
+                                width="1em"
+                                height="1em"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 24 24"
+                              >
+                                <defs>
+                                  <path
+                                    id="star-path-118"
+                                    d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                                  ></path>
+                                  <clipPath id="star-clip-118">
+                                    <rect x="0" y="0" width="24" height="24"></rect>
+                                  </clipPath>
+                                </defs>
+                                <use
+                                  xlink:href="#star-path-118"
+                                  fill="#DBDBDB"
+                                ></use>
+                                <use
+                                  clip-path="url(#star-clip-118)"
+                                  xlink:href="#star-path-118"
+                                ></use>
+                              </svg>
+                              <svg
+                                fill="{% if average_rating >= 5 %}#135f2c{% else %}#DBDBDB{% endif %}"
+                                width="1em"
+                                height="1em"
+                                preserveAspectRatio="xMidYMid meet"
+                                viewBox="0 0 24 24"
+                              >
+                                <defs>
+                                  <path
+                                    id="star-path-119"
+                                    d="M11.9996 19.7201L6.32294 22.1251C5.5626 22.4472 5.005 22.0311 5.0755 21.2188L5.60855 15.0767L1.5671 10.421C1.02579 9.79745 1.24924 9.13855 2.04358 8.95458L8.04973 7.56354L11.2287 2.28121C11.6545 1.57369 12.3502 1.5826 12.7706 2.28121L15.9496 7.56354L21.9557 8.95458C22.7602 9.1409 22.9667 9.8053 22.4322 10.421L18.3907 15.0767L18.9238 21.2188C18.9952 22.0414 18.4271 22.4432 17.6764 22.1251L11.9996 19.7201Z"
+                                  ></path>
+                                  <clipPath id="star-clip-119">
+                                    <rect
+                                      x="0"
+                                      y="0"
+                                      width="18.548148148148158"
+                                      height="24"
+                                    ></rect>
+                                  </clipPath>
+                                </defs>
+                                <use
+                                  xlink:href="#star-path-119"
+                                  fill="#DBDBDB"
+                                ></use>
+                                <use
+                                  clip-path="url(#star-clip-119)"
+                                  xlink:href="#star-path-119"
+                                ></use>
+                              </svg> </span
+                            >
+                        <span class="review-counting-text">
+                          <span class="review-counting">{{ review_count }}</span>
+                          <span class="review-text">개 리뷰</span>
+                        </span>
+                      </a>
+                    </p>
+                    <div class="product-contents-price-wrap">
+                      <span class="product-contents-price-container">
+                        <span class="product-price-info">
+                          <button class="product-price-info-button"></button>
+                        </span>
+                        <span class="product-price-separator"></span>
+                        <div class="product-final-price-wrap">
+                          <div class="product-final-price-container">
+                            <span class="final-price-number">{{ lecture.lecture_price }}</span>
+                            <span class="krw">원</span>
                           </div>
                         </div>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="product-overview-info-wrap">
+                    <div class="product-info-container">
+                      <div class="product-info-title">
+                        <span>위치</span>
                       </div>
-                    </li>
-                  </ul>
+                      <div class="product-info-contents">
+                        <span class="main-info-keyword">
+                          <b>{{ address.address_city }} {{ address.address_district }}</b>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product-overview-info-wrap">
+                    <div class="product-info-container">
+                      <div class="product-info-title">
+                        <span>정보</span>
+                      </div>
+                      <div class="product-info-contents">
+                        <span class="main-info-keyword">
+                          <b>키워드</b>
+                        </span>
+                        <span class="info-type">
+                            {% for lte in lectures %}
+                              {% if lte.id == lecture.id %}
+                                  {% for pN in lte.plant_name %}
+                                    <span class="info-tag">#{{ pN }}</span>
+                                  {% endfor %}
+                              {% endif %}
+                            {% endfor %}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <a href="#" class="user-info-link">
+                    <div class="user-link-name-wrap">
+                      <svg
+                        width="24"
+                        height="24"
+                        fill="none"
+                        preserveAspectRatio="xMidYMid meet"
+                      >
+                        <path
+                          d="M3.972 8.694c0-.26.212-.472.472-.472h12.278a.472.472 0 010 .945H4.444a.472.472 0 01-.472-.473z"
+                          fill="#35C5F0"
+                        ></path>
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M17.51 5.5H6.492a1 1 0 00-.93.632l-.99 2.5A1 1 0 005.498 10h13.004a1 1 0 00.927-1.368l-.99-2.5a1 1 0 00-.93-.632zM3.642 8.263a2.002 2.002 0 001.397 2.684V17.5a2.5 2.5 0 002.5 2.5H16.474a2.5 2.5 0 002.487-2.5v-6.553a2.002 2.002 0 001.398-2.684l-.99-2.5a2 2 0 00-1.86-1.263H6.493a2 2 0 00-1.86 1.263l-.99 2.5zM6.04 17.5V11h11.921v6.5a1.5 1.5 0 01-1.487 1.5v-4a2 2 0 00-2-2h-.97a2 2 0 00-2 2v4H7.54a1.5 1.5 0 01-1.5-1.5zm6.464 1.5h2.97v-4a1 1 0 00-1-1h-.97a1 1 0 00-1 1v1h.847a.5.5 0 110 1h-.847v2zM8 13h1.5v1.5H8V13zm-1 0a1 1 0 011-1h1.5a1 1 0 011 1v1.5a1 1 0 01-1 1H8a1 1 0 01-1-1V13z"
+                          fill="#3F474D"
+                        ></path>
+                      </svg>
+                      <div class="user-link-name-container">
+                        <span class="user-link-name">{{ lecture.teacher__member__member_name }}님의 판매상품</span>
+                      </div>
+                    </div>
+                    <div class="user-link-icon-wrap">
+                      <span>{{ lecture.lecture_category__lecture_category_name }}</span>
+    {#                  <svg#}
+    {#                    width="14"#}
+    {#                    height="14"#}
+    {#                    fill="none"#}
+    {#                    preserveAspectRatio="xMidYMid meet"#}
+    {#                  >#}
+    {#                    <path#}
+    {#                      d="M4.083 11.375L8.312 7 4.083 2.625l.803-.875L9.916 7l-5.03 5.25-.803-.875z"#}
+    {#                      fill="#828C94"#}
+    {#                    ></path>#}
+    {#                  </svg>#}
+                    </div>
+                  </a>
                 </div>
-              </section>
-              <p class="product-total-price">
-                <span class="product-order-text">주문금액</span>
-                <span class="product-order-price">
-                    <span class="total-price" data-price="{{ lecture.lecture_price }}">
-                      <span class="total-price-value">{{ lecture.lecture_price }}</span>원
+                <div class="product-option-wrap">
+                  <section class="product-option-container">
+                    <div class="product-option-inner">
+                      <div class="product-option-input">
+                        <div class="product-option-first-wrap">
+                          <span class="info-dropdown-box">
+                            <span class="info-title">날짜 선택</span>
+                            <div class="info-dropdown-wrap">
+                              {% for date in lecture_order_date %}
+                                <label class="weekday-selection">
+                                  <input type="radio" style="display: none" name="date-input" value="{{ date.date|date:"Y-m-d" }}" ><span>{{ date.date|date:"Y-m-d" }}</span>
+                                </label>
+                              {% endfor %}
+                            </div>
+                          </span>
+                        </div>
+                        <div
+                          class="product-option-second-wrap"
+                          style="display: none"
+                        >
+                          <span class="info-dropdown-box">
+                            <span class="info-title">시간 선택</span>
+                            <div class="info-dropdown-wrap">
+                              {% for time in lecture_order_time %}
+                                <label class="time-selection">
+                                  <input type="radio" style="display: none" name="time-input" value="{{ time.time }}" ><span>{{ time.time }}</span>
+                                </label>
+                              {% endfor %}
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                      <article
+                        class="selected-product-list-container"
+                        style="display: none">
+                        <h2 class="selected-product-name">
+                          <span>날짜:</span>
+                          <span class="selected-date">선택한날짜</span>
+                          /
+                          <span>시간:</span>
+                          <span class="selected-time">선택한 시간</span>
+                        </h2>
+                        <button
+                          class="delete-button-wrap"
+                          aria-label="삭제"
+                          type="button"
+                        >
+                          <span class="delete-button-container">
+                            <img src="{% static 'public/web/images/common/cancel.png' %}" alt="" />
+                          </span>
+                        </button>
+                        <div class="student-count-title">인원</div>
+                        <div class="selected-product-botton-wrap">
+                          <div class="selected-product-count">
+                            <span class="sub-count">
+                              <img src="{% static 'public/web/images/common/sub.png' %}" alt="" />
+                            </span>
+                            <button class="counted-number">0</button>
+                            <span class="add-count">
+                              <img src="{% static 'public/web/images/common/add.png' %}" alt="" />
+                            </span>
+                          </div>
+                          <div class="selected-price-wrap">
+                            <span class="selected-price">{{ lecture.lecture_price }}</span>
+                            <span class="won">원</span>
+                          </div>
+                        </div>
+                      </article>
+                      <ul class="selected-student-list-wrap" style="display: none">
+                        <li>
+                          <div class="each-info">
+                            <div class="info-title">예약자 이름</div>
+                            <div class="info-dropdown-wrap">
+                              <div class="info-dropdown-container">
+                                <div class="student-info-inner"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </section>
+                  <p class="product-total-price">
+                    <span class="product-order-text">주문금액</span>
+                    <span class="product-order-price">
+                        <span class="total-price" data-price="{{ lecture.lecture_price }}">
+                          <span class="total-price-value">{{ lecture.lecture_price }}</span>원
+                        </span>
                     </span>
-                </span>
-              </p>
-              <div class="product-order-button-wrap">
-                <button class="add-cart-button" type="button">장바구니</button>
-                <button class="order-button" type="button">바로구매</button>
+                  </p>
+                  <div class="product-order-button-wrap">
+                    <button class="add-cart-button" type="button">장바구니</button>
+                    <button class="order-button" type="submit">바로구매</button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
       </div>
       <div
         class="product-detail-nav-wrap"
@@ -1338,6 +1340,7 @@
         </div>
       </a>
     </div>
+    </form>
   {% include 'fix/footer.html' %}
   </body>
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.urls import path
 
+from apply.views import ApplyView
 from lecture.views import LectureMainView, LectureDetailOnlineView, LectureDetailOfflineView, LectureTotalView, \
     LectureUploadOnlineView, LectureUploadOfflineView, LectureUpdateOnlineView, LectureUpdateOfflineView, \
     LectureDeleteView, LectureTotalApi, LectureMainApi, LectureReportView
@@ -25,4 +26,6 @@ urlpatterns = [
     path('update/offline/', LectureUpdateOfflineView.as_view(), name='update-offline'),
 
     path('delete/', LectureDeleteView.as_view(), name='delete'),
+
+    path('/apply/', ApplyView.as_view(), name='apply'),
 ]

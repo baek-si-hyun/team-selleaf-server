@@ -174,6 +174,7 @@
         </div>
       </div>
     </div>
+    <form action="{% url 'lecture:detail-online' %}" method="post" name="apply" enctype="multipart/form-data">
     <div class="product-selling-wrap">
       <div class="product-overview-wrap">
         <nav class="product-category-wrap">
@@ -540,9 +541,9 @@
                         <span class="info-title">날짜 선택</span>
                         <div class="info-dropdown-wrap">
                           {% for date in lecture_order_date %}
-                              <div class="weekday-selection">
-                                <span>{{ date.date|date:"Y-m-d" }}</span>
-                              </div>
+                            <label class="weekday-selection">
+                              <input type="radio" style="display: none" name="date-input" value="{{ date.date|date:"Y-m-d" }}" ><span>{{ date.date|date:"Y-m-d" }}</span>
+                            </label>
                           {% endfor %}
                         </div>
                       </span>
@@ -552,9 +553,9 @@
                         <span class="info-title">시간 선택</span>
                         <div class="info-dropdown-wrap">
                           {% for time in lecture_order_time %}
-                            <div class="time-selection">
-                              <span>{{ time.time }}</span>
-                            </div>
+                            <label class="time-selection">
+                              <input type="radio" style="display: none" name="time-input" value="{{ time.time }}" ><span>{{ time.time }}</span>
+                            </label>
                           {% endfor %}
                         </div>
                       </span>
@@ -564,10 +565,10 @@
                         <span class="info-title">DIY 키트 선택</span>
                           <div class="info-dropdown-wrap">
                               {% for kit in kits %}
-                                <div class="kit-selection">
-                                  <div class="kit-title">{{ kit.kit_name }}</div>
+                                <label class="kit-selection">
+                                  <div class="kit-title"><input type="radio" style="display: none" name="kit-input" value="{{ kit.kit_name }}">{{ kit.kit_name }}</div>
                                   <div>{{ kit.kit_content }}</div>
-                                </div>
+                                </label>
                               {% endfor %}
                           </div>
                         </span>
@@ -1314,6 +1315,7 @@
         </div>
       </a>
     </div>
+    </form>
   {% include 'fix/footer.html' %}
   </body>
 {% endblock %}

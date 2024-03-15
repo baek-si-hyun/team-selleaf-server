@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from lecture.models import LectureCategory, Lecture, LectureProductFile, LecturePlant, Kit, LectureReview, \
     LectureAddress, LectureScrap
 from member.models import Member, MemberAddress, MemberProfile
+from report.models import LectureReport
 from selleaf.date import Date
 from selleaf.time import Time
 from teacher.models import Teacher
@@ -511,6 +512,10 @@ class LectureDetailOfflineView(View):
 
         return render(request, 'lecture/web/lecture-detail-offline.html', context)
 
+    def post(self, request):
+        # apply create
+
+        pass
 
 class LectureUploadOnlineView(View):
     def get(self, request):

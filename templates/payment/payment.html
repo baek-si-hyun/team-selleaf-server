@@ -31,7 +31,7 @@
               <div class="delivery-option-wrap">
                 <div class="delivery-option-container">
                   <span class="dropdown-image-wrap">
-                    <img {% static "public/web/images/common/button-down.png" %} alt="" />
+                    <img src = "{% static 'public/web/images/common/button-down.png' %}" alt="" />
                   </span>
                   <select class="delivery-option">
                     <option value="">배송시 요청사항을 선택해주세요</option>
@@ -86,7 +86,7 @@
                       <div class="domain-option-container">
                         <span class="dropdown-image-wrap">
                           <img
-                            {% static "public/web/images/common/button-down.png" %}
+                            src = "{% static 'public/web/images/common/button-down.png' %}"
                             alt=""
                           />
                         </span>
@@ -116,7 +116,7 @@
                       <div class="phone-common-inner">
                         <span class="dropdown-image-wrap">
                           <img
-                            {% static "public/web/images/common/button-down.png" %}
+                            src="{% static 'public/web/images/common/button-down.png' %}"
                             alt=""
                           />
                         </span>
@@ -165,7 +165,7 @@
                   <div class="order-product-info">
                     <figure class="product-preview-image">
                       <img
-                        {% static "public/web/images/common/blank-image.png" %}
+                        src="{% static 'public/web/images/common/blank-image.png' %}"
                         class="product-image"
                       />
                     </figure>
@@ -178,8 +178,9 @@
                         추가상품 - 베이직 본넬 매트리스 퀸Q
                       </p>
                       <p class="product-price">
-                        119,000원<span class="quantity">1개</span>
+                        119,000원
                       </p>
+                      <span class="quantity">1개</span>
                     </div>
                   </div>
                 </li>
@@ -337,16 +338,10 @@
                 </div>
                 <article class="detail-price-wrap">
                   <div class="price-title-text">
-                    총 상품 금액<span class="emphasis price">418,000원</span>
+                    총 상품 금액<span class="emphasis price Total">418,000원</span>
                   </div>
                   <div class="price-title-text">
-                    배송비<span class="price">0원</span>
-                  </div>
-                  <div class="price-title-text">
-                    쿠폰 사용<span class="price">0원</span>
-                  </div>
-                  <div class="price-title-text">
-                    포인트 사용<span class="price">0원</span>
+                    마일리지 사용<span class="price useMileage">0원</span>
                   </div>
                   <hr class="line" />
                   <div class="total-price-wrap">
@@ -485,7 +480,7 @@
             <span class="adress-modal-title">배송지 선택</span>
             <button type="button" class="close-button">
               <span class="cancel-image-wrap">
-                <img {% static "public/web/images/common/cancel.png" %} alt="" />
+                <img src="{% static 'public/web/images/common/cancel.png' %}"  alt="" />
               </span>
             </button>
           </div>
@@ -547,13 +542,13 @@
           <div class="address-update-title-wrap">
             <button type="button" class="back-button">
               <span class="back-button-image-wrap"
-                ><img {% static "public/web/images/common/arrow.png" %} alt=""
+                ><img src="{% static 'public/web/images/common/arrow.png' %}"  alt=""
               /></span>
             </button>
             <span class="address-update-title">배송지 수정</span>
             <button type="button" class="cancel-button">
               <span class="cancel-image-wrap">
-                <img src="/staticfiles/images/cancel.png" alt="" />
+                <img src="{% static 'public/web/images/common/cancel.png' %}" alt="" />
               </span>
             </button>
           </div>
@@ -594,7 +589,7 @@
                         <div class="number-input-inner">
                           <span class="dropdown-image-wrap">
                             <img
-                              {% static "public/web/images/common/button-down.png" %}
+                              src="{% static 'public/web/images/common/button-down.png' %}"
                               alt=""
                             />
                           </span>
@@ -689,7 +684,7 @@
                           <div class="check-image-wrap">
                             <span class="check-image-container">
                               <img
-                                {% static "public/web/images/common/checker.png" %}
+                                src="{% static 'public/web/images/common/checker.png' %}"
                                 alt=""
                               />
                             </span>
@@ -721,13 +716,13 @@
           <div class="add-address-title-wrap">
             <button type="button" class="add-back-button">
               <span class="add-back-button-image-wrap">
-                <img {% static "public/web/images/common/arrow.png" %} alt="" />
+                <img src="{% static 'public/web/images/common/arrow.png' %}"  alt="" />
               </span>
             </button>
             <span class="add-address-title">배송지 추가</span>
             <button type="button" class="add-cancel-button">
               <span class="add-cancel-image-wrap">
-                <img {% static "public/web/images/common/cancel.png" %} alt="" />
+                <img src="{% static 'public/web/images/common/cancel.png' %}" alt="" />
               </span>
             </button>
           </div>
@@ -768,7 +763,7 @@
                         <div class="number-input-inner">
                           <span class="dropdown-image-wrap">
                             <img
-                              {% static "public/web/images/common/button-down.png" %}
+                              src="{% static 'public/web/images/common/button-down.png' %}"
                               alt=""
                             />
                           </span>
@@ -859,7 +854,7 @@
                           <div class="check-image-wrap">
                             <span class="check-image-container">
                               <img
-                                {% static "public/web/images/common/checker.png" %}
+                                src="{% static 'public/web/images/common/checker.png' %}"
                                 alt=""
                               />
                             </span>
@@ -904,4 +899,5 @@
 {% endblock %}
 {% block js %}
     <script src="{% static 'order/js/payment/payment.js' %}"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 {% endblock %}

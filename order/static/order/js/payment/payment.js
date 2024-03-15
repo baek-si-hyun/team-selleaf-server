@@ -1,3 +1,54 @@
+// 전액 사용 눌렀을때 마일리지 창에 마일리지 들어가게
+const useAll = document.querySelector(".use-all");
+const mileageInput = document.querySelector(".mileage-usage");
+const mileage = document.querySelector(".mileage");
+let realRealM = mileage.innerText;
+realRealM = parseInt(realRealM.replace(" ", ""))
+
+useAll.addEventListener('click', ()=>{
+    mileageInput.value = mileage.innerText;
+    const realMileage = parseInt(mileageInput.value)
+})
+
+
+// 상품 총합 더하기
+let sum = 0;
+const productPrices = document.querySelectorAll(".product-price");
+const quantitys = document.querySelectorAll(".quantity");
+
+productPrices.forEach((productPrice, i)=>{
+    // 가격
+    let realPrice = productPrice.innerText;
+    let productRealPrice = realPrice.replace("원", "");
+    productRealPrice = parseInt(realPrice.replace(",", ""));
+
+    // 개수
+    let realQuantity = quantitys[i].innerText;
+    realQuantity = parseInt(realQuantity.replace('개', ''));
+
+    sum += productRealPrice * realQuantity
+})
+
+// 마일리지를 뺀 가격 구하기
+const realSum = sum - realRealM;
+console.log(sum)
+
+// 총 상품 금액 (마일리지 차감 안한 순수 금액)
+const emphasis = document.querySelector(".Total");
+const useMileage = document.querySelector(".useMileage");
+const totalPrice = document.querySelector(".total-price");
+const point = document.querySelector(".value");
+const summitBtn = document.querySelector(".summit");
+
+
+emphasis.innerText = sum.toString().toLocaleString() + "원"
+useMileage.innerText = realRealM + "원"
+totalPrice.innerText = realSum + "원"
+point.innerText = realSum.toString().slice(0, 3) + "p"
+summitBtn.innerText = realSum.toLocaleString() + "원 결제하기"
+
+
+
 // 주소 모달창 나오게
 const addressModal = document.querySelector(".address-modal-wrap");
 const modalBtn = document.querySelector(".change-button");
@@ -144,13 +195,13 @@ function handleSelectButtonClick(event) {
 
     const placeInfo = document.querySelector(".delivery-place-name");
     const address = document.querySelector(".address");
-    const userInfo = document.querySelector(".member-info-wrap");
+    const userInfo = document.querySelector(".user-info-wrap");
 
     // 주소 정보 업데이트
     const updateAddress = target.querySelector(".address-text").textContent;
     const updateAddressTitle = target.querySelector(".address-title").textContent;
-    const updateName = target.querySelector(".address-member-name").textContent;
-    const updatePhone = target.querySelector(".address-member-phone").textContent;
+    const updateName = target.querySelector(".address-user-name").textContent;
+    const updatePhone = target.querySelector(".address-user-phone").textContent;
     const updatetag = target.querySelector(".address-tag").textContent;
 
     // 화면에 정보 업데이트
@@ -304,3 +355,4 @@ agreeDivs.forEach((div, i) => {
 //     all.checked = terms.filter((term) => term.checked).length === 3;
 //   });
 // });
+

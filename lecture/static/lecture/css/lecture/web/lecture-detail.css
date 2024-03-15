@@ -2964,7 +2964,7 @@ li:first-child>.product-detail-nav-item{
 }
 
 
-.weekday-selection>span{
+label.weekday-selection>span{
     display: flex;
     margin: 12.5px 0 ;
     justify-content: space-around;
