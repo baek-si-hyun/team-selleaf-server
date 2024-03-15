@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-//아래 게시물 창 버튼
+//아래 게시물 창 버튼 - 페이지네이션 관련
 const paginationBtn = document.querySelectorAll(".page-count-num");
 const paginationBox = document.querySelector(".page");
 

@@ -39,6 +39,61 @@ const callFirstLectureReportsList = () => {
   });
 }
 
+// 거래 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
+const callFirstTradeReportsList = () => {
+  // 만들어둔 모듈을 사용해서 정보를 불러옴
+  reportService.getTradeReports(page, showReports).then((reports) => {
+    ul.innerHTML = reports;
+
+    // 체크박스 클릭 이벤트 추가
+    addCheckBoxEvent();
+  });
+}
+
+// 일반 게시물 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
+const callFirstPostReportsList = () => {
+  // 만들어둔 모듈을 사용해서 정보를 불러옴
+  reportService.getPostReports(page, showReports).then((reports) => {
+    ul.innerHTML = reports;
+
+    // 체크박스 클릭 이벤트 추가
+    addCheckBoxEvent();
+  });
+}
+
+// 일반 게시물 댓글 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
+const callFirstPostReplyReportsList = () => {
+  // 만들어둔 모듈을 사용해서 정보를 불러옴
+  reportService.getPostReplyReports(page, showReports).then((reports) => {
+    ul.innerHTML = reports;
+
+    // 체크박스 클릭 이벤트 추가
+    addCheckBoxEvent();
+  });
+}
+
+// 노하우 게시물 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
+const callFirstKnowhowReportsList = () => {
+  // 만들어둔 모듈을 사용해서 정보를 불러옴
+  reportService.getKnowhowReports(page, showReports).then((reports) => {
+    ul.innerHTML = reports;
+
+    // 체크박스 클릭 이벤트 추가
+    addCheckBoxEvent();
+  });
+}
+
+// 노하우 게시물 댓글 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
+const callFirstKnowhowReplyReportsList = () => {
+  // 만들어둔 모듈을 사용해서 정보를 불러옴
+  reportService.getKnowhowReplyReports(page, showReports).then((reports) => {
+    ul.innerHTML = reports;
+
+    // 체크박스 클릭 이벤트 추가
+    addCheckBoxEvent();
+  });
+}
+
 // 화면에 신고 내역 표시
 callFirstLectureReportsList();
 
@@ -46,8 +101,6 @@ callFirstLectureReportsList();
 document.addEventListener("DOMContentLoaded", function () {
   const deleteButtons = document.querySelectorAll(".delete-button");
   const modalWrap = document.querySelector(".delete-modal-wrap");
-
-  console.log(deleteButtons);
 
   deleteButtons.forEach(function (deleteButton) {
     deleteButton.addEventListener("click", (e) => {
@@ -82,20 +135,32 @@ paginationBox.addEventListener("click", (e) => {
   }
 });
 
-// 강의 정보, 리뷰 정보, 수강생 목록 선택하기
-const catebtns = document.querySelectorAll("#btn");
-const cateUnder = document.querySelectorAll("#under");
+// 신고 내역 선택 - id -> 클래스로 바꾸기
+const catebtns = document.querySelectorAll("button.lecture-info");
+const cateUnder = document.querySelectorAll("div.lecture-underbar");
 cateUnder[0].classList.add("underbar-checked");
 catebtns[0].classList.add("my_lecture-checked");
 
+// 각 신고 내역 버튼에 클릭 이벤트 추가
 catebtns.forEach((btn, i) => {
   btn.addEventListener("click", () => {
+    // 클릭 되었을 때, 우선 모든 버튼의 밑줄을 삭제하고
     catebtns.forEach((btn, i) => {
       btn.classList.remove("my_lecture-checked");
       cateUnder[i].classList.remove("underbar-checked");
     });
+
+    // 선택한 버튼에만 밑줄 추가
     btn.classList.add("my_lecture-checked");
     cateUnder[i].classList.add("underbar-checked");
+
+    // 어떤 버튼을 클릭했는지에 따라 다른 신고 내역 요청
+    btn.classList[1] === "lecture-report" ? callFirstLectureReportsList() :
+    btn.classList[1] === "trade-report" ? callFirstTradeReportsList() :
+    btn.classList[1] === "post-report" ? callFirstPostReportsList() :
+    btn.classList[1] === "post-reply-report" ? callFirstPostReplyReportsList() :
+    btn.classList[1] === "knowhow-report" ? callFirstKnowhowReportsList() :
+    btn.classList[1] === "knowhow-reply-report" ? callFirstKnowhowReplyReportsList() : false;
   });
 });
 
