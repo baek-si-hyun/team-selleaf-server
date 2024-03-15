@@ -19,7 +19,7 @@ const countCheckBoxes = () => {
 countCheckBoxes();
 
 // 화면에 게시물 목록을 뿌리기 위한 로직
-// 커뮤니티, 노하우, 거래는 각기 다른 페이지 사용
+// 일반 게시물, 노하우, 거래는 각기 다른 페이지 사용
 let postPage = 1;
 let knowhowPage = 1;
 let tradePage = 1;
@@ -33,7 +33,7 @@ const postCountTag = document.querySelector(".all-num");
 // 카테고리 선택 버튼
 const order1 = document.querySelector(".order-1");
 
-// 커뮤니티 게시글 세서 화면에 적용하는 기능을 함수화
+// 일반 게시글 세서 화면에 적용하는 기능을 함수화
 const countPosts = async () => {
   postCount = await postService.countPosts();
   postCountTag.innerText = postCount;
@@ -51,7 +51,7 @@ const countTrades = async () => {
   postCountTag.innerText = tradeCount;
 }
 
-// 커뮤니티 게시물 정보의 첫 페이지를 화면에 띄워주는 함수
+// 일반 게시물 정보의 첫 페이지를 화면에 띄워주는 함수
 const callFirstPostsList = () => {
   // 만들어둔 모듈을 사용해서 정보를 불러옴
   postService.getPostsList(postPage, showPosts).then((posts) => {
@@ -93,7 +93,7 @@ const callFirstTradesList = () => {
   });
 }
 
-// 페이지 열렸을 때 커뮤니티 게시글 표시
+// 페이지 열렸을 때 일반 게시글 표시
 callFirstPostsList();
 
 // 삭제 버튼 누르면 뜨는 모달창
@@ -134,8 +134,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // 현재 필터 검사하고, 서로 다른 뷰에 삭제 요청 후 해당 유형의 게시물 목록의 첫 페이지를 다시 불러옴
-    // 커뮤니티 게시물 삭제 시
-    if (order1.innerText === "커뮤니티") {
+    // 일반 게시물 삭제 시
+    if (order1.innerText === "일반 게시물") {
       await postService.deletePosts(deleteIds);
       callFirstPostsList();
     }
@@ -212,7 +212,7 @@ modalBtns.forEach((modalBtn) => {
     order1.innerText = categoryText;
 
     // 선택에 따라 다른 API에 데이터 요청해서 리스트 변경 - 첫 페이지 표시
-    categoryText === "커뮤니티"
+    categoryText === "일반 게시물"
         ? callFirstPostsList()
         : categoryText === "노하우"
         ? callFirstKnowhowsList()
