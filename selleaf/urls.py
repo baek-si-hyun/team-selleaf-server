@@ -32,28 +32,32 @@ urlpatterns = [
     # 관리자 페이지 뷰
     path('admin/login/', ManagerLoginView.as_view(), name='manager-login'),
     path('admin/logout/', ManagerLogoutView.as_view(), name='manager-logout'),
+
     # 회원 관리
     path('admin/member/', MemberManagementView.as_view(), name='manager-member'),
-    path('admin/member/<int:page>', MemberInfoAPI.as_view(), name='member-info'),
+    path('admin/member-list/', MemberInfoAPI.as_view(), name='member-info'),
     path('admin/member/delete/<str:member_ids>', DeleteManyMembersAPI.as_view(), name='member-delete'),
+
     # 강사 및 강사 신청자 관리
     path('admin/teacher/', TeacherManagementView.as_view(), name='manager-teacher'),
-    path('admin/teacher/<int:page>', TeacherInfoAPI.as_view(), name='teacher-info'),
+    path('admin/teacher-list/', TeacherInfoAPI.as_view(), name='teacher-info'),
     path('admin/teacher-entry/', TeacherEntryManagementView.as_view(), name='manager-teacher-entry'),
-    path('admin/teacher-entry/<int:page>', TeacherEntriesInfoAPI.as_view(), name='teacher-entry-info'),
+    path('admin/teacher-entry-list/', TeacherEntriesInfoAPI.as_view(), name='teacher-entry-info'),
     path('admin/teacher-approve/<str:teacher_ids>', TeacherApprovalAPI.as_view(), name='teacher-entry-approval'),
     path('admin/teacher-delete/<str:teacher_ids>', TeacherDeleteAPI.as_view(), name='teacher-delete'),
+
     # 게시물 관리
     path('admin/posts/', PostManagementView.as_view(), name='manager-post'),
-    path('admin/posts/posts/<int:page>', PostsListAPI.as_view(), name='community-post-api'),
-    path('admin/posts/knowhow/<int:page>', KnowhowPostsAPI.as_view(), name='knowhow-post-api'),
-    path('admin/posts/trade/<int:page>', TradePostsAPI.as_view(), name='trade-post-api'),
+    path('admin/posts/posts-list/', PostsListAPI.as_view(), name='community-post-api'),
+    path('admin/posts/knowhow-list/', KnowhowPostsAPI.as_view(), name='knowhow-post-api'),
+    path('admin/posts/trade-list/', TradePostsAPI.as_view(), name='trade-post-api'),
     path('admin/posts/posts-delete/<str:post_ids>', PostsDeleteAPI.as_view(), name='community-delete-api'),
     path('admin/posts/knowhow-delete/<str:knowhow_ids>', KnowhowDeleteAPI.as_view(), name='knowhow-delete-api'),
     path('admin/posts/trade-delete/<str:trade_ids>', TradeDeleteAPI.as_view(), name='trade-delete-api'),
     path('admin/posts/posts-count/', PostsCountAPI.as_view(), name='community-count-api'),
     path('admin/posts/knowhow-count/', KnowhowCountAPI.as_view(), name='knowhow-count-api'),
     path('admin/posts/trade-count/', TradeCountAPI.as_view(), name='trade-count-api'),
+
     # 댓글 관리
     path('admin/reply/', ReplyManagementView.as_view(), name='manager-reply'),
     path('admin/replies/api/', ReplyManagementAPI.as_view(), name='manager-reply-api'),
@@ -64,26 +68,30 @@ urlpatterns = [
 
     # 강의 관리
     path('admin/lecture/', LectureManagementView.as_view(), name='manager-lecture'),
-    path('admin/lecture/<int:page>', LectureInfoAPI.as_view(), name='lecture-info'),
+    path('admin/lecture-list/', LectureInfoAPI.as_view(), name='lecture-info'),
     path('admin/lecture/review/', LectureReviewManagementView.as_view(), name='manager-lecture-review'),
-    path('admin/lecture/review/<int:lecture_id>/<int:page>', LectureReviewInfoAPI.as_view(), name='lecture-review-info'),
+    path('admin/lecture/review-list/', LectureReviewInfoAPI.as_view(), name='lecture-review-info'),
     path('admin/lecture/trainees/', LectureTraineesManagementView.as_view(), name='manager-lecture-trainees'),
-    path('admin/lecture/trainees/<int:lecture_id>/<int:page>', TraineesInfoAPI.as_view(), name='lecture-review-info'),
+    path('admin/lecture/trainees-list/', TraineesInfoAPI.as_view(), name='lecture-review-info'),
+
     # 공지사항 관리
     path('admin/notice/', NoticeManagementView.as_view(), name='manager-notice'),
     path('admin/notice/write/', WriteNoticeView.as_view(), name='notice-write'),
     path('admin/notice/update/', UpdateNoticeView.as_view(), name='notice-update'),
     path('admin/notice/delete/', DeleteNoticeView.as_view(), name='notice-delete'),
     path('admin/notice/delete/<str:notice_ids>', DeleteManyNoticeView.as_view(), name='many-notice-delete'),
+
     # QnA 관리
     path('admin/qna/', QnAManagementView.as_view(), name='manager-qna'),
     path('admin/qna/write/', WriteQnAView.as_view(), name='qna-write'),
     path('admin/qna/update/', UpdateQnAView.as_view(), name='qna-update'),
     path('admin/qna/delete/', DeleteQnAView.as_view(), name='qna-delete'),
     path('admin/qna/delete/<str:qna_ids>', DeleteManyQnAView.as_view(), name='many-qna-delete'),
+
     # 태그 관리
     path('admin/tag/', TagManagementView.as_view(), name='manager-tag'),
     path('admin/tags/api/', TagManagementAPI.as_view(), name='manager-tag-api'),
+
     # 신고 내역 관리
     path('admin/report/lecture/', LectureReportManagementView.as_view(), name='manager-lecture-report'),
     path('admin/report/trade/', TradeReportManagementView.as_view(), name='manager-trade-report'),
@@ -103,6 +111,7 @@ urlpatterns = [
     path('admin/post-reply-report-adjust/<str:report_ids>', PostReplyReportAdjustAPI.as_view(), name='post-reply-report-adjust-api'),
     path('admin/knowhow-report-adjust/<str:report_ids>', KnowhowReportAdjustAPI.as_view(), name='knowhow-report-adjust-api'),
     path('admin/knowhow-reply-report-adjust/<str:report_ids>', KnowhowReplyReportAdjustAPI.as_view(), name='knowhow-reply-report-adjust-api'),
+
     # 기타 서비스 url
     path('alarm/', include('alarm.urls-web')),
     path('member/', include('member.urls-web')),

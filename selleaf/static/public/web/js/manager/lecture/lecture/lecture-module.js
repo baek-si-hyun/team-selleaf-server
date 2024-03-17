@@ -1,9 +1,9 @@
 // 다른 파일에서 lectureService.메소드명 형식으로 사용할 수 있도록 모듈화
 const lectureService = (() => {
     // 강의 게시물 목록 조회 - 한 번에 10개씩
-    const getList = async (page, callback) => {
+    const getList = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/lecture/${page}`);
+        const response = await fetch (`/admin/lecture-list/?keyword=${keyword}&page=${page}`);
         const lectures = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -24,8 +24,8 @@ const lectureService = (() => {
     }
 
     // 강의 리뷰 리스트 조회 - 한 번에 10개씩
-    const getReviews = async (lectureId, page, callback) => {
-        const response = await fetch(`/admin/lecture/review/${lectureId}/${page}`);
+    const getReviews = async (lectureId, keyword, page, callback) => {
+        const response = await fetch(`/admin/lecture/review-list/?lectureId=${lectureId}&keyword=${keyword}&page=${page}`);
         const reviews = await response.json();
 
         if (callback) {
@@ -36,8 +36,8 @@ const lectureService = (() => {
     }
 
     // 강의 수강생 리스트 조회 - 한 번에 10명씩
-    const getTrainees = async (lectureId, page, callback) => {
-        const response = await fetch(`/admin/lecture/trainees/${lectureId}/${page}`);
+    const getTrainees = async (lectureId, keyword, page, callback) => {
+        const response = await fetch(`/admin/lecture/trainees-list/?lectureId=${lectureId}&keyword=${keyword}&page=${page}`);
         const trainees = await response.json();
 
         if (callback) {
