@@ -27,6 +27,8 @@ class AlarmView(View):
         }
         return render(request,'alarm/alarm.html', context)
 
+
+
 class AlarmAPI(APIView):
     def get(self, request, page):
         # 페이지당 알람 수와 오프셋, 리미트 계산

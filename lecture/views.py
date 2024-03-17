@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apply.models import Apply, Trainee
+from cart.models import CartDetail, Cart
 from lecture.models import LectureCategory, Lecture, LectureProductFile, LecturePlant, Kit, LectureReview, \
     LectureAddress, LectureScrap
 from member.models import Member, MemberAddress, MemberProfile
@@ -562,6 +563,15 @@ class LectureDetailCartAPI(APIView):
         }
 
         apply = Apply.objects.create(**data)
+
+        cart = Cart.objects.filter(member_id = member, cart_status=0).values('id').first()
+
+        cart_data = {
+            'apply_id': apply.id,
+            'cart_id': cart.get('id')
+        }
+
+        CartDetail.objects.create(**cart_data)
 
         # 같이 듣는 사람 넣기
         name_inputs = request.POST.getlist('name_input')

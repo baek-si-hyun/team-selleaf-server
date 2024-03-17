@@ -31,11 +31,11 @@ class CartDetail(Period):
     CART_DETAIL_STATUS = [
         (0, '게시중'),
         (-1, '상품 삭제'),
-        (1, '결제 완료')
+        (1, '결제')
     ]
     cart = models.ForeignKey(Cart, on_delete=models.PROTECT, null=False, blank=False)
     apply = models.ForeignKey(Apply, on_delete=models.PROTECT, null=False, blank=False)
-    # 게시중 0, 결제 완료 1, 상품 삭제 -1
+    # 게시중 0, 결제 1, 상품 삭제 -1
     cart_detail_status = models.IntegerField(blank=False, null=False, default=0, choices=CART_DETAIL_STATUS)
 
     class Meta:

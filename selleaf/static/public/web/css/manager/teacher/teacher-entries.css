@@ -750,14 +750,14 @@ div.page-count-wrap{
     margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
-    grid-column: 1/-1;
+    gap: 16px;
 }
 
 ul.flex{
     display: flex;
 }
 
-button.page-count{
+button.page-count-prev, button.page-count-next{
     opacity: .3;
     border-width: 1px;
     border-radius: 9999px;
@@ -769,7 +769,6 @@ button.page-count{
     border-color: #e6e6e7;
     color: #1d1d1e;
     fill: #1d1d1e;
-    cursor: default;
 }
 
 svg.page-count{
@@ -804,6 +803,28 @@ span.page-count-num{
     line-height: 18px;
     color: #1d1d1e;
     fill: #1d1d1e;
+}
+
+div.nothing{
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    margin-top: 100px;
+}
+
+img.nothing{
+    width: 52px;
+    height: 57px;
+}
+
+p.nothing{
+    margin-top: 23px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #8a8a8b;
+    fill: #8a8a8b;
 }
 
 /* 삭제 모달 */
