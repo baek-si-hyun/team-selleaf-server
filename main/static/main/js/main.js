@@ -103,78 +103,82 @@ userReviewA.forEach((atag, i) => {
 
 const scrapPopup = document.querySelector(".scrap-popup-wrap");
 const scrapCancel = document.querySelector(".scrap-popup-cancel-wrap");
-let timeoutId;
-let animationTarget;
+
 
 const recommendScrapButton = document.querySelectorAll(
   ".realmain-plantRecommend-scrapbutton"
 );
 
-const transSrcapBtnFn = (scrap) => {
-  const img = scrap.querySelector(".scrap-img");
-  const imgSrc = img.getAttribute("src");
-  if (imgSrc === "/static/public/web/images/common/scrap-on.png") {
-    img.setAttribute("src", "/static/public/web/images/common/scrap-off.png");
-    if (animationTarget) {
-      animationTarget.classList.remove("show-animation");
+const transSrcapBtnFn = (scrapBtn, respones) => {
+  if (respones) {
+    const img = scrapBtn.querySelector(".scrap-img");
+    if (respones.status) {
+      img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
+      if (animationTarget) {
+        animationTarget.classList.remove("show-animation");
+      }
+      animationTarget = scrapPopup;
+    } else {
+      console.log(111)
+      img.setAttribute("src", "/static/public/web/images/common/scrap-off.png");
+      if (animationTarget) {
+        animationTarget.classList.remove("show-animation");
+      }
+      animationTarget = scrapCancel;
     }
-    animationTarget = scrapCancel;
-  } else {
-    img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
     if (animationTarget) {
-      animationTarget.classList.remove("show-animation");
+      animationTarget.classList.remove("hide-animation");
+      animationTarget.classList.add("show-animation");
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        animationTarget.classList.remove("show-animation");
+        animationTarget.classList.add("hide-animation");
+      }, 3000);
     }
-    animationTarget = scrapPopup;
-  }
-  if (animationTarget) {
-    animationTarget.classList.remove("hide-animation");
-    animationTarget.classList.add("show-animation");
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      animationTarget.classList.remove("show-animation");
-      animationTarget.classList.add("hide-animation");
-    }, 3000);
   }
 }
 
 const realmainPlantRecommendPhotoul = document.querySelector('.realmain-plantRecommend-photoul')
+let timeoutId;
+let animationTarget;
+
 realmainPlantRecommendPhotoul.addEventListener('click', async (e) => {
-  scrapBtn = e.target.closest('.scrap-button')
-  transSrcapBtnFn(scrapBtn)
+  const scrapBtn = e.target.closest('.scrap-button')
   const knowhowContentId = scrapBtn.closest('.realmain-plantRecommend-photoli').classList[1]
-  await knowhowScrapService.update(knowhowContentId)
+  const respones = await knowhowScrapService.update(knowhowContentId)
+  transSrcapBtnFn(scrapBtn, respones)
 })
 
 const realmainLecturePhotoWrap = document.querySelector('.realmain-lecture-photoWrap')
 realmainLecturePhotoWrap.addEventListener('click', async (e) => {
-  scrapBtn = e.target.closest('.scrap-button')
-  transSrcapBtnFn(scrapBtn)
+  const scrapBtn = e.target.closest('.scrap-button')
   const lectureContentId = scrapBtn.closest('.realmain-lecture-photoEachdiv').classList[1]
-  await lectureScrapService.update(lectureContentId)
+  const respones = await lectureScrapService.update(lectureContentId)
+  transSrcapBtnFn(scrapBtn, respones)
 })
 
 const realmainBestproductRealphotoWrap = document.querySelector('.realmain-bestproduct-realphotoWrap')
 realmainBestproductRealphotoWrap.addEventListener('click', async (e) => {
-  scrapBtn = e.target.closest('.scrap-button')
-  transSrcapBtnFn(scrapBtn)
+  const scrapBtn = e.target.closest('.scrap-button')
   const lectureContentId = scrapBtn.closest('.realmain-bestproduct-realphotoContent').classList[1]
-  await lectureScrapService.update(lectureContentId)
+  const respones = await lectureScrapService.update(lectureContentId)
+  transSrcapBtnFn(scrapBtn, respones)
 })
 
 const realmainTodayHotdealPhotoWrapUl = document.querySelector('.realmain-todayHotdeal-photoWrapUl')
 realmainTodayHotdealPhotoWrapUl.addEventListener('click', async (e) => {
-  scrapBtn = e.target.closest('.scrap-button')
-  transSrcapBtnFn(scrapBtn)
+  const scrapBtn = e.target.closest('.scrap-button')
   const tradeContentId = scrapBtn.closest('.realmain-todayHotdeal-photoWrapli').classList[1]
-  await tradeScrapService.update(tradeContentId)
+  const respones = await tradeScrapService.update(tradeContentId)
+  transSrcapBtnFn(scrapBtn, respones)
 })
 
 const popularcontentPhotoDiv = document.querySelector('.popularcontent-photoDiv')
 popularcontentPhotoDiv.addEventListener('click', async (e) => {
-  scrapBtn = e.target.closest('.scrap-button')
-  transSrcapBtnFn(scrapBtn)
+  const scrapBtn = e.target.closest('.scrap-button')
   const postContentId = scrapBtn.closest('.popularcontent-photoEachdiv').classList[2]
-  await postService.update(postContentId)
+  const respones = await postScrapService.update(postContentId)
+  transSrcapBtnFn(scrapBtn, respones)
 })
 
 const realmainBestproductPhotoCategoryUl = document.querySelector('.realmain-bestproduct-photoCategoryUl')
@@ -189,7 +193,7 @@ const createTag = (tags) => {
 const createBestLecture = (bestLectures) => {
   let bestLectureHTML = ``
   if (!bestLectures) return
-  bestLectures.forEach((bestLecture) => {
+  bestLectures.forEach((bestLecture, index) => {
     bestLectureHTML += `
   <div class="realmain-bestproduct-realphotoContent ${bestLecture.id}">
     <article class="realmain-bestproduct-realphotoArticle">
@@ -248,7 +252,7 @@ const createBestLecture = (bestLectures) => {
             fill="#134F2C"
         ></path>
       </svg>
-      <span class="realmain-bestproduct-rank">1</span>
+      <span class="realmain-bestproduct-rank">${index + 1}</span>
     </div>
   </div>
   `

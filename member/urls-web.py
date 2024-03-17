@@ -1,7 +1,7 @@
 from django.urls import path
 
 from member.views import MemberJoinView, MemberLoginView, MemberLogoutView, MypageUpdateView, MypagePostListAPI, \
-    MypagePostView, MypageShowView, MypageKnowhowListAPI, MypageShowReplyAPI, MypageReplyView, MypageShowReviewAPI, \
+    MypagePostView, MypageShowView,  MypageShowReplyAPI, MypageReplyView, MypageShowReviewAPI, \
     MypageReviewView, MypageShowLikesAPI, MypageLikesView, MypageLecturesView, \
     MypageShowLecturesAPI, LectureReviewView, MypageScrapLecturesView, MypageScrapLectureAPI, MypageScrapTradeView, \
     MypageScrapTradeAPI, MypageTradesView, MypageTradesAPI, MypageTeacherView, MypageTeacherPlanView, MypageTeacherAPI, \
@@ -17,7 +17,6 @@ urlpatterns = [
     path('mypage/show/', MypageShowView.as_view(),name='show'),
     path('mypage/posts/', MypagePostView.as_view(), name='mypost'),
     path('mypage/show/posts/<int:page>/', MypagePostListAPI.as_view()),
-    path('mypage/show/knowhow/<int:page>/', MypageKnowhowListAPI.as_view()),
     path('mypage/show/replies/<int:page>/', MypageShowReplyAPI.as_view()),
     path('mypage/replies/', MypageReplyView.as_view()),
     path('mypage/show/reviews/<int:page>/', MypageShowReviewAPI.as_view()),
