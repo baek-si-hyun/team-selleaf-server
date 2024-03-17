@@ -957,11 +957,13 @@ class LectureReviewManagementView(View):
 
 class LectureReviewInfoAPI(APIView):
     # 특정 강의에 달린 리뷰 목록을 가져오는 뷰
-    def get(self, request, lecture_id, page):
+    def get(self, request):
         # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
         lecture_id = request.GET.get('lectureId')
         keyword = request.GET.get('keyword', '')
         page = int(request.GET.get('page', 1))
+
+        print(lecture_id)
 
         # 한 페이지에 띄울 신고 내역 수
         row_count = 10
@@ -1081,7 +1083,7 @@ class LectureTraineesManagementView(View):
 
 class TraineesInfoAPI(APIView):
     # 특정 강의의 수강생 목록 조회 API 뷰
-    def get(self, request, lecture_id, page):
+    def get(self, request):
         # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
         lecture_id = request.GET.get('lectureId')
         keyword = request.GET.get('keyword', '')
@@ -1451,6 +1453,41 @@ class PaymentListAPI(APIView):
 
         # 요청한 데이터 반환
         return Response(payments)
+
+
+# 강의 삭제(소프트 딜리트) 뷰
+class LectureDeleteAPI(APIView):
+    def patch(self, request, lecture_ids):
+        # 요청 경로에 담긴 notice_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        lecture_ids = lecture_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for lecture_id in lecture_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_notice에서 해당 id를 가진 객체를 가져옴
+            if lecture_id != '':
+                notice = Lecture.objects.get(id=lecture_id)
+
+                # 해당 객체의 status를 0으로 만들고, 변경 시간과 같이 저장
+                notice.lecture_status = 0
+                notice.updated_date = timezone.now()
+                notice.save(update_fields=["lecture_status", "updated_date"])
+
+        return Response('success')
+
+
+# 강의 리뷰 삭제 뷰
+class LectureReviewDeleteAPI(APIView):
+    def delete(self, request, lecture_ids):
+        # 요청 경로에 담긴 notice_ids를 콤마(,)를 기준으로 분리해서 list로 만듬
+        lecture_ids = lecture_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for lecture_id in lecture_ids:
+            # 요소가 빈 문자열이 아닐 때만 tbl_notice에서 해당 id를 가진 객체를 가져옴
+            if lecture_id != '':
+                LectureReview.objects.get(id=lecture_id).delete()
+
+        return Response('success')
 
 
 # 공지사항 관리

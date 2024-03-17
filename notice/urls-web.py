@@ -6,5 +6,5 @@ app_name = 'notice'
 
 urlpatterns = [
     path('web/', NoticeWebView.as_view(), name='web'),
-    path('list/<int:page>/', NoticeListAPI.as_view(), name='notice-list-api'),
+    path('list/', NoticeListAPI.as_view(), name='notice-list-api'),
 ]
