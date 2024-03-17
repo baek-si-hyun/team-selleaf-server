@@ -110,29 +110,31 @@ const recommendScrapButton = document.querySelectorAll(
 );
 
 const transSrcapBtnFn = (scrapBtn, respones) => {
-  const img = scrapBtn.querySelector(".scrap-img");
-  if (respones.status) {
-    img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
-    if (animationTarget) {
-      animationTarget.classList.remove("show-animation");
+  if (respones) {
+    const img = scrapBtn.querySelector(".scrap-img");
+    if (respones.status) {
+      img.setAttribute("src", "/static/public/web/images/common/scrap-on.png");
+      if (animationTarget) {
+        animationTarget.classList.remove("show-animation");
+      }
+      animationTarget = scrapPopup;
+    } else {
+      console.log(111)
+      img.setAttribute("src", "/static/public/web/images/common/scrap-off.png");
+      if (animationTarget) {
+        animationTarget.classList.remove("show-animation");
+      }
+      animationTarget = scrapCancel;
     }
-    animationTarget = scrapPopup;
-  } else {
-    console.log(111)
-    img.setAttribute("src", "/static/public/web/images/common/scrap-off.png");
     if (animationTarget) {
-      animationTarget.classList.remove("show-animation");
+      animationTarget.classList.remove("hide-animation");
+      animationTarget.classList.add("show-animation");
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        animationTarget.classList.remove("show-animation");
+        animationTarget.classList.add("hide-animation");
+      }, 3000);
     }
-    animationTarget = scrapCancel;
-  }
-  if (animationTarget) {
-    animationTarget.classList.remove("hide-animation");
-    animationTarget.classList.add("show-animation");
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      animationTarget.classList.remove("show-animation");
-      animationTarget.classList.add("hide-animation");
-    }, 3000);
   }
 }
 
@@ -191,7 +193,7 @@ const createTag = (tags) => {
 const createBestLecture = (bestLectures) => {
   let bestLectureHTML = ``
   if (!bestLectures) return
-  bestLectures.forEach((bestLecture) => {
+  bestLectures.forEach((bestLecture, index) => {
     bestLectureHTML += `
   <div class="realmain-bestproduct-realphotoContent ${bestLecture.id}">
     <article class="realmain-bestproduct-realphotoArticle">
@@ -250,7 +252,7 @@ const createBestLecture = (bestLectures) => {
             fill="#134F2C"
         ></path>
       </svg>
-      <span class="realmain-bestproduct-rank">1</span>
+      <span class="realmain-bestproduct-rank">${index + 1}</span>
     </div>
   </div>
   `
