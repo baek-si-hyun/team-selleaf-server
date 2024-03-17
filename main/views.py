@@ -307,7 +307,9 @@ class KnowhowScrapAPI(APIView):
             knowhow_scrap.status = is_scrap
             knowhow_scrap.save()
 
-        return Response('success')
+        scrap_status = KnowhowScrap.objects.filter(knowhow_id=data['knowhow_id'], member_id=data['member_id']).values('status').first()
+        print(scrap_status)
+        return Response(scrap_status)
 
 
 class TradeScrapAPI(APIView):
@@ -324,7 +326,9 @@ class TradeScrapAPI(APIView):
             trade_scrap.status = is_scrap
             trade_scrap.save()
 
-        return Response('success')
+        scrap_status = TradeScrap.objects.filter(trade_id=data['trade_id'], member_id=data['member_id']).values('status').first()
+        print(scrap_status)
+        return Response(scrap_status)
 
 
 class LectureScrapAPI(APIView):
@@ -341,7 +345,8 @@ class LectureScrapAPI(APIView):
             lecture_scrap.status = is_scrap
             lecture_scrap.save()
 
-        return Response('success')
+        scrap_status = LectureScrap.objects.filter(lecture_id=data['lecture_id'], member_id=data['member_id']).values('status').first()
+        return Response(scrap_status)
 
 
 class PostScrapAPI(APIView):
@@ -358,4 +363,5 @@ class PostScrapAPI(APIView):
             post_scrap.status = is_scrap
             post_scrap.save()
 
-        return Response('success')
+        scrap_status = PostScrap.objects.filter(post_id=data['post_id'], member_id=data['member_id']).values('status').first()
+        return Response(scrap_status)
