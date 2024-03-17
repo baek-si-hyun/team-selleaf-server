@@ -566,47 +566,8 @@ class PostListApi(APIView):
                 like_count = PostLike.objects.filter(status=1, post=post['id']).count()
                 post['like_count'] = like_count
 
-
-
-
-
-
-
         print(condition, condition2)
         print(sort1, sort2)
-
-        # select_related로 조인먼저 해준다음, annotate로 member 조인에서 가져올 values 가져온다음
-        # like와 scrap의 갯수를 가상 컬럼으로 추가해서 넣어주고, 진짜 사용할 밸류들 가져온 후, distinct로 중복 제거
-        # knowhows = Knowhow.objects.select_related('knowhowlike', 'knowhowscrap').filter(condition, condition2) \
-        #     .annotate(member_name=F('member__member_name')) \
-        #     .values(*columns) \
-        #     .annotate(like_count=Count(Q(knowhowlike__status=1)), scrap_count=Count(Q(knowhowscrap__status=1))) \
-        #     .values('knowhow_title', 'member_name', 'knowhow_count', 'id', 'member_id', 'like_count',
-        #             'scrap_count') \
-        #     .order_by(sort1, sort2).distinct()
-
-        # knowhows = Knowhow.objects.filter(condition, condition2)\
-        #     .annotate(scrap_count=Count('knowhowscrap__id', filter=Q(knowhowscrap__status=1))\
-        #               , like_count=Count('knowhowlike__id', filter=Q(knowhowlike__status=1))).values(*columns1)\
-        #     .order_by(sort1, sort2)[offset:limit]
-
-        # knowhows = Knowhow.objects.filter(condition, condition2) \
-        #                .annotate(like_count=Count('knowhowlike__id', filter=Q(knowhowlike__status=1)))\
-        #                .values(*columns1) \
-        #                .order_by(sort1, sort2)[offset:limit]
-
-        # knowhows = Knowhow.objects.filter().values('member_id', 'id')
-        columns4 = [
-            'post_title',
-            'member_id',
-            'post_count',
-            'id',
-            'member_name'
-        ]
-
-
-        # for post in posts:
-        #     print(post)
 
         posts_count = Post.objects.select_related('postlike', 'postscrap').filter(condition, condition2) \
             .annotate(member_name=F('member__member_name')) \
@@ -615,10 +576,6 @@ class PostListApi(APIView):
             .values('post_title', 'member__member_name', 'post_count', 'id', 'member_id', 'like_count',
                     'scrap_count') \
             .order_by(sort1, sort2).distinct().count()
-
-        # print(knowhows_count)
-
-
 
         # knowhow에 가상 컬럼을 만들어서 하나씩 추가해줌
         for post in posts:
@@ -646,36 +603,46 @@ class PostListApi(APIView):
 class ChannelView(View):
     def get(self, request):
         # 노하우태그와 포스트 태그를 중복제거한 후 union
-        post_tags = PostTag.objects.annotate(posts=F('post_id'), knowhows=Value(0)).values('tag_name', 'posts', 'knowhows').distinct()
-        knowhow_tags = KnowhowTag.objects.annotate(posts=Value(0), knowhows=F('knowhow_id')).values('tag_name', 'posts', 'knowhows').distinct()
+        # 어노테이트에 파일 추가
+        # 중복 제거된 태그이름으로 조회
+        post_tags = PostTag.objects.annotate(posts=F('post_id'), knowhows=Value(0), tag_names=Count('id')).values('tag_name', 'posts', 'knowhows').order_by('-tag_names')
+        knowhow_tags = KnowhowTag.objects.annotate(posts=Value(0), knowhows=F('knowhow_id'), tag_names=Count('id')).values('tag_name', 'posts', 'knowhows').order_by('-tag_names')
         tags = post_tags.union(knowhow_tags)
 
-
-        tags = list(tags)
-
-        filtering_tags = list(map(dict, set(tuple(sorted(name.items())) for name in tags)))
-
-        for tag in filtering_tags:
-            print(tag['tag_name'])
-        files = []
-        # 해당 태그가 들어있는 게시물의 파일(사진)을 가져와야함.
-        # 노하우와 포스트게시물을 합쳐서 사용 해야함
+        filtering_tags = []
 
         for tag in tags:
-            if tag['posts'] != 0:
-                post_file = PostFile.objects.filter(post_id=tag['posts']).values('file_url').first()
-                tag['post_file'] = post_file['file_url']
+            print(tag)
+            filtering_tags.append(tag['tag_name'])
 
-            else:
-                knowhow_file = KnowhowFile.objects.filter(knowhow_id=tag['knowhows']).values('file_url').first()
-                tag['knowhow_file'] = knowhow_file['file_url']
+        filtering_tags = set(filtering_tags)
+
+        print(filtering_tags)
+
+        filtered_tags = PostTag.objects.values('tag_name').annotate(tag_names=Count('id')).values('tag_names', 'tag_name').order_by('-tag_names')
+
+        for tag in filtered_tags:
+            print(tag)
+        # for tag in tags:
+
+
+
+
+        # for tag in tags:
+        #     if tag['posts'] != 0:
+        #         post_file = PostFile.objects.filter(post_id=tag['posts']).values('file_url').first()
+        #         tag['post_file'] = post_file['file_url']
+        #
+        #     else:
+        #         knowhow_file = KnowhowFile.objects.filter(knowhow_id=tag['knowhows']).values('file_url').first()
+        #         tag['knowhow_file'] = knowhow_file['file_url']
 
             # print(tag)
 
         # print(type(tags))
 
         context = {
-            'tags': tags,
+            'filtering_tags': filtering_tags,
         }
 
         return render(request, 'community/web/channel.html', context)

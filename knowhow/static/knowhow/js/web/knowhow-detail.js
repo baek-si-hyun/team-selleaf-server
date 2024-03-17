@@ -97,16 +97,21 @@ declarationLabels.forEach((item, i) => {
   });
 });
 
+
 //신고모달 띄우기
 const declarationModalWrap = document.querySelector(".declaration-modal-wrap");
 const contentDeclarationBtn = document.querySelector(
   ".content-declaration-btn"
 );
 
+if (member_Id !== knowhow_member_id){
+  contentDeclarationBtn.addEventListener("click", () => {
+    declarationModalWrap.classList.add("open");
+  })
+
+}
 // 상단 신고하기 버튼 클릭 시
-contentDeclarationBtn.addEventListener("click", () => {
-  declarationModalWrap.classList.add("open");
-});
+
 
 // 댓글 신고버튼
 const commentDeclarationBtns = document.querySelectorAll(
@@ -141,4 +146,14 @@ reportDeclarationBtn.addEventListener("click", (e) => {
     })
   reportInput.value = reportContent
   declarationModalWrap.classList.remove("open");
+});
+
+//이미지 미리보기
+const contentImg = document.querySelector(".content-img");
+const prevImgs = document.querySelectorAll(".prev-img");
+prevImgs.forEach((item) => {
+  item.addEventListener("click", (e) => {
+    const imgSrc = e.target.getAttribute("src");
+    contentImg.setAttribute("src", imgSrc);
+  });
 });

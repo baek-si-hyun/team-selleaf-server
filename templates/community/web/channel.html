@@ -26,7 +26,7 @@
                   "
                 >
 {#                    *******************구분선**********************                  #}
-                {% for tag in tags %}
+                {% for tag in filterng_tags %}
                     
                   <div style="overflow-anchor: none;" class="tag-box">
                     <div class="tag-content-box">
@@ -38,7 +38,7 @@
                               <div class="tag-item-title-box">
                                 <div>
                                   <div class="tag-item-title">
-                                    #{{ tag.tag_name }}
+                                    #{{ tag }}
                                   </div>
                                   <div class="tag-item-sub-title">
                                     <div>3,041명 활동 중</div>

@@ -1132,6 +1132,7 @@ section.reply-update-wrap textarea {
   font-size: 24px;
   line-height: 1;
   color: rgb(33, 38, 41);
+  display: flex;
 }
 .sticky-icon-like::before {
   font-family: OhouseIcon;
@@ -1154,13 +1155,13 @@ section.reply-update-wrap textarea {
 .sticky-icon-comment:before {
   content: "\e996";
 }
-.sticky-icon-share::before {
-  font-family: OhouseIcon;
-  vertical-align: top;
-}
-.sticky-icon-share:before {
-  content: "\ef04";
-}
+/*.sticky-icon-share::before {*/
+/*  font-family: OhouseIcon;*/
+/*  vertical-align: top;*/
+/*}*/
+/*.sticky-icon-share:before {*/
+/*  content: "\ef04";*/
+/*}*/
 .sticky-data {
   position: absolute;
   left: 50%;

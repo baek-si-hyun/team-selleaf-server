@@ -240,7 +240,9 @@
                       <a href="/knowhow/update/?id={{ knowhow.id }}">
                           <button type="button" title="공유" class="sticky-btn background-color">
                             <span class="sticky-icon-box background-color">
-                              <span class="sticky-icon sticky-icon-share"> </span>
+                              <span class="sticky-icon sticky-icon-share">
+                                  <img src="{% static '/public/web/images/common/rewrite.png' %}" alt="">
+                              </span>
                             </span>
                             <span class="sticky-data" id="share">수정하기</span>
                           </button>
@@ -248,7 +250,9 @@
                       <a href="/knowhow/delete/?id={{ knowhow.id }}">
                           <button type="button" title="공유" class="sticky-btn background-color">
                             <span class="sticky-icon-box background-color">
-                              <span class="sticky-icon sticky-icon-share"> </span>
+                              <span class="sticky-icon sticky-icon-share">
+                                  <img src="{% static '/public/web/images/common/remove-btn.png' %}" alt="">
+                              </span>
                             </span>
                             <span class="sticky-data" id="share">삭제하기</span>
                           </button>
@@ -408,6 +412,7 @@
         const knowhow_id = '{{ knowhow.id }}'
         const member_Id = '{{ request.session.member.id }}'
         const replyCount = '{{ reply_count }}'
+        const knowhow_member_id = '{{ knowhow.member.id }}'
     </script>
 
     <script src="{% static 'knowhow/js/web/knowhow-detail.js' %}"></script>
