@@ -73,7 +73,7 @@ const showReplyList = (replies) => {
 
           text += `
             <div class="comments-history-item-wrap">
-              <a href="#" class="comments-history-link"></a>
+              <a href="/post/detail/?id=${reply.post_id}" class="comments-history-link"></a>
               <div class="comments-history-item-container">
                 <div class="comments-item-image-wrap" style="opacity: 1">
                   <img alt=""
@@ -111,7 +111,7 @@ const showReplyList = (replies) => {
 
           text += `
             <div class="comments-history-item-wrap">
-              <a href="#" class="comments-history-link"></a>
+              <a href="/knowhow/detail/?id=${reply.knowhow_id}" class="comments-history-link"></a>
               <div class="comments-history-item-container">
                 <div class="comments-item-image-wrap" style="opacity: 1">
                   <img alt=""

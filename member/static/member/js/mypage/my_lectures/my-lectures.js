@@ -77,7 +77,7 @@ const showApplies = (applies) => {
             if(apply.lecture_review.length === 0) {
                 text += `
                 <div class="lecture-history-item-wrap">
-                  <a href="#" class="lecture-history-link"></a>
+                  <a href="/lecture/detail/${apply.lecture_status}/?id=${apply.lecture_id}" class="lecture-history-link"></a>
                     <div class="lecture-history-item-container">
                       <div class="lecture-item-image-wrap">
                         <img  alt=""
@@ -124,7 +124,7 @@ const showApplies = (applies) => {
             }else{
                 text += `
                 <div class="lecture-history-item-wrap">
-                  <a href="#" class="lecture-history-link"></a>
+                  <a href="/lecture/detail/${apply.lecture_status}/?id=${apply.lecture_id}" class="lecture-history-link"></a>
                     <div class="lecture-history-item-container">
                       <div class="lecture-item-image-wrap">
                         <img  alt=""
@@ -171,7 +171,7 @@ const showApplies = (applies) => {
         }else if(apply.apply_status === 0) {
             text += `
             <div class="lecture-history-item-wrap">
-              <a href="#" class="lecture-history-link"></a>
+              <a href="/lecture/detail/${apply.lecture_status}/?id=${apply.lecture_id}" class="lecture-history-link"></a>
                 <div class="lecture-history-item-container">
                   <div class="lecture-item-image-wrap">
                     <img  alt=""

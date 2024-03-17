@@ -79,7 +79,7 @@ const showList = (trades) => {
               </li>`).join('');
           text += `
             <div class="trade-history-item-wrap">         
-                <a href="#" class="trade-history-link"></a>
+                <a href="/trade/detail/?id=${trade.id}" class="trade-history-link"></a>
                   <div class="trade-history-item-container">
                     <div class="trade-item-image-wrap">
                       <img  alt=""

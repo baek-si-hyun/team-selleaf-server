@@ -82,7 +82,7 @@ const showReviewList = (reviews) => {
 
       text += `
          <div class="reviews-history-item-wrap">
-                  <a href="#" class="reviews-history-link"></a>
+                  <a href="/lecture/detail/${review.lecture_status}/?id=${review.lecture_id}" class="reviews-history-link"></a>
                   <div class="reviews-history-item-container">
                     <div class="reviews-item-image-wrap" style="opacity: 1">
                       <img alt=""

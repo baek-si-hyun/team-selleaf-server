@@ -49,7 +49,7 @@ const showLikeList = (likes) => {
             <input type="hidden" class="post-id" name="post-id" value="${like.post_id}">
             <div class="post-inner">
               <article class="post">
-                <a href="#" class="post-link"></a>
+                <a href="/post/detail/?id=${like.post_id}" class="post-link"></a>
                 <div class="post-image-wrap_">
                   <div class="post-image-container">
                     <div class="post-image-inner">
@@ -73,7 +73,7 @@ const showLikeList = (likes) => {
             <input type="hidden" class="knowhow-id" name="post-id" value="${like.knowhow_id}">
             <div class="post-inner">
               <article class="post">
-                <a href="#" class="post-link"></a>
+                <a href="/knowhow/detail/?id=${like.knowhow_id}" class="post-link"></a>
                 <div class="post-image-wrap_">
                   <div class="post-image-container">
                     <div class="post-image-inner">

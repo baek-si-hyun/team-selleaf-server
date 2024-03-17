@@ -86,7 +86,7 @@ const showList = (scrapTrades) => {
             <div class="post-container">
               <div class="post-inner">
                 <article class="post">
-                  <a href="#" class="post-link"></a>
+                  <a href="/trade/detail/?id=${scrapTrade.trade_id}" class="post-link"></a>
                   <div class="post-image-wrap_">
                     <div class="post-image-container">
                       <div class="post-image-inner">
