@@ -357,11 +357,16 @@ div.category-benner{
     border-color: #e6e6e7;
 }
 
+div.category-wrap {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(9, 1fr);
+    width: 880px;
+}
+
 div.category-inner{
-    width: 100px;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    flex-shrink: 0;
     display: flex;
     font-weight: 500;
     font-size: 13px;
@@ -389,28 +394,33 @@ li.list-content{
     border-color: #f3f3f4;
 }
 
-button.text-left{
-    text-align: left;
-    width: 280px;
-    display: block;
-}
-
-div.list-content-wrap{
-    row-gap: 2px;
-    flex-direction: column;
-    display: flex;
+div.payment-info-wrap{
     color: #333334;
     fill: #333334;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(9, 1fr);
+    width: 880px;
 }
 
-div.list-content-container{
-    gap: 12px;
-    display: flex;
+div.payment-info-wrap:hover {
+    opacity: 0.7;
 }
 
-div.list-content-inner{
-    flex-direction: column;
-    display: flex;
+div.payment-info {
+    overflow: hidden;
+    display: -webkit-box;
+    word-break: break-word;
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 21px;
+    display: block;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 div.content-name{
@@ -504,14 +514,14 @@ div.page-count-wrap{
     margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
-    grid-column: 1/-1;
+    gap: 16px;
 }
 
 ul.flex{
     display: flex;
 }
 
-button.page-count{
+button.page-count-prev, button.page-count-next{
     opacity: .3;
     border-width: 1px;
     border-radius: 9999px;
@@ -523,7 +533,6 @@ button.page-count{
     border-color: #e6e6e7;
     color: #1d1d1e;
     fill: #1d1d1e;
-    cursor: default;
 }
 
 svg.page-count{
@@ -560,113 +569,24 @@ span.page-count-num{
     fill: #1d1d1e;
 }
 
-div.delete-modal-wrap{
-    z-index: 10;
-    display: none;
-
-}
-
-div.delete-modal-container{
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000),var(--tw-shadow);
-    --tw-shadow: 0px 2px 8px rgba(0,0,0,.08);
-    --tw-shadow-colored: 0px 2px 8px var(--tw-shadow-color);
-    padding: 32px;
-    border-width: 1px;
-    border-radius: 16px;
+div.nothing{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-    --tw-translate-x: -50%;
-    min-width: 360px;
     display: flex;
-    box-sizing: border-box;
-    z-index: 50;
-    top: 30px;
-    left: 50%;
-    position: fixed;
-    border-color: #e6e6e7;
-    background-color: #fff;
+    margin-top: 100px;
 }
 
-h4.delete-modal{
-    margin-bottom: 12px;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 28px;
-    color: #1d1d1e;
-    fill: #1d1d1e;
+img.nothing{
+    width: 52px;
+    height: 57px;
 }
 
-div.delete-modal-inner{
-    text-align: center;
-    max-width: 300px;
+p.nothing{
+    margin-top: 23px;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    color: #333334;
-    fill: #333334;
-}
-
-div.delete-modal-box{
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    display: flex;
-    margin-top: 24px;
-}
-
-div.modal-cancel{
-    flex: 1 1 0%;
-}
-
-button.modal-cancel{
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 20px;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    display: flex;
-    position: relative;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 16px;
-    color: #333334;
-    fill: #333334;
-    background-color: #f3f3f4;
-}
-
-div.modal-confirm{
-    flex: 1 1 0%;
-    margin-left: 16px;
-}
-
-button.modal-confirm{
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 20px;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    display: flex;
-    position: relative;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 16px;
-    color: #fff;
-    fill: #fff;
-    background-color: #c06888;
-}
-
-div.delete-modal-bgcolor{
-    width: 100%;
-    height: 100%;
-    z-index: 40;
-    left: 0;
-    top: 0;
-    position: fixed;
-    background-color: rgba(0,0,0,.4);
+    color: #8a8a8b;
+    fill: #8a8a8b;
 }

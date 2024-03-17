@@ -1,9 +1,9 @@
 // 다른 파일에서 teacherService.메소드명 형식으로 사용할 수 있도록 모듈화
 const teacherService = (() => {
     // 강사 목록 조회 - 한 번에 10명씩
-    const getList = async (page, callback) => {
+    const getList = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/teacher/${page}`);
+        const response = await fetch (`/admin/teacher-list/?keyword=${keyword}&page=${page}`);
         const teachers = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -16,9 +16,9 @@ const teacherService = (() => {
     }
 
     // 강사 신청자 목록 조회 - 한 번에 10명씩
-    const getEntryList = async (page, callback) => {
+    const getEntryList = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/teacher-entry/${page}`);
+        const response = await fetch (`/admin/teacher-entry-list/?keyword=${keyword}&page=${page}`);
         const teacherEntries = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
