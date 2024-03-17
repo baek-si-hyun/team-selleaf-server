@@ -177,9 +177,12 @@ const contentDeclarationBtn = document.querySelector(
 );
 
 // 상단 신고하기 버튼 클릭 시
-contentDeclarationBtn.addEventListener("click", () => {
-  declarationModalWrap.classList.add("open");
-});
+if(post_member_id !== member_Id){
+  contentDeclarationBtn.addEventListener("click", () => {
+    declarationModalWrap.classList.add("open");
+  });
+
+}
 
 // 댓글 신고버튼
 const commentDeclarationBtns = document.querySelectorAll(
