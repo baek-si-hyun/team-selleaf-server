@@ -37,18 +37,28 @@ const replyService = (() => {
         });
     }
 
-    return {write: write, getList: getList, remove: remove, update: update}
+    const like = async (post_id, reply_id, member_id, like_status, callback) => {
+        const response = await fetch(`/post/like/${post_id}/${reply_id}/${member_id}/${like_status}/`);
+        const likes = await response.json();
+        if (callback){
+            return callback(likes);
+        }
+        return likes;
+
+        }
+
+    return {write: write, getList: getList, remove: remove, update: update, like:like}
 })();
 
 const postService = (() => {
 
     const getList = async (page, filters, sorting, types, callback) => {
         const response = await fetch(`/post/list/${page}/${filters}/${sorting}/${types}`);
-        const knowhows = await response.json();
+        const posts = await response.json();
         if(callback){
-            return callback(knowhows);
+            return callback(posts);
         }
-        return knowhows;
+        return posts;
     }
 
     const getScrap = async (post_id, member_id, scrap_status, callback) => {

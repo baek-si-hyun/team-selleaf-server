@@ -21,7 +21,7 @@
                       <button class="uploader-profile-btn">
                         <figure class="uploader-img-box">
                           <img
-                            src= ""
+                            src= "{{ member_profile.file_url }}"
                             height="0"
                             class="uploader-img"
                           />
@@ -79,38 +79,42 @@
                       <dt class="check">조회</dt>
                       <dd class="check-data">{{ knowhow.knowhow_count }}</dd>
                     </dl>
+                      {% if request.session.member.id != knowhow.member.id %}
+                      
                     <div class="declaration-btn-box">
                       <button type="button" class="content-declaration-btn">
                         신고하기
                       </button>
                     </div>
+                      {% endif %}
+                      
                   </div>
                 </div>
                 <hr class="content-split-top" />
                 <div class="another-tag-box">
                   <div class="another-tag-box-title">다른 노하우 둘러보기</div>
-                    {% for tag in knowhow_tags %} 
+                    {% for tag in knowhow_tags %}
                   <div class="tag">
                     <span class="tag-text"># {{ tag.tag_name }}</span>
                   </div>
                     {% endfor %}
                 </div>
                 <hr class="content-split-top" />
-                <div class="uploader-bottom-data-wrap">
-                  <button class="uploader-bottom-data-btn">
-                    <figure class="uploader-bottom-img-box">
-                      <img
-                        src="https://image.ohou.se/i/bucketplace-v2-development/uploads/users/profile_images/170410117290522562.jpeg?w=50"
-                        height="0"
-                        class="uploader-bottom-img"
-                      />
-                    </figure>
-                    <div class="uploader-bottom-data-box">
-                      <span class="uploade-bottom-name">작성자</span>
-                    </div>
-                  </button>
-                </div>
-                <hr class="content-split-bottom" />
+{#                <div class="uploader-bottom-data-wrap">#}
+{#                  <button class="uploader-bottom-data-btn">#}
+{#                    <figure class="uploader-bottom-img-box">#}
+{#                      <img#}
+{#                        src=""#}
+{#                        height="0"#}
+{#                        class="uploader-bottom-img"#}
+{#                      />#}
+{#                    </figure>#}
+{#                    <div class="uploader-bottom-data-box">#}
+{#                      <span class="uploade-bottom-name">작성자</span>#}
+{#                    </div>#}
+{#                  </button>#}
+{#                </div>#}
+{#                <hr class="content-split-bottom" />#}
                 <div>
                   <div class="comment-section" id="comment-section">
                     <h1 class="comment-section-title">
@@ -121,7 +125,7 @@
                         <figure class="comment-user-icon-box">
                             {# 프로필 사진#}
                           <img
-                            src=""
+                            src="{{ session_profile.file_url }}"
                             height="0"
                             class="comment-user-icon"
                           />
@@ -236,7 +240,9 @@
                       <a href="/knowhow/update/?id={{ knowhow.id }}">
                           <button type="button" title="공유" class="sticky-btn background-color">
                             <span class="sticky-icon-box background-color">
-                              <span class="sticky-icon sticky-icon-share"> </span>
+                              <span class="sticky-icon sticky-icon-share">
+                                  <img src="{% static '/public/web/images/common/rewrite.png' %}" alt="">
+                              </span>
                             </span>
                             <span class="sticky-data" id="share">수정하기</span>
                           </button>
@@ -244,7 +250,9 @@
                       <a href="/knowhow/delete/?id={{ knowhow.id }}">
                           <button type="button" title="공유" class="sticky-btn background-color">
                             <span class="sticky-icon-box background-color">
-                              <span class="sticky-icon sticky-icon-share"> </span>
+                              <span class="sticky-icon sticky-icon-share">
+                                  <img src="{% static '/public/web/images/common/remove-btn.png' %}" alt="">
+                              </span>
                             </span>
                             <span class="sticky-data" id="share">삭제하기</span>
                           </button>
@@ -260,6 +268,9 @@
         </main>
       </div>
     </div>
+    
+    <form action="/knowhow/report/?id={{ knowhow.id }}" method="post" name="report">
+        {% csrf_token %}
     <div class="declaration-modal-wrap">
       <div class="declaration-modal-container">
         <div class="declaration-modal-title-box">
@@ -381,13 +392,18 @@
             </li>
           </ul>
         </div>
-        <div class="declaration-btn-wrap">
-          <div class="declaration-btn-container">
-            <button class="declaration-btn">신고하기</button>
+        <input type="hidden" class="report-content" name="report-content" value=""/>
+        <div class="report-declaration-btn-wrap">
+          <div class="report-declaration-btn-container">
+            <button type="submit" class="report-declaration-btn" id="report">신고하기</button>
+          </div>
+          <div class="cancel-declaration-btn-container">
+            <button type="button" class="cancel-declaration-btn" id="cancel">취소하기</button>
           </div>
         </div>
       </div>
     </div>
+  </form>
   </body>
 {% endblock %}
 {% block js %}
@@ -396,6 +412,7 @@
         const knowhow_id = '{{ knowhow.id }}'
         const member_Id = '{{ request.session.member.id }}'
         const replyCount = '{{ reply_count }}'
+        const knowhow_member_id = '{{ knowhow.member.id }}'
     </script>
 
     <script src="{% static 'knowhow/js/web/knowhow-detail.js' %}"></script>

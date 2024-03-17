@@ -228,6 +228,7 @@
   width: 100%;
 }
 .tag-item-title-box {
+  width: 195%;
   padding-bottom: 10px;
   display: -webkit-box;
   display: -webkit-flex;
@@ -279,7 +280,15 @@ span.tag-item-connect::before {
 .right-arrow:before {
   content: "\e968";
 }
+
+.tag-box{
+  width: 546px;
+  margin-left: -4px;
+  float: left;
+  overflow-anchor: none;
+}
 .tag-item-img-wrap {
+  width: 200%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
