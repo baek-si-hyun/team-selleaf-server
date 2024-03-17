@@ -1,5 +1,6 @@
 from operator import itemgetter
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 # noinspection PyInterpreter
 from django.db.models import F, Count
@@ -7,6 +8,7 @@ from django.utils import timezone
 
 from django.shortcuts import render, redirect
 from django.views import View
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -16,7 +18,9 @@ from knowhow.models import KnowhowFile, KnowhowReply, Knowhow, KnowhowPlant, Kno
 from lecture.models import LectureReview, LectureProductFile, LecturePlant, Lecture, LectureScrap
 from member.models import Member, MemberAddress, MemberProfile
 from member.serializers import MemberSerializer
+from order.models import OrderMileage
 from post.models import Post, PostFile, PostPlant, PostReply, PostReplyLike, PostLike
+from selleaf.models import Mileage
 from teacher.models import Teacher
 from trade.models import TradeScrap, TradeFile, TradePlant, Trade
 
@@ -146,6 +150,16 @@ class MypageShowView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -154,8 +168,11 @@ class MypageShowView(View):
             'post_count': post_count,
             'lecture_review':lecture_review,
             'like_count':like_count,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage': total
         }
+
+
 
         return render(request,'member/mypage/my_profile/see-all.html',context)
 
@@ -180,6 +197,15 @@ class MypagePostView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -187,7 +213,8 @@ class MypagePostView(View):
             'teacher': teacher,
             'post_count': post_count,
             'like_count':like_count,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage': total
         }
         return render(request,'member/mypage/my_profile/my-posts.html',context)
 
@@ -213,6 +240,15 @@ class MypageReplyView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
 
         context = {
             'member': member,
@@ -220,7 +256,8 @@ class MypageReplyView(View):
             'teacher':teacher,
             'like_count':like_count,
             'reply_count':reply_count,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage':total
         }
         return render(request,'member/mypage/my_profile/my-comments.html',context)
 
@@ -246,6 +283,16 @@ class MypageReviewView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -254,7 +301,8 @@ class MypageReviewView(View):
             'like_count': like_count,
             'post_count': post_count,
             'lecture_reply':lecture_reply,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage': total
         }
         return render(request,'member/mypage/my_profile/my-reviews.html',context)
 
@@ -283,6 +331,16 @@ class MypageLikesView(View):
         knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
         like_count = len(post_like) + len(knowhowlike)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -291,7 +349,8 @@ class MypageLikesView(View):
             'post_count': post_count,
             'reply_count': reply_count,
             'scrap_count':scrap_count,
-            'like_count':like_count
+            'like_count':like_count,
+            'mileage':total
         }
 
         return render(request,'member/mypage/my_profile/likes.html',context)
@@ -355,13 +414,23 @@ class MypageLecturesView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
             'teacher': teacher,
             'like_count': like_count,
             'lecture':lecture,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage':total
         }
         return render(request,'member/mypage/my_lecture/my-lectures.html',context)
 
@@ -430,13 +499,24 @@ class MypageTradesView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
             'teacher':teacher,
             'trade':trade,
             'like_count':like_count,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage':total
         }
         return render(request, 'member/mypage/trade/my-sales.html', context)
 
@@ -457,12 +537,22 @@ class MypageTeacherView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
             'lecture': lecture,
             'like_count':like_count,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage':total
         }
 
         return render(request, 'member/mypage/my_classes/past-classes.html',context)
@@ -484,12 +574,22 @@ class MypageTeacherPlanView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
             'lecture': lecture,
             'like_count': like_count,
-            'scrap_count': scrap_count
+            'scrap_count': scrap_count,
+            'mileage':total
         }
         return render(request, 'member/mypage/my_classes/planned-classes.html',context)
 
@@ -523,6 +623,10 @@ class MypagePostListAPI(APIView):
         offset = (page - 1) * row_count
         limit = row_count * page
 
+        if page < 1 or offset < 0:
+            raise NotFound("Invalid page number")
+
+
         posts = list(Post.objects.filter(member_id=request.session['member']['id'])\
             .annotate(member_name=F('member__member_name'))\
             .values(
@@ -542,10 +646,16 @@ class MypagePostListAPI(APIView):
                 post['post_file'] = 'file/2024/03/05/blank-image.png'
 
             tags = PostPlant.objects.filter(post_id=post['id']).values('plant_name')
-            post['post_plant'] = [tag['plant_name'] for tag in tags]
+            for tag in tags:
+                if tag is not None:
+                    post['post_plant'] = [tag['plant_name']]
+                else: post['post_plant'] = []
 
             replies = PostReply.objects.filter(post_id=post['id']).values('id')
             post['post_reply'] = [reply['id'] for reply in replies]
+
+            print(post)
+
 
 
         knowhows = list(Knowhow.objects.filter(member_id=request.session['member']['id']) \
@@ -567,54 +677,21 @@ class MypagePostListAPI(APIView):
                 knowhow['knowhow_file'] = 'file/2024/03/05/blank-image.png'
 
             tags = KnowhowPlant.objects.filter(knowhow_id=knowhow['id']).values('plant_name')
-            knowhow['knowhow_plant'] = [tag['plant_name'] for tag in tags]
+            for tag in tags:
+                if tag is not None:
+                    knowhow['knowhow_plant'] = [tag['plant_name']]
+                else:
+                    knowhow['knowhow_plant'] = []
 
             replies = KnowhowReply.objects.filter(knowhow_id=knowhow['id']).values('id')
             knowhow['knowhow_reply'] = [reply['id'] for reply in replies]
+
 
         posts.extend(knowhows)
         # updated_date를 기준으로 최신순으로 정렬
         sorted_posts = sorted(posts, key=itemgetter('updated_date'), reverse=True)
 
         return Response(sorted_posts[offset:limit])
-
-
-
-# 노하우 리스트
-# 12개 한페이지
-class MypageKnowhowListAPI(APIView):
-    def get(self, request, page):
-
-        row_count = 12
-        offset = (page - 1) * row_count
-        limit = row_count * page
-
-        print('모든 리스트 가져오기 2')
-        knowhows = Knowhow.objects.filter(member=request.session['member']['id'])\
-            .annotate(writer=F('member__member_name'))\
-            .values(
-                'id',
-                'knowhow_title',
-                'knowhow_content',
-                'knowhow_count',
-                'writer',
-                'updated_date',
-            )
-
-        for knowhow in knowhows:
-            knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
-            if knowhow_file is not None:
-                knowhow['knowhow_file'] = knowhow_file['file_url']
-            else:
-                knowhow['knowhow_file'] = 'file/2024/03/05/blank-image.png'
-
-            tags =KnowhowPlant.objects.filter(knowhow_id=knowhow['id']).values('plant_name')
-            knowhow['knowhow_plant'] = [tag['plant_name'] for tag in tags]
-
-            replies = KnowhowReply.objects.filter(knowhow_id=knowhow['id']).values('id')
-            knowhow['knowhow_reply'] = [reply['id'] for reply in replies]
-
-        return Response(knowhows[offset:limit])
 
 # 노하우, 포스트 댓글 리스트 합본
 # updated_date 기준 최신순 정렬
@@ -712,7 +789,8 @@ class MypageShowReviewAPI(APIView):
                 member_name=F('member__member_name'),
                 lecture_title=F('lecture__lecture_title'),
                 teacher_name=F('lecture__teacher__member__member_name'),
-                lecture_category=F('lecture__lecture_category__lecture_category_name'))\
+                lecture_category=F('lecture__lecture_category__lecture_category_name'),
+                lecture_status = F('lecture__online_status'))\
             .values(
                 'id',
                 'lecture_id',
@@ -722,7 +800,8 @@ class MypageShowReviewAPI(APIView):
                 'review_rating',
                 'updated_date',
                 'teacher_name',
-                'lecture_category'
+                'lecture_category',
+                'lecture_status'
             )
 
         for review in reviews:
@@ -731,6 +810,11 @@ class MypageShowReviewAPI(APIView):
                 review['lecture_file'] = lecture_file['file_url']
             else:
                 review['lecture_file'] = 'file/2024/03/05/blank-image.png'
+
+            if review['lecture_status'] == True:
+                review['lecture_status'] = 'online'
+            elif review['lecture_status']==False:
+                review['lecture_status'] = 'offline'
 
             tags = LecturePlant.objects.filter(lecture_id=review['lecture_id']).values('plant_name')
             review['lecture_plant'] = [tag['plant_name'] for tag in tags]
@@ -802,6 +886,7 @@ class MypageShowLikesAPI(APIView):
             else:
                 knowhow_like['knowhow_file'] = 'file/2024/03/05/blank-image.png'
 
+
             tags = KnowhowPlant.objects.filter(knowhow_id=knowhow_like['knowhow_id']).values('plant_name')
             knowhow_like['knowhow_plant'] = [tag['plant_name'] for tag in tags]
 
@@ -834,6 +919,7 @@ class MypageShowLecturesAPI(APIView):
             teacher_name=F('lecture__teacher__member__member_name'),
             lecture_content=F('lecture__lecture_content'),
             lecture_category=F('lecture__lecture_category__lecture_category_name'),
+            lecture_status = F('lecture__online_status')
             )\
             .values(
             'apply_status',
@@ -847,7 +933,8 @@ class MypageShowLecturesAPI(APIView):
             'time',
             'date',
             'kit',
-            'lecture_category'
+            'lecture_category',
+            'lecture_status'
         )
 
         for apply in applies:
@@ -859,6 +946,11 @@ class MypageShowLecturesAPI(APIView):
                 apply['lecture_file'] = lecture_file['file_url']
             else:
                 apply['lecture_file'] = 'file/2024/03/05/blank-image.png'
+
+            if apply['lecture_status'] == True:
+                apply['lecture_status'] = 'online'
+            elif apply['lecture_status']==False:
+                apply['lecture_status'] = 'offline'
 
             tags = LecturePlant.objects.filter(lecture_id=apply['lecture_id']).values('plant_name')
             apply['lecture_plant'] = [tag['plant_name'] for tag in tags]
@@ -882,6 +974,7 @@ class MypageScrapLectureAPI(APIView):
             lecture_content=F('lecture__lecture_content'),
             lecture_category=F('lecture__lecture_category__lecture_category_name'),
             lecture_price = F('lecture__lecture_price'),
+            lecture_status = F('lecture__online_status')
         ) \
             .values(
             'id',
@@ -892,7 +985,8 @@ class MypageScrapLectureAPI(APIView):
             'teacher_name',
             'lecture_content',
             'lecture_category',
-            'lecture_price'
+            'lecture_price',
+            'lecture_status'
         )
 
         for scrap_lecture in scrap_lectures:
@@ -903,6 +997,11 @@ class MypageScrapLectureAPI(APIView):
                 scrap_lecture['lecture_file'] = lecture_file['file_url']
             else:
                 scrap_lecture['lecture_file'] = 'file/2024/03/05/blank-image.png'
+
+            if scrap_lecture['lecture_status'] == True:
+                scrap_lecture['lecture_status'] = 'online'
+            elif scrap_lecture['lecture_status']==False:
+                scrap_lecture['lecture_status'] = 'offline'
 
             review = LectureReview.objects.filter(member_id=request.session['member']['id'],
                                                   lecture_id=scrap_lecture['lecture_id'])
@@ -1007,7 +1106,8 @@ class MypageTeacherAPI(APIView):
             lecture_title=F('lecture__lecture_title'),
             lecture_content=F('lecture__lecture_content'),
             lecture_category=F('lecture__lecture_category'),
-            member_name=F('member__member_name')
+            member_name=F('member__member_name'),
+            lecture_status = F('lecture__online_status')
             ).values(
             'teacher_name',
             'id',
@@ -1020,7 +1120,8 @@ class MypageTeacherAPI(APIView):
             'time',
             'kit',
             'apply_status',
-            'member_name'
+            'member_name',
+            'lecture_status'
             )
 
         for apply in applies:
@@ -1029,6 +1130,11 @@ class MypageTeacherAPI(APIView):
                 apply['lecture_file'] = lecture_file['file_url']
             else:
                 apply['lecture_file'] = 'file/2024/03/05/blank-image.png'
+
+            if apply['lecture_status'] == True:
+                apply['lecture_status'] = 'online'
+            elif apply['lecture_status']==False:
+                apply['lecture_status'] = 'offline'
 
             tags = LecturePlant.objects.filter(lecture_id=apply['lecture_id']).values('plant_name')
             apply['lecture_plant'] = [tag['plant_name'] for tag in tags]
@@ -1062,3 +1168,4 @@ class MypageTraineeAPI(APIView):
         apply['trainees'] = trainee_names
 
         return Response(apply)
+

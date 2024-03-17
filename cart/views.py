@@ -45,10 +45,9 @@ class CartView(View):
 class CartListAPI(APIView):
     # lecture detail 페이지에서 버튼을 누르면 정보입력
     def get(self, request, cart_id):
-
+        print('api')
         details = []
-        applies = Apply.objects.filter(member_id = request.session['member']['id'],apply_status=-3)
-
+        applies = Apply.objects.filter(member_id = request.session['member']['id'], apply_status=-3)
         for apply in applies:
 
             items = CartDetail.objects.filter(cart_id=cart_id,cart_detail_status=0, apply=apply)\
@@ -101,34 +100,13 @@ class CartAPI(APIView):
 class CartCheckoutAPI(APIView):
     @transaction.atomic
     def post(self, request, cart_id):
-        details = []
         member_id = request.session['member']['id']
-        applies = Apply.objects.filter(member_id=request.session['member']['id'], apply_status=-3)
-        cart = Cart.objects.filter(member_id = member_id,cart_status=0).first()
-        if cart.id == cart_id:
-            for apply in applies:
+        cart = Cart.objects.filter(member_id=member_id, cart_status=0).first()
+        cart_details = CartDetail.objects.filter(cart_detail_status= 0, cart_id=cart.id)
+        for detail in cart_details:
+            detail.cart_detail_status = 1
+            detail.updated_date = timezone.now()
+            detail.save(update_fields=['cart_detail_status','updated_date'])
 
-                items = CartDetail.objects.filter(cart_id=cart_id, cart_detail_status=0,apply=apply)\
-                    .annotate(lecture_price=F('apply__lecture__lecture_price')
-                              , lecture_title=F('apply__lecture__lecture_title')
-                              , teacher_name=F('apply__lecture__teacher__member__member_name')
-                              , quantity=F('apply__quantity')
-                              , date=F('apply__date')
-                              , time=F('apply__time')
-                              , kit=F('apply__kit')
-                              , lecture_id=F('apply__lecture__id')
-                              ) \
-                    .values('id', 'quantity', 'lecture_title', 'date', 'kit', 'time', 'teacher_name', 'lecture_price',
-                            'lecture_id')
 
-                for detail in details:
-                    detail_file = Lecture.objects.filter(id=detail['lecture_id']).values(
-                        'lectureplacefile__file_url').first()
-                    detail['lecture_file'] = detail_file['lectureplacefile__file_url']
-
-                if not items:  # items가 비어있는 경우 처리
-                    continue
-
-                details.append(**items)
-
-            return redirect('/cart/order/',details)
+        return redirect(f'/order/cart/order/{cart.id}')
