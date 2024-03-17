@@ -82,7 +82,7 @@ const addPaginationEvent = (pageInfo) => {
     if (pageInfo.page > 1) {
         // 뒤로 가기 버튼 클릭 이벤트 추가 - 이전 페이지의 데이터 요청(키워드는 그대로 유지)
         pageCountPrev.addEventListener("click", async () => {
-            await memberService.getList(keyword, --page, createHTML.showList);
+            await reportService.getPostReplyReports(keyword, --page, createHTML.showList);
         });
     }
 
@@ -90,7 +90,7 @@ const addPaginationEvent = (pageInfo) => {
     if (pageInfo.page !== pageInfo.realEnd){
         // 앞으로 가기 버튼 누르면 다음 페이지 데이터 요청
         pageCountNext.addEventListener("click", async () => {
-            await memberService.getList(keyword, ++page, createHTML.showList);
+            await reportService.getPostReplyReports(keyword, ++page, createHTML.showList);
         });
     }
 
@@ -99,7 +99,7 @@ const addPaginationEvent = (pageInfo) => {
         // 버튼 클릭 시 해당 버튼 안 숫자를 가져와서 page에 할당 -> 해당 페이지의 데이터 요청
         btn.addEventListener("click", async () => {
             page = pageCountNumSpans[i].innerText;
-            await memberService.getList(keyword, page, createHTML.showList);
+            await reportService.getPostReplyReports(keyword, page, createHTML.showList);
         });
     });
 }
@@ -113,50 +113,53 @@ const pageCountWrap = document.querySelector(".page-count-wrap")
 // HTML 코드 생성 모듈
 const createHTML = (() => {
     // 신고 내역 리스트 표시 - API 요청 데이터 전체(신고 내역 정보+페이지네이션 변수, 배열)를 인자로 받음
-    const showList = async (members) => {
+    const showList = async (reports) => {
         // HTML 코드를 담을 빈 문자열
         let text = ``;
         // 페이지네이션+전체 신고 내역 수를 담은 dict 데이터를 배열에서 분리해서 pageInfo에 할당
-        let pageInfo = members.pop()
+        let pageInfo = reports.pop()
         // 받아온 dict 데이터에서 전체 신고 내역 수를 화면에 표시
         allNum.innerText = pageInfo.totalCount
 
+        reportLecutres.innerText = pageInfo.lectureReports;
+        reportTrades.innerText = pageInfo.tradeReports;
+        reportPosts.innerText = pageInfo.postReports;
+        reportPostReplies.innerText = pageInfo.postReplyReports;
+        reportKnowhows.innerText = pageInfo.knowhowReports;
+        reportKnowhowReplies.innerText = pageInfo.knowhowReplyReports;
+
         // 신고 내역 정보가 없으면 내역 없음 표시
-        if (members.length === 0){
+        if (reports.length === 0){
             text += `
                 <div class="nothing">
                     <img src="/static/public/web/images/manager/nothing.png" class="nothing"/>
-                    <p class="nothing">회원이 없습니다.</p>
+                    <p class="nothing">신고 내역이 없습니다.</p>
                 </div>
             `
         }
         // 신고 내역이 하나라도 있다면 아래 코드로 신고 내역 리스트 생성
         else {
             // 신고 내역 각각을 HTML 코드에 담아서 text에 추가
-            for (let member of members){
-                // 회원의 가입 유형에 따라 서로 다른 문자열을 변수에 할당
-                const memberType = member.member_type === "google"
-                                          ? '구글'
-                                          : member.member_type === "kakao"
-                                          ? '카카오'
-                                          : member.member_type === "naver"
-                                          ? '네이버'
-                                          : false;
+            for (let report of reports){
+                let reportStatus = ''
 
-                // 회원의 휴면 여부에 따라 서로 다른 문자열을 변수에 할당
-                const memberStatus = member.member_status ? '휴면' : '비휴면';
+                if (report.report_status) {
+                    reportStatus = '접수됨'
+                }
+                else {
+                    reportStatus = "처리됨"
+                }
 
                 text += `
-                    <li class="list-content ${member.id}">
+                    <li class="list-content ${report.id}">
                     <input type="checkbox" class="checkbox-input" />
-                    <a class="member-info-wrap">
-                      <div class="member-info">${member.member_name}</div>
-                        <div class="member-info">${member.member_email}</div>
-                        <div class="member-info">${member.member_address}</div>
-                        <div class="member-info">${memberType}</div>
-                        <div class="member-info">10,000</div>
-                        <div class="member-info">${memberStatus}</div>
-                    </a>
+                    <div class="report-info-wrap">
+                      <div class="report-info">${report.report_target}</div>
+                      <div class="report-info">${report.report_content}</div>
+                      <div class="report-info">${report.report_member}</div>
+                      <div class="report-info">${reportStatus}</div>
+                      <div class="report-info">${report.created_date}</div>
+                    </div>
                   </li>
                 `
             }
@@ -228,43 +231,49 @@ const createHTML = (() => {
     return {showList: showList}
 })()
 
-// 회원 정보의 첫 페이지를 화면에 띄워주는 함수
-const callFirstMemberList = () => {
-  // 만들어둔 모듈을 사용해서 회원 정보를 불러옴
-  memberService.getList(keyword, page, createHTML.showList);
-
+// 일반 게시물 댓글 신고 리스트의 첫 페이지를 화면에 띄워주는 함수
+const callFirstPostReplyReportsList = () => {
+  reportService.getPostReplyReports(keyword, page, createHTML.showList);
   allCheckBox.checked = false;
   deleteBtn.disabled = true;
+  approveBtn.disabled = true;
 }
 
-// 페이지 열렸을 때 사용
-callFirstMemberList();
-
-// 페이지네이션 이벤트 추가하기
+// 첫 화면에 강의 신고 내역 표시
+callFirstPostReplyReportsList();
 
 // 삭제 버튼 누르면 뜨는 모달창
 document.addEventListener("DOMContentLoaded", function () {
   const deleteButtons = document.querySelectorAll(".delete-button");
-  const modalWrap = document.querySelector(".delete-modal-wrap");
+  const deleteModalWrap = document.querySelector(".delete-modal-wrap");
+  const approveModalWrap = document.querySelector(".approve-modal-wrap");
 
   deleteButtons.forEach(function (deleteButton) {
-    deleteButton.addEventListener("click", () => {
-      modalWrap.style.display = "flex";
+    deleteButton.addEventListener("click", (e) => {
+      deleteModalWrap.style.display = "flex";
     });
+  });
+
+  // 모달창이 표시되었을 때 나오는 어두운 배경 태그
+  const deleteModalBgcolor = document.querySelector(".delete-modal-bgcolor");
+
+  // 모달창이 표시된 상태에서 배경 클릭 시 모달창 숨김
+  deleteModalBgcolor.addEventListener("click", () => {
+      deleteModalWrap.style.display = "none";
   });
 
   const cancelButton = document.querySelector(".modal-cancel button");
   const confirmButton = document.querySelector(".modal-confirm button");
 
   cancelButton.addEventListener("click", () => {
-    modalWrap.style.display = "none";
+    deleteModalWrap.style.display = "none";
   });
 
-  // 삭제 버튼 이벤트 - 체크된 회원만 휴면 상태로 변경
+  // 삭제 시 이벤트
   confirmButton.addEventListener("click", async () => {
-    modalWrap.style.display = "none";
+    deleteModalWrap.style.display = "none";
 
-    // 휴면 상태로 만들 회원의 id를 담을 빈 문자열
+    // 삭제할 신고 내역의 id를 담을 빈 문자열
     let deleteIds = ``;
 
     // 이 시점에서 체크된 박스 개수를 세고
@@ -275,11 +284,52 @@ document.addEventListener("DOMContentLoaded", function () {
       deleteIds += `,${checkbox.parentElement.classList[1]}`;
     });
 
-    // API를 사용해서 체크한 회원들을 휴면 상태로 변경
-    await memberService.deleteMembers(deleteIds);
-    
-    // 페이지 새로고침
-    location.reload();
+    // 삭제할 신고 내역의 id를 삭제 API에 보냄
+    await reportService.deletePostReplyReports(deleteIds);
+
+    // 다시 리스트 요청 - 키워드는 유지
+    reportService.getPostReplyReports(keyword, page=1, createHTML.showList);
+    allCheckBox.checked = false;
+    deleteBtn.disabled = true;
+    approveBtn.disabled = true;
+  });
+
+  // 신고 승인 모달
+  approveBtn.addEventListener('click', () => {
+    approveModalWrap.style.display = 'flex';
+  });
+
+  const approveCancelBtn = document.querySelector(".approve-modal-cancel button");
+  const approveConfirmButton = document.querySelector(".approve-modal-confirm button");
+
+  // 승인 모달 취소
+  approveCancelBtn.addEventListener('click', () => {
+    approveModalWrap.style.display = 'none';
+  });
+
+  // 승인 실행
+  approveConfirmButton.addEventListener('click', async () => {
+    approveModalWrap.style.display = 'none';
+
+    // 승인할 신고 내역의 id를 담을 빈 문자열
+    let approveIds = ``;
+
+    // 이 시점에서 체크된 박스 개수를 세고
+    const checkedBoxes = document.querySelectorAll(".checkbox-input:checked");
+
+    // 각 체크박스를 감싸는 li 태그의 id를 approveIds에 추가
+    checkedBoxes.forEach((checkbox) => {
+      approveIds += `,${checkbox.parentElement.classList[1]}`;
+    });
+
+    // 승인할 신고 내역의 id를 API에 보내서 승인 처리
+    await reportService.approvePostReplyReports(approveIds);
+
+    // 다시 리스트 요청 - 키워드와 페이지 모두 유지
+    reportService.getPostReplyReports(keyword, page, createHTML.showList);
+    allCheckBox.checked = false;
+    deleteBtn.disabled = true;
+    approveBtn.disabled = true;
   });
 });
 
@@ -307,20 +357,22 @@ inputField.addEventListener("keyup", async (e) => {
         // 페이지 값 1로 원복
         page = 1
         // 위의 keyword가 포함된 신고 리스트의 1페이지를 불러옴
-        await memberService.getList(keyword, page, createHTML.showList)
+        await reportService.getPostReplyReports(keyword, page, createHTML.showList)
     }
 })
 
-// 입력 필드에 입력 내용이 변경될 때마다 실행될 함수를 정의
+// 입력 필드에 입력 내용이 변경될 때마다 실행될 함수를 정의합니다.
 function handleInputChange() {
-  const inputValue = inputField.value.trim();
+  const inputValue = inputField.value.trim(); // 입력 내용을 가져옵니다.
 
+  // 입력 내용이 있을 때
   if (inputValue !== "") {
-    cancelButton.style.display = "flex";
-    searchButton.style.display = "none";
+    cancelButton.style.display = "flex"; // cancel-logo를 보여줍니다.
+    searchButton.style.display = "none"; // search-logo를 숨깁니다.
   } else {
-    cancelButton.style.display = "none";
-    searchButton.style.display = "flex";
+    // 입력 내용이 없을 때
+    cancelButton.style.display = "none"; // cancel-logo를 숨깁니다.
+    searchButton.style.display = "flex"; // search-logo를 보여줍니다.
   }
 }
 
@@ -332,11 +384,11 @@ const handleCancelClick = async () => {
 
     keyword = inputField.value // keyword는 현재 빈 문자열(검색 조건 없음)
     page = 1 // 페이지 1로 초기화
-    await memberService.getList(keyword, page, createHTML.showList) // 신고 목록을 다시 불러옴
+    await reportService.getPostReplyReports(keyword, page, createHTML.showList) // 신고 목록을 다시 불러옴
 }
 
-// 입력 필드에 이벤트 리스너를 추가
+// 입력 필드에 이벤트 리스너를 추가합니다.
 inputField.addEventListener("input", handleInputChange);
 
-// cancel-logo에 클릭 이벤트 리스너를 추가
+// cancel-logo에 클릭 이벤트 리스너를 추가합니다.
 cancelButton.addEventListener("click", handleCancelClick);
