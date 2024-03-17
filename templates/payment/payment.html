@@ -1,5 +1,6 @@
 {% extends 'payment/base.html' %}
 {% load static %}
+{#{% load humanize %}#}
 {% block static %}
     <link rel="stylesheet" href="{% static 'order/css/payment/payment.css' %}">
 {% endblock %}
@@ -22,16 +23,16 @@
                 <div class="tag">기본배송지</div>
               </div>
               <div class="address">
-                경기 하남시 감일순환로 170 (감이동) , 감일스타힐스
+                {{ member_address.address_city }} {{ member_address.address_district }} {{ member_address.address_detail }}
               </div>
               <div class="user-info-wrap">
-                <div class="name">강희주</div>
-                <div class="phone">010-4849-6691</div>
+                <div class="name">{{ member.member_name }}</div>
+                <div class="phone">{{ member.member_email }}</div>
               </div>
               <div class="delivery-option-wrap">
                 <div class="delivery-option-container">
                   <span class="dropdown-image-wrap">
-                    <img {% static "public/web/images/common/button-down.png" %} alt="" />
+                    <img src = "{% static 'public/web/images/common/button-down.png' %}" alt="" />
                   </span>
                   <select class="delivery-option">
                     <option value="">배송시 요청사항을 선택해주세요</option>
@@ -63,48 +64,11 @@
                 <div class="input-container">
                   <div class="name-input-inner">
                     <input
-                      name="orderer.name"
+                      name="order-name"
                       maxlength="10"
                       class="name-input"
                     />
                     <div class="space"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="input-wrap">
-                <div class="input-title">이메일</div>
-                <div class="input-container">
-                  <div class="email-input-wrap">
-                    <div class="email-input-container">
-                      <div class="email-input-inner">
-                        <input maxlength="20" class="email-input" value="" />
-                        <div class="space"></div>
-                      </div>
-                      <span class="at">@</span>
-                    </div>
-                    <div class="domain-option-wrap">
-                      <div class="domain-option-container">
-                        <span class="dropdown-image-wrap">
-                          <img
-                            {% static "public/web/images/common/button-down.png" %}
-                            alt=""
-                          />
-                        </span>
-                        <select class="domain">
-                          <option value="">선택해주세요</option>
-                          <option value="naver.com">naver.com</option>
-                          <option value="hanmail.net">hanmail.net</option>
-                          <option value="daum.net">daum.net</option>
-                          <option value="gmail.com">gmail.com</option>
-                          <option value="kakao.com">kakao.com</option>
-                          <option value="nate.com">nate.com</option>
-                          <option value="hotmail.com">hotmail.com</option>
-                          <option value="outlook.com">outlook.com</option>
-                          <option value="icloud.com">icloud.com</option>
-                          <option value="CUSTOM">직접 입력</option>
-                        </select>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -116,11 +80,11 @@
                       <div class="phone-common-inner">
                         <span class="dropdown-image-wrap">
                           <img
-                            {% static "public/web/images/common/button-down.png" %}
+                            src="{% static 'public/web/images/common/button-down.png' %}"
                             alt=""
                           />
                         </span>
-                        <select class="number-options">
+                        <select name="order-phone" class="number-options">
                           <option value="010">010</option>
                           <option value="011">011</option>
                           <option value="016">016</option>
@@ -156,7 +120,7 @@
                 <li class="product-preview-wrap">
                   <div class="product-preview-container">
                     <div class="product-preview-inner">
-                      <h3 class="user-name">판매유저이름</h3>
+                      <h3 class="user-name">{{ teacher_name }}</h3>
                       <div class="delivery-condition">무료배송</div>
                     </div>
                     <hr class="divide" />
@@ -165,21 +129,18 @@
                   <div class="order-product-info">
                     <figure class="product-preview-image">
                       <img
-                        {% static "public/web/images/common/blank-image.png" %}
+                        src="/upload/{{ lecture_file.file_url }}"
                         class="product-image"
                       />
                     </figure>
                     <div class="product-info-contents">
                       <p class="product-name">
-                        [5%쿠폰]드레스덴 정품 조야패브릭 호텔식 침대프레임
-                        SS/Q/K/LK/CK
-                      </p>
-                      <p class="product-option">
-                        추가상품 - 베이직 본넬 매트리스 퀸Q
+                          {{lecture.lecture_title}}
                       </p>
                       <p class="product-price">
-                        119,000원<span class="quantity">1개</span>
+                          {{lecture.lecture_price }}
                       </p>
+                      <span class="quantity">{{ apply.quantity }}개</span>
                     </div>
                   </div>
                 </li>
@@ -205,7 +166,7 @@
                 <button type="button" class="use-all">전액 사용</button>
               </div>
               <div class="available-mileage-wrap">
-                사용 가능 마일리지<span class="mileage"> 195</span>
+                사용 가능 마일리지<span class="mileage"> {{ total }}</span>
                 <span> M</span>
               </div>
             </article>
@@ -337,16 +298,10 @@
                 </div>
                 <article class="detail-price-wrap">
                   <div class="price-title-text">
-                    총 상품 금액<span class="emphasis price">418,000원</span>
+                    총 상품 금액<span class="emphasis price Total">418,000원</span>
                   </div>
                   <div class="price-title-text">
-                    배송비<span class="price">0원</span>
-                  </div>
-                  <div class="price-title-text">
-                    쿠폰 사용<span class="price">0원</span>
-                  </div>
-                  <div class="price-title-text">
-                    포인트 사용<span class="price">0원</span>
+                    마일리지 사용<span class="price useMileage">0원</span>
                   </div>
                   <hr class="line" />
                   <div class="total-price-wrap">
@@ -470,7 +425,7 @@
               </div>
             </div>
             <div class="pay-button-wrap">
-              <button type="submit" class="summit">418,000원 결제하기</button>
+              <button type="button" class="summit">418,000원 결제하기</button>
             </div>
           </article>
         </aside>
@@ -485,7 +440,7 @@
             <span class="adress-modal-title">배송지 선택</span>
             <button type="button" class="close-button">
               <span class="cancel-image-wrap">
-                <img {% static "public/web/images/common/cancel.png" %} alt="" />
+                <img src="{% static 'public/web/images/common/cancel.png' %}"  alt="" />
               </span>
             </button>
           </div>
@@ -547,13 +502,13 @@
           <div class="address-update-title-wrap">
             <button type="button" class="back-button">
               <span class="back-button-image-wrap"
-                ><img {% static "public/web/images/common/arrow.png" %} alt=""
+                ><img src="{% static 'public/web/images/common/arrow.png' %}"  alt=""
               /></span>
             </button>
             <span class="address-update-title">배송지 수정</span>
             <button type="button" class="cancel-button">
               <span class="cancel-image-wrap">
-                <img src="/staticfiles/images/cancel.png" alt="" />
+                <img src="{% static 'public/web/images/common/cancel.png' %}" alt="" />
               </span>
             </button>
           </div>
@@ -594,7 +549,7 @@
                         <div class="number-input-inner">
                           <span class="dropdown-image-wrap">
                             <img
-                              {% static "public/web/images/common/button-down.png" %}
+                              src="{% static 'public/web/images/common/button-down.png' %}"
                               alt=""
                             />
                           </span>
@@ -689,7 +644,7 @@
                           <div class="check-image-wrap">
                             <span class="check-image-container">
                               <img
-                                {% static "public/web/images/common/checker.png" %}
+                                src="{% static 'public/web/images/common/checker.png' %}"
                                 alt=""
                               />
                             </span>
@@ -721,13 +676,13 @@
           <div class="add-address-title-wrap">
             <button type="button" class="add-back-button">
               <span class="add-back-button-image-wrap">
-                <img {% static "public/web/images/common/arrow.png" %} alt="" />
+                <img src="{% static 'public/web/images/common/arrow.png' %}"  alt="" />
               </span>
             </button>
             <span class="add-address-title">배송지 추가</span>
             <button type="button" class="add-cancel-button">
               <span class="add-cancel-image-wrap">
-                <img {% static "public/web/images/common/cancel.png" %} alt="" />
+                <img src="{% static 'public/web/images/common/cancel.png' %}" alt="" />
               </span>
             </button>
           </div>
@@ -768,7 +723,7 @@
                         <div class="number-input-inner">
                           <span class="dropdown-image-wrap">
                             <img
-                              {% static "public/web/images/common/button-down.png" %}
+                              src="{% static 'public/web/images/common/button-down.png' %}"
                               alt=""
                             />
                           </span>
@@ -859,7 +814,7 @@
                           <div class="check-image-wrap">
                             <span class="check-image-container">
                               <img
-                                {% static "public/web/images/common/checker.png" %}
+                                src="{% static 'public/web/images/common/checker.png' %}"
                                 alt=""
                               />
                             </span>
@@ -903,5 +858,7 @@
   </body>
 {% endblock %}
 {% block js %}
+    <script src="https://cdn.bootpay.co.kr/js/bootpay-3.3.6.min.js" type="application/javascript"></script>
     <script src="{% static 'order/js/payment/payment.js' %}"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 {% endblock %}
