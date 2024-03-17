@@ -1319,7 +1319,7 @@ class LectureReportAPI(APIView):
         lecture_reports = LectureReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('lecture__lecture_title'))\
-            .values(*columns).filter(id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for lecture_report in lecture_reports:
@@ -1399,7 +1399,7 @@ class TradeReportAPI(APIView):
         trade_reports = TradeReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('trade__trade_title'))\
-            .values(*columns).filter(id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for trade_report in trade_reports:
@@ -1479,7 +1479,7 @@ class PostReportAPI(APIView):
         post_reports = PostReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('post__post_title'))\
-            .values(*columns).filter(id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for post_report in post_reports:
@@ -1559,7 +1559,7 @@ class PostReplyReportAPI(APIView):
         post_reply_reports = PostReplyReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('post_reply__post_reply_content'))\
-            .values(*columns).filter(id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for post_reply_report in post_reply_reports:
@@ -1639,7 +1639,7 @@ class KnowhowReportAPI(APIView):
         knowhow_reports = KnowhowReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('knowhow__knowhow_title'))\
-            .values(*columns).filter(id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for knowhow_report in knowhow_reports:
@@ -1719,7 +1719,7 @@ class KnowhowReplyReportAPI(APIView):
         knowhow_reply_reports = KnowhowReplyReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('knowhow_reply__knowhow_reply_content'))\
-            .values(*columns).filter(id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for knowhow_reply_report in knowhow_reply_reports:

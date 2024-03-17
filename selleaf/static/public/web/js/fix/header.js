@@ -170,6 +170,7 @@ const teacherLogin = false;
 
 // 카카오 아이콘 눌렀을 때 모달창 구현 코드
 const myPagemodal = document.querySelector(".header-mymenumodal-wrap");
+const communityModal = document.querySelector(".community-modal-wrap");
 
 document.addEventListener("click", (e) => {
   if (!e.target.closest(".header-mymenumodal-wrap")) {
@@ -178,6 +179,14 @@ document.addEventListener("click", (e) => {
       return;
     }
     myPagemodal.classList.remove("myPagemodalOpen");
+  }
+
+  if (!e.target.closest(".community-modal-wrap")) {
+    if (e.target.closest(".community")) {
+      communityModal.classList.toggle("myPagemodalOpen");
+      return;
+    }
+    communityModal.classList.remove("myPagemodalOpen");
   }
 });
 

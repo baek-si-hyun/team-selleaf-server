@@ -32,10 +32,62 @@
                 <div class="header-third-inner">
                     {% with request.path as current_path %}
                         {# 커뮤니티(일반 게시물, 노하우) 서비스 페이지면 메뉴 텍스트 색 변경 #}
-                        {# href로 보낼 페이지랑 if 조건식 정할 것 #}
-                        <a class="header-third-inner-seconda" href="/community/main/">
-                            <span class="header-third-inner-firstsp">커뮤니티</span>
-                        </a>
+                        {% if 'post' in current_path or 'knowhow' in current_path %}
+                            <button class="header-third-inner-firsta community" type="button">
+                                <span class="header-third-inner-firstsp">
+                                    커뮤니티
+                                </span>
+                                <div
+                                        class="community-modal-wrap"
+                                        data-popper-reference-hidden="false"
+                                        data-popper-escaped="false"
+                                        data-popper-placement="bottom"
+                                >
+                                    <div class="header-mymenumodal-content">
+                                        <div class="header-mymenumodal-contentDiv">
+                                            {% if 'post' in current_path %}
+                                            <a class="header-third-inner-firsta" href="{% url 'post:create' %}">
+                                                <span class="header-third-inner-secondsp">포스트</span>
+                                            </a>
+                                            <a class="header-third-inner-seconda" href="{% url 'knowhow:create' %}">
+                                                <span class="header-third-inner-secondsp">노하우</span>
+                                            </a>
+                                            {% elif 'knowhow' in current_path %}
+                                            <a class="header-third-inner-firsta" href="{% url 'post:create' %}">
+                                                <span class="header-third-inner-secondsp">포스트</span>
+                                            </a>
+                                            <a class="header-third-inner-seconda" href="{% url 'knowhow:create' %}">
+                                                <span class="header-third-inner-secondsp">노하우</span>
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </button>
+                        {% else %}
+                            <button class="header-third-inner-seconda community" type="button">
+                                <span class="header-third-inner-firstsp">
+                                    커뮤니티
+                                </span>
+                                <div
+                                        class="community-modal-wrap"
+                                        data-popper-reference-hidden="false"
+                                        data-popper-escaped="false"
+                                        data-popper-placement="bottom"
+                                >
+                                    <div class="header-mymenumodal-content">
+                                        <div class="header-mymenumodal-contentDiv">
+                                            <a class="header-third-inner-seconda" href="{% url 'post:create' %}">
+                                                <span class="header-third-inner-secondsp">포스트</span>
+                                            </a>
+                                            <a class="header-third-inner-seconda" href="{% url 'knowhow:create' %}">
+                                                <span class="header-third-inner-secondsp">노하우</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </button>
+                        {% endif %}
                         {# 강의 서비스 페이지면 메뉴 텍스트 색 변경 #}
                         {% if 'lecture' in current_path and current_path != '/member/mypage/scraplectures/' %}
                             <a class="header-third-inner-firsta" href="{% url 'lecture:main' %}">
@@ -183,11 +235,10 @@
                   </span>
                                     <div
                                             class="header-mymenumodal-wrap"
-                                            style="
-                      position: absolute;
-                      inset: 0px auto auto 0px;
-                      transform: translate(945px, 58px);
-                    "
+                                            style="position: absolute;
+                                              inset: 0px auto auto 0px;
+                                              transform: translate(945px, 58px);
+                                            "
                                             data-popper-reference-hidden="false"
                                             data-popper-escaped="false"
                                             data-popper-placement="bottom"
@@ -236,9 +287,9 @@
                                                     강사신청
                                                 </a>
                                                 <!-- 고객센터 서비스 있는지 확인하고 없으면 삭제 -->
-                                                <a class="header-mymenumodal-contenta">
-                                                    고객센터
-                                                </a>
+{#                                                <a class="header-mymenumodal-contenta">#}
+{#                                                    고객센터#}
+{#                                                </a>#}
                                                 <a class="header-mymenumodal-contenta" href="/member/logout">
                                                     로그아웃
                                                 </a>
@@ -248,7 +299,7 @@
                                 {% else %}
                                     <a class="header-info-each" href="/member/login">로그인</a>
                                     <a class="header-info-each" href="/member/join">회원가입</a>
-                                    <a class="header-info-each" href="#">고객센터</a>
+{#                                    <a class="header-info-each" href="#">고객센터</a>#}
                                 {% endif %}
                             </div>
                             <span class="header-write-wrap">

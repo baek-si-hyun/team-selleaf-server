@@ -75,7 +75,7 @@
                             <div class="flex">
                               <p class="review-info">강의 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">{{ lecture_report_count }}</p>
+                                <p class="review-info-num lecture">{{ lecture_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -92,7 +92,7 @@
                             <div class="flex">
                               <p class="review-info">거래 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">{{ trade_report_count }}</p>
+                                <p class="review-info-num trade">{{ trade_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -109,7 +109,7 @@
                             <div class="flex">
                               <p class="review-info">일반 게시물 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">{{ post_report_count }}</p>
+                                <p class="review-info-num post">{{ post_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -126,7 +126,7 @@
                             <div class="flex">
                               <p class="review-info">일반 게시물 댓글 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">{{ post_reply_report_count }}</p>
+                                <p class="review-info-num post-reply">{{ post_reply_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -143,7 +143,7 @@
                             <div class="flex">
                               <p class="review-info">노하우 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">{{ knowhow_report_count }}</p>
+                                <p class="review-info-num knowhow">{{ knowhow_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -160,7 +160,7 @@
                             <div class="flex">
                               <p class="review-info">노하우 댓글 신고</p>
                               <div class="review-info-num">
-                                <p class="review-info-num">{{ knowhow_reply_report_count }}</p>
+                                <p class="review-info-num knowhow-reply">{{ knowhow_reply_report_count }}</p>
                               </div>
                             </div>
                           </div>
@@ -306,10 +306,20 @@
     let knowhowPage = 1;
     let knowhowReplyPage = 1;
     
+    // 각 신고 사항 별 개수를 담는 태그
+    const reportLecutres = document.querySelector("p.review-info-num.lecture");
+    const reportTrades = document.querySelector("p.review-info-num.trade");
+    const reportPosts = document.querySelector("p.review-info-num.post");
+    const reportPostReplies = document.querySelector("p.review-info-num.post-reply");
+    const reportKnowhows = document.querySelector("p.review-info-num.knowhow");
+    const reportKnowhowReplies = document.querySelector("p.review-info-num.knowhow-reply");
+
+    
     // 검색 키워드 - 초기값 빈 문자열
     let keyword = '';
   </script>
   <script src="{% static 'report/js/report-module.js' %}"></script>
+  <script src="{% static 'public/web/js/manager/add-checkbox-event.js' %}"></script>
   <script src="{% static 'public/web/js/manager/add-pagination-event.js' %}"></script>
   <script src="{% static 'report/js/show_report.js' %}"></script>
   <script src="{% static 'report/js/report.js' %}"></script>
