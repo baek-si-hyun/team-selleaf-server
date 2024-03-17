@@ -202,7 +202,7 @@
                                     <img alt="" src="{% static 'public/web/images/common/like-off.png' %}" />
                                   </div>
                                   <div class="scraps-likes-text">좋아요</div>
-                                  <div class="scraps-likes-count like-count"></div>
+                                  <div class="scraps-likes-count like-count">{{ like_count }}</div>
                                 </a>
                                 <!-- 마일리지 -->
                                 <div class="scraps-likes-content-wrap">
@@ -233,7 +233,7 @@
                     </h1>
                         <div class="title-empty-area"></div>
                 </div>
-                {% if like.count == 0 %}
+                {% if like_count == 0 %}
                   <div class="no-content-wrap">
                       <div class="no-contents">
                         <div

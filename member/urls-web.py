@@ -38,7 +38,7 @@ urlpatterns = [
     path('mypage/teachers/plan/',MypageTeacherPlanView.as_view()),
     path('mypage/show/teachers/<int:page>', MypageTeacherAPI.as_view()),
     path('mypage/teachers/apply/<int:apply_id>',MypageTraineeView.as_view()),
-    path('mypage/teachers/show/apply/<int:apply_id>/<int:page>', MypageTraineeAPI.as_view())
+    path('mypage/teachers/show/apply/<int:apply_id>', MypageTraineeAPI.as_view())
 
 
 ]

@@ -1,3 +1,54 @@
+// 전액 사용 눌렀을때 마일리지 창에 마일리지 들어가게
+const useAll = document.querySelector(".use-all");
+const mileageInput = document.querySelector(".mileage-usage");
+const mileage = document.querySelector(".mileage");
+let realRealM = mileage.innerText;
+realRealM = parseInt(realRealM.replace(" ", ""))
+
+useAll.addEventListener('click', ()=>{
+    mileageInput.value = mileage.innerText;
+    const realMileage = parseInt(mileageInput.value)
+})
+
+
+// 상품 총합 더하기
+let sum = 0;
+const productPrices = document.querySelectorAll(".product-price");
+const quantitys = document.querySelectorAll(".quantity");
+
+productPrices.forEach((productPrice, i)=>{
+    // 가격
+    let realPrice = productPrice.innerText;
+    let productRealPrice = realPrice.replace("원", "");
+    productRealPrice = parseInt(realPrice.replace(",", ""));
+
+    // 개수
+    let realQuantity = quantitys[i].innerText;
+    realQuantity = parseInt(realQuantity.replace('개', ''));
+
+    sum += productRealPrice * realQuantity
+})
+
+// 마일리지를 뺀 가격 구하기
+const realSum = sum - realRealM;
+console.log(sum)
+
+// 총 상품 금액 (마일리지 차감 안한 순수 금액)
+const emphasis = document.querySelector(".Total");
+const useMileage = document.querySelector(".useMileage");
+const totalPrice = document.querySelector(".total-price");
+const point = document.querySelector(".value");
+const summitBtn = document.querySelector(".summit");
+
+
+emphasis.innerText = sum.toString().toLocaleString() + "원"
+useMileage.innerText = realRealM + "원"
+totalPrice.innerText = realSum + "원"
+point.innerText = realSum.toString().slice(0, 3) + "p"
+summitBtn.innerText = realSum.toLocaleString() + "원 결제하기"
+
+
+
 // 주소 모달창 나오게
 const addressModal = document.querySelector(".address-modal-wrap");
 const modalBtn = document.querySelector(".change-button");
@@ -144,13 +195,13 @@ function handleSelectButtonClick(event) {
 
     const placeInfo = document.querySelector(".delivery-place-name");
     const address = document.querySelector(".address");
-    const userInfo = document.querySelector(".member-info-wrap");
+    const userInfo = document.querySelector(".user-info-wrap");
 
     // 주소 정보 업데이트
     const updateAddress = target.querySelector(".address-text").textContent;
     const updateAddressTitle = target.querySelector(".address-title").textContent;
-    const updateName = target.querySelector(".address-member-name").textContent;
-    const updatePhone = target.querySelector(".address-member-phone").textContent;
+    const updateName = target.querySelector(".address-user-name").textContent;
+    const updatePhone = target.querySelector(".address-user-phone").textContent;
     const updatetag = target.querySelector(".address-tag").textContent;
 
     // 화면에 정보 업데이트
@@ -304,3 +355,59 @@ agreeDivs.forEach((div, i) => {
 //     all.checked = terms.filter((term) => term.checked).length === 3;
 //   });
 // });
+
+summitBtn.addEventListener("click", () => {
+    const productName = document.querySelector("p.product-name").innerText;
+    // 유효성 검사 후 아래 코드로
+    BootPay.request({
+        price: '1000',
+        application_id: "65f3f21e00c78a001a64ad75",
+        name: `${productName}`,
+        pg: 'danal',
+        items: [
+            {
+                item_name: `${productName}`,
+                qty: 1, // 수량 직접 넣어야함
+                unique: '123',
+                price: 1000, // 가격 직접 넣어야함
+            }
+        ],
+        order_id: '고유order_id_1234',
+    }).error(function (data) {
+        //결제 진행시 에러가 발생하면 수행됩니다.
+        console.log(data);
+    }).cancel(function (data) {
+        //결제가 취소되면 수행됩니다.
+        console.log(data);
+    }).ready(function (data) {
+        // 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
+        console.log(data);
+    }).confirm(function (data) {
+        //결제가 실행되기 전에 수행되며, 주로 재고를 확인하는 로직이 들어갑니다.
+        //주의 - 카드 수기결제일 경우 이 부분이 실행되지 않습니다.
+        console.log(data);
+        var enable = true; // 재고 수량 관리 로직 혹은 다른 처리
+        if (enable) {
+            BootPay.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
+        } else {
+            BootPay.removePaymentWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
+        }
+    }).close(function (data) {
+        // 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
+        console.log(data);
+    }).done(async function (data) {
+        ////////////////////////
+        // 결제 완료 시의 로직 작성
+        const receiptId = await data.receipt_id;
+        pay(receiptId);
+    });
+})
+
+const pay = (receiptId) => {
+    // 결제하는 순간 화면에 있는 데이터들을 각각 받아오든, form태그가 있으면 그걸 가져오든 해서
+    // view로 보내면 됨.
+    // 1. form태그에 csrf token 넣어놓기
+    // 2. 적절한 view 링크로 action 속성값 넣기
+    // 3. 다 해놨으면 밑에 alert 대신 form.submit()
+    alert('결제 완료')
+}
