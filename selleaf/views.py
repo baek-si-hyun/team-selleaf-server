@@ -24,6 +24,17 @@ from teacher.models import Teacher
 from trade.models import Trade, TradeCategory
 
 
+# 메인 헤더 뷰
+class HeaderView(View):
+    def get(self, request):
+        alarms = Apply.objects.filter(receiver_id=request.session.get('member').get('id'),alarm_status=False)
+        alarm_count = len(alarms)
+        context = {
+            'alarm_count': alarm_count,
+        }
+        return render(request, 'fix/header.html', context)
+
+
 # 관리자 로그인
 class ManagerLoginView(View):
     # 관리자 로그인 페이지 이동 뷰

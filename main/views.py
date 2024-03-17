@@ -252,9 +252,6 @@ class MainView(View):
             lecture_review['lecture_file_url'] = lecture_review_file['lectureplacefile__file_url']
 
 
-        alarms = Alarm.objects.filter(receiver_id=request.session.get('member').get('id'), alarm_status=False)
-        alarm_count = len(alarms)
-
         context = {
             'best_knowhow': best_knowhow,
             'knowhows': knowhows,
@@ -262,7 +259,6 @@ class MainView(View):
             'trades': trades,
             'lectureReviews': lecture_reviews,
             'posts': posts,
-            'alarm_count': alarm_count,
         }
         return render(request, 'main/main.html', context)
 

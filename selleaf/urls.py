@@ -18,10 +18,11 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     LectureReportManagementView, TradeReportManagementView, PostReportManagementView, PostReplyReportManagementView, \
     KnowhowReportManagementView, KnowhowReplyReportManagementView, LectureReportAdjustAPI, TradeReportAdjustAPI, \
     PostReportAdjustAPI, PostReplyReportAdjustAPI, KnowhowReportAdjustAPI, KnowhowReplyReportAdjustAPI, PaymentListAPI, \
-    LectureDeleteAPI, LectureReviewDeleteAPI
+    LectureDeleteAPI, LectureReviewDeleteAPI, HeaderView
 
 urlpatterns = [
     path('', MainView.as_view(), name='main'),
+    path('header/', HeaderView.as_view(), name='main-header'),
     path('search/', SearchView.as_view(), name='search'),
     path('search/api/', SearchAPI.as_view(), name='search-api'),
     path('search-history/api/', SearchHistoryAPI.as_view(), name='search-history-api'),
