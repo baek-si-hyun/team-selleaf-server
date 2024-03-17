@@ -54,11 +54,11 @@ const postService = (() => {
 
     const getList = async (page, filters, sorting, types, callback) => {
         const response = await fetch(`/post/list/${page}/${filters}/${sorting}/${types}`);
-        const knowhows = await response.json();
+        const posts = await response.json();
         if(callback){
-            return callback(knowhows);
+            return callback(posts);
         }
-        return knowhows;
+        return posts;
     }
 
     const getScrap = async (post_id, member_id, scrap_status, callback) => {

@@ -187,11 +187,11 @@ const commentDeclarationBtns = document.querySelectorAll(
 );
 
 // 댓글 신고버튼 클릭 시
-commentDeclarationBtns.forEach((item) => {
-  item.addEventListener("click", () => {
-    declarationModalWrap.classList.add("open");
-  });
-});
+// commentDeclarationBtns.forEach((item) => {
+//   item.addEventListener("click", () => {
+//     declarationModalWrap.classList.add("open");
+//   });
+// });
 
 //신고 모달 없애기
 const cancelDeclarationBtn = document.querySelector(".cancel-declaration-btn");

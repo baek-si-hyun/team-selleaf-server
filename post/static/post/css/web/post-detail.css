@@ -76,6 +76,25 @@
   line-height: 32px;
   color: rgb(130, 140, 148);
 }
+.content-title-btn {
+  display: inline-block;
+  margin: 0px;
+  padding: 0px;
+  border: none;
+  background: none;
+  font-style: inherit;
+  font-variant: inherit;
+  font-weight: inherit;
+  font-stretch: inherit;
+  font-family: inherit;
+  font-optical-sizing: inherit;
+  font-kerning: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 16px;
+  line-height: 32px;
+  color: rgb(130, 140, 148);
+}
 .comment-like-icon-choice::before {
   font-family: OhouseIcon;
   vertical-align: top;
@@ -460,7 +479,8 @@
   margin-left: 0px;
 }
 .comment-item-box {
-  margin: 30px 0px;
+  padding-top: 15px;
+  margin: 15px 0px;
 }
 .comment-item {
   display: flex;
@@ -907,6 +927,19 @@
   justify-content: center;
   align-items: center;
 }
+.reply-declaration-modal-wrap {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  z-index: 1300;
+  background-color: rgba(33, 38, 41, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
 .declaration-modal-container {
   max-height: 78%;
   vertical-align: middle;
@@ -1111,6 +1144,38 @@
   background: none #FBCCD4;
 }
 
+.report-reply-declaration-btn {
+  margin: 0px;
+  border: none;
+  background: none #C06888;
+  font-style: inherit;
+  font-variant: inherit;
+  font-stretch: inherit;
+  font-family: inherit;
+  font-optical-sizing: inherit;
+  font-kerning: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 16px;
+  line-height: 20px;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 40px;
+  border-radius: 4px;
+  padding: 0px 16px;
+  font-weight: 700;
+  box-sizing: border-box;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  width: 100%;
+}
+.report-reply-declaration-btn:hover {
+  background: none #FBCCD4;
+}
+
 .cancel-declaration-btn-container {
   padding-top: 1px;
   padding-bottom: 7px;
@@ -1147,6 +1212,38 @@
   width: 100%;
 }
 .cancel-declaration-btn:hover {
+  background: none #FBCCD4;
+}
+
+.cancel-reply-declaration-btn {
+  margin: 0px;
+  border: none;
+  background: none #C06888;
+  font-style: inherit;
+  font-variant: inherit;
+  font-stretch: inherit;
+  font-family: inherit;
+  font-optical-sizing: inherit;
+  font-kerning: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 16px;
+  line-height: 20px;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 40px;
+  border-radius: 4px;
+  padding: 0px 16px;
+  font-weight: 700;
+  box-sizing: border-box;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  width: 100%;
+}
+.cancel-reply-declaration-btn:hover {
   background: none #FBCCD4;
 }
 
@@ -1306,4 +1403,11 @@ section.reply-update-wrap textarea {
 
 #more-replies {
   display: none;
+}
+.content-split-top {
+    margin: 20px 0px 0px;
+    padding: 0px;
+    height: 1px;
+    border: none;
+    background-color: rgb(234, 237, 239);
 }

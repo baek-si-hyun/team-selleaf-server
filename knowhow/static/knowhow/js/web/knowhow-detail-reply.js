@@ -49,7 +49,7 @@ const showList = (replies) => {
                         <div class="comment-user-img-wrap">
                           <figure class="comment-user-img-container">
                             <img
-                              src="/static/public/web/images/common/blank-image.png"
+                              src="${reply.member__memberprofile__file_url}"
                               height="0"
                               class="comment-user-img"
                             />
