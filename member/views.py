@@ -1106,7 +1106,8 @@ class MypageTeacherAPI(APIView):
             lecture_title=F('lecture__lecture_title'),
             lecture_content=F('lecture__lecture_content'),
             lecture_category=F('lecture__lecture_category'),
-            member_name=F('member__member_name')
+            member_name=F('member__member_name'),
+            lecture_status = F('lecture__online_status')
             ).values(
             'teacher_name',
             'id',
@@ -1119,7 +1120,8 @@ class MypageTeacherAPI(APIView):
             'time',
             'kit',
             'apply_status',
-            'member_name'
+            'member_name',
+            'lecture_status'
             )
 
         for apply in applies:
@@ -1128,6 +1130,11 @@ class MypageTeacherAPI(APIView):
                 apply['lecture_file'] = lecture_file['file_url']
             else:
                 apply['lecture_file'] = 'file/2024/03/05/blank-image.png'
+
+            if apply['lecture_status'] == True:
+                apply['lecture_status'] = 'online'
+            elif apply['lecture_status']==False:
+                apply['lecture_status'] = 'offline'
 
             tags = LecturePlant.objects.filter(lecture_id=apply['lecture_id']).values('plant_name')
             apply['lecture_plant'] = [tag['plant_name'] for tag in tags]
@@ -1161,3 +1168,4 @@ class MypageTraineeAPI(APIView):
         apply['trainees'] = trainee_names
 
         return Response(apply)
+

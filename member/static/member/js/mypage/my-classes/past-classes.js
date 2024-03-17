@@ -78,7 +78,7 @@ const showApplies = (applies) => {
               </li>`).join('');
     if (apply.apply_status === 1) {
       text += `
-          <a href="#" class="classes-history-link"></a>
+          <a href="/lecture/detail/${apply.lecture_status}/?id=${apply.lecture_id}" class="classes-history-link"></a>
             <div class="classes-history-item-container">
               <div class="classes-item-image-wrap">
                 <img alt=""
