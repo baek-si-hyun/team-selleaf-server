@@ -1,6 +1,6 @@
 let page = 1;
 
-const knowhowSection = document.querySelector(".content-line-box");
+const postSection = document.querySelector(".content-line-box");
 const filterItems = document.querySelectorAll(".filter-item")
 const optionList = document.querySelector('.option-list')
 const sortChoices = document.querySelectorAll(".menu-choice")
@@ -14,8 +14,8 @@ optionReset.addEventListener("click", () => {
     filter = '전체'
     sorting = '최신순'
     type = '전체'
-    knowhowService.getList(page=1, filter, sorting, type, showList).then((text) => {
-            knowhowSection.innerHTML = text;
+    postService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            postSection.innerHTML = text;
         });
 })
 
@@ -39,8 +39,8 @@ sortChoices.forEach((sort) => {
         }
         // console.log(type)
 
-        knowhowService.getList(page=1, filter, sorting, type, showList).then((text) => {
-            knowhowSection.innerHTML = text;
+        postService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            postSection.innerHTML = text;
         });
 
     })
@@ -74,11 +74,11 @@ filterItems.forEach((item) => {
             }
 
         }
-        knowhowService.getList(page=1, filter, sorting, type, showList).then((text) => {
-            knowhowSection.innerHTML = text;
+        postService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            postSection.innerHTML = text;
         });
-        knowhowService.getList(page++, filter, sorting, type, filterCount).then((filteringCount) => {
-            totalKnowhows.innerText = filteringCount;
+        postService.getList(page++, filter, sorting, type, filterCount).then((filteringCount) => {
+            totalposts.innerText = filteringCount;
         });
         // console.log(filter)
 
@@ -123,28 +123,28 @@ optionList.addEventListener("click", (e) => {
     }
 
     // console.log(filter)
-    knowhowService.getList(page=1, filter, sorting, type, showList).then((text) => {
-            knowhowSection.innerHTML = text;
+    postService.getList(page=1, filter, sorting, type, showList).then((text) => {
+            postSection.innerHTML = text;
         });
-    knowhowService.getList(page++, filter, sorting, type, filterCount).then((filteringCount) => {
-            totalKnowhows.innerText = filteringCount;
+    postService.getList(page++, filter, sorting, type, filterCount).then((filteringCount) => {
+            totalposts.innerText = filteringCount;
         });
 
 })
 
-const showList = (knowhows) => {
+const showList = (posts) => {
     let text = ``;
 
-    console.log(knowhows['knowhows'])
+    console.log(posts['posts'])
 
-    knowhows['knowhows'].forEach((knowhow) => {
+    posts['posts'].forEach((post) => {
         text += `
-            <a href="/knowhow/detail/?id=${knowhow.id}" class="knowhow-content-wrap">
+            <a href="/post/detail/?id=${post.id}" class="post-content-wrap">
                 <div class="content-item-wrap">
                   <div class="content-item-container">
                     <div class="content-img-box">
                       <img
-                        src="/upload/${knowhow.knowhow_file}"
+                        src="/upload/${post.post_file}"
                         class="content-img"
                       />
                       <div class="scrap-btn-box">
@@ -163,22 +163,22 @@ const showList = (knowhows) => {
                       </div>
                     </div>
                     <p class="content-title">
-                        ${knowhow.knowhow_title}
+                        ${post.post_title}
                     </p>
                     <div class="content-bottom-box">
                       <div class="content-uploader">
                         <div class="uploader-img-box">
             `;
-            if(knowhow.profile.includes('http://') || knowhow.profile.includes('https://')) {
+            if(post.profile.includes('http://') || post.profile.includes('https://')) {
                 text += `
                           <img
-                            src="${knowhow.profile}"
+                            src="${post.profile}"
                             class="uploader-img"
                           />
                          `;
-            }else if (knowhow.profile.includes('file/20')) {
+            }else if (post.profile.includes('file/20')) {
                 text += `
-                            <img src="/upload/${knowhow.profile}"
+                            <img src="/upload/${post.profile}"
                                  class="uploader-img"
                               />
                         `;
@@ -192,17 +192,17 @@ const showList = (knowhows) => {
 
             text += `
                         </div>
-                        <span class="uploader-name">${knowhow.member_name}</span>
+                        <span class="uploader-name">${post.member_name}</span>
                       </div>
                       <div class="content-data-box">
                         <span class="content-data scrap-content"
-                          >스크랩 <span>${knowhow.scrap_count}</span>
+                          >스크랩 <span>${post.scrap_count}</span>
                         </span>
                         <span class="content-data count-content"
-                          >조회수 <span>${knowhow.knowhow_count}</span>
+                          >조회수 <span>${post.post_count}</span>
                         </span>
                         <span class="content-data like-content"
-                          >좋아요 <span>${knowhow.like_count}</span>
+                          >좋아요 <span>${post.like_count}</span>
                         </span>
                       </div>
                     </div>
@@ -215,25 +215,25 @@ const showList = (knowhows) => {
     return text;
 }
 
-const filterCount = (knowhows) => {
-    filteringCount = `${knowhows['knowhows_count']}개의 노하우가 있어요!`
+const filterCount = (posts) => {
+    filteringCount = `${posts['posts_count']}개의 게시글이 있어요!`
     return filteringCount
 }
 
 // window.addEventListener('DOMContentLoaded', () => {
-//     knowhowService.getList(page++, filter, showList).then((text) => {
-//             knowhowSection.innerHTML += text;
+//     postService.getList(page++, filter, showList).then((text) => {
+//             postSection.innerHTML += text;
 //         });
 // })
 
 // 처음 화면에 나오는거
-knowhowService.getList(page++, filter, sorting, type, showList).then((text) => {
-    knowhowSection.innerHTML += text;
+postService.getList(page++, filter, sorting, type, showList).then((text) => {
+    postSection.innerHTML += text;
 });
 
-const totalKnowhows = document.querySelector(".total-data")
-knowhowService.getList(page, filter, sorting, type, filterCount).then((filteringCount) => {
-    totalKnowhows.innerText = filteringCount;
+const totalposts = document.querySelector(".total-data")
+postService.getList(page, filter, sorting, type, filterCount).then((filteringCount) => {
+    totalposts.innerText = filteringCount;
 });
 
 
@@ -252,22 +252,12 @@ window.addEventListener("scroll", () => {
 
 
     if (scrollTop + windowHeight >= totalHeight) {
-        knowhowService.getList(page++, filter, sorting, type, showList).then((text) => {
-                knowhowSection.innerHTML += text;
+        // console.log(111)
+        postService.getList(page++, filter, sorting, type, showList).then((text) => {
+                postSection.innerHTML += text;
 
             });
 
-        // if(optionBtn.previousElementSibling) {
-        //     knowhowService.getList(page++, filter, sorting, type, showList).then((text) => {
-        //         knowhowSection.innerHTML += text;
-        //
-        //     });
-        // }else{
-        //     knowhowService.getList(page++, filter, sorting, type, showList).then((text) => {
-        //         knowhowSection.innerHTML += text;
-        //
-        //     });
-        // }
     }
 });
 

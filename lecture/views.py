@@ -7,9 +7,12 @@ from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apply.models import Apply, Trainee
 from lecture.models import LectureCategory, Lecture, LectureProductFile, LecturePlant, Kit, LectureReview, \
     LectureAddress, LectureScrap
 from member.models import Member, MemberAddress, MemberProfile
+from order.models import OrderMileage
+from report.models import LectureReport
 from selleaf.date import Date
 from selleaf.time import Time
 from teacher.models import Teacher
@@ -511,6 +514,62 @@ class LectureDetailOfflineView(View):
 
         return render(request, 'lecture/web/lecture-detail-offline.html', context)
 
+    # apply로 보내주기
+    @transaction.atomic()
+    def post(self, request):
+        # apply create
+        print(request.POST)
+        apply_data = request.POST
+
+        lecture = Lecture.objects.get(id=apply_data['id'])
+        member = request.session['member']
+        member = Member.objects.get(id=member['id'])
+
+
+        data = {
+            'date': apply_data['date-input'],
+            'time': apply_data['time-input'],
+            'member': member,
+            'lecture': lecture,
+            'quantity': apply_data['kt-count-btn'],
+        }
+
+        apply = Apply.objects.create(**data)
+        member_mileage = OrderMileage.objects.create()
+        # 같이 듣는 사람 넣기
+        name_inputs = request.POST.getlist('name_input')
+        for name_input in name_inputs:
+            Trainee.objects.create(lecture=lecture, trainee_name=name_input)
+
+        return redirect(f'/order/order/?id={apply.id}')
+
+
+class LectureDetailCartAPI(APIView):
+    def post(self, request):
+        apply_data = request.POST
+
+        lecture = Lecture.objects.get(id=apply_data['id'])
+        member = request.session['member']
+        member = Member.objects.get(id=member['id'])
+
+        data = {
+            'date': apply_data['date-input'],
+            'time': apply_data['time-input'],
+            'member': member,
+            'lecture': lecture,
+            'quantity': apply_data['kt-count-btn'],
+            'apply_status': -3
+        }
+
+        apply = Apply.objects.create(**data)
+
+        # 같이 듣는 사람 넣기
+        name_inputs = request.POST.getlist('name_input')
+        for name_input in name_inputs:
+            Trainee.objects.create(lecture=lecture, trainee_name=name_input)
+
+        return Response("success")
+
 
 class LectureUploadOnlineView(View):
     def get(self, request):
@@ -859,3 +918,20 @@ class LectureDeleteView(View):
         Lecture.objects.filter(id=request.GET['id']).update(lecture_status=True)
 
         return redirect('/lecture/total')
+
+class LectureReportView(View):
+    @transaction.atomic
+    def post(self, request):
+        # 현재 로그인한 사용자 가져오기 --> 현재 로그인한 사용자가 그 게시물을 보고 있을 것이고 신고를 한다면 그 사용자가 할 것이기 때문
+        member = request.session['member']
+
+        # 현재 로그인한 사용자가 보고 있는 게시물 가져오기
+        lecture = Lecture.objects.get(id=request.POST['lecture-id'])
+
+        # 화면에서 사용자가 클릭한 신고 사유 가져오기
+        report = request.POST['declaration']
+
+        # 신고 생성
+        LectureReport.object.create(report_content=report, member_id=member['id'], report_status=True, lecture=lecture)
+
+        return redirect('/lecture/main')
