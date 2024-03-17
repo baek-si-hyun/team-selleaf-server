@@ -1,6 +1,6 @@
 const knowhowScrapService = (() => {
   const update = async (knowhowId) => {
-    await fetch(`/knowhow-scrap/api/`, {
+    const respones = await fetch(`/knowhow-scrap/api/`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -8,14 +8,14 @@ const knowhowScrapService = (() => {
       },
       body: JSON.stringify({'knowhow_id': knowhowId})
     });
+    return await respones.json()
   }
-
   return {update: update}
 })()
 
 const tradeScrapService = (() => {
   const update = async (tradeId) => {
-    await fetch(`/trade-scrap/api/`, {
+    const respones = await fetch(`/trade-scrap/api/`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -23,13 +23,14 @@ const tradeScrapService = (() => {
       },
       body: JSON.stringify({'trade_id': tradeId})
     });
+    return await respones.json()
   }
   return {update: update}
 })()
 
 const lectureScrapService = (() => {
   const update = async (lectureId) => {
-    await fetch(`/lecture-scrap/api/`, {
+    const respones = await fetch(`/lecture-scrap/api/`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -37,13 +38,13 @@ const lectureScrapService = (() => {
       },
       body: JSON.stringify({'lecture_id': lectureId})
     });
+    return await respones.json()
   }
-
   return {update: update}
 })()
 const postScrapService = (() => {
   const update = async (postId) => {
-    await fetch(`/post-scrap/api/`, {
+    const respones = await fetch(`/post-scrap/api/`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -51,7 +52,7 @@ const postScrapService = (() => {
       },
       body: JSON.stringify({'post_id': postId})
     });
+    return await respones.json()
   }
-
   return {update: update}
 })()

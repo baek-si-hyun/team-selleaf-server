@@ -80,8 +80,6 @@ class SearchView(View):
         except KeyError:
             return
 
-        if member is not None:
-            profile = request.session['member_files'][0]
 
         knowhow_condition = Q(knowhow_title__contains=search_data) | Q(knowhowtag__tag_name__contains=search_data)
         knowhows_queryset = Knowhow.objects.filter(knowhow_condition)
@@ -173,6 +171,11 @@ class MainView(View):
                       member_name=F('member__member_name')) \
             .values('member_profile', 'member_name', 'id').first()
 
+        knowhow_file = KnowhowFile.objects.filter(knowhow_id=best_knowhow['id']).values('file_url').first()
+        best_knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
+
+        print(best_knowhow)
+
         knowhows = Knowhow.objects.filter().order_by('knowhow_count') \
                        .annotate(member_profile=F('member__memberprofile__file_url'),
                                  member_name=F('member__member_name')) \
@@ -224,7 +227,7 @@ class MainView(View):
                 post['post_scrap'] = post_scrap['status'] if post_scrap and 'status' in post_scrap else False
 
 
-        lectures = Lecture.enabled_objects.filter().order_by('-id') \
+        lectures = Lecture.objects.filter().order_by('-id') \
                        .values('id', 'lecture_title', 'lecture_content')[:4]
         for lecture in lectures:
             lecture_file = LecturePlaceFile.objects.filter(lecture_id=lecture['id']).values('file_url').first()
@@ -237,7 +240,7 @@ class MainView(View):
                 lecture['lecture_scrap'] = lecture_scrap['status'] if lecture_scrap and 'status' in lecture_scrap else False
 
 
-                # 데이터가 너무 적어 하루단위를 일단 일주일 단위로 바꿈
+        # 데이터가 너무 적어 하루단위를 일단 일주일 단위로 바꿈
         lecture_reviews = LectureReview.objects.filter().order_by('-id') \
                               .annotate(lecture_title=F('lecture__lecture_title')) \
                               .values('id', 'lecture_title', 'review_content', 'lecture_id')[:3]
@@ -295,67 +298,88 @@ class BestLectureCategoryAPI(APIView):
 class KnowhowScrapAPI(APIView):
     def patch(self, request):
         data = request.data
-        data = {
-            'knowhow_id': data['knowhow_id'],
-            'member_id': request.session['member']['id']
-        }
+        member = request.session.get('member')
 
-        knowhow_scrap, created = KnowhowScrap.objects.get_or_create(knowhow_id=data['knowhow_id'],
-                                                                    member_id=data['member_id'])
-        if not created:
-            is_scrap = False if knowhow_scrap.status else True
-            knowhow_scrap.status = is_scrap
-            knowhow_scrap.save()
+        if member:
 
-        return Response('success')
+            data = {
+                'knowhow_id': data['knowhow_id'],
+                'member_id': member['id']
+            }
+
+            knowhow_scrap, created = KnowhowScrap.objects.get_or_create(knowhow_id=data['knowhow_id'],
+                                                                        member_id=data['member_id'])
+            if not created:
+                is_scrap = False if knowhow_scrap.status else True
+                knowhow_scrap.status = is_scrap
+                knowhow_scrap.save()
+
+            scrap_status = KnowhowScrap.objects.filter(knowhow_id=data['knowhow_id'], member_id=data['member_id']).values('status').first()
+            return Response(scrap_status)
+        else:
+            return Response('')
 
 
 class TradeScrapAPI(APIView):
     def patch(self, request):
         data = request.data
-        data = {
-            'trade_id': data['trade_id'],
-            'member_id': request.session['member']['id']
-        }
+        member = request.session.get('member')
+        if member:
+            data = {
+                'trade_id': data['trade_id'],
+                'member_id': member['id']
+            }
 
-        trade_scrap, created = TradeScrap.objects.get_or_create(trade_id=data['trade_id'], member_id=data['member_id'])
-        if not created:
-            is_scrap = False if trade_scrap.status else True
-            trade_scrap.status = is_scrap
-            trade_scrap.save()
+            trade_scrap, created = TradeScrap.objects.get_or_create(trade_id=data['trade_id'], member_id=data['member_id'])
+            if not created:
+                is_scrap = False if trade_scrap.status else True
+                trade_scrap.status = is_scrap
+                trade_scrap.save()
 
-        return Response('success')
+            scrap_status = TradeScrap.objects.filter(trade_id=data['trade_id'], member_id=data['member_id']).values('status').first()
+            return Response(scrap_status)
+        else:
+            return Response('')
 
 
 class LectureScrapAPI(APIView):
     def patch(self, request):
         data = request.data
-        data = {
-            'lecture_id': data['lecture_id'],
-            'member_id': request.session['member']['id']
-        }
-        lecture_scrap, created = LectureScrap.objects.get_or_create(lecture_id=data['lecture_id'],
-                                                                    member_id=data['member_id'])
-        if not created:
-            is_scrap = False if lecture_scrap.status else True
-            lecture_scrap.status = is_scrap
-            lecture_scrap.save()
+        member = request.session.get('member')
+        if member:
+            data = {
+                'lecture_id': data['lecture_id'],
+                'member_id': member['id']
+            }
+            lecture_scrap, created = LectureScrap.objects.get_or_create(lecture_id=data['lecture_id'],
+                                                                        member_id=data['member_id'])
+            if not created:
+                is_scrap = False if lecture_scrap.status else True
+                lecture_scrap.status = is_scrap
+                lecture_scrap.save()
 
-        return Response('success')
-
+            scrap_status = LectureScrap.objects.filter(lecture_id=data['lecture_id'], member_id=data['member_id']).values('status').first()
+            return Response(scrap_status)
+        else:
+            return Response('')
 
 class PostScrapAPI(APIView):
     def patch(self, request):
         data = request.data
-        data = {
-            'post_id': data['post_id'],
-            'member_id': request.session['member']['id']
-        }
+        member = request.session.get('member')
+        if member:
+            data = {
+                'post_id': data['post_id'],
+                'member_id': member['id']
+            }
 
-        post_scrap, created = PostScrap.objects.get_or_create(post_id=data['post_id'], member_id=data['member_id'])
-        if not created:
-            is_scrap = False if post_scrap.status else True
-            post_scrap.status = is_scrap
-            post_scrap.save()
+            post_scrap, created = PostScrap.objects.get_or_create(post_id=data['post_id'], member_id=data['member_id'])
+            if not created:
+                is_scrap = False if post_scrap.status else True
+                post_scrap.status = is_scrap
+                post_scrap.save()
 
-        return Response('success')
+            scrap_status = PostScrap.objects.filter(post_id=data['post_id'], member_id=data['member_id']).values('status').first()
+            return Response(scrap_status)
+        else:
+            return Response('')
