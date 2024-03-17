@@ -78,6 +78,7 @@ const sidebarSelected = document.querySelector(
 
 var count = 0;
 var totalPrice = 0; // 추가된 총 가격
+const kitInputValue = document.querySelector(".kt-count-btn");
 
 // 총 가격을 업데이트하는 함수
 function updateTotalPrice() {
@@ -118,7 +119,7 @@ add.addEventListener("click", (e) => {
 
     number.innerHTML = `${count}`;
     sidebarNumber.innerHTML = `${count}`;
-
+    kitInputValue.value = `${count}`;
     if (count >= 5) {
       studentAlert.innerHTML += `
         <div class="student-alert">
@@ -186,3 +187,25 @@ sidebarSub.addEventListener("click", (e) => {
   var studentAlert = studentInfo.querySelector(".student-alert");
   studentAlert && studentAlert.remove();
 });
+
+const orderButton = document.querySelector(".order-button");
+const addCartButton = document.querySelector(".add-cart-button");
+const orderForm = document.querySelector("form[name=apply]");
+orderButton.addEventListener("click", () => {
+  orderForm.action = '/lecture/detail/offline/';
+  orderForm.submit();
+})
+
+const addToCart = async (cartForm) => {
+  await fetch(`/lecture/cart/api/`, {
+    method: "POST",
+    body: cartForm,
+  });
+}
+
+addCartButton.addEventListener("click", async () => {
+  const cartForm = new FormData(orderForm);
+  await addToCart(cartForm);
+  // 모달로 변경하려면 변경
+  alert('장바구니에 상품이 추가되었습니다.');
+})

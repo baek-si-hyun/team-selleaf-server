@@ -1,9 +1,8 @@
 from django.urls import path
 
-from apply.views import ApplyView
 from lecture.views import LectureMainView, LectureDetailOnlineView, LectureDetailOfflineView, LectureTotalView, \
     LectureUploadOnlineView, LectureUploadOfflineView, LectureUpdateOnlineView, LectureUpdateOfflineView, \
-    LectureDeleteView, LectureTotalApi, LectureMainApi, LectureReportView
+    LectureDeleteView, LectureTotalApi, LectureMainApi, LectureReportView, LectureDetailCartAPI
 
 app_name = 'lecture'
 
@@ -27,5 +26,7 @@ urlpatterns = [
 
     path('delete/', LectureDeleteView.as_view(), name='delete'),
 
-    path('/apply/', ApplyView.as_view(), name='apply'),
+    # path('/apply/', ApplyView.as_view(), name='apply'),
+
+    path('cart/api/', LectureDetailCartAPI.as_view(), name='detail-cart-api')
 ]

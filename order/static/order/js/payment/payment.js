@@ -356,3 +356,58 @@ agreeDivs.forEach((div, i) => {
 //   });
 // });
 
+summitBtn.addEventListener("click", () => {
+    const productName = document.querySelector("p.product-name").innerText;
+    // 유효성 검사 후 아래 코드로
+    BootPay.request({
+        price: '1000',
+        application_id: "65f3f21e00c78a001a64ad75",
+        name: `${productName}`,
+        pg: 'danal',
+        items: [
+            {
+                item_name: `${productName}`,
+                qty: 1, // 수량 직접 넣어야함
+                unique: '123',
+                price: 1000, // 가격 직접 넣어야함
+            }
+        ],
+        order_id: '고유order_id_1234',
+    }).error(function (data) {
+        //결제 진행시 에러가 발생하면 수행됩니다.
+        console.log(data);
+    }).cancel(function (data) {
+        //결제가 취소되면 수행됩니다.
+        console.log(data);
+    }).ready(function (data) {
+        // 가상계좌 입금 계좌번호가 발급되면 호출되는 함수입니다.
+        console.log(data);
+    }).confirm(function (data) {
+        //결제가 실행되기 전에 수행되며, 주로 재고를 확인하는 로직이 들어갑니다.
+        //주의 - 카드 수기결제일 경우 이 부분이 실행되지 않습니다.
+        console.log(data);
+        var enable = true; // 재고 수량 관리 로직 혹은 다른 처리
+        if (enable) {
+            BootPay.transactionConfirm(data); // 조건이 맞으면 승인 처리를 한다.
+        } else {
+            BootPay.removePaymentWindow(); // 조건이 맞지 않으면 결제 창을 닫고 결제를 승인하지 않는다.
+        }
+    }).close(function (data) {
+        // 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
+        console.log(data);
+    }).done(async function (data) {
+        ////////////////////////
+        // 결제 완료 시의 로직 작성
+        const receiptId = await data.receipt_id;
+        pay(receiptId);
+    });
+})
+
+const pay = (receiptId) => {
+    // 결제하는 순간 화면에 있는 데이터들을 각각 받아오든, form태그가 있으면 그걸 가져오든 해서
+    // view로 보내면 됨.
+    // 1. form태그에 csrf token 넣어놓기
+    // 2. 적절한 view 링크로 action 속성값 넣기
+    // 3. 다 해놨으면 밑에 alert 대신 form.submit()
+    alert('결제 완료')
+}
