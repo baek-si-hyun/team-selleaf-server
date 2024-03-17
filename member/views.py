@@ -16,7 +16,9 @@ from knowhow.models import KnowhowFile, KnowhowReply, Knowhow, KnowhowPlant, Kno
 from lecture.models import LectureReview, LectureProductFile, LecturePlant, Lecture, LectureScrap
 from member.models import Member, MemberAddress, MemberProfile
 from member.serializers import MemberSerializer
+from order.models import OrderMileage
 from post.models import Post, PostFile, PostPlant, PostReply, PostReplyLike, PostLike
+from selleaf.models import Mileage
 from teacher.models import Teacher
 from trade.models import TradeScrap, TradeFile, TradePlant, Trade
 
@@ -146,6 +148,16 @@ class MypageShowView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -154,8 +166,11 @@ class MypageShowView(View):
             'post_count': post_count,
             'lecture_review':lecture_review,
             'like_count':like_count,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage': total
         }
+
+
 
         return render(request,'member/mypage/my_profile/see-all.html',context)
 
@@ -180,6 +195,15 @@ class MypagePostView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -187,7 +211,8 @@ class MypagePostView(View):
             'teacher': teacher,
             'post_count': post_count,
             'like_count':like_count,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage': total
         }
         return render(request,'member/mypage/my_profile/my-posts.html',context)
 
@@ -213,6 +238,15 @@ class MypageReplyView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
 
         context = {
             'member': member,
@@ -220,7 +254,8 @@ class MypageReplyView(View):
             'teacher':teacher,
             'like_count':like_count,
             'reply_count':reply_count,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage':total
         }
         return render(request,'member/mypage/my_profile/my-comments.html',context)
 
@@ -246,6 +281,16 @@ class MypageReviewView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -254,7 +299,8 @@ class MypageReviewView(View):
             'like_count': like_count,
             'post_count': post_count,
             'lecture_reply':lecture_reply,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage': total
         }
         return render(request,'member/mypage/my_profile/my-reviews.html',context)
 
@@ -283,6 +329,16 @@ class MypageLikesView(View):
         knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
         like_count = len(post_like) + len(knowhowlike)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
@@ -291,7 +347,8 @@ class MypageLikesView(View):
             'post_count': post_count,
             'reply_count': reply_count,
             'scrap_count':scrap_count,
-            'like_count':like_count
+            'like_count':like_count,
+            'mileage':total
         }
 
         return render(request,'member/mypage/my_profile/likes.html',context)
@@ -355,13 +412,23 @@ class MypageLecturesView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage','mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
             'teacher': teacher,
             'like_count': like_count,
             'lecture':lecture,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage':total
         }
         return render(request,'member/mypage/my_lecture/my-lectures.html',context)
 
@@ -430,13 +497,24 @@ class MypageTradesView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
             'teacher':teacher,
             'trade':trade,
             'like_count':like_count,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage':total
         }
         return render(request, 'member/mypage/trade/my-sales.html', context)
 
@@ -457,12 +535,22 @@ class MypageTeacherView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
             'lecture': lecture,
             'like_count':like_count,
-            'scrap_count':scrap_count
+            'scrap_count':scrap_count,
+            'mileage':total
         }
 
         return render(request, 'member/mypage/my_classes/past-classes.html',context)
@@ -484,12 +572,22 @@ class MypageTeacherPlanView(View):
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
         scrap_count = len(lecture_scrap) + len(trade_scrap)
 
+        mileages = OrderMileage.objects.filter(member_id=member['id']).values('mileage', 'mileage_status')
+
+        total = 0
+        for mileage in mileages:
+            if mileage['mileage_status'] == 1:
+                total += mileage['mileage']
+            elif mileage['mileage_status'] == 0:
+                total -= mileage['mileage']
+
         context = {
             'member': member,
             'memberProfile': member_file[0]['file_url'],
             'lecture': lecture,
             'like_count': like_count,
-            'scrap_count': scrap_count
+            'scrap_count': scrap_count,
+            'mileage':total
         }
         return render(request, 'member/mypage/my_classes/planned-classes.html',context)
 
