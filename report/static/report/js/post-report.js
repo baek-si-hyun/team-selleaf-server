@@ -133,7 +133,7 @@ const createHTML = (() => {
             text += `
                 <div class="nothing">
                     <img src="/static/public/web/images/manager/nothing.png" class="nothing"/>
-                    <p class="nothing">해당 내역이 없습니다.</p>
+                    <p class="nothing">신고 내역이 없습니다.</p>
                 </div>
             `
         }

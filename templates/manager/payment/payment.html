@@ -3,7 +3,7 @@
 {% block static %}
     <link rel="stylesheet" href="{% static 'public/web/css/manager/payment/payment.css' %}">
 {% endblock %}
-{% block title %}결제 관리{% endblock %}
+{% block title %}결제 내역 관리{% endblock %}
 {% block content %}
   <body class="overflow-hidden">
     <div class="next">
@@ -16,32 +16,12 @@
               <div class="content-inner">
                 <div class="content-box">
                   <div class="header">
-                    <h1 class="header-name">결제 관리</h1>
-                  </div>
-                  <div class="header-function-container">
-                    <ul class="header-function-inner">
-                      <li class="header-relative">
-                        <button
-                          class="lecture-info"
-                          aria-label="tab button"
-                          type="button"
-                          id="btn"
-                        >
-                          <div class="flex">
-                            <p class="lecture-info">결제정보</p>
-                            <div class="lecture-info-num">
-                              <p class="lecture-info-num">1</p>
-                            </div>
-                          </div>
-                        </button>
-                        <div class="lecture-underbar" id="under"></div>
-                      </li>
-                    </ul>
+                    <h1 class="header-name">결제 내역 관리</h1>
                   </div>
                   <div class="all-list">
                     <div>
                       <span class="all-name">전체</span>
-                      <span class="all-num">1</span>
+                      <span class="all-num">{{ payment_count }}</span>
                     </div>
                     <div class="search-bar">
                       <label class="search-bar">
@@ -70,40 +50,27 @@
                   </div>
                 </div>
                 <div class="category-benner">
-                  <div class="category-inner" style="width: 570px">제목</div>
-                  <div class="category-inner" style="width: 60px">이름</div>
-                  <div class="category-inner" style="width: 90px">결제금액</div>
-                  <div class="category-inner" style="width: 80px">결제일</div>
-                  <div class="category-inner">판매자</div>
+                  <div class="category-wrap">
+                    <div class="category-inner">구매자</div>
+                    <div class="category-inner">구매 강의</div>
+                    <div class="category-inner">키트</div>
+                    <div class="category-inner">수강료</div>
+                    <div class="category-inner">구매 개수</div>
+                    <div class="category-inner">총 결제액</div>
+                    <div class="category-inner">배송지</div>
+                    <div class="category-inner">결제 상태</div>
+                    <div class="category-inner">결제 일자</div>
+                  </div>
                 </div>
                 <ul class="list-content">
+{#                    리스트 예시 #}
                   <li class="list-content">
-                    <button class="text-left">
-                      <div class="list-content-wrap">
-                        <div class="list-content-container">
-                          <div class="list-content-inner">
-                            <div class="content-name">
-                              <p class="content-name">결제 내역 제목 1</p>
-                            </div>
-                            <p class="content-name-detail">결제 내역 내용 1</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <div class="content-open-wrap"></div>
-                    <div class="content-detail">
-                      <div class="content-detail-a">
-                        <p class="content-detail-num">백시현</p>
-                      </div>
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">10,000</p>
-                      </div>
-                      <div class="content-detail-b">
-                        <p class="content-detail-num">2024.02.05</p>
-                      </div>
-                      <div class="content-detail-c">
-                        <p class="content-detail-num">김수빈</p>
-                      </div>
+                    <div class="report-info-wrap">
+                      <div class="report-info">KGH</div>
+                      <div class="report-info">선인장 키우가</div>
+                      <div class="report-info">재배 키트</div>
+                      <div class="report-info">30,000</div>
+                      <div class="report-info"></div>
                     </div>
                   </li>
                 </ul>

@@ -16,6 +16,7 @@ from knowhow.models import Knowhow, KnowhowTag, KnowhowFile, KnowhowRecommend, K
 from lecture.models import Lecture, LectureReview
 from member.models import Member
 from notice.models import Notice
+from order.models import Order
 from post.models import Post, PostTag, PostFile, PostReply, PostCategory, PostPlant, PostScrap, PostLike, PostReplyLike
 from qna.models import QnA
 from report.models import KnowhowReplyReport, PostReplyReport, LectureReport, TradeReport, PostReport, KnowhowReport
@@ -1010,8 +1011,14 @@ class TagManagementAPI(APIView):
 class PaymentManagementView(View):
     # 결제 내역 관리 페이지 이동 뷰
     def get(self, request):
-        # 모든 결제 내역과, 각 결제 내역의 회원, 상품 내역 전부 가져와야 됨
-        return render(request, 'manager/payment/payment.html')
+        # 모든 결제 내역 수
+        payment_count = Order.objects.count()
+
+        context = {
+            'payment_count': payment_count
+        }
+
+        return render(request, 'manager/payment/payment.html', context)
 
 
 # 공지사항 관리

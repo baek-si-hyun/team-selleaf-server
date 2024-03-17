@@ -357,11 +357,16 @@ div.category-benner{
     border-color: #e6e6e7;
 }
 
+div.category-wrap {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(9, 1fr);
+    width: 880px;
+}
+
 div.category-inner{
-    width: 100px;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    flex-shrink: 0;
     display: flex;
     font-weight: 500;
     font-size: 13px;
