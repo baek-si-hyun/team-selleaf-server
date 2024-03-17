@@ -243,6 +243,14 @@
     let postCount = `{{ post_count }}`;
     let knowhowCount = `{{ knowhow_count }}`;
     let tradeCount = `{{ trade_count }}`;
+    
+    // 각 게시물 별 목록 페이지 수 - 초기값 1
+    let postPage = 1;
+    let knowhowPage = 1;
+    let tradePage = 1;
+    
+    // 검색 키워드 - 초기값 빈 문자열
+    let keyword = '';
   </script>
   <script src="{% static 'public/web/js/manager/post/post-module.js' %}"></script>
   <script src="{% static 'public/web/js/manager/post/show-posts.js' %}"></script>

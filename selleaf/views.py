@@ -677,12 +677,6 @@ class LectureReviewManagementView(View):
         for apply in applies:
             trainees_count = Trainee.objects.filter(apply=apply.id).count()
 
-            # 수강생 이름 확인
-            # trainees = Trainee.objects.filter(apply=apply.id).order_by('id')
-            #
-            # for trainee in trainees:
-            #     print(trainee.trainee_name)
-
             # 총 신청자 수 합계에 더하기
             total_trainees_count += trainees_count
 

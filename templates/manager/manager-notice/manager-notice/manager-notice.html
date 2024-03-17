@@ -190,6 +190,12 @@
 {% block js %}
   <script>
     const csrf_token = '{{ csrf_token }}';
+    
+    // 공지사항 목록 페이지 - 초기값 1
+    let page = 1;
+    
+    // 검색 키워드 - 초기값 빈 문자열
+    let keyword = '';
   </script>
   <script src="{% static 'notice/js/web/notice-module.js' %}"></script>
   <script src="{% static 'notice/js/web/manager-notice.js' %}"></script>
