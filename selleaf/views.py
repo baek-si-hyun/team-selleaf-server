@@ -16,7 +16,7 @@ from knowhow.models import Knowhow, KnowhowTag, KnowhowFile, KnowhowRecommend, K
 from lecture.models import Lecture, LectureReview
 from member.models import Member
 from notice.models import Notice
-from order.models import Order
+from order.models import Order, OrderDetail
 from post.models import Post, PostTag, PostFile, PostReply, PostCategory, PostPlant, PostScrap, PostLike, PostReplyLike
 from qna.models import QnA
 from report.models import KnowhowReplyReport, PostReplyReport, LectureReport, TradeReport, PostReport, KnowhowReport
@@ -1019,6 +1019,99 @@ class PaymentManagementView(View):
         }
 
         return render(request, 'manager/payment/payment.html', context)
+
+
+class PaymentListAPI(APIView):
+    def get(self, request):
+        # 쿼리 스트링에서 검색 키워드와 페이지 값 받아오기
+        keyword = request.GET.get('keyword', '')
+        page = int(request.GET.get('page', 1))
+
+        # 한 페이지에 띄울 결제 내역 수
+        row_count = 10
+
+        # 한 페이지에 표시할 결제 내역들을 슬라이싱 하기 위한 변수들
+        offset = (page - 1) * row_count
+        limit = page * row_count
+
+        # 검색 조건식 선언
+        condition = Q()
+
+        # keyword로 뭐라도 받았다면, keyword가 포함된 구매자, 구매 강의, 키트, 배송지, 결제 일자를 검색
+        if keyword:
+            condition |= Q(payment_member__icontains=keyword)
+            condition |= Q(payment_lecture__icontains=keyword)
+            condition |= Q(payment_kit__icontains=keyword)
+            condition |= Q(payment_address__icontains=keyword)
+            condition |= Q(created_date__icontains=keyword)
+
+        # 신고 내역 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'payment_member',   # 구매자
+            'payment_lecture',  # 구매 강의
+            'payment_price',    # 수강료
+            'payment_kit',  # 구매 키트 - 오프라인은 키트 없음
+            'payment_quantity', # 구매 개수
+            'payment_address',  # 배송지
+            'payment_status',   # 결제 상태
+            'created_date',
+        ]
+
+        # 결제 내역 조회
+        payments = OrderDetail.objects.filter() \
+                                    .annotate(payment_member=F('order__member__member_name'),
+                                              payment_lecture=F('apply__lecture__lecture_title'), \
+                                              payment_price=F('apply__lecture__lecture_price'),
+                                              payment_kit=F('order__kit__kit_name'),
+                                              payment_quantity=F('apply__quantity'),
+                                              payment_address=Concat(F('order__address__address_city'),
+                                                                     Value(" "),
+                                                                     F('order__address__address_district'),
+                                                                     output_field=CharField()
+                                                                     ),
+                                              payment_status=F('order_status')) \
+                                    .values(*columns).filter(condition, id__isnull=False)[offset:limit]
+
+        # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        for payment in payments:
+            payment['created_date'] = payment['created_date'].strftime('%Y.%m.%d')
+
+        # 신고 내역 수
+        total = payments.count()
+
+        # 페이지네이션에 필요한 정보들
+        page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
+
+        end_page = math.ceil(page / page_count) * page_count  # 화면에 표시할 페이지 숫자 버튼 중 마지막 페이지
+        start_page = end_page - page_count + 1  # 화면에 표시할 페이지 숫자 버튼 중 첫 페이지
+        real_end = math.ceil(total / row_count)  # 전체 리스트의 마지막 페이지
+
+        # end_page의 값이 real_end 보다 커지지 않게 조정
+        end_page = real_end if end_page > real_end else end_page
+
+        # end_page의 값이 0보다 작아지지 않게 조정
+        if end_page == 0:
+            end_page = 1
+
+        # 페이지네이션에 사용할 정보 완성
+        page_info = {
+            'totalCount': total,
+            'startPage': start_page,
+            'endPage': end_page,
+            'page': page,
+            'realEnd': real_end,
+            'pageCount': page_count,
+        }
+
+        # 신고 목록을 QuerySet -> list 타입으로 변경
+        payments = list(payments)
+
+        # 신고 목록의 맨 뒤에 페이지네이션 정보 추가
+        payments.append(page_info)
+
+        # 요청한 데이터 반환
+        return Response(payments)
 
 
 # 공지사항 관리

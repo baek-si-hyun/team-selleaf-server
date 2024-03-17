@@ -64,15 +64,19 @@
                 </div>
                 <ul class="list-content">
 {#                    리스트 예시 #}
-                  <li class="list-content">
-                    <div class="report-info-wrap">
-                      <div class="report-info">KGH</div>
-                      <div class="report-info">선인장 키우가</div>
-                      <div class="report-info">재배 키트</div>
-                      <div class="report-info">30,000</div>
-                      <div class="report-info"></div>
-                    </div>
-                  </li>
+{#                  <li class="list-content">#}
+{#                    <div class="payment-info-wrap">#}
+{#                      <div class="payment-info">KGH</div>#}
+{#                      <div class="payment-info">선인장 키우기</div>#}
+{#                      <div class="payment-info">재배 키트</div>#}
+{#                      <div class="payment-info">30,000</div>#}
+{#                      <div class="payment-info">3</div>#}
+{#                      <div class="payment-info">90,000</div>#}
+{#                      <div class="payment-info">경기도 광주시</div>#}
+{#                      <div class="payment-info">결제 완료</div>#}
+{#                      <div class="payment-info">2024.03.16</div>#}
+{#                    </div>#}
+{#                  </li>#}
                 </ul>
                 <div class="page-count-wrap">
                   <ul class="page flex">
@@ -166,5 +170,15 @@
   </body>
 {% endblock %}
 {% block js %}
+  <script>
+    const csrf_token = `{{ csrf_token }}`;
+  
+    // 신고 내역 페이지 - 초기값 1
+    let page = 1;
+    
+    // 검색 키워드 - 초기값 빈 문자열
+    let keyword = '';
+  </script>
+  <script src="{% static 'public/web/js/manager/payment/payment-module.js' %}"></script>
   <script src="{% static 'public/web/js/manager/payment/payment.js' %}"></script>
 {% endblock %}

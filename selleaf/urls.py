@@ -17,7 +17,7 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     TradeReportAPI, PostReportAPI, PostReplyReportAPI, KnowhowReportAPI, KnowhowReplyReportAPI, TagManagementAPI, \
     LectureReportManagementView, TradeReportManagementView, PostReportManagementView, PostReplyReportManagementView, \
     KnowhowReportManagementView, KnowhowReplyReportManagementView, LectureReportAdjustAPI, TradeReportAdjustAPI, \
-    PostReportAdjustAPI, PostReplyReportAdjustAPI, KnowhowReportAdjustAPI, KnowhowReplyReportAdjustAPI
+    PostReportAdjustAPI, PostReplyReportAdjustAPI, KnowhowReportAdjustAPI, KnowhowReplyReportAdjustAPI, PaymentListAPI
 
 urlpatterns = [
     path('', MainView.as_view(), name='main'),
@@ -60,6 +60,7 @@ urlpatterns = [
 
     # 결제 내역 관리
     path('admin/payment/', PaymentManagementView.as_view(), name='manager-payment'),
+    path('admin/payment-list/', PaymentListAPI.as_view(), name='payment-list'),
 
     # 강의 관리
     path('admin/lecture/', LectureManagementView.as_view(), name='manager-lecture'),

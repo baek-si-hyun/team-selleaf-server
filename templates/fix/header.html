@@ -209,34 +209,36 @@
                             <div class="header-info">
                                 {% if request.session.member %}
                                     <span class="header-kakao-wrap">
-                    <span class="header-alarm-pointer"></span>
-                    <button
-                            type="button"
-                            aria-label="프로필 메뉴"
-                            class="header-kakao-button"
-                    >
-                    {% if request.session.member_files.0.file_url %}
-                        {% if 'http' in request.session.member_files.0.file_url %}
-                            <img src="{{ request.session.member_files.0.file_url }}" alt="" class="current-profile-image">
-                        {% else %}
-                            <img src="/upload/{{ request.session.member_files.0.file_url }}" alt="" class="current-profile-image">
-                        {% endif %}
-                    {% else %}
-                        <img src="{% static 'member/images/mypage/base-profile-image.avif' %}" alt=""
-                             class="current-profile-image">
-                    {% endif %}
-                        {#                        <img#}
-{#                          alt="프로필 사진"#}
-{#                          class="header-kakao-image"#}
-{#                          src="{{memberProfile}}"#}
-{#                        />#}
-                    </button>
-                  </span>
+                                      {% if alarm_count != 0 %}
+                                      <span class="header-alarm-pointer"></span>
+                                      {% endif %}
+                                      <button
+                                              type="button"
+                                              aria-label="프로필 메뉴"
+                                              class="header-kakao-button"
+                                      >
+                                      {% if request.session.member_files.0.file_url %}
+                                          {% if 'http' in request.session.member_files.0.file_url %}
+                                              <img src="{{ request.session.member_files.0.file_url }}" alt="" class="current-profile-image">
+                                          {% else %}
+                                              <img src="/upload/{{ request.session.member_files.0.file_url }}" alt="" class="current-profile-image">
+                                          {% endif %}
+                                      {% else %}
+                                          <img src="{% static 'member/images/mypage/base-profile-image.avif' %}" alt=""
+                                               class="current-profile-image">
+                                      {% endif %}
+                                          {#                        <img#}
+                    {#                        alt="프로필 사진"#}
+                    {#                        class="header-kakao-image"#}
+                    {#                        src="{{memberProfile}}"#}
+                    {#                      />#}
+                                      </button>
+                                    </span>
                                     <div
                                             class="header-mymenumodal-wrap"
                                             style="position: absolute;
                                               inset: 0px auto auto 0px;
-                                              transform: translate(945px, 58px);
+                                              transform: translate(484%, 39%);
                                             "
                                             data-popper-reference-hidden="false"
                                             data-popper-escaped="false"
@@ -265,6 +267,7 @@
                                                 </a>
                                                 <a href="/alarm/main/" class="header-mymenumodal-contenta">
                                                     알림
+                                                    {% if alarm_count != 0 %}
                                                     <svg
                                                             class="header-mymenumodal-contentNew"
                                                             fill="#DB4455"
@@ -281,6 +284,7 @@
                                                                 fill="#DB4455"
                                                         ></path>
                                                     </svg>
+                                                    {% endif %}
                                                 </a>
                                                 <a class="header-mymenumodal-contenta" href="{% url 'teacher:entry' %}">
                                                     강사신청
@@ -310,10 +314,10 @@
                             <div
                                     class="header-post-wrap"
                                     style="
-                  position: absolute;
-                  inset: 0px auto auto 0px;
-                  transform: translate(987px, 70px);
-                "
+                                      position: absolute;
+                                      inset: 0px auto auto 0px;
+                                      transform: translate(293%, 31%);
+                                    "
                                     data-popper-reference-hidden="false"
                                     data-popper-escaped="false"
                                     data-popper-placement="bottom"
@@ -354,8 +358,7 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <!-- 강의 리뷰 작성은 완성되면 연결 -->
-                                    <a class="header-content-photo">
+                                    <a class="header-content-photo" href="/member/mypage/lectures/">
                                         <div class="header-photo-div">
                                             <img
                                                     src="{% static 'main/images/lectureReview.png' %}"
@@ -369,24 +372,6 @@
                                             </div>
                                             <div class="header-upload-subTitle">
                                                 새로운 지식을 만나고 경험을 공유하세요.
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <!-- 회의 바람 -->
-                                    <a class="header-content-photo">
-                                        <div class="header-photo-div">
-                                            <img
-                                                    src="{% static 'main/images/transationReview.png' %}"
-                                                    width="36"
-                                                    height="36"
-                                            />
-                                        </div>
-                                        <div class="header-upload-div">
-                                            <div class="header-upload-mainTitle">
-                                                상품 리뷰 작성하기
-                                            </div>
-                                            <div class="header-upload-subTitle">
-                                                상품 리뷰를 작성하고 포인트도 받아보세요.
                                             </div>
                                         </div>
                                     </a>
