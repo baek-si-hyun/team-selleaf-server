@@ -408,7 +408,7 @@ class MypageLecturesView(View):
         knowhow_like = KnowhowLike.objects.filter(member_id=member['id'])
         like_count = len(post_like) + len(knowhow_like)
 
-        lecture = Apply.objects.filter(member_id = member['id'])
+        lecture = Apply.objects.filter(member_id = member['id'],apply_status= 0)
 
         lecture_scrap = LectureScrap.objects.filter(member_id=member['id'])
         trade_scrap = TradeScrap.objects.filter(member_id=member['id'])
@@ -912,7 +912,7 @@ class MypageShowLecturesAPI(APIView):
         offset = (page - 1) * row_count
         limit = row_count * page
 
-        applies = Apply.objects.filter(member_id=request.session['member']['id']) \
+        applies = Apply.objects.filter(member_id=request.session['member']['id'], apply_status=0) \
             .annotate(
             member_name=F('member__member_name'),
             lecture_title=F('lecture__lecture_title'),
