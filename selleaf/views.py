@@ -1257,8 +1257,8 @@ class DeleteManyQnAView(APIView):
         return Response('success')
 
 
-# 신고 내역 관리
-class ReportManagementView(View):
+# 강의 신고 내역 관리
+class LectureReportManagementView(View):
     # 신고 내역 페이지 이동 뷰
     def get(self, request):
         # 강의, 거래, 일반 게시글(+댓글), 노하우 게시글(+댓글) 각각의 개수
@@ -1279,7 +1279,132 @@ class ReportManagementView(View):
             'knowhow_reply_report_count': knowhow_reply_report_count
         }
 
-        return render(request, 'manager/report/report.html', context)
+        return render(request, 'manager/report/lecture-report.html', context)
+
+
+# 거래 신고 내역 관리
+class TradeReportManagementView(View):
+    # 신고 내역 페이지 이동 뷰
+    def get(self, request):
+        # 강의, 거래, 일반 게시글(+댓글), 노하우 게시글(+댓글) 각각의 개수
+        lecture_report_count = LectureReport.object.count()     # 강의
+        trade_report_count = TradeReport.object.count()     # 거래
+        post_report_count = PostReport.object.count()   # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.count()    # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.count()     # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.count()  # 노하우 게시글 댓글
+
+        # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
+        context = {
+            'lecture_report_count': lecture_report_count,
+            'trade_report_count': trade_report_count,
+            'post_report_count': post_report_count,
+            'post_reply_report_count': post_reply_report_count,
+            'knowhow_report_count': knowhow_report_count,
+            'knowhow_reply_report_count': knowhow_reply_report_count
+        }
+
+        return render(request, 'manager/report/trade-report.html', context)
+
+
+# 일반 게시물 신고 내역 관리
+class PostReportManagementView(View):
+    # 신고 내역 페이지 이동 뷰
+    def get(self, request):
+        # 강의, 거래, 일반 게시글(+댓글), 노하우 게시글(+댓글) 각각의 개수
+        lecture_report_count = LectureReport.object.count()     # 강의
+        trade_report_count = TradeReport.object.count()     # 거래
+        post_report_count = PostReport.object.count()   # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.count()    # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.count()     # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.count()  # 노하우 게시글 댓글
+
+        # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
+        context = {
+            'lecture_report_count': lecture_report_count,
+            'trade_report_count': trade_report_count,
+            'post_report_count': post_report_count,
+            'post_reply_report_count': post_reply_report_count,
+            'knowhow_report_count': knowhow_report_count,
+            'knowhow_reply_report_count': knowhow_reply_report_count
+        }
+
+        return render(request, 'manager/report/post-report.html', context)
+
+
+# 일반 댓글 신고 내역 관리
+class PostReplyReportManagementView(View):
+    # 신고 내역 페이지 이동 뷰
+    def get(self, request):
+        # 강의, 거래, 일반 게시글(+댓글), 노하우 게시글(+댓글) 각각의 개수
+        lecture_report_count = LectureReport.object.count()     # 강의
+        trade_report_count = TradeReport.object.count()     # 거래
+        post_report_count = PostReport.object.count()   # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.count()    # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.count()     # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.count()  # 노하우 게시글 댓글
+
+        # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
+        context = {
+            'lecture_report_count': lecture_report_count,
+            'trade_report_count': trade_report_count,
+            'post_report_count': post_report_count,
+            'post_reply_report_count': post_reply_report_count,
+            'knowhow_report_count': knowhow_report_count,
+            'knowhow_reply_report_count': knowhow_reply_report_count
+        }
+
+        return render(request, 'manager/report/post-reply-report.html', context)
+
+
+# 노하우 신고 내역 관리
+class KnowhowReportManagementView(View):
+    # 신고 내역 페이지 이동 뷰
+    def get(self, request):
+        # 강의, 거래, 일반 게시글(+댓글), 노하우 게시글(+댓글) 각각의 개수
+        lecture_report_count = LectureReport.object.count()     # 강의
+        trade_report_count = TradeReport.object.count()     # 거래
+        post_report_count = PostReport.object.count()   # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.count()    # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.count()     # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.count()  # 노하우 게시글 댓글
+
+        # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
+        context = {
+            'lecture_report_count': lecture_report_count,
+            'trade_report_count': trade_report_count,
+            'post_report_count': post_report_count,
+            'post_reply_report_count': post_reply_report_count,
+            'knowhow_report_count': knowhow_report_count,
+            'knowhow_reply_report_count': knowhow_reply_report_count
+        }
+
+        return render(request, 'manager/report/knowhow-report.html', context)
+
+
+# 노하우 댓글 신고 내역 관리
+class KnowhowReplyReportManagementView(View):
+    # 신고 내역 페이지 이동 뷰
+    def get(self, request):
+        # 강의, 거래, 일반 게시글(+댓글), 노하우 게시글(+댓글) 각각의 개수
+        lecture_report_count = LectureReport.object.filter(report_status=1).count()  # 강의
+        trade_report_count = TradeReport.object.filter(report_status=1).count()  # 거래
+        post_report_count = PostReport.object.filter(report_status=1).count()  # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.filter(report_status=1).count()  # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.filter(report_status=1).count()  # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.filter(report_status=1).count()  # 노하우 게시글 댓글
+
+        # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
+        context = {
+            'lecture_report_count': lecture_report_count,
+            'trade_report_count': trade_report_count,
+            'post_report_count': post_report_count,
+            'post_reply_report_count': post_reply_report_count,
+            'knowhow_report_count': knowhow_report_count,
+            'knowhow_reply_report_count': knowhow_reply_report_count
+        }
+
+        return render(request, 'manager/report/knowhow-reply-report.html', context)
 
 
 class LectureReportAPI(APIView):
@@ -1319,7 +1444,7 @@ class LectureReportAPI(APIView):
         lecture_reports = LectureReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('lecture__lecture_title'))\
-            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False, report_status=1)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for lecture_report in lecture_reports:
@@ -1327,6 +1452,14 @@ class LectureReportAPI(APIView):
 
         # 신고 내역 수
         total = lecture_reports.count()
+
+        # 각 유형 별 신고 내역 수
+        lecture_report_count = LectureReport.object.filter(report_status=1).count()  # 강의
+        trade_report_count = TradeReport.object.filter(report_status=1).count()  # 거래
+        post_report_count = PostReport.object.filter(report_status=1).count()  # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.filter(report_status=1).count()  # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.filter(report_status=1).count()  # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.filter(report_status=1).count()  # 노하우 게시글 댓글
 
         # 페이지네이션에 필요한 정보들
         page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
@@ -1350,6 +1483,12 @@ class LectureReportAPI(APIView):
             'page': page,
             'realEnd': real_end,
             'pageCount': page_count,
+            'lectureReports': lecture_report_count,
+            'tradeReports': trade_report_count,
+            'postReports': post_report_count,
+            'postReplyReports': post_reply_report_count,
+            'knowhowReports': knowhow_report_count,
+            'knowhowReplyReports': knowhow_reply_report_count
         }
 
         # 신고 목록을 QuerySet -> list 타입으로 변경
@@ -1399,7 +1538,7 @@ class TradeReportAPI(APIView):
         trade_reports = TradeReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('trade__trade_title'))\
-            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False, report_status=1)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for trade_report in trade_reports:
@@ -1407,6 +1546,14 @@ class TradeReportAPI(APIView):
 
         # 신고 내역 수
         total = trade_reports.count()
+
+        # 각 유형 별 신고 내역 수
+        lecture_report_count = LectureReport.object.filter(report_status=1).count()  # 강의
+        trade_report_count = TradeReport.object.filter(report_status=1).count()  # 거래
+        post_report_count = PostReport.object.filter(report_status=1).count()  # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.filter(report_status=1).count()  # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.filter(report_status=1).count()  # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.filter(report_status=1).count()  # 노하우 게시글 댓글
 
         # 페이지네이션에 필요한 정보들
         page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
@@ -1430,6 +1577,12 @@ class TradeReportAPI(APIView):
             'page': page,
             'realEnd': real_end,
             'pageCount': page_count,
+            'lectureReports': lecture_report_count,
+            'tradeReports': trade_report_count,
+            'postReports': post_report_count,
+            'postReplyReports': post_reply_report_count,
+            'knowhowReports': knowhow_report_count,
+            'knowhowReplyReports': knowhow_reply_report_count
         }
 
         # 신고 목록을 QuerySet -> list 타입으로 변경
@@ -1479,7 +1632,7 @@ class PostReportAPI(APIView):
         post_reports = PostReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('post__post_title'))\
-            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False, report_status=1)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for post_report in post_reports:
@@ -1487,6 +1640,14 @@ class PostReportAPI(APIView):
 
         # 신고 내역 수
         total = post_reports.count()
+
+        # 각 유형 별 신고 내역 수
+        lecture_report_count = LectureReport.object.filter(report_status=1).count()  # 강의
+        trade_report_count = TradeReport.object.filter(report_status=1).count()  # 거래
+        post_report_count = PostReport.object.filter(report_status=1).count()  # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.filter(report_status=1).count()  # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.filter(report_status=1).count()  # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.filter(report_status=1).count()  # 노하우 게시글 댓글
 
         # 페이지네이션에 필요한 정보들
         page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
@@ -1510,6 +1671,12 @@ class PostReportAPI(APIView):
             'page': page,
             'realEnd': real_end,
             'pageCount': page_count,
+            'lectureReports': lecture_report_count,
+            'tradeReports': trade_report_count,
+            'postReports': post_report_count,
+            'postReplyReports': post_reply_report_count,
+            'knowhowReports': knowhow_report_count,
+            'knowhowReplyReports': knowhow_reply_report_count
         }
 
         # 신고 목록을 QuerySet -> list 타입으로 변경
@@ -1559,7 +1726,7 @@ class PostReplyReportAPI(APIView):
         post_reply_reports = PostReplyReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('post_reply__post_reply_content'))\
-            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False, report_status=1)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for post_reply_report in post_reply_reports:
@@ -1567,6 +1734,14 @@ class PostReplyReportAPI(APIView):
 
         # 신고 내역 수
         total = post_reply_reports.count()
+
+        # 각 유형 별 신고 내역 수
+        lecture_report_count = LectureReport.object.filter(report_status=1).count()  # 강의
+        trade_report_count = TradeReport.object.filter(report_status=1).count()  # 거래
+        post_report_count = PostReport.object.filter(report_status=1).count()  # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.filter(report_status=1).count()  # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.filter(report_status=1).count()  # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.filter(report_status=1).count()  # 노하우 게시글 댓글
 
         # 페이지네이션에 필요한 정보들
         page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
@@ -1590,6 +1765,12 @@ class PostReplyReportAPI(APIView):
             'page': page,
             'realEnd': real_end,
             'pageCount': page_count,
+            'lectureReports': lecture_report_count,
+            'tradeReports': trade_report_count,
+            'postReports': post_report_count,
+            'postReplyReports': post_reply_report_count,
+            'knowhowReports': knowhow_report_count,
+            'knowhowReplyReports': knowhow_reply_report_count
         }
 
         # 신고 목록을 QuerySet -> list 타입으로 변경
@@ -1639,7 +1820,7 @@ class KnowhowReportAPI(APIView):
         knowhow_reports = KnowhowReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('knowhow__knowhow_title'))\
-            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False, report_status=1)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for knowhow_report in knowhow_reports:
@@ -1647,6 +1828,14 @@ class KnowhowReportAPI(APIView):
 
         # 신고 내역 수
         total = knowhow_reports.count()
+
+        # 각 유형 별 신고 내역 수
+        lecture_report_count = LectureReport.object.filter(report_status=1).count()  # 강의
+        trade_report_count = TradeReport.object.filter(report_status=1).count()  # 거래
+        post_report_count = PostReport.object.filter(report_status=1).count()  # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.filter(report_status=1).count()  # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.filter(report_status=1).count()  # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.filter(report_status=1).count()  # 노하우 게시글 댓글
 
         # 페이지네이션에 필요한 정보들
         page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
@@ -1670,6 +1859,12 @@ class KnowhowReportAPI(APIView):
             'page': page,
             'realEnd': real_end,
             'pageCount': page_count,
+            'lectureReports': lecture_report_count,
+            'tradeReports': trade_report_count,
+            'postReports': post_report_count,
+            'postReplyReports': post_reply_report_count,
+            'knowhowReports': knowhow_report_count,
+            'knowhowReplyReports': knowhow_reply_report_count
         }
 
         # 신고 목록을 QuerySet -> list 타입으로 변경
@@ -1719,7 +1914,7 @@ class KnowhowReplyReportAPI(APIView):
         knowhow_reply_reports = KnowhowReplyReport.object\
             .annotate(report_member=F('member__member_name'),
                       report_target=F('knowhow_reply__knowhow_reply_content'))\
-            .values(*columns).filter(condition, id__isnull=False)[offset:limit]
+            .values(*columns).filter(condition, id__isnull=False, report_status=1)[offset:limit]
 
         # 각각의 신고 내역에서 created_date를 "YYYY.MM.DD" 형식으로 변환
         for knowhow_reply_report in knowhow_reply_reports:
@@ -1727,6 +1922,14 @@ class KnowhowReplyReportAPI(APIView):
 
         # 신고 내역 수
         total = knowhow_reply_reports.count()
+
+        # 각 유형 별 신고 내역 수
+        lecture_report_count = LectureReport.object.filter(report_status=1).count()  # 강의
+        trade_report_count = TradeReport.object.filter(report_status=1).count()  # 거래
+        post_report_count = PostReport.object.filter(report_status=1).count()  # 일반 게시글
+        post_reply_report_count = PostReplyReport.object.filter(report_status=1).count()  # 일반 게시글 댓글
+        knowhow_report_count = KnowhowReport.object.filter(report_status=1).count()  # 노하우 게시글
+        knowhow_reply_report_count = KnowhowReplyReport.object.filter(report_status=1).count()  # 노하우 게시글 댓글
 
         # 페이지네이션에 필요한 정보들
         page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
@@ -1750,6 +1953,12 @@ class KnowhowReplyReportAPI(APIView):
             'page': page,
             'realEnd': real_end,
             'pageCount': page_count,
+            'lectureReports': lecture_report_count,
+            'tradeReports': trade_report_count,
+            'postReports': post_report_count,
+            'postReplyReports': post_reply_report_count,
+            'knowhowReports': knowhow_report_count,
+            'knowhowReplyReports': knowhow_reply_report_count
         }
 
         # 신고 목록을 QuerySet -> list 타입으로 변경
@@ -1760,3 +1969,188 @@ class KnowhowReplyReportAPI(APIView):
 
         # 요청한 데이터 반환
         return Response(knowhow_reply_reports)
+
+
+# 신고 내역 승인, 삭제 뷰
+class LectureReportAdjustAPI(APIView):
+    def patch(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져옴
+            if report_id != '':
+                report = LectureReport.object.get(id=report_id)
+
+                # 해당 객체의 status를 0으로 만들고, 변경 시간과 같이 저장
+                report.report_status = 0
+                report.updated_date = timezone.now()
+                report.save(update_fields=["report_status", "updated_date"])
+
+        return Response('success')
+
+    def delete(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져와서 삭제
+            if report_id != '':
+                LectureReport.object.get(id=report_id).delete()
+
+        return Response('success')
+
+
+class TradeReportAdjustAPI(APIView):
+    def patch(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져옴
+            if report_id != '':
+                report = TradeReport.object.get(id=report_id)
+
+                # 해당 객체의 status를 0으로 만들고, 변경 시간과 같이 저장
+                report.report_status = 0
+                report.updated_date = timezone.now()
+                report.save(update_fields=["report_status", "updated_date"])
+
+        return Response('success')
+
+    def delete(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져와서 삭제
+            if report_id != '':
+                TradeReport.object.get(id=report_id).delete()
+
+        return Response('success')
+
+class PostReportAdjustAPI(APIView):
+    def patch(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져옴
+            if report_id != '':
+                report = PostReport.object.get(id=report_id)
+
+                # 해당 객체의 status를 0으로 만들고, 변경 시간과 같이 저장
+                report.report_status = 0
+                report.updated_date = timezone.now()
+                report.save(update_fields=["report_status", "updated_date"])
+
+        return Response('success')
+
+    def delete(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져와서 삭제
+            if report_id != '':
+                PostReport.object.get(id=report_id).delete()
+
+        return Response('success')
+
+class PostReplyReportAdjustAPI(APIView):
+    def patch(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져옴
+            if report_id != '':
+                report = PostReplyReport.object.get(id=report_id)
+
+                # 해당 객체의 status를 0으로 만들고, 변경 시간과 같이 저장
+                report.report_status = 0
+                report.updated_date = timezone.now()
+                report.save(update_fields=["report_status", "updated_date"])
+
+        return Response('success')
+
+    def delete(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져와서 삭제
+            if report_id != '':
+                PostReplyReport.object.get(id=report_id).delete()
+
+        return Response('success')
+
+
+class KnowhowReportAdjustAPI(APIView):
+    def patch(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져옴
+            if report_id != '':
+                report = KnowhowReport.object.get(id=report_id)
+
+                # 해당 객체의 status를 0으로 만들고, 변경 시간과 같이 저장
+                report.report_status = 0
+                report.updated_date = timezone.now()
+                report.save(update_fields=["report_status", "updated_date"])
+
+        return Response('success')
+
+    def delete(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져와서 삭제
+            if report_id != '':
+                KnowhowReport.object.get(id=report_id).delete()
+
+        return Response('success')
+
+
+class KnowhowReplyReportAdjustAPI(APIView):
+    def patch(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져옴
+            if report_id != '':
+                report = KnowhowReplyReport.object.get(id=report_id)
+
+                # 해당 객체의 status를 0으로 만들고, 변경 시간과 같이 저장
+                report.report_status = 0
+                report.updated_date = timezone.now()
+                report.save(update_fields=["report_status", "updated_date"])
+
+        return Response('success')
+
+    def delete(self, request, report_ids):
+        # 요청 경로에 담긴 아이디를 콤마(,)를 기준으로 분리해서 list로 만듬
+        report_ids = report_ids.split(',')
+
+        # 위 list의 각 요소를 순회
+        for report_id in report_ids:
+            # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져옴
+            if report_id != '':
+                KnowhowReplyReport.object.get(id=report_id).delete()
+
+        return Response('success')

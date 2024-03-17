@@ -12,9 +12,12 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     TeacherDeleteAPI, LectureManagementView, LectureInfoAPI, LectureReviewManagementView, LectureReviewInfoAPI, \
     LectureTraineesManagementView, TraineesInfoAPI, PostManagementView, ReplyManagementView, \
     KnowhowPostsAPI, TradePostsAPI, KnowhowDeleteAPI, TradeDeleteAPI, \
-    KnowhowCountAPI, TradeCountAPI, PostsListAPI, PostsDeleteAPI, PostsCountAPI, ReportManagementView, \
+    KnowhowCountAPI, TradeCountAPI, PostsListAPI, PostsDeleteAPI, PostsCountAPI, \
     PaymentManagementView, TagManagementView, ReplyManagementAPI, LectureReportAPI, \
-    TradeReportAPI, PostReportAPI, PostReplyReportAPI, KnowhowReportAPI, KnowhowReplyReportAPI, TagManagementAPI
+    TradeReportAPI, PostReportAPI, PostReplyReportAPI, KnowhowReportAPI, KnowhowReplyReportAPI, TagManagementAPI, \
+    LectureReportManagementView, TradeReportManagementView, PostReportManagementView, PostReplyReportManagementView, \
+    KnowhowReportManagementView, KnowhowReplyReportManagementView, LectureReportAdjustAPI, TradeReportAdjustAPI, \
+    PostReportAdjustAPI, PostReplyReportAdjustAPI, KnowhowReportAdjustAPI, KnowhowReplyReportAdjustAPI
 
 urlpatterns = [
     path('', MainView.as_view(), name='main'),
@@ -81,13 +84,24 @@ urlpatterns = [
     path('admin/tag/', TagManagementView.as_view(), name='manager-tag'),
     path('admin/tags/api/', TagManagementAPI.as_view(), name='manager-tag-api'),
     # 신고 내역 관리
-    path('admin/report/', ReportManagementView.as_view(), name='manager-report'),
-    path('admin/report/lecture/', LectureReportAPI.as_view(), name='lecture-report-api'),
-    path('admin/report/trade/', TradeReportAPI.as_view(), name='trade-report-api'),
-    path('admin/report/post/', PostReportAPI.as_view(), name='post-report-api'),
-    path('admin/report/post-reply/', PostReplyReportAPI.as_view(), name='post-reply-report-api'),
-    path('admin/report/knowhow/', KnowhowReportAPI.as_view(), name='knowhow-report-api'),
-    path('admin/report/knowhow-reply/', KnowhowReplyReportAPI.as_view(), name='knowhow-reply-report-api'),
+    path('admin/report/lecture/', LectureReportManagementView.as_view(), name='manager-lecture-report'),
+    path('admin/report/trade/', TradeReportManagementView.as_view(), name='manager-trade-report'),
+    path('admin/report/post/', PostReportManagementView.as_view(), name='manager-post-report'),
+    path('admin/report/post-reply/', PostReplyReportManagementView.as_view(), name='manager-post-reply-report'),
+    path('admin/report/knowhow/', KnowhowReportManagementView.as_view(), name='manager-knowhow-report'),
+    path('admin/report/knowhow-reply/', KnowhowReplyReportManagementView.as_view(), name='manager-knowhow-reply-report'),
+    path('admin/lecture-report/', LectureReportAPI.as_view(), name='lecture-report-api'),
+    path('admin/trade-report/', TradeReportAPI.as_view(), name='trade-report-api'),
+    path('admin/post-report/', PostReportAPI.as_view(), name='post-report-api'),
+    path('admin/post-reply-report/', PostReplyReportAPI.as_view(), name='post-reply-report-api'),
+    path('admin/knowhow-report/', KnowhowReportAPI.as_view(), name='knowhow-report-api'),
+    path('admin/knowhow-reply-report/', KnowhowReplyReportAPI.as_view(), name='knowhow-reply-report-api'),
+    path('admin/lecture-report-adjust/<str:report_ids>', LectureReportAdjustAPI.as_view(), name='lecture-report-adjust-api'),
+    path('admin/trade-report-adjust/<str:report_ids>', TradeReportAdjustAPI.as_view(), name='trade-report-adjust-api'),
+    path('admin/post-report-adjust/<str:report_ids>', PostReportAdjustAPI.as_view(), name='post-report-adjust-api'),
+    path('admin/post-reply-report-adjust/<str:report_ids>', PostReplyReportAdjustAPI.as_view(), name='post-reply-report-adjust-api'),
+    path('admin/knowhow-report-adjust/<str:report_ids>', KnowhowReportAdjustAPI.as_view(), name='knowhow-report-adjust-api'),
+    path('admin/knowhow-reply-report-adjust/<str:report_ids>', KnowhowReplyReportAdjustAPI.as_view(), name='knowhow-reply-report-adjust-api'),
     # 기타 서비스 url
     path('alarm/', include('alarm.urls-web')),
     path('member/', include('member.urls-web')),

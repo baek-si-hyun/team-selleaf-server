@@ -262,7 +262,7 @@ modalConfirm.addEventListener("click", async () => {
         // 가져온 댓글들의 삭제를 API에 비동기로 요청
         await manageReply.remove(replyList);
         // 다시 현재 페이지의 댓글 목록 표시
-        await manageReply.getReply(keyword, page, createHTML.showList)
+        await manageReply.getReply(keyword, page, createHTML.showList);
     }
 
     // 삭제 모달창 숨김

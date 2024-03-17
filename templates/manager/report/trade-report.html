@@ -3,7 +3,7 @@
 {% block static %}
     <link rel="stylesheet" href="{% static 'report/css/report.css' %}">
 {% endblock %}
-{% block title %}신고 내역 관리{% endblock %}
+{% block title %}거래 신고 내역 관리{% endblock %}
 {% block content %}
   <body class="overflow-hidden">
     <div class="next">
@@ -16,7 +16,7 @@
               <div class="content-inner">
                 <div class="content-box">
                   <div class="header">
-                    <h1 class="header-name">신고 내역 관리</h1>
+                    <h1 class="header-name">거래 신고 내역 관리</h1>
                     <div>
                       <div class="compose-button">
                         <!-- 승인 버튼 -->
@@ -66,10 +66,10 @@
                   <div class="header-function-container">
                     <ul class="header-function-inner">
                       <li class="header-relative-1">
-                        <button
+                        <a
                           class="lecture-info lecture-report"
                           aria-label="tab button"
-                          type="button"
+                          href="/admin/report/lecture/"
                         >
                           <div>
                             <div class="flex">
@@ -79,14 +79,14 @@
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar lecture-report"></div>
                       </li>
                       <li class="header-relative-2">
-                        <button
-                          class="lecture-info trade-report"
+                        <a
+                          class="lecture-info trade-report my_lecture-checked"
                           aria-label="tab button"
-                          type="button"
+                          href="/admin/report/trade/"
                         >
                           <div>
                             <div class="flex">
@@ -96,14 +96,14 @@
                               </div>
                             </div>
                           </div>
-                        </button>
-                        <div class="lecture-underbar trade-report"></div>
+                        </a>
+                        <div class="lecture-underbar trade-report underbar-checked"></div>
                       </li>
                       <li class="header-relative-3">
-                        <button
+                        <a
                           class="lecture-info post-report"
                           aria-label="tab button"
-                          type="button"
+                          href="/admin/report/post/"
                         >
                           <div>
                             <div class="flex">
@@ -113,14 +113,14 @@
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar post-report"></div>
                       </li>
                       <li class="header-relative-4">
-                        <button
+                        <a
                           class="lecture-info post-reply-report"
                           aria-label="tab button"
-                          type="button"
+                          href="/admin/report/post-reply/"
                         >
                           <div>
                             <div class="flex">
@@ -130,14 +130,14 @@
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar post-reply-report"></div>
                       </li>
                       <li class="header-relative-5">
-                        <button
+                        <a
                           class="lecture-info knowhow-report"
                           aria-label="tab button"
-                          type="button"
+                          href="/admin/report/knowhow/"
                         >
                           <div>
                             <div class="flex">
@@ -147,14 +147,14 @@
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar knowhow-report"></div>
                       </li>
                       <li class="header-relative-6">
-                        <button
+                        <a
                           class="lecture-info knowhow-reply-report"
                           aria-label="tab button"
-                          type="button"
+                          href="/admin/report/knowhow-reply/"
                         >
                           <div>
                             <div class="flex">
@@ -164,7 +164,7 @@
                               </div>
                             </div>
                           </div>
-                        </button>
+                        </a>
                         <div class="lecture-underbar knowhow-reply-report"></div>
                       </li>
                     </ul>
@@ -172,7 +172,7 @@
                   <div class="all-list">
                     <div>
                       <span class="all-name">전체</span>
-                      <span class="all-num">{{ lecture_report_count }}</span>
+                      <span class="all-num">{{ trade_report_count }}</span>
                     </div>
                     <div class="list-order">
                       <div class="search-bar">
@@ -298,13 +298,8 @@
   <script>
     const csrf_token = `{{ csrf_token }}`;
     
-    // 각 신고 내역 별 페이지 - 초기값 1
-    let lecturePage = 1;
-    let tradePage = 1;
-    let postPage = 1;
-    let postReplyPage = 1;
-    let knowhowPage = 1;
-    let knowhowReplyPage = 1;
+    // 신고 내역 페이지 - 초기값 1
+    let page = 1;
     
     // 각 신고 사항 별 개수를 담는 태그
     const reportLecutres = document.querySelector("p.review-info-num.lecture");
@@ -319,8 +314,5 @@
     let keyword = '';
   </script>
   <script src="{% static 'report/js/report-module.js' %}"></script>
-  <script src="{% static 'public/web/js/manager/add-checkbox-event.js' %}"></script>
-  <script src="{% static 'public/web/js/manager/add-pagination-event.js' %}"></script>
-  <script src="{% static 'report/js/show_report.js' %}"></script>
-  <script src="{% static 'report/js/report.js' %}"></script>
+  <script src="{% static 'report/js/trade-report.js' %}"></script>
 {% endblock %}
