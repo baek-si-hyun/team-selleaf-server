@@ -718,6 +718,7 @@ svg.edit-button{
     color: #333334;
     fill: #333334;
 }
+
 div.page-count-wrap{
     justify-content: center;
     display: flex;
@@ -725,14 +726,14 @@ div.page-count-wrap{
     margin-top: 40px;
     margin-left: auto;
     margin-right: auto;
-    grid-column: 1/-1;
+    gap: 16px;
 }
 
 ul.flex{
     display: flex;
 }
 
-button.page-count{
+button.page-count-prev, button.page-count-next{
     opacity: .3;
     border-width: 1px;
     border-radius: 9999px;
@@ -744,7 +745,6 @@ button.page-count{
     border-color: #e6e6e7;
     color: #1d1d1e;
     fill: #1d1d1e;
-    cursor: default;
 }
 
 svg.page-count{
