@@ -9,6 +9,7 @@ from django.views.generic import DetailView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from alarm.models import Alarm
 from knowhow.models import Knowhow, KnowhowFile, KnowhowPlant, KnowhowTag, KnowhowCategory, KnowhowRecommend, \
     KnowhowLike, KnowhowReply, KnowhowScrap
 from member.models import Member, MemberProfile
@@ -453,8 +454,11 @@ class KnowhowListApi(APIView):
 class KnowhowReplyWriteApi(APIView):
     @transaction.atomic
     def post(self, request):
-
         data = request.data
+
+        knowhow = Knowhow.objects.filter(id=data['knowhow_id']).values('member_id')
+
+        Alarm.objects.create(alarm_category=3, receiver_id=knowhow, sender_id=request.session['member']['id'], target_id=data['knowhow_id'])
         # print(data)
         data = {
             'knowhow_reply_content': data['reply_content'],
@@ -527,7 +531,6 @@ class KnowhowScrapApi(APIView):
 
         # 만들어지면 True, 이미 있으면 False
         scrap, scrap_created = KnowhowScrap.objects.get_or_create(knowhow_id=knowhow_id, member_id=member_id)
-
         if scrap_created:
             check_scrap_status = True
 
@@ -565,9 +568,13 @@ class KnowhowLikeApi(APIView):
 
         # 만들어지면 True, 이미 있으면 False
         like, like_created = KnowhowLike.objects.get_or_create(knowhow_id=knowhow_id, member_id=member_id)
+        # 노하우 게시글 작성한 사람의 아이디
+        knowhow = Knowhow.objects.filter(id=knowhow_id).values('member_id')
+
 
         if like_created:
             check_like_status = True
+            Alarm.objects.create(alarm_category=2, receiver_id=knowhow, sender_id=member_id, target_id=knowhow_id)
 
         else:
 

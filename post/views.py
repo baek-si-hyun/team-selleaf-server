@@ -6,6 +6,7 @@ from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from alarm.models import Alarm
 from knowhow.models import KnowhowTag, KnowhowFile
 from member.models import Member, MemberProfile
 from post.models import Post, PostCategory, PostTag, PostPlant, PostFile, PostReply, PostLike, PostScrap, PostReplyLike
@@ -260,13 +261,16 @@ class PostDeleteView(View):
 class PostReplyWriteApi(APIView):
     @transaction.atomic
     def post(self, request):
-
         data = request.data
+        post = Post.objects.filter(id=data['post_id']).values('member_id')
+
+        Alarm.objects.create(alarm_category=5, receiver_id=post, sender_id=request.session.get('member')['id'], target_id=data['post_id'])
+
         # print(data)
         data = {
             'post_reply_content': data['reply_content'],
             'post_id': data['post_id'],
-            'member_id': request.session['member']['id']
+            'member_id': request.session.get('member')['id']
         }
 
         PostReply.objects.create(**data)
@@ -377,9 +381,11 @@ class PostLikeApi(APIView):
 
         # 만들어지면 True, 이미 있으면 False
         like, like_created = PostLike.objects.get_or_create(post_id=post_id, member_id=member_id)
+        post = Post.objects.filter(id=post_id).values('member_id')
 
         if like_created:
             check_like_status = True
+            Alarm.objects.create(alarm_category=4, receiver_id=post, sender_id=member_id, target_id=post_id)
 
         else:
 
@@ -445,7 +451,7 @@ class PostListApi(APIView):
         offset = (page - 1) * row_count
         limit = row_count * page
 
-        member = request.session['member']
+        member = request.session.get('member')
 
         print(types)
 
