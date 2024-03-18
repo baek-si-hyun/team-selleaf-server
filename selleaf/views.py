@@ -16,7 +16,7 @@ from knowhow.models import Knowhow, KnowhowTag, KnowhowFile, KnowhowRecommend, K
 from lecture.models import Lecture, LectureReview
 from member.models import Member
 from notice.models import Notice
-from order.models import Order, OrderDetail
+from order.models import Order, OrderDetail, OrderMileage
 from post.models import Post, PostTag, PostFile, PostReply, PostCategory, PostPlant, PostScrap, PostLike, PostReplyLike
 from qna.models import QnA
 from report.models import KnowhowReplyReport, PostReplyReport, LectureReport, TradeReport, PostReport, KnowhowReport
@@ -142,6 +142,25 @@ class MemberInfoAPI(APIView):
                                                       )
                                 )\
                       .values(*columns).filter(condition, id__isnull=False)
+
+        for member in members:
+            # 총 마일리지를 담을 초기값
+            order_mileage = 0
+
+            # 특정 회원의 마일리지 내역 전부 가져옴
+            mileage_histories = OrderMileage.objects.filter(member_id=member.get('id'))
+
+            # status가 0이면 -, 1이면 +
+            for mileage in mileage_histories:
+                # 1이면 +
+                if mileage.mileage_status:
+                    order_mileage += int(mileage.mileage)
+                # 0이면 -
+                else:
+                    order_mileage -= int(mileage.mileage)
+
+            # member에 새 컬럼 만들어서 총 마일리지 할당
+            member['member_mileage'] = order_mileage
 
         # 회원 수
         total = members.count()
