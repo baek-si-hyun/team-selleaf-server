@@ -42,6 +42,7 @@ commentInput.addEventListener("keyup", () => {
 const stickyBtns = document.querySelectorAll(".sticky-btn");
 stickyBtns.forEach((item) => {
   item.addEventListener("click", () => {
+
     if (item.getAttribute("title") === "좋아요") {
       const img = item.querySelector("img");
       const imgSrc = img.getAttribute("src");
@@ -62,6 +63,9 @@ stickyBtns.forEach((item) => {
             "/static/public/web/images/common/scrap-off-blk.png"
           );
     }
+
+
+
   });
 });
 
