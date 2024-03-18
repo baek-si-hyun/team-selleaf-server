@@ -77,8 +77,8 @@ class ManagerLoginView(View):
 # 관리자 로그아웃
 class ManagerLogoutView(View):
     def get(self, request):
-        # 세션 정보 전체 초기화
-        request.session.clear()
+        # 세션에서 관리자 데이터 삭제
+        del request.session['admin']
 
         # 관리자 로그인 페이지로 이동
         return redirect('manager-login')
