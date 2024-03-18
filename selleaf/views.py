@@ -121,6 +121,7 @@ class MemberInfoAPI(APIView):
             condition |= Q(member_address__icontains=keyword)
             condition |= Q(member_type__icontains=keyword)
             condition |= Q(member_status__icontains=keyword)
+            condition |= Q(created_date__icontains=keyword)
 
         # 회원 정보 표시에 필요한 tbl_member와 tbl_member_address의 컬럼들
         columns = [
@@ -129,7 +130,8 @@ class MemberInfoAPI(APIView):
             'member_email',
             'member_address',
             'member_type',
-            'member_status'
+            'member_status',
+            'created_date'
         ]
 
         # 최근에 가입한 순서대로 10명의 회원을 가져옴
@@ -144,6 +146,8 @@ class MemberInfoAPI(APIView):
                       .values(*columns).filter(condition, id__isnull=False)
 
         for member in members:
+            member['created_date'] = member['created_date'].strftime('%Y.%m.%d')
+
             # 총 마일리지를 담을 초기값
             order_mileage = 0
 

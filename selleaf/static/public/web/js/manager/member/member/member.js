@@ -163,6 +163,7 @@ const createHTML = (() => {
                         <div class="member-info">${member.member_address}</div>
                         <div class="member-info">${memberType}</div>
                         <div class="member-info">${memeberMileage}</div>
+                        <div class="member-info">${member.created_date}</div>
                         <div class="member-info">${memberStatus}</div>
                     </a>
                   </li>
