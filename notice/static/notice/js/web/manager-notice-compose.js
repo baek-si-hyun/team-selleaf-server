@@ -82,12 +82,12 @@ function updateButtonState() {
   }
 }
 
-// 임시저장 버튼 클릭 시 실행되는 함수
-temporaryStorageBtn.addEventListener("click", function () {
-  // 임시저장 버튼을 숨기고 저장됨 버튼을 표시합니다.
-  temporaryStorageBtn.style.display = "none";
-  savedBtn.style.display = "flex";
-});
+// // 임시저장 버튼 클릭 시 실행되는 함수
+// temporaryStorageBtn.addEventListener("click", function () {
+//   // 임시저장 버튼을 숨기고 저장됨 버튼을 표시합니다.
+//   temporaryStorageBtn.style.display = "none";
+//   savedBtn.style.display = "flex";
+// });
 
 // 텍스트 입력 필드에 이벤트 리스너 추가
 titleInput.addEventListener("input", updateButtonState);
