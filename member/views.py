@@ -527,9 +527,11 @@ class MypageTeacherView(View):
         member = request.session['member']
         member_file = request.session['member_files']
 
-        lecture = Apply.objects.filter(lecture__teacher_id=member['id'])
+        teacher = Teacher.objects.filter(member_id=member['id']).first()
 
-        post_like = list(PostLike.objects.filter(member_id=member['id']))
+        lecture = Apply.objects.filter(lecture__teacher_id=teacher.id, apply_status=1)
+
+        post_like = PostLike.objects.filter(member_id=member['id'])
         knowhow_like = KnowhowLike.objects.filter(member_id=member['id'])
         like_count = len(post_like) + len(knowhow_like)
 
@@ -564,7 +566,8 @@ class MypageTeacherPlanView(View):
         member = request.session['member']
         member_file = request.session['member_files']
 
-        lecture = Apply.objects.filter(lecture__teacher_id=member['id'], apply_status = 0)
+        teacher = Teacher.objects.filter(member_id=member['id']).first()
+        lecture = Apply.objects.filter(lecture__teacher_id=teacher.id, apply_status = 0)
 
         post_like = list(PostLike.objects.filter(member_id=member['id']))
         knowhowlike = KnowhowLike.objects.filter(member_id=member['id'])
@@ -600,7 +603,9 @@ class MypageTraineeView(View):
         member = request.session['member']
         member_file = request.session['member_files']
 
-        lecture = Apply.objects.filter(lecture__teacher_id=member['id'])
+        teacher = Teacher.objects.filter(member_id=member['id']).first()
+
+        lecture = Apply.objects.filter(lecture__teacher_id=teacher.id)
 
         context = {
             'apply_id':apply_id,
@@ -1097,10 +1102,10 @@ class MypageTeacherAPI(APIView):
 
 
         # 강사의 ID 가져오기
-        teacher_id = request.session['member']['id']
-
+        member_id = request.session['member']['id']
+        teacher = Teacher.objects.filter(member_id=member_id).first()
         # 해당 강사가 소속된 강의에 대한 신청 필터링
-        applies = Apply.objects.filter(lecture_id__teacher_id=teacher_id)\
+        applies = Apply.objects.filter(lecture_id__teacher_id=teacher.id)\
             .annotate(
             teacher_name=F('lecture__teacher__member__member_name'),
             lecture_title=F('lecture__lecture_title'),
@@ -1150,9 +1155,11 @@ class MypageTraineeAPI(APIView):
     def get(self, request, apply_id):
 
 
-        teacher_id = request.session['member']['id']
+        member_id = request.session['member']['id']
 
-        apply = Apply.objects.filter(lecture_id__teacher_id=teacher_id, id=apply_id, apply_status=0)\
+        teacher = Teacher.objects.filter(member_id=member_id).first()
+
+        apply = Apply.objects.filter(lecture_id__teacher_id=teacher.id, id=apply_id)\
             .annotate(member_name=F('member__member_name'), phone = F('orderdetail__order__phone'))\
             .values(
             'id',
