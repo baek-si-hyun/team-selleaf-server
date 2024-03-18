@@ -46,17 +46,17 @@
                                     <div class="header-mymenumodal-content">
                                         <div class="header-mymenumodal-contentDiv">
                                             {% if 'post' in current_path %}
-                                            <a class="header-third-inner-firsta" href="{% url 'post:create' %}">
+                                            <a class="header-third-inner-firsta" href="/post/list/">
                                                 <span class="header-third-inner-secondsp">포스트</span>
                                             </a>
-                                            <a class="header-third-inner-seconda" href="{% url 'knowhow:create' %}">
+                                            <a class="header-third-inner-seconda" href="/knowhow/list/">
                                                 <span class="header-third-inner-secondsp">노하우</span>
                                             </a>
                                             {% elif 'knowhow' in current_path %}
-                                            <a class="header-third-inner-firsta" href="{% url 'post:create' %}">
+                                            <a class="header-third-inner-seconda" href="/post/list/">
                                                 <span class="header-third-inner-secondsp">포스트</span>
                                             </a>
-                                            <a class="header-third-inner-seconda" href="{% url 'knowhow:create' %}">
+                                            <a class="header-third-inner-firsta" href="/knowhow/list/">
                                                 <span class="header-third-inner-secondsp">노하우</span>
                                             </a>
                                             {% endif %}
@@ -77,10 +77,10 @@
                                 >
                                     <div class="header-mymenumodal-content">
                                         <div class="header-mymenumodal-contentDiv">
-                                            <a class="header-third-inner-seconda" href="{% url 'post:create' %}">
+                                            <a class="header-third-inner-seconda" href="{% url 'post:list' %}">
                                                 <span class="header-third-inner-secondsp">포스트</span>
                                             </a>
-                                            <a class="header-third-inner-seconda" href="{% url 'knowhow:create' %}">
+                                            <a class="header-third-inner-seconda" href="{% url 'knowhow:list' %}">
                                                 <span class="header-third-inner-secondsp">노하우</span>
                                             </a>
                                         </div>
