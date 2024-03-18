@@ -32,7 +32,7 @@
                 <div class="header-third-inner">
                     {% with request.path as current_path %}
                         {# 커뮤니티(일반 게시물, 노하우) 서비스 페이지면 메뉴 텍스트 색 변경 #}
-                        {% if 'post' in current_path or 'knowhow' in current_path %}
+                        {% if current_path != '/member/mypage/posts/' and 'post' in current_path or 'knowhow' in current_path %}
                             <button class="header-third-inner-firsta community" type="button">
                                 <span class="header-third-inner-firstsp">
                                     커뮤니티
@@ -89,7 +89,7 @@
                             </button>
                         {% endif %}
                         {# 강의 서비스 페이지면 메뉴 텍스트 색 변경 #}
-                        {% if 'lecture' in current_path and current_path != '/member/mypage/scraplectures/' %}
+                        {% if 'lecture' in current_path and current_path != '/member/mypage/scraplectures/' and current_path != '/member/mypage/lectures/' %}
                             <a class="header-third-inner-firsta" href="{% url 'lecture:main' %}">
                                 <span class="header-third-inner-secondsp">강의</span>
                             </a>
@@ -127,7 +127,7 @@
                                 {# 검색창 부분 #}
                                 <div class="header-fourth-inner-thirddiv">
                                     <span class="hearder-inner-thirddiv-span"> </span>
-                                    <form action="{% url  'search' %}" name="search-form"
+                                    <form action="{% url 'search' %}" name="search-form"
                                           style="flex:1; position: relative">
                                         <input
                                                 type="text"
@@ -209,8 +209,8 @@
                             <div class="header-info">
                                 {% if request.session.member %}
                                     <span class="header-kakao-wrap">
-                                      {% if alarm_count != 0 %}
-                                      <span class="header-alarm-pointer"></span>
+                                      {% if alarm_count %}
+                                        <span class="header-alarm-pointer"></span>
                                       {% endif %}
                                       <button
                                               type="button"
@@ -267,7 +267,7 @@
                                                 </a>
                                                 <a href="/alarm/main/" class="header-mymenumodal-contenta">
                                                     알림
-                                                    {% if alarm_count != 0 %}
+                                                    {% if alarm_count %}
                                                     <svg
                                                             class="header-mymenumodal-contentNew"
                                                             fill="#DB4455"

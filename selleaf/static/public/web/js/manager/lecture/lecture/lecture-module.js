@@ -35,6 +35,14 @@ const lectureService = (() => {
         return reviews;
     }
 
+    // 리뷰 여러 개 삭제 - delete
+    const deleteReviews = async (lectureIds) => {
+        await fetch(`/admin/lecture/review/delete/${lectureIds}`, {
+            method: 'delete',
+            headers: {'X-CSRFToken': csrf_token}
+        });
+    }
+
     // 강의 수강생 리스트 조회 - 한 번에 10명씩
     const getTrainees = async (lectureId, keyword, page, callback) => {
         const response = await fetch(`/admin/lecture/trainees-list/?lectureId=${lectureId}&keyword=${keyword}&page=${page}`);
@@ -52,6 +60,7 @@ const lectureService = (() => {
         getList: getList,
         deleteLectures: deleteLectures,
         getReviews: getReviews,
+        deleteReviews: deleteReviews,
         getTrainees: getTrainees
     }
 })();

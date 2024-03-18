@@ -173,20 +173,24 @@ const myPagemodal = document.querySelector(".header-mymenumodal-wrap");
 const communityModal = document.querySelector(".community-modal-wrap");
 
 document.addEventListener("click", (e) => {
-  if (!e.target.closest(".header-mymenumodal-wrap")) {
-    if (e.target.closest(".header-kakao-button")) {
-      myPagemodal.classList.toggle("myPagemodalOpen");
-      return;
+  if (myPagemodal) {
+    if (!e.target.closest(".header-mymenumodal-wrap")) {
+      if (e.target.closest(".header-kakao-button")) {
+        myPagemodal.classList.toggle("myPagemodalOpen");
+        return;
+      }
+      myPagemodal.classList.remove("myPagemodalOpen");
     }
-    myPagemodal.classList.remove("myPagemodalOpen");
   }
 
-  if (!e.target.closest(".community-modal-wrap")) {
-    if (e.target.closest(".community")) {
-      communityModal.classList.toggle("myPagemodalOpen");
-      return;
+  if (communityModal) {
+    if (!e.target.closest(".community-modal-wrap")) {
+      if (e.target.closest(".community")) {
+        communityModal.classList.toggle("myPagemodalOpen");
+        return;
+      }
+      communityModal.classList.remove("myPagemodalOpen");
     }
-    communityModal.classList.remove("myPagemodalOpen");
   }
 });
 

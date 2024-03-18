@@ -1,10 +1,10 @@
 // QnA 목록을 화면에 띄우는 함수
-const showQnAs = (qna_info) => {
+const showQnAs = (qnas) => {
     // 화면에 뿌릴 HTML 코드를 담기 위한 빈 문자열
     let text = ``
 
     // 조회한 데이터 중 QnA 리스트만 가져옴
-    qnas = qna_info.qnas;
+    let pageInfo = qnas.pop();
 
     // 각 QnA를 HTML 코드에 담아 text 변수에 추가
     qnas.forEach((qna) => {

@@ -17,10 +17,12 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     TradeReportAPI, PostReportAPI, PostReplyReportAPI, KnowhowReportAPI, KnowhowReplyReportAPI, TagManagementAPI, \
     LectureReportManagementView, TradeReportManagementView, PostReportManagementView, PostReplyReportManagementView, \
     KnowhowReportManagementView, KnowhowReplyReportManagementView, LectureReportAdjustAPI, TradeReportAdjustAPI, \
-    PostReportAdjustAPI, PostReplyReportAdjustAPI, KnowhowReportAdjustAPI, KnowhowReplyReportAdjustAPI, PaymentListAPI
+    PostReportAdjustAPI, PostReplyReportAdjustAPI, KnowhowReportAdjustAPI, KnowhowReplyReportAdjustAPI, PaymentListAPI, \
+    LectureDeleteAPI, LectureReviewDeleteAPI, HeaderView
 
 urlpatterns = [
     path('', MainView.as_view(), name='main'),
+    path('header/', HeaderView.as_view(), name='main-header'),
     path('search/', SearchView.as_view(), name='search'),
     path('search/api/', SearchAPI.as_view(), name='search-api'),
     path('search-history/api/', SearchHistoryAPI.as_view(), name='search-history-api'),
@@ -73,6 +75,8 @@ urlpatterns = [
     path('admin/lecture/review-list/', LectureReviewInfoAPI.as_view(), name='lecture-review-info'),
     path('admin/lecture/trainees/', LectureTraineesManagementView.as_view(), name='manager-lecture-trainees'),
     path('admin/lecture/trainees-list/', TraineesInfoAPI.as_view(), name='lecture-review-info'),
+    path('admin/lecture/delete/<str:lecture_ids>', LectureDeleteAPI.as_view(), name='lecture-delete-api'),
+    path('admin/lecture/review/delete/<str:lecture_ids>', LectureReviewDeleteAPI.as_view(), name='review-delete-api'),
 
     # 공지사항 관리
     path('admin/notice/', NoticeManagementView.as_view(), name='manager-notice'),
