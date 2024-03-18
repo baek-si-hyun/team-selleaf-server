@@ -21,7 +21,7 @@ class AlarmView(View):
         alarms= Alarm.objects.filter(receiver_id=member.get('id'),alarm_status=False)
         alarm_count = len(alarms)
         context = {
-            'alarm_count':alarm_count,
+            'alarm_count': alarm_count,
             'member': member,
             'memberProfile': member_file[0].get('file_url'),
         }
@@ -60,7 +60,7 @@ class AlarmAPI(APIView):
                     .annotate(title=F('lecture__lecture_title')).values('title','lecture_id')
 
                 for apply in applies:
-                    target_file = LectureProductFile.objects.filter(id = apply.get('lecture_id')).values('file_url').first()
+                    target_file = LectureProductFile.objects.filter(lecture_id = apply.get('lecture_id')).values('file_url').first()
                     alarm['target_file'] = target_file['file_url'] if target_file else 'file/2024/03/05/blank-image.png'
                     title = apply.get('title')
                     alarm["message"] = f'님이 {title} 강의를 신청하였습니다.'
@@ -73,7 +73,7 @@ class AlarmAPI(APIView):
                     .annotate(knowhow_name=F('knowhow__knowhow_title')).values('knowhow_name','knowhow_id')
 
                 for knowhow_like in knowhow_likes:
-                    target_file = KnowhowFile.objects.filter(id=knowhow_like.get('knowhow_id')).values('file_url').first()
+                    target_file = KnowhowFile.objects.filter(knowhow_id=knowhow_like.get('knowhow_id')).values('file_url').first()
                     alarm['target_file'] = target_file['file_url'] if target_file else 'file/2024/03/05/blank-image.png'
                     knowhow = knowhow_like.get('knowhow_name')
                     alarm["message"] = f'님이 {knowhow}를 좋아합니다.'
@@ -87,7 +87,7 @@ class AlarmAPI(APIView):
                     .annotate(knowhow_name=F('knowhow__knowhow_title'))
                 print(knowhow_replies)
                 for knowhow_reply in knowhow_replies:
-                    target_file = KnowhowFile.objects.filter(id=knowhow_reply.knowhow_id).values('file_url').first()
+                    target_file = KnowhowFile.objects.filter(knowhow_id=knowhow_reply.knowhow_id).values('file_url').first()
                     alarm['target_file'] = target_file['file_url'] if target_file else 'file/2024/03/05/blank-image.png'
                     knowhow = knowhow_reply.knowhow_name
                     alarm['reply'] = knowhow_reply.knowhow_reply_content
@@ -101,7 +101,7 @@ class AlarmAPI(APIView):
                     .annotate(post_name=F('post__post_title')).values('post_name', 'post_id')
 
                 for post_like in post_likes:
-                    target_file = PostFile.objects.filter(id=post_like.get('post_id')).values('file_url').first()
+                    target_file = PostFile.objects.filter(post_id=post_like.get('post_id')).values('file_url').first()
                     alarm['target_file'] = target_file['file_url'] if target_file else 'file/2024/03/05/blank-image.png'
                     post_like = post_like.get('post_name')
                     alarm["message"] = f'님이 {post_like}를 좋아합니다.'
@@ -113,7 +113,7 @@ class AlarmAPI(APIView):
                                                         post__member_id=member_id) \
                     .annotate(post_name=F('post__post_title'))
                 for post_reply in post_replies:
-                    target_file = PostFile.objects.filter(id=post_reply.post_id).values('file_url').first()
+                    target_file = PostFile.objects.filter(post_id=post_reply.post_id).values('file_url').first()
                     alarm['target_file'] = target_file['file_url'] if target_file else 'file/2024/03/05/blank-image.png'
                     post = post_reply.post_name
                     alarm['reply'] = post_reply.post_reply_content
@@ -127,7 +127,7 @@ class AlarmAPI(APIView):
                 reviews = LectureReview.objects.filter(member_id=alarm.get('sender_id'), lecture__teacher_id=member_id) \
                     .annotate(lecture_name=F('lecture__lecture_title'),lecture_status = F('lecture__online_status'))
                 for review in reviews:
-                    target_file = LectureProductFile.objects.filter(id=review.lecture_id).values('file_url').first()
+                    target_file = LectureProductFile.objects.filter(lecture_id=review.lecture_id).values('file_url').first()
                     alarm['target_file'] = target_file.get('file_url') if target_file else 'file/2024/03/05/blank-image.png'
                     lecture = review.lecture_name
                     alarm["message"] = f'님이 {lecture}에 리뷰를 작성하였습니다.'

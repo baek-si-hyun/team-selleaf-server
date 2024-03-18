@@ -40,46 +40,46 @@ commentInput.addEventListener("keyup", () => {
 
 });
 
-async function getPosts() {
-  const response = await fetch("");
-  const posts = await response.json();
-  return posts.reverse();
-}
-
-function appendItem(post) {
-  const similarPosts = document.querySelector(".similar-posts");
-  const contentItem = document.createElement("div");
-  contentItem.classList.add("similar-post-box");
-  contentItem.innerHTML = `
-    <span>
-      <div class="similar-post">
-        <a href="#" class="similar-post-link">
-          <img
-            src="../../../staticfiles/images/blank-image.png"
-            class="similar-post-img"
-        /></a>
-      </div>
-    </span>
-  `;
-  similarPosts.appendChild(contentItem);
-}
-function showLists() {
-  const dummyArray = new Array(20).fill(0);
-  dummyArray.forEach((post) => {
-    appendItem(post);
-  });
-}
-function handleScroll() {
-  const scrollTop = document.documentElement.scrollTop;
-  const windowHeight = window.innerHeight;
-  const totalHeight = document.documentElement.scrollHeight;
-  if (scrollTop + windowHeight >= totalHeight - 300) {
-    showLists();
-  }
-}
-
-window.addEventListener("scroll", handleScroll);
-showLists();
+// async function getPosts() {
+//   const response = await fetch("");
+//   const posts = await response.json();
+//   return posts.reverse();
+// }
+//
+// function appendItem(post) {
+//   const similarPosts = document.querySelector(".similar-posts");
+//   const contentItem = document.createElement("div");
+//   contentItem.classList.add("similar-post-box");
+//   contentItem.innerHTML = `
+//     <span>
+//       <div class="similar-post">
+//         <a href="#" class="similar-post-link">
+//           <img
+//             src="../../../staticfiles/images/blank-image.png"
+//             class="similar-post-img"
+//         /></a>
+//       </div>
+//     </span>
+//   `;
+//   similarPosts.appendChild(contentItem);
+// }
+// function showLists() {
+//   const dummyArray = new Array(20).fill(0);
+//   dummyArray.forEach((post) => {
+//     appendItem(post);
+//   });
+// }
+// function handleScroll() {
+//   const scrollTop = document.documentElement.scrollTop;
+//   const windowHeight = window.innerHeight;
+//   const totalHeight = document.documentElement.scrollHeight;
+//   if (scrollTop + windowHeight >= totalHeight - 300) {
+//     showLists();
+//   }
+// }
+//
+// window.addEventListener("scroll", handleScroll);
+// showLists();
 
 // const inputWrap = document.querySelector(".input-wrap");
 // const inputContainer = document.querySelector(".input-container");
@@ -177,9 +177,12 @@ const contentDeclarationBtn = document.querySelector(
 );
 
 // 상단 신고하기 버튼 클릭 시
-contentDeclarationBtn.addEventListener("click", () => {
-  declarationModalWrap.classList.add("open");
-});
+if(post_member_id !== member_id){
+  contentDeclarationBtn.addEventListener("click", () => {
+    declarationModalWrap.classList.add("open");
+  });
+
+}
 
 // 댓글 신고버튼
 const commentDeclarationBtns = document.querySelectorAll(

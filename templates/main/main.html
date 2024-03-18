@@ -185,20 +185,14 @@
                           aria-label="scrap 토글 버튼"
                           class="scrap-button"
                       >
-                            <span class="realmain-lecture-scrapSpan">
-                              <img
-                                  src="
-                                      
-                                      
-                                      
-
-
-                                      {% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
-                                  width="24"
-                                  height="24"
-                                  class="scrap-img"
-                              />
-                            </span>
+                        <span class="realmain-lecture-scrapSpan">
+                          <img
+                              src="{% if lecture.lecture_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                              width="24"
+                              height="24"
+                              class="scrap-img"
+                          />
+                        </span>
                       </button>
                     </div>
                   </div>
@@ -268,10 +262,7 @@
                             class="realmain-lecture-scrapSpan popularcontent-scrapSpan"
                         >
                           <img
-                              src="
-
-
-                                  {% if post.post_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
+                              src="{% if post.post_scrap %}{% static 'public/web/images/common/scrap-on.png' %}{% else %}{% static 'public/web/images/common/scrap-off.png' %}{% endif %}"
                               width="24"
                               height="24"
                               class="scrap-img popularcontent-scrapoff"
@@ -308,8 +299,7 @@
             <div class="realmain-todayHotdeal-lettercond">
               <div class="realmain-todayHotdeal-lettercondd">
                 <strong class="realmain-todayHotdeal-letterStrong"
-                >오늘의 거래🔥</strong
-                >
+                >오늘의 거래🔥</strong>
               </div>
             </div>
             <div class="realmain-lecture-seeMore-wrap">
@@ -364,18 +354,15 @@
                                     >{{ trade.trade_title }}</span
                                     >
                                 <span class="realmain-todayHotdeal-productSpanS"
-                                >{{ trade.trade_price }}</span
-                                >
+                                >{{ trade.trade_price }}</span>
                               </h1>
                               <span class="realmain-todayHotdeal-priceWrap">
                                     <span class="realmain-todayHotdeal-realprice"
-                                    >{{ trade.trade_content }}</span
-                                    >
+                                    >{{ trade.trade_content }}</span>
                                   </span>
                               <span class="realmain-todayHotdeal-boxWrap">
                                     <span class="realmain-todayHotdeal-boxWrapSpan"
-                                    ># {{ trade.trade_category_name }}</span
-                                    >
+                                    ># {{ trade.trade_category_name }}</span>
                                 <!-- <svg
                                   class="Deliveryicon"
                                   aria-label="특가"
@@ -441,8 +428,7 @@
             <div class="realmain-userReview-letterContentD">
               <div class="realmain-userReview-letterContentDD">
                 <strong class="realmain-userReview-letterStrong"
-                >유저들의 강의 평가🤓</strong
-                >
+                >유저들의 강의 평가🤓</strong>
               </div>
             </div>
             <div class="realmain-lecture-seeMore-wrap">
@@ -480,8 +466,7 @@
             <div class="realmain-bestproduct-letterContentD">
               <div class="realmain-bestproduct-letterContentDD">
                 <strong class="realmain-bestproduct-letterContentStrong"
-                >베스트 클래스👍</strong
-                >
+                >베스트 클래스👍</strong>
               </div>
             </div>
             <div class="realmain-lecture-seeMore-wrap">
@@ -503,8 +488,7 @@
                             checked
                         />
                         <span class="realmain-bestproduct-photoCategorySpan"
-                        >전체</span
-                        >
+                        >전체</span>
                       </label>
                     </li>
                     <li class="realmain-bestproduct-photoCategoryli">
@@ -514,8 +498,7 @@
                             class="realmain-bestproduct-photoCategoryip"
                         />
                         <span class="realmain-bestproduct-photoCategorySpan"
-                        >관엽식물</span
-                        >
+                        >관엽식물</span>
                       </label>
                     </li>
                     <li class="realmain-bestproduct-photoCategoryli">

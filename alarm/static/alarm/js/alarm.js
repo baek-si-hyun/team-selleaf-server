@@ -7,14 +7,26 @@ function truncateText(text, maxLength) {
     }
 }
 const showAlarm = (alarms) => {
+  let totalalarms = alarms.length
+  const alarmCounts = document.querySelectorAll('.alarm-count')
+  alarmCounts.forEach((alarmCount)=>{
+    alarmCount.innerText = totalalarms
+  })
   let text = ``
   alarms.forEach((alarm) => {
+      let member_file = ''
+      if(alarm.member_file.includes('http')){
+        member_file = alarm.member_file
+      }else{
+          member_file = `/uplaod/${alarm.member_file}`
+      }
+
       if( alarm.alarm_category === 1){
           text += `
             <div>    
               <div class="notice-contents">
                 <a href="" class="notice-profile-box">
-                  <img src="/upload/${alarm.member_file}" alt="" class="notice-profile" />
+                  <img src="${member_file}" alt="" class="notice-profile" />
                 </a>
                 <a href="${alarm.target_url}" class="notice-content-box">
                   <div class="inner-txt-wrap">
@@ -35,7 +47,7 @@ const showAlarm = (alarms) => {
         <div>    
           <div class="notice-contents">
             <a href="" class="notice-profile-box">
-              <img src="/upload/${alarm.member_file}" alt="" class="notice-profile" />
+              <img src="${member_file}" alt="" class="notice-profile" />
             </a>
             <a href="${alarm.target_url}${alarm.target_id}" class="notice-content-box">
               <div class="inner-txt-wrap">
@@ -59,7 +71,7 @@ const showAlarm = (alarms) => {
         <div>    
           <div class="notice-contents">
             <a href="" class="notice-profile-box">
-              <img src="/upload/${alarm.member_file}" alt="" class="notice-profile" />
+              <img src="${member_file}" alt="" class="notice-profile" />
             </a>
             <a href="${alarm.target_url}${alarm.target_id}" class="notice-content-box">
               <div class="inner-txt-wrap">
