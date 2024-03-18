@@ -2,6 +2,10 @@
 const allCheckBox = document.querySelector(".all-check");
 const deleteBtn = document.querySelector(".delete-button");
 
+const inputField = document.querySelector(".search-bar input");
+const cancelButton = document.querySelector(".search-bar .cancel-logo");
+const searchButton = document.querySelector(".search-bar .search-logo");
+
 // 현재 체크된 박스의 개수를 세는 함수
 const countCheckBoxes = () => {
   // 각 체크박스의 상태가 변할 때마다 체크된 박스의 개수를 셈
@@ -488,10 +492,6 @@ document.addEventListener("click", (e) => {
   }
   searchBar.classList.remove("search-bar-checked");
 });
-
-const inputField = document.querySelector(".search-bar input");
-const cancelButton = document.querySelector(".search-bar .cancel-logo");
-const searchButton = document.querySelector(".search-bar .search-logo");
 
 // 검색창에 엔터 입력 시 키워드로 검색하여 페이지를 뿌려주는 이벤트
 inputField.addEventListener("keyup", async (e) => {
