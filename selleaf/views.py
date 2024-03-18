@@ -286,16 +286,16 @@ class TeacherInfoAPI(APIView):
             'teacher_name',
             'teacher_info',
             'lecture_plan',
-            'created_date',
+            'updated_date',
         ]
 
         # 최근에 승인된 순으로 강사 10명의 정보를 가져옴
         teachers = Teacher.enabled_objects.annotate(teacher_name=F('member__member_name'))\
-            .values(*columns).filter(condition, id__isnull=False).order_by('-id')
+            .values(*columns).filter(condition, id__isnull=False).order_by('-updated_date')
 
-        # 각각의 강사 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        # 각각의 강사 정보에서 updated_date를 "YYYY.MM.DD" 형식으로 변환
         for teacher in teachers:
-            teacher['created_date'] = teacher['created_date'].strftime('%Y.%m.%d')
+            teacher['updated_date'] = teacher['updated_date'].strftime('%Y.%m.%d')
 
         # 강사 수
         total = teachers.count()
