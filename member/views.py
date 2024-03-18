@@ -837,13 +837,13 @@ class MypageShowLikesAPI(APIView):
         limit = row_count * page
 
 
-        likes = list(PostLike.objects.filter(member_id = request.session['member']['id'],status=1) \
+        likes = list(PostLike.objects.filter(member_id = request.session['member']['id'],status = 1) \
             .annotate(
             member_name=F('member__member_name'),
             post_title=F('post__post_title'),
             post_writer=F('post__member__member_name'),
             post_count=F('post__post_count'),
-            post_tag=F('post__posttag__tag_name')) \
+            post_tag=F('post__posttag__tag_name'))\
             .values(
             'id',
             'post_id',
