@@ -136,7 +136,7 @@ searchInput.addEventListener("keyup", (e) => {
 
 // 강사 로그인 시 글쓰기 버튼 눌렀을 때 강의 시작하기가 생겨야함 원래는 없어야하고
 const WriteLetterBtnModal = document.querySelectorAll(".header-content-photo");
-WriteLetterBtnModal[4].style.display = "none";
+WriteLetterBtnModal[3].style.display = "none";
 
 // 헤더부분에 로그인 | 회원가입 | 고객센터를 로그인이 됬을땐 아이콘 아이콘 아이콘 이런식으로 보여야하기 때문에
 // 그 부분 구현 코드
@@ -170,14 +170,27 @@ const teacherLogin = false;
 
 // 카카오 아이콘 눌렀을 때 모달창 구현 코드
 const myPagemodal = document.querySelector(".header-mymenumodal-wrap");
+const communityModal = document.querySelector(".community-modal-wrap");
 
 document.addEventListener("click", (e) => {
-  if (!e.target.closest(".header-mymenumodal-wrap")) {
-    if (e.target.closest(".header-kakao-button")) {
-      myPagemodal.classList.toggle("myPagemodalOpen");
-      return;
+  if (myPagemodal) {
+    if (!e.target.closest(".header-mymenumodal-wrap")) {
+      if (e.target.closest(".header-kakao-button")) {
+        myPagemodal.classList.toggle("myPagemodalOpen");
+        return;
+      }
+      myPagemodal.classList.remove("myPagemodalOpen");
     }
-    myPagemodal.classList.remove("myPagemodalOpen");
+  }
+
+  if (communityModal) {
+    if (!e.target.closest(".community-modal-wrap")) {
+      if (e.target.closest(".community")) {
+        communityModal.classList.toggle("myPagemodalOpen");
+        return;
+      }
+      communityModal.classList.remove("myPagemodalOpen");
+    }
   }
 });
 

@@ -172,7 +172,7 @@ div.compose-inner-left{
     fill: #1d1d1e;
 }
 
-button.compose-inner-left{
+a.compose-inner-left{
     border-radius: 9999px;
     justify-content: center;
     align-items: center;

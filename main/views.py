@@ -7,6 +7,8 @@ from django.utils import timezone
 from django.views import View
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+from alarm.models import Alarm
 from knowhow.models import Knowhow, KnowhowFile, KnowhowScrap, KnowhowTag
 from lecture.models import Lecture, LecturePlaceFile, LectureReview, LectureScrap, LecturePlant
 from post.models import Post, PostScrap, PostTag, PostFile
@@ -248,6 +250,7 @@ class MainView(View):
             lecture_review_file = Lecture.objects.filter(id=lecture_review['lecture_id']).values(
                 'lectureplacefile__file_url').first()
             lecture_review['lecture_file_url'] = lecture_review_file['lectureplacefile__file_url']
+
 
         context = {
             'best_knowhow': best_knowhow,

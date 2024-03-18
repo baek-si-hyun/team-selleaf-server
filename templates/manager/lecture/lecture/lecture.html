@@ -44,26 +44,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="header-function-container">
-                    <ul class="header-function-inner">
-                      <li class="header-relative">
-                        <button
-                          class="lecture-info"
-                          aria-label="tab button"
-                          type="button"
-                          id="btn"
-                        >
-                          <div class="flex">
-                            <p class="lecture-info">강의 정보</p>
-                            <div class="lecture-info-num">
-                              <p class="lecture-info-num">{{ lecture_count }}</p>
-                            </div>
-                          </div>
-                        </button>
-                        <div class="lecture-underbar" id="under"></div>
-                      </li>
-                    </ul>
-                  </div>
                   <div class="all-list">
                     <div>
                       <span class="all-name">전체</span>
@@ -210,67 +190,24 @@
                     </a>
                   </li>
                 </ul>
+                {# 페이지네이션 버튼 #}
                 <div class="page-count-wrap">
-                  <ul class="page flex">
-                    <li>
-                      <button
-                        class="page-count"
-                        aria-label="page turning button"
-                        disabled
-                        type="button"
-                      >
-                        <svg
-                          class="page-count"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M15.58 3.27c.504.405.563 1.115.13 1.587L9.168 12l6.543 7.143a1.076 1.076 0 0 1-.13 1.586 1.26 1.26 0 0 1-1.695-.122L6 12l7.885-8.607a1.26 1.26 0 0 1 1.695-.122Z"
-                          ></path>
-                        </svg>
-                      </button>
-                    </li>
-                    <li class="page-count">
-                      <button
-                        class="page-count-num page-count-num-choice"
-                        aria-label="page number button"
-                        type="button"
-                      >
-                        <span class="page-count-num">1</span>
-                      </button>
-                    </li>
-                    <li class="page-count">
-                      <button
-                        class="page-count-num"
-                        aria-label="page number button"
-                        type="button"
-                      >
-                        <span class="page-count-num">2</span>
-                      </button>
-                    </li>
-                    <li class="page-count">
-                      <button
-                        class="page-count"
-                        aria-label="page turning button"
-                        disabled
-                        type="button"
-                      >
-                        <svg
-                          class="page-count"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M8.42 20.73a1.076 1.076 0 0 1-.13-1.587L14.832 12 8.289 4.857a1.076 1.076 0 0 1 .13-1.586 1.26 1.26 0 0 1 1.696.122L18 12l-7.885 8.607a1.26 1.26 0 0 1-1.695.122Z"
-                          ></path>
-                        </svg>
-                      </button>
-                    </li>
-                  </ul>
+                  <button class="page-count" aria-label="page turning button" disabled type="button">
+                    <svg class="page-count" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M15.58 3.27c.504.405.563 1.115.13 1.587L9.168 12l6.543 7.143a1.076 1.076 0 0 1-.13 1.586 1.26 1.26 0 0 1-1.695-.122L6 12l7.885-8.607a1.26 1.26 0 0 1 1.695-.122Z"></path>
+                    </svg>
+                  </button>
+                  <button class="page-count-num page-count-num-choice" aria-label="page number button" type="button">
+                    <span class="page-count-num">1</span>
+                  </button>
+                  <button class="page-count-num" aria-label="page number button" type="button">
+                    <span class="page-count-num">2</span>
+                  </button>
+                  <button class="page-count" aria-label="page turning button" disabled type="button">
+                    <svg class="page-count" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.42 20.73a1.076 1.076 0 0 1-.13-1.587L14.832 12 8.289 4.857a1.076 1.076 0 0 1 .13-1.586 1.26 1.26 0 0 1 1.696.122L18 12l-7.885 8.607a1.26 1.26 0 0 1-1.695.122Z"></path>
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
@@ -303,7 +240,13 @@
 {% endblock %}
 {% block js %}
   <script>
-    const csrf_token = '{{ csrf_token }}';
+    const csrf_token = `{{ csrf_token }}`;
+  
+    // 강의 목록 페이지 - 초기값 1
+    let page = 1;
+    
+    // 검색 키워드 - 초기값 빈 문자열
+    let keyword = '';
   </script>
   <script src="{% static 'public/web/js/manager/lecture/lecture/lecture-module.js' %}"></script>
   <script src="{% static 'public/web/js/manager/lecture/lecture/show-lectures.js' %}"></script>

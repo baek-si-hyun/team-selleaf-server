@@ -3,6 +3,8 @@
 let noticePage = 1;
 let qnaPage = 1;
 
+let keyword= ''
+
 // 공지사항, Q&A 버튼
 const qnaButton = document.getElementById("Q&A");
 const noticeButton = document.getElementById("notice");
@@ -17,7 +19,7 @@ const callFirstNotices = () => {
 
   // 공지사항 목록 1페이지의 데이터 표시
   // getList의 리턴값은 Promise 객체이므로, 데이터를 활용하기 위해서는 .then() 사용
-  noticeService.getList(noticePage, showNotices).then((notices) => {
+  noticeService.getList(keyword, noticePage, showNotices).then((notices) => {
     ul.innerHTML = notices;
 
     // 클릭 이벤트 추가
@@ -36,7 +38,7 @@ const callNextNotices = () => {
   // 현재 스크롤이 ul 태그의 끝 부근에 있는지 검사
   if (currentScroll + 350 >= listHeight) {
     // 다음 페이지의 정보를 가져와서 화면에 뿌림
-    noticeService.getList(++noticePage, showNotices).then((notices) => {
+    noticeService.getList(keyword, ++noticePage, showNotices).then((notices) => {
       ul.innerHTML += notices;
 
       // 클릭 이벤트 추가
@@ -51,7 +53,7 @@ const callFirstQnAs = () => {
   qnaPage = 1;
 
   // QnA 목록 1페이지의 데이터 표시
-  qnaService.getList(qnaPage, showQnAs).then((qnas) => {
+  qnaService.getList(keyword, qnaPage, showQnAs).then((qnas) => {
     ul.innerHTML = qnas;
 
     // 클릭 이벤트 추가
@@ -70,7 +72,7 @@ const callNextQnAs = () => {
   // 현재 스크롤이 ul 태그의 끝 부근에 있는지 검사
   if (currentScroll + 350 >= listHeight) {
     // 다음 페이지의 정보를 가져와서 화면에 뿌림
-    qnaService.getList(++qnaPage, showQnAs).then((qnas) => {
+    qnaService.getList(keyword, ++qnaPage, showQnAs).then((qnas) => {
       ul.innerHTML += qnas;
 
       // 클릭 이벤트 추가

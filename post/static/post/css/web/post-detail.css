@@ -881,13 +881,7 @@
 .sticky-icon-comment:before {
   content: "\e996";
 }
-.sticky-icon-share::before {
-  font-family: OhouseIcon;
-  vertical-align: top;
-}
-.sticky-icon-share:before {
-  content: "\ef04";
-}
+
 .sticky-data {
   position: absolute;
   left: 50%;

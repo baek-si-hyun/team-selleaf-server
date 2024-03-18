@@ -1,9 +1,9 @@
 // 다른 파일에서 postService.메소드명 형식으로 사용할 수 있도록 모듈화
 const postService = (() => {
     // 커뮤니티 게시물 목록 조회 - 한 번에 10개씩
-    const getPostsList = async (page, callback) => {
+    const getPostsList = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/posts/posts/${page}`);
+        const response = await fetch (`/admin/posts/posts-list/?keyword=${keyword}&page=${page}`);
         const posts = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -16,9 +16,9 @@ const postService = (() => {
     }
 
     // 노하우 게시물 목록 조회 - 한 번에 10개씩
-    const getKnowhowList = async (page, callback) => {
+    const getKnowhowList = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/posts/knowhow/${page}`);
+        const response = await fetch (`/admin/posts/knowhow-list/?keyword=${keyword}&page=${page}`);
         const posts = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김
@@ -31,9 +31,9 @@ const postService = (() => {
     }
 
     // 거래 게시물 목록 조회 - 한 번에 10개씩
-    const getTradeList = async (page, callback) => {
+    const getTradeList = async (keyword, page, callback) => {
         // API에 데이터 요청
-        const response = await fetch (`/admin/posts/trade/${page}`);
+        const response = await fetch (`/admin/posts/trade-list/?keyword=${keyword}&page=${page}`);
         const posts = await response.json();
 
         // 콜백함수를 인자로 받았다면 콜백함수에 처리를 넘김

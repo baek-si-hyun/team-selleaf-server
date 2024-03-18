@@ -5,5 +5,5 @@ from qna.views import QnAListAPI
 app_name = 'qna'
 
 urlpatterns = [
-    path('list/<int:page>/', QnAListAPI.as_view(), name='qna-list-api'),
+    path('list/', QnAListAPI.as_view(), name='qna-list-api'),
 ]
