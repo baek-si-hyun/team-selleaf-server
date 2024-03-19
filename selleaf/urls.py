@@ -31,6 +31,7 @@ urlpatterns = [
     path('lecture-scrap/api/', LectureScrapAPI.as_view(), name='lecture-scrap-api'),
     path('post-scrap/api/', PostScrapAPI.as_view(), name='post-scrap-api'),
     path('lecture-category/api/', BestLectureCategoryAPI.as_view(), name='lecture-category-api'),
+
     # 관리자 페이지 뷰
     path('admin/login/', ManagerLoginView.as_view(), name='manager-login'),
     path('admin/logout/', ManagerLogoutView.as_view(), name='manager-logout'),
@@ -76,7 +77,7 @@ urlpatterns = [
     path('admin/lecture/trainees/', LectureTraineesManagementView.as_view(), name='manager-lecture-trainees'),
     path('admin/lecture/trainees-list/', TraineesInfoAPI.as_view(), name='lecture-review-info'),
     path('admin/lecture/delete/<str:lecture_ids>', LectureDeleteAPI.as_view(), name='lecture-delete-api'),
-    path('admin/lecture/review/delete/<str:lecture_ids>', LectureReviewDeleteAPI.as_view(), name='review-delete-api'),
+    path('admin/lecture/review/delete/<str:lecture_review_id>', LectureReviewDeleteAPI.as_view(), name='review-delete-api'),
 
     # 공지사항 관리
     path('admin/notice/', NoticeManagementView.as_view(), name='manager-notice'),
