@@ -919,7 +919,7 @@ class LectureInfoAPI(APIView):
         ]
 
         # 강의 게시물 정보를 최신순으로 가져옴
-        lectures = Lecture.objects.filter(lecture_status=0)\
+        lectures = Lecture.objects\
                        .annotate(teacher_name=F('teacher__member__member_name'),
                                  lecture_place=Concat(F('lectureaddress__address_city'),
                                                       Value(" "),
@@ -927,7 +927,7 @@ class LectureInfoAPI(APIView):
                                                       output_field=CharField()
                                                       ),
                                 )\
-                       .values(*columns).filter(condition, id__isnull=False)
+                       .values(*columns).filter(condition, lecture_status=0, id__isnull=False)
 
         # 각 강의 게시물의 작성 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
         for lecture in lectures:
