@@ -9,6 +9,7 @@
     펼쳐진 상태로 다시 클릭하면 닫히게
 */
 let page = 1
+let keyword = ''
 const listSection = document.querySelector('.list-section')
 
 // QnA 목록을 화면에 띄우는 함수
@@ -53,7 +54,7 @@ const nextQnAs = () => {
     let listHeight = listSection.clientHeight;
 
     if (currentscroll >= listHeight) {
-        qnaService.getList(++page, showQnAs).then((qna) => {
+        qnaService.getList(keyword, ++page, showQnAs).then((qna) => {
             listSection.innerHTML += qna;
 
             addButtonEvent();
@@ -61,7 +62,7 @@ const nextQnAs = () => {
     }
 }
 
-qnaService.getList(page, showQnAs).then((qna) => {
+qnaService.getList(keyword, page, showQnAs).then((qna) => {
     listSection.innerHTML = qna;
 
     addButtonEvent();

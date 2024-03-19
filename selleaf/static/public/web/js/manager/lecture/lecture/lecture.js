@@ -143,6 +143,8 @@ const createHTML = (() => {
                 // 온라인 강의는 '온라인', 오프라인 강의는 주소 출력
                 const lecturePlace = lecture.online_status
                                                           ? '온라인'
+                                                          : lecture.lecture_place === " "
+                                                          ? '온라인'
                                                           : lecture.lecture_place;
 
                 text += `
@@ -285,38 +287,38 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// 글쓰기 버튼을 클릭하면 모달이 생성되고 다시 클릭하면 모달이 없어져야함
-// 대신 화면의 다른 부분을 클릭해도 모달이 없어져야함
-const modalButton = document.querySelector("button.list-order");
-const modal = document.querySelector(".list-order-function");
-const modalUl = document.querySelector("ul.list-order-function");
-const modalSvg = document.querySelector("svg.list-order");
-
-document.addEventListener("click", (e) => {
-  if (e.target.closest("button.list-order")) {
-    modal.style.display = "block";
-    modalSvg.style.transform = "rotate(180deg)";
-    modalButton.classList.add("border-color");
-  } else {
-    if (e.target.classList.contains("list-order-function")) {
-      modal.style.display = "block";
-      return;
-    }
-    modal.style.display = "none";
-    modalSvg.style.transform = "rotate(360deg)";
-    modalButton.classList.remove("border-color");
-  }
-});
-
-// 순서 정렬 박스에서 선택한 값이 위에 선택하기
-const modalBtns = modal.querySelectorAll("button.function-latest");
-modalBtns.forEach((modalBtn) => {
-  modalBtn.addEventListener("click", (e) => {
-    const btn = e.target.closest("button");
-    const order1 = document.querySelector(".order-1");
-    order1.innerText = btn.innerText;
-  });
-});
+// // 글쓰기 버튼을 클릭하면 모달이 생성되고 다시 클릭하면 모달이 없어져야함
+// // 대신 화면의 다른 부분을 클릭해도 모달이 없어져야함
+// const modalButton = document.querySelector("button.list-order");
+// const modal = document.querySelector(".list-order-function");
+// const modalUl = document.querySelector("ul.list-order-function");
+// const modalSvg = document.querySelector("svg.list-order");
+//
+// document.addEventListener("click", (e) => {
+//   if (e.target.closest("button.list-order")) {
+//     modal.style.display = "block";
+//     modalSvg.style.transform = "rotate(180deg)";
+//     modalButton.classList.add("border-color");
+//   } else {
+//     if (e.target.classList.contains("list-order-function")) {
+//       modal.style.display = "block";
+//       return;
+//     }
+//     modal.style.display = "none";
+//     modalSvg.style.transform = "rotate(360deg)";
+//     modalButton.classList.remove("border-color");
+//   }
+// });
+//
+// // 순서 정렬 박스에서 선택한 값이 위에 선택하기
+// const modalBtns = modal.querySelectorAll("button.function-latest");
+// modalBtns.forEach((modalBtn) => {
+//   modalBtn.addEventListener("click", (e) => {
+//     const btn = e.target.closest("button");
+//     const order1 = document.querySelector(".order-1");
+//     order1.innerText = btn.innerText;
+//   });
+// });
 
 // 검색창 눌렀을때 검색바에 아웃라인주기
 const searchBar = document.querySelector("label.search-bar");

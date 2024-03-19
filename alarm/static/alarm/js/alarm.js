@@ -18,7 +18,7 @@ const showAlarm = (alarms) => {
       if(alarm.member_file.includes('http')){
         member_file = alarm.member_file
       }else{
-          member_file = `/uplaod/${alarm.member_file}`
+          member_file = `/upload/${alarm.member_file}`
       }
 
       if( alarm.alarm_category === 1){

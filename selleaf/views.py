@@ -16,7 +16,7 @@ from knowhow.models import Knowhow, KnowhowTag, KnowhowFile, KnowhowRecommend, K
 from lecture.models import Lecture, LectureReview
 from member.models import Member
 from notice.models import Notice
-from order.models import Order, OrderDetail
+from order.models import Order, OrderDetail, OrderMileage
 from post.models import Post, PostTag, PostFile, PostReply, PostCategory, PostPlant, PostScrap, PostLike, PostReplyLike
 from qna.models import QnA
 from report.models import KnowhowReplyReport, PostReplyReport, LectureReport, TradeReport, PostReport, KnowhowReport
@@ -77,8 +77,8 @@ class ManagerLoginView(View):
 # 관리자 로그아웃
 class ManagerLogoutView(View):
     def get(self, request):
-        # 세션 정보 전체 초기화
-        request.session.clear()
+        # 세션에서 관리자 데이터 삭제
+        del request.session['admin']
 
         # 관리자 로그인 페이지로 이동
         return redirect('manager-login')
@@ -121,6 +121,7 @@ class MemberInfoAPI(APIView):
             condition |= Q(member_address__icontains=keyword)
             condition |= Q(member_type__icontains=keyword)
             condition |= Q(member_status__icontains=keyword)
+            condition |= Q(created_date__icontains=keyword)
 
         # 회원 정보 표시에 필요한 tbl_member와 tbl_member_address의 컬럼들
         columns = [
@@ -129,7 +130,8 @@ class MemberInfoAPI(APIView):
             'member_email',
             'member_address',
             'member_type',
-            'member_status'
+            'member_status',
+            'created_date'
         ]
 
         # 최근에 가입한 순서대로 10명의 회원을 가져옴
@@ -142,6 +144,27 @@ class MemberInfoAPI(APIView):
                                                       )
                                 )\
                       .values(*columns).filter(condition, id__isnull=False)
+
+        for member in members:
+            member['created_date'] = member['created_date'].strftime('%Y.%m.%d')
+
+            # 총 마일리지를 담을 초기값
+            order_mileage = 0
+
+            # 특정 회원의 마일리지 내역 전부 가져옴
+            mileage_histories = OrderMileage.objects.filter(member_id=member.get('id'))
+
+            # status가 0이면 -, 1이면 +
+            for mileage in mileage_histories:
+                # 1이면 +
+                if mileage.mileage_status:
+                    order_mileage += int(mileage.mileage)
+                # 0이면 -
+                else:
+                    order_mileage -= int(mileage.mileage)
+
+            # member에 새 컬럼 만들어서 총 마일리지 할당
+            member['member_mileage'] = order_mileage
 
         # 회원 수
         total = members.count()
@@ -267,16 +290,16 @@ class TeacherInfoAPI(APIView):
             'teacher_name',
             'teacher_info',
             'lecture_plan',
-            'created_date',
+            'updated_date',
         ]
 
         # 최근에 승인된 순으로 강사 10명의 정보를 가져옴
         teachers = Teacher.enabled_objects.annotate(teacher_name=F('member__member_name'))\
-            .values(*columns).filter(condition, id__isnull=False).order_by('-id')
+            .values(*columns).filter(condition, id__isnull=False).order_by('-updated_date')
 
-        # 각각의 강사 정보에서 created_date를 "YYYY.MM.DD" 형식으로 변환
+        # 각각의 강사 정보에서 updated_date를 "YYYY.MM.DD" 형식으로 변환
         for teacher in teachers:
-            teacher['created_date'] = teacher['created_date'].strftime('%Y.%m.%d')
+            teacher['updated_date'] = teacher['updated_date'].strftime('%Y.%m.%d')
 
         # 강사 수
         total = teachers.count()
