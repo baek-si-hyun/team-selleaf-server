@@ -87,7 +87,6 @@ class ManagerLogoutView(View):
     def get(self, request):
         # 세션에서 관리자 정보와 기존에 요청했던 페이지에 대한 정보 삭제
         del request.session['admin']
-        del request.session['previous_uri']
 
         # 관리자 로그인 페이지로 이동
         return redirect('manager-login')
