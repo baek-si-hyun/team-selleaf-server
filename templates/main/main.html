@@ -199,12 +199,11 @@
                   <div class="realmain-lecture-explanationDiv">
                     <p class="realmain-lecture-explanationP">
                           <span class="realmain-lecture-explanationSpan"
-                          >{{ lecture.lecture_title }}</span
-                          >
+                          >{{ lecture.lecture_title }}</span>
                       {{ lecture.lecture_content }}
                     </p>
                   </div>
-                  <a class="realmain-lecture-explanationA" href="/lecture/detail/online/?id={{ lecture.id }}"></a>
+                  <a class="realmain-lecture-explanationA" href="/lecture/detail/offline/?id={{ lecture.id }}"></a>
                 </div>
               {% endfor %}
             </div>

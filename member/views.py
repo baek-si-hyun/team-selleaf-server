@@ -20,7 +20,6 @@ from member.models import Member, MemberAddress, MemberProfile
 from member.serializers import MemberSerializer
 from order.models import OrderMileage
 from post.models import Post, PostFile, PostPlant, PostReply, PostReplyLike, PostLike
-from selleaf.models import Mileage
 from teacher.models import Teacher
 from trade.models import TradeScrap, TradeFile, TradePlant, Trade
 
@@ -28,6 +27,7 @@ from trade.models import TradeScrap, TradeFile, TradePlant, Trade
 class MemberJoinView(View):
     def get(self, request):
         member = request.GET
+        # 회원가입시 get방식을 통해
         context = {
             'memberEmail': member['member_email'],
             'memberName': member['member_name'],
@@ -84,6 +84,7 @@ class MemberLoginView(View):
 
 class MemberLogoutView(View):
     def get(self, request):
+
         request.session.clear()
         return redirect('member:login')
 
