@@ -31,13 +31,19 @@ class OAuthLoginView(View):
         is_member = Member.objects.filter(**member_data)
 
         path = '/'
-        만약 이미 가입한 사용자라면
+        # 만약 가입하지 않은 사용자라면 회원가입으로 이동
+        # redirect에서 데이터를 전달하기 위해서는 쿼리스트링으로 전달하거나 세션을 이용해야한다.
         if not is_member.exists():
             path = f'/member/join?member_email={member_email}&member_name={member_name}&member_profile={member_profile}&member_type={member_type}'
+        # 이미 회원가입이 완료된 회원이라면 메인화면으로 이동
         else:
             member = is_member.first()
+            # 사용자의 정보를 세션에 저장
+            # serializer로 직렬화 한다.
             request.session['member'] = MemberSerializer(member).data
+            # 역참조를 통해 사용자 프로필을 가져온다.
             member_files = list(member.memberprofile_set.values('file_url'))
+            # 사용자의 프로필 데이터가 존재하면 세션에 넣는다.
             if len(member_files) != 0:
                 request.session['member_files'] = member_files
 
