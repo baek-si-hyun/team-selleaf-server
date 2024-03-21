@@ -26,7 +26,7 @@ def pre_handle_request(get_response):
             if uri != '/' and 'join' not in uri and 'login' not in uri:
                 # 게시물 작성, 마이페이지, 강사 신청 서비스 중 하나일 때
                 if 'lecture/upload' in uri or 'trade/upload' in uri or 'knowhow/create' in uri \
-                        or 'mypage' in uri or ('teacher' in uri and 'admin' not in uri):
+                        or 'post/create' in uri or 'mypage' in uri or ('teacher' in uri and 'admin' not in uri):
                     # 로그인조차 하지 않은 상태라면
                     if request.session.get('member') is None:
                         # 여기에 들어온 경로 = 로그인이 필요한 서비스들
