@@ -26,3 +26,6 @@
 ## ERD
 <img width="100%" src="https://imagedelivery.net/4aEUbX05h6IovGOQjgkfSw/1582dcea-021a-426c-da91-063f7845b700/dia" />
 
+## 담당 업무
+### 프론트엔드
+<img width="100%" src="https://imagedelivery.net/4aEUbX05h6IovGOQjgkfSw/370673e8-fa4b-4e5c-9798-1e56cf009300/public" />
