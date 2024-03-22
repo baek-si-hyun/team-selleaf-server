@@ -30,5 +30,7 @@
 ### 프론트엔드
 <img width="100%" src="https://imagedelivery.net/4aEUbX05h6IovGOQjgkfSw/370673e8-fa4b-4e5c-9798-1e56cf009300/public" />
 
+▶ 커뮤니티
+
 ### 백엔드
 <img width="100%" src="https://imagedelivery.net/4aEUbX05h6IovGOQjgkfSw/e756985f-549e-480c-efc2-ac284b4ef300/public" />
