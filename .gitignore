@@ -1,8 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/pycharm,django
 # Edit at https://www.toptal.com/developers/gitignore?templates=pycharm,django
-.idea
-idea
-/.idea
+#.idea
+#idea
+#/.idea
 ### Django ###
 *.log
 *.pot
