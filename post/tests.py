@@ -27,11 +27,8 @@ class PostTest(TestCase):
     #     PostFile.objects.create(**post_file_data)
     #
 
-    print(random.choice(member_queryset.values('id')))
 
-    ids = member_queryset.values_list('id', flat=True)
-
-    for number in range(1, 10):
+    for number in range(1, 100):
 
         response = urlopen('https://www.gardening.news/news/articleView.html?idxno=' + str(number))
         soup = BeautifulSoup(response, 'html.parser')
@@ -54,9 +51,11 @@ class PostTest(TestCase):
         else:
             img_src = ''
 
-        post_data = {
-            'post_title': title,
-            'post_content': content,
-            'member': random.choice(member_queryset),
-        }
-        post = Post.objects.create(**post_data)
+        # 세개 모두 비어있지 않다면
+        if title != '' and content != '' and img_src != '' and len(content) > 10:
+            post_data = {
+                'post_title': title,
+                'post_content': content,
+                'member': random.choice(member_queryset),
+            }
+            post = Post.objects.create(**post_data)
