@@ -37,3 +37,13 @@ class MemberProfile(File):
     class Meta:
         db_table = 'tbl_member_profile'
         ordering = ['-id']
+
+
+class MemberAiFile(Period):
+    file_name = models.CharField(max_length=255, null=False, blank=False)
+    file_path = models.CharField(max_length=255, null=False, blank=False)
+    category = models.CharField(max_length=255, null=False, blank=False)
+    member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
+
+    class Meta:
+        db_table = 'tbl_ai_file'

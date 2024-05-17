@@ -89,3 +89,11 @@ class KnowhowCategory(Period):
 
     class Meta:
         db_table = 'tbl_knowhow_category'
+
+
+class KnowhowView(Period):
+    knowhow = models.ForeignKey(Knowhow, on_delete=models.PROTECT, null=False)
+    member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
+
+    class Meta:
+        db_table = "tbl_knowhow_view"
