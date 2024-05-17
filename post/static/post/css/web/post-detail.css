@@ -372,7 +372,7 @@
   width: 35px;
   height: 35px;
   display: block;
-
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
 }
 .input-wrap {
   -webkit-box-flex: 1;
@@ -504,7 +504,6 @@
   height: 30px;
   display: block;
   border-radius: 50%;
-
 }
 .comment-content-box {
   flex: 1 1 0%;
