@@ -142,7 +142,7 @@ const createHTML = (() => {
                       <div class="teacher-info">${teacher.teacher_name}</div>
                         <div class="teacher-info">${teacher.teacher_info}</div>
                         <div class="teacher-info">${teacher.lecture_plan}</div>
-                        <div class="teacher-info">${teacher.created_date}</div>
+                        <div class="teacher-info">${teacher.updated_date}</div>
                     </a>
                   </li>
                 `

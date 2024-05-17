@@ -121,6 +121,11 @@ const createHTML = (() => {
         // 받아온 dict 데이터에서 전체 신고 내역 수를 화면에 표시
         allNum.innerText = pageInfo.totalCount
 
+        // 마일리지를 3자리마다 콤마로 구분해주는 함수
+        const mileageFormat = (mileage) => {
+            return new Intl.NumberFormat().format(mileage);
+        }
+
         // 신고 내역 정보가 없으면 내역 없음 표시
         if (members.length === 0){
             text += `
@@ -146,6 +151,9 @@ const createHTML = (() => {
                 // 회원의 휴면 여부에 따라 서로 다른 문자열을 변수에 할당
                 const memberStatus = member.member_status ? '휴면' : '비휴면';
 
+                // 마일리지에 서식 적용
+                let memeberMileage = mileageFormat(member.member_mileage);
+
                 text += `
                     <li class="list-content ${member.id}">
                     <input type="checkbox" class="checkbox-input" />
@@ -154,7 +162,8 @@ const createHTML = (() => {
                         <div class="member-info">${member.member_email}</div>
                         <div class="member-info">${member.member_address}</div>
                         <div class="member-info">${memberType}</div>
-                        <div class="member-info">10,000</div>
+                        <div class="member-info">${memeberMileage}</div>
+                        <div class="member-info">${member.created_date}</div>
                         <div class="member-info">${memberStatus}</div>
                     </a>
                   </li>

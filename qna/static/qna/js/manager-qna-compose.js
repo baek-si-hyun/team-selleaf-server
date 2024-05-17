@@ -50,14 +50,14 @@ function updateButtonState() {
   const titleEntered = titleInput.value.trim() !== "";
   const contentEntered = contentTextarea.value.trim() !== "";
 
-  // 임시저장 버튼 상태 업데이트
-  if (titleEntered || contentEntered) {
-    temporaryStorageBtn.classList.add("compose-temporary-storage-checked");
-    temporaryStorageBtn.removeAttribute("disabled"); // disable 제거
-  } else {
-    temporaryStorageBtn.classList.remove("compose-temporary-storage-checked");
-    temporaryStorageBtn.setAttribute("disabled", "disabled"); // disable 추가
-  }
+  // // 임시저장 버튼 상태 업데이트
+  // if (titleEntered || contentEntered) {
+  //   temporaryStorageBtn.classList.add("compose-temporary-storage-checked");
+  //   temporaryStorageBtn.removeAttribute("disabled"); // disable 제거
+  // } else {
+  //   temporaryStorageBtn.classList.remove("compose-temporary-storage-checked");
+  //   temporaryStorageBtn.setAttribute("disabled", "disabled"); // disable 추가
+  // }
 
   // 게시 버튼 상태 업데이트
   if (titleEntered && contentEntered) {
@@ -68,26 +68,26 @@ function updateButtonState() {
     storageBtn.setAttribute("disabled", "disabled"); // disable 추가
   }
 
-  // 저장됨 버튼 상태 업데이트
-  if (titleEntered || contentEntered) {
-    if (savedBtn.style.display === "flex") {
-      // 저장됨 버튼이 표시되어 있으면 임시저장 버튼을 표시합니다.
-      temporaryStorageBtn.style.display = "flex";
-      savedBtn.style.display = "none";
-    }
-  } else {
-    // 제목과 콘텐츠 입력이 모두 없으면 임시저장 버튼을 표시합니다.
-    temporaryStorageBtn.style.display = "flex";
-    savedBtn.style.display = "none";
-  }
+  // // 저장됨 버튼 상태 업데이트
+  // if (titleEntered || contentEntered) {
+  //   if (savedBtn.style.display === "flex") {
+  //     // 저장됨 버튼이 표시되어 있으면 임시저장 버튼을 표시합니다.
+  //     // temporaryStorageBtn.style.display = "flex";
+  //     savedBtn.style.display = "none";
+  //   }
+  // } else {
+  //   // 제목과 콘텐츠 입력이 모두 없으면 임시저장 버튼을 표시합니다.
+  //   // temporaryStorageBtn.style.display = "flex";
+  //   savedBtn.style.display = "none";
+  // }
 }
 
-// 임시저장 버튼 클릭 시 실행되는 함수
-temporaryStorageBtn.addEventListener("click", function () {
-  // 임시저장 버튼을 숨기고 저장됨 버튼을 표시합니다.
-  temporaryStorageBtn.style.display = "none";
-  savedBtn.style.display = "flex";
-});
+// // 임시저장 버튼 클릭 시 실행되는 함수
+// temporaryStorageBtn.addEventListener("click", function () {
+//   // 임시저장 버튼을 숨기고 저장됨 버튼을 표시합니다.
+//   temporaryStorageBtn.style.display = "none";
+//   savedBtn.style.display = "flex";
+// });
 
 // 텍스트 입력 필드에 이벤트 리스너 추가
 titleInput.addEventListener("input", updateButtonState);
