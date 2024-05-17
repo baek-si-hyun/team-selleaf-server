@@ -8,8 +8,8 @@ from selleaf.period import Period
 
 
 class Post(Period):
-    post_title = models.CharField(max_length=50, null=False)
-    post_content = models.CharField(max_length=500, null=False)
+    post_title = models.CharField(max_length=80, null=False)
+    post_content = models.CharField(max_length=3000, null=False)
     post_count = models.IntegerField(default=0, null=False)
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
 
@@ -66,8 +66,13 @@ class PostCategory(Period):
 
 
 class PostReply(Period):
+    POSTREPLY_STATUS = [
+        (0, '비활성화'),
+        (1, '활성화'),
+    ]
     post_reply_content = models.CharField(null=False, max_length=50)
     post = models.ForeignKey(Post, on_delete=models.PROTECT, null=False)
+    post_reply_status = models.IntegerField(choices=POSTREPLY_STATUS, default=1)
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
 
     class Meta:
