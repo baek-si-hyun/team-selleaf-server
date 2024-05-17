@@ -1183,4 +1183,3 @@ class MypageTraineeAPI(APIView):
         apply['trainees'] = trainee_names
 
         return Response(apply)
-
