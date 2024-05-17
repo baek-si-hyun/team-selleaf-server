@@ -20,7 +20,6 @@ from member.models import Member, MemberAddress, MemberProfile
 from member.serializers import MemberSerializer
 from order.models import OrderMileage
 from post.models import Post, PostFile, PostPlant, PostReply, PostReplyLike, PostLike
-from selleaf.models import Mileage
 from teacher.models import Teacher
 from trade.models import TradeScrap, TradeFile, TradePlant, Trade
 
@@ -28,43 +27,51 @@ from trade.models import TradeScrap, TradeFile, TradePlant, Trade
 class MemberJoinView(View):
     def get(self, request):
         member = request.GET
+        # 회원가입시 get방식을 통해 로그인 화면으로 부터 데이터를 받는다
         context = {
-            'memberEmail': member['member_email'],
-            'memberName': member['member_name'],
-            'memberProfile': member['member_profile'],
-            'memberType': member['member_type'],
+            'memberEmail': member.get('member_email'),
+            'memberName': member.get('member_name'),
+            'memberProfile': member.get('member_profile'),
+            'memberType': member.get('member_type'),
         }
         return render(request, 'member/join/join.html', context)
 
     def post(self, request):
+        # 회원가입시 받은 데이터들을 처리하는 로직
         post_data = request.POST
         marketing_agree = post_data.getlist('marketing-agree')
+        # 자바스크립트에서 false, true로 전달 되기 때문에 False, True로 전환하는 로직
         marketing_agree = True if marketing_agree else False
         sms_agree = post_data.getlist('sms-agree')
         sms_agree = True if sms_agree else False
 
         member_data = {
-            'member_email': post_data['member-email'],
-            'member_name': post_data['member-name'],
-            'member_type': post_data['member-type'],
+            'member_email': post_data.get('member-email'),
+            'member_name': post_data.get('member-name'),
+            'member_type': post_data.get('member-type'),
             'marketing_agree': marketing_agree,
             'sms_agree': sms_agree
         }
+        # member_data로 사용자의 정보 찾기
+        # filter에 kwargs로 dict를 전달한다.
         is_member = Member.objects.filter(**member_data)
 
+        # 사용자의 정보가 없으면 생성한다
+        # exists는 데이터의 존재여부를 반환한다.
         if not is_member.exists():
             member = Member.objects.create(**member_data)
-
+            # 사용자의 프로필 파일과 주소는 다른 테이블에서 관리 하기 때문에
+            # 별도로 저장
             profile_data = {
-                'file_url': post_data['member-profile'],
+                'file_url': post_data.get('member-profile'),
                 'member': member
             }
             MemberProfile.objects.create(**profile_data)
 
             address_data = {
-                'address_city': post_data['address-city'],
-                'address_district': post_data['address-district'],
-                'address_detail': post_data['address-detail'],
+                'address_city': post_data.get('address-city'),
+                'address_district': post_data.get('address-district'),
+                'address_detail': post_data.get('address-detail'),
                 'member': member
             }
             MemberAddress.objects.create(**address_data)
@@ -78,11 +85,13 @@ class MemberJoinView(View):
 
 
 class MemberLoginView(View):
+    # 로그인 페이지로 이동 로직
     def get(self, request):
         return render(request, 'member/login/login.html')
 
 
 class MemberLogoutView(View):
+    # 로그아웃시 세션에 사용자의 정보를 포함한 모든 정보 제거
     def get(self, request):
         request.session.clear()
         return redirect('member:login')
@@ -110,7 +119,6 @@ class MypageUpdateView(View):
         data = request.POST
         files = request.FILES.getlist('new-image')
         member_id = request.session['member']['id']
-
         member = Member.objects.get(id=member_id)
         member.member_name = data['member-name']
         member.updated_date = timezone.now()
