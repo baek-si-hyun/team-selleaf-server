@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '3.35.214.147', 'selleaf.site']
 
 INSTALLED_APPS = [
     'django.contrib.humanize',
+    'ai',
     'main',
     'apply',
     'alarm',
