@@ -74,7 +74,7 @@ class PostDetailView(View):
         if session_member_id:
             session_member_id = session_member_id.get('id')
             session_profile = MemberProfile.objects.get(id=session_member_id)
-        post_tags = PostTag.objects.filter(post_id__gte=1).values('tag_name')
+        post_tags = PostTag.objects.filter(post_id = request.GET['id']).values('tag_name').distinct()
         reply_count = PostReply.objects.filter(post_id=post.id).values('id').count()
         member_profile = MemberProfile.objects.get(id=post.member_id)
         post_category = PostCategory.objects.filter(post_id=post).values('category_name').first()
@@ -86,7 +86,7 @@ class PostDetailView(View):
         post.post_count += 1
         post.save(update_fields=['post_count'])
 
-        print(post.id)
+        post_tags = post_tags[:5]
 
         post_files = list(post.postfile_set.all())
         post_file = list(post.postfile_set.all())[0]
