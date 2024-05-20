@@ -9,7 +9,7 @@ from selleaf.period import Period
 
 class Knowhow(Period):
     knowhow_title = models.CharField(max_length=80, null=False)
-    knowhow_content = models.CharField(max_length=3000, null=False)
+    knowhow_content = models.CharField(max_length=8000, null=False)
     knowhow_count = models.IntegerField(default=0, null=False)
     member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
 
