@@ -219,17 +219,58 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    const send_post = () =>{
-        aiCheckbox.addEventListener('click',(e)=>{
-            postTitle = titleInput.value
-            postContent = contentTextArea.value
-            aiPost(postTitle, postContent)
-            e.style.backgroundColor = '#a2a9b4'
-        })
+    const sendPost = async () => {
+        const postTitle = titleInput.value;
+        const postContent = contentTextArea.value;
+        await postService.aiPost(postTitle, postContent);
+        checkboxLabel.style.backgroundColor = '#C06888';
+    };
 
-    }
+
 
     titleInput.addEventListener('input', toggleCheckbox);
     contentTextArea.addEventListener('input', toggleCheckbox);
+    aiCheckbox.addEventListener('click', sendPost);
 });
 
+const wrap = document.querySelector('.tag-list')
+
+const showtags= (tags) => {
+  let text = ``
+  tags.forEach((tag) => {
+    if (tag) {
+      text += `
+      <span class="tag-left-line">#</span>
+        <div class="tag-inner">
+          <span class="tag-text">
+            ${tag}
+          </span>
+          <button type="button" class="tag-cancel-btn">
+            <svg
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="#a2a9b4"
+              viewBox="0 0 14 14"
+              width="10px"
+              height="10px"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </button>
+        </div>
+        `
+    }
+
+postService.gettags(showtags).then((text)=>{
+  wrap.innerHTML += text
+})
+
+  });
+  return text;
+}
