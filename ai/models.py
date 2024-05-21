@@ -24,14 +24,8 @@ class AiKnowhow(models.Model):
 
 
 class AiPostReply(models.Model):
-    POSTREPLY_STATUS = [
-        (0, '비활성화'),
-        (1, '활성화'),
-    ]
-    post_reply_content = models.CharField(null=False, max_length=50)
-    post = models.ForeignKey(Post, on_delete=models.PROTECT, null=False)
-    post_reply_status = models.IntegerField(choices=POSTREPLY_STATUS, default=1)
-    member = models.ForeignKey(Member, on_delete=models.PROTECT, null=False)
+    comment = models.CharField(null=False, max_length=1000)
+    target = models.SmallIntegerField(default=0, null=False)
 
     class Meta:
         db_table = 'tbl_ai_post_reply'
