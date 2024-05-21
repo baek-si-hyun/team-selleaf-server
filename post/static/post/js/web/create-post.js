@@ -218,6 +218,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+
+    const send_post = () =>{
+        aiCheckbox.addEventListener('click',(e)=>{
+            postTitle = titleInput.value
+            postContent = contentTextArea.value
+            aiPost(postTitle, postContent)
+            e.style.backgroundColor = '#a2a9b4'
+        })
+
+    }
+
     titleInput.addEventListener('input', toggleCheckbox);
     contentTextArea.addEventListener('input', toggleCheckbox);
 });
+
