@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 
 from alarm.models import Alarm
 from knowhow.models import Knowhow, KnowhowFile, KnowhowPlant, KnowhowTag, KnowhowCategory, KnowhowRecommend, \
-    KnowhowLike, KnowhowReply, KnowhowScrap
+    KnowhowLike, KnowhowReply, KnowhowScrap, KnowhowView
 from member.models import Member, MemberProfile
 from report.models import KnowhowReport
 from selleaf.models import Like
@@ -96,6 +96,8 @@ class KnowhowDetailView(View):
 
         knowhow.knowhow_count += 1
         knowhow.save(update_fields=['knowhow_count'])
+
+
 
         knowhow_files = list(knowhow.knowhowfile_set.all())
         knowhow_file = list(knowhow.knowhowfile_set.all())[0]
