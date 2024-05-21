@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
-
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 import joblib
 import numpy as np
 from django.db import transaction
@@ -667,17 +668,16 @@ class PostAiView(View):
         return render(request, 'community/web/post/create-post.html')
 
 class PostAiAPIView(APIView):
-    def post(self, request):
+    def post(self, request, title):
         datas = request.data
-        features = request.data.iloc[:,:-1]
+        title = datas.get['title']
+        content = datas.get['content']
+        features = title, content
 
         def concatenate(features):
             return features.title + ' ' + features.content
 
         result_df = concatenate(features)
-
-        from sklearn.feature_extraction.text import CountVectorizer
-        from sklearn.metrics.pairwise import cosine_similarity
 
         count_v = CountVectorizer()
         count_metrix = count_v.fit_transform(result_df)
