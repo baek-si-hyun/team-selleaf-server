@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from sklearn.preprocessing import Binarizer
 
+from ai.models import AiPost
 from alarm.models import Alarm
 from knowhow.models import KnowhowTag, KnowhowFile
 from member.models import Member, MemberProfile
