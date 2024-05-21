@@ -23,23 +23,27 @@ dropBoxRequired.addEventListener("click", () => {
   downArrowIcon[1].classList.toggle("down-arrow-open");
   dropBoxes[1].classList.toggle("required-open");
 });
-
+let titleFlag = false
 titleInput.addEventListener("keyup", (e) => {
   titleInputCount.innerText = 0;
   e.target.value && (titleInputCount.innerText = e.target.value.length);
+  titleFlag = !!e.target.value;
+  submitDisabledFn()
 });
 
 textInputContainer.addEventListener("click", () => {
   contentTextArea.focus();
 });
 
-contentTextArea.addEventListener("click", () => {
-  markIconWrap.classList.add("wrap-open");
-});
+// contentTextArea.addEventListener("click", () => {
+//   markIconWrap.classList.add("wrap-open");
+// });
 
 const imgFileInput = document.querySelector("#img-file");
 const prevImgBox = document.querySelector(".prev-img-box");
 const cancel = document.querySelector(".cancel");
+
+let fileFlag = false
 imgFileInput.addEventListener("change", (e) => {
   const [file] = e.target.files;
   const reader = new FileReader();
@@ -52,19 +56,26 @@ imgFileInput.addEventListener("change", (e) => {
         (prevImgBox.style.zIndex = "5"))
       : (prevImgBox.style.backgroundImage = `url('images/attach.png')`);
   });
+  fileFlag = !!e.target.value;
+  submitDisabledFn()
 });
 cancel.addEventListener("click", (e) => {
   prevImgBox.style.backgroundImage = "";
   prevImgBox.style.zIndex = "-5";
   e.target.style.display = "none";
   imgFileInput.value = "";
+  fileFlag = !!e.target.value;
+  submitDisabledFn()
 });
 
 const tag = document.querySelector(".tag");
 const tagInput = document.querySelector(".tag-input");
 const tagList = document.querySelector(".tag-list");
 const emptyValue = document.querySelector(".empty-value");
+
+let tagFlag = false
 tagInput.addEventListener("keyup", (e) => {
+  e.preventDefault()
   let value = e.target.value;
   if (e.keyCode === 13 && e.target.value) {
     const items = tagList.querySelectorAll(".tag-list > span");
@@ -104,9 +115,13 @@ tagInput.addEventListener("keyup", (e) => {
         const canceltag = item.querySelector(".tag-cancel-btn");
         canceltag.addEventListener("click", () => {
           item.remove();
+          tagFlag = items.length >= 0;
+          submitDisabledFn()
         });
       });
     }
+    tagFlag = items.length >= 0;
+    submitDisabledFn()
   }
 });
 tagInput.addEventListener("focus", (e) => {
@@ -129,15 +144,50 @@ checkboxes.forEach((checkbox) => {
   checkbox.addEventListener("change", () => {
     checkboxes.forEach((cb) => {
       const label = cb.closest('.plant-selection');
-      if (cb.checked) {
-        label.classList.add("select-on");
-      } else {
-        label.classList.remove("select-on");
+      if (label) {
+        if (cb.checked) {
+          label.classList.add("select-on");
+        } else {
+          label.classList.remove("select-on");
+        }
       }
     });
   });
 });
 
-contentTextArea.addEventListener("keyup", () => {
+let textareaFlag = false
+contentTextArea.addEventListener("keyup", (e) => {
   contentCount.innerText = contentTextArea.value.length
+  textareaFlag = !!e.target.value
+  submitDisabledFn()
 })
+
+
+const selectElement = document.querySelector("select[name='post-category']");
+
+let selectedFlag = false
+selectElement.addEventListener("change", () => {
+  selectedFlag = true
+  submitDisabledFn()
+});
+let checkedFlag = false
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener('click', (e) => {
+    let checkedCount = 0;
+    checkboxes.forEach(item => {
+      if (item.checked) {
+        checkedCount++;
+      } else {
+        checkedCount--;
+      }
+    });
+    checkedFlag = checkedCount >= -4;
+    submitDisabledFn()
+  });
+});
+
+
+const publishBtn = document.querySelector('.publish-btn')
+const submitDisabledFn = () => {
+  publishBtn.disabled = !(textareaFlag && checkedFlag && selectedFlag && fileFlag && titleFlag && tagFlag);
+}
