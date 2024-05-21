@@ -134,6 +134,8 @@ urlpatterns = [
     path('oauth/', include('oauth.urls')),
     path('accounts/', include('allauth.urls')),
 
+    # 추천 서비스
+    path('ai/api/', include('ai.urls-web')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
