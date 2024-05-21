@@ -19,6 +19,7 @@ from knowhow.models import KnowhowTag, KnowhowFile
 from member.models import Member, MemberProfile
 from post.models import Post, PostCategory, PostTag, PostPlant, PostFile, PostReply, PostLike, PostScrap, PostReplyLike
 from report.models import PostReport, PostReplyReport
+from selleaf.utils.util import profanityDetectionModel, profanityDetectionPredict
 
 
 class PostAiView(View):
@@ -120,7 +121,7 @@ class PostDetailView(View):
         session_profile = None
         if session_member_id:
             session_member_id = session_member_id.get('id')
-            session_profile = MemberProfile.objects.get(id=session_member_id)
+            session_profile = MemberProfile.objects.get(member_id=session_member_id)
         post_tags = PostTag.objects.filter(post_id=request.GET['id']).values('tag_name').distinct()
         reply_count = PostReply.objects.filter(post_id=post.id).values('id').count()
         member_profile = MemberProfile.objects.get(id=post.member_id)
@@ -321,14 +322,11 @@ class PostReplyWriteApi(APIView):
         data = request.data
         post = Post.objects.filter(id=data['post_id']).values('member_id')
 
-        loaded_model = joblib.load(os.path.join(Path(__file__).resolve().parent, 'ai/commentai.pkl'))
-
-        # Preprocess the input text
-        print(data['reply_content'])
+        # 변수로 댓글 내용 저장하기
+        new_sentence = [data['reply_content']]
 
         # Make predictions
-        prediction = loaded_model.predict([data['reply_content']])
-        print(prediction[0])
+        prediction = profanityDetectionPredict(new_sentence)
 
         message = 'fails'
         if prediction[0] == 0:
@@ -337,20 +335,23 @@ class PostReplyWriteApi(APIView):
                                  target_id=data['post_id'])
 
             data = {
-                'post_reply_content': data['reply_content'],
+                'post_reply_content': new_sentence[0],
                 'post_id': data['post_id'],
                 'member_id': request.session.get('member')['id']
             }
 
             PostReply.objects.create(**data)
+
         else:
             data = {
-                'comment': data['reply_content'],
+                'comment': new_sentence[0],
                 'target': 1,
             }
 
+            profanityDetectionModel(new_sentence)
+
             AiPostReply.objects.create(**data)
-        print(message)
+
         return Response(message)
 
 
@@ -359,17 +360,32 @@ class PostReplyApi(APIView):
         PostReply.objects.filter(id=reply_id).delete()
         return Response('success')
 
+    message = 'fails'
     def patch(self, request, reply_id):
-        # print(request)
         reply_content = request.data['reply_content']
         updated_date = timezone.now()
 
-        reply = PostReply.objects.get(id=reply_id)
-        reply.post_reply_content = reply_content
-        reply.updated_date = updated_date
-        reply.save(update_fields=['post_reply_content', 'updated_date'])
+        new_sentence = [reply_content]
+        prediction = profanityDetectionPredict(new_sentence)
 
-        return Response('success')
+        message = 'fails'
+        if prediction[0] == 0:
+            reply = PostReply.objects.get(id=reply_id)
+            reply.post_reply_content = reply_content
+            reply.updated_date = updated_date
+            reply.save(update_fields=['post_reply_content', 'updated_date'])
+            message = 'ok'
+        else:
+            data = {
+                'comment': new_sentence[0],
+                'target': 1,
+            }
+
+            profanityDetectionModel(new_sentence)
+
+            AiPostReply.objects.create(**data)
+
+        return Response(message)
 
 
 class PostReplyLikeApi(APIView):
