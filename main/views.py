@@ -182,10 +182,12 @@ class MainView(View):
         knowhow_file = KnowhowFile.objects.filter(knowhow_id=best_knowhow['id']).values('file_url').first()
         best_knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
 
-
-        if member:
-            # knowhow ai
+        if member :
             member_object = Member.objects.get(id=member.get('id'))
+
+        if KnowhowView.objects.filter(member_id=member_object.id).count() >= 3:
+            # knowhow ai
+
 
             knowhow_model = joblib.load(os.path.join(Path(__file__).resolve().parent, 'ai/knowhow_ai.pkl'))
 
@@ -227,6 +229,26 @@ class MainView(View):
                     knowhow['knowhow_scrap'] = False
                 else:
                     knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'], member_id=member['id']).values(
+                        'status').first()
+                    knowhow['knowhow_scrap'] = knowhow_scrap[
+                        'status'] if knowhow_scrap and 'status' in knowhow_scrap else False
+
+        elif KnowhowView.objects.filter(member_id=member_object.id).count() < 3:
+            # 메인에 표시된 노하우 게시물
+            knowhows = Knowhow.objects.filter() \
+                           .annotate(member_profile=F('member__memberprofile__file_url'),
+                                     member_name=F('member__member_name')) \
+                           .values('member_profile', 'member_name', 'id', 'knowhow_title')[:10]
+
+            # print(knowhows)
+            for knowhow in knowhows:
+                knowhow_file = KnowhowFile.objects.filter(knowhow_id=knowhow['id']).values('file_url').first()
+                knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
+                if member is None:
+                    knowhow['knowhow_scrap'] = False
+                else:
+                    knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow['id'],
+                                                                member_id=member['id']).values(
                         'status').first()
                     knowhow['knowhow_scrap'] = knowhow_scrap[
                         'status'] if knowhow_scrap and 'status' in knowhow_scrap else False
