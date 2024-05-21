@@ -669,16 +669,13 @@ class PostAiView(View):
         return render(request, 'community/web/post/create-post.html')
 
 class PostAiAPIView(APIView):
-    def post(self, request, title):
+    def post(self, request):
         datas = request.data
-        title = datas.get['title']
-        content = datas.get['content']
-        features = title, content
 
         def concatenate(features):
-            return features.title + ' ' + features.content
+            return features.get['title'] + ' ' + features.get['content']
 
-        result_df = concatenate(features)
+        result_df = concatenate(datas)
 
         count_v = CountVectorizer()
         count_metrix = count_v.fit_transform(result_df)
@@ -695,7 +692,15 @@ class PostAiAPIView(APIView):
             tag_string = ','.join(tags)
             return tag_string.split(',')
 
-        # model = joblib.load(os.path.join(Path(__file__).resolve().parent, 'ai/machine.pkl'))
-        # binarizer = Binarizer(threshold=0.2968)
-        # custom_prediction = binarizer.fit_transform(model.predict_proba(datas.reshape(-1, 4))[:, 1].reshape(-1, 1))
-        # return Response(custom_prediction[0])
+        title = datas.get['title']
+        index = get_index_from_title(title)
+        title_check = get_title_from_index(index)
+        print(title_check)
+        recommended_tag = sorted(list(enumerate(c_s[index])), key=lambda x: x[1], reverse=True)
+        tag_set = set()
+
+        for tag in recommended_tag[1:4]:
+            tags = get_tag_from_index(tag[0])
+            tag_set.update(tags)
+
+        return Response(tag_set)

@@ -34,6 +34,6 @@ urlpatterns = [
 
     # 채널
     path('channel/', ChannelView.as_view(), name='list'),
-    path('ai/api/create/', ChannelView.as_view(), name='list'),
+    path('ai/api/', ChannelView.as_view(), name='list'),
 
 ]
