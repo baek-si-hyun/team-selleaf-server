@@ -96,7 +96,7 @@ class KnowhowDetailView(View):
 
             # 개인 모델 불러오기
             knowhow_model = joblib.load(
-                os.path.join(Path(__file__).resolve().parent.parent, f'main/ai/knowhow_ai{session_member_id}.pkl')
+                os.path.join(Path(__file__).resolve().parent, f'../main/ai/knowhow_ai{session_member_id}.pkl')
             )
 
             knowhow_title = Knowhow.objects.filter(id=knowhow.id).values('knowhow_title')
@@ -105,17 +105,17 @@ class KnowhowDetailView(View):
 
             knowhow_feature = knowhow_title[0]['knowhow_title'] + " " + knowhow_content[0]['knowhow_content']
             target_dict = {
-                '꽃': 1,
-                '농촌': 2,
-                '원예': 3,
-                '정원': 4
+                '꽃': 0,
+                '농촌': 1,
+                '원예': 2,
+                '정원': 3
             }
 
             knowhow_target = target_dict[knowhow_category[0].get('category_name')]
 
             # 모델 학습
             transformd_features = knowhow_model.named_steps['count_vectorizer'].transform([knowhow_feature])
-            knowhow_model.named_steps['nb'].fit(transformd_features, [knowhow_target])
+            knowhow_model.named_steps['nb'].partial_fit(transformd_features, [knowhow_target])
 
             # 저장할 파일의 경로를 지정
             file_path = os.path.join(Path(__file__).resolve().parent, f'../main/ai/knowhow_ai{session_member_id}.pkl')
