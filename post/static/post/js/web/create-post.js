@@ -191,3 +191,45 @@ const publishBtn = document.querySelector('.publish-btn')
 const submitDisabledFn = () => {
   publishBtn.disabled = !(textareaFlag && checkedFlag && selectedFlag && fileFlag && titleFlag && tagFlag);
 }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const titleInput = document.querySelector('.title-input');
+    const contentTextArea = document.querySelector('.content-text-area');
+    const aiCheckbox = document.querySelector('.ai-checkbox');
+    const checkboxLabel  = document.querySelector('.selection')
+    if (!titleInput || !contentTextArea || !aiCheckbox) {
+        console.error('One or more elements were not found.');
+        return;
+    }
+
+    const toggleCheckbox = () => {
+        const titleLength = titleInput.value.length;
+        const contentLength = contentTextArea.value.length;
+
+        if (titleLength >= 8 && contentLength >= 20) {
+            aiCheckbox.disabled = false;
+            aiCheckbox.hidden = true;
+            checkboxLabel.style.backgroundColor = '#fff'
+
+        } else {
+            aiCheckbox.disabled = true;
+            aiCheckbox.hidden = true;
+        }
+    };
+
+
+    const send_post = () =>{
+        aiCheckbox.addEventListener('click',(e)=>{
+            postTitle = titleInput.value
+            postContent = contentTextArea.value
+            aiPost(postTitle, postContent)
+            e.style.backgroundColor = '#a2a9b4'
+        })
+
+    }
+
+    titleInput.addEventListener('input', toggleCheckbox);
+    contentTextArea.addEventListener('input', toggleCheckbox);
+});
+
