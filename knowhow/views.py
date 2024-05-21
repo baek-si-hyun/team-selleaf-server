@@ -102,6 +102,8 @@ class KnowhowDetailView(View):
         knowhow.knowhow_count += 1
         knowhow.save(update_fields=['knowhow_count'])
 
+
+
         knowhow_files = list(knowhow.knowhowfile_set.all())
         knowhow_file = list(knowhow.knowhowfile_set.all())[0]
 
