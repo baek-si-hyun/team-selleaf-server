@@ -610,7 +610,18 @@ class KnowhowRecommendationAPI(APIView):
 
         # 디버깅
         print(similar_kh_ids)
-        return Response('success')
+
+        # 추천할 내용 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'knowhow_content'
+        ]
+
+        # 위에서 찾은 id 값을 가진 노하우 게시글의 id와 내용을 가져옴
+        knowhows = Knowhow.objects.values(*columns).filter(id__in=similar_kh_ids)
+    
+        # 요청한 노하우 id와 내용 반환
+        return Response(knowhows)
 
     # 입력받은 제목과 가장 유사도가 높은 기존 제목 5개의 id를 구해주는 메소드
     def get_similarity_from_title(self, title):
