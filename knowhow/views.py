@@ -1,5 +1,8 @@
+import os
 from datetime import timedelta
+from pathlib import Path
 
+import joblib
 from django.db import transaction
 from django.db.models import F, Count, Q
 from django.shortcuts import render, redirect
@@ -8,6 +11,7 @@ from django.views import View
 from django.views.generic import DetailView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from sklearn.pipeline import Pipeline
 
 from alarm.models import Alarm
 from knowhow.models import Knowhow, KnowhowFile, KnowhowPlant, KnowhowTag, KnowhowCategory, KnowhowRecommend, \
@@ -17,7 +21,7 @@ from report.models import KnowhowReport
 from selleaf.models import Like
 
 # 모듈 추가 (git 커밋 하지 말고, pull 받기 전에 잘라내기)
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 class KnowhowCreateView(View):
@@ -86,9 +90,43 @@ class KnowhowDetailView(View):
         session_profile = None
         if session_member_id:
             session_member_id = session_member_id.get('id')
-            session_profile = MemberProfile.objects.get(id=session_member_id)
+            session_profile = MemberProfile.objects.get(member_id=session_member_id)
             # ai때문에 추가한 부분
             KnowhowView.objects.create(knowhow_id=knowhow.id, member_id=session_member_id)
+
+            # 개인 모델 불러오기
+            knowhow_model = joblib.load(
+                os.path.join(Path(__file__).resolve().parent, f'../main/ai/knowhow_ai{session_member_id}.pkl')
+            )
+
+            knowhow_title = Knowhow.objects.filter(id=knowhow.id).values('knowhow_title')
+            knowhow_content = Knowhow.objects.filter(id=knowhow.id).values('knowhow_content')
+            knowhow_category = KnowhowCategory.objects.filter(knowhow_id=knowhow.id).values('category_name')
+
+            knowhow_feature = knowhow_title[0]['knowhow_title'] + " " + knowhow_content[0]['knowhow_content']
+            target_dict = {
+                '꽃': 0,
+                '농촌': 1,
+                '원예': 2,
+                '정원': 3
+            }
+
+            knowhow_target = target_dict[knowhow_category[0].get('category_name')]
+
+            # 모델 학습
+            transformd_features = knowhow_model.named_steps['count_vectorizer'].transform([knowhow_feature])
+            knowhow_model.named_steps['nb'].partial_fit(transformd_features, [knowhow_target])
+
+            # 저장할 파일의 경로를 지정
+            file_path = os.path.join(Path(__file__).resolve().parent, f'../main/ai/knowhow_ai{session_member_id}.pkl')
+            directory = os.path.dirname(file_path)
+
+            # 디렉토리가 존재하지 않으면 생성
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
+            # 모델을 지정된 경로에 저장
+            joblib.dump(knowhow_model, file_path)
 
         knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')
         reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow.id).values('id').count()
@@ -97,12 +135,10 @@ class KnowhowDetailView(View):
         knowhow_scrap = KnowhowScrap.objects.filter(knowhow_id=knowhow, member_id=session_member_id, status=1).exists()
         knowhow_like = KnowhowLike.objects.filter(knowhow_id=knowhow, member_id=session_member_id, status=1).exists()
 
-        print(knowhow_scrap)
+        # print(knowhow_scrap)
 
         knowhow.knowhow_count += 1
         knowhow.save(update_fields=['knowhow_count'])
-
-
 
         knowhow_files = list(knowhow.knowhowfile_set.all())
         knowhow_file = list(knowhow.knowhowfile_set.all())[0]
