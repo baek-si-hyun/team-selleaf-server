@@ -479,6 +479,8 @@
 .title-input-box {
   position: relative;
   margin: 45px 0px 0px;
+  display: flex;
+  gap: 10px;
 }
 input.title-input {
   display: block;
@@ -512,10 +514,36 @@ input.title-input {
   right: 0px;
   top: 50%;
   color: rgb(130, 140, 148);
-  margin: -9px 0px 0px;
+  margin-right: 15%;
   font-size: 15px;
   line-height: 19px;
+  width: 75px;
 }
+
+/* AI 내용 추천 버튼 추가 */
+.content-recommendation {
+  display: inline-block;
+  padding: 11px 16px;
+  background-color: rgba(33, 38, 41, 0.8);
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 400;
+  border-radius: 4px;
+  transition: background-color 0.1s ease 0s;
+  height: 40px;
+  width: 150px;
+  align-self: flex-end;
+  margin-bottom: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.content-recommendation:hover,
+.content-recommendation:active {
+  background-color: rgb(164, 172, 179);
+}
+
 .content-text-input-wrap {
   flex: 1 0 auto;
   cursor: text;
