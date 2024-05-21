@@ -612,7 +612,7 @@ class KnowhowRecommendationAPI(APIView):
         print(similar_kh_ids)
         return Response('success')
 
-    # 입력받은 제목과 가장 유사도가 높은 기존 제목 5개의 인덱스와 유사도를 구해주는 메소드
+    # 입력받은 제목과 가장 유사도가 높은 기존 제목 5개의 id를 구해주는 메소드
     def get_similarity_from_title(self, title):
         # tbl_knowhow에서 id랑 knowhow_title만 가져와서 리스트로 변환 - (id, 제목)이 여러 개 들어있음
         knowhow_title_list = list(Knowhow.objects.values_list('id', 'knowhow_title'))

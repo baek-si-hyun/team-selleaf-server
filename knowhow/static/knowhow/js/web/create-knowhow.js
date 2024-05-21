@@ -36,13 +36,13 @@ titleInput.addEventListener("keyup", (e) => {
   e.target.value && (titleInputCount.innerText = e.target.value.length);
 });
 
-textInputContainer.addEventListener("click", () => {
-  contentTextArea.focus();
-});
+// textInputContainer.addEventListener("click", () => {
+//   contentTextArea.focus();
+// });
 
-contentTextArea.addEventListener("click", () => {
-  markIconWrap.classList.add("wrap-open");
-});
+// contentTextArea.addEventListener("click", () => {
+//   markIconWrap.classList.add("wrap-open");
+// });
 const prevImgBox = document.querySelector(".prev-img-box");
 const inputs = document.querySelectorAll("input[type=file]");
 
