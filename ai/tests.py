@@ -16,16 +16,15 @@ class AiTest(TestCase):
     # # 로드된 모델을 사용
     # print(loaded_model)
 
-    with open(os.path.join(Path(__file__).resolve().parent, 'ai/merge_comments_data.csv'), mode='r', encoding='utf-8') as file:
+    with open(os.path.join(Path(__file__).resolve().parent, 'ai/merge_comments_data.csv'), mode='r',
+              encoding='utf-8') as file:
         csv_reader = csv.DictReader(file)
         asd = [row for row in csv_reader]
         print(asd)
 
-    members = Member.objects.all().values('id')
-    print(members)
-
     for i in range(len(asd)):
         reply_data = {
-            'comment' : i.Comment,
-            'target' : i.Target,
+            'comment': i.Comment,
+            'target': i.Target,
         }
+        print(reply_data)
