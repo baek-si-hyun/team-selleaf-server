@@ -182,21 +182,19 @@ class MainView(View):
         knowhow_file = KnowhowFile.objects.filter(knowhow_id=best_knowhow['id']).values('file_url').first()
         best_knowhow['knowhow_file_url'] = knowhow_file['file_url'] if knowhow_file else None
 
-        if member :
+        # knowhow ai
+        member_object = None
+        if member:
             member_object = Member.objects.get(id=member.get('id'))
 
-        if KnowhowView.objects.filter(member_id=member_object.id).count() >= 3:
-            # knowhow ai
-
-
-            knowhow_model = joblib.load(os.path.join(Path(__file__).resolve().parent, 'ai/knowhow_ai.pkl'))
+        if member_object and KnowhowView.objects.filter(member_id=member_object.id).count() >= 3:
+            knowhow_model = joblib.load(os.path.join(Path(__file__).resolve().parent, f'ai/knowhow_ai{member_object.id}.pkl'))
 
             knowhow_id = KnowhowView.objects.filter(member_id=member_object.id).order_by('-id')[:3].values('knowhow_id')
 
             knowhows = [0] * len(knowhow_id)
             probas = [0] * len(knowhow_id)
             for i in range(len(knowhow_id)):
-
                 knowhows[i] = Knowhow.objects.filter(id=knowhow_id[i].get('knowhow_id')).values('knowhow_title', 'knowhow_content')
                 knowhows[i] = (knowhows[i][0]['knowhow_title']) + (knowhows[i][0]['knowhow_content'])
                 probas[i] = knowhow_model.predict_proba([knowhows[i]])
@@ -233,7 +231,7 @@ class MainView(View):
                     knowhow['knowhow_scrap'] = knowhow_scrap[
                         'status'] if knowhow_scrap and 'status' in knowhow_scrap else False
 
-        elif KnowhowView.objects.filter(member_id=member_object.id).count() < 3:
+        elif member_object and KnowhowView.objects.filter(member_id=member_object.id).count() < 3:
             # 메인에 표시된 노하우 게시물
             knowhows = Knowhow.objects.filter() \
                            .annotate(member_profile=F('member__memberprofile__file_url'),
@@ -338,6 +336,7 @@ class MainView(View):
             'trades': trades,
             'lectureReviews': lecture_reviews,
             'posts': posts,
+            'member': member
         }
         return render(request, 'main/main.html', context)
 

@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-
 import joblib
 import numpy as np
 from django.db import transaction
@@ -10,9 +9,11 @@ from django.utils import timezone
 from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import Binarizer
 
-from ai.models import AiPost
+from ai.models import AiPost, AiPostReply
 from alarm.models import Alarm
 from knowhow.models import KnowhowTag, KnowhowFile
 from member.models import Member, MemberProfile
@@ -20,6 +21,44 @@ from post.models import Post, PostCategory, PostTag, PostPlant, PostFile, PostRe
 from report.models import PostReport, PostReplyReport
 
 
+class PostAiView(View):
+    def get(self, request):
+        return render(request, 'community/web/post/create-post.html')
+
+class PostAiAPIView(APIView):
+    def post(self, request):
+        data = request.data
+        # def concatenate(features):
+        #     return features['title'] + ' ' + features['content']
+
+        # result_df = concatenate(data)
+
+        count_v = CountVectorizer()
+        count_metrix = count_v.fit_transform(data)
+        c_s = cosine_similarity(count_metrix)
+
+        def get_index_from_title(title):
+            return AiPost.objects.filter(title=title).values_list('id', flat=True).first()
+
+        def get_title_from_index(index):
+            return AiPost.objects.filter(id=index).values('title').first()
+
+        def get_tag_from_index(index):
+            tags = AiPost.objects.filter(id=index).values_list('tag', flat=True)
+            return list(tags)
+
+        title = data['title']
+        index = get_index_from_title(title)
+        title_check = get_title_from_index(index)
+        print(title_check)
+        recommended_tag = sorted(list(enumerate(c_s[index])), key=lambda x: x[1], reverse=True)
+        tag_set = set()
+
+        for tag in recommended_tag[1:4]:
+            tags = get_tag_from_index(tag[0])
+            tag_set.update(tags)
+
+        return Response(tag_set)
 # Create your views here.
 class PostCreateView(View):
     def get(self, request):
@@ -73,6 +112,7 @@ class PostCreateView(View):
             PostFile.objects.create(post=post_data, file_url=files[key])
         return redirect(f'/post/detail/?id={post_data.id}')
 
+
 class PostDetailView(View):
     def get(self, request):
         post = Post.objects.get(id=request.GET['id'])
@@ -81,7 +121,7 @@ class PostDetailView(View):
         if session_member_id:
             session_member_id = session_member_id.get('id')
             session_profile = MemberProfile.objects.get(id=session_member_id)
-        post_tags = PostTag.objects.filter(post_id = request.GET['id']).values('tag_name').distinct()
+        post_tags = PostTag.objects.filter(post_id=request.GET['id']).values('tag_name').distinct()
         reply_count = PostReply.objects.filter(post_id=post.id).values('id').count()
         member_profile = MemberProfile.objects.get(id=post.member_id)
         post_category = PostCategory.objects.filter(post_id=post).values('category_name').first()
@@ -96,7 +136,9 @@ class PostDetailView(View):
         post_tags = post_tags[:5]
 
         post_files = list(post.postfile_set.all())
-        post_file = list(post.postfile_set.all())[0]
+        # post_file = list(post.postfile_set.all())[0]
+        post_file = post_files[0] if post_files else None
+
         post_writer = Post.objects.filter(member_id=post.member_id).values('member__member_name').first()
         post_writer = post_writer['member__member_name']
         context = {
@@ -116,6 +158,7 @@ class PostDetailView(View):
 
         return render(request, 'community/web/post/post-detail.html', context)
 
+
 # post 게시글 신고
 class PostReportView(View):
     def post(self, request):
@@ -132,6 +175,7 @@ class PostReportView(View):
         PostReport.object.create(**datas)
 
         return redirect(f'/post/detail/?id={post_id}')
+
 
 class PostReplyReportView(View):
     def post(self, request):
@@ -150,9 +194,9 @@ class PostReplyReportView(View):
 
         return redirect(f'/post/detail/?id={post_id}')
 
+
 class PostDetailApi(APIView):
     def get(self, request, post_id, page):
-
         row_count = 5
         offset = (page - 1) * row_count
         limit = row_count * page
@@ -181,6 +225,7 @@ class PostDetailApi(APIView):
         }
 
         return Response(data)
+
 
 class PostUpdateView(View):
     def get(self, request):
@@ -252,6 +297,7 @@ class PostUpdateView(View):
 
         return redirect(f'/post/detail/?id={post_id}')
 
+
 class PostDeleteView(View):
     @transaction.atomic
     def get(self, request):
@@ -268,27 +314,44 @@ class PostDeleteView(View):
 
         return redirect(f'/post/list/')
 
+
 class PostReplyWriteApi(APIView):
     @transaction.atomic
     def post(self, request):
         data = request.data
         post = Post.objects.filter(id=data['post_id']).values('member_id')
 
-        Alarm.objects.create(alarm_category=5, receiver_id=post, sender_id=request.session.get('member')['id'], target_id=data['post_id'])
+        loaded_model = joblib.load(os.path.join(Path(__file__).resolve().parent, 'ai/commentai.pkl'))
 
-        # print(data)
-        data = {
-            'post_reply_content': data['reply_content'],
-            'post_id': data['post_id'],
-            'member_id': request.session.get('member')['id']
-        }
+        # Preprocess the input text
+        print(data['reply_content'])
 
-        PostReply.objects.create(**data)
+        # Make predictions
+        prediction = loaded_model.predict([data['reply_content']])
+        print(prediction[0])
 
+        message = 'fails'
+        if prediction[0] == 0:
+            message = 'ok'
+            Alarm.objects.create(alarm_category=5, receiver_id=post, sender_id=request.session.get('member')['id'],
+                                 target_id=data['post_id'])
 
+            data = {
+                'post_reply_content': data['reply_content'],
+                'post_id': data['post_id'],
+                'member_id': request.session.get('member')['id']
+            }
 
-        return Response('success')
+            PostReply.objects.create(**data)
+        else:
+            data = {
+                'comment': data['reply_content'],
+                'target': 1,
+            }
 
+            AiPostReply.objects.create(**data)
+
+        return Response(message)
 
 
 class PostReplyApi(APIView):
@@ -308,13 +371,14 @@ class PostReplyApi(APIView):
 
         return Response('success')
 
+
 class PostReplyLikeApi(APIView):
     def get(self, request, post_id, reply_id, member_id, like_status):
 
         check_like_status = True
 
         # 만들어지면 True, 이미 있으면 False
-        reply_like, reply_like_created = PostReplyLike.objects\
+        reply_like, reply_like_created = PostReplyLike.objects \
             .get_or_create(post_id=post_id, post_reply_id=reply_id, member_id=member_id)
 
         if reply_like_created:
@@ -346,6 +410,7 @@ class PostReplyLikeApi(APIView):
 
         return Response(datas)
 
+
 class PostScrapApi(APIView):
     def get(self, request, post_id, member_id, scrap_status):
 
@@ -368,7 +433,7 @@ class PostScrapApi(APIView):
                 update_scrap.save(update_fields=['status'])
                 check_scrap_status = True
 
-            else :
+            else:
                 update_scrap = PostScrap.objects.get(post_id=post_id, member_id=member_id)
 
                 update_scrap.status = 0
@@ -383,6 +448,7 @@ class PostScrapApi(APIView):
         }
 
         return Response(datas)
+
 
 class PostLikeApi(APIView):
     def get(self, request, post_id, member_id, like_status):
@@ -406,7 +472,7 @@ class PostLikeApi(APIView):
                 update_like.save(update_fields=['status'])
                 check_like_status = True
 
-            else :
+            else:
                 update_like = PostLike.objects.get(post_id=post_id, member_id=member_id)
 
                 update_like.status = 0
@@ -416,7 +482,6 @@ class PostLikeApi(APIView):
         like_count = PostLike.objects.filter(post_id=post_id, status=1).count()
         # print(like_count)
 
-
         datas = {
             'check_like_status': check_like_status,
             'like_count': like_count
@@ -424,29 +489,27 @@ class PostLikeApi(APIView):
 
         return Response(datas)
 
+
 class PostLikeCountApi(APIView):
     def get(self, request, post_id):
-
         like_count = PostLike.objects.filter(post_id=post_id, status=1).count()
 
         # print(like_count)
 
-
         return Response(like_count)
+
 
 class PostScrapCountApi(APIView):
     def get(self, request, post_id):
-
         scrap_count = PostScrap.objects.filter(post_id=post_id, status=1).count()
 
         # print(scrap_count)
 
-
         return Response(scrap_count)
+
 
 class PostListView(View):
     def get(self, request):
-
         post_count = Post.objects.count()
 
         context = {
@@ -454,6 +517,7 @@ class PostListView(View):
         }
 
         return render(request, 'community/web/post/post.html', context)
+
 
 class PostListApi(APIView):
     def get(self, request, page, sorting, filters, types):
@@ -535,7 +599,7 @@ class PostListApi(APIView):
             sort2 = '-created_date'
 
             posts = Post.objects.filter(condition, condition2).values(*columns3).order_by(sort1, sort2)[
-                       offset:limit]
+                    offset:limit]
 
             for post in posts:
                 member_name = Member.objects.filter(id=post['member_id']).values('member_name').first().get(
@@ -553,9 +617,9 @@ class PostListApi(APIView):
             sort2 = '-post_count'
 
             posts = Post.objects.filter(condition, condition2) \
-                           .annotate(like_count=Count('postlike__id', filter=Q(postlike__status=1))) \
-                           .values(*columns1) \
-                           .order_by(sort1, sort2)[offset:limit]
+                        .annotate(like_count=Count('postlike__id', filter=Q(postlike__status=1))) \
+                        .values(*columns1) \
+                        .order_by(sort1, sort2)[offset:limit]
 
             for post in posts:
                 member_name = Member.objects.filter(id=post['member_id']).values('member_name').first().get(
@@ -570,9 +634,9 @@ class PostListApi(APIView):
             sort2 = '-id'
 
             posts = Post.objects.filter(condition, condition2) \
-                           .annotate(scrap_count=Count('postscrap__id', filter=Q(postscrap__status=1))) \
-                           .values(*columns2) \
-                           .order_by(sort1, sort2)[offset:limit]
+                        .annotate(scrap_count=Count('postscrap__id', filter=Q(postscrap__status=1))) \
+                        .values(*columns2) \
+                        .order_by(sort1, sort2)[offset:limit]
 
             for post in posts:
                 member_name = Member.objects.filter(id=post['member_id']).values('member_name').first().get(
@@ -606,7 +670,6 @@ class PostListApi(APIView):
             # knowhow['knowhow_like'] = knowhow_like['status'] if knowhow_like and 'status' in knowhow_like else False
             # print(knowhow)
 
-
         datas = {
             'posts': posts,
             'posts_count': posts_count
@@ -621,8 +684,11 @@ class ChannelView(View):
         # 노하우태그와 포스트 태그를 중복제거한 후 union
         # 어노테이트에 파일 추가
         # 중복 제거된 태그이름으로 조회
-        post_tags = PostTag.objects.annotate(posts=F('post_id'), knowhows=Value(0), tag_names=Count('id')).values('tag_name', 'posts', 'knowhows').order_by('-tag_names')
-        knowhow_tags = KnowhowTag.objects.annotate(posts=Value(0), knowhows=F('knowhow_id'), tag_names=Count('id')).values('tag_name', 'posts', 'knowhows').order_by('-tag_names')
+        post_tags = PostTag.objects.annotate(posts=F('post_id'), knowhows=Value(0), tag_names=Count('id')).values(
+            'tag_name', 'posts', 'knowhows').order_by('-tag_names')
+        knowhow_tags = KnowhowTag.objects.annotate(posts=Value(0), knowhows=F('knowhow_id'),
+                                                   tag_names=Count('id')).values('tag_name', 'posts',
+                                                                                 'knowhows').order_by('-tag_names')
         tags = post_tags.union(knowhow_tags)
 
         filtering_tags = []
@@ -635,14 +701,13 @@ class ChannelView(View):
 
         print(filtering_tags)
 
-        filtered_tags = PostTag.objects.values('tag_name').annotate(tag_names=Count('id')).values('tag_names', 'tag_name').order_by('-tag_names')
+        filtered_tags = PostTag.objects.values('tag_name').annotate(tag_names=Count('id')).values('tag_names',
+                                                                                                  'tag_name').order_by(
+            '-tag_names')
 
         for tag in filtered_tags:
             print(tag)
         # for tag in tags:
-
-
-
 
         # for tag in tags:
         #     if tag['posts'] != 0:
@@ -653,7 +718,7 @@ class ChannelView(View):
         #         knowhow_file = KnowhowFile.objects.filter(knowhow_id=tag['knowhows']).values('file_url').first()
         #         tag['knowhow_file'] = knowhow_file['file_url']
 
-            # print(tag)
+        # print(tag)
 
         # print(type(tags))
 
@@ -663,39 +728,4 @@ class ChannelView(View):
 
         return render(request, 'community/web/channel.html', context)
 
-class PostAiView(View):
-    def get(self, request):
-        return render(request, 'community/web/post/create-post.html')
 
-class PostAiAPIView(APIView):
-    def post(self, request):
-        datas = request.data
-        features = request.data.iloc[:,:-1]
-
-        def concatenate(features):
-            return features.title + ' ' + features.content
-
-        result_df = concatenate(features)
-
-        from sklearn.feature_extraction.text import CountVectorizer
-        from sklearn.metrics.pairwise import cosine_similarity
-
-        count_v = CountVectorizer()
-        count_metrix = count_v.fit_transform(result_df)
-        c_s = cosine_similarity(count_metrix)
-
-        def get_index_from_title(title):
-            return AiPost.objects.filter(title = title).values('id').first()
-
-        def get_title_from_index(index):
-            return AiPost.objects.filter(id = index).values('title')
-
-        def get_tag_from_index(index):
-            tags = AiPost.objects.filter(id = index).values('tag')
-            tag_string = ','.join(tags)
-            return tag_string.split(',')
-
-        # model = joblib.load(os.path.join(Path(__file__).resolve().parent, 'ai/machine.pkl'))
-        # binarizer = Binarizer(threshold=0.2968)
-        # custom_prediction = binarizer.fit_transform(model.predict_proba(datas.reshape(-1, 4))[:, 1].reshape(-1, 1))
-        # return Response(custom_prediction[0])
