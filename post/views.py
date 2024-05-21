@@ -1,3 +1,8 @@
+import os
+from pathlib import Path
+
+import joblib
+import numpy as np
 from django.db import transaction
 from django.db.models import F, Q, Count, Value
 from django.shortcuts import render, redirect
@@ -5,7 +10,9 @@ from django.utils import timezone
 from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from sklearn.preprocessing import Binarizer
 
+from ai.models import AiPost
 from alarm.models import Alarm
 from knowhow.models import KnowhowTag, KnowhowFile
 from member.models import Member, MemberProfile
@@ -74,7 +81,7 @@ class PostDetailView(View):
         if session_member_id:
             session_member_id = session_member_id.get('id')
             session_profile = MemberProfile.objects.get(id=session_member_id)
-        post_tags = PostTag.objects.filter(post_id__gte=1).values('tag_name').distinct()
+        post_tags = PostTag.objects.filter(post_id = request.GET['id']).values('tag_name').distinct()
         reply_count = PostReply.objects.filter(post_id=post.id).values('id').count()
         member_profile = MemberProfile.objects.get(id=post.member_id)
         post_category = PostCategory.objects.filter(post_id=post).values('category_name').first()
@@ -86,7 +93,7 @@ class PostDetailView(View):
         post.post_count += 1
         post.save(update_fields=['post_count'])
 
-        print(post.id)
+        post_tags = post_tags[:5]
 
         post_files = list(post.postfile_set.all())
         post_file = list(post.postfile_set.all())[0]
@@ -655,3 +662,40 @@ class ChannelView(View):
         }
 
         return render(request, 'community/web/channel.html', context)
+
+class PostAiView(View):
+    def get(self, request):
+        return render(request, 'community/web/post/create-post.html')
+
+class PostAiAPIView(APIView):
+    def post(self, request):
+        datas = request.data
+        features = request.data.iloc[:,:-1]
+
+        def concatenate(features):
+            return features.title + ' ' + features.content
+
+        result_df = concatenate(features)
+
+        from sklearn.feature_extraction.text import CountVectorizer
+        from sklearn.metrics.pairwise import cosine_similarity
+
+        count_v = CountVectorizer()
+        count_metrix = count_v.fit_transform(result_df)
+        c_s = cosine_similarity(count_metrix)
+
+        def get_index_from_title(title):
+            return AiPost.objects.filter(title = title).values('id').first()
+
+        def get_title_from_index(index):
+            return AiPost.objects.filter(id = index).values('title')
+
+        def get_tag_from_index(index):
+            tags = AiPost.objects.filter(id = index).values('tag')
+            tag_string = ','.join(tags)
+            return tag_string.split(',')
+
+        # model = joblib.load(os.path.join(Path(__file__).resolve().parent, 'ai/machine.pkl'))
+        # binarizer = Binarizer(threshold=0.2968)
+        # custom_prediction = binarizer.fit_transform(model.predict_proba(datas.reshape(-1, 4))[:, 1].reshape(-1, 1))
+        # return Response(custom_prediction[0])

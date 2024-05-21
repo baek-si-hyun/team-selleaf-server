@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 
 from alarm.models import Alarm
 from knowhow.models import Knowhow, KnowhowFile, KnowhowPlant, KnowhowTag, KnowhowCategory, KnowhowRecommend, \
-    KnowhowLike, KnowhowReply, KnowhowScrap, KnowhowView
+    KnowhowLike, KnowhowReply, KnowhowScrap
 from member.models import Member, MemberProfile
 from report.models import KnowhowReport
 from selleaf.models import Like
