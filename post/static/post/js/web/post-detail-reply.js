@@ -34,23 +34,23 @@ const showList = (replies) => {
                         <div class="comment-user-img-wrap">
                           <figure class="comment-user-img-container">
              `;
-        if (reply.member__memberprofile__file_url.includes('http://') || reply.member__memberprofile__file_url.includes('https://')) {
-            text += `   
+    if (reply.member__memberprofile__file_url.includes('http://') || reply.member__memberprofile__file_url.includes('https://')) {
+      text += `   
                    <img
                       src="${reply.member__memberprofile__file_url}"
                       height="0"
                       class="comment-user-img"
                     />`;
-        } else {
-            text += `   
+    } else {
+      text += `   
                    <img
                       src="/upload/${reply.member__memberprofile__file_url}"
                       height="0"
                       class="comment-user-img"
                     />`;
-        }
+    }
 
-        text += `
+    text += `
                           </figure>
                         </div>
                         <div class="comment-content-box">
@@ -128,12 +128,17 @@ moreButton.addEventListener("click", (e) => {
 
 writeButton.addEventListener("click", async (e) => {
   const replyContent = document.getElementById("reply-content");
-  console.log(replyContent.value)
-  await replyService.write({
+  const profanityWarning = document.querySelector('.profanity-warning')
+  const response = await replyService.write({
     reply_content: replyContent.value,
     post_id: post_id
   });
-  replyContent.value = "";
+  if(response === 'ok'){
+    replyContent.value = "";
+    profanityWarning.style.display = "none"
+  } else{
+    profanityWarning.style.display = ""
+  }
 
   page = 1
   const text = await replyService.getList(post_id, page, showList);

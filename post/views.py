@@ -350,7 +350,7 @@ class PostReplyWriteApi(APIView):
             }
 
             AiPostReply.objects.create(**data)
-
+        print(message)
         return Response(message)
 
 

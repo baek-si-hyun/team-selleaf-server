@@ -93,10 +93,16 @@ commentInput.addEventListener("focusout", () => {
 });
 
 // const commentSubmitBtn = document.querySelector(".comment-submit-btn");
-commentInput.addEventListener("keyup", () => {
-  commentInput.value
-    ? (commentSubmitBtn.style.color = "#c06888")
-    : (commentSubmitBtn.style.color = "rgb(194, 200, 204)");
+commentInput.addEventListener("keyup", (e) => {
+  if (commentInput.value){
+    commentSubmitBtn.style.color = "#c06888"
+    if(e.key === 'Enter'){
+      submitForm();
+    }
+  }
+    //
+    // ? ()
+    // : (commentSubmitBtn.style.color = "rgb(194, 200, 204)");
 });
 
 const stickyBtns = document.querySelectorAll(".sticky-btn");

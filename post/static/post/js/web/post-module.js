@@ -8,6 +8,7 @@ const replyService = (() => {
             },
             body: JSON.stringify(reply)
         });
+        return response.json()
     }
 
     const getList = async (post_id, page, callback) => {
