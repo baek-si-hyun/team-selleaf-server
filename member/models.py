@@ -17,6 +17,7 @@ class Member(Period):
     sms_agree = models.BooleanField(default=False)
     # True: 관리자, False: 일반 회원
     admin_type = models.BooleanField(default=False)
+    member_knowhow_ai_model = models.TextField(blank=False, default='base')
 
     class Meta:
         db_table = 'tbl_member'
