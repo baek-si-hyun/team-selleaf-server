@@ -1,5 +1,8 @@
+import os
 from operator import itemgetter
+from pathlib import Path
 
+import joblib
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 # noinspection PyInterpreter
@@ -50,7 +53,8 @@ class MemberJoinView(View):
             'member_name': post_data.get('member-name'),
             'member_type': post_data.get('member-type'),
             'marketing_agree': marketing_agree,
-            'sms_agree': sms_agree
+            'sms_agree': sms_agree,
+            # 'member_knowhow_ai_model': 'base'
         }
         # member_data로 사용자의 정보 찾기
         # filter에 kwargs로 dict를 전달한다.
@@ -60,6 +64,31 @@ class MemberJoinView(View):
         # exists는 데이터의 존재여부를 반환한다.
         if not is_member.exists():
             member = Member.objects.create(**member_data)
+
+            # 각 회원별 ai model 생성
+            # 사전훈련된 pkl파일 불러오기
+            # 용량의 문제로 잘 나오는것만 확인하고 주석처리
+            # knowhow_ai_models = {}
+            # knowhow_ai_models[f'knowhow_ai{member.id}'] = joblib.load(os.path.join(Path(__file__).resolve().parent, '../main/ai/knowhow_ai.pkl'))
+            #
+            # joblib.dump(knowhow_ai_models[f'knowhow_ai{member.id}'], f'../main/ai/knowhow_ai{member.id}.pkl')
+            #
+            # # 저장할 파일의 경로를 지정
+            # file_path = os.path.join(Path(__file__).resolve().parent, f'../main/ai/knowhow_ai{member.id}.pkl')
+            # directory = os.path.dirname(file_path)
+            #
+            # # 디렉토리가 존재하지 않으면 생성
+            # if not os.path.exists(directory):
+            #     os.makedirs(directory)
+            #
+            # # 모델을 지정된 경로에 저장
+            # joblib.dump(knowhow_ai_models[f'knowhow_ai{member.id}'], file_path)
+            #
+            # # member 테이블의 member_knowhow_ad_model 컬럼에 경로 저장
+            # member_model = Member.objects.get(id=member.id)
+            # member_model.member_knowhow_ai_model = f'main/ai/knowhow_ai{member.id}.pkl'
+            # member_model.save(update_fields=['member_knowhow_ai_model'])
+
             # 사용자의 프로필 파일과 주소는 다른 테이블에서 관리 하기 때문에
             # 별도로 저장
             profile_data = {
