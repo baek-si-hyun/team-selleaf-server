@@ -11,11 +11,14 @@ from rest_framework.views import APIView
 
 from alarm.models import Alarm
 from knowhow.models import Knowhow, KnowhowFile, KnowhowPlant, KnowhowTag, KnowhowCategory, KnowhowRecommend, \
-    KnowhowLike, KnowhowReply, KnowhowScrap
+    KnowhowLike, KnowhowReply, KnowhowScrap, KnowhowView
 from member.models import Member, MemberProfile
 from report.models import KnowhowReport
 from selleaf.models import Like
 
+# 모듈 추가 (git 커밋 하지 말고, pull 받기 전에 잘라내기)
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 class KnowhowCreateView(View):
     def get(self, request):
@@ -84,6 +87,8 @@ class KnowhowDetailView(View):
         if session_member_id:
             session_member_id = session_member_id.get('id')
             session_profile = MemberProfile.objects.get(id=session_member_id)
+            # ai때문에 추가한 부분
+            KnowhowView.objects.create(knowhow_id=knowhow.id, member_id=session_member_id)
 
         knowhow_tags = KnowhowTag.objects.filter(knowhow_id__gte=1).values('tag_name')
         reply_count = KnowhowReply.objects.filter(knowhow_id=knowhow.id).values('id').count()
@@ -594,3 +599,48 @@ class KnowhowLikeApi(APIView):
         }
 
         return Response(datas)
+
+
+# 노하우 제목 기반으로 내용 추천해주는 API(git 커밋 하지 말고, pull 받기 전에 잘라내기)
+class KnowhowRecommendationAPI(APIView):
+    # 추천 버튼 누르면 요청되는 API
+    def get(self, request, title):
+        # urls-web.py에서 전달받은 title 값을 메소드에 할당한 뒤, 반환값(id 리스트)를 변수에 할당
+        similar_kh_ids = self.get_similarity_from_title(title)
+
+        # 디버깅
+        print(similar_kh_ids)
+        return Response('success')
+
+    # 입력받은 제목과 가장 유사도가 높은 기존 제목 5개의 인덱스와 유사도를 구해주는 메소드
+    def get_similarity_from_title(self, title):
+        # tbl_knowhow에서 id랑 knowhow_title만 가져와서 리스트로 변환 - (id, 제목)이 여러 개 들어있음
+        knowhow_title_list = list(Knowhow.objects.values_list('id', 'knowhow_title'))
+
+        # (None, 입력받은 제목)을 리스트의 맨 뒤에 추가
+        new_knowhow = (None, title)
+        knowhow_title_list.append(new_knowhow)
+
+        # TfidfVectorizer 객체 선언
+        tfidf_v = TfidfVectorizer()
+
+        # 제목만 리스트 형태로 만들어서 TfidfVectorizer에 fit
+        knowhow_titles = [title for _, title in knowhow_title_list]
+        tfidf_metrix = tfidf_v.fit_transform(knowhow_titles)
+
+        # 위에서 fit한 결과의 코사인 유사도 산출
+        c_s = cosine_similarity(tfidf_metrix)
+
+        # 입력받은 제목 자신(유사도 1)을 제외한 나머지 제목들과의 유사도를 높은 순서대로 5개 가져옴
+        # 어차피 입력한 제목은 맨 마지막에 추가되니, 코사인 유사도에서 가장 마지막에 있는 거 조회하면 됨
+        knowhow_datas = sorted(list(enumerate(c_s[-1])), key=lambda x: x[1], reverse=True)[1:6]
+
+        # (id, 유사도) 중 id만 넣을 빈 리스트 선언
+        knowhow_ids = []
+
+        # 가져온 (id, 유사도) 중 id만 리스트에 추가
+        for id, _ in knowhow_datas:
+            knowhow_ids.append(knowhow_title_list[id][0])
+
+        # id 리스트 반환
+        return knowhow_ids

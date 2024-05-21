@@ -31,6 +31,7 @@ urlpatterns = [
     path('lecture-scrap/api/', LectureScrapAPI.as_view(), name='lecture-scrap-api'),
     path('post-scrap/api/', PostScrapAPI.as_view(), name='post-scrap-api'),
     path('lecture-category/api/', BestLectureCategoryAPI.as_view(), name='lecture-category-api'),
+
     # 관리자 페이지 뷰
     path('service-admin/login/', ManagerLoginView.as_view(), name='manager-login'),
     path('service-admin/logout/', ManagerLogoutView.as_view(), name='manager-logout'),
