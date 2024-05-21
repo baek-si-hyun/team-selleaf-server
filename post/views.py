@@ -9,6 +9,8 @@ from django.utils import timezone
 from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import Binarizer
 
 from ai.models import AiPost, AiPostReply
@@ -19,6 +21,44 @@ from post.models import Post, PostCategory, PostTag, PostPlant, PostFile, PostRe
 from report.models import PostReport, PostReplyReport
 
 
+class PostAiView(View):
+    def get(self, request):
+        return render(request, 'community/web/post/create-post.html')
+
+class PostAiAPIView(APIView):
+    def post(self, request):
+        data = request.data
+        # def concatenate(features):
+        #     return features['title'] + ' ' + features['content']
+
+        # result_df = concatenate(data)
+
+        count_v = CountVectorizer()
+        count_metrix = count_v.fit_transform(data)
+        c_s = cosine_similarity(count_metrix)
+
+        def get_index_from_title(title):
+            return AiPost.objects.filter(title=title).values_list('id', flat=True).first()
+
+        def get_title_from_index(index):
+            return AiPost.objects.filter(id=index).values('title').first()
+
+        def get_tag_from_index(index):
+            tags = AiPost.objects.filter(id=index).values_list('tag', flat=True)
+            return list(tags)
+
+        title = data['title']
+        index = get_index_from_title(title)
+        title_check = get_title_from_index(index)
+        print(title_check)
+        recommended_tag = sorted(list(enumerate(c_s[index])), key=lambda x: x[1], reverse=True)
+        tag_set = set()
+
+        for tag in recommended_tag[1:4]:
+            tags = get_tag_from_index(tag[0])
+            tag_set.update(tags)
+
+        return Response(tag_set)
 # Create your views here.
 class PostCreateView(View):
     def get(self, request):
