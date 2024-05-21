@@ -6,7 +6,9 @@ from pathlib import Path
 from django.test import TestCase
 import joblib
 
+from ai.models import AiPostReply
 from member.models import Member
+from post.models import Post
 
 
 class AiTest(TestCase):
@@ -17,14 +19,14 @@ class AiTest(TestCase):
     # print(loaded_model)
 
     with open(os.path.join(Path(__file__).resolve().parent, 'ai/merge_comments_data.csv'), mode='r',
-              encoding='utf-8') as file:
+              encoding='utf-8-sig') as file:
         csv_reader = csv.DictReader(file)
-        asd = [row for row in csv_reader]
-        print(asd)
+        asd = [{k: v.encode('utf-8').decode('utf-8-sig') if isinstance(v, str) else v for k, v in row.items()} for row in csv_reader]
 
-    for i in range(len(asd)):
+    for i in asd:
         reply_data = {
-            'comment': i.Comment,
-            'target': i.Target,
+            'comment': i['Comment'],
+            'target': i['Target'],
         }
-        print(reply_data)
+        # print(reply_data)
+        AiPostReply.objects.create(**reply_data)
