@@ -670,29 +670,27 @@ class PostAiView(View):
 
 class PostAiAPIView(APIView):
     def post(self, request):
-        datas = request.data
+        data = request.data
+        # def concatenate(features):
+        #     return features['title'] + ' ' + features['content']
 
-        def concatenate(features):
-            return features.get['title'] + ' ' + features.get['content']
-
-        result_df = concatenate(datas)
+        # result_df = concatenate(data)
 
         count_v = CountVectorizer()
-        count_metrix = count_v.fit_transform(result_df)
+        count_metrix = count_v.fit_transform(data)
         c_s = cosine_similarity(count_metrix)
 
         def get_index_from_title(title):
-            return AiPost.objects.filter(title = title).values('id').first()
+            return AiPost.objects.filter(title=title).values_list('id', flat=True).first()
 
         def get_title_from_index(index):
-            return AiPost.objects.filter(id = index).values('title')
+            return AiPost.objects.filter(id=index).values('title').first()
 
         def get_tag_from_index(index):
-            tags = AiPost.objects.filter(id = index).values('tag')
-            tag_string = ','.join(tags)
-            return tag_string.split(',')
+            tags = AiPost.objects.filter(id=index).values_list('tag', flat=True)
+            return list(tags)
 
-        title = datas.get['title']
+        title = data['title']
         index = get_index_from_title(title)
         title_check = get_title_from_index(index)
         print(title_check)
