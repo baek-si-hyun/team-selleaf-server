@@ -2,7 +2,7 @@ from django.urls import path
 
 from post.views import PostCreateView, PostDetailView, PostReplyWriteApi, PostDetailApi, PostReplyApi, PostScrapApi, \
     PostLikeApi, PostUpdateView, PostDeleteView, PostLikeCountApi, PostScrapCountApi, PostReplyLikeApi, PostReportView, \
-    PostReplyReportView, PostListView, PostListApi, ChannelView
+    PostReplyReportView, PostListView, PostListApi, ChannelView, PostAiAPIView, PostAiView
 
 app_name = 'post'
 
@@ -34,5 +34,9 @@ urlpatterns = [
 
     # 채널
     path('channel/', ChannelView.as_view(), name='list'),
+
+    # ai
+    path('ai/', PostAiView.as_view(), name='list'),
+    path('ai/api/', PostAiAPIView.as_view(), name='list'),
 
 ]

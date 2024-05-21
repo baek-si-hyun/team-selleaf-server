@@ -728,41 +728,41 @@ class ChannelView(View):
 
         return render(request, 'community/web/channel.html', context)
 
-
 class PostAiView(View):
     def get(self, request):
         return render(request, 'community/web/post/create-post.html')
 
-
 class PostAiAPIView(APIView):
     def post(self, request):
-        datas = request.data
-        features = request.data.iloc[:, :-1]
+        data = request.data
+        # def concatenate(features):
+        #     return features['title'] + ' ' + features['content']
 
-        def concatenate(features):
-            return features.title + ' ' + features.content
-
-        result_df = concatenate(features)
-
-        from sklearn.feature_extraction.text import CountVectorizer
-        from sklearn.metrics.pairwise import cosine_similarity
+        # result_df = concatenate(data)
 
         count_v = CountVectorizer()
-        count_metrix = count_v.fit_transform(result_df)
+        count_metrix = count_v.fit_transform(data)
         c_s = cosine_similarity(count_metrix)
 
         def get_index_from_title(title):
-            return AiPost.objects.filter(title=title).values('id').first()
+            return AiPost.objects.filter(title=title).values_list('id', flat=True).first()
 
         def get_title_from_index(index):
-            return AiPost.objects.filter(id=index).values('title')
+            return AiPost.objects.filter(id=index).values('title').first()
 
         def get_tag_from_index(index):
-            tags = AiPost.objects.filter(id=index).values('tag')
-            tag_string = ','.join(tags)
-            return tag_string.split(',')
+            tags = AiPost.objects.filter(id=index).values_list('tag', flat=True)
+            return list(tags)
 
-        # model = joblib.load(os.path.join(Path(__file__).resolve().parent, 'ai/machine.pkl'))
-        # binarizer = Binarizer(threshold=0.2968)
-        # custom_prediction = binarizer.fit_transform(model.predict_proba(datas.reshape(-1, 4))[:, 1].reshape(-1, 1))
-        # return Response(custom_prediction[0])
+        title = data['title']
+        index = get_index_from_title(title)
+        title_check = get_title_from_index(index)
+        print(title_check)
+        recommended_tag = sorted(list(enumerate(c_s[index])), key=lambda x: x[1], reverse=True)
+        tag_set = set()
+
+        for tag in recommended_tag[1:4]:
+            tags = get_tag_from_index(tag[0])
+            tag_set.update(tags)
+
+        return Response(tag_set)
