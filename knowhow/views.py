@@ -644,9 +644,6 @@ class KnowhowRecommendationAPI(APIView):
         # urls-web.py에서 전달받은 title 값을 메소드에 할당한 뒤, 반환값(id 리스트)를 변수에 할당
         similar_kh_ids = self.get_similarity_from_title(title)
 
-        # 디버깅
-        print(similar_kh_ids)
-
         # 추천할 내용 표시에 필요한 컬럼들
         columns = [
             'id',
