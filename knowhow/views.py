@@ -305,14 +305,14 @@ class KnowhowListApi(APIView):
         sort1 = '-id'
         sort2 = '-id'
 
-        if types == '식물 키우기':
-            condition2 |= Q(knowhowcategory__category_name__contains='식물 키우기')
-        elif types == '관련 제품':
-            condition2 |= Q(knowhowcategory__category_name__contains='관련 제품')
-        elif types == '테라리움':
-            condition2 |= Q(knowhowcategory__category_name__contains='테라리움')
-        elif types == '스타일링':
-            condition2 |= Q(knowhowcategory__category_name__contains='스타일링')
+        if types == '꽃':
+            condition2 |= Q(knowhowcategory__category_name__contains='꽃')
+        elif types == '농촌':
+            condition2 |= Q(knowhowcategory__category_name__contains='농촌')
+        elif types == '원예':
+            condition2 |= Q(knowhowcategory__category_name__contains='원예')
+        elif types == '정원':
+            condition2 |= Q(knowhowcategory__category_name__contains='정원')
         elif types == '전체':
             condition2 |= Q()
 

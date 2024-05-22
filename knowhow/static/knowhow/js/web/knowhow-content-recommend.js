@@ -18,8 +18,6 @@ const addListClickEvent = () => {
             // 리스트 내 내용 탐색
             targetText = list.children[0].children[0].children[1].innerText;
 
-            console.log(targetText)
-
             // textarea에 내용 삽입
             textArea.value = targetText;
 
@@ -109,5 +107,26 @@ if (!recommendButton.classList.contains('disabled')) {
 // AI 내용 추천 버튼 클릭 시 위 이벤트 발동
 recommendButton.addEventListener('click', recommendButtonClickEvent);
 
-// 발행신청 버튼 클릭 이벤트
+// 페이지 열렸을 때 발행 신청 버튼 비활성화
+publishButton.disabled = true;
 
+// 발행신청 버튼 활성/비활성 이벤트 - 제목이랑 내용 다 있어야 활성화
+document.addEventListener('keyup', () => {
+    const title = document.querySelector('input.title-input').value;
+    const content = document.querySelector('.content-text-area').value;
+
+    // 제목이랑 내용이 둘 다 있고
+    if (title && content) {
+        // 내용이 추천 내용과 다르면 발행신청 버튼 활성화
+        if (content !== recommendedContent) {
+            publishButton.disabled = false;
+        }
+        else {
+            publishButton.disabled = true;
+        }
+    }
+    // 그렇지 않다면 발행신청 버튼 비활성화
+    else {
+        publishButton.disabled = true;
+    }
+});

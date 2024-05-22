@@ -341,12 +341,4 @@ checkboxes.forEach((checkbox) => {
 contentTextArea.addEventListener("keyup", () => {
   // 키 누를 때마다 클자 수 세기
   contentCount.innerText = contentTextArea.value.length;
-
-  // 추천받은 내용 안 고쳤으면 발행신청 버튼 비활성화시켜 업로드 방지
-  if (contentTextArea.value === recommendedContent) {
-    publishButton.disabled = true;
-  }
-  else {
-    publishButton.disabled = false;
-  }
 })
