@@ -91,13 +91,17 @@ class PostCreateView(View):
 
         PostCategory.objects.create(**post_category)
 
-        # 포스트 태그
-        post_tag = {
-            'tag_name': data['post-tags'],
-            'post': post_data
-        }
+        print(data['post-tags'])
 
-        PostTag.objects.create(**post_tag)
+        tags = data['post-tags'].split(',')
+        # 포스트 태그
+        print(tags)
+        for tag in tags:
+            post_tag = {
+                'tag_name': tag,
+                'post': post_data
+            }
+            PostTag.objects.create(**post_tag)
 
         plant_types = data.getlist('plant-type')
 
