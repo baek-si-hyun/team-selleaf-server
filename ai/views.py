@@ -53,15 +53,15 @@ class PostAiAPIView(APIView):
 
         # 유사도 높은 순으로 정렬
         similar_indices = cosine_similarities.argsort()[::-1]
-        print(similar_indices)
+        print(similar_indices[1:6])
         tag_set = set()
         for idx in similar_indices[1:6]:  # 가장 유사한 5개의 포스트 선택
+            print(cosine_similarities[idx])
+            tags = self.get_tag_from_index(idx)
+            print(tags)
+            joined_str = ''.join(tags)
+            cleaned_str = joined_str.replace("[", "").replace("]", "").replace("'", "").strip()
+            cleaned_str = cleaned_str.split(" ")
+            tag_set.update(cleaned_str)
 
-            if cosine_similarities[idx] >= 0.1:
-
-                tags = self.get_tag_from_index(idx)
-                joined_str = ''.join(tags)
-                cleaned_str = joined_str.replace("[", "").replace("]", "").replace("'", "").strip()
-                cleaned_str = cleaned_str.split(" ")
-                tag_set.update(cleaned_str)
         return Response(list(tag_set)[:5])

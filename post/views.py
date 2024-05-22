@@ -84,6 +84,8 @@ class PostCreateView(View):
 
         post_data = Post.objects.create(**post)
 
+
+
         # 카테고리
         post_category = {
             'category_name': data['post-category'],
@@ -92,13 +94,26 @@ class PostCreateView(View):
 
         PostCategory.objects.create(**post_category)
 
-        # 포스트 태그
-        post_tag = {
-            'tag_name': data['post-tags'],
-            'post': post_data
-        }
+        print(data['post-tags'])
 
-        PostTag.objects.create(**post_tag)
+        tags = data['post-tags'].split(',')
+
+        # 포스트 태그
+        print(tags)
+        for tag in tags:
+            post_tag = {
+                'tag_name': tag,
+                'post': post_data
+            }
+            PostTag.objects.create(**post_tag)
+
+        post_ai = {
+            'post_title': data['post-title'],
+            'post_content': data['post-content'],
+            'post_tags': tags
+        }
+        AiPost.objects.create(**post_ai)
+
 
         plant_types = data.getlist('plant-type')
 
