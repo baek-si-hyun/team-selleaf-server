@@ -100,6 +100,7 @@ const postService = (() => {
     }
 
     const aiPost = async (postTitle, postContent) => {
+        console.log('aipost들어옴')
         const response = await fetch('/ai/api/post-detail/', {
             method: 'POST',
             headers: {
@@ -108,22 +109,8 @@ const postService = (() => {
             },
             body: JSON.stringify({ title: postTitle, content: postContent })
         });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+        return await response.json();
     };
-
-    const gettags = async (callback) => {
-        const response = await fetch(`/ai/api/post-detail/`)
-        const tags = await response.json();
-        if (callback){
-            return callback(tags);
-        }
-        return tags;
-    }
-
-
 
     return {
         getList: getList,
@@ -132,7 +119,6 @@ const postService = (() => {
         likeCount: likeCount,
         scrapCount: scrapCount,
         aiPost : aiPost,
-        gettags : gettags
     }
 })();
 
