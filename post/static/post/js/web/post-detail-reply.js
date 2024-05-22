@@ -25,32 +25,30 @@ const getPostDate = (replies) => {
 
 const showList = (replies) => {
   let text = ``;
-  console.log(replies)
   replies['replies'].forEach((reply) => {
-    // console.log(reply.created_date)
     text += `
             <div class="comment-item-box">
                       <div class="comment-item">
                         <div class="comment-user-img-wrap">
                           <figure class="comment-user-img-container">
              `;
-        if (reply.member__memberprofile__file_url.includes('http://') || reply.member__memberprofile__file_url.includes('https://')) {
-            text += `   
+    if (reply.member__memberprofile__file_url.includes('http://') || reply.member__memberprofile__file_url.includes('https://')) {
+      text += `   
                    <img
                       src="${reply.member__memberprofile__file_url}"
                       height="0"
                       class="comment-user-img"
                     />`;
-        } else {
-            text += `   
+    } else {
+      text += `   
                    <img
                       src="/upload/${reply.member__memberprofile__file_url}"
                       height="0"
                       class="comment-user-img"
                     />`;
-        }
+    }
 
-        text += `
+    text += `
                           </figure>
                         </div>
                         <div class="comment-content-box">
@@ -126,15 +124,23 @@ moreButton.addEventListener("click", (e) => {
   });
 });
 
+
 writeButton.addEventListener("click", async (e) => {
   const replyContent = document.getElementById("reply-content");
-  console.log(replyContent.value)
-  await replyService.write({
+  const profanityWarning = document.querySelector('.profanity-warning')
+  const inputContainer = document.querySelector('.input-container')
+  const response = await replyService.write({
     reply_content: replyContent.value,
     post_id: post_id
   });
-  replyContent.value = "";
-
+  if (response === 'ok') {
+    replyContent.value = "";
+    profanityWarning.style.display = "none"
+    inputContainer.style.border = "1px solid rgb(218, 221, 224);"
+  } else {
+    profanityWarning.style.display = ""
+    inputContainer.style.border = "1px solid red"
+  }
   page = 1
   const text = await replyService.getList(post_id, page, showList);
   replySection.innerHTML = text;
@@ -171,7 +177,6 @@ replyService.getList(post_id, page, countReply).then((replyCount) => {
 
 const replyModal = document.querySelector(".reply-declaration-modal-wrap")
 replySection.addEventListener("click", async (e) => {
-  console.log(e.target)
   if (e.target.classList[0] === 'update-btn') {
     const replyId = e.target.classList[1]
     const updateForm = document.getElementById(`update-form${replyId}`)
@@ -196,10 +201,14 @@ replySection.addEventListener("click", async (e) => {
   } else if (e.target.classList[0] === 'update-done') {
     const replyId = e.target.classList[1]
     const replyContent = document.querySelector(`#update-form${replyId} textarea`);
-    await replyService.update({
+    const response = await replyService.update({
       replyId: replyId,
       replyContent: replyContent.value
     })
+    if(response !== 'ok'){
+      alert('비속어가 포함되어 있습니다.');
+      return
+    }
     page = 1
     const text = await replyService.getList(post_id, page, showList);
     replySection.innerHTML = text;
@@ -220,7 +229,6 @@ replySection.addEventListener("click", async (e) => {
       moreButton.style.display = "flex";
     }
   } else if (e.target.classList[0] === 'reply-report-btn') {
-    console.log('report')
     replyModal.classList.add("open")
     replyReportReplyId.value = e.target.classList[1]
   }
@@ -248,7 +256,6 @@ reportReplyDeclarationBtn.addEventListener("click", (e) => {
   let reportContent = ''
   declarationItems.forEach((item) => {
     if (item.classList[1] === "report-choice") {
-      // console.log(item.innerText)
       reportContent = item.innerText
 
     }

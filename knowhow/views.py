@@ -305,14 +305,14 @@ class KnowhowListApi(APIView):
         sort1 = '-id'
         sort2 = '-id'
 
-        if types == '식물 키우기':
-            condition2 |= Q(knowhowcategory__category_name__contains='식물 키우기')
-        elif types == '관련 제품':
-            condition2 |= Q(knowhowcategory__category_name__contains='관련 제품')
-        elif types == '테라리움':
-            condition2 |= Q(knowhowcategory__category_name__contains='테라리움')
-        elif types == '스타일링':
-            condition2 |= Q(knowhowcategory__category_name__contains='스타일링')
+        if types == '꽃':
+            condition2 |= Q(knowhowcategory__category_name__contains='꽃')
+        elif types == '농촌':
+            condition2 |= Q(knowhowcategory__category_name__contains='농촌')
+        elif types == '원예':
+            condition2 |= Q(knowhowcategory__category_name__contains='원예')
+        elif types == '정원':
+            condition2 |= Q(knowhowcategory__category_name__contains='정원')
         elif types == '전체':
             condition2 |= Q()
 
@@ -644,11 +644,19 @@ class KnowhowRecommendationAPI(APIView):
         # urls-web.py에서 전달받은 title 값을 메소드에 할당한 뒤, 반환값(id 리스트)를 변수에 할당
         similar_kh_ids = self.get_similarity_from_title(title)
 
-        # 디버깅
-        print(similar_kh_ids)
-        return Response('success')
+        # 추천할 내용 표시에 필요한 컬럼들
+        columns = [
+            'id',
+            'knowhow_content'
+        ]
 
-    # 입력받은 제목과 가장 유사도가 높은 기존 제목 5개의 인덱스와 유사도를 구해주는 메소드
+        # 위에서 찾은 id 값을 가진 노하우 게시글의 id와 내용을 가져옴
+        knowhows = Knowhow.objects.values(*columns).filter(id__in=similar_kh_ids)
+    
+        # 요청한 노하우 id와 내용 반환
+        return Response(knowhows)
+
+    # 입력받은 제목과 가장 유사도가 높은 기존 제목 5개의 id를 구해주는 메소드
     def get_similarity_from_title(self, title):
         # tbl_knowhow에서 id랑 knowhow_title만 가져와서 리스트로 변환 - (id, 제목)이 여러 개 들어있음
         knowhow_title_list = list(Knowhow.objects.values_list('id', 'knowhow_title'))

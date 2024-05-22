@@ -1,7 +1,7 @@
 import math
 from datetime import datetime
 
-from django.db import transaction
+from django.db import connection, transaction
 from django.db.models import F, CharField, Value, Q
 from django.db.models.functions import Concat
 from django.shortcuts import render, redirect
@@ -10,6 +10,7 @@ from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from ai.models import AiPostReply
 from alarm.models import Alarm
 from apply.models import Apply, Trainee
 from knowhow.models import Knowhow, KnowhowTag, KnowhowFile, KnowhowRecommend, KnowhowReply, KnowhowCategory, \
@@ -21,6 +22,7 @@ from order.models import Order, OrderDetail, OrderMileage
 from post.models import Post, PostTag, PostFile, PostReply, PostCategory, PostPlant, PostScrap, PostLike, PostReplyLike
 from qna.models import QnA
 from report.models import KnowhowReplyReport, PostReplyReport, LectureReport, TradeReport, PostReport, KnowhowReport
+from selleaf.utils.util import profanityDetectionModel
 from teacher.models import Teacher
 from trade.models import Trade, TradeCategory
 
@@ -103,7 +105,7 @@ class MemberManagementView(View):
         context = {'member_count': member_count}
 
         # member.html을 불러오면서 화면에 회원 수 전달
-        return render(request, 'manager/member/member/member.html',context)
+        return render(request, 'manager/member/member/member.html', context)
 
 
 class MemberInfoAPI(APIView):
@@ -135,24 +137,24 @@ class MemberInfoAPI(APIView):
         # 회원 정보 표시에 필요한 컬럼들
         columns = [
             'id',
-            'member_name',      # 회원 이름(닉네임)
-            'member_email',     # 회원 이메일
-            'member_address',   # 회원 주소(tbl_member_address의 city + district)
-            'member_type',      # 회원의 가입 유형(구글, 네이버, 카카오)
-            'member_status',    # 회원 상태(휴면/비휴면)
-            'created_date'      # 가입 일자
+            'member_name',  # 회원 이름(닉네임)
+            'member_email',  # 회원 이메일
+            'member_address',  # 회원 주소(tbl_member_address의 city + district)
+            'member_type',  # 회원의 가입 유형(구글, 네이버, 카카오)
+            'member_status',  # 회원 상태(휴면/비휴면)
+            'created_date'  # 가입 일자
         ]
 
         # 회원들의 정보를 최근에 가입한 순서대로 가져옴
         # 기존에 tbl_member에 없던 주소는 tbl_member_address에서 가져와서 문자열 합치기
-        members = Member.objects\
-                      .annotate(member_address=Concat(F('memberaddress__address_city'),
-                                                      Value(" "),
-                                                      F('memberaddress__address_district'),
-                                                      output_field=CharField()
-                                                      )
-                                )\
-                      .values(*columns).filter(condition, id__isnull=False)
+        members = Member.objects \
+            .annotate(member_address=Concat(F('memberaddress__address_city'),
+                                            Value(" "),
+                                            F('memberaddress__address_district'),
+                                            output_field=CharField()
+                                            )
+                      ) \
+            .values(*columns).filter(condition, id__isnull=False)
 
         # 각 회원의 가입 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
         for member in members:
@@ -304,14 +306,14 @@ class TeacherInfoAPI(APIView):
         # 강사 정보 표시에 필요한 컬럼들
         columns = [
             'id',
-            'teacher_name',     # 강사 이름(= 회원 이름)
-            'teacher_info',     # 주요 강의
-            'lecture_plan',     # 강의 계획
-            'updated_date',     # 승인 일자
+            'teacher_name',  # 강사 이름(= 회원 이름)
+            'teacher_info',  # 주요 강의
+            'lecture_plan',  # 강의 계획
+            'updated_date',  # 승인 일자
         ]
 
         # 강사들의 정보를 최근에 승인된 순서대로 가져옴
-        teachers = Teacher.enabled_objects.annotate(teacher_name=F('member__member_name'))\
+        teachers = Teacher.enabled_objects.annotate(teacher_name=F('member__member_name')) \
             .values(*columns).filter(condition, id__isnull=False).order_by('-updated_date')
 
         # 각 강사의 승인 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
@@ -382,14 +384,14 @@ class TeacherEntriesInfoAPI(APIView):
         # 강사 신청자 정보 표시에 필요한 컬럼들
         columns = [
             'id',
-            'teacher_name',     # 강사 신청자 이름(= 회원 이름)
-            'teacher_info',     # 주요 강의
-            'lecture_plan',     # 강의 계획
-            'created_date',     # 신청 일자
+            'teacher_name',  # 강사 신청자 이름(= 회원 이름)
+            'teacher_info',  # 주요 강의
+            'lecture_plan',  # 강의 계획
+            'created_date',  # 신청 일자
         ]
 
         # 강사 신청자들의 정보를 최근에 신청한 순서대로 가져옴
-        teacher_entries = Teacher.objects.filter(teacher_status=0).annotate(teacher_name=F('member__member_name'))\
+        teacher_entries = Teacher.objects.filter(teacher_status=0).annotate(teacher_name=F('member__member_name')) \
             .values(*columns).filter(condition, id__isnull=False).order_by('-id')
 
         # 각 강사 신청자들의 신청 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
@@ -531,18 +533,18 @@ class PostsListAPI(APIView):
         # 일반 게시물 정보 표시에 필요한 컬럼들
         columns = [
             'id',
-            'post_title',       # 일반 게시물 제목
-            'post_content',     # 일반 게시물 내용
-            'member_name',      # 작성자
-            'category_name',    # 일반 게시물 카테고리 명
-            'created_date',     # 작성 일자
+            'post_title',  # 일반 게시물 제목
+            'post_content',  # 일반 게시물 내용
+            'member_name',  # 작성자
+            'category_name',  # 일반 게시물 카테고리 명
+            'created_date',  # 작성 일자
         ]
 
         # 일반 게시물 목록을 최신순으로 가져옴
-        posts = Post.objects.filter()\
+        posts = Post.objects.filter() \
             .annotate(member_name=F('member__member_name'),
                       category_name=F('postcategory__category_name')
-                      )\
+                      ) \
             .values(*columns).filter(condition, id__isnull=False)
 
         # 각 일반 게시물의 작성 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
@@ -618,19 +620,19 @@ class KnowhowPostsAPI(APIView):
         # 노하우 게시물 정보 표시에 필요한 컬럼들
         columns = [
             'id',
-            'knowhow_title',        # 노하우 게시물 제목
-            'knowhow_content',      # 노하우 게시물 내용
-            'member_name',          # 작성자
-            'category_name',        # 노하우 게사물 카테고리 명
-            'created_date',         # 작성 일자
+            'knowhow_title',  # 노하우 게시물 제목
+            'knowhow_content',  # 노하우 게시물 내용
+            'member_name',  # 작성자
+            'category_name',  # 노하우 게사물 카테고리 명
+            'created_date',  # 작성 일자
         ]
 
         # 노하우 게시물 목록을 최신순으로 가져옴
         knowhow_posts = Knowhow.objects.filter() \
-                              .annotate(member_name=F('member__member_name'),
-                                        category_name=F('knowhowcategory__category_name')
-                                        ) \
-                              .values(*columns).filter(condition, id__isnull=False)
+            .annotate(member_name=F('member__member_name'),
+                      category_name=F('knowhowcategory__category_name')
+                      ) \
+            .values(*columns).filter(condition, id__isnull=False)
 
         # 각 노하우 게시물의 작성 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
         for knowhow_post in knowhow_posts:
@@ -705,18 +707,18 @@ class TradePostsAPI(APIView):
         # 거래 게시물 정보 표시에 필요한 컬럼들
         columns = [
             'id',
-            'trade_title',      # 거래 게시물 제목
-            'trade_content',    # 거래 게시물 내용
-            'member_name',      # 작성자
-            'category_name',    # 거래 게시물 카테고리 명
-            'created_date',     # 작성 일자
+            'trade_title',  # 거래 게시물 제목
+            'trade_content',  # 거래 게시물 내용
+            'member_name',  # 작성자
+            'category_name',  # 거래 게시물 카테고리 명
+            'created_date',  # 작성 일자
         ]
 
         # 거래 게시물 목록을 최신순으로 가져옴
         trade_posts = Trade.enabled_objects.filter() \
-                              .annotate(member_name=F('member__member_name'),
-                                        category_name=F('trade_category__category_name')) \
-                              .values(*columns).filter(condition, id__isnull=False)
+            .annotate(member_name=F('member__member_name'),
+                      category_name=F('trade_category__category_name')) \
+            .values(*columns).filter(condition, id__isnull=False)
 
         # 각 거래 게시물의 작성 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
         for trade_post in trade_posts:
@@ -782,7 +784,7 @@ class PostsDeleteAPI(APIView):
                 PostScrap.objects.filter(post_id=post_id).delete()
                 PostLike.objects.filter(post_id=post_id).delete()
                 Post.objects.filter(id=post_id).delete()
-        
+
         # 요청에 대한 응답 반환
         return Response('success')
 
@@ -813,8 +815,8 @@ class KnowhowDeleteAPI(APIView):
 
         # 요청에 대한 응답 반환
         return Response('success')
-    
-    
+
+
 class TradeDeleteAPI(APIView):
     # 거래 게시물 여러 개를 한 번에 삭제하는 API 뷰 - 소프트 딜리트
     @transaction.atomic
@@ -871,10 +873,10 @@ class LectureManagementView(View):
     def get(self, request):
         # 강의 게시물 전체 개수
         lecture_count = Lecture.objects.filter(lecture_status=0).count()
-        
+
         # 강의 게시물 수를 context에 담음
         context = {'lecture_count': lecture_count}
-        
+
         # lecture.html 페이지로 이동하면서 context 안에 담긴 강의 게시물 수도 같이 보냄
         return render(request, 'manager/lecture/lecture/lecture.html', context)
 
@@ -908,26 +910,26 @@ class LectureInfoAPI(APIView):
         # 강의 정보 표시에 필요한 컬럼들
         columns = [
             'id',
-            'lecture_title',        # 강의 제목
-            'lecture_content',      # 강의 내용
-            'teacher_name',         # 강사 이름(회원 이름)
-            'lecture_headcount',    # 강의 정원
-            'lecture_price',        # 수강료
-            'lecture_place',        # 강의 장소
-            'online_status',        # 온라인 여부
-            'created_date',         # 강의 개설 일자
+            'lecture_title',  # 강의 제목
+            'lecture_content',  # 강의 내용
+            'teacher_name',  # 강사 이름(회원 이름)
+            'lecture_headcount',  # 강의 정원
+            'lecture_price',  # 수강료
+            'lecture_place',  # 강의 장소
+            'online_status',  # 온라인 여부
+            'created_date',  # 강의 개설 일자
         ]
 
         # 강의 게시물 정보를 최신순으로 가져옴
-        lectures = Lecture.objects\
-                       .annotate(teacher_name=F('teacher__member__member_name'),
-                                 lecture_place=Concat(F('lectureaddress__address_city'),
-                                                      Value(" "),
-                                                      F('lectureaddress__address_district'),
-                                                      output_field=CharField()
-                                                      ),
-                                )\
-                       .values(*columns).filter(condition, lecture_status=0, id__isnull=False)
+        lectures = Lecture.objects \
+            .annotate(teacher_name=F('teacher__member__member_name'),
+                      lecture_place=Concat(F('lectureaddress__address_city'),
+                                           Value(" "),
+                                           F('lectureaddress__address_district'),
+                                           output_field=CharField()
+                                           ),
+                      ) \
+            .values(*columns).filter(condition, lecture_status=0, id__isnull=False)
 
         # 각 강의 게시물의 작성 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
         for lecture in lectures:
@@ -1074,16 +1076,16 @@ class LectureReviewInfoAPI(APIView):
         # 리뷰 정보 표시에 필요한 컬럼들
         columns = [
             'id',
-            'review_title',     # 리뷰 제목
-            'review_content',   # 리뷰 내용
-            'member_name',      # 작성자
-            'review_rating',    # 별점
-            'created_date',     # 작성 일자
+            'review_title',  # 리뷰 제목
+            'review_content',  # 리뷰 내용
+            'member_name',  # 작성자
+            'review_rating',  # 별점
+            'created_date',  # 작성 일자
         ]
 
         # 특정 강의의 리뷰 목록을 최신순으로 가져옴
-        reviews = LectureReview.objects.filter(lecture=lecture_id)\
-            .annotate(member_name=F('member__member_name'))\
+        reviews = LectureReview.objects.filter(lecture=lecture_id) \
+            .annotate(member_name=F('member__member_name')) \
             .values(*columns).filter(condition, id__isnull=False)
 
         # 각 강의 리뷰의 작성 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
@@ -1203,12 +1205,12 @@ class TraineesInfoAPI(APIView):
         # 수강생 정보 표시에 필요한 컬럼들
         columns = [
             'id',
-            'trainee_name',     # 수강생 이름
-            'main_applicant',   # 대표 신청자(회원)
-            'apply_date',       # 수강 날짜
-            'apply_time',       # 수강 시간
-            'apply_status',     # 0(신청 완료), 1(수강 완료), -1(수강 취소)
-            'purchase_date',    # 수강 신청일
+            'trainee_name',  # 수강생 이름
+            'main_applicant',  # 대표 신청자(회원)
+            'apply_date',  # 수강 날짜
+            'apply_time',  # 수강 시간
+            'apply_status',  # 0(신청 완료), 1(수강 완료), -1(수강 취소)
+            'purchase_date',  # 수강 신청일
         ]
 
         # 특정 강의를 신청한 수강 신청 내역을 가져옴
@@ -1219,12 +1221,12 @@ class TraineesInfoAPI(APIView):
 
         for apply in applies:
             # 특정 강의의 수강생 목록을 최신순으로 가져옴
-            trainees = Trainee.objects.filter(apply=apply.id)\
+            trainees = Trainee.objects.filter(apply=apply.id) \
                 .annotate(main_applicant=F('apply__member__member_name'),
                           apply_date=F('apply__date'),
                           apply_time=F('apply__time'),
                           apply_status=F('apply__apply_status'),
-                          purchase_date=F('apply__created_date'))\
+                          purchase_date=F('apply__created_date')) \
                 .values(*columns).filter(condition, id__isnull=False)
 
             # 각 수강생의 수강 신청일을 "YYYY.MM.DD" 형식의 문자열로 변환
@@ -1323,7 +1325,7 @@ class ReplyManagementAPI(APIView):
         # 쿼리 스트링에서 키워드와 페이지 정보를 가져옴
         keyword = request.GET.get('keyword', '')
         page = int(request.GET.get('page', 1))
-
+        print(keyword)
         # 한 페이지에 표시할 댓글 수
         row_count = 10
 
@@ -1342,12 +1344,12 @@ class ReplyManagementAPI(APIView):
 
         # 댓글 정보 표시에 필요한 컬럼들
         columns = [
-            'reply_member_id',      # 댓글 작성자 id
-            'reply_member_name',    # 댓글 작성자 이름
-            'target_title',         # 댓글이 작성된 게시물의 제목
-            'reply_id',             # 댓글 id
-            'reply_content',        # 댓글 내용
-            'reply_created',        # 댓글 작성 일자
+            'reply_member_id',  # 댓글 작성자 id
+            'reply_member_name',  # 댓글 작성자 이름
+            'target_title',  # 댓글이 작성된 게시물의 제목
+            'reply_id',  # 댓글 id
+            'reply_content',  # 댓글 내용
+            'reply_created',  # 댓글 작성 일자
         ]
 
         # 일반 게시물 댓글 목록을 최신순으로 가져옴
@@ -1422,7 +1424,8 @@ class ReplyManagementAPI(APIView):
 
         # 댓글 목록의 맨 뒤에 페이지네이션에 필요한 정보 추가
         replies.append(page_info)
-
+        print(replies)
+        print(1111)
         # 요청한 댓글 정보 및 페이지네이션에 사용할 정보 반환
         return Response(replies)
 
@@ -1582,30 +1585,30 @@ class PaymentListAPI(APIView):
         # 결제 내역 표시에 필요한 컬럼들
         columns = [
             'id',
-            'payment_member',       # 구매자
-            'payment_lecture',      # 구매 강의
-            'payment_price',        # 수강료
-            'payment_kit',          # 구매 키트 - 오프라인은 키트 없음
-            'payment_quantity',     # 구매 개수
-            'payment_address',      # 배송지
-            'payment_status',       # 결제 상태
-            'created_date',         # 결제 요청 발생 일자
+            'payment_member',  # 구매자
+            'payment_lecture',  # 구매 강의
+            'payment_price',  # 수강료
+            'payment_kit',  # 구매 키트 - 오프라인은 키트 없음
+            'payment_quantity',  # 구매 개수
+            'payment_address',  # 배송지
+            'payment_status',  # 결제 상태
+            'created_date',  # 결제 요청 발생 일자
         ]
 
         # 결제 내역을 최신순으로 가져옴
         payments = OrderDetail.objects.filter() \
-                                    .annotate(payment_member=F('order__member__member_name'),
-                                              payment_lecture=F('apply__lecture__lecture_title'), \
-                                              payment_price=F('apply__lecture__lecture_price'),
-                                              payment_kit=F('order__kit__kit_name'),
-                                              payment_quantity=F('apply__quantity'),
-                                              payment_address=Concat(F('order__address__address_city'),
-                                                                     Value(" "),
-                                                                     F('order__address__address_district'),
-                                                                     output_field=CharField()
-                                                                     ),
-                                              payment_status=F('order_status')) \
-                                    .values(*columns).filter(condition, id__isnull=False)
+            .annotate(payment_member=F('order__member__member_name'),
+                      payment_lecture=F('apply__lecture__lecture_title'), \
+                      payment_price=F('apply__lecture__lecture_price'),
+                      payment_kit=F('order__kit__kit_name'),
+                      payment_quantity=F('apply__quantity'),
+                      payment_address=Concat(F('order__address__address_city'),
+                                             Value(" "),
+                                             F('order__address__address_district'),
+                                             output_field=CharField()
+                                             ),
+                      payment_status=F('order_status')) \
+            .values(*columns).filter(condition, id__isnull=False)
 
         # 각 결제 내역의 요청 발생 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
         for payment in payments:
@@ -1896,11 +1899,11 @@ class LectureReportManagementView(View):
     # 신고 내역 페이지 이동 뷰
     def get(self, request):
         # 강의, 거래, 일반 게시물(+댓글), 노하우 게시물(+댓글) 각각의 개수
-        lecture_report_count = LectureReport.object.count()     # 강의
-        trade_report_count = TradeReport.object.count()     # 거래
-        post_report_count = PostReport.object.count()   # 일반 게시물
-        post_reply_report_count = PostReplyReport.object.count()    # 일반 게시물 댓글
-        knowhow_report_count = KnowhowReport.object.count()     # 노하우 게시물
+        lecture_report_count = LectureReport.object.count()  # 강의
+        trade_report_count = TradeReport.object.count()  # 거래
+        post_report_count = PostReport.object.count()  # 일반 게시물
+        post_reply_report_count = PostReplyReport.object.count()  # 일반 게시물 댓글
+        knowhow_report_count = KnowhowReport.object.count()  # 노하우 게시물
         knowhow_reply_report_count = KnowhowReplyReport.object.count()  # 노하우 게시물 댓글
 
         # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
@@ -1921,11 +1924,11 @@ class TradeReportManagementView(View):
     # 신고 내역 페이지 이동 뷰
     def get(self, request):
         # 강의, 거래, 일반 게시물(+댓글), 노하우 게시물(+댓글) 각각의 개수
-        lecture_report_count = LectureReport.object.count()     # 강의
-        trade_report_count = TradeReport.object.count()     # 거래
-        post_report_count = PostReport.object.count()   # 일반 게시물
-        post_reply_report_count = PostReplyReport.object.count()    # 일반 게시물 댓글
-        knowhow_report_count = KnowhowReport.object.count()     # 노하우 게시물
+        lecture_report_count = LectureReport.object.count()  # 강의
+        trade_report_count = TradeReport.object.count()  # 거래
+        post_report_count = PostReport.object.count()  # 일반 게시물
+        post_reply_report_count = PostReplyReport.object.count()  # 일반 게시물 댓글
+        knowhow_report_count = KnowhowReport.object.count()  # 노하우 게시물
         knowhow_reply_report_count = KnowhowReplyReport.object.count()  # 노하우 게시물 댓글
 
         # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
@@ -1946,11 +1949,11 @@ class PostReportManagementView(View):
     # 신고 내역 페이지 이동 뷰
     def get(self, request):
         # 강의, 거래, 일반 게시물(+댓글), 노하우 게시물(+댓글) 각각의 개수
-        lecture_report_count = LectureReport.object.count()     # 강의
-        trade_report_count = TradeReport.object.count()     # 거래
-        post_report_count = PostReport.object.count()   # 일반 게시물
-        post_reply_report_count = PostReplyReport.object.count()    # 일반 게시물 댓글
-        knowhow_report_count = KnowhowReport.object.count()     # 노하우 게시물
+        lecture_report_count = LectureReport.object.count()  # 강의
+        trade_report_count = TradeReport.object.count()  # 거래
+        post_report_count = PostReport.object.count()  # 일반 게시물
+        post_reply_report_count = PostReplyReport.object.count()  # 일반 게시물 댓글
+        knowhow_report_count = KnowhowReport.object.count()  # 노하우 게시물
         knowhow_reply_report_count = KnowhowReplyReport.object.count()  # 노하우 게시물 댓글
 
         # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
@@ -1971,11 +1974,11 @@ class PostReplyReportManagementView(View):
     # 신고 내역 페이지 이동 뷰
     def get(self, request):
         # 강의, 거래, 일반 게시물(+댓글), 노하우 게시물(+댓글) 각각의 개수
-        lecture_report_count = LectureReport.object.count()     # 강의
-        trade_report_count = TradeReport.object.count()     # 거래
-        post_report_count = PostReport.object.count()   # 일반 게시물
-        post_reply_report_count = PostReplyReport.object.count()    # 일반 게시물 댓글
-        knowhow_report_count = KnowhowReport.object.count()     # 노하우 게시물
+        lecture_report_count = LectureReport.object.count()  # 강의
+        trade_report_count = TradeReport.object.count()  # 거래
+        post_report_count = PostReport.object.count()  # 일반 게시물
+        post_reply_report_count = PostReplyReport.object.count()  # 일반 게시물 댓글
+        knowhow_report_count = KnowhowReport.object.count()  # 노하우 게시물
         knowhow_reply_report_count = KnowhowReplyReport.object.count()  # 노하우 게시물 댓글
 
         # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
@@ -1996,11 +1999,11 @@ class KnowhowReportManagementView(View):
     # 신고 내역 페이지 이동 뷰
     def get(self, request):
         # 강의, 거래, 일반 게시물(+댓글), 노하우 게시물(+댓글) 각각의 개수
-        lecture_report_count = LectureReport.object.count()     # 강의
-        trade_report_count = TradeReport.object.count()     # 거래
-        post_report_count = PostReport.object.count()   # 일반 게시물
-        post_reply_report_count = PostReplyReport.object.count()    # 일반 게시물 댓글
-        knowhow_report_count = KnowhowReport.object.count()     # 노하우 게시물
+        lecture_report_count = LectureReport.object.count()  # 강의
+        trade_report_count = TradeReport.object.count()  # 거래
+        post_report_count = PostReport.object.count()  # 일반 게시물
+        post_reply_report_count = PostReplyReport.object.count()  # 일반 게시물 댓글
+        knowhow_report_count = KnowhowReport.object.count()  # 노하우 게시물
         knowhow_reply_report_count = KnowhowReplyReport.object.count()  # 노하우 게시물 댓글
 
         # 위의 모든 정보를 화면으로 보내기 전, dict 형식으로 묶어줌
@@ -2068,17 +2071,17 @@ class LectureReportAPI(APIView):
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
             'id',
-            'report_content',   # 신고 내용
-            'report_member',    # 신고자
-            'report_status',    # 1 - 접수됨, 0 - 삭제됨
-            'report_target',    # 신고 대상 - 강의
-            'created_date',     # 신고 일자
+            'report_content',  # 신고 내용
+            'report_member',  # 신고자
+            'report_status',  # 1 - 접수됨, 0 - 삭제됨
+            'report_target',  # 신고 대상 - 강의
+            'created_date',  # 신고 일자
         ]
 
         # 신고 내역 조회
-        lecture_reports = LectureReport.object\
+        lecture_reports = LectureReport.object \
             .annotate(report_member=F('member__member_name'),
-                      report_target=F('lecture__lecture_title'))\
+                      report_target=F('lecture__lecture_title')) \
             .values(*columns).filter(condition, id__isnull=False, report_status=1)
 
         # 각 신고 내역의 신고 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
@@ -2099,9 +2102,9 @@ class LectureReportAPI(APIView):
         # 페이지네이션에 필요한 정보들
         page_count = 5  # 화면에 표시할 페이지 숫자 버튼의 최대 개수
 
-        end_page = math.ceil(page / page_count) * page_count    # 화면에 표시할 페이지 숫자 버튼 중 마지막 페이지
+        end_page = math.ceil(page / page_count) * page_count  # 화면에 표시할 페이지 숫자 버튼 중 마지막 페이지
         start_page = end_page - page_count + 1  # 화면에 표시할 페이지 숫자 버튼 중 첫 페이지
-        real_end = math.ceil(total / row_count) # 전체 리스트의 마지막 페이지
+        real_end = math.ceil(total / row_count)  # 전체 리스트의 마지막 페이지
 
         # end_page의 값이 real_end 보다 커지지 않게 조정
         end_page = real_end if end_page > real_end else end_page
@@ -2163,17 +2166,17 @@ class TradeReportAPI(APIView):
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
             'id',
-            'report_content',   # 신고 내용
-            'report_member',    # 신고자
-            'report_status',    # 1 - 접수됨, 0 - 삭제됨
-            'report_target',    # 신고 대상 - 거래
-            'created_date',     # 신고 일자
+            'report_content',  # 신고 내용
+            'report_member',  # 신고자
+            'report_status',  # 1 - 접수됨, 0 - 삭제됨
+            'report_target',  # 신고 대상 - 거래
+            'created_date',  # 신고 일자
         ]
 
         # 신고 내역 조회
-        trade_reports = TradeReport.object\
+        trade_reports = TradeReport.object \
             .annotate(report_member=F('member__member_name'),
-                      report_target=F('trade__trade_title'))\
+                      report_target=F('trade__trade_title')) \
             .values(*columns).filter(condition, id__isnull=False, report_status=1)
 
         # 각 신고 내역의 신고 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
@@ -2258,17 +2261,17 @@ class PostReportAPI(APIView):
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
             'id',
-            'report_content',   # 신고 내용
-            'report_member',    # 신고자
-            'report_status',    # 1 - 접수됨, 0 - 삭제됨
-            'report_target',    # 신고 대상 - 일반 게시물
-            'created_date',     # 신고 일자
+            'report_content',  # 신고 내용
+            'report_member',  # 신고자
+            'report_status',  # 1 - 접수됨, 0 - 삭제됨
+            'report_target',  # 신고 대상 - 일반 게시물
+            'created_date',  # 신고 일자
         ]
 
         # 신고 내역 조회
-        post_reports = PostReport.object\
+        post_reports = PostReport.object \
             .annotate(report_member=F('member__member_name'),
-                      report_target=F('post__post_title'))\
+                      report_target=F('post__post_title')) \
             .values(*columns).filter(condition, id__isnull=False, report_status=1)
 
         # 각 신고 내역의 신고 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
@@ -2353,17 +2356,17 @@ class PostReplyReportAPI(APIView):
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
             'id',
-            'report_content',   # 신고 내용
-            'report_member',    # 신고자
-            'report_status',    # 1 - 접수됨, 0 - 삭제됨
-            'report_target',    # 신고 대상 - 일반 게시물 댓글
-            'created_date',     # 신고 일자
+            'report_content',  # 신고 내용
+            'report_member',  # 신고자
+            'report_status',  # 1 - 접수됨, 0 - 삭제됨
+            'report_target',  # 신고 대상 - 일반 게시물 댓글
+            'created_date',  # 신고 일자
         ]
 
         # 신고 내역 조회
-        post_reply_reports = PostReplyReport.object\
+        post_reply_reports = PostReplyReport.object \
             .annotate(report_member=F('member__member_name'),
-                      report_target=F('post_reply__post_reply_content'))\
+                      report_target=F('post_reply__post_reply_content')) \
             .values(*columns).filter(condition, id__isnull=False, report_status=1)
 
         # 각 신고 내역의 신고 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
@@ -2448,17 +2451,17 @@ class KnowhowReportAPI(APIView):
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
             'id',
-            'report_content',   # 신고 내용
-            'report_member',    # 신고자
-            'report_status',    # 1 - 접수됨, 0 - 삭제됨
-            'report_target',    # 신고 대상 - 노하우 게시물
-            'created_date',     # 신고 일자
+            'report_content',  # 신고 내용
+            'report_member',  # 신고자
+            'report_status',  # 1 - 접수됨, 0 - 삭제됨
+            'report_target',  # 신고 대상 - 노하우 게시물
+            'created_date',  # 신고 일자
         ]
 
         # 신고 내역 조회
-        knowhow_reports = KnowhowReport.object\
+        knowhow_reports = KnowhowReport.object \
             .annotate(report_member=F('member__member_name'),
-                      report_target=F('knowhow__knowhow_title'))\
+                      report_target=F('knowhow__knowhow_title')) \
             .values(*columns).filter(condition, id__isnull=False, report_status=1)
 
         # 각 신고 내역의 신고 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
@@ -2543,17 +2546,17 @@ class KnowhowReplyReportAPI(APIView):
         # 신고 내역 표시에 필요한 컬럼들
         columns = [
             'id',
-            'report_content',   # 신고 내용
-            'report_member',    # 신고자
-            'report_status',    # 1 - 접수됨, 0 - 삭제됨
-            'report_target',    # 신고 대상 - 노하우 게시물 댓글
-            'created_date',     # 신고 일자
+            'report_content',  # 신고 내용
+            'report_member',  # 신고자
+            'report_status',  # 1 - 접수됨, 0 - 삭제됨
+            'report_target',  # 신고 대상 - 노하우 게시물 댓글
+            'created_date',  # 신고 일자
         ]
 
         # 신고 내역 조회
-        knowhow_reply_reports = KnowhowReplyReport.object\
+        knowhow_reply_reports = KnowhowReplyReport.object \
             .annotate(report_member=F('member__member_name'),
-                      report_target=F('knowhow_reply__knowhow_reply_content'))\
+                      report_target=F('knowhow_reply__knowhow_reply_content')) \
             .values(*columns).filter(condition, id__isnull=False, report_status=1)
 
         # 각 신고 내역의 신고 일자를 "YYYY.MM.DD" 형식의 문자열로 변환
@@ -2734,7 +2737,31 @@ class PostReplyReportAdjustAPI(APIView):
         for report_id in report_ids:
             # 요소가 빈 문자열이 아닐 때만 테이블에서 해당 id를 가진 객체를 가져와서 삭제
             if report_id != '':
+                post_report_reply = PostReplyReport.object.filter(id=report_id).values().first()
+                report_reply_id = post_report_reply.get('post_reply_id')
+                post_reply = PostReply.objects.filter(id=report_reply_id).values().first()
+
+                new_sentence = [post_reply['post_reply_content']]
+                data = {
+                    'comment': new_sentence[0],
+                    'target': 1,
+                }
+                print(data)
+                # profanityDetectionModel(new_sentence)
+                # AiPostReply.objects.create(**data)
                 PostReplyReport.object.get(id=report_id).delete()
+                PostReply.objects.get(id=report_reply_id).delete()
+
+
+                # try:
+                #     with transaction.atomic():
+                #         with connection.cursor() as cursor:
+                #             cursor.execute('SET foreign_key_checks = 0;')
+                #             PostReply.objects.get(id=report_reply_id).delete()
+                #             PostReplyReport.objects.get(id=report_id).delete()
+                #             cursor.execute('SET foreign_key_checks = 1;')
+                # except Exception as e:
+                #     print(f"Error occurred: {e}")
 
         return Response('success')
 

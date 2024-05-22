@@ -75,3 +75,23 @@ class PostTest(TestCase):
         print("Articles saved successfully.")
     else:
         print("Failed to save articles.")
+# import os
+# from pathlib import Path
+# from unittest import TestCase
+#
+# import joblib
+#
+#
+# class SihyunTest(TestCase):
+#     model_path = os.path.join(Path(__file__).resolve().parent, 'ai/commentai.pkl')
+#     loaded_model = joblib.load(model_path)
+#
+#     # 변수로 댓글 내용 저장하기
+#     names = ['김규일', '백시현', '양현', '강희주', '송서경', '김수빈', '한동석']
+#
+#     for name in names:
+#         # Make predictions
+#         new_sentence = [name]
+#         transformed_X_train = loaded_model.named_steps['count_vectorizer'].transform(new_sentence)
+#         loaded_model.named_steps['multinomial_NB'].fit(transformed_X_train, [0])
+#         joblib.dump(loaded_model, model_path)
