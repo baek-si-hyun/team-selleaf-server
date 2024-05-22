@@ -350,12 +350,13 @@
 .comment-input-wrap {
   margin-bottom: 40px;
   margin-top: 8px;
+  display: flex;
+  flex-direction: column;
 }
 .comment-input-container {
   position: relative;
   display: flex;
-  -webkit-box-align: center;
-  align-items: center;
+  align-items: start;
 }
 .comment-user-icon-box {
   display: inline-block;
