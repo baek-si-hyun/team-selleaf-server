@@ -9,7 +9,6 @@
     <div class="create-post-container">
       <form action="{% url 'post:create' %}" method="post" name="post-create-form" enctype="multipart/form-data">
         {% csrf_token %}
-
         <div
             class="sticky-container"
             style="
@@ -22,7 +21,7 @@
           <div class="header-wrap" style="position: relative;">
             <div class="header-container">
               <div class="nav-wrap">
-                <a href="#" class="nav-logo">
+                <a href="{% url 'main' %}" class="nav-logo">
                   <img
                       src="{% static 'public/web/images/common/logo-lettering-blk.png' %}"
                       width="72px"
@@ -301,8 +300,10 @@
                         <div class="required-info-item-title-box2">
                           AI추천태그
                         </div>
+                        <img class="loading"  alt="Animated GIF" src="{% static 'public/web/images/common/loading.gif' %}" 
+                             style="display: none"/>
                         <div class="required-info-item-wrap">
-                          <div class="required-info-item">
+                          <div class="required-info-item2">
                             <div class="required-info-item-inner">
                               <span class="required-info-item-box">
                                 
@@ -399,7 +400,15 @@
   </div>
 {% endblock %}
 {% block js %}
+  <script>
+    const csrf_token = '{{ csrf_token }}'
+    const post_id = `{{ post.id }}`
+    const member_id = '{{ request.session.member.id }}'
+    const post_member_id = '{{ post.member_id }}'
+    const reply_count = '{{ reply_count }}'
+  </script>
   <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
   <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
   <script src="{% static 'post/js/web/create-post.js' %}"></script>
+  <script src="{% static 'post/js/web/post-module.js' %}"></script>
 {% endblock %}

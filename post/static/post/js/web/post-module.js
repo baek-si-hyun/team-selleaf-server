@@ -102,32 +102,22 @@ const postService = (() => {
     }
 
     const aiPost = async (postTitle, postContent) => {
-    const csrfToken = getCookie('csrftoken'); // CSRF 토큰 가져오기
-    try {
-        const response = await fetch('/ai/api/', {
+        const loading = document.querySelector('.loading')
+        const info = document.querySelector('.tag-input2')
+        loading.style.display = 'block'
+        info.style.display = 'none'
+        const response = await fetch('/ai/api/post-detail/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
-                'X-CSRFToken': csrfToken
+                'X-CSRFToken': csrf_token
             },
             body: JSON.stringify({ title: postTitle, content: postContent })
         });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-
-        // 추천 태그를 UI에 표시하는 로직 추가 가능
-        displayRecommendedTags(data);
-
-    } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-    }
-};
-
-
+        loading.style.display = 'none'
+        info.style.display = 'inline-block'
+        return await response.json();
+    };
 
     return {
         getList: getList,
@@ -135,7 +125,7 @@ const postService = (() => {
         getLike: getLike,
         likeCount: likeCount,
         scrapCount: scrapCount,
-        aiPost : aiPost
+        aiPost : aiPost,
     }
 })();
 
