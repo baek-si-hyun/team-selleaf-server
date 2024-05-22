@@ -204,8 +204,8 @@ class MainView(View):
                 total_proba[i] = (probas[0][0][i] + probas[1][0][i] + probas[2][0][i])
 
             print('total_proba', total_proba)
-            if total_proba[0] == 3:
-                total_proba = [2.7, 0.1, 0.1, 0.1]
+            # if total_proba[0] == 3:
+            #     total_proba = [2.7, 0.1, 0.1, 0.1]
 
 
             categories = ['꽃', '농촌', '원예', '정원']
