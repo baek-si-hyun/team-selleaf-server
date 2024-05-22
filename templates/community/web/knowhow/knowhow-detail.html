@@ -20,11 +20,19 @@
                   <div class="uploader-data-container">
                     <button class="uploader-profile-btn">
                       <figure class="uploader-img-box">
-                        <img
-                            src="{{ member_profile.file_url }}"
-                            height="0"
-                            class="uploader-img"
-                        />
+                        {% if 'http://' not in member_profile.file_url or 'https://' not in member_profile.file_url %}
+                          <img
+                              src="/upload/{{ member_profile.file_url }}"
+                              height="0"
+                              class="uploader-img"
+                          />
+                        {% else %}
+                          <img
+                              src="{{ member_profile.file_url }}"
+                              height="0"
+                              class="uploader-img"
+                          />
+                        {% endif %}
                       </figure>
                       <div class="uploader-name-box">
                         <span class="uploader-name">{{ knowhow.member.member_name }}</span>
