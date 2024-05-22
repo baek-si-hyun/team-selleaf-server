@@ -606,7 +606,7 @@ input.title-input {
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
-  padding-left: 130px;
+  padding-left: 25px;
 }
 .tag {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 10px;
@@ -694,7 +694,7 @@ input::placeholder {
 
 .required-info-item-title-box2{
   flex: 0 0 auto;
-  width: 90px;
+  width: 70px;
   padding: 8px 0px;
   font-size: 15px;
   font-weight: bold;
@@ -713,4 +713,20 @@ input::placeholder {
     background-color: lightgrey;
     margin-right: 10px;
     margin-top: 11.5px;
+}
+
+.loading{
+  width: 20px;
+  margin-top: 10px;
+}
+
+.required-info-item-wrap2 {
+  flex: 1 0 0px;
+}
+
+.required-info-item2 {
+  margin-left: 18px;
+  display: flex;
+  align-items: flex-start;
+  padding: 0 0 12px 0;
 }

@@ -100,7 +100,10 @@ const postService = (() => {
     }
 
     const aiPost = async (postTitle, postContent) => {
-        console.log('aipost들어옴')
+        const loading = document.querySelector('.loading')
+        const info = document.querySelector('.tag-input2')
+        loading.style.display = 'block'
+        info.style.display = 'none'
         const response = await fetch('/ai/api/post-detail/', {
             method: 'POST',
             headers: {
@@ -109,6 +112,8 @@ const postService = (() => {
             },
             body: JSON.stringify({ title: postTitle, content: postContent })
         });
+        loading.style.display = 'none'
+        info.style.display = 'inline-block'
         return await response.json();
     };
 

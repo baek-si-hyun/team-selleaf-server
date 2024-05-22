@@ -192,6 +192,7 @@ const publishBtn = document.querySelector('.publish-btn')
 
 
 const checkboxLabel = document.querySelector('.selection')
+const aititle = document.querySelector('.required-info-item-title-box2')
 
 document.addEventListener('DOMContentLoaded', () => {
     const titleInput = document.querySelector('.title-input');
@@ -220,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const sendPost = async () => {
+        aititle.style.color = '#000'
         checkboxLabel.style.backgroundColor = '#C06888';
         const postTitle = titleInput.value;
         const postContent = contentTextArea.value;
@@ -235,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const wrap = document.querySelector('.tag-list')
 const innerTag = wrap.querySelectorAll('.tag')
+const info = document.querySelector('.tag-input2')
 const showtags = (tags) => {
     let text = ``
     tags.forEach((tag) => {
@@ -281,22 +284,14 @@ const showtags = (tags) => {
             const tagList = document.querySelector('.tag-list')
             const ttags = tagList.querySelectorAll('.tag')
             tagFlag = ttags.length >= 0;
-            ttags.length === 0 && (checkboxLabel.style.backgroundColor = '#fff')
+            ttags.length === 0 && (
+                checkboxLabel.style.backgroundColor = '#fff',
+                aititle.style.color = '#a4acb3'
+
+            )
         });
 
     });
 
 
-}
-
-
-const submitDisabledFn = () => {
-    console.log(textareaFlag)
-    console.log(checkedFlag)
-    console.log(selectedFlag)
-    console.log(fileFlag)
-    console.log(titleFlag)
-    console.log(tagFlag)
-    console.log('---------------------')
-    publishBtn.disabled = !(textareaFlag && checkedFlag && selectedFlag && fileFlag && titleFlag && tagFlag);
 }

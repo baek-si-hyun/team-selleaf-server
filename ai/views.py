@@ -64,6 +64,4 @@ class PostAiAPIView(APIView):
                 cleaned_str = joined_str.replace("[", "").replace("]", "").replace("'", "").strip()
                 cleaned_str = cleaned_str.split(" ")
                 tag_set.update(cleaned_str)
-        print(tag_set)
-        print(list(tag_set)[:6])
         return Response(list(tag_set)[:5])
