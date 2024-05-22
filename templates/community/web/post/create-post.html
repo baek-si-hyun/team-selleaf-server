@@ -300,10 +300,11 @@
                         <div class="required-info-item-title-box2">
                           AI추천태그
                         </div>
+                        <input type="hidden" id="post-tags" name="post-tags" value=""> 
                         <img class="loading"  alt="Animated GIF" src="{% static 'public/web/images/common/loading.gif' %}" 
                              style="display: none"/>
                         <div class="required-info-item-wrap">
-                          <div class="required-info-item2">
+                          <div class="required-info-item">
                             <div class="required-info-item-inner">
                               <span class="required-info-item-box">
                                 
@@ -335,7 +336,7 @@
             <div class="upload-wrap">
               <div class="prev-img-box">
                 <img
-                    src="../../staticfiles/images/cancel.png"
+                    src="{% static 'public/web/images/common/cancel.png' %}"
                     class="cancel"
                     width="30px"
                     height="30px"
