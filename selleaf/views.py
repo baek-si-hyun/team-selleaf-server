@@ -2742,26 +2742,16 @@ class PostReplyReportAdjustAPI(APIView):
                 post_reply = PostReply.objects.filter(id=report_reply_id).values().first()
 
                 new_sentence = [post_reply['post_reply_content']]
+                print(new_sentence)
+                profanityDetectionModel(new_sentence)
                 data = {
                     'comment': new_sentence[0],
                     'target': 1,
                 }
-                print(data)
-                # profanityDetectionModel(new_sentence)
-                # AiPostReply.objects.create(**data)
+                AiPostReply.objects.create(**data)
+
                 PostReplyReport.object.get(id=report_id).delete()
                 PostReply.objects.get(id=report_reply_id).delete()
-
-
-                # try:
-                #     with transaction.atomic():
-                #         with connection.cursor() as cursor:
-                #             cursor.execute('SET foreign_key_checks = 0;')
-                #             PostReply.objects.get(id=report_reply_id).delete()
-                #             PostReplyReport.objects.get(id=report_id).delete()
-                #             cursor.execute('SET foreign_key_checks = 1;')
-                # except Exception as e:
-                #     print(f"Error occurred: {e}")
 
         return Response('success')
 

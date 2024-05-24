@@ -38,7 +38,7 @@ def pre_handle_request(get_response):
                 # 관리자 페이지 요청
                 if 'admin' in uri:
                     # 관리자 페이지 중 관리자 로그인 이외의 서비스를 요청했을 때
-                    if 'admin/login' not in uri:
+                    if 'managers-page/login' not in uri:
                         # 세션에 관리자 정보가 없으면
                         if request.session.get('admin') is None:
                             # 요청한 경로를 session에 담아놓은 뒤

@@ -16,5 +16,5 @@ def profanityDetectionPredict(new_sentence):
 def profanityDetectionModel(new_sentence):
     loaded_model = joblib.load(model_path)
     transformed_X_train = loaded_model.named_steps['count_vectorizer'].transform(new_sentence)
-    loaded_model.named_steps['multinomial_NB'].partial_fit(transformed_X_train, [1])
+    loaded_model.named_steps['multinomial_NB'].fit(transformed_X_train, [1])
     joblib.dump(loaded_model, model_path)

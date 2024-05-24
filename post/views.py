@@ -196,7 +196,8 @@ class PostReportView(View):
 class PostReplyReportView(View):
     def post(self, request):
         data = request.POST
-        member_id = request.session['member']['id']
+        member = request.session.get('member')
+        member_id = member.get('id')
         post_id = request.GET['id']
         reply_id = data['reply-report-reply-id']
 
