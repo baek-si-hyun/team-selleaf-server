@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-xrbh@fs#!56dnm^+1ld6l5n5t7n)1d@6t(@r3a&2!_x1j8r*$r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['3.38.116.70', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '3.36.60.87', 'selleaf.site']
 
 # Application definition
 
@@ -129,6 +129,7 @@ DATABASES = {
         # 계정 비밀번호
         'PASSWORD': '1234',
         # DBMS가 설치된 서버 PC의 IP, (127.0.0.1 = 로컬)
+        'HOST': '54.180.29.21',
         'HOST': '52.79.151.112',
         # DBMS의 포트번호
         'PORT': '3306'
