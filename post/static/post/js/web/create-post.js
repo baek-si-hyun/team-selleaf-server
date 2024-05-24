@@ -235,18 +235,9 @@ document.addEventListener('DOMContentLoaded', () => {
     aiCheckbox.addEventListener('click', sendPost);
 });
 
-const form = document.querySelector('form[name="post-create-form"]');
-const aiTagsInput = document.getElementById('post-tags');
-
-
-const setTagsInputValue = () => {
-  const tags = Array.from(tagList.querySelectorAll('.tag-text')).map(tag => tag.textContent.trim());
-  aiTagsInput.value = tags.join(',');
-};
-
-
 const wrap = document.querySelector('.tag-list')
 const innerTag = wrap.querySelectorAll('.tag')
+const info = document.querySelector('.tag-input2')
 const showtags = (tags) => {
     let text = ``
     tags.forEach((tag) => {
@@ -284,7 +275,6 @@ const showtags = (tags) => {
 
     });
     wrap.innerHTML = text
-    setTagsInputValue()
     tagFlag = innerTag.length >= 0;
     const aitags = document.querySelectorAll(".tag");
     aitags.forEach((item) => {
@@ -296,19 +286,12 @@ const showtags = (tags) => {
             tagFlag = ttags.length >= 0;
             ttags.length === 0 && (
                 checkboxLabel.style.backgroundColor = '#fff',
-                aititle.style.color = '#a4acb3')
+                aititle.style.color = '#a4acb3'
+
+            )
         });
 
     });
 
 
-}
-
-form.addEventListener('submit', (event) => {
-  setTagsInputValue();
-});
-
-const submitDisabledFn = () => {
-    console.log(textareaFlag, checkedFlag, selectedFlag,fileFlag, titleFlag, tagFlag)
-    publishBtn.disabled = !(textareaFlag && checkedFlag && selectedFlag && fileFlag && titleFlag && tagFlag);
 }
