@@ -5,11 +5,13 @@ import joblib
 
 model_path = os.path.join(Path(__file__).resolve().parent, '../../ai/ai/commentai.pkl')
 
+
 def profanityDetectionPredict(new_sentence):
     loaded_model = joblib.load(model_path)
 
     prediction = loaded_model.predict(new_sentence)
     return prediction
+
 
 def profanityDetectionModel(new_sentence):
     loaded_model = joblib.load(model_path)
