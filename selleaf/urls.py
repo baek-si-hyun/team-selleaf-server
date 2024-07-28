@@ -21,6 +21,7 @@ from selleaf.views import ManagerLoginView, ManagerLogoutView, MemberManagementV
     LectureDeleteAPI, LectureReviewDeleteAPI, HeaderView
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', MainView.as_view(), name='main'),
     path('header/', HeaderView.as_view(), name='main-header'),
     path('search/', SearchView.as_view(), name='search'),
@@ -31,7 +32,6 @@ urlpatterns = [
     path('lecture-scrap/api/', LectureScrapAPI.as_view(), name='lecture-scrap-api'),
     path('post-scrap/api/', PostScrapAPI.as_view(), name='post-scrap-api'),
     path('lecture-category/api/', BestLectureCategoryAPI.as_view(), name='lecture-category-api'),
-
     # 관리자 페이지 뷰
     path('managers-page/login/', ManagerLoginView.as_view(), name='manager-login'),
     path('managers-page/logout/', ManagerLogoutView.as_view(), name='manager-logout'),
@@ -118,7 +118,6 @@ urlpatterns = [
     path('managers-page/knowhow-reply-report-adjust/<str:report_ids>', KnowhowReplyReportAdjustAPI.as_view(), name='knowhow-reply-report-adjust-api'),
 
     # 기타 서비스 url
-    path('admin/', admin.site.urls),
     path('alarm/', include('alarm.urls-web')),
     path('member/', include('member.urls-web')),
     path('lecture/', include('lecture.urls-web')),
@@ -134,8 +133,6 @@ urlpatterns = [
     path('oauth/', include('oauth.urls')),
     path('accounts/', include('allauth.urls')),
 
-    # 추천 서비스
-    path('ai/api/', include('ai.urls-web')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

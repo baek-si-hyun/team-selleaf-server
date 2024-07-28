@@ -22,7 +22,8 @@
                   <img
                       src="{{ member_profile.file_url }}"
                       height="0"
-                      class="uploader-img"
+                      class="uploader-img" loading="lazy"
+                      decoding="async"
                   />
                 </figure>
                 <div class="uploader-data-box">
@@ -50,7 +51,8 @@
                         <img
                             src="/upload/{{ post_file.file_url }}"
                             alt=""
-                            class="content-img"
+                            class="content-img" loading="lazy"
+                            decoding="async"
                         />
                       </div>
                     </div>
@@ -112,18 +114,21 @@
                           {% if 'http://' not in session_profile.file_url or 'https://' not in session_profile.file_url %}
                             <img
                                 src="/upload/{{ session_profile.file_url }}"
-                                class="comment-user-icon"
+                                class="comment-user-icon" loading="lazy"
+                                decoding="async"
                             />
                           {% else %}
                             <img
                                 src="{{ session_profile.file_url }}"
-                                class="comment-user-icon"
+                                class="comment-user-icon" loading="lazy"
+                                decoding="async"
                             />
                           {% endif %}
                         {% else %}
                           <img
                               src="/upload/file/2024/03/05/blank-image.avif"
-                              class="comment-user-icon"
+                              class="comment-user-icon" loading="lazy"
+                              decoding="async"
                           />
                         {% endif %}
                       </figure>
@@ -148,214 +153,21 @@
                             </div>
                           </div>
                         </div>
-                        <div style="color:red; display: none; margin-top: 7px" class="profanity-warning"><span>비속어가 포함되어 있습니다!</span></div>
+                        <div style="color:red; display: none; margin-top: 7px" class="profanity-warning"><span>비속어가 포함되어 있습니다!</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-
                   <section class="reply-section"></section>
                   <div class="pagination-box">
-                    {#                      <button type="button" >#}
                     <div class="declaration-btn-wrap">
                       <div class="declaration-btn-container">
                         <button class="declaration-btn" id="more-replies">더보기</button>
                       </div>
                     </div>
-                    {#                      </button>#}
                   </div>
                 </div>
               </div>
-              {#                <hr class="content-spiit" />#}
-              {#                <div class="similar-posts-box">#}
-              {#                  <p class="similar-posts-title">#}
-              {#                    유저들의 비슷한 공간 베스트#}
-              {#                  </p>#}
-              {#                  <div#}
-              {#                    class="similar-posts"#}
-              {#                    style="padding-top: 0px; transform: translateY(0px);"#}
-              {#                  >#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div>#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="javascript:void(0)">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                    <div class="similar-post-box">#}
-              {#                      <span>#}
-              {#                        <div class="similar-post">#}
-              {#                          <a href="#" class="similar-post-link">#}
-              {#                            <img#}
-              {#                              src="../../../staticfiles/images/blank-image.png"#}
-              {#                              class="similar-post-img"#}
-              {#                            />#}
-              {#                          </a>#}
-              {#                        </div>#}
-              {#                      </span>#}
-              {#                    </div>#}
-              {#                  </div>#}
-              {#                </div>#}
             </div>
             <div class="sticky-wrap">
               <div
@@ -375,7 +187,8 @@
                               class="sticky-icon"
                               src="{% static 'public/web/images/common/like-on.png' %}"
                               alt=""
-                              id="like-icon"
+                              id="like-icon" loading="lazy"
+                              decoding="async"
                           />
                         </span>
                       {% else %}
@@ -384,7 +197,8 @@
                               class="sticky-icon"
                               src="{% static 'public/web/images/common/like-off.png' %}"
                               alt=""
-                              id="like-icon"
+                              id="like-icon" loading="lazy"
+                              decoding="async"
                           />
                         </span>
                       {% endif %}
@@ -398,7 +212,8 @@
                               class="sticky-icon"
                               src="{% static 'public/web/images/common/scrap-on.png' %}"
                               alt=""
-                              id="scrap-icon"
+                              id="scrap-icon" loading="lazy"
+                              decoding="async"
                           />
                         
                         </span>
@@ -408,13 +223,15 @@
                               class="sticky-icon"
                               src="{% static 'public/web/images/common/scrap-off.png' %}"
                               alt=""
-                              id="scrap-icon"
+                              id="scrap-icon" loading="lazy"
+                              decoding="async"
                           />
                         
                         </span>
                       {% endif %}
                       <span class="sticky-data" id="scrap-count"></span>
                     </button>
+                    <hr class="sticky-btn-split"/>
                     <button title="댓글" class="sticky-btn background-color">
                       <a href="#comment-section">
                           <span class="sticky-icon-box background-color">
@@ -429,7 +246,8 @@
                         <button type="button" title="공유" class="sticky-btn background-color">
                             <span class="sticky-icon-box background-color">
                               <span class="sticky-icon sticky-icon-share">
-                                  <img src="{% static '/public/web/images/common/rewrite.png' %}" alt="">
+                                  <img src="{% static '/public/web/images/common/rewrite.png' %}" alt="" loading="lazy"
+                                       decoding="async">
                               
                               </span>
                             </span>
@@ -440,7 +258,9 @@
                         <button type="button" title="공유" class="sticky-btn background-color">
                             <span class="sticky-icon-box background-color">
                               <span class="sticky-icon sticky-icon-share">
-                                  <img src="{% static '/public/web/images/common/remove-btn.png' %}" alt="">
+                                  <img src="{% static '/public/web/images/common/remove-btn.png' %}" alt=""
+                                       loading="lazy"
+                                       decoding="async">
                               </span>
                             </span>
                           <span class="sticky-data" id="share">삭제하기</span>
