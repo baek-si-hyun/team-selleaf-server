@@ -16,7 +16,7 @@
 
 |Member|Member|Member|Member|Member|Member|
 | :-: | :-: | :-: | :-: | :-: | :-: |
-| <img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/030b8ff3-e6be-4934-bbc5-aa04919eb0b0" width="150"> |<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/1fb7fcd0-df5a-4924-9557-2a354248ee64" width="150"> |<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/72e403ca-0a32-4291-a71f-a93b3311aee2" width="150"> |<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/85282963-ac33-4143-9992-2cdf3d00af5f" width="150">|<img src="" width="150">|<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/713c6c8e-5cb6-4e8a-8877-929c9ae831f2" width="150">|
+| <img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/030b8ff3-e6be-4934-bbc5-aa04919eb0b0" width="150"> |<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/1fb7fcd0-df5a-4924-9557-2a354248ee64" width="150"> |<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/72e403ca-0a32-4291-a71f-a93b3311aee2" width="150"> |<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/85282963-ac33-4143-9992-2cdf3d00af5f" width="150">|<img src="https://github.com/user-attachments/assets/b55bfbdd-bc01-4cab-8f6f-ee70eb15f7f7" width="150">|<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/713c6c8e-5cb6-4e8a-8877-929c9ae831f2" width="150">|
 | [강희주]()|[김광협]()|[김수빈]()|[김규일]()|[백시현]()|[조은종]()|
 <br>
 
@@ -41,21 +41,40 @@
 
 
 ## 기획 배경
-<img src="https://imagedelivery.net/4aEUbX05h6IovGOQjgkfSw/c282ccdf-9f65-4609-aad3-7988e9c35900/public" />
-<img src="https://imagedelivery.net/4aEUbX05h6IovGOQjgkfSw/5f99a604-136b-46d2-0c2a-736314a24000/public" />
+<img src="https://github.com/user-attachments/assets/9682e651-9539-4d8c-8308-332842839695" />
+<img src="https://github.com/user-attachments/assets/332edfcb-495d-4667-a464-b852bc28bc07" />
 
 
 ## 기획 의도
----
-1. 식테크를 위한 거래 플랫폼
-2. 식집사를 위한 플랫폼
-3. 누구나 쉽게 시작하는 강의
-4. 식작사 N잡러를 위한 플랫폼
----
 
-<img src="https://imagedelivery.net/4aEUbX05h6IovGOQjgkfSw/89a24c38-cbde-4aeb-6244-3bb218985000/public" />
+1. 소비 촉진 및 시장 확대
+2. 지역 경제 활성화
+3. 소득 및 일자리 창출
+4. 지속 가능한 소비
+
+
+<img src="https://github.com/user-attachments/assets/f955f035-de22-4d91-a5d5-f508806b1d25" />
+
+
+## 담당 업무
+
+- 팀원 
+  - 깃허브 PR 담당
+  - migration, migrate 담당
+  - AWS 서버 배포 담당
+
+- 화면 
+  - 메인
+  - 검색 결과
+  - 노하우, 일반 커뮤니티
+
+- 서버
+  - 메인
+  - 검색 결과
+  - 로그인, 회원가입
+
+- 머신러닝 AI 기반 서비스
+  - 게시물 댓글 비속어 감지 모델
 
 ## ERD
 <img width="100%" src="https://imagedelivery.net/4aEUbX05h6IovGOQjgkfSw/1582dcea-021a-426c-da91-063f7845b700/dia" />
-
-## 담당 업무
