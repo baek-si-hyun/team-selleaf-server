@@ -14,10 +14,10 @@
 
 ### 🪴 Member
 
-|Member|Member|Member|Member|Member|Member|
-| :-: | :-: | :-: | :-: | :-: | :-: |
-| <img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/030b8ff3-e6be-4934-bbc5-aa04919eb0b0" width="150"> |<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/1fb7fcd0-df5a-4924-9557-2a354248ee64" width="150"> |<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/72e403ca-0a32-4291-a71f-a93b3311aee2" width="150"> |<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/85282963-ac33-4143-9992-2cdf3d00af5f" width="150">|<img src="https://github.com/user-attachments/assets/b55bfbdd-bc01-4cab-8f6f-ee70eb15f7f7" width="150">|<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/713c6c8e-5cb6-4e8a-8877-929c9ae831f2" width="150">|
-| [강희주]()|[김광협]()|[김수빈]()|[김규일]()|[백시현]()|[조은종]()|
+|Member|Member|Member|         Member         |Member|Member|
+| :-: | :-: | :-: |:----------------------:| :-: | :-: |
+| <img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/030b8ff3-e6be-4934-bbc5-aa04919eb0b0" width="150"> |<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/1fb7fcd0-df5a-4924-9557-2a354248ee64" width="150"> |<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/72e403ca-0a32-4291-a71f-a93b3311aee2" width="150"> |<img src="https://github.com/user-attachments/assets/bfc5af5f-f73d-4943-8002-7759b2403be3" width="150">|<img src="https://github.com/user-attachments/assets/b55bfbdd-bc01-4cab-8f6f-ee70eb15f7f7" width="150">|<img src="https://github.com/DianaKang0123/team-selleaf-server/assets/156397873/713c6c8e-5cb6-4e8a-8877-929c9ae831f2" width="150">|
+| [강희주]()|[김광협]()|[김수빈]()|        [김규일]()         |[백시현]()|[조은종]()|
 <br>
 
 ### 🪴 기능
